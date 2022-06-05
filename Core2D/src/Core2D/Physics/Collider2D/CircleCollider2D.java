@@ -1,7 +1,7 @@
 package Core2D.Physics.Collider2D;
 
 import Core2D.Object2D.Object2D;
-import Core2D.Physics.Physics;
+import Core2D.Physics.PhysicsWorld;
 import org.jbox2d.collision.shapes.CircleShape;
 
 public class CircleCollider2D extends Collider2D
@@ -15,7 +15,7 @@ public class CircleCollider2D extends Collider2D
         super(attachedObject2D);
 
         shape = new CircleShape();
-        shape.m_radius = 1.0f / Physics.RATIO;
+        shape.m_radius = 1.0f / PhysicsWorld.RATIO;
 
         setShape(shape);
 
@@ -29,7 +29,7 @@ public class CircleCollider2D extends Collider2D
         super(attachedObject2D);
 
         shape = new CircleShape();
-        shape.m_radius = 1.0f / Physics.RATIO;
+        shape.m_radius = 1.0f / PhysicsWorld.RATIO;
 
         setShape(shape);
 
@@ -48,7 +48,7 @@ public class CircleCollider2D extends Collider2D
 
         body.destroyFixture(body.getFixtureList());
 
-        shape.m_radius = radius / Physics.RATIO;
+        shape.m_radius = radius / PhysicsWorld.RATIO;
 
         fixtureDef.shape = shape;
 

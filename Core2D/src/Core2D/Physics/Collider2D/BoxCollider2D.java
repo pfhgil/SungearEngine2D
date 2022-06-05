@@ -1,7 +1,7 @@
 package Core2D.Physics.Collider2D;
 
 import Core2D.Object2D.Object2D;
-import Core2D.Physics.Physics;
+import Core2D.Physics.PhysicsWorld;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.joml.Vector2f;
 
@@ -16,7 +16,7 @@ public class BoxCollider2D extends Collider2D
         super(attachedObject2D);
 
         shape = new PolygonShape();
-        shape.setAsBox(100.0f / Physics.RATIO / 2, 100.0f / Physics.RATIO / 2);
+        shape.setAsBox(100.0f / PhysicsWorld.RATIO / 2, 100.0f / PhysicsWorld.RATIO / 2);
 
         setShape(shape);
 
@@ -30,7 +30,7 @@ public class BoxCollider2D extends Collider2D
         super(attachedObject2D);
 
         shape = new PolygonShape();
-        shape.setAsBox(100.0f / Physics.RATIO / 2, 100.0f / Physics.RATIO / 2);
+        shape.setAsBox(100.0f / PhysicsWorld.RATIO / 2, 100.0f / PhysicsWorld.RATIO / 2);
 
         setShape(shape);
 
@@ -47,7 +47,7 @@ public class BoxCollider2D extends Collider2D
 
         body.destroyFixture(body.getFixtureList());
 
-        shape.setAsBox(Math.abs((100.0f / Physics.RATIO / 2.0f) * this.scale.x), Math.abs((100.0f / Physics.RATIO / 2.0f) * this.scale.y));
+        shape.setAsBox(Math.abs((100.0f / PhysicsWorld.RATIO / 2.0f) * this.scale.x), Math.abs((100.0f / PhysicsWorld.RATIO / 2.0f) * this.scale.y));
 
         fixtureDef.shape = shape;
 
@@ -62,7 +62,7 @@ public class BoxCollider2D extends Collider2D
 
         body.destroyFixture(body.getFixtureList());
 
-        shape.setAsBox(Math.abs((100.0f / Physics.RATIO / 2.0f) * this.scale.x), Math.abs((100.0f / Physics.RATIO / 2.0f) * this.scale.y));
+        shape.setAsBox(Math.abs((100.0f / PhysicsWorld.RATIO / 2.0f) * this.scale.x), Math.abs((100.0f / PhysicsWorld.RATIO / 2.0f) * this.scale.y));
 
         fixtureDef.shape = shape;
 

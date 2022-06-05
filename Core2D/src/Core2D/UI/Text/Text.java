@@ -82,6 +82,7 @@ public class Text extends CommonDrawableObjectsParameters
         vertexShader = null;
     }
 
+    @Override
     public void draw()
     {
         if(active) {
@@ -98,6 +99,7 @@ public class Text extends CommonDrawableObjectsParameters
         }
     }
 
+    @Override
     public void destroy()
     {
         text = null;

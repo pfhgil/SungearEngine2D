@@ -3,6 +3,7 @@ package Core2D.Object2D;
 import Core2D.Camera2D.Camera2D;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Component;
+import Core2D.Component.Components.Rigidbody2DComponent;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Component.NonDuplicated;
@@ -11,8 +12,6 @@ import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Resources;
 import Core2D.Core2D.Settings;
 import Core2D.Log.Log;
-import Core2D.Physics.Collider2D.BoxCollider2D;
-import Core2D.Physics.Collider2D.CircleCollider2D;
 import Core2D.Shader.Shader;
 import Core2D.Shader.ShaderProgram;
 import Core2D.ShaderUtils.*;
@@ -157,12 +156,19 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         addComponent(objectTextureComponent);
         objectTextureComponent = null;
 
-        if(objectTransform.getCollider2D() != null) {
-            if(objectTransform.getCollider2D() instanceof BoxCollider2D) {
+        if(object2D.getComponent(Rigidbody2DComponent.class) != null) {
+            Rigidbody2DComponent rigidbody2DComponent = new Rigidbody2DComponent();
+            rigidbody2DComponent.set(object2D.getComponent(Rigidbody2DComponent.class));
+            addComponent(rigidbody2DComponent);
+            rigidbody2DComponent = null;
+            /*
+            if(objectTransform.getRigidbody2D() instanceof BoxCollider2D) {
                 //transform.setCollider2D(new BoxCollider2D(this, object2D.getTransform().getCollider2D()));
-            } else if(objectTransform .getCollider2D() instanceof CircleCollider2D) {
+            } else if(objectTransform .getRigidbody2D() instanceof CircleCollider2D) {
                 //transform.setCollider2D(new CircleCollider2D(this, object2D.getTransform().getCollider2D()));
             }
+
+             */
         }
 
         active = object2D.isActive();
@@ -229,6 +235,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         vertexArrayObject.unBind();
     }
 
+    @Override
     public void update(float deltaTime)
     {
         if(active) {
@@ -243,6 +250,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         }
     }
 
+    @Override
     public void draw()
     {
         if(active) {
@@ -324,6 +332,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         }
     }
 
+    @Override
     public void destroy()
     {
         Iterator<Component> componentsIterator = components.iterator();
@@ -399,12 +408,14 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
             }
         }
 
-        component.object2D = this;
+        component.setObject2D(this);
         // первоначальные настройки для некоторых компонентов
         if(component instanceof TextureComponent) {
             TextureComponent textureComponent = ((TextureComponent) component);
             textureComponent.setUV(textureComponent.getUV());
             textureComponent.setTexture2D(Resources.Textures.WHITE_TEXTURE);
+        } else if(component instanceof Rigidbody2DComponent) {
+            getComponent(TransformComponent.class).getTransform().setRigidbody2D(((Rigidbody2DComponent) component).getRigidbody2D());
         }
         components.add(component);
     }

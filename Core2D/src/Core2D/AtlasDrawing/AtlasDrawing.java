@@ -18,6 +18,7 @@ public class AtlasDrawing extends CommonDrawableObjectsParameters
         this.atlasTexture2D = atlasTexture2D;
     }
 
+    @Override
     public void update(float deltaTime)
     {
         for(int i = 0; i < drawableObjects2D.size(); i++) {
@@ -25,6 +26,7 @@ public class AtlasDrawing extends CommonDrawableObjectsParameters
         }
     }
 
+    @Override
     public void draw()
     {
         if(active) {
@@ -38,6 +40,7 @@ public class AtlasDrawing extends CommonDrawableObjectsParameters
         }
     }
 
+    @Override
     public void destroy()
     {
         for(Object2D obj : drawableObjects2D) {

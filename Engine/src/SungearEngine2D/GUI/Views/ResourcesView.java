@@ -1,7 +1,10 @@
 package SungearEngine2D.GUI.Views;
 
+import Core2D.Core2D.Core2D;
 import Core2D.Log.Log;
+import Core2D.Utils.FileUtils;
 import Core2D.Utils.ExceptionsUtils;
+import SungearEngine2D.Main.Main;
 import SungearEngine2D.Project.ProjectsManager;
 import imgui.ImGui;
 import imgui.ImVec2;
@@ -10,12 +13,13 @@ import imgui.flag.ImGuiDragDropFlags;
 import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
-import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.charset.CoderResult;
 import java.util.List;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
@@ -193,6 +197,13 @@ public class ResourcesView extends View
 
         beginDragAndDropTarget(files[id]);
 
+        if(ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left) && ImGui.isItemHovered()) {
+            if(FilenameUtils.getExtension(files[id].getName()).equals("sgs")) {
+                Core2D.getSceneManager2D().loadScene(files[id].getPath());
+                MainView.getInspectorView().setCurrentInspectingObject(null);
+            }
+        }
+
         if (ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left) && ImGui.isItemHovered() && hoveredFileID == id && isDirectory && !filenameEditing) {
             currentDirectoryPath = files[id].getPath();
         }
@@ -212,9 +223,9 @@ public class ResourcesView extends View
                 if(ImGui.menuItem("Delete")) {
                     try {
                         if(!isDirectory) {
-                            FileUtils.delete(files[id]);
+                            org.apache.commons.io.FileUtils.delete(files[id]);
                         } else {
-                            FileUtils.deleteDirectory(files[id]);
+                            org.apache.commons.io.FileUtils.deleteDirectory(files[id]);
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -257,9 +268,9 @@ public class ResourcesView extends View
     {
         if(ProjectsManager.getCurrentProject() != null) {
             File newFile = switch (fileType) {
-                case "Java" -> Core2D.Utils.FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".java");
-                case "Text" -> Core2D.Utils.FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".txt");
-                case "Directory" -> Core2D.Utils.FileUtils.createFolder(ResourcesView.currentDirectoryPath + "\\" + name);
+                case "Java" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".java");
+                case "Text" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".txt");
+                case "Directory" -> FileUtils.createFolder(ResourcesView.currentDirectoryPath + "\\" + name);
                 default -> null;
             };
             if(newFile == null) return;
@@ -268,24 +279,24 @@ public class ResourcesView extends View
                 String javaFileCode =
                         "public class " + name + "\n" +
                         "{\n" +
-                        "   public void Update()\n" +
+                        "   public void update()\n" +
                         "   {\n" +
                         "       \n" +
                         "   }\n" +
                         "   \n" +
-                        "   public void DeltaUpdate(float deltaTime)\n" +
+                        "   public void deltaUpdate(float deltaTime)\n" +
                         "   {\n" +
                         "       \n" +
                         "   }\n" +
                         "}";
                 // создаю файл с уже заранее подготовленным кодом
-                Core2D.Utils.FileUtils.writeToFile(
+                FileUtils.writeToFile(
                         newFile,
                         javaFileCode,
                         false
                 );
             } else if(fileType.equals("Text")) { // если тип файла - текст, то создаю файл с надписью hello! (по приколу)
-                Core2D.Utils.FileUtils.writeToFile(
+                FileUtils.writeToFile(
                         newFile,
                         "Hello!",
                         false
@@ -305,9 +316,9 @@ public class ResourcesView extends View
                     if (!droppedFile.equals(dest) && !droppedFile.getParentFile().getPath().equals(dest.getPath())) {
                         try {
                             if (droppedFile.isFile()) {
-                                FileUtils.moveFile(droppedFile, new File(dest.getPath() + "\\" + droppedFile.getName()));
+                                org.apache.commons.io.FileUtils.moveFile(droppedFile, new File(dest.getPath() + "\\" + droppedFile.getName()));
                             } else {
-                                FileUtils.moveDirectory(droppedFile, new File(dest.getPath() + "\\" + droppedFile.getName()));
+                                org.apache.commons.io.FileUtils.moveDirectory(droppedFile, new File(dest.getPath() + "\\" + droppedFile.getName()));
                             }
                         } catch (IOException e) {
                             Log.showErrorDialog("File " + droppedFile.getPath() + " can not be moved to directory " + dest.getPath() + "! Check log file.");

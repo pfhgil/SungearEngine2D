@@ -121,11 +121,14 @@ public class VertexAttribute
 
         offset = 0;
         size = shaderDataTypeInByte(shaderDataType);
+
+        name = null;
     }
     // конструктор
     public VertexAttribute(int ID, String name, int shaderDataType)
     {
         this(ID, name, shaderDataType, false);
+        name = null;
     }
 
     // получить размер аттрибута

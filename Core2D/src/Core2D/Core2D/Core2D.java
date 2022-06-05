@@ -3,7 +3,7 @@ package Core2D.Core2D;
 import Core2D.Camera2D.Camera2D;
 import Core2D.Input.Core2DInputCallback;
 import Core2D.Log.Log;
-import Core2D.Physics.Physics;
+import Core2D.Physics.PhysicsWorld;
 import Core2D.Scene2D.SceneManager2D;
 import Core2D.Timer.Timer;
 import Core2D.Timer.TimerCallback;
@@ -25,8 +25,6 @@ public class Core2D extends Graphics
     private static Core2DInputCallback core2DInputCallback;
 
     public static Core2DUserCallback core2DUserCallback;
-
-    private static Physics physics = new Physics();
 
     private static TimersManager timersManager = new TimersManager();
 
@@ -123,20 +121,20 @@ public class Core2D extends Graphics
 
             deltaTimer.getTimerCallbacks().add(new TimerCallback() {
                 @Override
-                public void DeltaUpdate(float deltaTime) {
+                public void deltaUpdate(float deltaTime) {
                     // для того, чтобы deltaTime пришел в норму
                     if (totalIterations > 0) {
                         if (core2DUserCallback != null) {
                             core2DUserCallback.onDeltaUpdate(deltaTime);
                         }
-                        physics.worldUpdate(deltaTime);
 
                         sceneManager2D.updateCurrentScene2D(deltaTime);
                     }
+                    totalIterations++;
                 }
 
                 @Override
-                public void Update() {
+                public void update() {
 
                 }
             });
@@ -183,10 +181,6 @@ public class Core2D extends Graphics
 
     public static Core2DInputCallback getCore2DInputCallback() {
         return core2DInputCallback;
-    }
-
-    public static Physics getPhysics() {
-        return physics;
     }
 
     public static TimersManager getTimersManager() {

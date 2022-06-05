@@ -91,7 +91,7 @@ public class Timer
 
                 if(timerCallbacks != null) {
                     for(TimerCallback timerCallback : timerCallbacks) {
-                        timerCallback.Update();
+                        timerCallback.update();
                     }
                 }
 
@@ -107,14 +107,16 @@ public class Timer
             deltaTime = (currentTime - lastTime) / 1000.0f / 1000.0f / 1000.0f;
             lastTime = currentTime;
 
-            if(maxDelta != 0) deltaUpdate();
+            deltaUpdate();
         }
     }
 
     private void deltaUpdate()
     {
-        // ограничение frameTime
-        deltaTime = Math.min(deltaTime, maxDelta);
+        if(maxDelta != 0.0f) {
+            // ограничение frameTime
+            deltaTime = Math.min(deltaTime, maxDelta);
+        }
 
         deltaTimesSum += deltaTime;
         deltaTimesNum++;
@@ -123,7 +125,7 @@ public class Timer
 
         if(timerCallbacks != null) {
             for(TimerCallback timerCallback : timerCallbacks) {
-                timerCallback.DeltaUpdate(deltaTime);
+                timerCallback.deltaUpdate(deltaTime);
             }
         }
     }

@@ -36,6 +36,21 @@ public abstract class CommonDrawableObjectsParameters
         tag = null;
     }
 
+    public void draw()
+    {
+
+    }
+
+    public void update(float deltaTime)
+    {
+
+    }
+
+    public void destroy()
+    {
+
+    }
+
     public void destroyLayerObject()
     {
         if(this.layer != null) {

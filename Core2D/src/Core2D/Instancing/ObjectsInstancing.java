@@ -257,6 +257,7 @@ public class ObjectsInstancing extends CommonDrawableObjectsParameters
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
+    @Override
     public void update(float deltaTime)
     {
         for(int i = 0; i < drawableObjects2D.size(); i++) {
@@ -264,6 +265,7 @@ public class ObjectsInstancing extends CommonDrawableObjectsParameters
         }
     }
 
+    @Override
     public void draw()
     {
         if(active && drawableObjects2D.size() != 0) {
@@ -293,6 +295,7 @@ public class ObjectsInstancing extends CommonDrawableObjectsParameters
         }
     }
 
+    @Override
     public void destroy()
     {
         Iterator<Object2D> objects2DIterator = drawableObjects2D.iterator();

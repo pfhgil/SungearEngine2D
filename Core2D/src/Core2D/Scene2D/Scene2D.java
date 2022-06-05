@@ -6,6 +6,7 @@ import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
+import Core2D.Physics.PhysicsWorld;
 import Core2D.Utils.Tag;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -25,6 +26,8 @@ public class Scene2D
     private Vector4f screenClearColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
 
     private List<Tag> tags = new ArrayList<>();
+
+    private transient PhysicsWorld physicsWorld = new PhysicsWorld();
 
     public Scene2D()
     {
@@ -79,6 +82,8 @@ public class Scene2D
 
     public void update(float deltaTime)
     {
+        physicsWorld.step(deltaTime, 6, 2);
+
         layering.update(deltaTime);
 
         if(scene2DCallback != null) {
@@ -132,6 +137,14 @@ public class Scene2D
         tags.remove(tag);
     }
 
+    public void destroy()
+    {
+        name = null;
+        layering.destroy();
+        layering = null;
+        physicsWorld = null;
+    }
+
     public String getName() { return name; }
     public void setName(String name)
     {
@@ -161,4 +174,7 @@ public class Scene2D
     }
 
     public List<Tag> getTags() { return tags; }
+
+    public PhysicsWorld getPhysicsWorld() { return physicsWorld; }
+    public void setPhysicsWorld(PhysicsWorld physicsWorld) { this.physicsWorld = physicsWorld; }
 }

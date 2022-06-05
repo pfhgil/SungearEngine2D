@@ -71,11 +71,13 @@ public class VertexArrayObject
 
         // добавялю vbo в список
         VBOs.add(vertexBufferObject);
+        vertexBufferObject = null;
     }
     public void putIBO(IndexBufferObject indexBufferObject)
     {
         // добавляю IBO в список
         IBOs.add(indexBufferObject);
+        indexBufferObject = null;
     }
 
     public void updateVBO(VertexBufferObject VBO, float[] data)
@@ -83,6 +85,8 @@ public class VertexArrayObject
         VBO.bind();
         glBufferSubData(GL_ARRAY_BUFFER, 0, data);
         VBO.unBind();
+        VBO = null;
+        data = null;
     }
 
     // геттеры и сеттеры

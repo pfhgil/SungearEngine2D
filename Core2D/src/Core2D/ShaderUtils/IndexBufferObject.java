@@ -13,13 +13,15 @@ public class IndexBufferObject
     // слой
     private BufferLayout layout;
 
-    public IndexBufferObject(short[] _data)
+    public IndexBufferObject(short[] data)
     {
-        data = _data;
+        this.data = data;
         usage = GL_STATIC_DRAW;
 
         create();
         putData();
+
+        data = null;
     }
     // создание буфера
     public void create()

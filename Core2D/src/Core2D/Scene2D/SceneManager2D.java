@@ -1,6 +1,8 @@
 package Core2D.Scene2D;
 
 import Core2D.Component.Component;
+import Core2D.Core2D.Graphics;
+import Core2D.Core2D.Settings;
 import Core2D.Deserializers.*;
 import Core2D.Layering.Layer;
 import Core2D.Layering.LayerObject;
@@ -51,7 +53,9 @@ public class SceneManager2D
 
     public void updateCurrentScene2D(float deltaTime)
     {
-        if(currentScene2D != null) currentScene2D.update(deltaTime);
+        if(currentScene2D != null) {
+            currentScene2D.update(deltaTime);
+        }
     }
 
     public void saveScene(Scene2D scene, String path)
@@ -68,13 +72,12 @@ public class SceneManager2D
 
         String serialized = gson.toJson(scene);
 
-        File sceneFile = FileUtils.createFile(path);
-        FileUtils.writeToFile(sceneFile, serialized, false);
+        FileUtils.serializeObject(path, serialized);
     }
 
     public Scene2D loadScene(String path)
     {
-        String sceneString = FileUtils.readAllFile(new File(path));
+        File sceneFile = new File(path);
 
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
@@ -86,11 +89,28 @@ public class SceneManager2D
                 .registerTypeAdapter(Scene2D.class, new Scene2DDeserializer())
                 .create();
 
-        if(!sceneString.equals("")) {
-            Scene2D scene2D = gson.fromJson(sceneString, Scene2D.class);
-            setCurrentScene2D(scene2D);
+        if(sceneFile.exists()) {
+            String sceneString = (String) FileUtils.deSerializeObject(path);
+            if(!sceneString.equals("")) {
+                if(currentScene2D != null) {
+                    currentScene2D.destroy();
+                    currentScene2D = null;
+                }
 
-            return scene2D;
+                Settings.Other.Picking.currentPickingColor.x = 0.0f;
+                Settings.Other.Picking.currentPickingColor.y = 0.0f;
+                Settings.Other.Picking.currentPickingColor.z = 0.0f;
+
+                Scene2D scene2D = new Scene2D();
+                this.currentScene2D = scene2D;
+                Scene2D deSerializedScene2D = gson.fromJson(sceneString, Scene2D.class);
+                deSerializedScene2D.setPhysicsWorld(scene2D.getPhysicsWorld());
+                setCurrentScene2D(deSerializedScene2D);
+
+                System.gc();
+
+                return scene2D;
+            }
         }
 
         return null;

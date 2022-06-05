@@ -101,6 +101,7 @@ public class Line2D extends CommonDrawableObjectsParameters
         vertexArrayObject.unBind();
     }
 
+    @Override
     public void draw()
     {
         vertexArrayObject.bind();
@@ -128,6 +129,7 @@ public class Line2D extends CommonDrawableObjectsParameters
         vertexArrayObject.unBind();
     }
 
+    @Override
     public void destroy()
     {
         transform.destroy();

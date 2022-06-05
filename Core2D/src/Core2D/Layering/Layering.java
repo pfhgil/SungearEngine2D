@@ -7,6 +7,7 @@ import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
 import java.util.List;
 
 public class Layering {
@@ -106,6 +107,18 @@ public class Layering {
         layers.remove(layer);
 
         sort();
+    }
+
+    public void destroy()
+    {
+        Iterator<Layer> layerIterator = layers.iterator();
+        while(layerIterator.hasNext()) {
+            Layer layer = layerIterator.next();
+            layer.destroy();
+            layer = null;
+            layerIterator.remove();
+        }
+        layerIterator = null;
     }
 
     public List<Layer> getLayers() { return layers; }

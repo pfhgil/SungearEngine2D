@@ -209,6 +209,7 @@ public class LinesInstancing extends CommonDrawableObjectsParameters
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 
+    @Override
     public void draw()
     {
         if(active && drawableLines2D.size() != 0) {
@@ -242,6 +243,7 @@ public class LinesInstancing extends CommonDrawableObjectsParameters
         }
     }
 
+    @Override
     public void destroy()
     {
         Iterator<Line2D> lines2DIterator = drawableLines2D.iterator();

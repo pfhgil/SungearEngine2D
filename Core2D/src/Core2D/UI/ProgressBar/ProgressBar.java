@@ -89,6 +89,7 @@ public class ProgressBar extends CommonDrawableObjectsParameters
         setOrientation(this.orientation);
     }
 
+    @Override
     public void draw()
     {
         if(active) {

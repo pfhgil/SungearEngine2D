@@ -172,7 +172,7 @@ public class TopToolbarView
                             @Override
                             public void onRightButtonClicked() {
                                 ProjectsManager.loadProject(projectPath.get());
-                                Core2D.getSceneManager2D().loadScene(ProjectsManager.getCurrentProject().getScenesPath() + "\\lvl0.txt");
+                                //Core2D.getSceneManager2D().loadScene(ProjectsManager.getCurrentProject().getScenesPath() + "\\lvl0.txt");
                                 //Core2D.getSceneManager2D().loadScene(ProjectsManager.getCurrentProject().getScenesPath() + "\\lvl0.txt");
 
                                 projectPath.set("");
@@ -288,7 +288,7 @@ public class TopToolbarView
                                     Core2D.getSceneManager2D().setCurrentScene2D(scene2D);
                                 }
                                 Core2D.getSceneManager2D().getScenes().add(scene2D);
-                                Core2D.getSceneManager2D().saveScene(scene2D, ProjectsManager.getCurrentProject().getScenesPath() + "\\" + scene2D.getName() + ".txt");
+                                Core2D.getSceneManager2D().saveScene(scene2D, ProjectsManager.getCurrentProject().getScenesPath() + "\\" + scene2D.getName() + ".sgs");
                                 scene2D = null;
                             } else {
                                 Log.showErrorDialog("Can not create new scene2D! First create or open project.");
@@ -307,7 +307,7 @@ public class TopToolbarView
 
                 if(ImGui.menuItem("Save current")) {
                     if(ProjectsManager.getCurrentProject() != null && Core2D.getSceneManager2D().getCurrentScene2D() != null) {
-                        Core2D.getSceneManager2D().saveScene(Core2D.getSceneManager2D().getCurrentScene2D(), ProjectsManager.getCurrentProject().getScenesPath() + "\\" + Core2D.getSceneManager2D().getCurrentScene2D().getName() + ".txt");
+                        Core2D.getSceneManager2D().saveScene(Core2D.getSceneManager2D().getCurrentScene2D(), ProjectsManager.getCurrentProject().getScenesPath() + "\\" + Core2D.getSceneManager2D().getCurrentScene2D().getName() + ".sgs");
                     }
                 }
 

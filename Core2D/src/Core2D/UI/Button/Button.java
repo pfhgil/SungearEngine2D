@@ -66,42 +66,44 @@ public class Button extends CommonDrawableObjectsParameters
         if(text != null) updateTextPosition();
     }
 
-    public void update()
+    private void update()
     {
-        if(button.isActive()) {
-            Vector2f mousePosition = Mouse.getMousePosition();
-            if (Utils.isPointInNoRotatedObject(mousePosition, button) && !hovered) {
-                applyMultiplier(new Vector4f(0.7f, 0.7f, 0.7f, 1.0f));
-                uiElementCallback.onHovered();
-                hovered = true;
-            } else if(!Utils.isPointInNoRotatedObject(mousePosition, button) && hovered) {
-                applyBackMultiplier();
-                hovered = false;
-                picked = false;
-            }
+        Vector2f mousePosition = Mouse.getMousePosition();
+        if (Utils.isPointInNoRotatedObject(mousePosition, button) && !hovered) {
+            applyMultiplier(new Vector4f(0.7f, 0.7f, 0.7f, 1.0f));
+            uiElementCallback.onHovered();
+            hovered = true;
+        } else if (!Utils.isPointInNoRotatedObject(mousePosition, button) && hovered) {
+            applyBackMultiplier();
+            hovered = false;
+            picked = false;
+        }
 
-            if(Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT) && Utils.isPointInNoRotatedObject(mousePosition, button) && Utils.isPointInNoRotatedObject(mousePosition, button)  && !picked) {
-                applyBackMultiplier();
-                applyMultiplier(new Vector4f(0.4f, 0.4f, 0.4f, 1.0f));
-                picked = true;
-            }
-            if (Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && Utils.isPointInNoRotatedObject(mousePosition, button)) {
-                applyBackMultiplier();
-                uiElementCallback.onClicked();
-                picked = false;
-                hovered = false;
-            }
+        if (Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT) && Utils.isPointInNoRotatedObject(mousePosition, button) && Utils.isPointInNoRotatedObject(mousePosition, button) && !picked) {
+            applyBackMultiplier();
+            applyMultiplier(new Vector4f(0.4f, 0.4f, 0.4f, 1.0f));
+            picked = true;
+        }
+        if (Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && Utils.isPointInNoRotatedObject(mousePosition, button)) {
+            applyBackMultiplier();
+            uiElementCallback.onClicked();
+            picked = false;
+            hovered = false;
+        }
 
-            if(Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
-                originalClickPosition = new Vector2f(mousePosition);
-            }
+        if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
+            originalClickPosition = new Vector2f(mousePosition);
         }
     }
 
+    @Override
     public void draw()
     {
-        button.draw();
-        if(text != null) text.draw();
+        if(active) {
+            update();
+            button.draw();
+            if(text != null) text.draw();
+        }
     }
 
     private void updateTextPosition()
@@ -193,6 +195,7 @@ public class Button extends CommonDrawableObjectsParameters
     @Override
     public void setActive(boolean active)
     {
+        this.active = active;
         button.setActive(active);
         text.setActive(active);
     }

@@ -1,7 +1,6 @@
 package Core2D.Physics.Collider2D;
 
 import Core2D.Component.Components.TransformComponent;
-import Core2D.Core2D.Core2D;
 import Core2D.Object2D.Object2D;
 import Core2D.Object2D.Transform;
 import org.jbox2d.collision.shapes.MassData;
@@ -39,7 +38,7 @@ public abstract class Collider2D
         BodyDef bodyDef = new BodyDef();
         bodyDef.position.set(0.0f, 0.0f);
         bodyDef.type = BodyType.DYNAMIC;
-        body = Core2D.getPhysics().getPhysicsWorld().createBody(bodyDef);
+        //body = Core2D.getPhysics().getPhysicsWorld().createBody(bodyDef);
 
         fixtureDef = new FixtureDef();
         fixtureDef.density = 0.1f;
@@ -61,7 +60,7 @@ public abstract class Collider2D
         bodyDef.position.set(0.0f, 0.0f);
         bodyDef.type = collider2D.getBody().getType();
 
-        body = Core2D.getPhysics().getPhysicsWorld().createBody(bodyDef);
+        //body = Core2D.getPhysics().getPhysicsWorld().createBody(bodyDef);
 
         body.setTransform(collider2D.getBody().getPosition(), collider2D.getBody().getAngle());
         body.setLinearVelocity(collider2D.getBody().getLinearVelocity());
@@ -113,7 +112,7 @@ public abstract class Collider2D
         this.drawingBoundingBox.destroy();
         this.drawingBoundingBox = null;
 
-        Core2D.getPhysics().getPhysicsWorld().destroyBody(body);
+        //Core2D.getPhysics().getPhysicsWorld().destroyBody(body);
 
         this.body = null;
     }

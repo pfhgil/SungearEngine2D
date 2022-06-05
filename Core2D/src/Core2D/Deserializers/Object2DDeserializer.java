@@ -1,9 +1,11 @@
 package Core2D.Deserializers;
 
 import Core2D.Component.Component;
+import Core2D.Component.Components.Rigidbody2DComponent;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Object2D.Object2D;
+import Core2D.Physics.Rigidbody2D;
 import Core2D.Texture2D.Texture2D;
 import Core2D.UI.Text.Text;
 import Core2D.Utils.Tag;
@@ -28,6 +30,7 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
         JsonArray components = jsonObject.getAsJsonArray("components");
 
         Object2D object2D = new Object2D();
+        object2D.removeComponent(object2D.getComponent(TextureComponent.class));
 
         object2D.setName(name);
         object2D.setTag(tag.getName());
@@ -49,11 +52,16 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                         textureComponent.getTexture2D().getGLTextureBlock()
                 );
 
+                object2D.addComponent(component);
                 object2D.getComponent(TextureComponent.class).set(component);
                 object2D.getComponent(TextureComponent.class).setTexture2D(texture2D);
 
                 textureComponent = null;
                 texture2D = null;
+            } else if(component instanceof Rigidbody2DComponent) {
+                Rigidbody2DComponent rigidbody2DComponent = new Rigidbody2DComponent();
+                rigidbody2DComponent.set(component);
+                object2D.addComponent(rigidbody2DComponent);
             } else {
                 object2D.addComponent(component);
             }

@@ -1,9 +1,7 @@
 package Core2D.Object2D;
 
-import Core2D.Core2D.Settings;
-import Core2D.Physics.Collider2D.BoxCollider2D;
-import Core2D.Physics.Collider2D.Collider2D;
-import Core2D.Physics.Physics;
+import Core2D.Physics.PhysicsWorld;
+import Core2D.Physics.Rigidbody2D;
 import org.jbox2d.common.Vec2;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
@@ -44,8 +42,8 @@ public class Transform implements Serializable
     // погрешность при достижении цели
     private transient Vector2f destinationInfelicity = new Vector2f(0.01f, 0.01f);
 
-    // прикрепленный коллайдер
-    private transient Collider2D collider2D;
+    // прикрепленный rigibody2d
+    private transient Rigidbody2D rigidbody2D;
 
     // колбэк
     private transient TransformCallback transformCallback = null;
@@ -74,13 +72,13 @@ public class Transform implements Serializable
         transform = null;
     }
 
-    public Transform(Collider2D collider2D)
+    public Transform(Rigidbody2D rigidbody2D)
     {
-        this.collider2D = collider2D;
+        this.rigidbody2D = rigidbody2D;
 
         init();
 
-        collider2D = null;
+        rigidbody2D = null;
     }
 
     public void init()
@@ -106,8 +104,8 @@ public class Transform implements Serializable
             }
         }
 
-        if(collider2D != null) {
-            if(Settings.Debug.ENABLE_DEBUG_PHYSICS_DRAWING) collider2D.draw();
+        if(rigidbody2D != null) {
+            //if(Settings.Debug.ENABLE_DEBUG_PHYSICS_DRAWING) rigidbody2D.draw();
 
             setPositionOfBody();
             setRotationOfBody();
@@ -121,9 +119,9 @@ public class Transform implements Serializable
         translationMatrix.identity();
         translationMatrix.translate(position.x, position.y, 0.0f);
 
-        if(collider2D != null) {
-            Vec2 newPosition = new Vec2(collider2D.getBody().getTransform().position).add(new Vec2(translation.x / Physics.RATIO, translation.y / Physics.RATIO));
-            collider2D.getBody().setTransform(newPosition, collider2D.getBody().getAngle());
+        if(rigidbody2D != null) {
+            Vec2 newPosition = new Vec2(rigidbody2D.getBody().getTransform().position).add(new Vec2(translation.x / PhysicsWorld.RATIO, translation.y / PhysicsWorld.RATIO));
+            rigidbody2D.getBody().setTransform(newPosition, rigidbody2D.getBody().getAngle());
         }
 
         translation = null;
@@ -144,9 +142,9 @@ public class Transform implements Serializable
 
         rotationMatrix.rotateAround(rotationQ, centre.x, centre.y, 0.0f);
 
-        if(collider2D != null) {
-            float newAngle = (float) (Math.toDegrees(collider2D.getBody().getAngle()) + rotation);
-            collider2D.getBody().setTransform(collider2D.getBody().getTransform().position, (float) Math.toRadians(newAngle));
+        if(rigidbody2D != null) {
+            float newAngle = (float) (Math.toDegrees(rigidbody2D.getBody().getAngle()) + rotation);
+            rigidbody2D.getBody().setTransform(rigidbody2D.getBody().getTransform().position, (float) Math.toRadians(newAngle));
         }
 
         updateModelMatrix();
@@ -162,11 +160,14 @@ public class Transform implements Serializable
         centre.x = (100.0f * this.scale.x) / 2.0f;
         centre.y = (100.0f * this.scale.y) / 2.0f;
 
-        if(collider2D != null) {
-            if(collider2D instanceof BoxCollider2D) {
-                ((BoxCollider2D) collider2D).scale(scale);
+        /*
+        if(rigidbody2D != null) {
+            if(rigidbody2D instanceof BoxCollider2D) {
+                ((BoxCollider2D) rigidbody2D).scale(scale);
             }
         }
+
+         */
 
         scale = null;
 
@@ -186,8 +187,8 @@ public class Transform implements Serializable
 
     public void applyLinearImpulse(Vector2f impulse, Vector2f pos)
     {
-        if(collider2D != null) {
-            collider2D.getBody().applyLinearImpulse(new Vec2(impulse.x / Physics.RATIO, impulse.y / Physics.RATIO), new Vec2(pos.x / Physics.RATIO, pos.y / Physics.RATIO));
+        if(rigidbody2D != null) {
+            rigidbody2D.getBody().applyLinearImpulse(new Vec2(impulse.x / PhysicsWorld.RATIO, impulse.y / PhysicsWorld.RATIO), new Vec2(pos.x / PhysicsWorld.RATIO, pos.y / PhysicsWorld.RATIO));
         }
 
         impulse = null;
@@ -196,15 +197,15 @@ public class Transform implements Serializable
 
     public void applyAngularImpulse(float impulse)
     {
-        if(collider2D != null) {
-            collider2D.getBody().applyAngularImpulse(impulse / Physics.RATIO);
+        if(rigidbody2D != null) {
+            rigidbody2D.getBody().applyAngularImpulse(impulse / PhysicsWorld.RATIO);
         }
     }
 
     public void applyForce(Vector2f force, Vector2f pos)
     {
-        if(collider2D != null) {
-            collider2D.getBody().applyForce(new Vec2(force.x / Physics.RATIO, force.y / Physics.RATIO), new Vec2(pos.x / Physics.RATIO, pos.y / Physics.RATIO));
+        if(rigidbody2D != null) {
+            rigidbody2D.getBody().applyForce(new Vec2(force.x / PhysicsWorld.RATIO, force.y / PhysicsWorld.RATIO), new Vec2(pos.x / PhysicsWorld.RATIO, pos.y / PhysicsWorld.RATIO));
         }
 
         force = null;
@@ -213,15 +214,15 @@ public class Transform implements Serializable
 
     public void applyTorque(float torque)
     {
-        if(collider2D != null) {
-            collider2D.getBody().applyTorque(torque / Physics.RATIO);
+        if(rigidbody2D != null) {
+            rigidbody2D.getBody().applyTorque(torque / PhysicsWorld.RATIO);
         }
     }
 
     public void setLinearVelocity(Vector2f impulse)
     {
-        if(collider2D != null) {
-            collider2D.getBody().setLinearVelocity(new Vec2(impulse.x / Physics.RATIO, impulse.y / Physics.RATIO));
+        if(rigidbody2D != null) {
+            rigidbody2D.getBody().setLinearVelocity(new Vec2(impulse.x / PhysicsWorld.RATIO, impulse.y / PhysicsWorld.RATIO));
         }
 
         impulse = null;
@@ -233,10 +234,10 @@ public class Transform implements Serializable
         modelMatrix = new Matrix4f(translationMatrix).mul(rotationMatrix).mul(scaleMatrix);
     }
 
-    private void updateCollider2D()
+    private void updateRigidbody2D()
     {
-        if(collider2D != null) {
-            collider2D.getBody().setTransform(new Vec2((position.x + centre.x) / Physics.RATIO, (position.y + centre.y) / Physics.RATIO), (float) Math.toRadians(rotation));
+        if(rigidbody2D != null) {
+            rigidbody2D.getBody().setTransform(new Vec2((position.x + centre.x) / PhysicsWorld.RATIO, (position.y + centre.y) / PhysicsWorld.RATIO), (float) Math.toRadians(rotation));
         }
     }
 
@@ -261,8 +262,8 @@ public class Transform implements Serializable
 
     public void destroy()
     {
-        if(collider2D != null) collider2D.destroy();
-        collider2D = null;
+        if(rigidbody2D != null) rigidbody2D.destroy();
+        rigidbody2D = null;
 
         position = null;
         scale = null;
@@ -292,12 +293,12 @@ public class Transform implements Serializable
 
         position = null;
 
-        updateCollider2D();
+        updateRigidbody2D();
         updateModelMatrix();
     }
     private void setPositionOfBody()
     {
-        Vec2 bodyPos = collider2D.getBody().getTransform().position.mul(Physics.RATIO);
+        Vec2 bodyPos = rigidbody2D.getBody().getTransform().position.mul(PhysicsWorld.RATIO);
         this.position = new Vector2f(bodyPos.x - centre.x, bodyPos.y - centre.y);
 
         translationMatrix.identity();
@@ -320,12 +321,12 @@ public class Transform implements Serializable
 
         rotationMatrix.rotateAroundLocal(rotationQ, centre.x, centre.y, 0.0f);
 
-        updateCollider2D();
+        updateRigidbody2D();
         updateModelMatrix();
     }
     private void setRotationOfBody()
     {
-        this.rotation = (float) Math.toDegrees(collider2D.getBody().getTransform().getAngle());
+        this.rotation = (float) Math.toDegrees(rigidbody2D.getBody().getTransform().getAngle());
 
         rotationMatrix.identity();
         Quaternionf rotationQ = new Quaternionf();
@@ -350,11 +351,14 @@ public class Transform implements Serializable
         centre.x = (100.0f * this.scale.x) / 2.0f;
         centre.y = (100.0f * this.scale.y) / 2.0f;
 
-        if(collider2D != null) {
+        /*
+        if(rigidbody2D != null) {
             if(collider2D instanceof BoxCollider2D) {
                 ((BoxCollider2D) collider2D).setScale(scale);
             }
         }
+
+         */
 
         scale = null;
 
@@ -377,18 +381,18 @@ public class Transform implements Serializable
 
     public Matrix4f getModelMatrix() { return modelMatrix; }
 
-    public Collider2D getCollider2D()
+    public Rigidbody2D getRigidbody2D()
     {
-        return collider2D;
+        return rigidbody2D;
     }
-    public void setCollider2D(Collider2D collider2D)
+    public void setRigidbody2D(Rigidbody2D rigidbody2D)
     {
-        this.collider2D = collider2D;
+        this.rigidbody2D = rigidbody2D;
 
-        updateCollider2D();
+        updateRigidbody2D();
         setScale(scale);
 
-        collider2D = null;
+        rigidbody2D = null;
     }
 
     public TransformCallback getTransformCallback() {return transformCallback; }

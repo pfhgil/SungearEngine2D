@@ -2,14 +2,17 @@ package SungearEngine2D.GUI.Views;
 
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Component;
+import Core2D.Component.Components.Rigidbody2DComponent;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Component.NonRemovable;
 import Core2D.Controllers.PC.Keyboard;
 import Core2D.Core2D.Core2D;
 import Core2D.Layering.Layer;
+import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
 import Core2D.Texture2D.Texture2D;
+import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.Tag;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindow;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindowCallback;
@@ -21,6 +24,7 @@ import imgui.ImVec4;
 import imgui.flag.*;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
+import org.jbox2d.dynamics.BodyType;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
@@ -99,6 +103,8 @@ public class InspectorView extends View
 
     private void inspectObject2D(Object2D inspectingObject2D)
     {
+        setCurrentInspectingObject(inspectingObject2D);
+
         if(showPopupWindow) {
             ImGui.openPopup("Component actions");
             if(ImGui.beginPopupContextWindow("Component actions", ImGuiMouseButton.Left)) {
@@ -435,6 +441,8 @@ public class InspectorView extends View
                 componentName = "Transform";
             } else if(inspectingObject2D.getComponents().get(i) instanceof TextureComponent) {
                 componentName = "Texture";
+            } else if(inspectingObject2D.getComponents().get(i) instanceof Rigidbody2DComponent) {
+                componentName = "Rigidbody2D";
             }
 
             boolean opened = ImGui.collapsingHeader(componentName);
@@ -444,7 +452,6 @@ public class InspectorView extends View
 
             ImGui.setCursorPosX(headerSize.x - headerSize.y);
             if(currentHoveredComponentID == i) {
-                System.out.println("dsds");
                 ImGui.image(Resources.Textures.Icons.threeDotsIcon.getTextureHandler(), headerSize.y, headerSize.y, 0, 0, 1, 1,0.6f, 0.6f, 0.6f, 1.0f);
             } else {
                 ImGui.image(Resources.Textures.Icons.threeDotsIcon.getTextureHandler(), headerSize.y, headerSize.y);
@@ -472,7 +479,7 @@ public class InspectorView extends View
             }
 
             if(opened) {
-                if (componentName.equals("Transform")) {
+                if(componentName.equals("Transform")) {
                     TransformComponent transformComponent = ((TransformComponent) inspectingObject2D.getComponents().get(i));
                     if (ImGui.dragFloat2("Position", inspectingObject2DPosition)) {
                         transformComponent.getTransform().setPosition(new Vector2f(inspectingObject2DPosition));
@@ -488,7 +495,7 @@ public class InspectorView extends View
                     }
                     transformComponent = null;
 
-                } else if (componentName.equals("Texture")) {
+                } else if(componentName.equals("Texture")) {
                     ImGui.inputText("Source", inspectingObject2DTextureName, ImGuiInputTextFlags.ReadOnly);
 
                     if (MainView.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(MainView.getResourcesView().getCurrentMovingFile())) {
@@ -503,6 +510,30 @@ public class InspectorView extends View
                             ImGui.endDragDropTarget();
                         }
                     }
+                } else if(componentName.equals("Rigidbody2D")) {
+                    Rigidbody2DComponent rigidbody2DComponent = ((Rigidbody2DComponent) inspectingObject2D.getComponents().get(i));
+                    ImGui.pushID("BodyTypeCombo");
+                    {
+                        if (ImGui.beginCombo("", rigidbody2DComponent.getRigidbody2D().typeToString())) {
+
+                            if(ImGui.selectable("Dynamic")) {
+                                rigidbody2DComponent.getRigidbody2D().setType(BodyType.DYNAMIC);
+                            }
+
+                            if(ImGui.selectable("Static")) {
+                                rigidbody2DComponent.getRigidbody2D().setType(BodyType.STATIC);
+                            }
+
+                            if(ImGui.selectable("Kinematic")) {
+                                rigidbody2DComponent.getRigidbody2D().setType(BodyType.KINEMATIC);
+                            }
+
+                            //System.out.println("x: " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.x + ", " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.y);
+
+                            ImGui.endCombo();
+                        }
+                    }
+                    ImGui.popID();
                 }
             }
 
@@ -540,11 +571,21 @@ public class InspectorView extends View
                 ImGui.beginListBox("");
 
                 try {
-                    if (ImGui.selectable("Texture component")) {
+                    if(ImGui.selectable("Texture")) {
+                        System.out.println("sfddsf");
                         ((Object2D) currentInspectingObject).addComponent(new TextureComponent());
                         action = "";
                     }
+                    if(ImGui.selectable("Rigidbody2D")) {
+                        Rigidbody2DComponent rigidbody2DComponent = new Rigidbody2DComponent();
+                        rigidbody2DComponent.getRigidbody2D().setType(BodyType.STATIC);
+                        ((Object2D) currentInspectingObject).addComponent(rigidbody2DComponent);
+                        action = "";
+                    }
                 } catch (Exception e) {
+                    System.out.println("dsd: " + e.toString());
+                    Log.CurrentSession.println(ExceptionsUtils.toString(e));
+
                     action = "";
 
                     ImGui.endListBox();
@@ -553,7 +594,7 @@ public class InspectorView extends View
                     return;
                 }
 
-                if (ImGui.isMouseClicked(ImGuiMouseButton.Left) && !ImGui.isItemHovered()) {
+                if (ImGui.isMouseClicked(ImGuiMouseButton.Left) && !ImGui.isAnyItemHovered()) {
                     action = "";
                 }
 

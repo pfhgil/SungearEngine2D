@@ -32,17 +32,17 @@ public class TextureComponent extends Component implements NonDuplicated
     @Override
     public void destroy()
     {
-        object2D.getShaderProgram().bind();
+        getObject2D().getShaderProgram().bind();
 
         ShaderUtils.setUniform(
-                object2D.getShaderProgram().getHandler(),
+                getObject2D().getShaderProgram().getHandler(),
                 "useSampler",
                 false
         );
 
-        object2D.getShaderProgram().unBind();
+        getObject2D().getShaderProgram().unBind();
 
-        object2D = null;
+        setObject2D(null);
 
         if(!this.texture2D.equals(Resources.Textures.WHITE_TEXTURE)) {
             this.texture2D.destroy();
@@ -80,21 +80,21 @@ public class TextureComponent extends Component implements NonDuplicated
         texture2D = null;
 
         if(this.texture2D != null) {
-            object2D.getShaderProgram().bind();
+            getObject2D().getShaderProgram().bind();
 
             ShaderUtils.setUniform(
-                    object2D.getShaderProgram().getHandler(),
+                    getObject2D().getShaderProgram().getHandler(),
                     "sampler",
                     this.texture2D.getFormattedTextureBlock()
             );
 
             ShaderUtils.setUniform(
-                    object2D.getShaderProgram().getHandler(),
+                    getObject2D().getShaderProgram().getHandler(),
                     "useSampler",
                     true
             );
 
-            object2D.getShaderProgram().unBind();
+            getObject2D().getShaderProgram().unBind();
         }
     }
 
@@ -103,15 +103,15 @@ public class TextureComponent extends Component implements NonDuplicated
     {
         this.active = active;
 
-        object2D.getShaderProgram().bind();
+        getObject2D().getShaderProgram().bind();
 
         ShaderUtils.setUniform(
-                object2D.getShaderProgram().getHandler(),
+                getObject2D().getShaderProgram().getHandler(),
                 "useSampler",
                 active
         );
 
-        object2D.getShaderProgram().unBind();
+        getObject2D().getShaderProgram().unBind();
     }
 
     public float[] getUV() { return UV; }
@@ -172,21 +172,21 @@ public class TextureComponent extends Component implements NonDuplicated
 
     private void updateUV()
     {
-        if(object2D != null) {
-            object2D.getData()[2] = UV[0];
-            object2D.getData()[3] = UV[1];
+        if(getObject2D() != null) {
+            getObject2D().getData()[2] = UV[0];
+            getObject2D().getData()[3] = UV[1];
 
-            object2D.getData()[6] = UV[2];
-            object2D.getData()[7] = UV[3];
+            getObject2D().getData()[6] = UV[2];
+            getObject2D().getData()[7] = UV[3];
 
-            object2D.getData()[10] = UV[4];
-            object2D.getData()[11] = UV[5];
+            getObject2D().getData()[10] = UV[4];
+            getObject2D().getData()[11] = UV[5];
 
-            object2D.getData()[14] = UV[6];
-            object2D.getData()[15] = UV[7];
+            getObject2D().getData()[14] = UV[6];
+            getObject2D().getData()[15] = UV[7];
 
-            VertexBufferObject vbo = object2D.getVertexArrayObject().getVBOs().get(0);
-            object2D.getVertexArrayObject().updateVBO(vbo, object2D.getData());
+            VertexBufferObject vbo = getObject2D().getVertexArrayObject().getVBOs().get(0);
+            getObject2D().getVertexArrayObject().updateVBO(vbo, getObject2D().getData());
             vbo = null;
         }
     }

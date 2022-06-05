@@ -1,14 +1,8 @@
 package Core2D.Layering;
 
-import Core2D.AtlasDrawing.AtlasDrawing;
+import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Components.TextureComponent;
-import Core2D.Instancing.ObjectsInstancing;
-import Core2D.Instancing.Primitives.LinesInstancing;
 import Core2D.Object2D.Object2D;
-import Core2D.Primitives.Line2D;
-import Core2D.UI.Button.Button;
-import Core2D.UI.ProgressBar.ProgressBar;
-import Core2D.UI.Text.Text;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
@@ -31,24 +25,7 @@ public class Layer
     public void draw()
     {
         for(LayerObject object : renderingObjects) {
-            if(object.getObject() instanceof ObjectsInstancing) {
-                ((ObjectsInstancing) object.getObject()).draw();
-            } else if(object.getObject() instanceof AtlasDrawing) {
-                ((AtlasDrawing) object.getObject()).draw();
-            } else if(object.getObject() instanceof Object2D) {
-                ((Object2D) object.getObject()).draw();
-            } else if(object.getObject() instanceof Line2D) {
-                ((Line2D) object.getObject()).draw();
-            } else if(object.getObject() instanceof LinesInstancing) {
-                ((LinesInstancing) object.getObject()).draw();
-            } else if(object.getObject() instanceof Button) {
-                ((Button) object.getObject()).update();
-                ((Button) object.getObject()).draw();
-            } else if(object.getObject() instanceof Text) {
-                ((Text) object.getObject()).draw();
-            } else if(object.getObject() instanceof ProgressBar) {
-                ((ProgressBar) object.getObject()).draw();
-            }
+            ((CommonDrawableObjectsParameters) object.getObject()).draw();
         }
     }
 
@@ -102,15 +79,35 @@ public class Layer
 
     public void update(float deltaTime)
     {
-        for(Object object : renderingObjects) {
-            if(object instanceof ObjectsInstancing) {
-                ((ObjectsInstancing) object).update(deltaTime);
-            } else if(object instanceof AtlasDrawing) {
-                ((AtlasDrawing) object).update(deltaTime);
-            } else if(object instanceof Object2D) {
-                ((Object2D) object).update(deltaTime);
-            }
+        for(LayerObject layerObject : renderingObjects) {
+            ((CommonDrawableObjectsParameters) layerObject.getObject()).update(deltaTime);
         }
+    }
+
+    public void destroy()
+    {
+        name = null;
+
+        /*
+        Iterator<LayerObject> layerObjectIterator = renderingObjects.iterator();
+        while(layerObjectIterator.hasNext()) {
+            LayerObject layerObject = layerObjectIterator.next();
+            CommonDrawableObjectsParameters objParams = (CommonDrawableObjectsParameters) layerObject.getObject();
+            objParams.destroy();
+            layerObjectIterator.remove();
+            objParams = null;
+            layerObject.setObject(null);
+            layerObject = null;
+        }
+
+        layerObjectIterator = null;
+
+         */
+        for(int i = 0; i < renderingObjects.size(); i++) {
+            ((CommonDrawableObjectsParameters) renderingObjects.get(i).getObject()).destroy();
+        }
+
+        renderingObjects = null;
     }
 
     public List<LayerObject> getRenderingObjects() { return renderingObjects; }

@@ -13,22 +13,26 @@ public class VertexBufferObject
     // слой
     private BufferLayout layout;
 
-    public VertexBufferObject(float[] _data)
+    public VertexBufferObject(float[] data)
     {
-        data = _data;
+        this.data = data;
         usage = GL_STATIC_DRAW;
 
         create();
         putData();
+
+        data = null;
     }
 
-    public VertexBufferObject(float[] _data, int usage)
+    public VertexBufferObject(float[] data, int usage)
     {
-        data = _data;
+        this.data = data;
         this.usage = usage;
 
         create();
         putData();
+
+        data = null;
     }
     // создание буфера
     private void create()
@@ -58,6 +62,8 @@ public class VertexBufferObject
         this.data = data;
 
         glBufferSubData(GL_ARRAY_BUFFER, 0, data);
+
+        data = null;
     }
     // связка
     public void bind()
@@ -75,7 +81,11 @@ public class VertexBufferObject
     public int getHandler() { return handler; }
 
     public BufferLayout getLayout() { return layout; }
-    public void setLayout(BufferLayout layout) { this.layout = layout; }
+    public void setLayout(BufferLayout layout)
+    {
+        this.layout = layout;
+        layout = null;
+    }
 
     public float[] getData() { return data; }
 

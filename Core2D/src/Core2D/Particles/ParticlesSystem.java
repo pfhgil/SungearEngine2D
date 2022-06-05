@@ -31,12 +31,12 @@ public class ParticlesSystem
 
         this.createParticlesTimer = new Timer(new TimerCallback() {
             @Override
-            public void DeltaUpdate(float deltaTime) {
+            public void deltaUpdate(float deltaTime) {
 
             }
 
             @Override
-            public void Update() {
+            public void update() {
                 if(particlesObjectsInstancing.getDrawableObjects2D().size() < particlesSettings.getMaxParticlesNum()) {
                     ParticlesFactory.createParticle(particlesSettings, particlesObjectsInstancing.getDrawableObjects2D());
                     allCreatedParticles++;
