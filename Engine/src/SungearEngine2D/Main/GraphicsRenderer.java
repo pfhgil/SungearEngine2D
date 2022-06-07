@@ -1,14 +1,19 @@
 package SungearEngine2D.Main;
 
+import Core2D.Component.Components.BoxCollider2DComponent;
 import Core2D.Controllers.PC.Mouse;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Graphics;
 import Core2D.Object2D.Object2D;
+import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.ShaderUtils.FrameBufferObject;
+import SungearEngine2D.Debug.DebugDraw;
 import SungearEngine2D.GUI.Views.MainView;
 import SungearEngine2D.Grid.Grid;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.List;
 
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
@@ -35,6 +40,18 @@ public class GraphicsRenderer
         Grid.draw();
 
         Core2D.getSceneManager2D().drawCurrentScene2D();
+
+        Object inspectingObject = MainView.getInspectorView().getCurrentInspectingObject();
+        if(inspectingObject instanceof Object2D) {
+            Object2D object2D = (Object2D) inspectingObject;
+            List<BoxCollider2DComponent> boxCollider2DComponents = object2D.getAllComponents(BoxCollider2DComponent.class);
+
+            for(BoxCollider2DComponent boxCollider2DComponent : boxCollider2DComponents) {
+                boxCollider2DComponent.getBoxCollider2D().draw(object2D);
+            }
+        }
+
+        inspectingObject = null;
 
         renderTarget.unBind();
 

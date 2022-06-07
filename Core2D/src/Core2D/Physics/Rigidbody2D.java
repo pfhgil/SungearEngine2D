@@ -1,16 +1,16 @@
 package Core2D.Physics;
 
-import Core2D.Core2D.Core2D;
-import Core2D.Log.Log;
 import Core2D.Scene2D.Scene2D;
-import org.jbox2d.dynamics.*;
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyType;
 
 public class Rigidbody2D
 {
-    //private transient Object2D attachedObject2D;
-
-
-    private BodyDef bodyDef;
+    private BodyType bodyType = BodyType.STATIC;
+    private float density = 1.0f;
+    private float restitution = 0.0f;
+    private float friction = 0.1f;
+    private boolean isSensor = false;
     // само тело
     private transient Body body;
 
@@ -18,40 +18,31 @@ public class Rigidbody2D
 
     private transient Scene2D scene2D;
 
-    public Rigidbody2D()
-    {
-        if(Core2D.getSceneManager2D().getCurrentScene2D() != null) {
-            bodyDef = new BodyDef();
-            bodyDef.position.set(0.0f, 0.0f);
-            bodyDef.type = BodyType.DYNAMIC;
-            scene2D = Core2D.getSceneManager2D().getCurrentScene2D();
-            body = scene2D.getPhysicsWorld().createBody(bodyDef);
-        } else {
-            Log.CurrentSession.println("Error while creating Rigidbody2D. Core2D.getSceneManager2D().getCurrentScene2D() == null");
-        }
-    }
-
     public void set(Rigidbody2D rigidbody2D)
     {
-        if(Core2D.getSceneManager2D().getCurrentScene2D() != null) {
-            bodyDef.type = rigidbody2D.getType();
-            body.setType(rigidbody2D.getType());
-        } else {
-            Log.CurrentSession.println("Error while creating Rigidbody2D. Core2D.getSceneManager2D().getCurrentScene2D() == null");
+        bodyType = rigidbody2D.getType();
+        if(this.body != null) {
+            body.setType(this.bodyType);
         }
+
+        rigidbody2D = null;
     }
 
-    public void destroy()
-    {
-        //attachedObject2D = null;
+    public float getDensity() { return density; }
+    public void setDensity(float density) { this.density = density; }
 
-        scene2D.getPhysicsWorld().destroyBody(body);
-        bodyDef = null;
-    }
+    public float getRestitution() { return restitution; }
+    public void setRestitution(float restitution) { this.restitution = restitution; }
+
+    public float getFriction() { return friction; }
+    public void setFriction(float friction) { this.friction = friction; }
+
+    public boolean isSensor() { return isSensor; }
+    public void setSensor(boolean sensor) { isSensor = sensor; }
 
     public BodyType getType()
     {
-        return bodyDef.type;
+        return bodyType;
     }
     public String typeToString()
     {
@@ -67,18 +58,20 @@ public class Rigidbody2D
     }
     public void setType(BodyType bodyType)
     {
-        bodyDef.type = bodyType;
-        body.setType(bodyType);
+        this.bodyType = bodyType;
+        if(this.body != null) {
+            body.setType(this.bodyType);
+        }
+
+        bodyType = null;
     }
 
-    //public Object2D getAttachedObject2D() { return attachedObject2D; }
-    //public void setAttachedObject2D(Object2D attachedObject2D) { this.attachedObject2D = attachedObject2D; }
-
-
-    public BodyDef getBodyDef() { return bodyDef; }
-
     public Body getBody() { return body; }
+    public void setBody(Body body) { this.body = body; }
 
     public boolean isNoLinearVelocity() { return noLinearVelocity; }
     public void setNoLinearVelocity(boolean noLinearVelocity) { this.noLinearVelocity = noLinearVelocity; }
+
+    public Scene2D getScene2D() { return scene2D; }
+    public void setScene2D(Scene2D scene2D) { this.scene2D = scene2D; }
 }

@@ -151,7 +151,7 @@ public class Line2D extends CommonDrawableObjectsParameters
         vertexArrayObject.destroy();
         vertexArrayObject = null;
 
-        destroy();
+        destroyLayerObject();
     }
 
     public Vector4f getColor() { return color; }

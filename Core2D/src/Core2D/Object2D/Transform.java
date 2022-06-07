@@ -262,7 +262,6 @@ public class Transform implements Serializable
 
     public void destroy()
     {
-        if(rigidbody2D != null) rigidbody2D.destroy();
         rigidbody2D = null;
 
         position = null;

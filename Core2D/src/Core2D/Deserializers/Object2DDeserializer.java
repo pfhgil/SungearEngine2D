@@ -5,9 +5,7 @@ import Core2D.Component.Components.Rigidbody2DComponent;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Object2D.Object2D;
-import Core2D.Physics.Rigidbody2D;
 import Core2D.Texture2D.Texture2D;
-import Core2D.UI.Text.Text;
 import Core2D.Utils.Tag;
 import com.google.gson.*;
 import org.joml.Vector4f;
@@ -60,8 +58,8 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                 texture2D = null;
             } else if(component instanceof Rigidbody2DComponent) {
                 Rigidbody2DComponent rigidbody2DComponent = new Rigidbody2DComponent();
-                rigidbody2DComponent.set(component);
                 object2D.addComponent(rigidbody2DComponent);
+                rigidbody2DComponent.set(component);
             } else {
                 object2D.addComponent(component);
             }

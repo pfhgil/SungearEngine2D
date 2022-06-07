@@ -1,7 +1,6 @@
 package Core2D.Scene2D;
 
 import Core2D.Component.Component;
-import Core2D.Core2D.Graphics;
 import Core2D.Core2D.Settings;
 import Core2D.Deserializers.*;
 import Core2D.Layering.Layer;

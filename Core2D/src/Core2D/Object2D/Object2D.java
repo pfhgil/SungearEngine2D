@@ -408,16 +408,21 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
             }
         }
 
-        component.setObject2D(this);
-        // первоначальные настройки для некоторых компонентов
-        if(component instanceof TextureComponent) {
-            TextureComponent textureComponent = ((TextureComponent) component);
-            textureComponent.setUV(textureComponent.getUV());
-            textureComponent.setTexture2D(Resources.Textures.WHITE_TEXTURE);
-        } else if(component instanceof Rigidbody2DComponent) {
-            getComponent(TransformComponent.class).getTransform().setRigidbody2D(((Rigidbody2DComponent) component).getRigidbody2D());
-        }
         components.add(component);
+        component.setObject2D(this);
+        component.init();
+    }
+
+    public <T extends Component> List<T> getAllComponents(Class<T> componentClass)
+    {
+        List<T> componentsFound = new ArrayList<>();
+        for(Component component : components) {
+            if(component.getClass().isAssignableFrom(componentClass)) {
+                componentsFound.add(componentClass.cast(component));
+            }
+        }
+
+        return componentsFound;
     }
 
     public <T extends Component> T getComponent(Class<T> componentClass)

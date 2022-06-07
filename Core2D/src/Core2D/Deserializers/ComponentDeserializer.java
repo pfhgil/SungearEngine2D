@@ -1,10 +1,8 @@
 package Core2D.Deserializers;
 
 import Core2D.Component.Component;
-import Core2D.Component.Components.TextureComponent;
 import com.google.gson.*;
 
-import java.lang.ref.WeakReference;
 import java.lang.reflect.Type;
 
 public class ComponentDeserializer implements JsonDeserializer<Component>, JsonSerializer<Component>

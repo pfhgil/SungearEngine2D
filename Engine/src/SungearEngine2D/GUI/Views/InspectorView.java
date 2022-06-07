@@ -2,6 +2,7 @@ package SungearEngine2D.GUI.Views;
 
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Component;
+import Core2D.Component.Components.BoxCollider2DComponent;
 import Core2D.Component.Components.Rigidbody2DComponent;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
@@ -11,11 +12,14 @@ import Core2D.Core2D.Core2D;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
+import Core2D.Physics.Collider2D.BoxCollider2D;
+import Core2D.Physics.PhysicsWorld;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.Tag;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindow;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindowCallback;
+import SungearEngine2D.Main.GraphicsRenderer;
 import SungearEngine2D.Main.Resources;
 import SungearEngine2D.Utils.ResourcesUtils;
 import imgui.ImGui;
@@ -24,11 +28,13 @@ import imgui.ImVec4;
 import imgui.flag.*;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
+import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.BodyType;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
+import javax.swing.*;
 import java.util.List;
 
 public class InspectorView extends View
@@ -443,9 +449,13 @@ public class InspectorView extends View
                 componentName = "Texture";
             } else if(inspectingObject2D.getComponents().get(i) instanceof Rigidbody2DComponent) {
                 componentName = "Rigidbody2D";
+            } else if(inspectingObject2D.getComponents().get(i) instanceof BoxCollider2DComponent) {
+                componentName = "BoxCollider2D";
             }
 
+            ImGui.pushID(componentName + i);
             boolean opened = ImGui.collapsingHeader(componentName);
+            ImGui.popID();
             ImGui.sameLine();
 
             ImVec2 headerSize = ImGui.getItemRectSize();
@@ -534,6 +544,30 @@ public class InspectorView extends View
                         }
                     }
                     ImGui.popID();
+                } else if(componentName.equals("BoxCollider2D")) {
+                    BoxCollider2DComponent boxCollider2DComponent = ((BoxCollider2DComponent) inspectingObject2D.getComponents().get(i));
+
+                    ImGui.text("Offset");
+                    ImGui.sameLine();
+                    float[] offset = new float[] { boxCollider2DComponent.getBoxCollider2D().getOffset().x, boxCollider2DComponent.getBoxCollider2D().getOffset().y };
+                    ImGui.pushID("BoxCollider2DOffsetDragFloat_" + i);
+                    {
+                        if(ImGui.dragFloat2("", offset)) {
+                            boxCollider2DComponent.getBoxCollider2D().setOffset(new Vector2f(offset[0], offset[1]));
+                        }
+                    }
+                    ImGui.popID();
+
+                    ImGui.text("Scale");
+                    ImGui.sameLine();
+                    float[] scale = new float[] { boxCollider2DComponent.getBoxCollider2D().getScale().x, boxCollider2DComponent.getBoxCollider2D().getScale().y };
+                    ImGui.pushID("BoxCollider2DScaleDragFloat_" + i);
+                    {
+                        if(ImGui.dragFloat2("", scale)) {
+                            boxCollider2DComponent.getBoxCollider2D().setScale(new Vector2f(scale[0], scale[1]));
+                        }
+                    }
+                    ImGui.popID();
                 }
             }
 
@@ -572,15 +606,17 @@ public class InspectorView extends View
 
                 try {
                     if(ImGui.selectable("Texture")) {
-                        System.out.println("sfddsf");
                         ((Object2D) currentInspectingObject).addComponent(new TextureComponent());
                         action = "";
                     }
                     if(ImGui.selectable("Rigidbody2D")) {
                         Rigidbody2DComponent rigidbody2DComponent = new Rigidbody2DComponent();
-                        rigidbody2DComponent.getRigidbody2D().setType(BodyType.STATIC);
                         ((Object2D) currentInspectingObject).addComponent(rigidbody2DComponent);
+                        rigidbody2DComponent.getRigidbody2D().setType(BodyType.STATIC);
                         action = "";
+                    }
+                    if(ImGui.selectable("BoxCollider2D")) {
+                        ((Object2D) currentInspectingObject).addComponent(new BoxCollider2DComponent());
                     }
                 } catch (Exception e) {
                     System.out.println("dsd: " + e.toString());
@@ -638,6 +674,8 @@ public class InspectorView extends View
             }
         }
     }
+
+    public Object getCurrentInspectingObject() { return currentInspectingObject; }
 
     public boolean isEditing() { return isEditing; }
     public void setEditing(boolean editing) { isEditing = editing; }

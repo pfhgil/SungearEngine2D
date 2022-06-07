@@ -1,15 +1,10 @@
 package Core2D.Physics.Collider2D;
 
-import Core2D.Object2D.Object2D;
-import Core2D.Physics.PhysicsWorld;
-import org.jbox2d.collision.shapes.CircleShape;
-
-public class CircleCollider2D extends Collider2D
+public class CircleCollider2D
 {
-    private CircleShape shape;
-
     private float radius;
 
+    /*
     public CircleCollider2D(Object2D attachedObject2D)
     {
         super(attachedObject2D);
@@ -54,4 +49,6 @@ public class CircleCollider2D extends Collider2D
 
         body.createFixture(fixtureDef);
     }
+
+     */
 }

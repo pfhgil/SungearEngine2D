@@ -69,11 +69,14 @@ public class GUI
 
         MainView.draw();
 
+        /*
         ImGui.begin("click view");
 
         ImGui.image(Graphics.getPickingRenderTarget().getTextureHandler(), 100.0f, 100.0f);
 
         ImGui.end();
+
+         */
 
         renderer.endFrame();
     }

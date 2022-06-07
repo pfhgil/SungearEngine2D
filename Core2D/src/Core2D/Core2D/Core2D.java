@@ -3,7 +3,6 @@ package Core2D.Core2D;
 import Core2D.Camera2D.Camera2D;
 import Core2D.Input.Core2DInputCallback;
 import Core2D.Log.Log;
-import Core2D.Physics.PhysicsWorld;
 import Core2D.Scene2D.SceneManager2D;
 import Core2D.Timer.Timer;
 import Core2D.Timer.TimerCallback;

@@ -73,6 +73,13 @@ public class TextureComponent extends Component implements NonDuplicated
         component = null;
     }
 
+    @Override
+    public void init()
+    {
+        setUV(getUV());
+        setTexture2D(Resources.Textures.WHITE_TEXTURE);
+    }
+
     public Texture2D getTexture2D() { return texture2D; }
     public void setTexture2D(Texture2D texture2D)
     {
