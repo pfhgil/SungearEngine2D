@@ -6,7 +6,7 @@ import imgui.glfw.ImGuiImplGlfw;
 import imgui.internal.ImGui;
 import imgui.internal.ImGuiContext;
 
-public class Renderer
+public class \Renderer
 {
     private ImGuiContext imGuiContext;
     private ImGuiImplGlfw imGuiImplGlfw;

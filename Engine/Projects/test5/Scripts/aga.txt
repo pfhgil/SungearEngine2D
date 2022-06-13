@@ -1,0 +1,1 @@
+idea64.exe D:\Pixelfield\SungearEngine2D\Engine\Projects\test5\Scripts\govno.java

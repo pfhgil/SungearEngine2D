@@ -4,16 +4,17 @@ import Core2D.Controllers.PC.Keyboard;
 import Core2D.Controllers.PC.Mouse;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
+import Core2D.Scene2D.SceneManager;
 import Core2D.ShaderUtils.FrameBufferObject;
 import Core2D.Utils.ExceptionsUtils;
-import org.joml.Matrix4f;
-import org.joml.Vector2f;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
+import org.joml.*;
 import org.lwjgl.BufferUtils;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11C;
 
+import java.lang.Math;
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -58,13 +59,17 @@ public abstract class Graphics
          *
          */
 
+        Vector2i pickingRenderTargetSize = getScreenSize();
+
         projectionMatrix = new Matrix4f().ortho2D(0, Core2D.getWindow().getSize().x, 0, Core2D.getWindow().getSize().y);
 
-        pickingRenderTarget = new FrameBufferObject(1680, 1050, FrameBufferObject.BuffersTypes.COLOR_BUFFER, GL_TEXTURE0);
+        pickingRenderTarget = new FrameBufferObject(pickingRenderTargetSize.x, pickingRenderTargetSize.y, FrameBufferObject.BuffersTypes.COLOR_BUFFER, GL_TEXTURE0);
     }
 
     // отрисовка
     protected static void draw() {
+        System.gc();
+
         // цикл отрисовки (работает до тех пор, пока окно не должно быть закрыто)
         Core2D.getDeltaTimer().start();
 
@@ -79,7 +84,7 @@ public abstract class Graphics
                     screenCleared = true;
                 }
 
-                Core2D.getTimersManager().UpdateTimers();
+                Core2D.getTimersManager().updateTimers();
 
                 GL11C.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
@@ -139,7 +144,7 @@ public abstract class Graphics
 
         glDisable(GL_BLEND);
 
-        Core2D.getSceneManager2D().drawCurrentScene2DPicking();
+        SceneManager.drawCurrentScene2DPicking();
 
         Vector3f selectedPixelColor = getPixelColor(oglPosition);
 
@@ -148,7 +153,7 @@ public abstract class Graphics
         glEnable(GL_BLEND);
         pickingRenderTarget.unBind();
 
-        return Core2D.getSceneManager2D().getPickedObject2D(selectedPixelColor);
+        return SceneManager.getPickedObject2D(selectedPixelColor);
     }
 
     public static ViewMode getViewMode() { return viewMode; }
@@ -178,5 +183,21 @@ public abstract class Graphics
         Graphics.screenClearColor.set(screenClearColor);
         screenCleared = false;
         screenClearColor = null;
+    }
+
+    public static Vector2i getScreenSize()
+    {
+        int sizeX = 0;
+        int sizeY = 0;
+        GLFWVidMode glfwVidMode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
+        if(glfwVidMode != null) {
+            sizeX = glfwVidMode.width();
+            sizeY = glfwVidMode.height();
+        } else {
+            Log.CurrentSession.println("Error! Unable to get window target size (GLFWVidMode == null).");
+            Log.showErrorDialog("Error! Unable to get window target size (GLFWVidMode == null).");
+        }
+
+        return new Vector2i(sizeX, sizeY);
     }
 }

@@ -7,14 +7,14 @@ public class TimersManager
 {
     private List<Timer> allTimers = new ArrayList<>();
 
-    public void UpdateTimers()
+    public void updateTimers()
     {
         for(int i = 0; i < allTimers.size(); i++) {
             allTimers.get(i).startFrame();
         }
     }
 
-    public Timer GetTimer(String name)
+    public Timer getTimer(String name)
     {
         for(int i = 0; i < allTimers.size(); i++) {
             if(name.equals(allTimers.get(i).getName())) {

@@ -239,7 +239,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     public void update(float deltaTime)
     {
         if(active) {
-            getComponent(TransformComponent.class).update(deltaTime);
+            getComponent(TransformComponent.class).deltaUpdate(deltaTime);
 
             /*
             for (SpriteAnimation spriteAnimation : spriteAnimations) {

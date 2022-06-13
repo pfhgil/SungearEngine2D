@@ -3,6 +3,8 @@ package Core2D.Physics;
 import Core2D.Scene2D.Scene2D;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
+import org.jbox2d.dynamics.Fixture;
+import org.jbox2d.dynamics.FixtureDef;
 
 public class Rigidbody2D
 {
@@ -20,25 +22,75 @@ public class Rigidbody2D
 
     public void set(Rigidbody2D rigidbody2D)
     {
-        bodyType = rigidbody2D.getType();
-        if(this.body != null) {
-            body.setType(this.bodyType);
-        }
+        setType(rigidbody2D.getType());
+        setDensity(rigidbody2D.getDensity());
+        setRestitution(rigidbody2D.getRestitution());
+        setFriction(rigidbody2D.getFriction());
+        setSensor(rigidbody2D.isSensor());
 
         rigidbody2D = null;
     }
 
     public float getDensity() { return density; }
-    public void setDensity(float density) { this.density = density; }
+    public void setDensity(float density)
+    {
+        this.density = density;
+
+        for(Fixture f = body.getFixtureList(); f != null; f = f.getNext()) {
+            f.setDensity(density);
+        }
+        /*
+        body.destroyFixture(body.getFixtureList());
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.density = density;
+        body.createFixture(fixtureDef);
+
+         */
+    }
 
     public float getRestitution() { return restitution; }
-    public void setRestitution(float restitution) { this.restitution = restitution; }
+    public void setRestitution(float restitution)
+    {
+        this.restitution = restitution;
+
+        for(Fixture f = body.getFixtureList(); f != null; f = f.getNext()) {
+            f.setRestitution(restitution);
+        }
+        /*
+        body.destroyFixture(body.getFixtureList());
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.restitution = restitution;
+        body.createFixture(fixtureDef);
+
+         */
+    }
 
     public float getFriction() { return friction; }
-    public void setFriction(float friction) { this.friction = friction; }
+    public void setFriction(float friction)
+    {
+        this.friction = friction;
+
+        for(Fixture f = body.getFixtureList(); f != null; f = f.getNext()) {
+            f.setFriction(friction);
+        }
+        /*
+        body.destroyFixture(body.getFixtureList());
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.friction = friction;
+        body.createFixture(fixtureDef);
+
+         */
+    }
 
     public boolean isSensor() { return isSensor; }
-    public void setSensor(boolean sensor) { isSensor = sensor; }
+    public void setSensor(boolean sensor)
+    {
+        isSensor = sensor;
+
+        for(Fixture f = body.getFixtureList(); f != null; f = f.getNext()) {
+            f.setSensor(sensor);
+        }
+    }
 
     public BodyType getType()
     {

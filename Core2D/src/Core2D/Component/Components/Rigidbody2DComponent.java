@@ -4,6 +4,7 @@ import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
 import Core2D.Core2D.Core2D;
 import Core2D.Physics.Rigidbody2D;
+import Core2D.Scene2D.SceneManager;
 
 /*
     TODO: добавить класс Rigidbody2D в физику, продумать как все будет работать (Rigidbody2D отвечает за гравитационные явления, тип объекта
@@ -40,8 +41,8 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated
     @Override
     public void init()
     {
-        if(Core2D.getSceneManager2D().getCurrentScene2D() != null) {
-            Core2D.getSceneManager2D().getCurrentScene2D().getPhysicsWorld().addRigidbody2D(getObject2D());
+        if(SceneManager.getCurrentScene2D() != null) {
+            SceneManager.getCurrentScene2D().getPhysicsWorld().addRigidbody2D(getObject2D());
         }
         getObject2D().getComponent(TransformComponent.class).getTransform().setRigidbody2D(this.getRigidbody2D());
     }

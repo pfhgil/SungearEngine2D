@@ -14,16 +14,19 @@ public class FileUtils
     {
         Object obj = null;
 
-        ObjectInputStream objectOutputStream = null;
         try {
-            objectOutputStream = new ObjectInputStream(new FileInputStream(path));
+            FileInputStream fileInputStream = new FileInputStream(path);
+            ObjectInputStream objectOutputStream = new ObjectInputStream(fileInputStream);
 
             obj = objectOutputStream.readObject();
 
             objectOutputStream.close();
+            fileInputStream.close();
+
             objectOutputStream = null;
+            fileInputStream = null;
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            Log.CurrentSession.println(ExceptionsUtils.toString(e));
         }
 
         return obj;
@@ -42,30 +45,26 @@ public class FileUtils
             objectOutputStream.close();
             objectOutputStream = null;
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            Log.CurrentSession.println(ExceptionsUtils.toString(e));
         }
 
         return obj;
     }
 
-    public static void serializeObject(String path, Object obj)
+    public synchronized static void serializeObject(String path, Object obj)
     {
-        ObjectOutputStream objectOutputStream = null;
         try {
-            objectOutputStream = new ObjectOutputStream(new FileOutputStream(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            FileOutputStream fos = new FileOutputStream(path);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(obj);
 
-        try {
-            if (objectOutputStream != null) {
-                objectOutputStream.writeObject(obj);
-                objectOutputStream.close();
+            oos.close();
+            fos.close();
 
-                objectOutputStream = null;
-            }
+            oos = null;
+            fos = null;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.CurrentSession.println(ExceptionsUtils.toString(e));
         }
     }
 
@@ -85,7 +84,8 @@ public class FileUtils
             scanner.close();
             scanner = null;
         } catch (Exception e) {
-            System.out.println("[FILE_OPERATIONS_READ_ALL_LINES] Error while reading all file (name: " + file.getName() + ") lines: " + e.toString());
+            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            //System.out.println("[FILE_OPERATIONS_READ_ALL_LINES] Error while reading all file (name: " + file.getName() + ") lines: " + e.toString());
         }
 
         return stringBuilder.toString();
@@ -113,7 +113,8 @@ public class FileUtils
             bufferedReader = null;
             inputStream = null;
         } catch (Exception e) {
-            System.out.println("[FILE_OPERATIONS_READ_ALL_LINES] Error while reading all file (name: " + inputStream.toString() + ") lines: " + e.toString());
+            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            //System.out.println("[FILE_OPERATIONS_READ_ALL_LINES] Error while reading all file (name: " + inputStream.toString() + ") lines: " + e.toString());
         }
 
         return stringBuilder.toString();

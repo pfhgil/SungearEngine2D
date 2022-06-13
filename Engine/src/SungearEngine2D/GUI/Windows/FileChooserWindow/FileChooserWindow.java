@@ -19,7 +19,7 @@ public class FileChooserWindow
     private DialogWindow dialogWindow;
 
     private String currentChosenFilePath = "";
-    private String initialDirectoryPath = "D:\\PixelField\\SungearEngine2D";
+    private String initialDirectoryPath = "C:\\";
 
     private FileChooserWindowCallback fileChooserWindowCallback;
 

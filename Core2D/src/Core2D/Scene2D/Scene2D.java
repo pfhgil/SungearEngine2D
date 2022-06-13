@@ -17,6 +17,7 @@ import java.util.List;
 public class Scene2D
 {
     private String name = "sampleScene2D";
+    private String scenePath = "";
 
     private Layering layering = new Layering();
 
@@ -151,6 +152,9 @@ public class Scene2D
         this.name = name;
         name = null;
     }
+
+    public String getScenePath() { return scenePath; }
+    public void setScenePath(String scenePath) { this.scenePath = scenePath; }
 
     public Layering getLayering() { return layering; }
     public void setLayering(Layering layering) { this.layering = layering; }

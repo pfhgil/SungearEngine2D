@@ -4,6 +4,7 @@ import Core2D.Controllers.PC.Keyboard;
 import Core2D.Core2D.Core2D;
 import Core2D.Log.Log;
 import Core2D.Scene2D.Scene2D;
+import Core2D.Scene2D.SceneManager;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindow;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindowCallback;
 import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindow;
@@ -172,6 +173,7 @@ public class TopToolbarView
                             @Override
                             public void onRightButtonClicked() {
                                 ProjectsManager.loadProject(projectPath.get());
+                                //ResourcesView.currentDirectoryPath = projectPath.get();
                                 //Core2D.getSceneManager2D().loadScene(ProjectsManager.getCurrentProject().getScenesPath() + "\\lvl0.txt");
                                 //Core2D.getSceneManager2D().loadScene(ProjectsManager.getCurrentProject().getScenesPath() + "\\lvl0.txt");
 
@@ -284,11 +286,11 @@ public class TopToolbarView
                             if(ProjectsManager.getCurrentProject() != null) {
                                 Scene2D scene2D = new Scene2D();
                                 scene2D.setName(newSceneName.get());
-                                if (Core2D.getSceneManager2D().getScenes().size() == 0) {
-                                    Core2D.getSceneManager2D().setCurrentScene2D(scene2D);
+                                if (SceneManager.getScenes().size() == 0) {
+                                    SceneManager.setCurrentScene2D(scene2D);
                                 }
-                                Core2D.getSceneManager2D().getScenes().add(scene2D);
-                                Core2D.getSceneManager2D().saveScene(scene2D, ProjectsManager.getCurrentProject().getScenesPath() + "\\" + scene2D.getName() + ".sgs");
+                                SceneManager.getScenes().add(scene2D);
+                                SceneManager.saveScene(scene2D, ProjectsManager.getCurrentProject().getScenesPath() + "\\" + scene2D.getName() + ".sgs");
                                 scene2D = null;
                             } else {
                                 Log.showErrorDialog("Can not create new scene2D! First create or open project.");
@@ -306,8 +308,8 @@ public class TopToolbarView
                 }
 
                 if(ImGui.menuItem("Save current")) {
-                    if(ProjectsManager.getCurrentProject() != null && Core2D.getSceneManager2D().getCurrentScene2D() != null) {
-                        Core2D.getSceneManager2D().saveScene(Core2D.getSceneManager2D().getCurrentScene2D(), ProjectsManager.getCurrentProject().getScenesPath() + "\\" + Core2D.getSceneManager2D().getCurrentScene2D().getName() + ".sgs");
+                    if(ProjectsManager.getCurrentProject() != null && SceneManager.getCurrentScene2D() != null) {
+                        SceneManager.saveScene(SceneManager.getCurrentScene2D(), SceneManager.getCurrentScene2D().getScenePath());
                     }
                 }
 

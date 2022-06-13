@@ -2,9 +2,11 @@ package SungearEngine2D.GUI.Views;
 
 import Core2D.Core2D.Core2D;
 import Core2D.Log.Log;
+import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.Main.Main;
+import SungearEngine2D.Main.Settings;
 import SungearEngine2D.Project.ProjectsManager;
 import imgui.ImGui;
 import imgui.ImVec2;
@@ -199,7 +201,10 @@ public class ResourcesView extends View
 
         if(ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left) && ImGui.isItemHovered()) {
             if(FilenameUtils.getExtension(files[id].getName()).equals("sgs")) {
-                Core2D.getSceneManager2D().loadScene(files[id].getPath());
+                SceneManager.loadScene(files[id].getPath());
+                SceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;
+                Settings.PlayMode.paused = false;
+                Settings.PlayMode.active = false;
                 MainView.getInspectorView().setCurrentInspectingObject(null);
             }
         }
@@ -277,17 +282,18 @@ public class ResourcesView extends View
             // если тип файл - java, то создаю этот файл с заранее подготовленным кодом
             if(newFile.exists() && fileType.equals("Java")) {
                 String javaFileCode =
+                        "package Core2D;\n\n" +
                         "public class " + name + "\n" +
                         "{\n" +
-                        "   public void update()\n" +
-                        "   {\n" +
-                        "       \n" +
-                        "   }\n" +
-                        "   \n" +
-                        "   public void deltaUpdate(float deltaTime)\n" +
-                        "   {\n" +
-                        "       \n" +
-                        "   }\n" +
+                        "    public void update()\n" +
+                        "    {\n" +
+                        "        \n" +
+                        "    }\n" +
+                        "    \n" +
+                        "    public void deltaUpdate(float deltaTime)\n" +
+                        "    {\n" +
+                        "        \n" +
+                        "    }\n" +
                         "}";
                 // создаю файл с уже заранее подготовленным кодом
                 FileUtils.writeToFile(

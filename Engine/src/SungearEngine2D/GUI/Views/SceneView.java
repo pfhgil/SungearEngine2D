@@ -4,11 +4,15 @@ import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Controllers.PC.Mouse;
 import Core2D.Core2D.Core2D;
+import Core2D.Core2D.Graphics;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
+import Core2D.Scene2D.SceneManager;
 import Core2D.Texture2D.Texture2D;
 import SungearEngine2D.Main.GraphicsRenderer;
 import SungearEngine2D.Main.Main;
+import SungearEngine2D.Main.Resources;
+import SungearEngine2D.Main.Settings;
 import SungearEngine2D.Utils.ResourcesUtils;
 import imgui.ImGui;
 import imgui.ImVec2;
@@ -17,6 +21,7 @@ import imgui.flag.ImGuiWindowFlags;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWVidMode;
@@ -45,22 +50,77 @@ public class SceneView extends View
 
     private void init()
     {
-        GLFWVidMode glfwVidMode = GLFW.glfwGetVideoMode(GLFW.glfwGetPrimaryMonitor());
-        if(glfwVidMode != null) {
-            targetSize.x = glfwVidMode.width();
-            targetSize.y = glfwVidMode.height();
-        } else {
-            Log.CurrentSession.println("Error! Unable to get window target size (GLFWVidMode == null).");
-            Log.showErrorDialog("Error! Unable to get window target size (GLFWVidMode == null).");
-        }
+        Vector2i size = Graphics.getScreenSize();
+        targetSize.x = size.x;
+        targetSize.y = size.y;
     }
 
     public void draw()
     {
         ImGui.pushStyleColor(ImGuiCol.ChildBg, 0.65f, 0.65f, 0.65f, 1.0f);
-        ImGui.begin("Scene2D view", ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse);
+        ImGui.begin("Scene2D view", ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.MenuBar);
         {
-            MainView.isSomeViewFocusedExceptSceneView = !ImGui.isWindowFocused();
+            ImGui.beginMenuBar();
+            {
+                Vector4f playButtonColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
+                boolean active = Settings.PlayMode.active;
+                if(active) {
+                    ImGui.pushStyleColor(ImGuiCol.Button, 0, 0, 0, 0);
+                    ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0, 0, 0, 0);
+                    ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0, 0, 0, 0);
+                    playButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
+                }
+                if(ImGui.imageButton(Resources.Textures.Icons.playButtonIcon.getTextureHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, playButtonColor.x, playButtonColor.y, playButtonColor.z, playButtonColor.w)) {
+                    if(SceneManager.getCurrentScene2D() != null) {
+                        if(!Settings.PlayMode.active && !Settings.PlayMode.paused) {
+                            Settings.PlayMode.active = true;
+                            SceneManager.saveScene(SceneManager.getCurrentScene2D(), SceneManager.getCurrentScene2D().getScenePath());
+                            SceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = true;
+                        } else {
+                            Settings.PlayMode.active = false;
+                            Settings.PlayMode.paused = false;
+                            SceneManager.loadScene(SceneManager.getCurrentScene2D().getScenePath());
+                            SceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;
+                        }
+                    }
+                }
+                if(active) {
+                    ImGui.popStyleColor(3);
+                }
+
+                Vector4f pauseButtonColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
+                boolean paused = Settings.PlayMode.paused;
+                if(paused) {
+                    ImGui.pushStyleColor(ImGuiCol.Button, 0, 0, 0, 0);
+                    ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0, 0, 0, 0);
+                    ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0, 0, 0, 0);
+                    pauseButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
+                }
+                if(ImGui.imageButton(Resources.Textures.Icons.pauseButtonIcon.getTextureHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, pauseButtonColor.x, pauseButtonColor.y, pauseButtonColor.z, pauseButtonColor.w)) {
+                    if(SceneManager.getCurrentScene2D() != null) {
+                        Settings.PlayMode.paused = !Settings.PlayMode.paused;
+                        SceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = !SceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics;
+                    }
+                }
+                if(paused) {
+                    ImGui.popStyleColor(3);
+                }
+
+                if(ImGui.imageButton(Resources.Textures.Icons.stopButtonIcon.getTextureHandler(), 8, 10)) {
+                    if(SceneManager.getCurrentScene2D() != null) {
+                        Settings.PlayMode.active = false;
+                        Settings.PlayMode.paused = false;
+                        SceneManager.loadScene(SceneManager.getCurrentScene2D().getScenePath());
+                        SceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;
+                    }
+                }
+                //if(ImGui.menuItem())
+            }
+            boolean hovered = ImGui.isAnyItemHovered();
+
+            ImGui.endMenuBar();
+
+            MainView.isSomeViewFocusedExceptSceneView = !isHovered() || hovered;
 
             ImGui.popStyleColor(1);
 
@@ -87,7 +147,7 @@ public class SceneView extends View
             ImGui.image(GraphicsRenderer.getRenderTarget().getTextureHandler(), windowSize.x, windowSize.y, 0, 1, 1, 0);
 
             if(ImGui.beginDragDropTarget()) {
-                if(MainView.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(MainView.getResourcesView().getCurrentMovingFile()) && Core2D.getSceneManager2D().getCurrentScene2D() != null) {
+                if(MainView.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(MainView.getResourcesView().getCurrentMovingFile()) && SceneManager.getCurrentScene2D() != null) {
                     // если превью не существует, то создаю его
                     if(newObject2DPreview == null) {
                         newObject2DPreview = createSceneObject2D(MainView.getResourcesView().getCurrentMovingFile());
@@ -178,7 +238,7 @@ public class SceneView extends View
         newSceneObject2D.getComponent(TransformComponent.class).getTransform().setPosition(objectPosition);
 
         // дефолтный layer
-        newSceneObject2D.setLayer(Core2D.getSceneManager2D().getCurrentScene2D().getLayering().getLayer("default"));
+        newSceneObject2D.setLayer(SceneManager.getCurrentScene2D().getLayering().getLayer("default"));
         newSceneObject2D.setName(FilenameUtils.getBaseName(imageFile.getName()));
 
         newObject2DScale = null;

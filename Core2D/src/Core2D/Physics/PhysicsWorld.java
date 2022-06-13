@@ -6,9 +6,12 @@ import Core2D.Core2D.Core2D;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
 import Core2D.Physics.Collider2D.BoxCollider2D;
+import Core2D.Physics.Collider2D.CircleCollider2D;
+import Core2D.Scene2D.SceneManager;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
 import org.jbox2d.collision.Manifold;
+import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Settings;
 import org.jbox2d.common.Vec2;
@@ -23,6 +26,8 @@ public class PhysicsWorld extends World
     private UserContactListener userContactListener;
 
     public static final float RATIO = 30.0f;
+
+    public boolean simulatePhysics = true;
 
     public PhysicsWorld()
     {
@@ -57,18 +62,26 @@ public class PhysicsWorld extends World
         });
     }
 
+    @Override
+    public void step(float deltaTime, int velocityIterations, int positionIterations)
+    {
+        if(simulatePhysics) {
+            super.step(deltaTime, velocityIterations, positionIterations);
+        }
+    }
+
     public void addRigidbody2D(Object2D object2D)
     {
         Rigidbody2DComponent rigidbody2DComponent = object2D.getComponent(Rigidbody2DComponent.class);
         if(rigidbody2DComponent != null) {
             Rigidbody2D rigidbody2D = rigidbody2DComponent.getRigidbody2D();
 
-            if(Core2D.getSceneManager2D().getCurrentScene2D() != null) {
+            if(SceneManager.getCurrentScene2D() != null) {
                 BodyDef bodyDef = new BodyDef();
                 bodyDef.position.set(0.0f, 0.0f);
                 bodyDef.type = rigidbody2D.getType();
-                rigidbody2D.setScene2D(Core2D.getSceneManager2D().getCurrentScene2D());
-                rigidbody2D.setBody(Core2D.getSceneManager2D().getCurrentScene2D().getPhysicsWorld().createBody(bodyDef));
+                rigidbody2D.setScene2D(SceneManager.getCurrentScene2D());
+                rigidbody2D.setBody(SceneManager.getCurrentScene2D().getPhysicsWorld().createBody(bodyDef));
 
                 List<BoxCollider2DComponent> boxCollider2DComponentList = object2D.getAllComponents(BoxCollider2DComponent.class);
 
@@ -103,6 +116,30 @@ public class PhysicsWorld extends World
         Fixture fixture = body.createFixture(fixtureDef);
         boxCollider2D.setFixture(fixture);
         boxCollider2D.setRigidbody2D(rigidbody2D);
+    }
+
+    public void addCircleCollider2D(Rigidbody2D rigidbody2D, CircleCollider2D circleCollider2D)
+    {
+        Body body = rigidbody2D.getBody();
+        if(body == null) {
+            Log.CurrentSession.println("Can not add CircleCollider2D. body == null");
+
+            return;
+        }
+
+        CircleShape shape = new CircleShape();
+        shape.m_radius = circleCollider2D.getRadius() / PhysicsWorld.RATIO;
+        shape.m_p.set(circleCollider2D.getOffset().x / PhysicsWorld.RATIO, circleCollider2D.getOffset().y / PhysicsWorld.RATIO);
+
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = rigidbody2D.getDensity();
+        fixtureDef.restitution = rigidbody2D.getRestitution();
+        fixtureDef.friction = rigidbody2D.getFriction();
+        fixtureDef.isSensor = rigidbody2D.isSensor();
+        Fixture fixture = body.createFixture(fixtureDef);
+        circleCollider2D.setFixture(fixture);
+        circleCollider2D.setRigidbody2D(rigidbody2D);
     }
 
     public void destroyRigidbody2D(Object2D object2D)

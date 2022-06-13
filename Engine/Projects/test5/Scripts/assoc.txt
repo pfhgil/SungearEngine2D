@@ -1,0 +1,1 @@
+reg add HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Explorer\FileExts\.java\UserChoice /v ProgId /t REG_SZ /d idea64.exe /f

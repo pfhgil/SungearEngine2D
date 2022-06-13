@@ -41,7 +41,7 @@ public class TransformComponent extends Component implements NonRemovable, NonDu
     }
 
     @Override
-    public void update(float deltaTime)
+    public void deltaUpdate(float deltaTime)
     {
         transform.update(deltaTime);
     }

@@ -2,9 +2,11 @@ package SungearEngine2D.GUI.Views;
 
 import Core2D.Core2D.Core2D;
 import imgui.ImGui;
+import imgui.ImGuiWindowClass;
 import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
+import imgui.internal.flag.ImGuiDockNodeFlags;
 import imgui.type.ImBoolean;
 
 public class MainView
@@ -21,6 +23,7 @@ public class MainView
     private static SceneView sceneView;
     private static TopToolbarView topToolbarView;
     private static LogView logView;
+    private static BottomMenuView bottomMenuView;
 
     public static void init()
     {
@@ -33,6 +36,7 @@ public class MainView
         sceneView = new SceneView();
         topToolbarView = new TopToolbarView();
         logView = new LogView();
+        bottomMenuView = new BottomMenuView();
     }
 
     public static void draw()
@@ -70,6 +74,8 @@ public class MainView
             sceneView.draw();
 
             logView.draw();
+
+            bottomMenuView.draw();
         }
         ImGui.end();
     }
@@ -85,4 +91,6 @@ public class MainView
     public static SceneView getSceneView() { return sceneView; }
 
     public static TopToolbarView getTopToolbarView() { return topToolbarView; }
+
+    public static BottomMenuView getBottomMenuView() {  return bottomMenuView;  }
 }

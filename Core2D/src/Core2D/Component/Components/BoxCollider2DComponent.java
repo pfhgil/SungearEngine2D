@@ -3,6 +3,7 @@ package Core2D.Component.Components;
 import Core2D.Component.Component;
 import Core2D.Core2D.Core2D;
 import Core2D.Physics.Collider2D.BoxCollider2D;
+import Core2D.Scene2D.SceneManager;
 
 public class BoxCollider2DComponent extends Component
 {
@@ -33,8 +34,8 @@ public class BoxCollider2DComponent extends Component
     {
         Rigidbody2DComponent rigidbody2DComponent = getObject2D().getComponent(Rigidbody2DComponent.class);
         if(rigidbody2DComponent != null) {
-            if(Core2D.getSceneManager2D().getCurrentScene2D() != null) {
-                Core2D.getSceneManager2D().getCurrentScene2D().getPhysicsWorld().addBoxCollider2D(rigidbody2DComponent.getRigidbody2D(), boxCollider2D);
+            if(SceneManager.getCurrentScene2D() != null) {
+                SceneManager.getCurrentScene2D().getPhysicsWorld().addBoxCollider2D(rigidbody2DComponent.getRigidbody2D(), boxCollider2D);
             }
         }
     }

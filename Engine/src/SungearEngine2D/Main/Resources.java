@@ -19,6 +19,10 @@ public class Resources
             public static final Texture2D layersIcon = new Texture2D(Core2D.class.getResourceAsStream("/data/icons/layers.png"), 0);
 
             public static final Texture2D threeDotsIcon = new Texture2D(Core2D.class.getResourceAsStream("/data/icons/three_dots_icon.png"), 0);
+
+            public static final Texture2D playButtonIcon = new Texture2D(Core2D.class.getResourceAsStream("/data/icons/play_button.png"), 0);
+            public static final Texture2D stopButtonIcon = new Texture2D(Core2D.class.getResourceAsStream("/data/icons/stop_button.png"), 0);
+            public static final Texture2D pauseButtonIcon = new Texture2D(Core2D.class.getResourceAsStream("/data/icons/pause_button.png"), 0);
         }
     }
 }

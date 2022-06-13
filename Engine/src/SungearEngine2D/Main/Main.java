@@ -20,6 +20,8 @@ public class Main
     private static Object2D cameraAnchor;
     private static Camera2D mainCamera2D;
 
+    public static Thread settingsThread;
+
     public static void main(String[] main)
     {
         Graphics.setScreenClearColor(new Vector4f(0.65f, 0.65f, 0.65f, 1.0f));
@@ -41,6 +43,14 @@ public class Main
                 GUI.init();
 
                 GraphicsRenderer.init();
+
+                settingsThread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Settings.loadSettingsFile();
+                    }
+                });
+                settingsThread.start();
 
                 //Object2D newSceneObject2D = new Object2D();
                 //Gson objSerializer = new GsonBuilder().setPrettyPrinting().create();

@@ -2,10 +2,7 @@ package SungearEngine2D.GUI.Views;
 
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Component;
-import Core2D.Component.Components.BoxCollider2DComponent;
-import Core2D.Component.Components.Rigidbody2DComponent;
-import Core2D.Component.Components.TextureComponent;
-import Core2D.Component.Components.TransformComponent;
+import Core2D.Component.Components.*;
 import Core2D.Component.NonRemovable;
 import Core2D.Controllers.PC.Keyboard;
 import Core2D.Core2D.Core2D;
@@ -14,6 +11,7 @@ import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
 import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.Physics.PhysicsWorld;
+import Core2D.Scene2D.SceneManager;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.Tag;
@@ -115,7 +113,7 @@ public class InspectorView extends View
             ImGui.openPopup("Component actions");
             if(ImGui.beginPopupContextWindow("Component actions", ImGuiMouseButton.Left)) {
                 if(!(currentEditingComponent instanceof NonRemovable)) {
-                    boolean deleteClicked = ImGui.menuItem("Delete");
+                    boolean deleteClicked = ImGui.menuItem("Remove");
                     someButtonInPopupWindowHovered = ImGui.isItemHovered();
                     if (deleteClicked) {
                         try {
@@ -148,7 +146,7 @@ public class InspectorView extends View
         ImGui.pushID("LayersCombo");
         {
             if(ImGui.beginCombo("", inspectingObject2D.getLayer().getName())) {
-                List<Layer> layers = Core2D.getSceneManager2D().getCurrentScene2D().getLayering().getLayers();
+                List<Layer> layers = SceneManager.getCurrentScene2D().getLayering().getLayers();
                 for (int i = 0; i < layers.size(); i++) {
                     boolean selected = ImGui.selectable(layers.get(i).getId() + ".  " + layers.get(i).getName());
 
@@ -169,14 +167,14 @@ public class InspectorView extends View
                             layers.get(i).setId(droppedLayer.getId());
                             droppedLayer.setId(thisLayerID);
 
-                            Core2D.getSceneManager2D().getCurrentScene2D().getLayering().sort();
+                            SceneManager.getCurrentScene2D().getLayering().sort();
                         }
 
                         ImGui.endDragDropTarget();
                     }
 
                     if(selected) {
-                        inspectingObject2D.setLayer(Core2D.getSceneManager2D().getCurrentScene2D().getLayering().getLayers().get(i));
+                        inspectingObject2D.setLayer(SceneManager.getCurrentScene2D().getLayering().getLayers().get(i));
                     }
                 }
                 layers = null;
@@ -215,7 +213,7 @@ public class InspectorView extends View
                         @Override
                         public void onRightButtonClicked() {
                             if(!newName.get().equals("")) {
-                                Core2D.getSceneManager2D().getCurrentScene2D().getLayering().addLayer(new Layer(Core2D.getSceneManager2D().getCurrentScene2D().getLayering().getLayers().size(), newName.get()));
+                                SceneManager.getCurrentScene2D().getLayering().addLayer(new Layer(SceneManager.getCurrentScene2D().getLayering().getLayers().size(), newName.get()));
                                 dialogWindow.setActive(false);
                                 newName.set("", true);
                             }
@@ -234,8 +232,8 @@ public class InspectorView extends View
                         public void onDraw() {
                             ImGui.beginChild("EditLayersChildWindow", dialogWindow.getCurrentWindowSize().x - 17, dialogWindow.getCurrentWindowSize().y - 75, true);
                             {
-                                for (int i = 0; i < Core2D.getSceneManager2D().getCurrentScene2D().getLayering().getLayers().size(); i++) {
-                                    Layer currentLayer = Core2D.getSceneManager2D().getCurrentScene2D().getLayering().getLayers().get(i);
+                                for (int i = 0; i < SceneManager.getCurrentScene2D().getLayering().getLayers().size(); i++) {
+                                    Layer currentLayer = SceneManager.getCurrentScene2D().getLayering().getLayers().get(i);
                                     if (currentLayer.getName().equals(currentEditingName.get())) {
                                         ImGui.setNextItemOpen(true, ImGuiCond.Once);
                                     }
@@ -264,8 +262,8 @@ public class InspectorView extends View
                                             }
                                             ImGui.popID();
 
-                                            if(ImGui.button("Delete")) {
-                                                Core2D.getSceneManager2D().getCurrentScene2D().getLayering().deleteLayer(currentLayer);
+                                            if(ImGui.button("Remove")) {
+                                                SceneManager.getCurrentScene2D().getLayering().deleteLayer(currentLayer);
                                             }
                                         }
                                     }
@@ -303,7 +301,7 @@ public class InspectorView extends View
         ImGui.pushID("TagsCombo");
         {
             if(ImGui.beginCombo("", inspectingObject2D.getTag().getName())) {
-                List<Tag> tags = Core2D.getSceneManager2D().getCurrentScene2D().getTags();
+                List<Tag> tags = SceneManager.getCurrentScene2D().getTags();
                 for(int i = 0; i < tags.size(); i++) {
                     if(ImGui.selectable(tags.get(i).getName())) {
                         inspectingObject2D.setTag(tags.get(i).getName());
@@ -345,7 +343,7 @@ public class InspectorView extends View
                         @Override
                         public void onRightButtonClicked() {
                             if(!newName.get().equals("")) {
-                                Core2D.getSceneManager2D().getCurrentScene2D().addTag(new Tag(newName.get()));
+                                SceneManager.getCurrentScene2D().addTag(new Tag(newName.get()));
                                 dialogWindow.setActive(false);
                                 newName.set("", true);
                             }
@@ -364,8 +362,8 @@ public class InspectorView extends View
                         public void onDraw() {
                             ImGui.beginChild("EditTagsChildWindow", dialogWindow.getCurrentWindowSize().x - 17, dialogWindow.getCurrentWindowSize().y - 75, true);
                             {
-                                for (int i = 0; i < Core2D.getSceneManager2D().getCurrentScene2D().getTags().size(); i++) {
-                                    Tag currentTag = Core2D.getSceneManager2D().getCurrentScene2D().getTags().get(i);
+                                for (int i = 0; i < SceneManager.getCurrentScene2D().getTags().size(); i++) {
+                                    Tag currentTag = SceneManager.getCurrentScene2D().getTags().get(i);
                                     if(currentTag.getName().equals(currentEditingName.get())) {
                                         ImGui.setNextItemOpen(true, ImGuiCond.Once);
                                     }
@@ -392,9 +390,8 @@ public class InspectorView extends View
                                             }
                                             ImGui.popID();
 
-                                            if (ImGui.button("Delete")) {
-                                                System.out.println("sdsd");
-                                                Core2D.getSceneManager2D().getCurrentScene2D().deleteTag(currentTag);
+                                            if (ImGui.button("Remove")) {
+                                                SceneManager.getCurrentScene2D().deleteTag(currentTag);
                                             }
                                         }
                                     }
@@ -451,6 +448,8 @@ public class InspectorView extends View
                 componentName = "Rigidbody2D";
             } else if(inspectingObject2D.getComponents().get(i) instanceof BoxCollider2DComponent) {
                 componentName = "BoxCollider2D";
+            } else if(inspectingObject2D.getComponents().get(i) instanceof CircleCollider2DComponent) {
+                componentName = "CircleCollider2D";
             }
 
             ImGui.pushID(componentName + i);
@@ -499,7 +498,7 @@ public class InspectorView extends View
                         transformComponent.getTransform().setRotation(inspectingObject2DRotation[0]);
                         isEditing = true;
                     }
-                    if (ImGui.dragFloat2("Scale", inspectingObject2DScale)) {
+                    if (ImGui.dragFloat2("Scale", inspectingObject2DScale, 0.01f)) {
                         transformComponent.getTransform().setScale(new Vector2f(inspectingObject2DScale));
                         isEditing = true;
                     }
@@ -522,49 +521,82 @@ public class InspectorView extends View
                     }
                 } else if(componentName.equals("Rigidbody2D")) {
                     Rigidbody2DComponent rigidbody2DComponent = ((Rigidbody2DComponent) inspectingObject2D.getComponents().get(i));
-                    ImGui.pushID("BodyTypeCombo");
-                    {
-                        if (ImGui.beginCombo("", rigidbody2DComponent.getRigidbody2D().typeToString())) {
+                    if (ImGui.beginCombo("Type", rigidbody2DComponent.getRigidbody2D().typeToString())) {
 
-                            if(ImGui.selectable("Dynamic")) {
-                                rigidbody2DComponent.getRigidbody2D().setType(BodyType.DYNAMIC);
-                            }
-
-                            if(ImGui.selectable("Static")) {
-                                rigidbody2DComponent.getRigidbody2D().setType(BodyType.STATIC);
-                            }
-
-                            if(ImGui.selectable("Kinematic")) {
-                                rigidbody2DComponent.getRigidbody2D().setType(BodyType.KINEMATIC);
-                            }
-
-                            //System.out.println("x: " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.x + ", " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.y);
-
-                            ImGui.endCombo();
+                        if (ImGui.selectable("Dynamic")) {
+                            rigidbody2DComponent.getRigidbody2D().setType(BodyType.DYNAMIC);
                         }
+
+                        if (ImGui.selectable("Static")) {
+                            rigidbody2DComponent.getRigidbody2D().setType(BodyType.STATIC);
+                        }
+
+                        if (ImGui.selectable("Kinematic")) {
+                            rigidbody2DComponent.getRigidbody2D().setType(BodyType.KINEMATIC);
+                        }
+
+                        //System.out.println("x: " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.x + ", " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.y);
+
+                        ImGui.endCombo();
                     }
-                    ImGui.popID();
+
+                    float[] density = new float[] { rigidbody2DComponent.getRigidbody2D().getDensity() };
+                    if (ImGui.dragFloat("Density", density, 0.01f)) {
+                        rigidbody2DComponent.getRigidbody2D().setDensity(density[0]);
+                    }
+
+                    float[] restitution = new float[] { rigidbody2DComponent.getRigidbody2D().getRestitution() };
+                    if (ImGui.dragFloat("Restitution", restitution, 0.01f)) {
+                        rigidbody2DComponent.getRigidbody2D().setRestitution(restitution[0]);
+                    }
+
+                    float[] friction = new float[] { rigidbody2DComponent.getRigidbody2D().getFriction() };
+                    if (ImGui.dragFloat("Friction", friction, 0.01f)) {
+                        rigidbody2DComponent.getRigidbody2D().setFriction(friction[0]);
+                    }
+
+                    ImGui.newLine();
+
+                    if(ImGui.checkbox("Sensor", rigidbody2DComponent.getRigidbody2D().isSensor())) {
+                        rigidbody2DComponent.getRigidbody2D().setSensor(!rigidbody2DComponent.getRigidbody2D().isSensor());
+                    }
                 } else if(componentName.equals("BoxCollider2D")) {
                     BoxCollider2DComponent boxCollider2DComponent = ((BoxCollider2DComponent) inspectingObject2D.getComponents().get(i));
 
-                    ImGui.text("Offset");
-                    ImGui.sameLine();
                     float[] offset = new float[] { boxCollider2DComponent.getBoxCollider2D().getOffset().x, boxCollider2DComponent.getBoxCollider2D().getOffset().y };
                     ImGui.pushID("BoxCollider2DOffsetDragFloat_" + i);
                     {
-                        if(ImGui.dragFloat2("", offset)) {
+                        if(ImGui.dragFloat2("Offset", offset)) {
                             boxCollider2DComponent.getBoxCollider2D().setOffset(new Vector2f(offset[0], offset[1]));
                         }
                     }
                     ImGui.popID();
 
-                    ImGui.text("Scale");
-                    ImGui.sameLine();
                     float[] scale = new float[] { boxCollider2DComponent.getBoxCollider2D().getScale().x, boxCollider2DComponent.getBoxCollider2D().getScale().y };
                     ImGui.pushID("BoxCollider2DScaleDragFloat_" + i);
                     {
-                        if(ImGui.dragFloat2("", scale)) {
+                        if(ImGui.dragFloat2("Scale", scale, 0.01f)) {
                             boxCollider2DComponent.getBoxCollider2D().setScale(new Vector2f(scale[0], scale[1]));
+                        }
+                    }
+                    ImGui.popID();
+                } else if(componentName.equals("CircleCollider2D")) {
+                    CircleCollider2DComponent circleCollider2DComponent = ((CircleCollider2DComponent) inspectingObject2D.getComponents().get(i));
+
+                    float[] offset = new float[] { circleCollider2DComponent.getCircleCollider2D().getOffset().x, circleCollider2DComponent.getCircleCollider2D().getOffset().y };
+                    ImGui.pushID("CircleCollider2DOffsetDragFloat_" + i);
+                    {
+                        if(ImGui.dragFloat2("Offset", offset)) {
+                            circleCollider2DComponent.getCircleCollider2D().setOffset(new Vector2f(offset[0], offset[1]));
+                        }
+                    }
+                    ImGui.popID();
+
+                    float[] radius = new float[] { circleCollider2DComponent.getCircleCollider2D().getRadius() };
+                    ImGui.pushID("CircleCollider2DRadiusDragFloat_" + i);
+                    {
+                        if(ImGui.dragFloat("Radius", radius, 0.01f)) {
+                            circleCollider2DComponent.getCircleCollider2D().setRadius(radius[0]);
                         }
                     }
                     ImGui.popID();
@@ -617,9 +649,13 @@ public class InspectorView extends View
                     }
                     if(ImGui.selectable("BoxCollider2D")) {
                         ((Object2D) currentInspectingObject).addComponent(new BoxCollider2DComponent());
+                        action = "";
+                    }
+                    if(ImGui.selectable("CircleCollider2D")) {
+                        ((Object2D) currentInspectingObject).addComponent(new CircleCollider2DComponent());
+                        action = "";
                     }
                 } catch (Exception e) {
-                    System.out.println("dsd: " + e.toString());
                     Log.CurrentSession.println(ExceptionsUtils.toString(e));
 
                     action = "";

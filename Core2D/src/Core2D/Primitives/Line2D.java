@@ -97,6 +97,10 @@ public class Line2D extends CommonDrawableObjectsParameters
         vertexArrayObject.putVBO(vertexBufferObject, false);
         vertexArrayObject.putIBO(indexBufferObject);
 
+        attributesLayout = null;
+        vertexBufferObject = null;
+        indexBufferObject = null;
+
         // отвязываю vao
         vertexArrayObject.unBind();
     }
