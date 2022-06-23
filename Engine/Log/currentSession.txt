@@ -1,2 +1,0 @@
-2022/06/23 00:23:03|Log directory was founded!
-2022/06/23 00:23:03|Current session log file was created!
