@@ -1,0 +1,734 @@
+{
+  "name": "lvl0",
+  "layering": {
+    "layers": [
+      {
+        "renderingObjects": [
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": 107.531,
+                        "y": 1741.514
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 10.0,
+                        "y": 10.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\PixelField\\SungearEngine2D\\Projects\\test3\\Resources\\Textures\\bg4.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "name": "bg4",
+              "isUIElement": false,
+              "active": true,
+              "tag": {
+                "name": "default"
+              }
+            }
+          }
+        ],
+        "id": 4,
+        "name": "hggh"
+      },
+      {
+        "renderingObjects": [
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": 1432.531,
+                        "y": 1289.5142
+                      },
+                      "rotation": 47.0,
+                      "scale": {
+                        "x": 10.0,
+                        "y": 10.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\PixelField\\SungearEngine2D\\Projects\\test3\\Resources\\Textures\\bg4.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "name": "bg4",
+              "isUIElement": false,
+              "active": true,
+              "tag": {
+                "name": "default"
+              }
+            }
+          },
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": 189.447,
+                        "y": -1700.8716
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 10.0,
+                        "y": 10.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\PixelField\\SungearEngine2D\\Projects\\test3\\Resources\\Textures\\bg3.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "name": "bg3",
+              "isUIElement": false,
+              "active": true,
+              "tag": {
+                "name": "default"
+              }
+            }
+          },
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                      },
+                      "rotation": -126.0,
+                      "scale": {
+                        "x": -36.0,
+                        "y": 9.8
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\PixelField\\SungearEngine2D\\Projects\\test3\\Resources\\Textures\\test.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "name": "test",
+              "isUIElement": false,
+              "active": true,
+              "tag": {
+                "name": "default"
+              }
+            }
+          }
+        ],
+        "id": 3,
+        "name": "water"
+      },
+      {
+        "renderingObjects": [
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": 2509.325,
+                        "y": -4024.352
+                      },
+                      "rotation": -1377.0,
+                      "scale": {
+                        "x": 32.8,
+                        "y": 9.8
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\PixelField\\SungearEngine2D\\Projects\\test3\\Resources\\Textures\\test.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "name": "test",
+              "isUIElement": false,
+              "active": true,
+              "tag": {
+                "name": "default"
+              }
+            }
+          }
+        ],
+        "id": 2,
+        "name": "bg"
+      },
+      {
+        "renderingObjects": [],
+        "id": 1,
+        "name": "ui"
+      },
+      {
+        "renderingObjects": [
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -632.306,
+                        "y": -558.8854
+                      },
+                      "rotation": -122.0,
+                      "scale": {
+                        "x": 10.0,
+                        "y": 10.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\PixelField\\SungearEngine2D\\Projects\\test3\\Resources\\Textures\\bg1.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "name": "bg1",
+              "isUIElement": false,
+              "active": true,
+              "tag": {
+                "name": "default"
+              }
+            }
+          },
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -1911.306,
+                        "y": -558.8854
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 10.0,
+                        "y": 10.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\PixelField\\SungearEngine2D\\Projects\\test3\\Resources\\Textures\\bg1.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "name": "bg1",
+              "isUIElement": false,
+              "active": true,
+              "tag": {
+                "name": "default"
+              }
+            }
+          },
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -1171.553,
+                        "y": -1700.8716
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 10.0,
+                        "y": 10.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\PixelField\\SungearEngine2D\\Projects\\test3\\Resources\\Textures\\bg3.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "name": "bg3",
+              "isUIElement": false,
+              "active": true,
+              "tag": {
+                "name": "default"
+              }
+            }
+          },
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -883.034,
+                        "y": 723.027
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 7.5,
+                        "y": 5.63
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\PixelField\\SungearEngine2D\\Projects\\test3\\Resources\\Textures\\wc_3_tfz_screenshot.jpg",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "name": "wc_3_tfz_screenshot",
+              "isUIElement": false,
+              "active": true,
+              "tag": {
+                "name": "default"
+              }
+            }
+          },
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -2550.034,
+                        "y": 723.027
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 7.5,
+                        "y": 5.63
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\PixelField\\SungearEngine2D\\Projects\\test3\\Resources\\Textures\\wc_3_tfz_screenshot.jpg",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "name": "wc_3_tfz_screenshot",
+              "isUIElement": false,
+              "active": true,
+              "tag": {
+                "name": "default"
+              }
+            }
+          },
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": 1417.634,
+                        "y": -550.05255
+                      },
+                      "rotation": -158.0,
+                      "scale": {
+                        "x": 10.0,
+                        "y": 10.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\PixelField\\SungearEngine2D\\Projects\\test3\\Resources\\Textures\\bg1.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "name": "bg1",
+              "isUIElement": false,
+              "active": true,
+              "tag": {
+                "name": "default"
+              }
+            }
+          },
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": 3529.634,
+                        "y": -550.05255
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 10.0,
+                        "y": 10.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\PixelField\\SungearEngine2D\\Projects\\test3\\Resources\\Textures\\bg1.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "name": "bg1",
+              "isUIElement": false,
+              "active": true,
+              "tag": {
+                "name": "пщмт"
+              }
+            }
+          }
+        ],
+        "id": 0,
+        "name": "default"
+      }
+    ]
+  },
+  "screenClearColor": {
+    "x": 1.0,
+    "y": 1.0,
+    "z": 1.0,
+    "w": 1.0
+  },
+  "tags": [
+    {
+      "name": "default"
+    },
+    {
+      "name": "пщмт"
+    }
+  ]
+}
