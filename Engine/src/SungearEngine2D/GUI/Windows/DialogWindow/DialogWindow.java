@@ -10,7 +10,8 @@ import org.joml.Vector2f;
 
 public class DialogWindow
 {
-    private String windowName;
+    private String windowName = "";
+    private int id = -1;
 
     private DialogWindowCallback dialogWindowCallback;
 
@@ -51,7 +52,9 @@ public class DialogWindow
             ImGui.setNextWindowPos(Core2D.getWindow().getSize().x / 2.0f - windowSize.x / 2.0f, Core2D.getWindow().getSize().y / 2.0f - windowSize.y / 2.0f, ImGuiCond.Appearing);
             ImGui.setNextWindowSize(windowSize.x, windowSize.y, ImGuiCond.Appearing);
             ImGui.begin(windowName, ImGuiWindowFlags.NoDocking | ImGuiWindowFlags.NoCollapse);
-            ImGui.setWindowFocus();
+            if(MainView.getCurrentFocusedDialogWindow() == id) {
+                ImGui.setWindowFocus();
+            }
 
             ImVec2 currentWindowSize = ImGui.getWindowSize();
             this.currentWindowSize.x = currentWindowSize.x;
@@ -101,7 +104,12 @@ public class DialogWindow
     public void setButtonsNum(int buttonsNum) { this.buttonsNum = buttonsNum; }
 
     public String getWindowName() { return windowName; }
-    public void setWindowName(String windowName) { this.windowName = windowName; }
+    public void setWindowName(String windowName)
+    {
+        this.windowName = windowName;
+        id = ImGui.getID(windowName);
+        MainView.setCurrentFocusedDialogWindow(id);
+    }
 
     public String getMiddleButtonText() { return middleButtonText; }
     public void setMiddleButtonText(String middleButtonText) { this.middleButtonText = middleButtonText; }

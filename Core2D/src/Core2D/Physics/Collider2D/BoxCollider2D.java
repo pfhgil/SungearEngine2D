@@ -1,6 +1,7 @@
 package Core2D.Physics.Collider2D;
 
 import Core2D.Component.Components.TransformComponent;
+import Core2D.Graphics.Graphics;
 import Core2D.Object2D.Object2D;
 import Core2D.Physics.PhysicsWorld;
 import Core2D.Physics.Rigidbody2D;
@@ -10,6 +11,7 @@ import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Fixture;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 public class BoxCollider2D
@@ -19,6 +21,7 @@ public class BoxCollider2D
 
     private Vector2f scale = new Vector2f(1.0f, 1.0f);
     private Vector2f offset = new Vector2f();
+
     private transient Line2D[] debugLines = new Line2D[4];
 
     public BoxCollider2D()
@@ -33,11 +36,15 @@ public class BoxCollider2D
     public void draw(Object2D object2D)
     {
         for(Line2D line2D : debugLines) {
-            line2D.draw();
+            Graphics.getMainRenderer().render(line2D);
         }
 
         TransformComponent transformComponent = object2D.getComponent(TransformComponent.class);
-        Vector2f center = new Vector2f(transformComponent.getTransform().getPosition()).add(transformComponent.getTransform().getCentre()).add(offset.);
+        Vector3f rotatedOffset = new Vector3f(offset.x, offset.y, 0.0f);
+        rotatedOffset.rotateZ((float) Math.toRadians(transformComponent.getTransform().getRotation()));
+        Vector2f center = new Vector2f(transformComponent.getTransform().getPosition())
+                .add(transformComponent.getTransform().getCentre())
+                .add(new Vector2f(rotatedOffset.x, rotatedOffset.y));
         Vector2f halfSize = new Vector2f(100.0f * scale.x, 100.0f * scale.y);
 
         Vector2f min = new Vector2f(center).sub(new Vector2f(halfSize).mul(0.5f));
@@ -86,16 +93,24 @@ public class BoxCollider2D
     {
         setOffset(boxCollider2D.getOffset());
         setScale(boxCollider2D.getScale());
+
+        boxCollider2D = null;
     }
 
     private void updateShape()
     {
-        PolygonShape shape = (PolygonShape) fixture.getShape();
-        shape.setAsBox((100.0f / PhysicsWorld.RATIO / 2.0f) * scale.x, (100.0f / PhysicsWorld.RATIO / 2.0f) * scale.y, new Vec2(offset.x / PhysicsWorld.RATIO, offset.y / PhysicsWorld.RATIO), rigidbody2D.getBody().getAngle());
-        Fixture newFixture = rigidbody2D.getBody().createFixture(shape, fixture.getDensity());
-        rigidbody2D.getBody().destroyFixture(fixture);
+        if(fixture != null && rigidbody2D != null) {
+            PolygonShape shape = (PolygonShape) fixture.getShape();
+            shape.setAsBox((100.0f / PhysicsWorld.RATIO / 2.0f) * scale.x, (100.0f / PhysicsWorld.RATIO / 2.0f) * scale.y, new Vec2(offset.x / PhysicsWorld.RATIO, offset.y / PhysicsWorld.RATIO), rigidbody2D.getBody().getAngle());
 
-        fixture = newFixture;
+            Fixture newFixture = rigidbody2D.getBody().createFixture(shape, fixture.getDensity());
+            newFixture.setFriction(rigidbody2D.getFriction());
+            newFixture.setRestitution(rigidbody2D.getRestitution());
+            newFixture.setSensor(rigidbody2D.isSensor());
+            rigidbody2D.getBody().destroyFixture(fixture);
+
+            fixture = newFixture;
+        }
     }
 
     public Vector2f getOffset() { return offset; }
@@ -119,68 +134,4 @@ public class BoxCollider2D
 
     public Rigidbody2D getRigidbody2D() { return rigidbody2D; }
     public void setRigidbody2D(Rigidbody2D rigidbody2D) { this.rigidbody2D = rigidbody2D; }
-
-    /*
-    public BoxCollider2D(Object2D attachedObject2D)
-    {
-        super(attachedObject2D);
-
-        shape = new PolygonShape();
-        shape.setAsBox(100.0f / PhysicsWorld.RATIO / 2, 100.0f / PhysicsWorld.RATIO / 2);
-
-        setShape(shape);
-
-        create();
-
-        attachedObject2D = null;
-    }
-
-    public BoxCollider2D(Object2D attachedObject2D, Collider2D boxCollider2D)
-    {
-        super(attachedObject2D);
-
-        shape = new PolygonShape();
-        shape.setAsBox(100.0f / PhysicsWorld.RATIO / 2, 100.0f / PhysicsWorld.RATIO / 2);
-
-        setShape(shape);
-
-        create(boxCollider2D);
-
-        attachedObject2D = null;
-        boxCollider2D = null;
-    }
-
-    public void scale(Vector2f scale)
-    {
-        //Vector2f dif = new Vector2f(this.scale.x - scale.x, this.scale.y - scale.y);
-        this.scale.add(new Vector2f(scale));
-
-        body.destroyFixture(body.getFixtureList());
-
-        shape.setAsBox(Math.abs((100.0f / PhysicsWorld.RATIO / 2.0f) * this.scale.x), Math.abs((100.0f / PhysicsWorld.RATIO / 2.0f) * this.scale.y));
-
-        fixtureDef.shape = shape;
-
-        body.createFixture(fixtureDef);
-
-        scale = null;
-    }
-
-    public void setScale(Vector2f scale)
-    {
-        this.scale = scale;
-
-        body.destroyFixture(body.getFixtureList());
-
-        shape.setAsBox(Math.abs((100.0f / PhysicsWorld.RATIO / 2.0f) * this.scale.x), Math.abs((100.0f / PhysicsWorld.RATIO / 2.0f) * this.scale.y));
-
-        fixtureDef.shape = shape;
-
-        body.createFixture(fixtureDef);
-
-        scale = null;
-    }
-
-    public PolygonShape getShape() { return shape; }
-         */
 }

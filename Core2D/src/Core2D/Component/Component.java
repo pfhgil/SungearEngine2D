@@ -16,7 +16,12 @@ public abstract class Component
 
     }
 
-    protected void update(float deltaTime)
+    public void update()
+    {
+
+    }
+
+    public void deltaUpdate(float deltaTime)
     {
 
     }

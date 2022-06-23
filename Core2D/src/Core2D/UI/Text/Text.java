@@ -82,14 +82,6 @@ public class Text extends CommonDrawableObjectsParameters
         vertexShader = null;
     }
 
-    @Override
-    public void draw()
-    {
-        if(active) {
-            textObjectsInstancing.draw();
-        }
-    }
-
     private void calculateMinHeight()
     {
         minHeight = maxHeight;
@@ -102,6 +94,8 @@ public class Text extends CommonDrawableObjectsParameters
     @Override
     public void destroy()
     {
+        shouldDestroy = true;
+
         text = null;
         textObjectsInstancing.destroy();
         textObjectsInstancing = null;
@@ -320,4 +314,6 @@ public class Text extends CommonDrawableObjectsParameters
             glyph.setUIElement(this.isUIElement);
         }
     }
+
+    public ObjectsInstancing getTextObjectsInstancing() { return textObjectsInstancing; }
 }

@@ -1,22 +1,30 @@
 package Core2D.Scene2D;
 
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
-import Core2D.Core2D.Graphics;
+import Core2D.Component.Components.ScriptComponent;
+import Core2D.Graphics.Graphics;
 import Core2D.Layering.Layer;
+import Core2D.Layering.LayerObject;
 import Core2D.Layering.Layering;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
 import Core2D.Physics.PhysicsWorld;
+import Core2D.Scripting.ScriptTempValue;
+import Core2D.Scripting.ScriptTempValues;
+import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.Tag;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
+import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Scene2D
 {
     private String name = "sampleScene2D";
+    private String scenePath = "";
 
     private Layering layering = new Layering();
 
@@ -28,6 +36,8 @@ public class Scene2D
     private List<Tag> tags = new ArrayList<>();
 
     private transient PhysicsWorld physicsWorld = new PhysicsWorld();
+
+    private ScriptSystem scriptSystem = new ScriptSystem();
 
     public Scene2D()
     {
@@ -62,7 +72,7 @@ public class Scene2D
 
     public void draw()
     {
-        layering.draw();
+        Graphics.getMainRenderer().render(layering);
 
         if(scene2DCallback != null) {
             scene2DCallback.onDraw();
@@ -98,6 +108,25 @@ public class Scene2D
         }
 
         Graphics.setScreenClearColor(screenClearColor);
+
+        int k = 0;
+        if(scriptSystem.getScriptTempValuesList().size() != 0) {
+            for (Layer layer : layering.getLayers()) {
+                for (LayerObject layerObject : layer.getRenderingObjects()) {
+                    if (layerObject.getObject() instanceof Object2D) {
+                        List<ScriptComponent> scriptComponents = ((Object2D) layerObject.getObject()).getAllComponents(ScriptComponent.class);
+
+                        for (ScriptComponent scriptComponent : scriptComponents) {
+                            if (scriptComponent.getScript().getScriptClass().getFields().length != 0) {
+                                scriptSystem.getScriptTempValuesList().get(k).setScript(scriptComponent.getScript());
+                                k++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        applyScriptsTempValues();
     }
 
     public void addTag(Tag tag)
@@ -137,6 +166,87 @@ public class Scene2D
         tags.remove(tag);
     }
 
+    public Object2D findObject2DByName(String name)
+    {
+        for(Layer layer : layering.getLayers()) {
+            for(LayerObject o : layer.getRenderingObjects()) {
+                if(o.getObject() instanceof Object2D && ((Object2D) o.getObject()).getName().equals(name)) {
+                    return (Object2D) o.getObject();
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public Object2D findObject2DByTag(String tag)
+    {
+        for(Layer layer : layering.getLayers()) {
+            for(LayerObject o : layer.getRenderingObjects()) {
+                if(o.getObject() instanceof Object2D && ((Object2D) o.getObject()).getTag().getName().equals(tag)) {
+                    return (Object2D) o.getObject();
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public void saveScriptsTempValues()
+    {
+        for(int i = 0; i < scriptSystem.getScriptTempValuesList().size(); i++) {
+            scriptSystem.getScriptTempValuesList().get(i).destroy();
+        }
+
+        scriptSystem.getScriptTempValuesList().clear();
+
+        for(Layer layer : layering.getLayers()) {
+            for(int i = 0; i < layer.getRenderingObjects().size(); i++) {
+                LayerObject layerObject = layer.getRenderingObjects().get(i);
+                if(layerObject.getObject() instanceof Object2D) {
+                    List<ScriptComponent> scriptComponents = ((Object2D) layerObject.getObject()).getAllComponents(ScriptComponent.class);
+
+                    if(scriptComponents.size() != 0) {
+                        ScriptTempValues scriptTempValues = new ScriptTempValues();
+                        for (ScriptComponent scriptComponent : scriptComponents) {
+                            for (Field field : scriptComponent.getScript().getScriptClass().getFields()) {
+                                ScriptTempValue scriptTempValue = new ScriptTempValue();
+
+                                scriptTempValue.setValue(scriptComponent.getScript().getFieldValue(field));
+                                scriptTempValue.setFieldName(field.getName());
+                                scriptTempValue.setScript(scriptComponent.getScript());
+
+                                scriptTempValues.getScriptTempValues().add(scriptTempValue);
+                            }
+                        }
+                        scriptSystem.getScriptTempValuesList().add(scriptTempValues);
+                    }
+                }
+            }
+        }
+    }
+
+    public void applyScriptsTempValues()
+    {
+        scriptSystem.applyTempValues();
+
+        for (Layer layer : layering.getLayers()) {
+            for(int i = 0; i < layer.getRenderingObjects().size(); i++) {
+                LayerObject layerObject = layer.getRenderingObjects().get(i);
+                if (layerObject.getObject() instanceof Object2D) {
+                    List<ScriptComponent> scriptComponents = ((Object2D) layerObject.getObject()).getAllComponents(ScriptComponent.class);
+
+                    if (scriptComponents.size() != 0) {
+                        for (ScriptComponent scriptComponent : scriptComponents) {
+                            long lastModified = new File(scriptComponent.getScript().getPath() + ".java").lastModified();
+                            scriptComponent.getScript().setLastModified(lastModified);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
     public void destroy()
     {
         name = null;
@@ -151,6 +261,9 @@ public class Scene2D
         this.name = name;
         name = null;
     }
+
+    public String getScenePath() { return scenePath; }
+    public void setScenePath(String scenePath) { this.scenePath = scenePath; }
 
     public Layering getLayering() { return layering; }
     public void setLayering(Layering layering) { this.layering = layering; }
@@ -177,4 +290,7 @@ public class Scene2D
 
     public PhysicsWorld getPhysicsWorld() { return physicsWorld; }
     public void setPhysicsWorld(PhysicsWorld physicsWorld) { this.physicsWorld = physicsWorld; }
+
+    public ScriptSystem getScriptSystem() { return scriptSystem; }
+    public void setScriptSystem(ScriptSystem scriptSystem) { this.scriptSystem = scriptSystem; }
 }

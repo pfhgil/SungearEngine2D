@@ -189,6 +189,12 @@ public class LinesInstancing extends CommonDrawableObjectsParameters
         }
     }
 
+    @Override
+    public void update()
+    {
+        updateVBO();
+    }
+
     private void updateVBO()
     {
         updateArray();
@@ -210,42 +216,10 @@ public class LinesInstancing extends CommonDrawableObjectsParameters
     }
 
     @Override
-    public void draw()
-    {
-        if(active && drawableLines2D.size() != 0) {
-            updateVBO();
-
-            glBindVertexArray(vao);
-
-            shaderProgram.bind();
-
-            ShaderUtils.setUniform(
-                    shaderProgram.getHandler(),
-                    "projectionMatrix",
-                    Core2D.getProjectionMatrix()
-            );
-
-            if (drawableLines2D.get(0).getAttachedCamera2D() != null) {
-                ShaderUtils.setUniform(
-                        shaderProgram.getHandler(),
-                        "cameraMatrix",
-                        drawableLines2D.get(0).getAttachedCamera2D().getTransform().getModelMatrix()
-                );
-            }
-
-            GL46C.glLineWidth(linesWidth);
-            GL46C.glDrawElementsInstanced(GL_LINES, 2, GL_UNSIGNED_SHORT, 0, drawableLines2D.size());
-            GL46C.glLineWidth(1.0f);
-
-            shaderProgram.unBind();
-
-            glBindVertexArray(0);
-        }
-    }
-
-    @Override
     public void destroy()
     {
+        shouldDestroy = true;
+
         Iterator<Line2D> lines2DIterator = drawableLines2D.iterator();
         while(lines2DIterator.hasNext()) {
             Line2D line2D = lines2DIterator.next();
@@ -288,4 +262,10 @@ public class LinesInstancing extends CommonDrawableObjectsParameters
 
     public float getLinesWidth() { return linesWidth; }
     public void setLinesWidth(float linesWidth) { this.linesWidth = linesWidth; }
+
+    public List<Line2D> getDrawableLines2D() { return drawableLines2D; }
+
+    public ShaderProgram getShaderProgram() { return shaderProgram; }
+
+    public int getVAOID() { return vao; }
 }

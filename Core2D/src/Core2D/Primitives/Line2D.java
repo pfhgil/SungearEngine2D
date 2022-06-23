@@ -2,6 +2,7 @@ package Core2D.Primitives;
 
 import Core2D.Camera2D.Camera2D;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
+import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Resources;
 import Core2D.Object2D.Transform;
@@ -97,41 +98,34 @@ public class Line2D extends CommonDrawableObjectsParameters
         vertexArrayObject.putVBO(vertexBufferObject, false);
         vertexArrayObject.putIBO(indexBufferObject);
 
+        attributesLayout = null;
+        vertexBufferObject = null;
+        indexBufferObject = null;
+
         // отвязываю vao
         vertexArrayObject.unBind();
     }
 
     @Override
-    public void draw()
+    public void update()
     {
-        vertexArrayObject.bind();
+        updateMVPMatrix();
+    }
 
-        // использовать шейдер
-        shaderProgram.bind();
-
-        if (attachedCamera2D != null && !isUIElement) {
+    private void updateMVPMatrix()
+    {
+        if(attachedCamera2D != null && !isUIElement) {
             mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(attachedCamera2D.getTransform().getModelMatrix()).mul(transform.getModelMatrix());
         } else {
             mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(transform.getModelMatrix());
         }
-        ShaderUtils.setUniform(
-                shaderProgram.getHandler(),
-                "mvpMatrix",
-                mvpMatrix
-        );
-
-        glLineWidth(lineWidth);
-        glDrawElements(GL_LINES, 2, GL_UNSIGNED_SHORT, 0);
-        glLineWidth(1.0f);
-
-        shaderProgram.unBind();
-
-        vertexArrayObject.unBind();
     }
 
     @Override
     public void destroy()
     {
+        shouldDestroy = true;
+
         transform.destroy();
         transform = null;
 
@@ -174,6 +168,8 @@ public class Line2D extends CommonDrawableObjectsParameters
     public float[] getData() { return data; }
 
     public ShaderProgram getShaderProgram() { return shaderProgram; }
+
+    public VertexArrayObject getVertexArrayObject() { return vertexArrayObject; }
 
     public Transform getTransform() { return transform; }
     public void setTransform(Transform transform)

@@ -19,30 +19,18 @@ public class AtlasDrawing extends CommonDrawableObjectsParameters
     }
 
     @Override
-    public void update(float deltaTime)
+    public void deltaUpdate(float deltaTime)
     {
         for(int i = 0; i < drawableObjects2D.size(); i++) {
-            drawableObjects2D.get(i).update(deltaTime);
-        }
-    }
-
-    @Override
-    public void draw()
-    {
-        if(active) {
-            atlasTexture2D.bind();
-
-            for (Object2D drawableObject2D : drawableObjects2D) {
-                drawableObject2D.drawWithoutTextureBind();
-            }
-
-            atlasTexture2D.unBind();
+            drawableObjects2D.get(i).deltaUpdate(deltaTime);
         }
     }
 
     @Override
     public void destroy()
     {
+        shouldDestroy = true;
+
         for(Object2D obj : drawableObjects2D) {
             obj.destroy();
             obj = null;
@@ -55,6 +43,8 @@ public class AtlasDrawing extends CommonDrawableObjectsParameters
 
         destroyLayerObject();
     }
+
+    public Texture2D getAtlasTexture2D() { return atlasTexture2D; }
 
     public List<Object2D> getDrawableObjects2D() { return drawableObjects2D; }
 }

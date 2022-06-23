@@ -10,20 +10,57 @@ import java.util.Scanner;
 
 public class FileUtils
 {
+    public static File findFile(File dir, String parentName, String name) {
+        File result = null; // no need to store result as String, you're returning File anyway
+        File[] dirlist  = dir.listFiles();
+
+        if(dirlist != null) {
+            for (int i = 0; i < dirlist.length; i++) {
+                if (dirlist[i].isDirectory()) {
+                    result = findFile(dirlist[i], name);
+                    if (result != null) break; // recursive call found the file; terminate the loop
+                } if (dirlist[i].getName().matches(name) && dirlist[i].getParentFile().getName().matches(parentName)) {
+                    return dirlist[i]; // found the file; return it
+                }
+            }
+        }
+        return result; // will return null if we didn't find anything
+    }
+
+    public static File findFile(File dir, String name) {
+        File result = null; // no need to store result as String, you're returning File anyway
+        File[] dirlist  = dir.listFiles();
+
+        if(dirlist != null) {
+            for (int i = 0; i < dirlist.length; i++) {
+                if (dirlist[i].isDirectory()) {
+                    result = findFile(dirlist[i], name);
+                    if (result != null) break; // recursive call found the file; terminate the loop
+                } if (dirlist[i].getName().matches(name)) {
+                    return dirlist[i]; // found the file; return it
+                }
+            }
+        }
+        return result; // will return null if we didn't find anything
+    }
+
     public static Object deSerializeObject(String path)
     {
         Object obj = null;
 
-        ObjectInputStream objectOutputStream = null;
         try {
-            objectOutputStream = new ObjectInputStream(new FileInputStream(path));
+            FileInputStream fileInputStream = new FileInputStream(path);
+            ObjectInputStream objectOutputStream = new ObjectInputStream(fileInputStream);
 
             obj = objectOutputStream.readObject();
 
             objectOutputStream.close();
+            fileInputStream.close();
+
             objectOutputStream = null;
+            fileInputStream = null;
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            Log.CurrentSession.println(ExceptionsUtils.toString(e));
         }
 
         return obj;
@@ -42,30 +79,26 @@ public class FileUtils
             objectOutputStream.close();
             objectOutputStream = null;
         } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
+            Log.CurrentSession.println(ExceptionsUtils.toString(e));
         }
 
         return obj;
     }
 
-    public static void serializeObject(String path, Object obj)
+    public synchronized static void serializeObject(String path, Object obj)
     {
-        ObjectOutputStream objectOutputStream = null;
         try {
-            objectOutputStream = new ObjectOutputStream(new FileOutputStream(path));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+            FileOutputStream fos = new FileOutputStream(path);
+            ObjectOutputStream oos = new ObjectOutputStream(fos);
+            oos.writeObject(obj);
 
-        try {
-            if (objectOutputStream != null) {
-                objectOutputStream.writeObject(obj);
-                objectOutputStream.close();
+            oos.close();
+            fos.close();
 
-                objectOutputStream = null;
-            }
+            oos = null;
+            fos = null;
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.CurrentSession.println(ExceptionsUtils.toString(e));
         }
     }
 
@@ -85,7 +118,8 @@ public class FileUtils
             scanner.close();
             scanner = null;
         } catch (Exception e) {
-            System.out.println("[FILE_OPERATIONS_READ_ALL_LINES] Error while reading all file (name: " + file.getName() + ") lines: " + e.toString());
+            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            //System.out.println("[FILE_OPERATIONS_READ_ALL_LINES] Error while reading all file (name: " + file.getName() + ") lines: " + e.toString());
         }
 
         return stringBuilder.toString();
@@ -113,7 +147,8 @@ public class FileUtils
             bufferedReader = null;
             inputStream = null;
         } catch (Exception e) {
-            System.out.println("[FILE_OPERATIONS_READ_ALL_LINES] Error while reading all file (name: " + inputStream.toString() + ") lines: " + e.toString());
+            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            //System.out.println("[FILE_OPERATIONS_READ_ALL_LINES] Error while reading all file (name: " + inputStream.toString() + ") lines: " + e.toString());
         }
 
         return stringBuilder.toString();

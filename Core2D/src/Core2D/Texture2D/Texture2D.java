@@ -187,8 +187,8 @@ public class Texture2D
         glTexStorage2D(textureHandler, 1, internalFormat, width, height);
 
         // текстура будет растягиваться под фигуру
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, param);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, param);
 
         // ставлю режим выравнивания данных текстуры по 1 байту (чтобы цвет текстуры был правильный)
         glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
@@ -241,7 +241,11 @@ public class Texture2D
         unBind();
 
         // очищаю буфер с данными текстуры
-        if(pixelsData != null) stbi_image_free(pixelsData);
+        if(pixelsData != null) {
+            stbi_image_free(pixelsData);
+            pixelsData.clear();
+            pixelsData = null;
+        }
     }
 
     // удаление текстур

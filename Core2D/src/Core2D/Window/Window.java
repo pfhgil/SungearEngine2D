@@ -1,6 +1,6 @@
 package Core2D.Window;
 
-import Core2D.Core2D.Graphics;
+import Core2D.Graphics.Graphics;
 import Core2D.Core2D.Settings;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFWErrorCallback;

@@ -4,6 +4,7 @@ import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Controllers.PC.Mouse;
 import Core2D.Core2D.Resources;
+import Core2D.Graphics.Graphics;
 import Core2D.Object2D.Object2D;
 import Core2D.Object2D.Transform;
 import Core2D.UI.Text.Text;
@@ -66,7 +67,28 @@ public class Button extends CommonDrawableObjectsParameters
         if(text != null) updateTextPosition();
     }
 
-    private void update()
+    @Override
+    public void destroy()
+    {
+        shouldDestroy = true;
+
+        button.destroy();
+        button = null;
+
+        uiElementCallback = null;
+
+        name = null;
+
+        originalClickPosition = null;
+
+        text.destroy();
+        text = null;
+
+        backMultiplier = null;
+    }
+
+    @Override
+    public void update()
     {
         Vector2f mousePosition = Mouse.getMousePosition();
         if (Utils.isPointInNoRotatedObject(mousePosition, button) && !hovered) {
@@ -93,16 +115,6 @@ public class Button extends CommonDrawableObjectsParameters
 
         if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
             originalClickPosition = new Vector2f(mousePosition);
-        }
-    }
-
-    @Override
-    public void draw()
-    {
-        if(active) {
-            update();
-            button.draw();
-            if(text != null) text.draw();
         }
     }
 

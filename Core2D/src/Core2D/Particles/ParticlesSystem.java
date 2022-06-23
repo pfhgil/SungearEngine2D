@@ -58,6 +58,13 @@ public class ParticlesSystem
         }
     }
 
+    public void update()
+    {
+        if(active) {
+            createParticlesTimer.startFrame();
+        }
+    }
+
     public void stopSystem()
     {
         if(active) {
@@ -85,7 +92,6 @@ public class ParticlesSystem
         particlesObjectsInstancing.destroy();
         particlesObjectsInstancing = null;
 
-        Core2D.getTimersManager().getAllTimers().remove(createParticlesTimer);
         createParticlesTimer.setName(null);
         createParticlesTimer = null;
     }

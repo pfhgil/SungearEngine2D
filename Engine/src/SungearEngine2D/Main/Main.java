@@ -1,17 +1,30 @@
 package SungearEngine2D.Main;
 
 import Core2D.Camera2D.Camera2D;
+import Core2D.Component.Components.ScriptComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DUserCallback;
-import Core2D.Core2D.Graphics;
+import Core2D.Graphics.Graphics;
+import Core2D.Layering.Layer;
+import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
+import Core2D.Scene2D.SceneManager;
+import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.CameraController.CameraController;
 import SungearEngine2D.GUI.GUI;
 import SungearEngine2D.GUI.Views.MainView;
+import SungearEngine2D.Scripting.Compiler;
+import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Main
 {
@@ -19,6 +32,8 @@ public class Main
 
     private static Object2D cameraAnchor;
     private static Camera2D mainCamera2D;
+
+    public static Thread helpThread;
 
     public static void main(String[] main)
     {
@@ -41,6 +56,67 @@ public class Main
                 GUI.init();
 
                 GraphicsRenderer.init();
+
+
+                helpThread = new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Settings.initCompiler();
+                        Settings.loadSettingsFile();
+
+                        while(true) {
+                            try {
+                                Thread.sleep(250);
+                            } catch (InterruptedException e) {
+                                Log.CurrentSession.println(ExceptionsUtils.toString(e));
+                            }
+
+                            if(SceneManager.getCurrentScene2D() != null) {
+                                SceneManager.getCurrentScene2D().saveScriptsTempValues();
+
+                                List<String> compiledScripts = new ArrayList<>();
+
+                                for(int p = 0; p < SceneManager.getCurrentScene2D().getLayering().getLayers().size(); p++) {
+                                    Layer layer = SceneManager.getCurrentScene2D().getLayering().getLayers().get(p);
+                                    if(layer != null && layer.getRenderingObjects() != null) {
+                                        int size = layer.getRenderingObjects().size();
+                                        for (int i = 0; i < size; i++) {
+                                            if (layer.getRenderingObjects().get(i).getObject() instanceof Object2D && !((Object2D) layer.getRenderingObjects().get(i).getObject()).isShouldDestroy()) {
+                                                List<ScriptComponent> scriptComponents = ((Object2D) layer.getRenderingObjects().get(i).getObject()).getAllComponents(ScriptComponent.class);
+
+                                                for (int k = 0; k < scriptComponents.size(); k++) {
+                                                    // был ли уже скомпилирован скрипт
+                                                    boolean alreadyCompiled = false;
+                                                    for(int l = 0; l < compiledScripts.size(); l++) {
+                                                        if(compiledScripts.get(l).equals(scriptComponents.get(k).getScript().getName())) {
+                                                            alreadyCompiled = true;
+                                                            break;
+                                                        }
+                                                    }
+                                                    if(alreadyCompiled) {
+                                                        continue;
+                                                    }
+                                                    long lastModified = new File(scriptComponents.get(k).getScript().getPath() + ".java").lastModified();
+                                                    if (lastModified != scriptComponents.get(k).getScript().getLastModified()) {
+                                                        scriptComponents.get(k).getScript().setLastModified(lastModified);
+                                                        boolean compiled = Compiler.compileScript(scriptComponents.get(k).getScript().getPath() + ".java");
+                                                        if (compiled) {
+                                                            compiledScripts.add(scriptComponents.get(k).getScript().getName());
+                                                            scriptComponents.get(k).getScript().loadClass(new File(scriptComponents.get(k).getScript().getPath()).getParent(), FilenameUtils.getBaseName(new File(scriptComponents.get(k).getScript().getPath()).getName()));
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+
+                                SceneManager.getCurrentScene2D().applyScriptsTempValues();
+                            }
+                        }
+                    }
+                });
+                helpThread.start();
 
                 //Object2D newSceneObject2D = new Object2D();
                 //Gson objSerializer = new GsonBuilder().setPrettyPrinting().create();

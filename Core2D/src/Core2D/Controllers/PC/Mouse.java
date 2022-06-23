@@ -1,7 +1,9 @@
 package Core2D.Controllers.PC;
 
 import Core2D.Core2D.Core2D;
+import Core2D.Graphics.Graphics;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -12,13 +14,18 @@ public class Mouse
 
     private static Vector2f mousePosition = new Vector2f();
 
+    private static boolean customSettings = false;
+
+    private static Vector2f viewportSize = new Vector2f();
+    private static Vector2f viewportPosition = new Vector2f();
+
     // Возвращает true в том случае, если кнопка нажата / в удержании
     public static boolean buttonDown(int buttonId)
     {
         // кнопка нажата
         boolean buttonDown = false;
 
-        buttonDown = glfwGetMouseButton(Core2D.getWindow().getWindow(), buttonId) == 1;
+        buttonDown = glfwGetMouseButton(Core2D.getWindow().getWindow(), buttonId) == 1 && mousePosition.x > 0.0f && mousePosition.y > 0.0f;
 
         return buttonDown;
     }
@@ -26,13 +33,13 @@ public class Mouse
     // Возвращает true в том случае, если кнопка нажата, иначе возвращает false
     public static boolean buttonPressed(int keyId)
     {
-        return buttonDown(keyId) && !buttons[keyId];
+        return buttonDown(keyId) && !buttons[keyId] && mousePosition.x > 0.0f && mousePosition.y > 0.0f;
     }
 
     // Возвращает true в том случае, если кнопка отпущена, иначе возвращает false
     public static boolean buttonReleased(int keyId)
     {
-        return !buttonDown(keyId) && buttons[keyId];
+        return !buttonDown(keyId) && buttons[keyId] && mousePosition.x > 0.0f && mousePosition.y > 0.0f;
     }
 
     // Удерживает весь ввод с мышки
@@ -51,9 +58,38 @@ public class Mouse
         // получаю позицию курсора
         glfwGetCursorPos(Core2D.getWindow().getWindow(), curPosX,  curPosY);
 
-        mousePosition.x = (float) curPosX[0];
-        mousePosition.y = Core2D.getWindow().getSize().y - (float) curPosY[0];
+        Vector2f tmpMousePos = new Vector2f();
+        tmpMousePos.x = (float) curPosX[0];
+        tmpMousePos.y = Core2D.getWindow().getSize().y - (float) curPosY[0];
+
+        if(!customSettings) {
+            viewportSize = new Vector2f(Core2D.getWindow().getSize());
+        }
+
+        Vector2i targetSize = Graphics.getScreenSize();
+        float currentX = tmpMousePos.x - viewportPosition.x;
+        currentX = (currentX / viewportSize.x) * targetSize.x;
+
+        float currentY = tmpMousePos.y - viewportPosition.y;
+        currentY = (currentY / viewportSize.y) * targetSize.y;
+
+        mousePosition.x = currentX;
+        mousePosition.y = currentY;
     }
+
+
+    public static void setViewportSize(Vector2f viewportSize)
+    {
+        customSettings = true;
+        Mouse.viewportSize = viewportSize;
+    }
+
+    public static void setViewportPosition(Vector2f viewportPosition)
+    {
+        customSettings = true;
+        Mouse.viewportPosition = viewportPosition;
+    }
+
     // получаю позицию курсора
     public static Vector2f getMousePosition() { return mousePosition; }
 }

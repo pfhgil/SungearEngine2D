@@ -1,12 +1,12 @@
 package Core2D.Core2D;
 
 import Core2D.Camera2D.Camera2D;
+import Core2D.Graphics.Graphics;
 import Core2D.Input.Core2DInputCallback;
 import Core2D.Log.Log;
-import Core2D.Scene2D.SceneManager2D;
+import Core2D.Scene2D.SceneManager;
 import Core2D.Timer.Timer;
 import Core2D.Timer.TimerCallback;
-import Core2D.Timer.TimersManager;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Window.Window;
 import org.joml.Vector2i;
@@ -24,10 +24,6 @@ public class Core2D extends Graphics
     private static Core2DInputCallback core2DInputCallback;
 
     public static Core2DUserCallback core2DUserCallback;
-
-    private static TimersManager timersManager = new TimersManager();
-
-    private static SceneManager2D sceneManager2D = new SceneManager2D();
 
     public static Camera2D currentCamera2D;
 
@@ -127,7 +123,7 @@ public class Core2D extends Graphics
                             core2DUserCallback.onDeltaUpdate(deltaTime);
                         }
 
-                        sceneManager2D.updateCurrentScene2D(deltaTime);
+                        SceneManager.updateCurrentScene2D(deltaTime);
                     }
                     totalIterations++;
                 }
@@ -180,14 +176,6 @@ public class Core2D extends Graphics
 
     public static Core2DInputCallback getCore2DInputCallback() {
         return core2DInputCallback;
-    }
-
-    public static TimersManager getTimersManager() {
-        return timersManager;
-    }
-
-    public static SceneManager2D getSceneManager2D() {
-        return sceneManager2D;
     }
 
     public static Timer getDeltaTimer() {

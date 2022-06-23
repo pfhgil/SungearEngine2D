@@ -39,24 +39,18 @@ public class Timer
     public Timer(float destTime)
     {
         this.destTime = destTime;
-
-        Core2D.getTimersManager().getAllTimers().add(this);
     }
 
     public Timer(float destTime, boolean cyclic)
     {
         this.destTime = destTime;
         this.cyclic = cyclic;
-
-        Core2D.getTimersManager().getAllTimers().add(this);
     }
 
     public Timer(TimerCallback timerCallback, float destTime)
     {
         this.timerCallbacks.add(timerCallback);
         this.destTime = destTime;
-
-        Core2D.getTimersManager().getAllTimers().add(this);
     }
 
     public Timer(TimerCallback timerCallback, float destTime, boolean cyclic)
@@ -64,8 +58,6 @@ public class Timer
         this.timerCallbacks.add(timerCallback);
         this.destTime = destTime;
         this.cyclic = cyclic;
-
-        Core2D.getTimersManager().getAllTimers().add(this);
     }
 
     public void start()

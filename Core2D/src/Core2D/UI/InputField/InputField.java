@@ -1,5 +1,6 @@
 package Core2D.UI.InputField;
 
+import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Controllers.PC.Keyboard;
 import Core2D.Controllers.PC.Mouse;
@@ -18,9 +19,9 @@ import org.lwjgl.glfw.GLFW;
  * ДОДЕЛАТЬ
  */
 // TODO: написать destroy метод
-public class InputField
+public class InputField extends CommonDrawableObjectsParameters
 {
-    private static class Cursor
+    public static class Cursor
     {
         private Object2D cursor;
 
@@ -37,11 +38,6 @@ public class InputField
             cursor.setUIElement(true);
             cursor.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 1.0f));
             cursor.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(0.025f, 1.0f));
-        }
-
-        public void draw()
-        {
-            cursor.draw();
         }
 
         public void update(float deltaTime)
@@ -180,18 +176,16 @@ public class InputField
         Core2D.getCore2DInputCallback().getUserInputCallbacks().add(userInputCallback);
     }
 
-    public void draw()
+    @Override
+    public void update()
     {
-        inputField.draw();
-        text.draw();
-        if(selected) cursor.draw();
-
         if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
             selected = Utils.isPointInNoRotatedObject(Mouse.getMousePosition(), inputField);
         }
     }
 
-    public void update(float deltaTime)
+    @Override
+    public void deltaUpdate(float deltaTime)
     {
         dt = deltaTime;
 
@@ -229,6 +223,8 @@ public class InputField
         cursorTransform = null;
     }
 
+    public Object2D getInputField() { return inputField; }
+
     public Text getText() { return text; }
 
     public Cursor getCursor() { return cursor; }
@@ -238,4 +234,6 @@ public class InputField
 
     public float getCursorOffsetDivisorY() { return cursorOffsetDivisorY; }
     public void setCursorOffsetDivisorY(float cursorOffsetDivisorY) { this.cursorOffsetDivisorY = cursorOffsetDivisorY; }
+
+    public boolean isSelected() { return selected; }
 }

@@ -19,7 +19,7 @@ public class FileChooserWindow
     private DialogWindow dialogWindow;
 
     private String currentChosenFilePath = "";
-    private String initialDirectoryPath = "D:\\PixelField\\SungearEngine2D";
+    private String initialDirectoryPath = "";
 
     private FileChooserWindowCallback fileChooserWindowCallback;
 
@@ -42,6 +42,9 @@ public class FileChooserWindow
 
     private void create()
     {
+        File f = new File("");
+        initialDirectoryPath = f.getAbsolutePath();
+
         dialogWindow = new DialogWindow("Choose directory", "Cancel", "Choose");
         //dialogWindow.setWindowSize(new Vector2f(250.0f, dialogWindow.getWindowSize().y));
         dialogWindow.setDialogWindowCallback(new DialogWindowCallback() {

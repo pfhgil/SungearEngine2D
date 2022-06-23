@@ -90,11 +90,14 @@ public class ProgressBar extends CommonDrawableObjectsParameters
     }
 
     @Override
-    public void draw()
+    public void destroy()
     {
-        if(active) {
-            progressBar.draw();
-        }
+        shouldDestroy = true;
+
+        fillingColor = null;
+
+        progressBar.destroy();
+        progressBar = null;
     }
 
     public Object2D getProgressBar() { return progressBar; }

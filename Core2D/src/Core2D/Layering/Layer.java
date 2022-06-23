@@ -2,6 +2,7 @@ package Core2D.Layering;
 
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Components.TextureComponent;
+import Core2D.Graphics.Graphics;
 import Core2D.Object2D.Object2D;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -22,13 +23,6 @@ public class Layer
         this.name = name;
     }
 
-    public void draw()
-    {
-        for(LayerObject object : renderingObjects) {
-            ((CommonDrawableObjectsParameters) object.getObject()).draw();
-        }
-    }
-
     // рисует все объекты разными цветами при выборке объектов
     // тут я ставлю цвет объекта для pick и отключаю текстуру
     // TODO: сделать не только для объектов отрисовку
@@ -47,7 +41,7 @@ public class Layer
                 if(textureComponent != null) {
                     textureComponent.setActive(false);
                 }
-                object2D.draw();
+                Graphics.getMainRenderer().render(object2D);
                 object2D.setColor(lastColor);
                 if(textureComponent != null) {
                     textureComponent.setActive(true);
@@ -79,8 +73,8 @@ public class Layer
 
     public void update(float deltaTime)
     {
-        for(LayerObject layerObject : renderingObjects) {
-            ((CommonDrawableObjectsParameters) layerObject.getObject()).update(deltaTime);
+        for(int i = 0; i < renderingObjects.size(); i++) {
+            ((CommonDrawableObjectsParameters) renderingObjects.get(i).getObject()).deltaUpdate(deltaTime);
         }
     }
 

@@ -2,9 +2,11 @@ package SungearEngine2D.GUI.Views;
 
 import Core2D.Core2D.Core2D;
 import Core2D.Log.Log;
+import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.Main.Main;
+import SungearEngine2D.Main.Settings;
 import SungearEngine2D.Project.ProjectsManager;
 import imgui.ImGui;
 import imgui.ImVec2;
@@ -188,6 +190,7 @@ public class ResourcesView extends View
 
         if(ImGui.beginDragDropSource()) {
             ImGui.setDragDropPayload("File", files[id]);
+            MainView.getInspectorView().setDroppingFile(files[id]);
             currentMovingFile = files[id];
 
             ImGui.image(textureID, iconImageSize.x / 2.0f, iconImageSize.y / 2.0f, 0, 0, 1, 1, 1.0f, 1.0f, 1.0f, 0.5f);
@@ -199,8 +202,9 @@ public class ResourcesView extends View
 
         if(ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left) && ImGui.isItemHovered()) {
             if(FilenameUtils.getExtension(files[id].getName()).equals("sgs")) {
-                Core2D.getSceneManager2D().loadScene(files[id].getPath());
-                MainView.getInspectorView().setCurrentInspectingObject(null);
+                MainView.getSceneView().stopPlayMode();
+                SceneManager.loadScene(files[id].getPath());
+                SceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;
             }
         }
 
@@ -277,17 +281,29 @@ public class ResourcesView extends View
             // если тип файл - java, то создаю этот файл с заранее подготовленным кодом
             if(newFile.exists() && fileType.equals("Java")) {
                 String javaFileCode =
+                        "import Core2D.Object2D.*;\n" +
+                        "\n" +
                         "public class " + name + "\n" +
                         "{\n" +
-                        "   public void update()\n" +
-                        "   {\n" +
-                        "       \n" +
-                        "   }\n" +
-                        "   \n" +
-                        "   public void deltaUpdate(float deltaTime)\n" +
-                        "   {\n" +
-                        "       \n" +
-                        "   }\n" +
+                        "    public void update()\n" +
+                        "    {\n" +
+                        "        \n" +
+                        "    }\n" +
+                        "    \n" +
+                        "    public void deltaUpdate(float deltaTime)\n" +
+                        "    {\n" +
+                        "        \n" +
+                        "    }\n" +
+                        "    \n" +
+                        "    public void collider2DEnter(Object2D otherObj)\n" +
+                        "    {\n" +
+                        "        \n" +
+                        "    }\n" +
+                        "    \n" +
+                        "    public void collider2DExit(Object2D otherObj)\n" +
+                        "    {\n" +
+                        "        \n" +
+                        "    }\n" +
                         "}";
                 // создаю файл с уже заранее подготовленным кодом
                 FileUtils.writeToFile(

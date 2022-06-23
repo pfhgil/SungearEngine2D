@@ -2,16 +2,20 @@ package Core2D.Deserializers;
 
 import Core2D.Component.Component;
 import Core2D.Component.Components.Rigidbody2DComponent;
+import Core2D.Component.Components.ScriptComponent;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Object2D.Object2D;
 import Core2D.Texture2D.Texture2D;
+import Core2D.Utils.FileUtils;
 import Core2D.Utils.Tag;
 import com.google.gson.*;
 import org.joml.Vector4f;
 
+import java.io.File;
 import java.lang.reflect.Type;
 
+// TODO: исправить загрузку ресурсов по пути
 public class Object2DDeserializer implements JsonDeserializer<Object2D>
 {
     @Override
@@ -44,8 +48,14 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
             } else if(component instanceof TextureComponent) {
                 TextureComponent textureComponent = (TextureComponent) component;
 
+                String textureFileName = new File(textureComponent.getTexture2D().getSource()).getName();
+                String parentFileName = new File(textureComponent.getTexture2D().getSource()).getParentFile().getName();
+                File textureFile = FileUtils.findFile(new File("./"), parentFileName, textureFileName);
+
+                //System.out.println("texture: " + textureFile.getPath());
+
                 Texture2D texture2D = new Texture2D(
-                        textureComponent.getTexture2D().getSource(),
+                        textureFile.getPath(),
                         textureComponent.getTexture2D().getParam(),
                         textureComponent.getTexture2D().getGLTextureBlock()
                 );
@@ -60,6 +70,17 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                 Rigidbody2DComponent rigidbody2DComponent = new Rigidbody2DComponent();
                 object2D.addComponent(rigidbody2DComponent);
                 rigidbody2DComponent.set(component);
+                //System.out.println("mass: " + ((Rigidbody2DComponent) component).getRigidbody2D().getMass());
+            } else if(component instanceof ScriptComponent) {
+                ScriptComponent scriptComponent = (ScriptComponent) component;
+                File scriptFile = new File(scriptComponent.getScript().getPath() + ".java");
+
+                if(scriptFile.exists()) {
+                    ScriptComponent sc = new ScriptComponent();
+                    object2D.addComponent(sc);
+                    System.out.println("dsdsd");
+                    sc.set(component);
+                }
             } else {
                 object2D.addComponent(component);
             }

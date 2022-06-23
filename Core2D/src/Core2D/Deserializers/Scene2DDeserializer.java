@@ -2,6 +2,7 @@ package Core2D.Deserializers;
 
 import Core2D.Layering.Layering;
 import Core2D.Scene2D.Scene2D;
+import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.Tag;
 import com.google.gson.*;
 import org.joml.Vector4f;
@@ -19,10 +20,12 @@ public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
         Vector4f screenClearColor = context.deserialize(jsonObject.get("screenClearColor"), Vector4f.class);
         Layering layering = context.deserialize(jsonObject.get("layering"), Layering.class);
         JsonArray tags = jsonObject.getAsJsonArray("tags");
+        ScriptSystem scriptSystem = context.deserialize(jsonObject.get("scriptSystem"), ScriptSystem.class);
 
         Scene2D scene2D = new Scene2D(name);
         scene2D.setScreenClearColor(screenClearColor);
         scene2D.setLayering(layering);
+        scene2D.setScriptSystem(scriptSystem);
 
         //this.setName(name);
         //this.setScreenClearColor(screenClearColor);

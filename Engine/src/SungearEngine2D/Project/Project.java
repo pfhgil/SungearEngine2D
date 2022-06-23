@@ -9,6 +9,7 @@ public class Project implements Serializable
     private static final long serialVersionUID = 6332323L;
 
     private String projectParentPath;
+    private String projectPath;
     private String projectName;
 
     private String resourcesPath;
@@ -19,6 +20,7 @@ public class Project implements Serializable
     {
         this.projectParentPath = projectParentPath;
         this.projectName = projectName;
+        this.projectPath = projectParentPath + "\\" + projectName;
 
         resourcesPath = projectParentPath + "\\" + projectName + "\\Resources";
         scriptsPath = projectParentPath + "\\" + projectName + "\\Scripts";
@@ -27,7 +29,16 @@ public class Project implements Serializable
 
     public String getProjectParentPath() { return projectParentPath; }
 
-    public String getProjectPath() { return projectParentPath + "\\" + projectName;  }
+    public void setProjectParentPath(String projectParentPath) { this.projectParentPath = projectParentPath; }
+
+    public String getProjectPath() { return projectPath; }
+    public void setProjectPath(String projectPath)
+    {
+        this.projectPath = projectPath;
+        resourcesPath = projectPath + "\\Resources";
+        scriptsPath = projectPath + "\\Scripts";
+        scenesPath = projectPath + "\\Scenes";
+    }
 
     public String getProjectName() { return projectName; }
 

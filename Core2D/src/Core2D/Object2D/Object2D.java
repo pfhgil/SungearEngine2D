@@ -12,9 +12,11 @@ import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Resources;
 import Core2D.Core2D.Settings;
 import Core2D.Log.Log;
+import Core2D.Scene2D.SceneManager;
 import Core2D.Shader.Shader;
 import Core2D.Shader.ShaderProgram;
 import Core2D.ShaderUtils.*;
+import Core2D.Utils.ExceptionsUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -29,7 +31,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
 import static org.lwjgl.opengl.GL20C.GL_VERTEX_SHADER;
 
-public class Object2D extends CommonDrawableObjectsParameters implements Serializable
+public class Object2D extends CommonDrawableObjectsParameters implements Serializable, AutoCloseable
 {
     // лист компонентов
     private List<Component> components = new ArrayList<>();
@@ -79,9 +81,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
 
     // является ли ui элементом
     private boolean isUIElement = false;
-
-    // sprite анимации
-    //private List<SpriteAnimation> spriteAnimations = new ArrayList<>();
 
     // цвета для picking`а мышкой
     private transient Vector3f pickColor = new Vector3f();
@@ -161,14 +160,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
             rigidbody2DComponent.set(object2D.getComponent(Rigidbody2DComponent.class));
             addComponent(rigidbody2DComponent);
             rigidbody2DComponent = null;
-            /*
-            if(objectTransform.getRigidbody2D() instanceof BoxCollider2D) {
-                //transform.setCollider2D(new BoxCollider2D(this, object2D.getTransform().getCollider2D()));
-            } else if(objectTransform .getRigidbody2D() instanceof CircleCollider2D) {
-                //transform.setCollider2D(new CircleCollider2D(this, object2D.getTransform().getCollider2D()));
-            }
-
-             */
         }
 
         active = object2D.isActive();
@@ -178,13 +169,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         tag = object2D.getTag();
 
         isUIElement = object2D.isUIElement;
-
-        /*
-        for(SpriteAnimation spriteAnimation : object2D.getSpriteAnimations()) {
-            spriteAnimations.add(new SpriteAnimation(spriteAnimation));
-        }
-
-         */
 
         if(Core2D.currentCamera2D != null) {
             setAttachedCamera2D(object2D.getAttachedCamera2D());
@@ -207,6 +191,21 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
 
         pickColor = null;
         pickColor = new Vector3f(Settings.Other.Picking.currentPickingColor);
+    }
+
+    /**
+     * @return New Object2D on current scene
+     */
+    public static Object2D instantiate()
+    {
+        if(SceneManager.getCurrentScene2D() != null) {
+            Object2D object2D = new Object2D();
+            object2D.setLayer(SceneManager.getCurrentScene2D().getLayering().getLayer("default"));
+
+            return object2D;
+        }
+
+        return null;
     }
 
     private void loadVAO()
@@ -236,105 +235,35 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     }
 
     @Override
-    public void update(float deltaTime)
+    public void update()
     {
-        if(active) {
-            getComponent(TransformComponent.class).update(deltaTime);
-
-            /*
-            for (SpriteAnimation spriteAnimation : spriteAnimations) {
-                spriteAnimation.update(deltaTime);
-            }
-
-             */
-        }
+        updateMVPMatrix();
     }
 
     @Override
-    public void draw()
+    public void deltaUpdate(float deltaTime)
     {
         if(active) {
-            TextureComponent textureComponent = getComponent(TextureComponent.class);
-            if(textureComponent != null) {
-                // использую VAO
-                vertexArrayObject.bind();
-
-                // использую текстуру
-                textureComponent.getTexture2D().bind();
-
-                // использовать шейдер
-                shaderProgram.bind();
-
-                if (attachedCamera2D != null && !isUIElement) {
-                    mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(attachedCamera2D.getTransform().getModelMatrix()).mul(getComponent(TransformComponent.class).getTransform().getModelMatrix());
-                } else {
-                    mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(getComponent(TransformComponent.class).getTransform().getModelMatrix());
-                }
-                ShaderUtils.setUniform(
-                        shaderProgram.getHandler(),
-                        "mvpMatrix",
-                        mvpMatrix
-                );
-
-                // нарисовать два треугольника
-                glDrawElements(drawingMode, 6, GL_UNSIGNED_SHORT, 0);
-
-                // прекращаю использование шейдерной программы
-                shaderProgram.unBind();
-
-                // прекращаю использование текстуры
-                textureComponent.getTexture2D().unBind();
-
-                // прекращаю использование VAO
-                vertexArrayObject.unBind();
-            } else {
-                drawWithoutTextureBind();
+            for(Component component : components) {
+                component.deltaUpdate(deltaTime);
             }
-
-            textureComponent = null;
         }
     }
 
-    // отрисовка без бинда текстуры
-    public void drawWithoutTextureBind()
+    private void updateMVPMatrix()
     {
-        if(active) {
-            // использую VAO
-            vertexArrayObject.bind();
-
-            // использовать шейдер
-            shaderProgram.bind();
-
-            if (attachedCamera2D != null && !isUIElement) {
-                // выполняю умножения матриц тут, т.к. умножение матриц в шейдере не выгодно. умножение происходит 6 раз, т.к. вершин 6
-                // а если выполнять в этом методе, то всего лишь 1 раз
-                // передача одной матрицы вместо трех (проекции, модели, камеры)
-                // но немного нагрузка на cpu идет, но она незначительная
-                // для оптимизации
-                mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(attachedCamera2D.getTransform().getModelMatrix()).mul(getComponent(TransformComponent.class).getTransform().getModelMatrix());
-            } else {
-                mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(getComponent(TransformComponent.class).getTransform().getModelMatrix());
-            }
-            ShaderUtils.setUniform(
-                    shaderProgram.getHandler(),
-                    "mvpMatrix",
-                    mvpMatrix
-            );
-
-            // нарисовать два треугольника
-            glDrawElements(drawingMode, 6, GL_UNSIGNED_SHORT, 0);
-
-            // прекращаю использование шейдерной программы
-            shaderProgram.unBind();
-
-            // прекращаю использование VAO
-            vertexArrayObject.unBind();
+        if(attachedCamera2D != null && !isUIElement) {
+            mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(attachedCamera2D.getTransform().getModelMatrix()).mul(getComponent(TransformComponent.class).getTransform().getModelMatrix());
+        } else {
+            mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(getComponent(TransformComponent.class).getTransform().getModelMatrix());
         }
     }
 
     @Override
     public void destroy()
     {
+        shouldDestroy = true;
+
         Iterator<Component> componentsIterator = components.iterator();
         while(componentsIterator.hasNext()) {
             Component component = componentsIterator.next();
@@ -350,22 +279,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         attachedCamera2D = null;
 
         color = null;
-
-        /*
-        if(Settings.Other.Picking.currentPickingColor.x > 0.0f) {
-            Settings.Other.Picking.currentPickingColor.x--;
-        } else {
-            if (Settings.Other.Picking.currentPickingColor.y > 0.0f) {
-                Settings.Other.Picking.currentPickingColor.x = 255.0f;
-                Settings.Other.Picking.currentPickingColor.y--;
-            } else if(Settings.Other.Picking.currentPickingColor.x == 0.0f && Settings.Other.Picking.currentPickingColor.y == 0.0f) {
-                Settings.Other.Picking.currentPickingColor.x = 255.0f;
-                Settings.Other.Picking.currentPickingColor.y = 255.0f;
-                Settings.Other.Picking.currentPickingColor.z--;
-            }
-        }
-
-         */
 
         pickColor = null;
 
@@ -383,20 +296,13 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
 
         tag = null;
 
-        /*
-        Iterator<SpriteAnimation> spriteAnimationsIterator = spriteAnimations.iterator();
-        while(spriteAnimationsIterator.hasNext()) {
-            SpriteAnimation spriteAnimation = spriteAnimationsIterator.next();
-            spriteAnimation.destroy();
-            spriteAnimation = null;
-            spriteAnimationsIterator.remove();
-        }
-        spriteAnimationsIterator = null;
-        spriteAnimations = null;
-
-         */
-
         destroyLayerObject();
+
+        try {
+            close();
+        } catch (Exception e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+        }
     }
 
     public void addComponent(Component component)
@@ -411,6 +317,8 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         components.add(component);
         component.setObject2D(this);
         component.init();
+
+        component = null;
     }
 
     public <T extends Component> List<T> getAllComponents(Class<T> componentClass)
@@ -440,6 +348,8 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     {
         if(component instanceof NonRemovable) {
             Log.showErrorDialog("Component " + component.getClass().getName() + " is non-removable");
+
+            component = null;
             throw new RuntimeException("Component " + component.getClass().getName() + " is non-removable");
         } else {
             component.destroy();
@@ -549,4 +459,9 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     }
 
     public Vector3f getPickColor() { return pickColor; }
+
+    @Override
+    public void close() throws Exception {
+
+    }
 }

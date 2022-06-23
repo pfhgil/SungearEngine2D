@@ -150,6 +150,15 @@ public class Transform implements Serializable
         updateModelMatrix();
     }
 
+    public void lookAt(Vector2f target)
+    {
+        float dx = target.x - position.x;
+        float dy = target.y - position.y;
+        float angle = (float) (Math.atan2(dy, dx) * 180.0f / Math.PI);
+
+        setRotation(angle);
+    }
+
     public void scale(Vector2f scale)
     {
         this.scale = this.scale.add(scale);

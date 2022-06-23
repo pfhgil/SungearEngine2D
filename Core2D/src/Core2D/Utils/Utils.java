@@ -88,6 +88,21 @@ public class Utils
         return s.toString();
     }
 
+    public static String outputStreamToString(OutputStream outputStream)
+    {
+        ByteArrayOutputStream baos = null;
+        try {
+            baos = new ByteArrayOutputStream();
+            baos.writeTo(outputStream);
+
+            return baos.toString();
+        } catch (IOException e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+        }
+
+        return "no string";
+    }
+
     // считывает из файла в ByteBuffer
     public static ByteBuffer resourceToByteBuffer(String resource) throws IOException
     {

@@ -13,13 +13,6 @@ import java.util.List;
 public class Layering {
     private List<Layer> layers = new ArrayList<>();
 
-    public void draw()
-    {
-        for(Layer layer : layers) {
-            layer.draw();
-        }
-    }
-
     // рисует все объекты разными цветами при выборке объектов
     public void drawPicking()
     {

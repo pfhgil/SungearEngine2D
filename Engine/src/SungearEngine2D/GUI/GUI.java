@@ -5,6 +5,7 @@ import Core2D.Core2D.Graphics;
 import Core2D.Utils.FileUtils;
 import SungearEngine2D.GUI.Views.MainView;
 import SungearEngine2D.GUI.Views.ResourcesView;
+import SungearEngine2D.Main.Settings;
 import SungearEngine2D.Project.ProjectsManager;
 import imgui.ImGui;
 import org.apache.commons.io.FilenameUtils;
@@ -68,6 +69,8 @@ public class GUI
         renderer.startFrame();
 
         MainView.draw();
+
+        Settings.drawImGUI();
 
         /*
         ImGui.begin("click view");

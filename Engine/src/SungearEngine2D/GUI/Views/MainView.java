@@ -14,6 +14,9 @@ public class MainView
     // находится ли какой-то вид в фокусе кроме вида сцены
     public static boolean isSomeViewFocusedExceptSceneView = false;
 
+    private static int lastFocusedDialogWindow = -1;
+    private static int currentFocusedDialogWindow = -1;
+
     private static InspectorView inspectorView;
     private static ProjectTreeView projectTreeView;
     private static ResourcesView resourcesView;
@@ -21,6 +24,7 @@ public class MainView
     private static SceneView sceneView;
     private static TopToolbarView topToolbarView;
     private static LogView logView;
+    private static BottomMenuView bottomMenuView;
 
     public static void init()
     {
@@ -33,6 +37,7 @@ public class MainView
         sceneView = new SceneView();
         topToolbarView = new TopToolbarView();
         logView = new LogView();
+        bottomMenuView = new BottomMenuView();
     }
 
     public static void draw()
@@ -70,6 +75,8 @@ public class MainView
             sceneView.draw();
 
             logView.draw();
+
+            bottomMenuView.draw();
         }
         ImGui.end();
     }
@@ -85,4 +92,13 @@ public class MainView
     public static SceneView getSceneView() { return sceneView; }
 
     public static TopToolbarView getTopToolbarView() { return topToolbarView; }
+
+    public static BottomMenuView getBottomMenuView() {  return bottomMenuView;  }
+
+    public static int getCurrentFocusedDialogWindow() { return currentFocusedDialogWindow; }
+    public static void setCurrentFocusedDialogWindow(int currentFocusedDialogWindow)
+    {
+        MainView.lastFocusedDialogWindow = MainView.currentFocusedDialogWindow;
+        MainView.currentFocusedDialogWindow = currentFocusedDialogWindow;
+    }
 }

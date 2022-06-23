@@ -236,6 +236,11 @@ public class ObjectsInstancing extends CommonDrawableObjectsParameters
         }
     }
 
+    @Override
+    public void update()
+    {
+        updateVBO();
+    }
 
     private void updateVBO()
     {
@@ -258,46 +263,18 @@ public class ObjectsInstancing extends CommonDrawableObjectsParameters
     }
 
     @Override
-    public void update(float deltaTime)
+    public void deltaUpdate(float deltaTime)
     {
         for(int i = 0; i < drawableObjects2D.size(); i++) {
-            drawableObjects2D.get(i).update(deltaTime);
-        }
-    }
-
-    @Override
-    public void draw()
-    {
-        if(active && drawableObjects2D.size() != 0) {
-            updateVBO();
-
-            atlasTexture2D.bind();
-
-            glBindVertexArray(vao);
-
-            shaderProgram.bind();
-
-            if (drawableObjects2D.get(0).getAttachedCamera2D() != null) {
-                ShaderUtils.setUniform(
-                        shaderProgram.getHandler(),
-                        "cameraMatrix",
-                        drawableObjects2D.get(0).getAttachedCamera2D().getTransform().getModelMatrix()
-                );
-            }
-
-            GL46C.glDrawElementsInstanced(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0, drawableObjects2D.size());
-
-            shaderProgram.unBind();
-
-            glBindVertexArray(0);
-
-            atlasTexture2D.unBind();
+            drawableObjects2D.get(i).deltaUpdate(deltaTime);
         }
     }
 
     @Override
     public void destroy()
     {
+        shouldDestroy = true;
+
         Iterator<Object2D> objects2DIterator = drawableObjects2D.iterator();
         while(objects2DIterator.hasNext()) {
             Object2D object2D = objects2DIterator.next();
@@ -366,6 +343,10 @@ public class ObjectsInstancing extends CommonDrawableObjectsParameters
 
         this.shaderProgram.unBind();
     }
+
+    public Texture2D getAtlasTexture2D() { return atlasTexture2D; }
+
+    public int getVAOID() { return vao; }
 
     public void LoadShaders(String vertexShaderPath, String fragmentShaderPath)
     {
