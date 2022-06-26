@@ -1,12 +1,13 @@
 package Core2D.Shader;
 
 import Core2D.Log.Log;
+import Core2D.Utils.ExceptionsUtils;
 
 import java.io.Serializable;
 
 import static org.lwjgl.opengl.GL20C.*;
 
-public class Shader implements Serializable
+public class Shader implements Serializable, AutoCloseable
 {
     // id шейдера
     private transient int shaderHandler;
@@ -40,20 +41,25 @@ public class Shader implements Serializable
             errorString = glGetShaderInfoLog(shaderHandler, maxErrorStringLength);
 
             // удаление шейдера
-            delete();
+            destroy();
 
             // вывод ошибки в консоль
-            System.out.println("Error while creating and compiling shader. Core2D.Shader type is: " + shaderTypeToString(shaderType) + ". Error is: " + errorString);
-            Log.CurrentSession.println("Error while creating and compiling shader. Core2D.Shader type is: " + shaderTypeToString(shaderType) + ". Error is: " + errorString);
+            Log.CurrentSession.println("Error while creating and compiling shader. Core2D.Shader type is: " + shaderTypeToString(shaderType) + ". Error is: " + errorString, Log.MessageType.ERROR);
         }
 
         shaderCode = null;
     }
 
-    public void delete()
+    public void destroy()
     {
         // удаление шейдера
         glDeleteShader(shaderHandler);
+
+        try {
+            close();
+        } catch (Exception e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        }
     }
 
     public String shaderTypeToString(int shaderType)
@@ -67,4 +73,9 @@ public class Shader implements Serializable
 
     public int getType() { return shaderType; }
     public void setType(int shaderType) { this.shaderType = shaderType; }
+
+    @Override
+    public void close() throws Exception {
+
+    }
 }

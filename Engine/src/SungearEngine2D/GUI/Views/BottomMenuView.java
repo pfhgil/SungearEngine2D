@@ -5,6 +5,7 @@ import imgui.ImGuiWindowClass;
 import imgui.ImVec2;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.internal.flag.ImGuiDockNodeFlags;
+import org.joml.Vector4f;
 
 public class BottomMenuView
 {
@@ -12,6 +13,9 @@ public class BottomMenuView
     public String progressBarText = "";
     public float progressBarCurrent = 0.0f;
     public float progressBarDest = 0.0f;
+
+    public String leftSideInfo = "";
+    public Vector4f leftSideInfoColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
 
     public void draw()
     {
@@ -22,7 +26,10 @@ public class BottomMenuView
 
         ImGui.begin("BottomMenu", ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoResize);
 
+        ImGui.textColored(leftSideInfoColor.x, leftSideInfoColor.y, leftSideInfoColor.z, leftSideInfoColor.w, leftSideInfo);
+
         if(showProgressBar) {
+
             ImVec2 windowSize = ImGui.getWindowSize();
 
             ImGui.setCursorPos(windowSize.x - 150.0f, 10.0f);

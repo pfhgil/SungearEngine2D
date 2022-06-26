@@ -8,7 +8,7 @@ import org.joml.Vector2f;
 
 import java.io.Serializable;
 
-public class Camera2D implements Serializable
+public class Camera2D implements Serializable, AutoCloseable
 {
     private Transform transform;
     // прикрепленный объект, за котором следует камера
@@ -70,5 +70,10 @@ public class Camera2D implements Serializable
     {
         this.attachedObject2D = attachedObject2D;
         this.attachedObject2D.setAttachedCamera2D(this);
+    }
+
+    @Override
+    public void close() throws Exception {
+
     }
 }

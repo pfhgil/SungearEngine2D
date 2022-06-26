@@ -95,13 +95,13 @@ public class Builder
             Process proc = pb.start();
 
             // принт вывода и ошибок
-            Log.CurrentSession.println(Utils.inputStreamToString(proc.getInputStream()));
-            Log.CurrentSession.println(Utils.inputStreamToString(proc.getErrorStream()));
+            Log.CurrentSession.println(Utils.outputStreamToString(proc.getOutputStream()), Log.MessageType.INFO);
+            Log.CurrentSession.println(Utils.inputStreamToString(proc.getErrorStream()), Log.MessageType.ERROR);
 
             // жду завершения процесса
             proc.waitFor();
         } catch (InterruptedException | IOException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
         // удаляю bat файл для билда
@@ -195,13 +195,13 @@ public class Builder
             Process proc = pb.start();
 
             // принт вывода и ошибок
-            Log.CurrentSession.println(Utils.inputStreamToString(proc.getInputStream()));
-            Log.CurrentSession.println(Utils.inputStreamToString(proc.getErrorStream()));
+            Log.CurrentSession.println(Utils.outputStreamToString(proc.getOutputStream()), Log.MessageType.INFO);
+            Log.CurrentSession.println(Utils.inputStreamToString(proc.getErrorStream()), Log.MessageType.ERROR);
 
             // жду завершения процесса
             proc.waitFor();
         } catch (InterruptedException | IOException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
         // удаляю bat файл для билда
@@ -280,13 +280,13 @@ public class Builder
             Process proc = pb.start();
 
             // принт вывода и ошибок
-            Log.CurrentSession.println(Utils.inputStreamToString(proc.getInputStream()));
-            Log.CurrentSession.println(Utils.inputStreamToString(proc.getErrorStream()));
+            Log.CurrentSession.println(Utils.outputStreamToString(proc.getOutputStream()), Log.MessageType.INFO);
+            Log.CurrentSession.println(Utils.inputStreamToString(proc.getErrorStream()), Log.MessageType.ERROR);
 
             // жду завершения процесса
             proc.waitFor();
         } catch (InterruptedException | IOException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
         // удаляю bat файл для билда

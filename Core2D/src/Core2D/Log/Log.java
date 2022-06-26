@@ -1,6 +1,7 @@
 package Core2D.Log;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -10,6 +11,14 @@ import java.util.Date;
 
 public class Log
 {
+    public enum MessageType
+    {
+        SUCCESS,
+        INFO,
+        WARNING,
+        ERROR
+    }
+
     public static class CurrentSession {
         // путь до папки для логов
         private static String directoryPath = "Log";
@@ -18,10 +27,15 @@ public class Log
         // файл текущей сессии
         private static File currentSessionFile;
 
-        private static StringBuilder log = new StringBuilder();
+        private static StringBuilder successLog = new StringBuilder();
+        private static StringBuilder infoLog = new StringBuilder();
+        private static StringBuilder warningLog = new StringBuilder();
+        private static StringBuilder errorLog = new StringBuilder();
+        private static StringBuilder allLog = new StringBuilder();
+
 
         // записывает в файл лога информацию (новая строка)
-        public static void println(String string) {
+        public static void println(String string, MessageType messageType) {
             FileWriter fileWriter = null;
             try {
                 fileWriter = new FileWriter(currentSessionFile, true);
@@ -35,8 +49,21 @@ public class Log
                     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                     Date date = new Date();
 
-                    String str = dateFormat.format(date) + "|" + string + "\n";
-                    log.append(str);
+                    String str = "";
+                    if(messageType == MessageType.SUCCESS) {
+                        str = "[#FFFFFF] " + dateFormat.format(date) + " | [#008000] " + string + "\n";
+                        successLog.append(str);
+                    } else if(messageType == MessageType.INFO) {
+                        str = "[#FFFFFF] " + dateFormat.format(date) + " | [#FFFFFF] " + string + "\n";
+                        infoLog.append(str);
+                    } else if(messageType == MessageType.WARNING) {
+                        str = "[#FFFFFF] " + dateFormat.format(date) + " | [#FFFF00] " + string + "\n";
+                        warningLog.append(str);
+                    } else if(messageType == MessageType.ERROR) {
+                        str = "[#FFFFFF] " + dateFormat.format(date) + " | [#FF0000] " + string + "\n";
+                        errorLog.append(str);
+                    }
+                    allLog.append(str);
                     // записываю в файл лога информацию
                     fileWriter.write(str);
 
@@ -82,8 +109,8 @@ public class Log
                         if (_currentSessionFile.createNewFile()) {
                             currentSessionFile = _currentSessionFile;
 
-                            println("Log directory was not founded! It was created.");
-                            println("Current session log file was created!");
+                            println("Log directory was not founded! It was created.", MessageType.INFO);
+                            println("Current session log file was created!", MessageType.SUCCESS);
                         } else {
                             showWarningDialog("LOG: Current session log file was not created!");
                         }
@@ -103,8 +130,8 @@ public class Log
                     if (_currentSessionFile.createNewFile()) {
                         currentSessionFile = _currentSessionFile;
 
-                        println("Log directory was founded!");
-                        println("Current session log file was created!");
+                        println("Log directory was founded!", MessageType.SUCCESS);
+                        println("Current session log file was created!", MessageType.SUCCESS);
                     } else {
                         showWarningDialog("LOG: Current session log file was not created!");
                     }
@@ -114,7 +141,15 @@ public class Log
             }
         }
 
-        public static String getLog() { return log.toString(); }
+        public static String getSuccessLog() { return successLog.toString(); }
+
+        public static String getInfoLog() { return infoLog.toString(); }
+
+        public static String getWarningLog() { return warningLog.toString(); }
+
+        public static String getErrorLog() { return errorLog.toString(); }
+
+        public static String getAllLog() { return allLog.toString(); }
     }
 
     // показывает окно предупреждения

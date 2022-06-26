@@ -2,22 +2,22 @@ package Core2D.Primitives;
 
 import Core2D.Camera2D.Camera2D;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
-import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Resources;
+import Core2D.Log.Log;
 import Core2D.Object2D.Transform;
 import Core2D.Shader.Shader;
 import Core2D.Shader.ShaderProgram;
 import Core2D.ShaderUtils.*;
+import Core2D.Utils.ExceptionsUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
 import static org.lwjgl.opengl.GL20C.GL_VERTEX_SHADER;
 
-public class Line2D extends CommonDrawableObjectsParameters
+public class Line2D extends CommonDrawableObjectsParameters implements AutoCloseable
 {
     // трансформации объекта
     private Transform transform;
@@ -101,6 +101,7 @@ public class Line2D extends CommonDrawableObjectsParameters
         attributesLayout = null;
         vertexBufferObject = null;
         indexBufferObject = null;
+        indices = null;
 
         // отвязываю vao
         vertexArrayObject.unBind();
@@ -139,13 +140,19 @@ public class Line2D extends CommonDrawableObjectsParameters
 
         data = null;
 
-        shaderProgram.delete();
+        shaderProgram.destroy();
         shaderProgram = null;
 
         vertexArrayObject.destroy();
         vertexArrayObject = null;
 
-        destroyLayerObject();
+        destroyParams();
+
+        try {
+            close();
+        } catch (Exception e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        }
     }
 
     public Vector4f getColor() { return color; }
@@ -214,4 +221,9 @@ public class Line2D extends CommonDrawableObjectsParameters
 
     public float getLineWidth() { return lineWidth; }
     public void setLineWidth(float lineWidth) { this.lineWidth = lineWidth; }
+
+    @Override
+    public void close() throws Exception {
+
+    }
 }

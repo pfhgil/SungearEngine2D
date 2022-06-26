@@ -3,9 +3,11 @@ package Core2D.Component.Components;
 import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
 import Core2D.Component.NonRemovable;
+import Core2D.Log.Log;
 import Core2D.Object2D.Transform;
+import Core2D.Utils.ExceptionsUtils;
 
-public class TransformComponent extends Component implements NonRemovable, NonDuplicated
+public class TransformComponent extends Component implements NonRemovable, NonDuplicated, AutoCloseable
 {
     private Transform transform;
 
@@ -36,8 +38,17 @@ public class TransformComponent extends Component implements NonRemovable, NonDu
     @Override
     public void destroy()
     {
-        this.transform.destroy();
-        this.transform = null;
+        transform.destroy();
+        transform = null;
+
+        object2D = null;
+
+
+        try {
+            close();
+        } catch (Exception e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        }
     }
 
     @Override
@@ -47,4 +58,9 @@ public class TransformComponent extends Component implements NonRemovable, NonDu
     }
 
     public Transform getTransform() { return transform; }
+
+    @Override
+    public void close() throws Exception {
+
+    }
 }

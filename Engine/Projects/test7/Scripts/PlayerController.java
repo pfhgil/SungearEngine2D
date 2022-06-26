@@ -18,11 +18,9 @@ public class PlayerController
     @InspectorView
     public float jumpPower = 800.0f;
 
-    //dfsd
-
     public void update()
     {
-        
+
     }
     
     public void deltaUpdate(float deltaTime)

@@ -110,8 +110,7 @@ public class Texture2D
 
         } catch (IOException e) {
             String exception = "Error while loading texture by source: " + source +". Error is: " + ExceptionsUtils.toString(e);
-            System.out.println(exception);
-            Log.CurrentSession.println(exception);
+            Log.CurrentSession.println(exception, Log.MessageType.ERROR);
             exception = null;
         }
 
@@ -153,8 +152,7 @@ public class Texture2D
 
         } catch (IOException e) {
             String exception = "Error while loading texture by source: " + source +". Error is: " + ExceptionsUtils.toString(e);
-            System.out.println(exception);
-            Log.CurrentSession.println(exception);
+            Log.CurrentSession.println(exception, Log.MessageType.ERROR);
             exception = null;
         }
 

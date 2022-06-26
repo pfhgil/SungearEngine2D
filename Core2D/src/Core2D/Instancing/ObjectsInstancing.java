@@ -22,8 +22,6 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
-import static org.lwjgl.opengl.GL11C.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11C.GL_UNSIGNED_SHORT;
 import static org.lwjgl.opengl.GL15C.*;
 import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
 import static org.lwjgl.opengl.GL20C.*;
@@ -297,10 +295,10 @@ public class ObjectsInstancing extends CommonDrawableObjectsParameters
 
         indices = null;
 
-        shaderProgram.delete();
+        shaderProgram.destroy();
         shaderProgram = null;
 
-        destroyLayerObject();
+        destroyParams();
     }
 
     public List<Object2D> getDrawableObjects2D() { return drawableObjects2D; }
@@ -357,7 +355,7 @@ public class ObjectsInstancing extends CommonDrawableObjectsParameters
         Shader vertexShader = new Shader(vertexShaderCode, GL_VERTEX_SHADER);
         Shader fragmentShader = new Shader(fragmentShaderCode, GL_FRAGMENT_SHADER);
 
-        shaderProgram.delete();
+        shaderProgram.destroy();
 
         // создаю шейдерную программу
         shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
@@ -395,13 +393,13 @@ public class ObjectsInstancing extends CommonDrawableObjectsParameters
 
             vertexShader = new Shader(Resources.ShadersTexts.Instancing.Object2D.vertexShaderText, GL_VERTEX_SHADER);
         } else {
-            Log.CurrentSession.println("Failed to load shader type id " + shaderType + " by path " + shaderPath + "! Please, check path and type of shader!");
+            Log.CurrentSession.println("Failed to load shader type id " + shaderType + " by path " + shaderPath + "! Please, check path and type of shader!", Log.MessageType.ERROR);
 
             vertexShader = new Shader(Resources.ShadersTexts.Instancing.Object2D.vertexShaderText, GL_VERTEX_SHADER);
             fragmentShader = new Shader(Resources.ShadersTexts.Instancing.Object2D.fragmentShaderText, GL_FRAGMENT_SHADER);
         }
 
-        shaderProgram.delete();
+        shaderProgram.destroy();
 
         // создаю шейдерную программу
         shaderProgram = new ShaderProgram(vertexShader, fragmentShader);

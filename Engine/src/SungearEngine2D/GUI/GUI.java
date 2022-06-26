@@ -1,7 +1,7 @@
 package SungearEngine2D.GUI;
 
 import Core2D.Core2D.Core2D;
-import Core2D.Core2D.Graphics;
+import Core2D.Graphics.*;
 import Core2D.Utils.FileUtils;
 import SungearEngine2D.GUI.Views.MainView;
 import SungearEngine2D.GUI.Views.ResourcesView;

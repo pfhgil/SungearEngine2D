@@ -142,7 +142,7 @@ public class ResourcesView extends View
                     boolean renamed = files[i].renameTo(renamedFile);
                     if(!renamed) {
                         Log.showErrorDialog("File " + files[i].getPath() + " can not be renamed to " + renamedFile.getPath());
-                        Log.CurrentSession.println("File " + files[i].getPath() + " can not be renamed to " + renamedFile.getPath());
+                        Log.CurrentSession.println("File " + files[i].getPath() + " can not be renamed to " + renamedFile.getPath(), Log.MessageType.ERROR);
                     }
 
                     disableEditingFilename();
@@ -338,7 +338,7 @@ public class ResourcesView extends View
                             }
                         } catch (IOException e) {
                             Log.showErrorDialog("File " + droppedFile.getPath() + " can not be moved to directory " + dest.getPath() + "! Check log file.");
-                            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+                            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                         }
                     }
                 }

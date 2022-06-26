@@ -5,7 +5,6 @@ import Core2D.Component.Components.TransformComponent;
 import Core2D.Controllers.PC.Mouse;
 import Core2D.Core2D.Core2D;
 import Core2D.Graphics.Graphics;
-import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Texture2D.Texture2D;
@@ -13,6 +12,7 @@ import SungearEngine2D.Main.GraphicsRenderer;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;
 import SungearEngine2D.Main.Settings;
+import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Utils.ResourcesUtils;
 import imgui.ImGui;
 import imgui.ImVec2;
@@ -23,8 +23,6 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector4f;
-import org.lwjgl.glfw.GLFW;
-import org.lwjgl.glfw.GLFWVidMode;
 
 import java.io.File;
 
@@ -63,7 +61,7 @@ public class SceneView extends View
             ImGui.beginMenuBar();
             {
                 Vector4f playButtonColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
-                boolean active = Settings.PlayMode.active;
+                boolean active = Settings.Playmode.active;
                 if(active) {
                     ImGui.pushStyleColor(ImGuiCol.Button, 0, 0, 0, 0);
                     ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0, 0, 0, 0);
@@ -72,7 +70,7 @@ public class SceneView extends View
                 }
                 if(ImGui.imageButton(Resources.Textures.Icons.playButtonIcon.getTextureHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, playButtonColor.x, playButtonColor.y, playButtonColor.z, playButtonColor.w)) {
                     if(SceneManager.getCurrentScene2D() != null) {
-                        if(!Settings.PlayMode.active && !Settings.PlayMode.paused) {
+                        if(!Settings.Playmode.active && !Settings.Playmode.paused) {
                             startPlayMode();
                         } else {
                             stopPlayMode();
@@ -84,7 +82,7 @@ public class SceneView extends View
                 }
 
                 Vector4f pauseButtonColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
-                boolean paused = Settings.PlayMode.paused;
+                boolean paused = Settings.Playmode.paused;
                 if(paused) {
                     ImGui.pushStyleColor(ImGuiCol.Button, 0, 0, 0, 0);
                     ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0, 0, 0, 0);
@@ -128,6 +126,8 @@ public class SceneView extends View
 
             sceneViewWindowSize.x = windowSize.x;
             sceneViewWindowSize.y = windowSize.y;
+
+            //System.out.println("size: " + windowSize.x + ", " + windowSize.y);
             // нахожу размер окна, который нужен
             ImVec2 windowSizeDest = getLargestSizeForViewport();
 
@@ -135,8 +135,8 @@ public class SceneView extends View
             ratioCameraScale.x = (windowSizeDest.x / windowSize.x) / (targetSize.x / Core2D.getWindow().getSize().x);
             ratioCameraScale.y = (windowSizeDest.y / windowSize.y) / (targetSize.y / Core2D.getWindow().getSize().y);
 
-            Mouse.setViewportPosition(MainView.getSceneView().getSceneViewWindowScreenPosition());
-            Mouse.setViewportSize(MainView.getSceneView().getSceneViewWindowSize());
+            Mouse.setViewportPosition(sceneViewWindowScreenPosition);
+            Mouse.setViewportSize(new Vector2f(sceneViewWindowSize.x, sceneViewWindowSize.y));
 
             ImGui.image(GraphicsRenderer.getRenderTarget().getTextureHandler(), windowSize.x, windowSize.y, 0, 1, 1, 0);
 
@@ -185,8 +185,12 @@ public class SceneView extends View
 
     public void startPlayMode()
     {
-        if(SceneManager.getCurrentScene2D() != null) {
-            Settings.PlayMode.active = true;
+        if(Compiler.getNotCompiledScripts().size() != 0) {
+            MainView.getBottomMenuView().leftSideInfo = "Script " + Compiler.getNotCompiledScripts().get(Compiler.getNotCompiledScripts().size() - 1) + " was not compiled. Fix all errors before entering the playmode";
+            MainView.getBottomMenuView().leftSideInfoColor.set(1.0f, 0.0f, 0.0f, 1.0f);
+        }
+        if(SceneManager.getCurrentScene2D() != null && Settings.Playmode.canEnterPlaymode) {
+            Settings.Playmode.active = true;
             SceneManager.saveScene(SceneManager.getCurrentScene2D(), SceneManager.getCurrentScene2D().getScenePath());
             SceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = true;
             SceneManager.getCurrentScene2D().getScriptSystem().runScripts = true;
@@ -195,9 +199,9 @@ public class SceneView extends View
 
     public void stopPlayMode()
     {
-        if(SceneManager.getCurrentScene2D() != null && Settings.PlayMode.active) {
-            Settings.PlayMode.active = false;
-            Settings.PlayMode.paused = false;
+        if(SceneManager.getCurrentScene2D() != null && Settings.Playmode.active) {
+            Settings.Playmode.active = false;
+            Settings.Playmode.paused = false;
             MainView.getInspectorView().setCurrentInspectingObject(null);
             SceneManager.loadScene(SceneManager.getCurrentScene2D().getScenePath());
             SceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;
@@ -207,8 +211,8 @@ public class SceneView extends View
 
     public void pausePlayMode()
     {
-        if(SceneManager.getCurrentScene2D() != null && Settings.PlayMode.active) {
-            Settings.PlayMode.paused = !Settings.PlayMode.paused;
+        if(SceneManager.getCurrentScene2D() != null && Settings.Playmode.active) {
+            Settings.Playmode.paused = !Settings.Playmode.paused;
             SceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = !SceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics;
             SceneManager.getCurrentScene2D().getScriptSystem().runScripts = !SceneManager.getCurrentScene2D().getScriptSystem().runScripts;
         }
@@ -277,8 +281,17 @@ public class SceneView extends View
     // получить позицию в мировом пространстве относительно viewport
     public Vector2f getMouseOGLPosition(Vector2f mousePosition)
     {
-        float currentX = mousePosition.x - sceneViewWindowScreenPosition.x;
-        currentX = (currentX / sceneViewWindowSize.x) * 2.0f - 1.0f;
+        /*
+        Vector2f originalMousePosition = new Vector2f(
+                mousePosition.x / Graphics.getScreenSize().x * sceneViewWindowSize.x + sceneViewWindowScreenPosition.x,
+                mousePosition.y / Graphics.getScreenSize().y * sceneViewWindowSize.y + sceneViewWindowScreenPosition.y
+        );
+
+         */
+
+        //float currentX = originalMousePosition.x - sceneViewWindowScreenPosition.x;
+        //currentX = (currentX / sceneViewWindowSize.x) * 2.0f - 1.0f;
+        float currentX = mousePosition.x / Graphics.getScreenSize().x * 2.0f - 1.0f;
         Vector4f tmp = new Vector4f(currentX, 0, 0, 1);
 
         Matrix4f viewProjection = new Matrix4f();
@@ -293,8 +306,9 @@ public class SceneView extends View
 
         currentX = tmp.x;
 
-        float currentY = mousePosition.y - sceneViewWindowScreenPosition.y;
-        currentY = ((currentY / sceneViewWindowSize.y) * 2.0f - 1.0f);
+        //float currentY = originalMousePosition.y - sceneViewWindowScreenPosition.y;
+        //currentY = ((currentY / sceneViewWindowSize.y) * 2.0f - 1.0f);
+        float currentY = mousePosition.y / Graphics.getScreenSize().y * 2.0f - 1.0f;;
 
         tmp = new Vector4f(0, currentY, 0, 1);
         tmp.mul(viewProjection);

@@ -28,7 +28,7 @@ public abstract class View
 
     public boolean isHovered()
     {
-        Vector2f mousePosition = new Vector2f(Mouse.getMousePosition());
+        Vector2f mousePosition = new Vector2f(Mouse.getScreenMousePosition());
         mousePosition.y = Core2D.getWindow().getSize().y - mousePosition.y;
         return hovered ||
                 (mousePosition.x > windowScreenPosition.x && mousePosition.x < windowScreenPosition.x + windowScreenSize.x &&

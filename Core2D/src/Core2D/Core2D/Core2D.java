@@ -80,7 +80,7 @@ public class Core2D extends Graphics
         try {
             initCore();
         } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
         draw();
@@ -140,7 +140,7 @@ public class Core2D extends Graphics
                 core2DUserCallback.onInit();
             }
         } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
 

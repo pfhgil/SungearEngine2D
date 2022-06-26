@@ -171,7 +171,7 @@ public class PhysicsWorld extends World
                     addCircleCollider2D(rigidbody2D, circleCollider2DComponent.getCircleCollider2D());
                 }
             } else {
-                Log.CurrentSession.println("Error while creating Rigidbody2D. Core2D.getSceneManager2D().getCurrentScene2D() == null");
+                Log.CurrentSession.println("Error while creating Rigidbody2D. Core2D.getSceneManager2D().getCurrentScene2D() == null", Log.MessageType.ERROR);
             }
         }
     }
@@ -180,7 +180,7 @@ public class PhysicsWorld extends World
     {
         Body body = rigidbody2D.getBody();
         if(body == null) {
-            Log.CurrentSession.println("Can not add BoxCollider2D. body == null");
+            Log.CurrentSession.println("Can not add BoxCollider2D. body == null", Log.MessageType.ERROR);
 
             return;
         }
@@ -204,7 +204,7 @@ public class PhysicsWorld extends World
     {
         Body body = rigidbody2D.getBody();
         if(body == null) {
-            Log.CurrentSession.println("Can not add CircleCollider2D. body == null");
+            Log.CurrentSession.println("Can not add CircleCollider2D. body == null", Log.MessageType.ERROR);
 
             return;
         }
@@ -222,16 +222,5 @@ public class PhysicsWorld extends World
         Fixture fixture = body.createFixture(fixtureDef);
         circleCollider2D.setFixture(fixture);
         circleCollider2D.setRigidbody2D(rigidbody2D);
-    }
-
-    public void destroyRigidbody2D(Object2D object2D)
-    {
-        Rigidbody2DComponent rigidbody2DComponent = object2D.getComponent(Rigidbody2DComponent.class);
-        if(rigidbody2DComponent != null) {
-            Rigidbody2D rigidbody2D = rigidbody2DComponent.getRigidbody2D();
-
-            rigidbody2D.getScene2D().getPhysicsWorld().destroyBody(rigidbody2D.getBody());
-            rigidbody2D = null;
-        }
     }
 }

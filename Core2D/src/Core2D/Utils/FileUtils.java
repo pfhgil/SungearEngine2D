@@ -60,7 +60,7 @@ public class FileUtils
             objectOutputStream = null;
             fileInputStream = null;
         } catch (IOException | ClassNotFoundException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
         return obj;
@@ -79,7 +79,7 @@ public class FileUtils
             objectOutputStream.close();
             objectOutputStream = null;
         } catch (IOException | ClassNotFoundException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
         return obj;
@@ -98,7 +98,7 @@ public class FileUtils
             oos = null;
             fos = null;
         } catch (IOException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
 
@@ -118,7 +118,7 @@ public class FileUtils
             scanner.close();
             scanner = null;
         } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             //System.out.println("[FILE_OPERATIONS_READ_ALL_LINES] Error while reading all file (name: " + file.getName() + ") lines: " + e.toString());
         }
 
@@ -147,7 +147,7 @@ public class FileUtils
             bufferedReader = null;
             inputStream = null;
         } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             //System.out.println("[FILE_OPERATIONS_READ_ALL_LINES] Error while reading all file (name: " + inputStream.toString() + ") lines: " + e.toString());
         }
 
@@ -166,7 +166,7 @@ public class FileUtils
             fileWriter.flush();
             fileWriter.close();
         } catch (IOException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
 
@@ -182,7 +182,7 @@ public class FileUtils
             outputStream.flush();
             outputStream.close();
         } catch (IOException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
 
@@ -193,9 +193,9 @@ public class FileUtils
         File folder = new File(path);
         // если папки не существует, то создаю папку
         if(!folder.exists()) {
-            if(!folder.mkdir()) Log.CurrentSession.println("Folder by path '" + path + "' was not created!");
+            if(!folder.mkdir()) Log.CurrentSession.println("Folder by path '" + path + "' was not created!", Log.MessageType.ERROR);
         } else {
-            Log.CurrentSession.println("Folder by path '" + path + "' already exists");
+            Log.CurrentSession.println("Folder by path '" + path + "' already exists", Log.MessageType.ERROR);
         }
 
         return folder;
@@ -209,12 +209,12 @@ public class FileUtils
         // если файла не существует, то создаю файл
         if(!file.exists()) {
             try {
-                if(!file.createNewFile()) Log.CurrentSession.println("File by path '" + path + "' was not created!");
+                if(!file.createNewFile()) Log.CurrentSession.println("File by path '" + path + "' was not created!", Log.MessageType.ERROR);
             } catch (IOException e) {
-                Log.CurrentSession.println(ExceptionsUtils.toString(e));
+                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }
         } else {
-            Log.CurrentSession.println("File by path '" + path + "' already exists");
+            Log.CurrentSession.println("File by path '" + path + "' already exists", Log.MessageType.ERROR);
         }
 
         return file;
@@ -226,7 +226,7 @@ public class FileUtils
         try {
             Files.copy(from, Paths.get(toPath), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
 
@@ -240,7 +240,7 @@ public class FileUtils
                 org.apache.commons.io.FileUtils.copyDirectory(new File(fromPath), new File(toPath));
             }
         } catch (IOException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
 }

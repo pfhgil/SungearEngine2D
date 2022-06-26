@@ -131,6 +131,8 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     // копировать объект
     public Object2D(Object2D object2D)
     {
+        destroy();
+
         // загружаю шейдеры
         Shader vertexShader = new Shader(Resources.ShadersTexts.Object2D.vertexShaderText, GL_VERTEX_SHADER);
         Shader fragmentShader = new Shader(Resources.ShadersTexts.Object2D.fragmentShaderText, GL_FRAGMENT_SHADER);
@@ -230,6 +232,8 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         vertexBufferObject = null;
         indexBufferObject = null;
 
+        indices = null;
+
         // отвязываю vao
         vertexArrayObject.unBind();
     }
@@ -288,20 +292,18 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
 
         data = null;
 
-        shaderProgram.delete();
+        shaderProgram.destroy();
         shaderProgram = null;
 
         vertexArrayObject.destroy();
         vertexArrayObject = null;
 
-        tag = null;
-
-        destroyLayerObject();
+        destroyParams();
 
         try {
             close();
         } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
 
@@ -315,7 +317,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         }
 
         components.add(component);
-        component.setObject2D(this);
+        component.object2D = this;
         component.init();
 
         component = null;
@@ -349,7 +351,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         if(component instanceof NonRemovable) {
             Log.showErrorDialog("Component " + component.getClass().getName() + " is non-removable");
 
-            component = null;
             throw new RuntimeException("Component " + component.getClass().getName() + " is non-removable");
         } else {
             component.destroy();
@@ -416,7 +417,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         vertexShaderCode = null;
         fragmentShaderCode = null;
 
-        shaderProgram.delete();
+        shaderProgram.destroy();
 
         // создаю шейдерную программу
         shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
@@ -440,13 +441,13 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
 
             vertexShader = new Shader(Resources.ShadersTexts.Object2D.vertexShaderText, GL_VERTEX_SHADER);
         } else {
-            Log.CurrentSession.println("Failed to load shader type id " + shaderType + "!");
+            Log.CurrentSession.println("Failed to load shader type id " + shaderType + "!", Log.MessageType.ERROR);
 
             vertexShader = new Shader(Resources.ShadersTexts.Object2D.vertexShaderText, GL_VERTEX_SHADER);
             fragmentShader = new Shader(Resources.ShadersTexts.Object2D.fragmentShaderText, GL_FRAGMENT_SHADER);
         }
 
-        shaderProgram.delete();
+        shaderProgram.destroy();
 
         shaderCode = null;
 

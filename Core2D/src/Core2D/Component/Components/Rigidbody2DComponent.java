@@ -2,14 +2,12 @@ package Core2D.Component.Components;
 
 import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
+import Core2D.Log.Log;
 import Core2D.Physics.Rigidbody2D;
 import Core2D.Scene2D.SceneManager;
+import Core2D.Utils.ExceptionsUtils;
 
-/*
-    TODO: добавить класс Rigidbody2D в физику, продумать как все будет работать (Rigidbody2D отвечает за гравитационные явления, тип объекта
-    (динамичный, статичный)). коллайдеры отвечают только за столкновения
- */
-public class Rigidbody2DComponent extends Component implements NonDuplicated
+public class Rigidbody2DComponent extends Component implements NonDuplicated, AutoCloseable
 {
     private Rigidbody2D rigidbody2D;
 
@@ -21,10 +19,19 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated
     @Override
     public void destroy()
     {
-        rigidbody2D.getScene2D().getPhysicsWorld().destroyRigidbody2D(getObject2D());
+        rigidbody2D.getScene2D().getPhysicsWorld().destroyBody(rigidbody2D.getBody());
+        rigidbody2D.destroy();
         rigidbody2D = null;
-        if(getObject2D().getComponent(TransformComponent.class) != null) {
-            getObject2D().getComponent(TransformComponent.class).getTransform().setRigidbody2D(null);
+        if(object2D.getComponent(TransformComponent.class) != null) {
+            object2D.getComponent(TransformComponent.class).getTransform().setRigidbody2D(null);
+        }
+
+        object2D = null;
+
+        try {
+            close();
+        } catch (Exception e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
 
@@ -41,10 +48,15 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated
     public void init()
     {
         if(SceneManager.getCurrentScene2D() != null) {
-            SceneManager.getCurrentScene2D().getPhysicsWorld().addRigidbody2D(getObject2D());
+            SceneManager.getCurrentScene2D().getPhysicsWorld().addRigidbody2D(object2D);
         }
-        getObject2D().getComponent(TransformComponent.class).getTransform().setRigidbody2D(this.getRigidbody2D());
+        object2D.getComponent(TransformComponent.class).getTransform().setRigidbody2D(this.getRigidbody2D());
     }
 
     public Rigidbody2D getRigidbody2D() { return rigidbody2D; }
+
+    @Override
+    public void close() throws Exception {
+
+    }
 }

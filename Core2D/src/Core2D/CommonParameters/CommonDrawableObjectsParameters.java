@@ -55,8 +55,10 @@ public abstract class CommonDrawableObjectsParameters
 
     }
 
-    public void destroyLayerObject()
+    public void destroyParams()
     {
+        tag.destroy();
+        tag = null;
         if(this.layer != null) {
             this.layer.getRenderingObjects().remove(layerObject);
         }

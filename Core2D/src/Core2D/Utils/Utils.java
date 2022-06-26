@@ -71,7 +71,7 @@ public class Utils
         try {
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "CP866"));
         } catch (UnsupportedEncodingException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             return "";
         }
 
@@ -79,7 +79,7 @@ public class Utils
             try {
                 if (((newLine = bufferedReader.readLine()) == null)) break;
             } catch (IOException e) {
-                Log.CurrentSession.println(ExceptionsUtils.toString(e));
+                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }
             s.append(newLine).append("\n");
 
@@ -97,7 +97,7 @@ public class Utils
 
             return baos.toString();
         } catch (IOException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
         return "no string";

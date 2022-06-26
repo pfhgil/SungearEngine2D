@@ -1,8 +1,11 @@
 package Core2D.ShaderUtils;
 
+import Core2D.Log.Log;
+import Core2D.Utils.ExceptionsUtils;
+
 import static org.lwjgl.opengl.GL15C.*;
 
-public class IndexBufferObject
+public class IndexBufferObject implements AutoCloseable
 {
     // id буфера
     private int handler;
@@ -39,6 +42,12 @@ public class IndexBufferObject
 
         if(layout != null) layout.destroy();
         layout = null;
+
+        try {
+            close();
+        } catch (Exception e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        }
     }
     // положить данные
     public void putData()
@@ -60,4 +69,9 @@ public class IndexBufferObject
     public short[] getData() { return data; }
 
     public int getUsage() { return usage; }
+
+    @Override
+    public void close() throws Exception {
+
+    }
 }

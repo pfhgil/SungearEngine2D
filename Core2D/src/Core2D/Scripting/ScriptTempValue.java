@@ -23,7 +23,7 @@ public class ScriptTempValue
                     field.set(script.getScriptClassInstance(), value);
                 }
             } catch (NoSuchFieldException | IllegalAccessException e) {
-                Log.CurrentSession.println(ExceptionsUtils.toString(e));
+                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }
         }
     }

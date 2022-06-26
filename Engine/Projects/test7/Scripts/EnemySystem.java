@@ -18,7 +18,7 @@ public class EnemySystem
     public float enemyHealth = 100.0f;
 
     @InspectorView
-    public float bulletDamage = 5.0f;
+    public float bulletDamage = 25.0f;
 
     public void update()
     {

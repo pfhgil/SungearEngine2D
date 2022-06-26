@@ -28,7 +28,8 @@ public class Layer
     // TODO: сделать не только для объектов отрисовку
     public void drawPicking()
     {
-        for(LayerObject layerObject : renderingObjects) {
+        for(int i = 0; i < renderingObjects.size(); i++) {
+            LayerObject layerObject = renderingObjects.get(i);
             if (layerObject.getObject() instanceof Object2D) {
                 Object2D object2D = ((Object2D) layerObject.getObject());
 
@@ -55,7 +56,8 @@ public class Layer
 
     public Object2D getPickedObject2D(Vector3f pixelColor)
     {
-        for(LayerObject layerObject : renderingObjects) {
+        for(int i = 0; i < renderingObjects.size(); i++) {
+            LayerObject layerObject = renderingObjects.get(i);
             if(layerObject.getObject() instanceof Object2D) {
                 Object2D object2D = ((Object2D) layerObject.getObject());
                 if(object2D.getPickColor().x == pixelColor.x &&

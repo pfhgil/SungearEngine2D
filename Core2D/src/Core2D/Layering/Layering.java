@@ -57,7 +57,7 @@ public class Layering {
         if(foundLayer == null) {
             foundLayer = getLayer(layer.getName());
         } else {
-            Log.CurrentSession.println("Layer with ID " + foundLayer.getId() + " already exists");
+            Log.CurrentSession.println("Layer with ID " + foundLayer.getId() + " already exists", Log.MessageType.ERROR);
             Log.showErrorDialog("Layer with ID " + foundLayer.getId() + " already exists");
             return;
         }
@@ -67,7 +67,7 @@ public class Layering {
 
             sort();
         } else {
-            Log.CurrentSession.println("Layer with name '" + foundLayer.getName() + "' already exists");
+            Log.CurrentSession.println("Layer with name '" + foundLayer.getName() + "' already exists", Log.MessageType.ERROR);
             Log.showErrorDialog("Layer with name '" + foundLayer.getName() + "' already exists");
         }
     }

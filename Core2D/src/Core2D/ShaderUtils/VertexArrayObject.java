@@ -1,5 +1,8 @@
 package Core2D.ShaderUtils;
 
+import Core2D.Log.Log;
+import Core2D.Utils.ExceptionsUtils;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -8,7 +11,7 @@ import static org.lwjgl.opengl.GL15C.GL_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15C.glBufferSubData;
 import static org.lwjgl.opengl.GL30C.*;
 
-public class VertexArrayObject
+public class VertexArrayObject implements AutoCloseable
 {
     // array id
     private int handler;
@@ -47,11 +50,20 @@ public class VertexArrayObject
             ibosIterator.remove();
         }
 
+        vbosIterator = null;
+        ibosIterator = null;
+
         VBOs = null;
         IBOs = null;
 
         // удаление vao
         glDeleteVertexArrays(handler);
+
+        try {
+            close();
+        } catch (Exception e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        }
     }
 
     // связка
@@ -95,4 +107,9 @@ public class VertexArrayObject
     public List<VertexBufferObject> getVBOs() { return VBOs; }
 
     public List<IndexBufferObject> getIBOs() { return IBOs; }
+
+    @Override
+    public void close() throws Exception {
+
+    }
 }

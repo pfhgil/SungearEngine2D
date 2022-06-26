@@ -23,6 +23,8 @@ public class Rigidbody2D
 
     public void set(Rigidbody2D rigidbody2D)
     {
+        this.bodyType = null;
+
         setType(rigidbody2D.getType());
         setDensity(rigidbody2D.getDensity());
         setRestitution(rigidbody2D.getRestitution());
@@ -32,6 +34,12 @@ public class Rigidbody2D
         setFixedRotation(rigidbody2D.isFixedRotation());
 
         rigidbody2D = null;
+    }
+
+    public void destroy()
+    {
+        body = null;
+        scene2D = null;
     }
 
     public float getDensity() { return density; }

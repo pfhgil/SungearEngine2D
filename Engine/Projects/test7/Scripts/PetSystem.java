@@ -24,7 +24,7 @@ public class PetSystem
     private int seenObjectsNum = 0;
 
     @InspectorView
-    public float reloadTime = 0.1f;
+    public float reloadTime = 1.0f;
 
     @InspectorView
     public float bulletSpeed = 10000.0f;

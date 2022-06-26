@@ -35,8 +35,12 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
         object2D.removeComponent(object2D.getComponent(TextureComponent.class));
 
         object2D.setName(name);
+        name = null;
         object2D.setTag(tag.getName());
+        tag.destroy();
+        tag = null;
         object2D.setColor(color);
+        color = null;
         object2D.setDrawingMode(drawingMode);
         object2D.setUIElement(isUIElement);
         object2D.setActive(active);
@@ -78,7 +82,6 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                 if(scriptFile.exists()) {
                     ScriptComponent sc = new ScriptComponent();
                     object2D.addComponent(sc);
-                    System.out.println("dsdsd");
                     sc.set(component);
                 }
             } else {

@@ -24,8 +24,11 @@ public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
 
         Scene2D scene2D = new Scene2D(name);
         scene2D.setScreenClearColor(screenClearColor);
+        screenClearColor = null;
         scene2D.setLayering(layering);
+        layering = null;
         scene2D.setScriptSystem(scriptSystem);
+        scriptSystem = null;
 
         //this.setName(name);
         //this.setScreenClearColor(screenClearColor);
@@ -37,7 +40,6 @@ public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
             if(!tag.getName().equals("default")) {
                 scene2D.addTag(tag);
             }
-            tag = null;
         }
 
         return scene2D;

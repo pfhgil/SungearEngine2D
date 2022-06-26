@@ -1,10 +1,13 @@
 package Core2D.Shader;
 
+import Core2D.Log.Log;
+import Core2D.Utils.ExceptionsUtils;
+
 import java.io.Serializable;
 
 import static org.lwjgl.opengl.GL20C.*;
 
-public class ShaderProgram implements Serializable
+public class ShaderProgram implements Serializable, AutoCloseable
 {
     // id программы
     private transient int programHandler;
@@ -43,10 +46,10 @@ public class ShaderProgram implements Serializable
             errorString = glGetProgramInfoLog(programHandler, maxErrorStringLength);
 
             // удаление программы
-            delete();
+            destroy();
             // удаление шейдеров
-            vertexShader.delete();
-            fragmentShader.delete();
+            vertexShader.destroy();
+            fragmentShader.destroy();
 
             // вывод ошибки в консоль
             System.out.println("Error while creating and linking program. Error is: " + errorString);
@@ -56,18 +59,24 @@ public class ShaderProgram implements Serializable
         detachShaders();
     }
 
-    public void delete()
+    public void destroy()
     {
         // отвязка шейдеров от программы
         detachShaders();
         // удаление программы
         glDeleteProgram(programHandler);
 
-        if(fragmentShader != null) fragmentShader.delete();
-        if(vertexShader != null) vertexShader.delete();
+        if(fragmentShader != null) fragmentShader.destroy();
+        if(vertexShader != null) vertexShader.destroy();
 
         fragmentShader = null;
         vertexShader = null;
+
+        try {
+            close();
+        } catch (Exception e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        }
     }
     public void detachShaders()
     {
@@ -92,4 +101,9 @@ public class ShaderProgram implements Serializable
     public void setFragmentShader(Shader _fragmentShader) { fragmentShader = _fragmentShader; }
 
     public int getHandler() { return programHandler; }
+
+    @Override
+    public void close() throws Exception {
+
+    }
 }

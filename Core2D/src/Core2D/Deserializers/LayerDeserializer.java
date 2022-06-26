@@ -24,7 +24,14 @@ public class LayerDeserializer implements JsonDeserializer<Layer>
             LayerObject object = context.deserialize(element, LayerObject.class);
             CommonDrawableObjectsParameters objParams = ((CommonDrawableObjectsParameters) object.getObject());
             objParams.setLayer(layer);
+
+            object = null;
+            objParams = null;
         }
+
+        renderingObjects = null;
+        name = null;
+        jsonObject = null;
 
         return layer;
     }

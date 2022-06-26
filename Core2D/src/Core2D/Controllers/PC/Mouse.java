@@ -13,6 +13,7 @@ public class Mouse
     private static boolean[] buttons = new boolean[GLFW_MOUSE_BUTTON_LAST];
 
     private static Vector2f mousePosition = new Vector2f();
+    private static Vector2f screenMousePosition = new Vector2f();
 
     private static boolean customSettings = false;
 
@@ -58,19 +59,18 @@ public class Mouse
         // получаю позицию курсора
         glfwGetCursorPos(Core2D.getWindow().getWindow(), curPosX,  curPosY);
 
-        Vector2f tmpMousePos = new Vector2f();
-        tmpMousePos.x = (float) curPosX[0];
-        tmpMousePos.y = Core2D.getWindow().getSize().y - (float) curPosY[0];
+        screenMousePosition.x = (float) curPosX[0];
+        screenMousePosition.y = Core2D.getWindow().getSize().y - (float) curPosY[0];
 
         if(!customSettings) {
             viewportSize = new Vector2f(Core2D.getWindow().getSize());
         }
 
         Vector2i targetSize = Graphics.getScreenSize();
-        float currentX = tmpMousePos.x - viewportPosition.x;
+        float currentX = screenMousePosition.x - viewportPosition.x;
         currentX = (currentX / viewportSize.x) * targetSize.x;
 
-        float currentY = tmpMousePos.y - viewportPosition.y;
+        float currentY = screenMousePosition.y - viewportPosition.y;
         currentY = (currentY / viewportSize.y) * targetSize.y;
 
         mousePosition.x = currentX;
@@ -92,4 +92,10 @@ public class Mouse
 
     // получаю позицию курсора
     public static Vector2f getMousePosition() { return mousePosition; }
+
+    public static Vector2f getScreenMousePosition() { return screenMousePosition; }
+
+    public static Vector2f getViewportSize() { return viewportSize; }
+
+    public static Vector2f getViewportPosition() { return viewportPosition; }
 }

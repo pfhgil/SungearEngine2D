@@ -91,6 +91,9 @@ public class BoxCollider2D
 
     public void set(BoxCollider2D boxCollider2D)
     {
+        this.offset = null;
+        this.scale = null;
+
         setOffset(boxCollider2D.getOffset());
         setScale(boxCollider2D.getScale());
 

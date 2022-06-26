@@ -2,9 +2,11 @@ package SungearEngine2D.GUI.Views;
 
 import Core2D.Log.Log;
 import imgui.ImGui;
-import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
+
+import java.awt.*;
+import java.util.Scanner;
 
 public class LogView extends View
 {
@@ -14,10 +16,31 @@ public class LogView extends View
     {
         ImGui.begin("Log", ImGuiWindowFlags.NoMove);
         {
-            log.set(Log.CurrentSession.getLog(), true);
+            log.set(Log.CurrentSession.getAllLog(), true);
+
+            Scanner textScanner = new Scanner(log.get());
+            Color col = new Color(1.0f, 1.0f, 1.0f, 1.0f);
 
             ImGui.pushID("LogText");
-            ImGui.inputTextMultiline("", log, ImGui.getWindowWidth(), ImGui.getContentRegionAvailY(), ImGuiInputTextFlags.ReadOnly);
+            while(textScanner.hasNextLine()) {
+                String nextLine = textScanner.nextLine();
+                Scanner lineScanner = new Scanner(nextLine);
+                lineScanner.useDelimiter(" ");
+                while(lineScanner.hasNext()) {
+                    String nextWord = lineScanner.next();
+                    if(nextWord.length() >= 9 && nextWord.charAt(0) == '[' && nextWord.charAt(8) == ']' && nextWord.charAt(1) == '#') {
+                        StringBuilder stringBuilder = new StringBuilder();
+                        for(int i = 1; i < nextWord.length() - 1; i++) {
+                            stringBuilder.append(nextWord.charAt(i));
+                        }
+                        col = Color.decode(stringBuilder.toString());
+                    } else {
+                        ImGui.sameLine();
+                        ImGui.textColored(col.getRed(), col.getGreen(), col.getBlue(), col.getAlpha(), nextWord);
+                    }
+                }
+                ImGui.newLine();
+            }
             ImGui.popID();
 
             update();

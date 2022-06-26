@@ -238,10 +238,10 @@ public class LinesInstancing extends CommonDrawableObjectsParameters
 
         indices = null;
 
-        shaderProgram.delete();
+        shaderProgram.destroy();
         shaderProgram = null;
 
-        destroyLayerObject();
+        destroyParams();
     }
 
     public boolean isUIInstancing() { return isUIInstancing; }

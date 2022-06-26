@@ -22,9 +22,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Main
 {
@@ -66,9 +64,9 @@ public class Main
 
                         while(true) {
                             try {
-                                Thread.sleep(250);
+                                Thread.sleep(100);
                             } catch (InterruptedException e) {
-                                Log.CurrentSession.println(ExceptionsUtils.toString(e));
+                                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                             }
 
                             if(SceneManager.getCurrentScene2D() != null) {
@@ -79,31 +77,25 @@ public class Main
                                 for(int p = 0; p < SceneManager.getCurrentScene2D().getLayering().getLayers().size(); p++) {
                                     Layer layer = SceneManager.getCurrentScene2D().getLayering().getLayers().get(p);
                                     if(layer != null && layer.getRenderingObjects() != null) {
-                                        int size = layer.getRenderingObjects().size();
-                                        for (int i = 0; i < size; i++) {
+                                        for (int i = 0; i < layer.getRenderingObjects().size(); i++) {
                                             if (layer.getRenderingObjects().get(i).getObject() instanceof Object2D && !((Object2D) layer.getRenderingObjects().get(i).getObject()).isShouldDestroy()) {
                                                 List<ScriptComponent> scriptComponents = ((Object2D) layer.getRenderingObjects().get(i).getObject()).getAllComponents(ScriptComponent.class);
 
                                                 for (int k = 0; k < scriptComponents.size(); k++) {
                                                     // был ли уже скомпилирован скрипт
-                                                    boolean alreadyCompiled = false;
-                                                    for(int l = 0; l < compiledScripts.size(); l++) {
-                                                        if(compiledScripts.get(l).equals(scriptComponents.get(k).getScript().getName())) {
-                                                            alreadyCompiled = true;
-                                                            break;
-                                                        }
-                                                    }
+                                                    boolean alreadyCompiled = compiledScripts.contains(scriptComponents.get(k).getScript().getName());
                                                     if(alreadyCompiled) {
                                                         continue;
                                                     }
                                                     long lastModified = new File(scriptComponents.get(k).getScript().getPath() + ".java").lastModified();
                                                     if (lastModified != scriptComponents.get(k).getScript().getLastModified()) {
+                                                        Settings.Playmode.canEnterPlaymode = false;
                                                         scriptComponents.get(k).getScript().setLastModified(lastModified);
                                                         boolean compiled = Compiler.compileScript(scriptComponents.get(k).getScript().getPath() + ".java");
                                                         if (compiled) {
-                                                            compiledScripts.add(scriptComponents.get(k).getScript().getName());
                                                             scriptComponents.get(k).getScript().loadClass(new File(scriptComponents.get(k).getScript().getPath()).getParent(), FilenameUtils.getBaseName(new File(scriptComponents.get(k).getScript().getPath()).getName()));
                                                         }
+                                                        compiledScripts.add(scriptComponents.get(k).getScript().getName());
                                                     }
                                                 }
                                             }

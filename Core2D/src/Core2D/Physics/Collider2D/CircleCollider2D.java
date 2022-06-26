@@ -99,6 +99,8 @@ public class CircleCollider2D
 
     public void set(CircleCollider2D circleCollider2D)
     {
+        this.offset = null;
+
         setOffset(circleCollider2D.getOffset());
         setRadius(circleCollider2D.getRadius());
 

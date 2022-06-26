@@ -14,3 +14,10 @@
 
 5) сделать сериализацию скриптов (путей до них)
 выполнено: нет
+
+-Xmx2048м
+-Xss256k
+-XX:+UseG1GC
+-XX:InitiatingHeapOccupancyPercent=65
+-XX:G1HeapRegionSize=2
+-XX:MaxGCPauseMillis=100

@@ -109,7 +109,7 @@ public abstract class Graphics
                 // брать сообщения из очереди и обрабатывать их
                 glfwPollEvents();
             } catch (Exception e) {
-                Log.CurrentSession.println(ExceptionsUtils.toString(e));
+                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }
         }
     }
@@ -200,7 +200,7 @@ public abstract class Graphics
             sizeX = glfwVidMode.width();
             sizeY = glfwVidMode.height();
         } else {
-            Log.CurrentSession.println("Error! Unable to get window target size (GLFWVidMode == null).");
+            Log.CurrentSession.println("Error! Unable to get window target size (GLFWVidMode == null).", Log.MessageType.ERROR);
             Log.showErrorDialog("Error! Unable to get window target size (GLFWVidMode == null).");
         }
 

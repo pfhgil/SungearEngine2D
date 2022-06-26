@@ -21,10 +21,11 @@ public class Settings
     private static DialogWindow dialogWindow = new DialogWindow("Choose JDK bin path", "Cancel", "Choose");
     private static SettingsFile settingsFile = new SettingsFile();
 
-    public static class PlayMode
+    public static class Playmode
     {
         public static boolean active = false;
         public static boolean paused = false;
+        public static boolean canEnterPlaymode = true;
     }
 
     public static void initCompiler()
@@ -144,10 +145,10 @@ public class Settings
                         try {
                             boolean created = file.createNewFile();
                             if(!created) {
-                                Log.CurrentSession.println("Error while creating settings.txt");
+                                Log.CurrentSession.println("Error while creating settings.txt", Log.MessageType.ERROR);
                             }
                         } catch (IOException e) {
-                            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+                            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                         }
 
                         settingsFile = new SettingsFile();

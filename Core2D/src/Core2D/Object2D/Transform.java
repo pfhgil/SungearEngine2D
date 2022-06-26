@@ -252,6 +252,8 @@ public class Transform implements Serializable
 
     public void set(Transform transform)
     {
+        destroy();
+
         position = new Vector2f(transform.getPosition());
         rotation = transform.getRotation();
         scale = new Vector2f(transform.getScale());
@@ -263,6 +265,10 @@ public class Transform implements Serializable
         scaleMatrix = new Matrix4f(transform.getScaleMatrix());
 
         modelMatrix = new Matrix4f(transform.getModelMatrix());
+
+        destinationPosition = new Vector2f();
+        moveToDestinationSpeedCoeff = new Vector2f();
+        destinationInfelicity = new Vector2f();
 
         init();
 

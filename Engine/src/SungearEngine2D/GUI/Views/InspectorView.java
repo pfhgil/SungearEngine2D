@@ -742,7 +742,7 @@ public class InspectorView extends View
                         action = "";
                     }
                 } catch (Exception e) {
-                    Log.CurrentSession.println(ExceptionsUtils.toString(e));
+                    Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
 
                     action = "";
 

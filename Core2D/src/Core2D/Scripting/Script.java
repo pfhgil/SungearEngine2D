@@ -34,6 +34,17 @@ public class Script
 
     public void set(Script script)
     {
+        scriptClass = null;
+        scriptClassInstance = null;
+
+        path = null;
+        name = null;
+
+        deltaUpdateMethod = null;
+        updateMethod = null;
+        collider2DEnterMethod = null;
+        collider2DExitMethod = null;
+
         loadClass(new File(script.getPath()).getParent(), FilenameUtils.getBaseName(script.getName()));
     }
 
@@ -50,14 +61,14 @@ public class Script
             scriptClassInstance = scriptClass.newInstance();
 
             path = dirPath + "\\" + baseName;
-            this.name = baseName;
+            name = baseName;
 
             deltaUpdateMethod = getMethod("deltaUpdate", float.class);
             updateMethod = getMethod("update");
             collider2DEnterMethod = getMethod("collider2DEnter", Object2D.class);
             collider2DExitMethod = getMethod("collider2DExit", Object2D.class);
         } catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
 
@@ -66,7 +77,7 @@ public class Script
         try {
             return scriptClass.getField(name);
         } catch (NoSuchFieldException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
         return null;
@@ -89,7 +100,7 @@ public class Script
         try {
             return field.get(scriptClassInstance);
         } catch (IllegalAccessException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
         return null;
@@ -100,7 +111,7 @@ public class Script
         try {
             field.set(scriptClassInstance, obj);
         } catch (IllegalAccessException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
 
@@ -109,7 +120,7 @@ public class Script
         try {
             return scriptClass.getMethod(name, parameterTypes);
         } catch (NoSuchMethodException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
         return null;
@@ -120,7 +131,7 @@ public class Script
         try {
             method.invoke(scriptClassInstance, args);
         } catch (IllegalAccessException | InvocationTargetException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e));
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
 
@@ -159,8 +170,11 @@ public class Script
 
         updateMethod = null;
         deltaUpdateMethod = null;
+        collider2DEnterMethod = null;
+        collider2DExitMethod = null;
 
         scriptClass = null;
+        scriptClassInstance = null;
     }
 
     public boolean isActive() { return active; }

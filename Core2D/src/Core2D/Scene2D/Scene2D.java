@@ -133,7 +133,7 @@ public class Scene2D
     {
         Tag foundTag = getTag(tag.getName());
         if(foundTag != null) {
-            Log.CurrentSession.println("Error adding new tag \"" + tag.getName() + "\" on scene \"" + name + "\". This tag already exists.");
+            Log.CurrentSession.println("Error adding new tag \"" + tag.getName() + "\" on scene \"" + name + "\". This tag already exists.", Log.MessageType.ERROR);
             Log.showErrorDialog("Error adding new tag \"" + tag.getName() + "\" on scene \"" + name + "\". This tag already exists.");
             return;
         }
@@ -203,7 +203,7 @@ public class Scene2D
         for(Layer layer : layering.getLayers()) {
             for(int i = 0; i < layer.getRenderingObjects().size(); i++) {
                 LayerObject layerObject = layer.getRenderingObjects().get(i);
-                if(layerObject.getObject() instanceof Object2D) {
+                if(layerObject.getObject() instanceof Object2D && !((Object2D) layerObject.getObject()).isShouldDestroy()) {
                     List<ScriptComponent> scriptComponents = ((Object2D) layerObject.getObject()).getAllComponents(ScriptComponent.class);
 
                     if(scriptComponents.size() != 0) {
@@ -233,7 +233,7 @@ public class Scene2D
         for (Layer layer : layering.getLayers()) {
             for(int i = 0; i < layer.getRenderingObjects().size(); i++) {
                 LayerObject layerObject = layer.getRenderingObjects().get(i);
-                if (layerObject.getObject() instanceof Object2D) {
+                if (layerObject.getObject() instanceof Object2D && !((Object2D) layerObject.getObject()).isShouldDestroy()) {
                     List<ScriptComponent> scriptComponents = ((Object2D) layerObject.getObject()).getAllComponents(ScriptComponent.class);
 
                     if (scriptComponents.size() != 0) {
