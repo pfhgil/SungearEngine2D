@@ -82,8 +82,6 @@ public class Layer
 
     public void destroy()
     {
-        name = null;
-
         /*
         Iterator<LayerObject> layerObjectIterator = renderingObjects.iterator();
         while(layerObjectIterator.hasNext()) {

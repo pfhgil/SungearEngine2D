@@ -3,6 +3,8 @@ package SungearEngine2D.GUI.Views;
 import Core2D.Core2D.Core2D;
 import Core2D.Log.Log;
 import Core2D.Scene2D.SceneManager;
+import Core2D.Timer.Timer;
+import Core2D.Timer.TimerCallback;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.Main.Main;
@@ -62,8 +64,37 @@ public class ResourcesView extends View
     // максимальная длина имени файла + "..."
     private int maxFileNameLength = 27;
 
+    private boolean canOpenScene2D = true;
+    private Timer openScene2DTimer = new Timer(new TimerCallback() {
+        @Override
+        public void deltaUpdate(float v) {
+
+        }
+
+        @Override
+        public void update() {
+            System.out.println("ddsd");
+            canOpenScene2D = true;
+        }
+    }, 3.0f, true);
+
+    public ResourcesView()
+    {
+        init();
+    }
+
+    @Override
+    public void init()
+    {
+        openScene2DTimer.start();
+    }
+
     public void draw()
     {
+        if(!canOpenScene2D) {
+            openScene2DTimer.startFrame();
+        }
+
         ImGui.begin("Resources", ImGuiWindowFlags.NoMove);
         {
             showDirectoryResources();
@@ -202,9 +233,12 @@ public class ResourcesView extends View
 
         if(ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left) && ImGui.isItemHovered()) {
             if(FilenameUtils.getExtension(files[id].getName()).equals("sgs")) {
-                MainView.getSceneView().stopPlayMode();
-                SceneManager.loadScene(files[id].getPath());
-                SceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;
+                if(canOpenScene2D) {
+                    canOpenScene2D = false;
+                    MainView.getSceneView().stopPlayMode();
+                    SceneManager.loadScene(files[id].getPath());
+                    SceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;
+                }
             }
         }
 

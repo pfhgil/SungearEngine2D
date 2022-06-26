@@ -93,6 +93,7 @@ public class InspectorView extends View
         init();
     }
 
+    @Override
     public void init()
     {
         dialogWindow = new DialogWindow("Add layer", "Cancel", "Add");

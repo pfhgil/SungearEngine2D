@@ -19,6 +19,7 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated, Au
     @Override
     public void destroy()
     {
+        rigidbody2D.getBody().setUserData(null);
         rigidbody2D.getScene2D().getPhysicsWorld().destroyBody(rigidbody2D.getBody());
         rigidbody2D.destroy();
         rigidbody2D = null;

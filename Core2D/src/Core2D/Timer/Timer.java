@@ -36,6 +36,8 @@ public class Timer
 
     private List<TimerCallback> timerCallbacks = new ArrayList<>();
 
+    private boolean firstTime = true;
+
     public Timer(float destTime)
     {
         this.destTime = destTime;
@@ -74,6 +76,11 @@ public class Timer
     public void startFrame()
     {
         if(active) {
+            if(firstTime) {
+                startTime = System.nanoTime();
+                firstTime = false;
+            }
+
             difference = (System.nanoTime() - startTime);
 
             framesPerDestTime++;

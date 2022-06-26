@@ -13,6 +13,11 @@ public abstract class View
 
     private boolean hovered;
 
+    protected void init()
+    {
+
+    }
+
     protected void update()
     {
         ImVec2 size = ImGui.getWindowSize();

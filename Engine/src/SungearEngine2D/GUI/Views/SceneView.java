@@ -46,7 +46,8 @@ public class SceneView extends View
         init();
     }
 
-    private void init()
+    @Override
+    public void init()
     {
         Vector2i size = Graphics.getScreenSize();
         targetSize.x = size.x;

@@ -130,16 +130,6 @@ public class Line2D extends CommonDrawableObjectsParameters implements AutoClose
         transform.destroy();
         transform = null;
 
-        mvpMatrix = null;
-
-        attachedCamera2D = null;
-
-        color = null;
-
-        indices = null;
-
-        data = null;
-
         shaderProgram.destroy();
         shaderProgram = null;
 

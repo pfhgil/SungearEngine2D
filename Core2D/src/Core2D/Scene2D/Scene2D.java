@@ -39,6 +39,8 @@ public class Scene2D
 
     private ScriptSystem scriptSystem = new ScriptSystem();
 
+    public int objectsDestroyed = 0;
+
     public Scene2D()
     {
         layering.addLayer(new Layer(0, "default"));
@@ -249,7 +251,6 @@ public class Scene2D
 
     public void destroy()
     {
-        name = null;
         layering.destroy();
         layering = null;
         physicsWorld = null;

@@ -275,22 +275,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
             component = null;
             componentsIterator.remove();
         }
-        components = null;
-        componentsIterator = null;
-
-        mvpMatrix = null;
-
-        attachedCamera2D = null;
-
-        color = null;
-
-        pickColor = null;
-
-        size = null;
-
-        indices = null;
-
-        data = null;
 
         shaderProgram.destroy();
         shaderProgram = null;
@@ -464,5 +448,13 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     @Override
     public void close() throws Exception {
 
+    }
+
+    @Override
+    protected synchronized void finalize()
+    {
+        System.out.println("Object2D " + name + " was destroyed!");
+        SceneManager.getCurrentScene2D().objectsDestroyed++;
+        System.out.println("Objects destroyed: " + SceneManager.getCurrentScene2D().objectsDestroyed);
     }
 }

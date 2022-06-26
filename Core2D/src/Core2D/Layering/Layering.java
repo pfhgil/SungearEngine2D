@@ -111,7 +111,6 @@ public class Layering {
             layer = null;
             layerIterator.remove();
         }
-        layerIterator = null;
     }
 
     public List<Layer> getLayers() { return layers; }

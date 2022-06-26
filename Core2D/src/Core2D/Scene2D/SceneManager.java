@@ -88,7 +88,17 @@ public class SceneManager
             String sceneString = (String) FileUtils.deSerializeObject(path);
             if(!sceneString.equals("")) {
                 if(currentScene2D != null) {
+                    int objectsNum = 0;
+                    for(int i = 0; i < currentScene2D.getLayering().getLayers().size(); i++) {
+                        for(int k = 0; k < currentScene2D.getLayering().getLayers().get(i).getRenderingObjects().size(); k++) {
+                            if(currentScene2D.getLayering().getLayers().get(i).getRenderingObjects().get(k).getObject() instanceof Object2D) {
+                                objectsNum++;
+                            }
+                        }
+                    }
+                    System.out.println("Objects num: " + objectsNum);
                     currentScene2D.destroy();
+                    System.out.println("Objects destroyed: " + currentScene2D.objectsDestroyed);
                     currentScene2D = null;
                 }
 
@@ -118,6 +128,14 @@ public class SceneManager
 
     public static void setCurrentScene2D(Scene2D scene2D)
     {
+        /*
+        if(currentScene2D != null) {
+            currentScene2D.destroy();
+            currentScene2D = null;
+        }
+
+         */
+        System.gc();
         currentScene2D = scene2D;
 
         currentScene2D.load();
