@@ -1,6 +1,7 @@
 package Core2D.Physics;
 
 import Core2D.Scene2D.Scene2D;
+import Core2D.Scene2D.SceneManager;
 import org.jbox2d.collision.shapes.MassData;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
@@ -15,7 +16,6 @@ public class Rigidbody2D
     private boolean isSensor = false;
     private boolean isFixedRotation = false;
 
-    private float mass;
     // само тело
     private transient Body body;
 
@@ -30,7 +30,6 @@ public class Rigidbody2D
         setRestitution(rigidbody2D.getRestitution());
         setFriction(rigidbody2D.getFriction());
         setSensor(rigidbody2D.isSensor());
-        setMass(rigidbody2D.getMass());
         setFixedRotation(rigidbody2D.isFixedRotation());
 
         rigidbody2D = null;
@@ -50,6 +49,8 @@ public class Rigidbody2D
         for(Fixture f = body.getFixtureList(); f != null; f = f.getNext()) {
             f.setDensity(density);
         }
+
+        body.resetMassData();
     }
 
     public float getRestitution() { return restitution; }
@@ -89,20 +90,6 @@ public class Rigidbody2D
 
         if(body != null) {
             body.setFixedRotation(isFixedRotation);
-        }
-    }
-
-    public float getMass() { return mass; }
-    public void setMass(float mass)
-    {
-        this.mass = mass;
-
-        if(body != null) {
-            MassData massData = new MassData();
-            body.getMassData(massData);
-            massData.mass = mass;
-            body.setMassData(massData);
-            massData = null;
         }
     }
 

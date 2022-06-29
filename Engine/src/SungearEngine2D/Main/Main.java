@@ -70,7 +70,9 @@ public class Main
                             }
 
                             if(SceneManager.getCurrentScene2D() != null) {
-                                SceneManager.getCurrentScene2D().saveScriptsTempValues();
+                                if(!Settings.Playmode.active) {
+                                    SceneManager.getCurrentScene2D().saveScriptsTempValues();
+                                }
 
                                 List<String> compiledScripts = new ArrayList<>();
 
@@ -103,16 +105,14 @@ public class Main
                                     }
                                 }
 
-                                SceneManager.getCurrentScene2D().applyScriptsTempValues();
+                                if(!Settings.Playmode.active) {
+                                    SceneManager.getCurrentScene2D().applyScriptsTempValues();
+                                }
                             }
                         }
                     }
                 });
                 helpThread.start();
-
-                //Object2D newSceneObject2D = new Object2D();
-                //Gson objSerializer = new GsonBuilder().setPrettyPrinting().create();
-                //System.out.println(objSerializer.toJson(newSceneObject2D));
             }
 
             @Override

@@ -1,2 +1,21 @@
-[#FFFFFF] 2022/06/26 16:49:58 | [#008000] Log directory was founded!
-[#FFFFFF] 2022/06/26 16:49:58 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/06/28 22:11:46 | [#008000] Log directory was founded!
+[#FFFFFF] 2022/06/28 22:11:46 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/06/28 22:13:19 | [#FF0000] java.lang.NullPointerException: Cannot invoke "Core2D.Scripting.Script.getScriptClassInstance()" because "this.script" is null
+	at Core2D.Scripting.ScriptTempValue.applyToScript(ScriptTempValue.java:41)
+	at Core2D.Scripting.ScriptTempValues.applyToScript(ScriptTempValues.java:14)
+	at Core2D.Systems.ScriptSystem.applyTempValues(ScriptSystem.java:17)
+	at Core2D.Scene2D.Scene2D.applyScriptsTempValues(Scene2D.java:233)
+	at Core2D.Scene2D.Scene2D.load(Scene2D.java:131)
+	at Core2D.Scene2D.SceneManager.setCurrentScene2D(SceneManager.java:140)
+	at Core2D.Scene2D.SceneManager.loadScene(SceneManager.java:114)
+	at SungearEngine2D.GUI.Views.SceneView.stopPlayMode(SceneView.java:207)
+	at SungearEngine2D.GUI.Views.SceneView.draw(SceneView.java:104)
+	at SungearEngine2D.GUI.Views.MainView.draw(MainView.java:75)
+	at SungearEngine2D.GUI.GUI.draw(GUI.java:71)
+	at SungearEngine2D.Main.Main$1.onDrawFrame(Main.java:124)
+	at Core2D.Graphics.Graphics.draw(Graphics.java:98)
+	at Core2D.Core2D.Core2D.run(Core2D.java:86)
+	at Core2D.Core2D.Core2D.start(Core2D.java:65)
+	at SungearEngine2D.Main.Main.main(Main.java:138)
+
+[#FFFFFF] 2022/06/28 22:13:22 | [#008000] Script PlayerController.java was successfully built!

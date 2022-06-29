@@ -453,7 +453,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     @Override
     protected synchronized void finalize()
     {
-        System.out.println("Object2D " + name + " was destroyed!");
+        //System.out.println("Object2D " + name + " was destroyed!");
         SceneManager.getCurrentScene2D().objectsDestroyed++;
         System.out.println("Objects destroyed: " + SceneManager.getCurrentScene2D().objectsDestroyed);
     }

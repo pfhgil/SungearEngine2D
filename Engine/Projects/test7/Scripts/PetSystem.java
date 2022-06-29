@@ -16,15 +16,17 @@ public class PetSystem
 {
     private boolean firstTime = true;
 
-    private Object2D petObject;
-    private Object2D playerObject;
+    private Object2D turretObject;
 
     private Object2D lastSeenObject2D;
 
     private int seenObjectsNum = 0;
 
     @InspectorView
-    public float reloadTime = 1.0f;
+    public String turretName = "";
+
+    @InspectorView
+    public float reloadTime = 0.1f;
 
     @InspectorView
     public float bulletSpeed = 10000.0f;
@@ -42,7 +44,7 @@ public class PetSystem
 
                 @Override
                 public void update() {
-                    if(petObject != null && lastSeenObject2D != null && !lastSeenObject2D.isShouldDestroy()) {
+                    if(turretObject != null && lastSeenObject2D != null && !lastSeenObject2D.isShouldDestroy()) {
                         Object2D bullet = Object2D.instantiate();
 
                         BoxCollider2DComponent boxCollider2DComponent = new BoxCollider2DComponent();
@@ -52,17 +54,17 @@ public class PetSystem
                         bullet.addComponent(boxCollider2DComponent);
 
                         Transform bulletTransform = bullet.getComponent(TransformComponent.class).getTransform();
-                        Transform petTransform = petObject.getComponent(TransformComponent.class).getTransform();
+                        Transform turretTransform = turretObject.getComponent(TransformComponent.class).getTransform();
                         Transform lastSeenObjectTransform = lastSeenObject2D.getComponent(TransformComponent.class).getTransform();
 
-                        CircleCollider2D circleCollider2D = petObject.getComponent(CircleCollider2DComponent.class).getCircleCollider2D();
+                        CircleCollider2D circleCollider2D = turretObject.getComponent(CircleCollider2DComponent.class).getCircleCollider2D();
 
-                        Vector2f dif = new Vector2f(petTransform.getPosition()).add(new Vector2f(lastSeenObjectTransform.getPosition()).negate());
+                        Vector2f dif = new Vector2f(turretTransform.getPosition()).add(new Vector2f(lastSeenObjectTransform.getPosition()).negate());
                         Vector2f multiplier = new Vector2f(-dif.x / circleCollider2D.getRadius(), -dif.y / circleCollider2D.getRadius());
 
                         bulletTransform.setScale(new Vector2f(0.2f, 0.1f));
-                        bulletTransform.setRotation(petTransform.getRotation());
-                        bulletTransform.setPosition(new Vector2f(new Vector2f(petTransform.getPosition().x, petTransform.getPosition().y)));
+                        bulletTransform.setRotation(turretTransform.getRotation());
+                        bulletTransform.setPosition(new Vector2f(new Vector2f(turretTransform.getPosition().x, turretTransform.getPosition().y)));
                         bulletTransform.applyLinearImpulse(new Vector2f(bulletSpeed * multiplier.x, bulletSpeed * multiplier.y), new Vector2f(bulletTransform.getPosition()).add(bulletTransform.getCentre()));
 
                         bullet.setTag("bullet");
@@ -77,22 +79,15 @@ public class PetSystem
 
         petShootTimer.startFrame();
 
-        petObject = SceneManager.getCurrentScene2D().findObject2DByName("pet");
-        playerObject = SceneManager.getCurrentScene2D().findObject2DByName("roman");
+        turretObject = SceneManager.getCurrentScene2D().findObject2DByName(turretName);
     }
     
     public void deltaUpdate(float deltaTime)
     {
-        if(petObject != null && playerObject != null) {
+        if(turretObject != null) {
             if(lastSeenObject2D != null && !lastSeenObject2D.isShouldDestroy()) {
-                petObject.getComponent(TransformComponent.class).getTransform().lookAt(lastSeenObject2D.getComponent(TransformComponent.class).getTransform().getPosition());
-            } else {
-                petObject.getComponent(TransformComponent.class).getTransform().lookAt(
-                        new Vector2f(playerObject.getComponent(TransformComponent.class).getTransform().getPosition())
-                                .add(playerObject.getComponent(TransformComponent.class).getTransform().getCentre())
-                );
+                turretObject.getComponent(TransformComponent.class).getTransform().lookAt(lastSeenObject2D.getComponent(TransformComponent.class).getTransform().getPosition());
             }
-            petObject.getComponent(TransformComponent.class).getTransform().moveTo(playerObject.getComponent(TransformComponent.class).getTransform().getPosition(), new Vector2f(1.0f, 1.0f));
         }
     }
     

@@ -74,7 +74,6 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                 Rigidbody2DComponent rigidbody2DComponent = new Rigidbody2DComponent();
                 object2D.addComponent(rigidbody2DComponent);
                 rigidbody2DComponent.set(component);
-                //System.out.println("mass: " + ((Rigidbody2DComponent) component).getRigidbody2D().getMass());
             } else if(component instanceof ScriptComponent) {
                 ScriptComponent scriptComponent = (ScriptComponent) component;
                 File scriptFile = new File(scriptComponent.getScript().getPath() + ".java");

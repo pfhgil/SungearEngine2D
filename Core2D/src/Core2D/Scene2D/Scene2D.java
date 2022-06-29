@@ -209,8 +209,8 @@ public class Scene2D
                     List<ScriptComponent> scriptComponents = ((Object2D) layerObject.getObject()).getAllComponents(ScriptComponent.class);
 
                     if(scriptComponents.size() != 0) {
-                        ScriptTempValues scriptTempValues = new ScriptTempValues();
                         for (ScriptComponent scriptComponent : scriptComponents) {
+                            ScriptTempValues scriptTempValues = new ScriptTempValues();
                             for (Field field : scriptComponent.getScript().getScriptClass().getFields()) {
                                 ScriptTempValue scriptTempValue = new ScriptTempValue();
 
@@ -220,8 +220,8 @@ public class Scene2D
 
                                 scriptTempValues.getScriptTempValues().add(scriptTempValue);
                             }
+                            scriptSystem.getScriptTempValuesList().add(scriptTempValues);
                         }
-                        scriptSystem.getScriptTempValuesList().add(scriptTempValues);
                     }
                 }
             }

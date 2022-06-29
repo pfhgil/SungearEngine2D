@@ -156,7 +156,7 @@ public class PhysicsWorld extends World
                 bodyDef.position.set(0.0f, 0.0f);
                 bodyDef.type = rigidbody2D.getType();
                 rigidbody2D.setScene2D(SceneManager.getCurrentScene2D());
-                rigidbody2D.setBody(SceneManager.getCurrentScene2D().getPhysicsWorld().createBody(bodyDef));
+                rigidbody2D.setBody(createBody(bodyDef));
                 rigidbody2D.getBody().setUserData(object2D);
                 //System.out.println("name: " + object2D.getName() + ", mass: " + rigidbody2D.getMass());
 

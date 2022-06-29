@@ -135,7 +135,6 @@ public class SceneManager
         }
 
          */
-        System.gc();
         currentScene2D = scene2D;
 
         currentScene2D.load();

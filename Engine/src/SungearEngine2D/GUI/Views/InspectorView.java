@@ -119,7 +119,6 @@ public class InspectorView extends View
     {
         setCurrentInspectingObject(inspectingObject2D);
         if(inspectingObject2D != null && !inspectingObject2D.isShouldDestroy()) {
-
             if (showPopupWindow) {
                 ImGui.openPopup("Component actions");
                 if (ImGui.beginPopupContextWindow("Component actions", ImGuiMouseButton.Left)) {
@@ -585,12 +584,15 @@ public class InspectorView extends View
 
                         ImGui.separator();
 
+                        /*
                         ImGui.text("Mass data");
                         ImGui.newLine();
                         float[] mass = new float[] { rigidbody2DComponent.getRigidbody2D().getMass() };
                         if (ImGui.dragFloat("Mass", mass, 0.01f)) {
                             rigidbody2DComponent.getRigidbody2D().setMass(mass[0]);
                         }
+
+                         */
                     } else if (componentName.equals("BoxCollider2D")) {
                         BoxCollider2DComponent boxCollider2DComponent = ((BoxCollider2DComponent) inspectingObject2D.getComponents().get(i));
 
@@ -653,6 +655,21 @@ public class InspectorView extends View
                                     ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.CallbackAlways);
 
                                     scriptComponent.getScript().setFieldValue(field, string.get());
+                                } else if(cs.isAssignableFrom(Object2D.class)) {
+                                    ImString string = new ImString("null");
+                                    if(scriptComponent.getScript().getFieldValue(field) != null) {
+                                        string.set(((Object2D) scriptComponent.getScript().getFieldValue(field)).getName());
+                                    }
+                                    ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
+                                    if(ImGui.beginDragDropTarget()) {
+                                        Object droppedObject = ImGui.acceptDragDropPayload("SceneObject2D");
+                                        if(droppedObject != null) {
+                                            Object2D object2D = (Object2D) droppedObject;
+
+                                            scriptComponent.getScript().setFieldValue(field, object2D);
+                                        }
+                                        ImGui.endDragDropTarget();
+                                    }
                                 }
                             }
 
@@ -686,8 +703,6 @@ public class InspectorView extends View
                 action = "addObject2DComponent";
             }
 
-            drawAction();
-
             if(droppingFile != null) {
                 if (ImGui.beginDragDropTarget()) {
                     if (FilenameUtils.getExtension(droppingFile.getName()).equals("java")) {
@@ -707,6 +722,8 @@ public class InspectorView extends View
                     ImGui.endDragDropTarget();
                 }
             }
+
+            drawAction();
         }
     }
 
