@@ -1,6 +1,6 @@
 package Core2D.Object2D;
 
-import Core2D.Camera2D.Camera2D;
+import Core2D.Camera2D.CamerasManager;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Component;
 import Core2D.Component.Components.Rigidbody2DComponent;
@@ -17,6 +17,7 @@ import Core2D.Shader.Shader;
 import Core2D.Shader.ShaderProgram;
 import Core2D.ShaderUtils.*;
 import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.Utils;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -38,9 +39,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
 
     // model view projection matrix
     private transient Matrix4f mvpMatrix;
-
-    // камера, в виде которой будет объект
-    private transient Camera2D attachedCamera2D;
 
     // цвет
     private Vector4f color;
@@ -76,9 +74,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
 
     private int drawingMode = GL_TRIANGLES;
 
-    // имя объекта
-    private String name = "default";
-
     // является ли ui элементом
     private boolean isUIElement = false;
 
@@ -107,10 +102,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         addComponent(new TextureComponent());
         getComponent(TextureComponent.class).setTexture2D(Resources.Textures.WHITE_TEXTURE);
 
-        if(Core2D.currentCamera2D != null) {
-            setAttachedCamera2D(Core2D.currentCamera2D);
-        }
-
         if(Settings.Other.Picking.currentPickingColor.x < 255.0f) {
             Settings.Other.Picking.currentPickingColor.x++;
         } else {
@@ -126,6 +117,8 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
 
         pickColor = null;
         pickColor = new Vector3f(Settings.Other.Picking.currentPickingColor);
+
+        createNewID();
     }
 
     // копировать объект
@@ -172,10 +165,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
 
         isUIElement = object2D.isUIElement;
 
-        if(Core2D.currentCamera2D != null) {
-            setAttachedCamera2D(object2D.getAttachedCamera2D());
-        }
-
         object2D = null;
 
         if(Settings.Other.Picking.currentPickingColor.x < 255.0f) {
@@ -193,6 +182,8 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
 
         pickColor = null;
         pickColor = new Vector3f(Settings.Other.Picking.currentPickingColor);
+
+        createNewID();
     }
 
     /**
@@ -256,8 +247,8 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
 
     private void updateMVPMatrix()
     {
-        if(attachedCamera2D != null && !isUIElement) {
-            mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(attachedCamera2D.getTransform().getModelMatrix()).mul(getComponent(TransformComponent.class).getTransform().getModelMatrix());
+        if(CamerasManager.getMainCamera2D() != null && !isUIElement) {
+            mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(CamerasManager.getMainCamera2D().getTransform().getModelMatrix()).mul(getComponent(TransformComponent.class).getTransform().getModelMatrix());
         } else {
             mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(getComponent(TransformComponent.class).getTransform().getModelMatrix());
         }
@@ -368,24 +359,10 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
 
     public Matrix4f getMvpMatrix() { return mvpMatrix; }
 
-    public Camera2D getAttachedCamera2D() { return attachedCamera2D; }
-    public void setAttachedCamera2D(Camera2D attachedCamera2D)
-    {
-        this.attachedCamera2D = attachedCamera2D;
-        attachedCamera2D = null;
-    }
-
     public float[] getData() { return data; }
 
     public int getDrawingMode() { return drawingMode; }
     public void setDrawingMode(int drawingMode) { this.drawingMode = drawingMode; }
-
-    public String getName() { return name; }
-    public void setName(String name)
-    {
-        this.name = name;
-        name = null;
-    }
 
     public boolean isUIElement() { return isUIElement; }
     public void setUIElement(boolean UIElement) { isUIElement = UIElement; }
@@ -453,8 +430,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     @Override
     protected synchronized void finalize()
     {
-        //System.out.println("Object2D " + name + " was destroyed!");
         SceneManager.getCurrentScene2D().objectsDestroyed++;
-        System.out.println("Objects destroyed: " + SceneManager.getCurrentScene2D().objectsDestroyed);
+        System.out.println("Objects destroyed: " + SceneManager.getCurrentScene2D().objectsDestroyed + ", name: " + name);
     }
 }

@@ -3,10 +3,7 @@ package Core2D.Window;
 import Core2D.Graphics.Graphics;
 import Core2D.Core2D.Settings;
 import org.joml.Vector2i;
-import org.lwjgl.glfw.GLFWErrorCallback;
-import org.lwjgl.glfw.GLFWFramebufferSizeCallbackI;
-import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.glfw.GLFWWindowIconifyCallbackI;
+import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GL11C;
 import org.lwjgl.system.MemoryStack;
 
@@ -133,6 +130,21 @@ public class Window
 
         glfwSetInputMode(window, GLFW_LOCK_KEY_MODS , GLFW_TRUE);
 
+        glfwSetWindowSizeCallback(window, new GLFWWindowSizeCallbackI() {
+            @Override
+            public void invoke(long window, int width, int height) {
+                size.x = width;
+                size.y = height;
+
+                // сделать настройки более гибкими
+                Graphics.setViewMode(Graphics.getViewMode());
+                GL11C.glViewport(0,  0, size.x, size.y);
+
+                System.out.println("size: " + size.x + ", " + size.y);
+            }
+        });
+
+        /*
         glfwSetFramebufferSizeCallback(window, new GLFWFramebufferSizeCallbackI() {
             @Override
             public void invoke(long window, int width, int height) {
@@ -142,8 +154,14 @@ public class Window
                 // сделать настройки более гибкими
                 Graphics.setViewMode(Graphics.getViewMode());
                 GL11C.glViewport(0,  0, size.x, size.y);
+
+                System.out.println("lol1");
             }
         });
+
+         */
+
+
 
         System.out.println("окно проинициализировано");
     }

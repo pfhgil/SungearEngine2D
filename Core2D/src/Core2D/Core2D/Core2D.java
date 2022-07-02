@@ -25,8 +25,6 @@ public class Core2D extends Graphics
 
     public static Core2DUserCallback core2DUserCallback;
 
-    public static Camera2D currentCamera2D;
-
     // поток для сборка мусора
     private static Thread gcThread;
     private static boolean gcThreadRunning = false;

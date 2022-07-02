@@ -4,6 +4,7 @@ import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Graphics.Graphics;
 import Core2D.Object2D.Object2D;
+import Core2D.Utils.WrappedObject;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
@@ -12,14 +13,14 @@ import java.util.List;
 
 public class Layer
 {
-    private List<LayerObject> renderingObjects = new ArrayList<>();
+    private List<WrappedObject> renderingObjects = new ArrayList<>();
 
-    private int id;
+    private int ID;
     private String name;
 
-    public Layer(int id, String name)
+    public Layer(int ID, String name)
     {
-        this.id = id;
+        this.ID = ID;
         this.name = name;
     }
 
@@ -29,9 +30,9 @@ public class Layer
     public void drawPicking()
     {
         for(int i = 0; i < renderingObjects.size(); i++) {
-            LayerObject layerObject = renderingObjects.get(i);
-            if (layerObject.getObject() instanceof Object2D) {
-                Object2D object2D = ((Object2D) layerObject.getObject());
+            WrappedObject wrappedObject = renderingObjects.get(i);
+            if (wrappedObject.getObject() instanceof Object2D) {
+                Object2D object2D = ((Object2D) wrappedObject.getObject());
 
                 //System.out.println("name: " + object2D.getName() + ", color: " + object2D.getPickColor().x + ", " + object2D.getPickColor().y + ", " + object2D.getPickColor().z);
 
@@ -57,9 +58,9 @@ public class Layer
     public Object2D getPickedObject2D(Vector3f pixelColor)
     {
         for(int i = 0; i < renderingObjects.size(); i++) {
-            LayerObject layerObject = renderingObjects.get(i);
-            if(layerObject.getObject() instanceof Object2D) {
-                Object2D object2D = ((Object2D) layerObject.getObject());
+            WrappedObject wrappedObject = renderingObjects.get(i);
+            if(wrappedObject.getObject() instanceof Object2D) {
+                Object2D object2D = ((Object2D) wrappedObject.getObject());
                 if(object2D.getPickColor().x == pixelColor.x &&
                         object2D.getPickColor().y == pixelColor.y &&
                         object2D.getPickColor().z == pixelColor.z) {
@@ -83,15 +84,15 @@ public class Layer
     public void destroy()
     {
         /*
-        Iterator<LayerObject> layerObjectIterator = renderingObjects.iterator();
+        Iterator<WrappedObject> layerObjectIterator = renderingObjects.iterator();
         while(layerObjectIterator.hasNext()) {
-            LayerObject layerObject = layerObjectIterator.next();
-            CommonDrawableObjectsParameters objParams = (CommonDrawableObjectsParameters) layerObject.getObject();
+            WrappedObject wrappedObject = layerObjectIterator.next();
+            CommonDrawableObjectsParameters objParams = (CommonDrawableObjectsParameters) wrappedObject.getObject();
             objParams.destroy();
             layerObjectIterator.remove();
             objParams = null;
-            layerObject.setObject(null);
-            layerObject = null;
+            wrappedObject.setObject(null);
+            wrappedObject = null;
         }
 
         layerObjectIterator = null;
@@ -104,10 +105,10 @@ public class Layer
         renderingObjects = null;
     }
 
-    public List<LayerObject> getRenderingObjects() { return renderingObjects; }
+    public List<WrappedObject> getRenderingObjects() { return renderingObjects; }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+    public int getID() { return ID; }
+    public void setID(int ID) { this.ID = ID; }
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }

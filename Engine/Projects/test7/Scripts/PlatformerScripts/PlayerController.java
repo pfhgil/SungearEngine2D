@@ -30,6 +30,7 @@ public class PlayerController
 
         if(player != null) {
             Transform playerTransform = player.getComponent(TransformComponent.class).getTransform();
+            //System.out.println("plyer pos: " + playerTransform.getPosition().x + ", " + playerTransform.getPosition().y);
 
             if(Keyboard.keyDown(GLFW.GLFW_KEY_D)) {
                 playerTransform.translate(new Vector2f(movementSpeedX * deltaTime, 0.0f));

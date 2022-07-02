@@ -31,7 +31,6 @@ public class ScriptTempValues
         for(ScriptTempValue scriptTempValue : scriptTempValues) {
             scriptTempValue.setScript(script);
         }
-        script = null;
     }
 
     public List<ScriptTempValue> getScriptTempValues() { return scriptTempValues; }

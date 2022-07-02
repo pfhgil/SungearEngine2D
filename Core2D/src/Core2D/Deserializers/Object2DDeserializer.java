@@ -26,24 +26,23 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
         String name = jsonObject.get("name").getAsString();
         Tag tag = context.deserialize(jsonObject.get("tag"), Tag.class);
         Vector4f color = context.deserialize(jsonObject.get("color"), Vector4f.class);
-        int drawingMode = context.deserialize(jsonObject.get("drawingMode"), int.class);
+        int drawingMode = jsonObject.get("drawingMode").getAsInt();
         boolean isUIElement = context.deserialize(jsonObject.get("isUIElement"), boolean.class);
         boolean active = context.deserialize(jsonObject.get("active"), boolean.class);
         JsonArray components = jsonObject.getAsJsonArray("components");
+        int ID = jsonObject.get("ID").getAsInt();
 
         Object2D object2D = new Object2D();
         object2D.removeComponent(object2D.getComponent(TextureComponent.class));
 
         object2D.setName(name);
-        name = null;
         object2D.setTag(tag.getName());
         tag.destroy();
-        tag = null;
         object2D.setColor(color);
-        color = null;
         object2D.setDrawingMode(drawingMode);
         object2D.setUIElement(isUIElement);
         object2D.setActive(active);
+        object2D.setID(ID);
 
         for(JsonElement element : components) {
             Component component = context.deserialize(element, Component.class);

@@ -1,76 +1,65 @@
 package Core2D.Camera2D;
 
-import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
-import Core2D.Object2D.Object2D;
 import Core2D.Object2D.Transform;
+import Core2D.Scene2D.SceneManager;
+import Core2D.Utils.Utils;
 import org.joml.Vector2f;
 
 import java.io.Serializable;
 
+// TODO: сделать id для камеры
 public class Camera2D implements Serializable, AutoCloseable
 {
     private Transform transform;
-    // прикрепленный объект, за котором следует камера
-    private Object2D attachedObject2D;
+
+    private String name = "default";
+
+    private int ID;
 
     public Camera2D()
     {
         transform = new Transform();
 
-        Core2D.currentCamera2D = this;
-    }
+        if(SceneManager.getCurrentScene2D() != null) {
+            SceneManager.getCurrentScene2D().maxObjectID++;
+            ID = SceneManager.getCurrentScene2D().maxObjectID;
+        } else {
+            ID = Utils.getRandom(0, 1000000000);
+        }
 
-    public Camera2D(Object2D attachedObject2D)
-    {
-        transform = new Transform();
-        setAttachedObject2D(attachedObject2D);
-
-        Core2D.currentCamera2D = this;
+        System.out.println("camera id: " + ID);
     }
 
     /**
      * Исправить. Умножать на deltaTime, чтобы камера не "лагала"
      **/
-    public void follow()
+    public void follow(Transform transform)
     {
-        if(attachedObject2D != null) {
-            Transform attachedObjectTransform = attachedObject2D.getComponent(TransformComponent.class).getTransform();
-
-            Vector2f objectResPos = new Vector2f(attachedObjectTransform.getPosition()).add(attachedObjectTransform.getCentre()).mul(transform.getScale());
-            Vector2f cameraResultPos = new Vector2f(objectResPos.negate().add(new Vector2f(Core2D.getWindow().getSize().x / 2.0f, Core2D.getWindow().getSize().y / 2.0f)));
-            Vector2f resultCentre = new Vector2f(attachedObjectTransform.getCentre()).add(new Vector2f(Core2D.getWindow().getSize().x / 2.0f, Core2D.getWindow().getSize().y / 2.0f)).mul(new Vector2f(transform.getScale()));
-            // ставлю объект посередине вида камеры
-            transform.setPosition(cameraResultPos);
-            transform.setCentre(resultCentre);
-
-            attachedObjectTransform = null;
-        }
+        Vector2f objectResPos = new Vector2f(transform.getPosition()).add(transform.getCentre()).mul(this.transform.getScale());
+        Vector2f cameraResultPos = new Vector2f(objectResPos.negate().add(new Vector2f(Core2D.getWindow().getSize().x / 2.0f, Core2D.getWindow().getSize().y / 2.0f)));
+        Vector2f resultCentre = new Vector2f(transform.getCentre()).add(new Vector2f(Core2D.getWindow().getSize().x / 2.0f, Core2D.getWindow().getSize().y / 2.0f)).mul(new Vector2f(this.transform.getScale()));
+        // ставлю объект посередине вида камеры
+        this.transform.setPosition(cameraResultPos);
+        this.transform.setCentre(resultCentre);
     }
 
-    public void lerpFollow(Vector2f coeff)
+    public void lerpFollow(Transform transform, Vector2f coeff)
     {
-        if(attachedObject2D != null) {
-            Transform attachedObjectTransform = attachedObject2D.getComponent(TransformComponent.class).getTransform();
+        Vector2f cameraResultPos = new Vector2f(new Vector2f(this.transform.getPosition()).negate().add(new Vector2f(Core2D.getWindow().getSize().x / 2.0f, Core2D.getWindow().getSize().y / 2.0f)));
+        Vector2f objectResPos = new Vector2f(transform.getPosition()).add(transform.getCentre()).mul(this.transform.getScale());
 
-            Vector2f cameraResultPos = new Vector2f(new Vector2f(transform.getPosition()).negate().add(new Vector2f(Core2D.getWindow().getSize().x / 2.0f, Core2D.getWindow().getSize().y / 2.0f)));
-            Vector2f objectResPos = new Vector2f(attachedObjectTransform.getPosition()).add(attachedObjectTransform.getCentre()).mul(transform.getScale());
-
-            Vector2f difference = new Vector2f(cameraResultPos.x - objectResPos.x, cameraResultPos.y - objectResPos.y).mul(coeff);
-            transform.translate(difference);
-
-            attachedObjectTransform = null;
-        }
+        Vector2f difference = new Vector2f(cameraResultPos.x - objectResPos.x, cameraResultPos.y - objectResPos.y).mul(coeff);
+        this.transform.translate(difference);
     }
 
     public Transform getTransform() { return transform; }
 
-    public Object2D getAttachedObject2D() { return attachedObject2D; }
-    public void setAttachedObject2D(Object2D attachedObject2D)
-    {
-        this.attachedObject2D = attachedObject2D;
-        this.attachedObject2D.setAttachedCamera2D(this);
-    }
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+
+    public int getID() { return ID; }
+    public void setID(int ID) { this.ID = ID; }
 
     @Override
     public void close() throws Exception {

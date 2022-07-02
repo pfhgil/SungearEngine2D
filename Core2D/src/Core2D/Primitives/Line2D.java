@@ -1,6 +1,7 @@
 package Core2D.Primitives;
 
 import Core2D.Camera2D.Camera2D;
+import Core2D.Camera2D.CamerasManager;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Resources;
@@ -24,9 +25,6 @@ public class Line2D extends CommonDrawableObjectsParameters implements AutoClose
 
     // model view projection matrix
     private Matrix4f mvpMatrix;
-
-    // камера, в виде которой будет объект
-    private Camera2D attachedCamera2D;
 
     // цвет
     private Vector4f color;
@@ -75,10 +73,6 @@ public class Line2D extends CommonDrawableObjectsParameters implements AutoClose
         transform = new Transform();
 
         loadVAO();
-
-        if(Core2D.currentCamera2D != null) {
-            setAttachedCamera2D(Core2D.currentCamera2D);
-        }
     }
 
     private void loadVAO()
@@ -115,8 +109,8 @@ public class Line2D extends CommonDrawableObjectsParameters implements AutoClose
 
     private void updateMVPMatrix()
     {
-        if(attachedCamera2D != null && !isUIElement) {
-            mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(attachedCamera2D.getTransform().getModelMatrix()).mul(transform.getModelMatrix());
+        if(CamerasManager.getMainCamera2D() != null && !isUIElement) {
+            mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(CamerasManager.getMainCamera2D().getTransform().getModelMatrix()).mul(transform.getModelMatrix());
         } else {
             mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(transform.getModelMatrix());
         }
@@ -176,13 +170,6 @@ public class Line2D extends CommonDrawableObjectsParameters implements AutoClose
     }
 
     public Matrix4f getMvpMatrix() { return mvpMatrix; }
-
-    public Camera2D getAttachedCamera2D() { return attachedCamera2D; }
-    public void setAttachedCamera2D(Camera2D attachedCamera2D)
-    {
-        this.attachedCamera2D = attachedCamera2D;
-        attachedCamera2D = null;
-    }
 
     public boolean isUIElement() { return isUIElement; }
     public void setUIElement(boolean UIElement) { isUIElement = UIElement; }

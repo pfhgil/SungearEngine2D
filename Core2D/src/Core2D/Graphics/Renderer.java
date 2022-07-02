@@ -1,15 +1,15 @@
 package Core2D.Graphics;
 
 import Core2D.AtlasDrawing.AtlasDrawing;
+import Core2D.Camera2D.CamerasManager;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Component;
 import Core2D.Component.Components.TextureComponent;
-import Core2D.Controllers.PC.Mouse;
 import Core2D.Core2D.Core2D;
 import Core2D.Instancing.ObjectsInstancing;
 import Core2D.Instancing.Primitives.LinesInstancing;
 import Core2D.Layering.Layer;
-import Core2D.Layering.LayerObject;
+import Core2D.Utils.WrappedObject;
 import Core2D.Layering.Layering;
 import Core2D.Object2D.Object2D;
 import Core2D.Primitives.Line2D;
@@ -18,7 +18,6 @@ import Core2D.UI.Button.Button;
 import Core2D.UI.InputField.InputField;
 import Core2D.UI.ProgressBar.ProgressBar;
 import Core2D.UI.Text.Text;
-import org.joml.Matrix4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL11C;
 import org.lwjgl.opengl.GL46C;
@@ -138,11 +137,11 @@ public class Renderer
 
             objectsInstancing.getShaderProgram().bind();
 
-            if (objectsInstancing.getDrawableObjects2D().get(0).getAttachedCamera2D() != null) {
+            if (CamerasManager.getMainCamera2D() != null) {
                 ShaderUtils.setUniform(
                         objectsInstancing.getShaderProgram().getHandler(),
                         "cameraMatrix",
-                        objectsInstancing.getDrawableObjects2D().get(0).getAttachedCamera2D().getTransform().getModelMatrix()
+                        CamerasManager.getMainCamera2D().getTransform().getModelMatrix()
                 );
             }
 
@@ -171,11 +170,11 @@ public class Renderer
                     Core2D.getProjectionMatrix()
             );
 
-            if (linesInstancing.getDrawableLines2D().get(0).getAttachedCamera2D() != null) {
+            if (CamerasManager.getMainCamera2D() != null) {
                 ShaderUtils.setUniform(
                         linesInstancing.getShaderProgram().getHandler(),
                         "cameraMatrix",
-                        linesInstancing.getDrawableLines2D().get(0).getAttachedCamera2D().getTransform().getModelMatrix()
+                        CamerasManager.getMainCamera2D().getTransform().getModelMatrix()
                 );
             }
 
@@ -225,9 +224,9 @@ public class Renderer
         }
     }
 
-    public void render(LayerObject layerObject)
+    public void render(WrappedObject wrappedObject)
     {
-        Object object = layerObject.getObject();
+        Object object = wrappedObject.getObject();
         if(object instanceof CommonDrawableObjectsParameters && ((CommonDrawableObjectsParameters) object).isActive()) {
             if(object instanceof Line2D) {
                 render((Line2D) object);

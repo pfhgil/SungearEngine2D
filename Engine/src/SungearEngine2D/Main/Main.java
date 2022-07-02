@@ -1,8 +1,10 @@
 package SungearEngine2D.Main;
 
 import Core2D.Camera2D.Camera2D;
+import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Components.ScriptComponent;
 import Core2D.Component.Components.TransformComponent;
+import Core2D.Controllers.PC.Keyboard;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DUserCallback;
 import Core2D.Graphics.Graphics;
@@ -44,8 +46,7 @@ public class Main
                 cameraAnchor = new Object2D();
                 cameraAnchor.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
                 cameraAnchor.getComponent(TransformComponent.class).getTransform().setPosition(new Vector2f(-50.0f, -50.0f));
-
-                mainCamera2D.setAttachedObject2D(cameraAnchor);
+                CamerasManager.setMainCamera2D(mainCamera2D);
 
                 CameraController.controlledCamera2DAnchor = cameraAnchor;
 
@@ -54,7 +55,6 @@ public class Main
                 GUI.init();
 
                 GraphicsRenderer.init();
-
 
                 helpThread = new Thread(new Runnable() {
                     @Override
@@ -69,44 +69,48 @@ public class Main
                                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                             }
 
-                            if(SceneManager.getCurrentScene2D() != null) {
-                                if(!Settings.Playmode.active) {
-                                    SceneManager.getCurrentScene2D().saveScriptsTempValues();
-                                }
+                            if(SceneManager.getCurrentScene2D() != null && SceneManager.getCurrentScene2D().isSceneLoaded()) {
+                                try {
+                                    if (!Settings.Playmode.active) {
+                                        SceneManager.getCurrentScene2D().saveScriptsTempValues();
+                                    }
 
-                                List<String> compiledScripts = new ArrayList<>();
+                                    List<String> compiledScripts = new ArrayList<>();
 
-                                for(int p = 0; p < SceneManager.getCurrentScene2D().getLayering().getLayers().size(); p++) {
-                                    Layer layer = SceneManager.getCurrentScene2D().getLayering().getLayers().get(p);
-                                    if(layer != null && layer.getRenderingObjects() != null) {
-                                        for (int i = 0; i < layer.getRenderingObjects().size(); i++) {
-                                            if (layer.getRenderingObjects().get(i).getObject() instanceof Object2D && !((Object2D) layer.getRenderingObjects().get(i).getObject()).isShouldDestroy()) {
-                                                List<ScriptComponent> scriptComponents = ((Object2D) layer.getRenderingObjects().get(i).getObject()).getAllComponents(ScriptComponent.class);
+                                    for (int p = 0; p < SceneManager.getCurrentScene2D().getLayering().getLayers().size(); p++) {
+                                        Layer layer = SceneManager.getCurrentScene2D().getLayering().getLayers().get(p);
+                                        if (layer != null && layer.getRenderingObjects() != null) {
+                                            for (int i = 0; i < layer.getRenderingObjects().size(); i++) {
+                                                if (layer.getRenderingObjects().get(i).getObject() instanceof Object2D && !((Object2D) layer.getRenderingObjects().get(i).getObject()).isShouldDestroy()) {
+                                                    List<ScriptComponent> scriptComponents = ((Object2D) layer.getRenderingObjects().get(i).getObject()).getAllComponents(ScriptComponent.class);
 
-                                                for (int k = 0; k < scriptComponents.size(); k++) {
-                                                    // был ли уже скомпилирован скрипт
-                                                    boolean alreadyCompiled = compiledScripts.contains(scriptComponents.get(k).getScript().getName());
-                                                    if(alreadyCompiled) {
-                                                        continue;
-                                                    }
-                                                    long lastModified = new File(scriptComponents.get(k).getScript().getPath() + ".java").lastModified();
-                                                    if (lastModified != scriptComponents.get(k).getScript().getLastModified()) {
-                                                        Settings.Playmode.canEnterPlaymode = false;
-                                                        scriptComponents.get(k).getScript().setLastModified(lastModified);
-                                                        boolean compiled = Compiler.compileScript(scriptComponents.get(k).getScript().getPath() + ".java");
-                                                        if (compiled) {
-                                                            scriptComponents.get(k).getScript().loadClass(new File(scriptComponents.get(k).getScript().getPath()).getParent(), FilenameUtils.getBaseName(new File(scriptComponents.get(k).getScript().getPath()).getName()));
+                                                    for (int k = 0; k < scriptComponents.size(); k++) {
+                                                        // был ли уже скомпилирован скрипт
+                                                        boolean alreadyCompiled = compiledScripts.contains(scriptComponents.get(k).getScript().getName());
+                                                        if (alreadyCompiled) {
+                                                            continue;
                                                         }
-                                                        compiledScripts.add(scriptComponents.get(k).getScript().getName());
+                                                        long lastModified = new File(scriptComponents.get(k).getScript().getPath() + ".java").lastModified();
+                                                        if (lastModified != scriptComponents.get(k).getScript().getLastModified()) {
+                                                            Settings.Playmode.canEnterPlaymode = false;
+                                                            scriptComponents.get(k).getScript().setLastModified(lastModified);
+                                                            boolean compiled = Compiler.compileScript(scriptComponents.get(k).getScript().getPath() + ".java");
+                                                            if (compiled) {
+                                                                scriptComponents.get(k).getScript().loadClass(new File(scriptComponents.get(k).getScript().getPath()).getParent(), FilenameUtils.getBaseName(new File(scriptComponents.get(k).getScript().getPath()).getName()));
+                                                            }
+                                                            compiledScripts.add(scriptComponents.get(k).getScript().getName());
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
                                     }
-                                }
 
-                                if(!Settings.Playmode.active) {
-                                    SceneManager.getCurrentScene2D().applyScriptsTempValues();
+                                    if (!Settings.Playmode.active) {
+                                        SceneManager.getCurrentScene2D().applyScriptsTempValues();
+                                    }
+                                } catch(Exception e) {
+                                    Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                                 }
                             }
                         }
@@ -118,10 +122,10 @@ public class Main
             @Override
             public void onDrawFrame() {
                 mainCamera2D.getTransform().setScale(new Vector2f(MainView.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
-                mainCamera2D.follow();
+                mainCamera2D.follow(cameraAnchor.getComponent(TransformComponent.class).getTransform());
                 CameraController.control();
 
-                GUI.draw();
+                if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) GUI.draw();
 
                 GraphicsRenderer.draw();
 

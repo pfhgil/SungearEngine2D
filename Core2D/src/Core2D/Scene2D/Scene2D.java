@@ -1,10 +1,12 @@
 package Core2D.Scene2D;
 
+import Core2D.Camera2D.Camera2D;
+import Core2D.Camera2D.CamerasManager;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Components.ScriptComponent;
 import Core2D.Graphics.Graphics;
 import Core2D.Layering.Layer;
-import Core2D.Layering.LayerObject;
+import Core2D.Utils.WrappedObject;
 import Core2D.Layering.Layering;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
@@ -28,6 +30,10 @@ public class Scene2D
 
     private Layering layering = new Layering();
 
+    private List<Camera2D> cameras2D = new ArrayList<>();
+
+    private Camera2D sceneMainCamera2D;
+
     private transient Scene2DCallback scene2DCallback;
 
     // цвет очистки экрана
@@ -39,7 +45,12 @@ public class Scene2D
 
     private ScriptSystem scriptSystem = new ScriptSystem();
 
-    public int objectsDestroyed = 0;
+    public transient int objectsDestroyed = 0;
+
+    private transient boolean sceneLoaded = false;
+
+    // максимальный id объекта
+    public int maxObjectID = 0;
 
     public Scene2D()
     {
@@ -114,21 +125,25 @@ public class Scene2D
         int k = 0;
         if(scriptSystem.getScriptTempValuesList().size() != 0) {
             for (Layer layer : layering.getLayers()) {
-                for (LayerObject layerObject : layer.getRenderingObjects()) {
-                    if (layerObject.getObject() instanceof Object2D) {
-                        List<ScriptComponent> scriptComponents = ((Object2D) layerObject.getObject()).getAllComponents(ScriptComponent.class);
+                for (WrappedObject wrappedObject : layer.getRenderingObjects()) {
+                    if (wrappedObject.getObject() instanceof Object2D) {
+                        List<ScriptComponent> scriptComponents = ((Object2D) wrappedObject.getObject()).getAllComponents(ScriptComponent.class);
 
                         for (ScriptComponent scriptComponent : scriptComponents) {
-                            if (scriptComponent.getScript().getScriptClass().getFields().length != 0) {
-                                scriptSystem.getScriptTempValuesList().get(k).setScript(scriptComponent.getScript());
-                                k++;
-                            }
+                            scriptSystem.getScriptTempValuesList().get(k).setScript(scriptComponent.getScript());
+                            k++;
                         }
                     }
                 }
             }
         }
         applyScriptsTempValues();
+
+        if(sceneMainCamera2D != null) {
+            CamerasManager.setMainCamera2D(sceneMainCamera2D);
+        }
+
+        sceneLoaded = true;
     }
 
     public void addTag(Tag tag)
@@ -171,7 +186,7 @@ public class Scene2D
     public Object2D findObject2DByName(String name)
     {
         for(Layer layer : layering.getLayers()) {
-            for(LayerObject o : layer.getRenderingObjects()) {
+            for(WrappedObject o : layer.getRenderingObjects()) {
                 if(o.getObject() instanceof Object2D && ((Object2D) o.getObject()).getName().equals(name)) {
                     return (Object2D) o.getObject();
                 }
@@ -184,10 +199,34 @@ public class Scene2D
     public Object2D findObject2DByTag(String tag)
     {
         for(Layer layer : layering.getLayers()) {
-            for(LayerObject o : layer.getRenderingObjects()) {
+            for(WrappedObject o : layer.getRenderingObjects()) {
                 if(o.getObject() instanceof Object2D && ((Object2D) o.getObject()).getTag().getName().equals(tag)) {
                     return (Object2D) o.getObject();
                 }
+            }
+        }
+
+        return null;
+    }
+
+    public Object2D findObject2DByID(int ID)
+    {
+        for(Layer layer : layering.getLayers()) {
+            for(WrappedObject o : layer.getRenderingObjects()) {
+                if(o.getObject() instanceof Object2D && ((Object2D) o.getObject()).getID() == ID) {
+                    return (Object2D) o.getObject();
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public Camera2D findCamera2DByID(int ID)
+    {
+        for(Camera2D camera2D : cameras2D) {
+            if(camera2D.getID() == ID) {
+                return camera2D;
             }
         }
 
@@ -204,9 +243,9 @@ public class Scene2D
 
         for(Layer layer : layering.getLayers()) {
             for(int i = 0; i < layer.getRenderingObjects().size(); i++) {
-                LayerObject layerObject = layer.getRenderingObjects().get(i);
-                if(layerObject.getObject() instanceof Object2D && !((Object2D) layerObject.getObject()).isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponents = ((Object2D) layerObject.getObject()).getAllComponents(ScriptComponent.class);
+                WrappedObject wrappedObject = layer.getRenderingObjects().get(i);
+                if(wrappedObject.getObject() instanceof Object2D && !((Object2D) wrappedObject.getObject()).isShouldDestroy()) {
+                    List<ScriptComponent> scriptComponents = ((Object2D) wrappedObject.getObject()).getAllComponents(ScriptComponent.class);
 
                     if(scriptComponents.size() != 0) {
                         for (ScriptComponent scriptComponent : scriptComponents) {
@@ -214,7 +253,7 @@ public class Scene2D
                             for (Field field : scriptComponent.getScript().getScriptClass().getFields()) {
                                 ScriptTempValue scriptTempValue = new ScriptTempValue();
 
-                                scriptTempValue.setValue(scriptComponent.getScript().getFieldValue(field));
+                                scriptTempValue.setValue(new WrappedObject(scriptComponent.getScript().getFieldValue(field)));
                                 scriptTempValue.setFieldName(field.getName());
                                 scriptTempValue.setScript(scriptComponent.getScript());
 
@@ -234,9 +273,9 @@ public class Scene2D
 
         for (Layer layer : layering.getLayers()) {
             for(int i = 0; i < layer.getRenderingObjects().size(); i++) {
-                LayerObject layerObject = layer.getRenderingObjects().get(i);
-                if (layerObject.getObject() instanceof Object2D && !((Object2D) layerObject.getObject()).isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponents = ((Object2D) layerObject.getObject()).getAllComponents(ScriptComponent.class);
+                WrappedObject wrappedObject = layer.getRenderingObjects().get(i);
+                if (wrappedObject.getObject() instanceof Object2D && !((Object2D) wrappedObject.getObject()).isShouldDestroy()) {
+                    List<ScriptComponent> scriptComponents = ((Object2D) wrappedObject.getObject()).getAllComponents(ScriptComponent.class);
 
                     if (scriptComponents.size() != 0) {
                         for (ScriptComponent scriptComponent : scriptComponents) {
@@ -254,6 +293,14 @@ public class Scene2D
         layering.destroy();
         layering = null;
         physicsWorld = null;
+
+        cameras2D.clear();
+        tags.clear();
+
+        cameras2D = null;
+        tags = null;
+
+        sceneMainCamera2D = null;
     }
 
     public String getName() { return name; }
@@ -268,6 +315,14 @@ public class Scene2D
 
     public Layering getLayering() { return layering; }
     public void setLayering(Layering layering) { this.layering = layering; }
+
+    public List<Camera2D> getCameras2D() { return cameras2D; }
+
+    public Camera2D getSceneMainCamera2D() { return sceneMainCamera2D; }
+    public void setSceneMainCamera2D(Camera2D sceneMainCamera2D)
+    {
+        this.sceneMainCamera2D = sceneMainCamera2D;
+    }
 
     public Scene2DCallback getScene2DCallback() { return scene2DCallback; }
     public void setScene2DCallback(Scene2DCallback scene2DCallback)
@@ -294,4 +349,7 @@ public class Scene2D
 
     public ScriptSystem getScriptSystem() { return scriptSystem; }
     public void setScriptSystem(ScriptSystem scriptSystem) { this.scriptSystem = scriptSystem; }
+
+    public boolean isSceneLoaded() { return sceneLoaded; }
+    public void setSceneLoaded(boolean sceneLoaded) { this.sceneLoaded = sceneLoaded; }
 }

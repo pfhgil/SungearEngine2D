@@ -1,10 +1,11 @@
 package Core2D.Scene2D;
 
+import Core2D.Camera2D.Camera2D;
 import Core2D.Component.Component;
 import Core2D.Core2D.Settings;
 import Core2D.Deserializers.*;
 import Core2D.Layering.Layer;
-import Core2D.Layering.LayerObject;
+import Core2D.Utils.WrappedObject;
 import Core2D.Layering.Layering;
 import Core2D.Object2D.Object2D;
 import Core2D.Utils.FileUtils;
@@ -57,8 +58,9 @@ public class SceneManager
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
+                .registerTypeAdapter(Camera2D.class, new Camera2DDeserializer())
                 .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
-                .registerTypeAdapter(LayerObject.class, new LayerObjectDeserializer())
+                .registerTypeAdapter(WrappedObject.class, new WrappedObjectDeserializer())
                 .registerTypeAdapter(Layer.class, new LayerDeserializer())
                 .registerTypeAdapter(Layering.class, new LayeringDeserializer())
                 .registerTypeAdapter(Scene2D.class, new Scene2DDeserializer())
@@ -66,6 +68,8 @@ public class SceneManager
 
         scene.setScenePath(path);
         String serialized = gson.toJson(scene);
+
+        //System.out.println(serialized);
 
         FileUtils.serializeObject(path, serialized);
     }
@@ -76,7 +80,8 @@ public class SceneManager
 
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
-                .registerTypeAdapter(LayerObject.class, new LayerObjectDeserializer())
+                .registerTypeAdapter(WrappedObject.class, new WrappedObjectDeserializer())
+                .registerTypeAdapter(Camera2D.class, new Camera2DDeserializer())
                 .registerTypeAdapter(Component.class, new ComponentDeserializer())
                 .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
                 .registerTypeAdapter(Layer.class, new LayerDeserializer())
@@ -85,8 +90,8 @@ public class SceneManager
                 .create();
 
         if(sceneFile.exists()) {
-            String sceneString = (String) FileUtils.deSerializeObject(path);
-            if(!sceneString.equals("")) {
+            String deserialized = (String) FileUtils.deSerializeObject(path);
+            if(!deserialized.equals("")) {
                 if(currentScene2D != null) {
                     int objectsNum = 0;
                     for(int i = 0; i < currentScene2D.getLayering().getLayers().size(); i++) {
@@ -102,6 +107,8 @@ public class SceneManager
                     currentScene2D = null;
                 }
 
+                //System.out.println(deserialized);
+
                 Settings.Other.Picking.currentPickingColor.x = 0.0f;
                 Settings.Other.Picking.currentPickingColor.y = 0.0f;
                 Settings.Other.Picking.currentPickingColor.z = 0.0f;
@@ -109,15 +116,15 @@ public class SceneManager
                 Scene2D scene2D = new Scene2D();
                 currentScene2D = scene2D;
 
-                Scene2D deSerializedScene2D = gson.fromJson(sceneString, Scene2D.class);
-                deSerializedScene2D.setPhysicsWorld(scene2D.getPhysicsWorld());
-                setCurrentScene2D(deSerializedScene2D);
+                Scene2D deserializedScene2D = gson.fromJson(deserialized, Scene2D.class);
+                deserializedScene2D.setPhysicsWorld(scene2D.getPhysicsWorld());
+                setCurrentScene2D(deserializedScene2D);
 
-                deSerializedScene2D.setScenePath(path);
+                deserializedScene2D.setScenePath(path);
 
                 System.gc();
 
-                return deSerializedScene2D;
+                return deserializedScene2D;
             }
         }
 
@@ -135,6 +142,10 @@ public class SceneManager
         }
 
          */
+
+        if (currentScene2D != null) {
+            currentScene2D.setSceneLoaded(false);
+        }
         currentScene2D = scene2D;
 
         currentScene2D.load();

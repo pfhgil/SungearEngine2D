@@ -1,5 +1,6 @@
 package SungearEngine2D.GUI.Views;
 
+import Core2D.Camera2D.CamerasManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Log.Log;
 import Core2D.Scene2D.SceneManager;
@@ -120,6 +121,10 @@ public class ResourcesView extends View
                         if(ImGui.menuItem("Text file")) {
                             MainView.getTopToolbarView().setCurrentFileTypeNeedCreate("Text");
                         }
+                        ImGui.separator();
+                        if(ImGui.menuItem("Scene2D")) {
+                            MainView.getTopToolbarView().showCreateScene2DDialog();
+                        }
                         ImGui.endMenu();
                     }
                     ImGui.endPopup();
@@ -237,7 +242,9 @@ public class ResourcesView extends View
                     canOpenScene2D = false;
                     MainView.getSceneView().stopPlayMode();
                     SceneManager.loadScene(files[id].getPath());
+                    CamerasManager.setMainCamera2D((Main.getMainCamera2D()));
                     SceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;
+                    SceneManager.getCurrentScene2D().getScriptSystem().runScripts = false;
                 }
             }
         }

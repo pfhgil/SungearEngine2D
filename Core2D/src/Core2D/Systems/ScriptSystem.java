@@ -9,7 +9,7 @@ public class ScriptSystem
 {
     private List<ScriptTempValues> scriptTempValuesList = new ArrayList<>();
 
-    public transient boolean runScripts = false;
+    public transient boolean runScripts = true;
 
     public void applyTempValues()
     {

@@ -2,15 +2,15 @@ package SungearEngine2D.Main;
 
 import Core2D.Component.Components.BoxCollider2DComponent;
 import Core2D.Component.Components.CircleCollider2DComponent;
+import Core2D.Controllers.PC.Keyboard;
 import Core2D.Controllers.PC.Mouse;
-import Core2D.Core2D.Core2D;
 import Core2D.Graphics.Graphics;
 import Core2D.Object2D.Object2D;
-import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.ShaderUtils.FrameBufferObject;
+import SungearEngine2D.DebugDraw.CameraDebugLines;
 import SungearEngine2D.GUI.Views.MainView;
-import SungearEngine2D.Grid.Grid;
+import SungearEngine2D.DebugDraw.Grid;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFW;
@@ -29,14 +29,16 @@ public class GraphicsRenderer
     public static void init()
     {
         Grid.init(new Vector2f(10000, 10000));
+        CameraDebugLines.init();
+
         Vector2i targetSize = Graphics.getScreenSize();
         renderTarget = new FrameBufferObject(targetSize.x, targetSize.y, FrameBufferObject.BuffersTypes.COLOR_BUFFER, GL_TEXTURE0);
     }
 
     public static void draw()
     {
-        renderTarget.bind();
-        glClear(GL_COLOR_BUFFER_BIT);
+        if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) renderTarget.bind();
+        if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) glClear(GL_COLOR_BUFFER_BIT);
 
         Grid.draw();
 
@@ -61,7 +63,9 @@ public class GraphicsRenderer
 
         inspectingObject = null;
 
-        renderTarget.unBind();
+        CameraDebugLines.draw();
+
+        if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) renderTarget.unBind();
 
         if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && !MainView.isSomeViewFocusedExceptSceneView && !MainView.getInspectorView().isEditing()) {
             Vector2f mousePosition = Mouse.getMousePosition();

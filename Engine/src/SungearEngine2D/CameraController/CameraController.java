@@ -19,6 +19,8 @@ public class CameraController
     // scale камеры, установленный с помощью колесика мышки
     private static Vector2f mouseCameraScale = new Vector2f(1);
 
+    public static boolean controlCamera = true;
+
     public static void init()
     {
         Core2D.getCore2DInputCallback().getUserInputCallbacks().add(new UserInputCallback() {
@@ -29,7 +31,7 @@ public class CameraController
 
             @Override
             public void onScroll(double xoffset, double yoffset) {
-                if(controlledCamera2DAnchor != null && !MainView.isSomeViewFocusedExceptSceneView) {
+                if(controlledCamera2DAnchor != null && !MainView.isSomeViewFocusedExceptSceneView && controlCamera) {
                     mouseCameraScale.x += (float) (yoffset / 5.0f) * mouseCameraScale.x;
                     mouseCameraScale.y += (float) (yoffset / 5.0f) * mouseCameraScale.y;
                     mouseCameraScale.x = Math.abs(mouseCameraScale.x);
@@ -41,19 +43,20 @@ public class CameraController
 
     public static void control()
     {
-        if(Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
-            lastCursorPosition = new Vector2f(Mouse.getMousePosition());
-        }
-        if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
-            lastCursorPosition = new Vector2f(Mouse.getMousePosition());
-        }
-        if(controlledCamera2DAnchor != null && !MainView.isSomeViewFocusedExceptSceneView) {
-            if (Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
-                Vector2f currentPosition = new Vector2f(Mouse.getMousePosition());
-                Vector2f difference = new Vector2f(currentPosition.x - lastCursorPosition.x, currentPosition.y - lastCursorPosition.y);
-                controlledCamera2DAnchor.getComponent(TransformComponent.class).getTransform().translate(difference.negate().div(Main.getMainCamera2D().getTransform().getScale()));
-                lastCursorPosition = currentPosition;
+        if(controlCamera) {
+            if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
+                lastCursorPosition = new Vector2f(Mouse.getMousePosition());
             }
+            if (Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
+                lastCursorPosition = new Vector2f(Mouse.getMousePosition());
+            }
+            if (controlledCamera2DAnchor != null && !MainView.isSomeViewFocusedExceptSceneView) {
+                if (Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
+                    Vector2f currentPosition = new Vector2f(Mouse.getMousePosition());
+                    Vector2f difference = new Vector2f(currentPosition.x - lastCursorPosition.x, currentPosition.y - lastCursorPosition.y);
+                    controlledCamera2DAnchor.getComponent(TransformComponent.class).getTransform().translate(difference.negate().div(Main.getMainCamera2D().getTransform().getScale()));
+                    lastCursorPosition = currentPosition;
+                }
             /*
             if(Keyboard.KeyDown(GLFW.GLFW_KEY_S)) {
                 Main.getMainCamera2D().getTransform().getModelMatrix().translate(new Vector3f(0.0f, 0.0f, -1f));
@@ -70,6 +73,7 @@ public class CameraController
             }
 
              */
+            }
         }
     }
 

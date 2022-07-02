@@ -46,19 +46,19 @@ public class Layering {
         layers.sort(new Comparator<Layer>() {
             @Override
             public int compare(Layer o1, Layer o2) {
-                return Integer.compare(o2.getId(), o1.getId());
+                return Integer.compare(o2.getID(), o1.getID());
             }
         });
     }
 
     public void addLayer(Layer layer)
     {
-        Layer foundLayer = getLayer(layer.getId());
+        Layer foundLayer = getLayer(layer.getID());
         if(foundLayer == null) {
             foundLayer = getLayer(layer.getName());
         } else {
-            Log.CurrentSession.println("Layer with ID " + foundLayer.getId() + " already exists", Log.MessageType.ERROR);
-            Log.showErrorDialog("Layer with ID " + foundLayer.getId() + " already exists");
+            Log.CurrentSession.println("Layer with ID " + foundLayer.getID() + " already exists", Log.MessageType.ERROR);
+            Log.showErrorDialog("Layer with ID " + foundLayer.getID() + " already exists");
             return;
         }
 
@@ -75,7 +75,7 @@ public class Layering {
     public Layer getLayer(int id)
     {
         for(Layer layer : layers) {
-            if(layer.getId() == id) return layer;
+            if(layer.getID() == id) return layer;
         }
 
         return null;

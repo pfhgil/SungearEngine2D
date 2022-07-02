@@ -1,5 +1,6 @@
 package SungearEngine2D.GUI.Views;
 
+import Core2D.Camera2D.Camera2D;
 import Core2D.Controllers.PC.Keyboard;
 import Core2D.Core2D.Core2D;
 import Core2D.Log.Log;
@@ -216,7 +217,10 @@ public class TopToolbarView
                     }
 
                     if(ImGui.menuItem("Camera2D")) {
-                        // сделать
+                        if(SceneManager.getCurrentScene2D() != null) {
+                            Camera2D camera2D = new Camera2D();
+                            SceneManager.getCurrentScene2D().getCameras2D().add(camera2D);
+                        }
                     }
 
                     if(ImGui.menuItem("Instancing object")) {
@@ -255,57 +259,7 @@ public class TopToolbarView
 
             if(ImGui.beginMenu("Scene")) {
                 if(ImGui.menuItem("Create")) {
-                    dialogWindow.setWindowName("Create scene");
-                    dialogWindow.setRightButtonText("Create");
-                    dialogWindow.setActive(true);
-                    dialogWindow.setWindowSize(new Vector2f(525.0f, dialogWindow.getWindowSize().y));
-                    dialogWindow.setDialogWindowCallback(new DialogWindowCallback() {
-                        @Override
-                        public void onDraw() {
-                            ImGui.inputText("Scene name", newSceneName);
-                            if(!ImGui.isItemActive() && Keyboard.keyReleased(GLFW.GLFW_KEY_ENTER)) {
-                                onRightButtonClicked();
-                            }
-                        }
-
-                        @Override
-                        public void onMiddleButtonClicked() {
-
-                        }
-
-                        @Override
-                        public void onLeftButtonClicked() {
-                            newSceneName.set("");
-
-                            dialogWindow.setActive(false);
-                            currentAction = "";
-                        }
-
-                        @Override
-                        public void onRightButtonClicked() {
-                            if(ProjectsManager.getCurrentProject() != null) {
-                                MainView.getSceneView().stopPlayMode();
-                                Scene2D scene2D = new Scene2D();
-                                scene2D.setName(newSceneName.get());
-                                if (SceneManager.getScenes().size() == 0) {
-                                    SceneManager.setCurrentScene2D(scene2D);
-                                }
-                                SceneManager.getScenes().add(scene2D);
-                                SceneManager.saveScene(scene2D, ProjectsManager.getCurrentProject().getScenesPath() + "\\" + scene2D.getName() + ".sgs");
-                                scene2D = null;
-                            } else {
-                                Log.showErrorDialog("Can not create new scene2D! First create or open project.");
-                            }
-
-                            newSceneName.set("");
-
-                            dialogWindow.setActive(false);
-                            currentAction = "";
-                        }
-                    });
-
-                    currentAction = "Scene/Create";
-                    // сделать
+                    showCreateScene2DDialog();
                 }
 
                 if(ImGui.menuItem("Save current")) {
@@ -336,6 +290,71 @@ public class TopToolbarView
             dialogWindow.draw();
             fileChooserWindow.draw();
         }
+    }
+
+    public void showCreateScene2DDialog()
+    {
+        dialogWindow.setWindowName("Create scene");
+        dialogWindow.setRightButtonText("Create");
+        dialogWindow.setActive(true);
+        dialogWindow.setWindowSize(new Vector2f(525.0f, dialogWindow.getWindowSize().y));
+        dialogWindow.setDialogWindowCallback(new DialogWindowCallback() {
+            @Override
+            public void onDraw() {
+                ImGui.inputText("Scene name", newSceneName);
+                if(!ImGui.isItemActive() && Keyboard.keyReleased(GLFW.GLFW_KEY_ENTER)) {
+                    onRightButtonClicked();
+                }
+            }
+
+            @Override
+            public void onMiddleButtonClicked() {
+
+            }
+
+            @Override
+            public void onLeftButtonClicked() {
+                newSceneName.set("");
+
+                dialogWindow.setActive(false);
+                currentAction = "";
+            }
+
+            @Override
+            public void onRightButtonClicked() {
+                if(ProjectsManager.getCurrentProject() != null) {
+                    MainView.getSceneView().stopPlayMode();
+                    if(SceneManager.getCurrentScene2D() != null) {
+                        SceneManager.getCurrentScene2D().destroy();
+                    }
+                    Scene2D scene2D = new Scene2D();
+
+                    Camera2D camera2D = new Camera2D();
+                    scene2D.getCameras2D().add(camera2D);
+                    scene2D.setSceneMainCamera2D(camera2D);
+
+                    scene2D.getPhysicsWorld().simulatePhysics = false;
+                    scene2D.getScriptSystem().runScripts = false;
+                    scene2D.setName(newSceneName.get());
+                    if (SceneManager.getScenes().size() == 0) {
+                        SceneManager.setCurrentScene2D(scene2D);
+                    }
+                    SceneManager.getScenes().add(scene2D);
+                    SceneManager.saveScene(scene2D, ResourcesView.currentDirectoryPath + "\\" + scene2D.getName() + ".sgs");
+                    scene2D = null;
+                } else {
+                    Log.showErrorDialog("Can not create new scene2D! First create or open project.");
+                }
+
+                newSceneName.set("");
+
+                dialogWindow.setActive(false);
+                currentAction = "";
+            }
+        });
+
+        currentAction = "Scene/Create";
+        // сделать
     }
 
     // устанавливает тип файла, который нужно создать

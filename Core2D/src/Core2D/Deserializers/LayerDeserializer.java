@@ -2,7 +2,7 @@ package Core2D.Deserializers;
 
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Layering.Layer;
-import Core2D.Layering.LayerObject;
+import Core2D.Utils.WrappedObject;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
@@ -15,16 +15,18 @@ public class LayerDeserializer implements JsonDeserializer<Layer>
         JsonObject jsonObject = jsonElement.getAsJsonObject();
 
         String name = jsonObject.get("name").getAsString();
-        int id = context.deserialize(jsonObject.get("id"), int.class);
+        int ID = context.deserialize(jsonObject.get("ID"), int.class);
         JsonArray renderingObjects = jsonObject.getAsJsonArray("renderingObjects");
 
-        Layer layer = new Layer(id, name);
+        Layer layer = new Layer(ID, name);
 
         for(JsonElement element : renderingObjects) {
-            LayerObject object = context.deserialize(element, LayerObject.class);
+            WrappedObject object = context.deserialize(element, WrappedObject.class);
             CommonDrawableObjectsParameters objParams = ((CommonDrawableObjectsParameters) object.getObject());
+
             objParams.setLayer(layer);
 
+            object.setObject(null);
             object = null;
             objParams = null;
         }

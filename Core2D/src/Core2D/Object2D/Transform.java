@@ -68,8 +68,6 @@ public class Transform implements Serializable
         modelMatrix = new Matrix4f(transform.getModelMatrix());
 
         init();
-
-        transform = null;
     }
 
     public Transform(Rigidbody2D rigidbody2D)

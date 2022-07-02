@@ -16,14 +16,12 @@ public class PetSystem
 {
     private boolean firstTime = true;
 
-    private Object2D turretObject;
-
     private Object2D lastSeenObject2D;
 
     private int seenObjectsNum = 0;
 
     @InspectorView
-    public String turretName = "";
+    public Object2D turretObject;
 
     @InspectorView
     public float reloadTime = 0.1f;
@@ -78,8 +76,6 @@ public class PetSystem
         }
 
         petShootTimer.startFrame();
-
-        turretObject = SceneManager.getCurrentScene2D().findObject2DByName(turretName);
     }
     
     public void deltaUpdate(float deltaTime)

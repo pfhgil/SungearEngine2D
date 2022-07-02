@@ -9,10 +9,8 @@ import org.joml.Vector4f;
 
 public class EnemySystem
 {
-    private Object2D enemy;
-
     @InspectorView
-    public String enemyName;
+    public Object2D enemy;
 
     @InspectorView
     public float enemyHealth = 100.0f;
@@ -22,7 +20,7 @@ public class EnemySystem
 
     public void update()
     {
-        enemy = SceneManager.getCurrentScene2D().findObject2DByName(enemyName);
+        //sdf
     }
     
     public void deltaUpdate(float deltaTime)
