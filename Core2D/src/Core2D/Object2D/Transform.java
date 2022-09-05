@@ -2,10 +2,13 @@ package Core2D.Object2D;
 
 import Core2D.Physics.PhysicsWorld;
 import Core2D.Physics.Rigidbody2D;
+import Core2D.Scene2D.SceneManager;
+import Core2D.Utils.MatrixUtils;
 import org.jbox2d.common.Vec2;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 import java.io.Serializable;
 
@@ -20,7 +23,7 @@ public class Transform implements Serializable
     private Vector2f scale = new Vector2f(1.0f, 1.0f);
 
     // цент объекта (относительно позиции объекта)
-    private transient Vector2f centre = new Vector2f();
+    private Vector2f centre = new Vector2f();
 
     // матрица перемещения объекта
     private transient Matrix4f translationMatrix = new Matrix4f();
@@ -32,21 +35,36 @@ public class Transform implements Serializable
     // матрица модели объекта
     private transient Matrix4f modelMatrix = new Matrix4f();
 
-    // позиция куда нужно передвинуть плавно объект
+    // результативная матрица модели объекта
+    private transient Matrix4f resultModelMatrix = new Matrix4f();
+
+    // кастомная матрица
+    private transient Matrix4f customMatrix = new Matrix4f();
+
+    // позиция, куда нужно передвинуть плавно объект
     private transient Vector2f destinationPosition = new Vector2f();
     // множитель скорости, с которой будет передвигать объект в позицию moveToPosition
     private transient Vector2f moveToDestinationSpeedCoeff = new Vector2f();
     // нужно ли передвигать объект к позиции
     private transient boolean needToMoveToDestination = false;
 
+    // поворот, на который нужно повернуть плавно объект
+    private transient float destinationRotation;
+    // скорость, с которой объект будет набирать поворот destinationRotation
+    private transient float destinationRotationToAdd;
+    // нужно ли повернуть объект
+    private transient boolean needToRotateToDestinationRotation = false;
+
     // погрешность при достижении цели
-    private transient Vector2f destinationInfelicity = new Vector2f(0.01f, 0.01f);
+    private transient Vector2f destinationPositionInfelicity = new Vector2f(0.01f, 0.01f);
 
     // прикрепленный rigibody2d
     private transient Rigidbody2D rigidbody2D;
 
     // колбэк
     private transient TransformCallback transformCallback = null;
+
+    private transient Transform parentTransform;
 
     public Transform()
     {
@@ -55,19 +73,7 @@ public class Transform implements Serializable
 
     public Transform(Transform transform)
     {
-        position = new Vector2f(transform.getPosition());
-        rotation = transform.getRotation();
-        scale = new Vector2f(transform.getScale());
-
-        centre = new Vector2f(transform.getCentre());
-
-        translationMatrix = new Matrix4f(transform.getTranslationMatrix());
-        rotationMatrix = new Matrix4f(transform.getRotationMatrix());
-        scaleMatrix = new Matrix4f(transform.getScaleMatrix());
-
-        modelMatrix = new Matrix4f(transform.getModelMatrix());
-
-        init();
+        set(transform);
     }
 
     public Transform(Rigidbody2D rigidbody2D)
@@ -92,7 +98,7 @@ public class Transform implements Serializable
             Vector2f dif = new Vector2f(destinationPosition.x - position.x, destinationPosition.y - position.y).mul(moveToDestinationSpeedCoeff).mul(deltaTime);
 
             // 0.1f - погрешность, чтобы объект всегда достигал цели
-            if(Math.abs(dif.x) > destinationInfelicity.x || Math.abs(dif.y) > destinationInfelicity.y) {
+            if(Math.abs(dif.x) > destinationPositionInfelicity.x || Math.abs(dif.y) > destinationPositionInfelicity.y) {
                 translate(new Vector2f(dif));
             } else {
                 needToMoveToDestination = false;
@@ -102,23 +108,96 @@ public class Transform implements Serializable
             }
         }
 
-        if(rigidbody2D != null) {
+        if(needToRotateToDestinationRotation) {
+            int a = (int) rotation / 360;
+            float clearRotation = (float) Math.ceil(rotation - 360.0f * a);
+
+            a = (int) destinationRotationToAdd / 360;
+            float clearDestinationRotationToAdd = destinationRotationToAdd - 360.0f * a;
+
+            destinationRotation = (float) Math.ceil(destinationRotation);
+
+            float firstVar = destinationRotation - clearRotation;
+            firstVar += (firstVar > 180) ? -360.0f : (firstVar < -180.0f) ? 360.0f : 0.0f;
+
+            firstVar = (float) Math.ceil(firstVar);
+
+            if(firstVar < 0.0f) {
+                rotate(-clearDestinationRotationToAdd);
+            } else if(firstVar > 0.0f) {
+                rotate(clearDestinationRotationToAdd);
+            }
+        }
+
+        boolean canUpdateRigigbody2D = true;
+        if(SceneManager.currentSceneManager.getCurrentScene2D() != null && !SceneManager.currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics) {
+            canUpdateRigigbody2D = false;
+        }
+        if(rigidbody2D != null && canUpdateRigigbody2D) {
             //if(Settings.Debug.ENABLE_DEBUG_PHYSICS_DRAWING) rigidbody2D.draw();
 
-            setPositionOfBody();
-            setRotationOfBody();
+            setPositionLikeRigidbody2D();
+            setRotationLikeRigidbody2D();
+        }
+
+        if(parentTransform != null) {
+            Matrix4f translationMatrix = MatrixUtils.getTranslationMatrix(parentTransform.getResultModelMatrix());
+            Matrix4f rotationMatrix = MatrixUtils.getRotationMatrix(parentTransform.getResultModelMatrix());
+
+            Vector2f parentScale = MatrixUtils.getScale(parentTransform.getResultModelMatrix());
+
+            Vector2f lastScale = new Vector2f(scale);
+            setScale(new Vector2f(scale).mul(parentScale));
+            scale.set(lastScale);
+
+            Vector2f lastPosition = new Vector2f(position);
+            setPosition(new Vector2f(position).mul(parentScale));
+            position.set(lastPosition);
+
+            Matrix4f result = new Matrix4f(translationMatrix).mul(rotationMatrix);
+            resultModelMatrix.set(result);
+            resultModelMatrix.mul(modelMatrix);
+        } else {
+            resultModelMatrix.set(modelMatrix);
         }
     }
 
     public void translate(Vector2f translation)
     {
-        position = position.add(translation);
+        if(parentTransform != null) {
+            translation.div(new Vector2f(MatrixUtils.getScale(parentTransform.getResultModelMatrix())));
+        }
+
+        position.add(translation);
+
+        translationMatrix.translate(translation.x, translation.y, 0.0f);
+
+        if(rigidbody2D != null) {
+            Vec2 newPosition = new Vec2(rigidbody2D.getBody().getTransform().position).add(new Vec2(translation.x / PhysicsWorld.RATIO, translation.y / PhysicsWorld.RATIO));
+            rigidbody2D.getBody().setTransform(newPosition, rigidbody2D.getBody().getAngle());
+        }
+
+        translation = null;
+
+        updateModelMatrix();
+    }
+
+    public void translateInRotationDirection(Vector2f translation)
+    {
+        if(parentTransform != null) {
+            translation.div(new Vector2f(MatrixUtils.getScale(parentTransform.getResultModelMatrix())));
+        }
+
+        Vector3f rotatedTranslation = new Vector3f(translation.x, translation.y, 0.0f);
+        rotatedTranslation.rotateZ((float) Math.toRadians(rotation));
+
+        position.add(new Vector2f(rotatedTranslation.x, rotatedTranslation.y));
 
         translationMatrix.identity();
         translationMatrix.translate(position.x, position.y, 0.0f);
 
         if(rigidbody2D != null) {
-            Vec2 newPosition = new Vec2(rigidbody2D.getBody().getTransform().position).add(new Vec2(translation.x / PhysicsWorld.RATIO, translation.y / PhysicsWorld.RATIO));
+            Vec2 newPosition = new Vec2(rigidbody2D.getBody().getTransform().position).add(new Vec2(rotatedTranslation.x / PhysicsWorld.RATIO, rotatedTranslation.y / PhysicsWorld.RATIO));
             rigidbody2D.getBody().setTransform(newPosition, rigidbody2D.getBody().getAngle());
         }
 
@@ -131,12 +210,11 @@ public class Transform implements Serializable
     {
         this.rotation += rotation;
 
-        rotationMatrix.identity();
         Quaternionf rotationQ = new Quaternionf();
 
         rotationQ.rotateX((float) Math.toRadians(0));
         rotationQ.rotateY((float) Math.toRadians(0));
-        rotationQ.rotateZ((float) Math.toRadians(this.rotation));
+        rotationQ.rotateZ((float) Math.toRadians(rotation));
 
         rotationMatrix.rotateAround(rotationQ, centre.x, centre.y, 0.0f);
 
@@ -148,24 +226,63 @@ public class Transform implements Serializable
         updateModelMatrix();
     }
 
-    public void lookAt(Vector2f target)
+    public void rotate(float rotation, Matrix4f dest)
     {
-        float dx = target.x - position.x;
-        float dy = target.y - position.y;
+        Quaternionf rotationQ = new Quaternionf();
+
+        rotationQ.rotateX((float) Math.toRadians(0));
+        rotationQ.rotateY((float) Math.toRadians(0));
+        rotationQ.rotateZ((float) Math.toRadians(rotation));
+
+        dest.rotateAround(rotationQ, centre.x, centre.y, 0.0f);
+    }
+
+    public void rotateAround(float rotation, Vector2f point)
+    {
+        this.rotation += rotation;
+
+        Quaternionf rotationQ = new Quaternionf();
+
+        rotationQ.rotateX((float) Math.toRadians(0));
+        rotationQ.rotateY((float) Math.toRadians(0));
+        rotationQ.rotateZ((float) Math.toRadians(rotation));
+
+        rotationMatrix.rotateAround(rotationQ, point.x, point.y, 0.0f);
+
+        if(rigidbody2D != null) {
+            float newAngle = (float) (Math.toDegrees(rigidbody2D.getBody().getAngle()) + rotation);
+            rigidbody2D.getBody().setTransform(rigidbody2D.getBody().getTransform().position, (float) Math.toRadians(newAngle));
+        }
+
+        updateModelMatrix();
+    }
+
+    public float getRotationOfLookAt(Vector2f target)
+    {
+        Vector2f resultPosition = MatrixUtils.getPosition(resultModelMatrix);
+        float parentRotation = 0.0f;
+        if(parentTransform != null) {
+            parentRotation = MatrixUtils.getRotation(parentTransform.getResultModelMatrix());
+        }
+
+        float dx = resultPosition.x - target.x;
+        float dy = resultPosition.y - target.y;
         float angle = (float) (Math.atan2(dy, dx) * 180.0f / Math.PI);
 
-        setRotation(angle);
+        return angle - parentRotation;
+    }
+
+    public void lookAt(Vector2f target)
+    {
+        setRotation(getRotationOfLookAt(target));
     }
 
     public void scale(Vector2f scale)
     {
-        this.scale = this.scale.add(scale);
+        this.scale.add(scale);
 
         scaleMatrix.identity();
         scaleMatrix.scale(this.scale.x, this.scale.y, 1.0f);
-
-        centre.x = (100.0f * this.scale.x) / 2.0f;
-        centre.y = (100.0f * this.scale.y) / 2.0f;
 
         /*
         if(rigidbody2D != null) {
@@ -176,20 +293,33 @@ public class Transform implements Serializable
 
          */
 
-        scale = null;
+        updateModelMatrix();
+    }
+
+    public void scaleMul(Vector2f scale)
+    {
+        this.scale.mul(scale);
+
+        scaleMatrix.identity();
+        scaleMatrix.scale(this.scale.x, this.scale.y, 1.0f);
 
         updateModelMatrix();
     }
 
-    public void moveTo(Vector2f toPosition, Vector2f coeff)
+    public void lerpMoveTo(Vector2f toPosition, Vector2f coeff)
     {
         destinationPosition = new Vector2f(toPosition);
         moveToDestinationSpeedCoeff = new Vector2f(coeff);
 
-        toPosition = null;
-        coeff = null;
-
         needToMoveToDestination = true;
+    }
+
+    public void lerpLookAt(Vector2f target, float destinationRotationToAdd)
+    {
+        this.destinationRotation = getRotationOfLookAt(target);
+        this.destinationRotationToAdd = destinationRotationToAdd;
+
+        needToRotateToDestinationRotation = true;
     }
 
     public void applyLinearImpulse(Vector2f impulse, Vector2f pos)
@@ -197,9 +327,6 @@ public class Transform implements Serializable
         if(rigidbody2D != null) {
             rigidbody2D.getBody().applyLinearImpulse(new Vec2(impulse.x / PhysicsWorld.RATIO, impulse.y / PhysicsWorld.RATIO), new Vec2(pos.x / PhysicsWorld.RATIO, pos.y / PhysicsWorld.RATIO));
         }
-
-        impulse = null;
-        pos = null;
     }
 
     public void applyAngularImpulse(float impulse)
@@ -214,9 +341,6 @@ public class Transform implements Serializable
         if(rigidbody2D != null) {
             rigidbody2D.getBody().applyForce(new Vec2(force.x / PhysicsWorld.RATIO, force.y / PhysicsWorld.RATIO), new Vec2(pos.x / PhysicsWorld.RATIO, pos.y / PhysicsWorld.RATIO));
         }
-
-        force = null;
-        pos = null;
     }
 
     public void applyTorque(float torque)
@@ -231,20 +355,18 @@ public class Transform implements Serializable
         if(rigidbody2D != null) {
             rigidbody2D.getBody().setLinearVelocity(new Vec2(impulse.x / PhysicsWorld.RATIO, impulse.y / PhysicsWorld.RATIO));
         }
-
-        impulse = null;
     }
 
-    // обновление матрицы модели (в шейдере тоже)
+    // обновление матрицы модели
     private void updateModelMatrix()
     {
-        modelMatrix = new Matrix4f(translationMatrix).mul(rotationMatrix).mul(scaleMatrix);
+        modelMatrix = new Matrix4f(customMatrix).mul(translationMatrix).mul(rotationMatrix).mul(scaleMatrix);
     }
 
     private void updateRigidbody2D()
     {
         if(rigidbody2D != null) {
-            rigidbody2D.getBody().setTransform(new Vec2((position.x + centre.x) / PhysicsWorld.RATIO, (position.y + centre.y) / PhysicsWorld.RATIO), (float) Math.toRadians(rotation));
+            rigidbody2D.getBody().setTransform(new Vec2(position.x / PhysicsWorld.RATIO, position.y / PhysicsWorld.RATIO), (float) Math.toRadians(rotation));
         }
     }
 
@@ -264,13 +386,13 @@ public class Transform implements Serializable
 
         modelMatrix = new Matrix4f(transform.getModelMatrix());
 
+        customMatrix = new Matrix4f(transform.getCustomMatrix());
+
         destinationPosition = new Vector2f();
         moveToDestinationSpeedCoeff = new Vector2f();
-        destinationInfelicity = new Vector2f();
+        destinationPositionInfelicity = new Vector2f();
 
         init();
-
-        transform = null;
     }
 
     public void destroy()
@@ -290,7 +412,7 @@ public class Transform implements Serializable
 
         destinationPosition = null;
         moveToDestinationSpeedCoeff = null;
-        destinationInfelicity = null;
+        destinationPositionInfelicity = null;
 
         transformCallback = null;
     }
@@ -298,20 +420,18 @@ public class Transform implements Serializable
     public Vector2f getPosition() { return position; }
     public void setPosition(Vector2f position)
     {
-        this.position = new Vector2f(position);
+        this.position.set(position);
 
         translationMatrix.identity();
-        translationMatrix.translate(position.x, position.y, 0.0f);
-
-        position = null;
+        translationMatrix.translate(this.position.x, this.position.y, 0.0f);
 
         updateRigidbody2D();
         updateModelMatrix();
     }
-    private void setPositionOfBody()
+    private void setPositionLikeRigidbody2D()
     {
         Vec2 bodyPos = rigidbody2D.getBody().getTransform().position.mul(PhysicsWorld.RATIO);
-        this.position = new Vector2f(bodyPos.x - centre.x, bodyPos.y - centre.y);
+        this.position.set(new Vector2f(bodyPos.x, bodyPos.y));
 
         translationMatrix.identity();
         translationMatrix.translate(position.x, position.y, 0.0f);
@@ -327,16 +447,32 @@ public class Transform implements Serializable
         rotationMatrix.identity();
         Quaternionf rotationQ = new Quaternionf();
 
-        rotationQ.rotateLocalX((float) Math.toRadians(0));
-        rotationQ.rotateLocalY((float) Math.toRadians(0));
-        rotationQ.rotateLocalZ((float) Math.toRadians(this.rotation));
+        rotationQ.rotateX((float) Math.toRadians(0));
+        rotationQ.rotateY((float) Math.toRadians(0));
+        rotationQ.rotateZ((float) Math.toRadians(this.rotation));
 
-        rotationMatrix.rotateAroundLocal(rotationQ, centre.x, centre.y, 0.0f);
+        rotationMatrix.rotateAround(rotationQ, centre.x, centre.y, 0.0f);
 
         updateRigidbody2D();
         updateModelMatrix();
     }
-    private void setRotationOfBody()
+    public void setRotationAround(float angle, Vector2f point)
+    {
+        this.rotation = angle;
+
+        rotationMatrix.identity();
+        Quaternionf rotationQ = new Quaternionf();
+
+        rotationQ.rotateX((float) Math.toRadians(0));
+        rotationQ.rotateY((float) Math.toRadians(0));
+        rotationQ.rotateZ((float) Math.toRadians(this.rotation));
+
+        rotationMatrix.rotateAround(rotationQ, point.x, point.y, 0.0f);
+
+        updateRigidbody2D();
+        updateModelMatrix();
+    }
+    private void setRotationLikeRigidbody2D()
     {
         this.rotation = (float) Math.toDegrees(rigidbody2D.getBody().getTransform().getAngle());
 
@@ -355,35 +491,21 @@ public class Transform implements Serializable
     public Vector2f getScale() { return scale; }
     public void setScale(Vector2f scale)
     {
-        this.scale = new Vector2f(scale);
+        this.scale.set(scale);
 
         scaleMatrix.identity();
         scaleMatrix.scale(this.scale.x, this.scale.y, 1.0f);
 
-        centre.x = (100.0f * this.scale.x) / 2.0f;
-        centre.y = (100.0f * this.scale.y) / 2.0f;
-
-        /*
         if(rigidbody2D != null) {
-            if(collider2D instanceof BoxCollider2D) {
-                ((BoxCollider2D) collider2D).setScale(scale);
-            }
+            Vec2 newPosition = new Vec2(rigidbody2D.getBody().getTransform().position);
+            rigidbody2D.getBody().setTransform(newPosition, rigidbody2D.getBody().getAngle());
         }
-
-         */
-
-        scale = null;
 
         updateModelMatrix();
     }
 
     public Vector2f getCentre() { return centre; }
-    public void setCentre(Vector2f centre)
-    {
-        this.centre = new Vector2f(centre);
-
-        centre = null;
-    }
+    public void setCentre(Vector2f centre) { this.centre.set(centre); }
 
     public Matrix4f getTranslationMatrix() { return translationMatrix; }
 
@@ -392,6 +514,10 @@ public class Transform implements Serializable
     public Matrix4f getScaleMatrix() { return scaleMatrix; }
 
     public Matrix4f getModelMatrix() { return modelMatrix; }
+
+    public Matrix4f getResultModelMatrix() { return resultModelMatrix; }
+
+    public Matrix4f getCustomMatrix() { return customMatrix; }
 
     public Rigidbody2D getRigidbody2D()
     {
@@ -403,13 +529,17 @@ public class Transform implements Serializable
 
         updateRigidbody2D();
         setScale(scale);
-
-        rigidbody2D = null;
     }
 
     public TransformCallback getTransformCallback() {return transformCallback; }
     public void setTransformCallback(TransformCallback transformCallback) { this.transformCallback = transformCallback; }
 
-    public Vector2f getDestinationInfelicity() { return destinationInfelicity; }
-    public void setDestinationInfelicity(Vector2f destinationInfelicity) { this.destinationInfelicity = destinationInfelicity; }
+    public Vector2f getDestinationPositionInfelicity() { return destinationPositionInfelicity; }
+    public void setDestinationPositionInfelicity(Vector2f destinationPositionInfelicity) { this.destinationPositionInfelicity = destinationPositionInfelicity; }
+
+    public boolean isNeedToMoveToDestination() { return needToMoveToDestination; }
+    public void setNeedToMoveToDestination(boolean needToMoveToDestination) { this.needToMoveToDestination = needToMoveToDestination; }
+
+    public Transform getParentTransform() { return parentTransform; }
+    public void setParentTransform(Transform parentTransform) { this.parentTransform = parentTransform; }
 }

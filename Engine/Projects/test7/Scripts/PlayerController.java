@@ -44,7 +44,11 @@ public class PlayerController
     
     public void collider2DEnter(Object2D otherObj)
     {
-        
+        if(otherObj.getTag().getName().equals("deathSpace")) {
+            System.out.println("kkkkjj");
+            Object2D spawnPoint = SceneManager.getCurrentScene2D().findObject2DByTag("spawnPoint");
+            player.getComponent(TransformComponent.class).getTransform().setPosition(spawnPoint.getTransform(TransformComponent.class).getTransform().getPosition());
+        }
     }
     
     public void collider2DExit(Object2D otherObj)

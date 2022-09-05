@@ -22,9 +22,11 @@ public class MainView
     private static ResourcesView resourcesView;
     private static SceneTreeView sceneTreeView;
     private static SceneView sceneView;
+    private static GameView gameView;
     private static TopToolbarView topToolbarView;
     private static LogView logView;
     private static BottomMenuView bottomMenuView;
+    private static ToolbarView toolbarView;
 
     public static void init()
     {
@@ -35,9 +37,11 @@ public class MainView
         resourcesView = new ResourcesView();
         sceneTreeView = new SceneTreeView();
         sceneView = new SceneView();
+        gameView = new GameView();
         topToolbarView = new TopToolbarView();
         logView = new LogView();
         bottomMenuView = new BottomMenuView();
+        toolbarView = new ToolbarView();
     }
 
     public static void draw()
@@ -55,10 +59,11 @@ public class MainView
         ImGui.setNextWindowSize(Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
+        ImGui.pushStyleVar(ImGuiStyleVar.WindowPadding, 0.0f, 0.0F);
 
         ImGui.begin("Dockspace demo", new ImBoolean(true), windowFlags);
         {
-            ImGui.popStyleVar(2);
+            ImGui.popStyleVar(3);
 
             ImGui.dockSpace(mainDockspaceID);
 
@@ -74,9 +79,13 @@ public class MainView
 
             sceneView.draw();
 
+            gameView.draw();
+
             logView.draw();
 
             bottomMenuView.draw();
+
+            toolbarView.draw();
         }
         ImGui.end();
     }

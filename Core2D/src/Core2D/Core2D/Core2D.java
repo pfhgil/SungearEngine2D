@@ -1,6 +1,7 @@
 package Core2D.Core2D;
 
-import Core2D.Camera2D.Camera2D;
+import Core2D.AssetManager.AssetManager;
+import Core2D.Camera2D.CamerasManager;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.Core2DInputCallback;
 import Core2D.Log.Log;
@@ -30,6 +31,8 @@ public class Core2D extends Graphics
     private static boolean gcThreadRunning = false;
 
     private static Timer deltaTimer = new Timer(1.0f, true);
+
+    public static Core2DMode core2DMode = Core2DMode.IN_ENGINE;
 
     public static void start() {
         Log.CurrentSession.createCurrentSession();
@@ -95,6 +98,8 @@ public class Core2D extends Graphics
 
             /** инициализация **/
 
+            AssetManager.init();
+
             gcThread = new Thread(new Runnable() {
                 @Override
                 public void run() {
@@ -121,7 +126,8 @@ public class Core2D extends Graphics
                             core2DUserCallback.onDeltaUpdate(deltaTime);
                         }
 
-                        SceneManager.updateCurrentScene2D(deltaTime);
+                        CamerasManager.getMainCamera2D().getTransform().update(deltaTime);
+                        SceneManager.currentSceneManager.updateCurrentScene2D(deltaTime);
                     }
                     totalIterations++;
                 }
@@ -152,6 +158,10 @@ public class Core2D extends Graphics
         glfwSetErrorCallback(null).free();
 
         stopGCThread();
+
+        if(Core2D.core2DUserCallback != null) {
+            Core2D.core2DUserCallback.onExit();
+        }
 
         System.exit(130);
     }

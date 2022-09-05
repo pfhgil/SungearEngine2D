@@ -6,7 +6,6 @@ import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Components.ScriptComponent;
 import Core2D.Graphics.Graphics;
 import Core2D.Layering.Layer;
-import Core2D.Utils.WrappedObject;
 import Core2D.Layering.Layering;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
@@ -15,7 +14,7 @@ import Core2D.Scripting.ScriptTempValue;
 import Core2D.Scripting.ScriptTempValues;
 import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.Tag;
-import org.joml.Vector3f;
+import Core2D.Utils.WrappedObject;
 import org.joml.Vector4f;
 
 import java.io.File;
@@ -51,6 +50,10 @@ public class Scene2D
 
     // максимальный id объекта
     public int maxObjectID = 0;
+
+    public boolean inBuild = false;
+
+    private boolean isMainScene2D = false;
 
     public Scene2D()
     {
@@ -98,19 +101,23 @@ public class Scene2D
         layering.drawPicking();
     }
 
-    public Object2D getPickedObject2D(Vector3f pixelColor)
+    public Object2D getPickedObject2D(Vector4f pixelColor)
     {
         return layering.getPickedObject2D(pixelColor);
     }
 
-    public void update(float deltaTime)
+    public void deltaUpdate(float deltaTime)
     {
         physicsWorld.step(deltaTime, 6, 2);
 
-        layering.update(deltaTime);
+        layering.deltaUpdate(deltaTime);
 
         if(scene2DCallback != null) {
             scene2DCallback.onUpdate(deltaTime);
+        }
+
+        for(Camera2D camera2D : cameras2D) {
+            camera2D.getTransform().update(deltaTime);
         }
     }
 
@@ -352,4 +359,15 @@ public class Scene2D
 
     public boolean isSceneLoaded() { return sceneLoaded; }
     public void setSceneLoaded(boolean sceneLoaded) { this.sceneLoaded = sceneLoaded; }
+
+    public boolean isMainScene2D() { return isMainScene2D; }
+    public void setMainScene2D(boolean mainScene2D)
+    {
+        if(SceneManager.currentSceneManager.mainScene2D != null) {
+            SceneManager.currentSceneManager.mainScene2D.isMainScene2D = false;
+            SceneManager.currentSceneManager.mainScene2D = null;
+        }
+        isMainScene2D = mainScene2D;
+        SceneManager.currentSceneManager.mainScene2D = this;
+    }
 }

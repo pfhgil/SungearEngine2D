@@ -1,6 +1,5 @@
 package Core2D.Particles;
 
-import Core2D.Core2D.Core2D;
 import Core2D.Instancing.ObjectsInstancing;
 import Core2D.Object2D.Object2D;
 import Core2D.Particles.ParticlesSettings.ParticlesSettings;

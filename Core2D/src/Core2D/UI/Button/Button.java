@@ -1,10 +1,9 @@
 package Core2D.UI.Button;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Controllers.PC.Mouse;
-import Core2D.Core2D.Resources;
-import Core2D.Graphics.Graphics;
 import Core2D.Object2D.Object2D;
 import Core2D.Object2D.Transform;
 import Core2D.UI.Text.Text;
@@ -38,7 +37,7 @@ public class Button extends CommonDrawableObjectsParameters
     public Button(String name, String text, UIElementCallback uiElementCallback)
     {
         this.name = name;
-        this.text = new Text(Resources.Fonts.COMIC_SANS_MS, text);
+        this.text = new Text(AssetManager.getFont("comicSansSM"), text);
 
         create(uiElementCallback);
     }
@@ -46,7 +45,7 @@ public class Button extends CommonDrawableObjectsParameters
     public Button(String name, UIElementCallback uiElementCallback)
     {
         this.name = name;
-        this.text = new Text(Resources.Fonts.COMIC_SANS_MS);
+        this.text = new Text(AssetManager.getFont("comicSansSM"));
 
         create(uiElementCallback);
     }

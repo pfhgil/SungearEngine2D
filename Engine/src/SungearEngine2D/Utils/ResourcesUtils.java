@@ -35,6 +35,15 @@ public class ResourcesUtils
         };
     }
 
+    public static boolean isFilePrefab(File file)
+    {
+        String fileExtension = FilenameUtils.getExtension(file.getPath());
+        return switch (fileExtension) {
+            case "sgopref", "sgcpref" -> true;
+            default -> false;
+        };
+    }
+
     public static int getNumOfAllSystemFiles()
     {
         int num = 0;

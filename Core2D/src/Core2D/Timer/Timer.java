@@ -1,7 +1,5 @@
 package Core2D.Timer;
 
-import Core2D.Core2D.Core2D;
-
 import java.util.ArrayList;
 import java.util.List;
 

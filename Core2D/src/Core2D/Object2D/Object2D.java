@@ -1,5 +1,6 @@
 package Core2D.Object2D;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.Camera2D.CamerasManager;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Component;
@@ -8,16 +9,12 @@ import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Component.NonDuplicated;
 import Core2D.Component.NonRemovable;
-import Core2D.Core2D.Core2D;
-import Core2D.Core2D.Resources;
 import Core2D.Core2D.Settings;
 import Core2D.Log.Log;
 import Core2D.Scene2D.SceneManager;
-import Core2D.Shader.Shader;
 import Core2D.Shader.ShaderProgram;
 import Core2D.ShaderUtils.*;
-import Core2D.Utils.ExceptionsUtils;
-import Core2D.Utils.Utils;
+import Core2D.Utils.MatrixUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -28,11 +25,9 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
-import static org.lwjgl.opengl.GL20C.GL_VERTEX_SHADER;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
-public class Object2D extends CommonDrawableObjectsParameters implements Serializable, AutoCloseable
+public class Object2D extends CommonDrawableObjectsParameters implements Serializable
 {
     // лист компонентов
     private List<Component> components = new ArrayList<>();
@@ -53,16 +48,16 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     // массив данных о вершинах
     // первые строки - позиции вершин, вторые строки - текстурные координаты
     private transient float[] data = new float[] {
-            0.0f, 0.0f,
+            -size.x / 2.0f, -size.y / 2.0f,
             0, 0,
 
-            0.0f, size.y,
+            -size.x / 2.0f, size.y / 2.0f,
             0, 0,
 
-            size.x, size.y,
+            size.x / 2.0f, size.y / 2.0f,
             0, 0,
 
-            size.x, 0.0f,
+            size.x / 2.0f, -size.y / 2.0f,
             0, 0,
     };
 
@@ -78,19 +73,17 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     private boolean isUIElement = false;
 
     // цвета для picking`а мышкой
-    private transient Vector3f pickColor = new Vector3f();
+    private transient Vector3f pickColor;
+
+    public transient Object2D parentObject2D;
+    private int parentObject2DID = -1;
+
+    private transient List<Object2D> childrenObjects = new ArrayList<>();
+    private List<Integer> childrenObjectsID = new ArrayList<>();
 
     public Object2D()
     {
-        // загружаю шейдеры
-        Shader vertexShader = new Shader(Resources.ShadersTexts.Object2D.vertexShaderText, GL_VERTEX_SHADER);
-        Shader fragmentShader = new Shader(Resources.ShadersTexts.Object2D.fragmentShaderText, GL_FRAGMENT_SHADER);
-
-        // создаю шейдерную программу
-        shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
-
-        vertexShader = null;
-        fragmentShader = null;
+        shaderProgram = AssetManager.getShaderProgram("object2DProgram");
 
         Vector4f col = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
         setColor(col);
@@ -100,7 +93,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
 
         addComponent(new TransformComponent());
         addComponent(new TextureComponent());
-        getComponent(TextureComponent.class).setTexture2D(Resources.Textures.WHITE_TEXTURE);
+        getComponent(TextureComponent.class).setTexture2D(AssetManager.getTexture2D("whiteTexture"));
 
         if(Settings.Other.Picking.currentPickingColor.x < 255.0f) {
             Settings.Other.Picking.currentPickingColor.x++;
@@ -126,15 +119,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     {
         destroy();
 
-        // загружаю шейдеры
-        Shader vertexShader = new Shader(Resources.ShadersTexts.Object2D.vertexShaderText, GL_VERTEX_SHADER);
-        Shader fragmentShader = new Shader(Resources.ShadersTexts.Object2D.fragmentShaderText, GL_FRAGMENT_SHADER);
-
-        // создаю шейдерную программу
-        shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
-
-        vertexShader = null;
-        fragmentShader = null;
+        shaderProgram = AssetManager.getShaderProgram("object2DProgram");
 
         setColor(new Vector4f(object2D.getColor().x, object2D.getColor().y, object2D.getColor().z, object2D.getColor().w));
 
@@ -191,9 +176,9 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
      */
     public static Object2D instantiate()
     {
-        if(SceneManager.getCurrentScene2D() != null) {
+        if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
             Object2D object2D = new Object2D();
-            object2D.setLayer(SceneManager.getCurrentScene2D().getLayering().getLayer("default"));
+            object2D.setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
 
             return object2D;
         }
@@ -247,10 +232,14 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
 
     private void updateMVPMatrix()
     {
+        Matrix4f modelMatrix = new Matrix4f().set(getComponent(TransformComponent.class).getTransform().getResultModelMatrix());
+
         if(CamerasManager.getMainCamera2D() != null && !isUIElement) {
-            mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(CamerasManager.getMainCamera2D().getTransform().getModelMatrix()).mul(getComponent(TransformComponent.class).getTransform().getModelMatrix());
+
+            mvpMatrix = new Matrix4f(CamerasManager.getMainCamera2D().getProjectionMatrix()).mul(CamerasManager.getMainCamera2D().getTransform().getModelMatrix())
+                    .mul(modelMatrix);
         } else {
-            mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(getComponent(TransformComponent.class).getTransform().getModelMatrix());
+            mvpMatrix = new Matrix4f().mul(modelMatrix);
         }
     }
 
@@ -267,19 +256,23 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
             componentsIterator.remove();
         }
 
-        shaderProgram.destroy();
-        shaderProgram = null;
+        childrenObjectsID.clear();
 
-        vertexArrayObject.destroy();
-        vertexArrayObject = null;
-
-        destroyParams();
-
-        try {
-            close();
-        } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        Iterator<Object2D> childrenIterator = childrenObjects.iterator();
+        while(childrenIterator.hasNext()) {
+            Object2D child = childrenIterator.next();
+            child.parentObject2D = null;
+            child.destroy();
+            child = null;
+            childrenIterator.remove();
         }
+
+        if(vertexArrayObject != null) {
+            vertexArrayObject.destroy();
+            vertexArrayObject = null;
+        }
+
+        //destroyParams();
     }
 
     public void addComponent(Component component)
@@ -339,23 +332,10 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     public VertexArrayObject getVertexArrayObject() { return vertexArrayObject; }
 
     public Vector4f getColor() { return color; }
-    public void setColor(Vector4f color)
-    {
-        this.color = new Vector4f(color);
-        color = null;
-
-        shaderProgram.bind();
-
-        ShaderUtils.setUniform(
-                shaderProgram.getHandler(),
-                "color",
-                new Vector4f(this.color)
-        );
-
-        shaderProgram.unBind();
-    }
+    public void setColor(Vector4f color) { this.color = new Vector4f(color); }
 
     public ShaderProgram getShaderProgram() { return shaderProgram; }
+    public void setShaderProgram(ShaderProgram shaderProgram) { this.shaderProgram = shaderProgram; }
 
     public Matrix4f getMvpMatrix() { return mvpMatrix; }
 
@@ -369,68 +349,112 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
 
     //public List<SpriteAnimation> getSpriteAnimations() { return spriteAnimations; }
 
-    public void loadShaders(String vertexShaderCode, String fragmentShaderCode)
-    {
-        // загружаю шейдеры
-        Shader vertexShader = new Shader(vertexShaderCode, GL_VERTEX_SHADER);
-        Shader fragmentShader = new Shader(fragmentShaderCode, GL_FRAGMENT_SHADER);
-
-        vertexShaderCode = null;
-        fragmentShaderCode = null;
-
-        shaderProgram.destroy();
-
-        // создаю шейдерную программу
-        shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
-
-        Vector4f col = new Vector4f(color.x, color.y, color.z, color.w);
-        setColor(col);
-        col = null;
-    }
-
-    public void loadShader(String shaderCode, int shaderType)
-    {
-        Shader vertexShader;
-        Shader fragmentShader;
-
-        if(shaderType == GL_VERTEX_SHADER) {
-            vertexShader = new Shader(shaderCode, shaderType);
-
-            fragmentShader = new Shader(Resources.ShadersTexts.Object2D.fragmentShaderText, GL_FRAGMENT_SHADER);
-        } else if(shaderType == GL_FRAGMENT_SHADER) {
-            fragmentShader = new Shader(shaderCode, shaderType);
-
-            vertexShader = new Shader(Resources.ShadersTexts.Object2D.vertexShaderText, GL_VERTEX_SHADER);
-        } else {
-            Log.CurrentSession.println("Failed to load shader type id " + shaderType + "!", Log.MessageType.ERROR);
-
-            vertexShader = new Shader(Resources.ShadersTexts.Object2D.vertexShaderText, GL_VERTEX_SHADER);
-            fragmentShader = new Shader(Resources.ShadersTexts.Object2D.fragmentShaderText, GL_FRAGMENT_SHADER);
-        }
-
-        shaderProgram.destroy();
-
-        shaderCode = null;
-
-        // создаю шейдерную программу
-        shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
-
-        Vector4f col = new Vector4f(color.x, color.y, color.z, color.w);
-        setColor(col);
-        col = null;
-    }
-
     public Vector3f getPickColor() { return pickColor; }
 
-    @Override
-    public void close() throws Exception {
+    public Object2D getParentObject2D() { return parentObject2D; }
+    public void setParentObject2D(Object2D parentObject2D)
+    {
+        if(this.parentObject2D != null) {
+            if(parentObject2D == null) {
+                Transform transform = getComponent(TransformComponent.class).getTransform();
+                Transform parentTransform = this.parentObject2D.getComponent(TransformComponent.class).getTransform();
+                transform.setParentTransform(null);
+                transform.setPosition(new Vector2f(transform.getPosition())
+                        .mul(MatrixUtils.getScale(parentTransform.getResultModelMatrix()))
+                        .add(MatrixUtils.getPosition(parentTransform.getResultModelMatrix())));
+                transform.setScale(new Vector2f(transform.getScale()).mul(MatrixUtils.getScale(parentTransform.getResultModelMatrix())));
 
+                this.parentObject2D.removeChild(this);
+            }
+        }
+        this.parentObject2D = parentObject2D;
+        if(parentObject2D != null) {
+            this.parentObject2DID = parentObject2D.getID();
+            Transform transform = getComponent(TransformComponent.class).getTransform();
+            Transform parentTransform = this.parentObject2D.getComponent(TransformComponent.class).getTransform();
+            transform.setParentTransform(parentTransform);
+            transform.setPosition(new Vector2f(transform.getPosition()).add(MatrixUtils.getPosition(parentTransform.getResultModelMatrix()).negate()));
+            transform.setScale(new Vector2f(transform.getScale()).div(MatrixUtils.getScale(parentTransform.getResultModelMatrix())));
+        } else {
+            this.parentObject2DID = -1;
+            getComponent(TransformComponent.class).getTransform().setParentTransform(null);
+        }
+    }
+
+    public int getParentObject2DID() { return parentObject2DID; }
+    public void setParentObject2DID(int parentObject2DID)
+    {
+        this.parentObject2DID = parentObject2DID;
+
+        if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+            setParentObject2D(SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(parentObject2DID));
+        }
+    }
+
+    public List<Object2D> getChildrenObjects() { return childrenObjects; }
+    public void addChildObject(Object2D object2D)
+    {
+        childrenObjects.add(object2D);
+        childrenObjectsID.add(object2D.getID());
+        object2D.setParentObject2D(this);
+    }
+    public void addChildrenObjects(List<Object2D> objects2D)
+    {
+        childrenObjects.addAll(objects2D);
+        for(int i = 0; i < objects2D.size(); i++) {
+            childrenObjectsID.add(objects2D.get(i).getID());
+            objects2D.get(i).setParentObject2D(this);
+        }
+    }
+    public void addChildObjectByID(int object2DID)
+    {
+        if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+            Object2D object2D = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(object2DID);
+            if(object2D != null) {
+                childrenObjects.add(object2D);
+                childrenObjectsID.add(object2D.getID());
+                object2D.setParentObject2D(this);
+            }
+        }
+    }
+    public void addChildrenObjectsByID(List<Integer> objects2DID)
+    {
+        if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+            for (int i = 0; i < objects2DID.size(); i++) {
+                Object2D object2D = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(objects2DID.get(i));
+                if(object2D != null) {
+                    childrenObjects.add(object2D);
+                    childrenObjectsID.add(object2D.getID());
+                    object2D.setParentObject2D(this);
+                }
+            }
+        }
+    }
+    public void removeChild(Object2D child)
+    {
+        childrenObjects.remove(child);
+        childrenObjectsID.remove((Integer) child.getID());
+    }
+
+    public List<Integer> getChildrenObjectsID() { return childrenObjectsID; }
+    public void setChildrenObjectsID(List<Integer> childrenObjectsID) { this.childrenObjectsID.addAll(childrenObjectsID); }
+    public void applyChildrenObjectsID()
+    {
+        if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+            for (int i = 0; i < childrenObjectsID.size(); i++) {
+                Object2D object2D = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(childrenObjectsID.get(i));
+                if(object2D != null) {
+                    childrenObjects.add(object2D);
+                    object2D.setParentObject2D(this);
+                }
+            }
+        }
     }
 
     @Override
     protected synchronized void finalize()
     {
-        SceneManager.getCurrentScene2D().objectsDestroyed++;
-        System.out.println("Objects destroyed: " + SceneManager.getCurrentScene2D().objectsDestroyed + ", name: " + name);
+        SceneManager.currentSceneManager.getCurrentScene2D().objectsDestroyed++;
+        System.out.println("Objects destroyed: " + SceneManager.currentSceneManager.getCurrentScene2D().objectsDestroyed + ", name: " + name);
     }
 }

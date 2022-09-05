@@ -43,8 +43,8 @@ public class BoxCollider2DComponent extends Component implements AutoCloseable
     {
         Rigidbody2DComponent rigidbody2DComponent = object2D.getComponent(Rigidbody2DComponent.class);
         if(rigidbody2DComponent != null) {
-            if(SceneManager.getCurrentScene2D() != null) {
-                SceneManager.getCurrentScene2D().getPhysicsWorld().addBoxCollider2D(rigidbody2DComponent.getRigidbody2D(), boxCollider2D);
+            if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+                SceneManager.currentSceneManager.getCurrentScene2D().getPhysicsWorld().addBoxCollider2D(rigidbody2DComponent.getRigidbody2D(), boxCollider2D);
             }
         }
     }

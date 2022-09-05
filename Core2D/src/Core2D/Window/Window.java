@@ -1,7 +1,8 @@
 package Core2D.Window;
 
-import Core2D.Graphics.Graphics;
+import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
+import Core2D.Graphics.Graphics;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GL11C;
@@ -139,8 +140,6 @@ public class Window
                 // сделать настройки более гибкими
                 Graphics.setViewMode(Graphics.getViewMode());
                 GL11C.glViewport(0,  0, size.x, size.y);
-
-                System.out.println("size: " + size.x + ", " + size.y);
             }
         });
 

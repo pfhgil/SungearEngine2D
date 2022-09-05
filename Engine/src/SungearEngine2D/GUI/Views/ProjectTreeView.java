@@ -1,8 +1,8 @@
 package SungearEngine2D.GUI.Views;
 
-import SungearEngine2D.Project.Project;
+import Core2D.Project.Project;
+import Core2D.Project.ProjectsManager;
 import SungearEngine2D.Main.Resources;
-import SungearEngine2D.Project.ProjectsManager;
 import imgui.ImGui;
 import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiMouseButton;

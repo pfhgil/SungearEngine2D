@@ -3,7 +3,7 @@ package Core2D.Layering;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
-import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -21,7 +21,7 @@ public class Layering {
         }
     }
 
-    public Object2D getPickedObject2D(Vector3f pixelColor)
+    public Object2D getPickedObject2D(Vector4f pixelColor)
     {
         Object2D pickedObject2D = null;
         for(Layer layer : layers) {
@@ -34,10 +34,10 @@ public class Layering {
         return null;
     }
 
-    public void update(float deltaTime)
+    public void deltaUpdate(float deltaTime)
     {
         for(Layer layer : layers) {
-            layer.update(deltaTime);
+            layer.deltaUpdate(deltaTime);
         }
     }
 

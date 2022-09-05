@@ -11,9 +11,10 @@ import java.util.Scanner;
 public class FileUtils
 {
     public static File findFile(File dir, String parentName, String name) {
-        File result = null; // no need to store result as String, you're returning File anyway
-        File[] dirlist  = dir.listFiles();
+        File parentFile = findFile(dir, parentName);
+        //File[] dirlist  = dir.listFiles();
 
+        /*
         if(dirlist != null) {
             for (int i = 0; i < dirlist.length; i++) {
                 if (dirlist[i].isDirectory()) {
@@ -24,7 +25,13 @@ public class FileUtils
                 }
             }
         }
-        return result; // will return null if we didn't find anything
+
+         */
+        if(parentFile != null) {
+            return new File(parentFile.getPath() + "\\" + name);
+        }
+        return null;
+        //return result; // will return null if we didn't find anything
     }
 
     public static File findFile(File dir, String name) {

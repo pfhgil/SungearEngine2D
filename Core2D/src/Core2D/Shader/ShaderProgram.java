@@ -1,13 +1,10 @@
 package Core2D.Shader;
 
-import Core2D.Log.Log;
-import Core2D.Utils.ExceptionsUtils;
-
 import java.io.Serializable;
 
 import static org.lwjgl.opengl.GL20C.*;
 
-public class ShaderProgram implements Serializable, AutoCloseable
+public class ShaderProgram implements Serializable
 {
     // id программы
     private transient int programHandler;
@@ -71,12 +68,6 @@ public class ShaderProgram implements Serializable, AutoCloseable
 
         fragmentShader = null;
         vertexShader = null;
-
-        try {
-            close();
-        } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-        }
     }
     public void detachShaders()
     {
@@ -101,9 +92,4 @@ public class ShaderProgram implements Serializable, AutoCloseable
     public void setFragmentShader(Shader _fragmentShader) { fragmentShader = _fragmentShader; }
 
     public int getHandler() { return programHandler; }
-
-    @Override
-    public void close() throws Exception {
-
-    }
 }

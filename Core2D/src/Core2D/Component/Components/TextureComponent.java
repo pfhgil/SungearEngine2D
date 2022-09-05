@@ -1,20 +1,21 @@
 package Core2D.Component.Components;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
-import Core2D.Core2D.Resources;
 import Core2D.Log.Log;
-import Core2D.ShaderUtils.ShaderUtils;
 import Core2D.ShaderUtils.VertexBufferObject;
 import Core2D.Texture2D.Texture2D;
+import Core2D.Texture2D.TextureDrawModes;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.PositionsQuad;
 import org.joml.Vector2f;
 
-public class TextureComponent extends Component implements NonDuplicated, AutoCloseable
+public class TextureComponent extends Component implements NonDuplicated
 {
-    private Texture2D texture2D = null;
+    private Texture2D texture2D = new Texture2D();
     private boolean active = true;
+    private int textureDrawMode = TextureDrawModes.DEFAULT;
 
     private float[] UV = new float[] {
             0.0f, 0.0f,
@@ -36,47 +37,35 @@ public class TextureComponent extends Component implements NonDuplicated, AutoCl
     {
         object2D.getShaderProgram().bind();
 
-        ShaderUtils.setUniform(
-                object2D.getShaderProgram().getHandler(),
-                "useSampler",
-                false
-        );
+        textureDrawMode = TextureDrawModes.NO_TEXTURE;
 
         object2D.getShaderProgram().unBind();
 
         object2D = null;
 
-        if(!this.texture2D.equals(Resources.Textures.WHITE_TEXTURE)) {
+        if(this.texture2D.getTextureHandler() != ((Texture2D) AssetManager.getAsset("whiteTexture").getAsset()).getTextureHandler()) {
             this.texture2D.destroy();
         }
         this.texture2D = null;
 
         UV = null;
-
-
-        try {
-            close();
-        } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-        }
     }
 
     @Override
     public void set(Component component)
     {
         if(component instanceof TextureComponent) {
-            if (!this.texture2D.equals(Resources.Textures.WHITE_TEXTURE)) {
+            if (this.texture2D.getTextureHandler() != ((Texture2D) AssetManager.getAsset("whiteTexture").getAsset()).getTextureHandler()) {
                 this.texture2D.destroy();
             }
             this.texture2D = null;
+            this.texture2D = new Texture2D();
 
             TextureComponent textureComponent = (TextureComponent) component;
 
             setTexture2D(textureComponent.getTexture2D());
             setActive(textureComponent.isActive());
             setUV(textureComponent.getUV());
-
-            textureComponent = null;
         }
 
         component = null;
@@ -86,31 +75,16 @@ public class TextureComponent extends Component implements NonDuplicated, AutoCl
     public void init()
     {
         setUV(getUV());
-        setTexture2D(Resources.Textures.WHITE_TEXTURE);
+        setTexture2D(AssetManager.getTexture2D("whiteTexture"));
     }
 
     public Texture2D getTexture2D() { return texture2D; }
     public void setTexture2D(Texture2D texture2D)
     {
-        this.texture2D = texture2D;
-        texture2D = null;
+        this.texture2D.set(texture2D);
 
         if(this.texture2D != null) {
-            object2D.getShaderProgram().bind();
-
-            ShaderUtils.setUniform(
-                    object2D.getShaderProgram().getHandler(),
-                    "sampler",
-                    this.texture2D.getFormattedTextureBlock()
-            );
-
-            ShaderUtils.setUniform(
-                    object2D.getShaderProgram().getHandler(),
-                    "useSampler",
-                    true
-            );
-
-            object2D.getShaderProgram().unBind();
+            textureDrawMode = TextureDrawModes.DEFAULT;
         }
     }
 
@@ -119,16 +93,15 @@ public class TextureComponent extends Component implements NonDuplicated, AutoCl
     {
         this.active = active;
 
-        object2D.getShaderProgram().bind();
-
-        ShaderUtils.setUniform(
-                object2D.getShaderProgram().getHandler(),
-                "useSampler",
-                active
-        );
-
-        object2D.getShaderProgram().unBind();
+        if(active) {
+            textureDrawMode = TextureDrawModes.DEFAULT;
+        } else {
+            textureDrawMode = TextureDrawModes.NO_TEXTURE;
+        }
     }
+
+    public int getTextureDrawMode() { return textureDrawMode; }
+    public void setTextureDrawMode(int textureDrawMode) { this.textureDrawMode = textureDrawMode; }
 
     public float[] getUV() { return UV; }
     public void setUV(float[] UV)
@@ -205,10 +178,5 @@ public class TextureComponent extends Component implements NonDuplicated, AutoCl
             object2D.getVertexArrayObject().updateVBO(vbo, object2D.getData());
             vbo = null;
         }
-    }
-
-    @Override
-    public void close() throws Exception {
-
     }
 }

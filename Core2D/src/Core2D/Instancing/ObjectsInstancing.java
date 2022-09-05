@@ -1,30 +1,26 @@
 package Core2D.Instancing;
 
+import Core2D.AssetManager.AssetManager;
+import Core2D.Camera2D.CamerasManager;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
-import Core2D.Core2D.Core2D;
-import Core2D.Core2D.Resources;
-import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
-import Core2D.Shader.Shader;
 import Core2D.Shader.ShaderProgram;
 import Core2D.ShaderUtils.ShaderUtils;
 import Core2D.Texture2D.Texture2D;
-import Core2D.Utils.FileUtils;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL46C;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL15C.*;
-import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
-import static org.lwjgl.opengl.GL20C.*;
+import static org.lwjgl.opengl.GL20C.glEnableVertexAttribArray;
+import static org.lwjgl.opengl.GL20C.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30C.glBindVertexArray;
 import static org.lwjgl.opengl.GL30C.glGenVertexArrays;
 import static org.lwjgl.opengl.GL33C.glVertexAttribDivisor;
@@ -85,23 +81,17 @@ public class ObjectsInstancing extends CommonDrawableObjectsParameters
 
     private void create()
     {
-        // загружаю шейдеры
-        Shader vertexShader = new Shader(Resources.ShadersTexts.Instancing.Object2D.vertexShaderText, GL_VERTEX_SHADER);
-        Shader fragmentShader = new Shader(Resources.ShadersTexts.Instancing.Object2D.fragmentShaderText, GL_FRAGMENT_SHADER);
-
-        // создаю шейдерную программу
-        shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
-
-        vertexShader = null;
-        fragmentShader = null;
+        shaderProgram = AssetManager.getShaderProgram("objects2DInstancingProgram");
 
         shaderProgram.bind();
 
-        ShaderUtils.setUniform(
-                shaderProgram.getHandler(),
-                "projectionMatrix",
-                Core2D.getProjectionMatrix()
-        );
+        if(CamerasManager.getMainCamera2D() != null) {
+            ShaderUtils.setUniform(
+                    shaderProgram.getHandler(),
+                    "projectionMatrix",
+                    CamerasManager.getMainCamera2D().getProjectionMatrix()
+            );
+        }
 
         ShaderUtils.setUniform(
                 shaderProgram.getHandler(),
@@ -295,129 +285,18 @@ public class ObjectsInstancing extends CommonDrawableObjectsParameters
 
         indices = null;
 
-        shaderProgram.destroy();
-        shaderProgram = null;
-
-        destroyParams();
+        //destroyParams();
     }
 
     public List<Object2D> getDrawableObjects2D() { return drawableObjects2D; }
 
     public boolean isUIInstancing() { return isUIInstancing; }
-    public void setUIInstancing(boolean UIInstancing)
-    {
-        isUIInstancing = UIInstancing;
-
-        shaderProgram.bind();
-
-        ShaderUtils.setUniform(
-                shaderProgram.getHandler(),
-                "isUIInstancing",
-                isUIInstancing
-        );
-
-        shaderProgram.unBind();
-    }
+    public void setUIInstancing(boolean UIInstancing) { isUIInstancing = UIInstancing; }
 
     public ShaderProgram getShaderProgram() { return shaderProgram; }
-    public void setShaderProgram(ShaderProgram shaderProgram)
-    {
-        this.shaderProgram = shaderProgram;
-        shaderProgram = null;
-
-        this.shaderProgram.bind();
-
-        ShaderUtils.setUniform(
-                this.shaderProgram.getHandler(),
-                "projectionMatrix",
-                Core2D.getProjectionMatrix()
-        );
-
-        ShaderUtils.setUniform(
-                this.shaderProgram.getHandler(),
-                "isUIInstancing",
-                isUIInstancing
-        );
-
-        this.shaderProgram.unBind();
-    }
+    public void setShaderProgram(ShaderProgram shaderProgram) { this.shaderProgram = shaderProgram; }
 
     public Texture2D getAtlasTexture2D() { return atlasTexture2D; }
 
     public int getVAOID() { return vao; }
-
-    public void LoadShaders(String vertexShaderPath, String fragmentShaderPath)
-    {
-        String vertexShaderCode = FileUtils.readAllFile(new File(vertexShaderPath));
-        String fragmentShaderCode = FileUtils.readAllFile(new File(fragmentShaderPath));
-
-        // загружаю шейдеры
-        Shader vertexShader = new Shader(vertexShaderCode, GL_VERTEX_SHADER);
-        Shader fragmentShader = new Shader(fragmentShaderCode, GL_FRAGMENT_SHADER);
-
-        shaderProgram.destroy();
-
-        // создаю шейдерную программу
-        shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
-
-        shaderProgram.bind();
-
-        ShaderUtils.setUniform(
-                shaderProgram.getHandler(),
-                "projectionMatrix",
-                Core2D.getProjectionMatrix()
-        );
-
-        ShaderUtils.setUniform(
-                shaderProgram.getHandler(),
-                "isUIInstancing",
-                isUIInstancing
-        );
-
-        shaderProgram.unBind();
-    }
-
-    public void LoadShader(String shaderPath, int shaderType)
-    {
-        Shader vertexShader;
-        Shader fragmentShader;
-
-        if(shaderType == GL_VERTEX_SHADER) {
-            String vertexShaderCode = FileUtils.readAllFile(new File(shaderPath));
-            vertexShader = new Shader(vertexShaderCode, shaderType);
-
-            fragmentShader = new Shader(Resources.ShadersTexts.Instancing.Object2D.fragmentShaderText, GL_FRAGMENT_SHADER);
-        } else if(shaderType == GL_FRAGMENT_SHADER) {
-            String fragmentShaderCode = FileUtils.readAllFile(new File(shaderPath));
-            fragmentShader = new Shader(fragmentShaderCode, shaderType);
-
-            vertexShader = new Shader(Resources.ShadersTexts.Instancing.Object2D.vertexShaderText, GL_VERTEX_SHADER);
-        } else {
-            Log.CurrentSession.println("Failed to load shader type id " + shaderType + " by path " + shaderPath + "! Please, check path and type of shader!", Log.MessageType.ERROR);
-
-            vertexShader = new Shader(Resources.ShadersTexts.Instancing.Object2D.vertexShaderText, GL_VERTEX_SHADER);
-            fragmentShader = new Shader(Resources.ShadersTexts.Instancing.Object2D.fragmentShaderText, GL_FRAGMENT_SHADER);
-        }
-
-        shaderProgram.destroy();
-
-        // создаю шейдерную программу
-        shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
-
-        shaderProgram.bind();
-
-        ShaderUtils.setUniform(
-                shaderProgram.getHandler(),
-                "projectionMatrix",
-                Core2D.getProjectionMatrix()
-        );
-
-        ShaderUtils.setUniform(
-                shaderProgram.getHandler(),
-                "isUIInstancing",
-                isUIInstancing
-        );
-
-        shaderProgram.unBind();
-    }
 }

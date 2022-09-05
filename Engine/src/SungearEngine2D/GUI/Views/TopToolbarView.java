@@ -2,15 +2,14 @@ package SungearEngine2D.GUI.Views;
 
 import Core2D.Camera2D.Camera2D;
 import Core2D.Controllers.PC.Keyboard;
-import Core2D.Core2D.Core2D;
 import Core2D.Log.Log;
+import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindow;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindowCallback;
 import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindow;
 import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindowCallback;
-import SungearEngine2D.Project.ProjectsManager;
 import imgui.ImGui;
 import imgui.type.ImString;
 import org.joml.Vector2f;
@@ -200,7 +199,47 @@ public class TopToolbarView
                 }
 
                 if(ImGui.menuItem("Build project")) {
-                    // сделать
+                    if(ProjectsManager.getCurrentProject() != null) {
+                        dialogWindow.setWindowName("Build project");
+                        dialogWindow.setRightButtonText("Build");
+                        dialogWindow.setActive(true);
+                        dialogWindow.setWindowSize(new Vector2f(525.0f, dialogWindow.getWindowSize().y));
+                        dialogWindow.setDialogWindowCallback(new DialogWindowCallback() {
+                            @Override
+                            public void onDraw() {
+                                ImGui.beginChild("ChooseScenes2DToAdd", dialogWindow.getWindowSize().x, dialogWindow.getWindowSize().y / 3.0f);
+                                for(Scene2D scene2D : SceneManager.currentSceneManager.getScenes()) {
+                                    if(ImGui.checkbox(scene2D.getName(), scene2D.inBuild)) {
+                                        scene2D.inBuild = !scene2D.inBuild;
+                                    }
+                                }
+                                ImGui.endChild();
+                            }
+
+                            @Override
+                            public void onMiddleButtonClicked() {
+
+                            }
+
+                            @Override
+                            public void onLeftButtonClicked() {
+                                dialogWindow.setActive(false);
+                                currentAction = "";
+                            }
+
+                            @Override
+                            public void onRightButtonClicked() {
+
+
+                                dialogWindow.setActive(false);
+                                currentAction = "";
+                            }
+                        });
+
+                        currentAction = "Project/Build";
+                    } else {
+                        Log.showErrorDialog("Can not build new project! First create or open project.");
+                    }
                 }
 
                 if(ImGui.menuItem("Exit")) {
@@ -217,9 +256,9 @@ public class TopToolbarView
                     }
 
                     if(ImGui.menuItem("Camera2D")) {
-                        if(SceneManager.getCurrentScene2D() != null) {
+                        if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
                             Camera2D camera2D = new Camera2D();
-                            SceneManager.getCurrentScene2D().getCameras2D().add(camera2D);
+                            SceneManager.currentSceneManager.getCurrentScene2D().getCameras2D().add(camera2D);
                         }
                     }
 
@@ -263,8 +302,8 @@ public class TopToolbarView
                 }
 
                 if(ImGui.menuItem("Save current")) {
-                    if(ProjectsManager.getCurrentProject() != null && SceneManager.getCurrentScene2D() != null) {
-                        SceneManager.saveScene(SceneManager.getCurrentScene2D(), SceneManager.getCurrentScene2D().getScenePath());
+                    if(ProjectsManager.getCurrentProject() != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+                        SceneManager.currentSceneManager.saveScene(SceneManager.currentSceneManager.getCurrentScene2D(), SceneManager.currentSceneManager.getCurrentScene2D().getScenePath());
                     }
                 }
 
@@ -322,34 +361,38 @@ public class TopToolbarView
 
             @Override
             public void onRightButtonClicked() {
-                if(ProjectsManager.getCurrentProject() != null) {
-                    MainView.getSceneView().stopPlayMode();
-                    if(SceneManager.getCurrentScene2D() != null) {
-                        SceneManager.getCurrentScene2D().destroy();
-                    }
-                    Scene2D scene2D = new Scene2D();
+                if (!SceneManager.currentSceneManager.isScene2DExists(newSceneName.get())) {
+                    if (ProjectsManager.getCurrentProject() != null) {
+                        MainView.getSceneView().stopPlayMode();
+                        if (SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+                            SceneManager.currentSceneManager.getCurrentScene2D().destroy();
+                        }
+                        Scene2D scene2D = new Scene2D();
 
-                    Camera2D camera2D = new Camera2D();
-                    scene2D.getCameras2D().add(camera2D);
-                    scene2D.setSceneMainCamera2D(camera2D);
+                        Camera2D camera2D = new Camera2D();
+                        scene2D.getCameras2D().add(camera2D);
+                        scene2D.setSceneMainCamera2D(camera2D);
 
-                    scene2D.getPhysicsWorld().simulatePhysics = false;
-                    scene2D.getScriptSystem().runScripts = false;
-                    scene2D.setName(newSceneName.get());
-                    if (SceneManager.getScenes().size() == 0) {
-                        SceneManager.setCurrentScene2D(scene2D);
+                        scene2D.getPhysicsWorld().simulatePhysics = false;
+                        scene2D.getScriptSystem().runScripts = false;
+                        scene2D.setName(newSceneName.get());
+                        if (SceneManager.currentSceneManager.getScenes().size() == 0) {
+                            SceneManager.currentSceneManager.setCurrentScene2D(scene2D);
+                        }
+                        SceneManager.currentSceneManager.getScenes().add(scene2D);
+                        SceneManager.currentSceneManager.saveScene(scene2D, ResourcesView.currentDirectoryPath + "\\" + scene2D.getName() + ".sgs");
+                        scene2D = null;
+                    } else {
+                        Log.showErrorDialog("Can not create new scene2D! First create or open project.");
                     }
-                    SceneManager.getScenes().add(scene2D);
-                    SceneManager.saveScene(scene2D, ResourcesView.currentDirectoryPath + "\\" + scene2D.getName() + ".sgs");
-                    scene2D = null;
+
+                    newSceneName.set("");
+
+                    dialogWindow.setActive(false);
+                    currentAction = "";
                 } else {
-                    Log.showErrorDialog("Can not create new scene2D! First create or open project.");
+                    Log.showErrorDialog("Can not create new scene2D! Scene2D with the same name already exists.");
                 }
-
-                newSceneName.set("");
-
-                dialogWindow.setActive(false);
-                currentAction = "";
             }
         });
 

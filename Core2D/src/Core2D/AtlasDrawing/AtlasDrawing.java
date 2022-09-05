@@ -41,7 +41,7 @@ public class AtlasDrawing extends CommonDrawableObjectsParameters
 
         atlasTexture2D = null;
 
-        destroyParams();
+        //destroyParams();
     }
 
     public Texture2D getAtlasTexture2D() { return atlasTexture2D; }

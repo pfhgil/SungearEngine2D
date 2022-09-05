@@ -1,5 +1,6 @@
 package SungearEngine2D.Main;
 
+import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Components.BoxCollider2DComponent;
 import Core2D.Component.Components.CircleCollider2DComponent;
 import Core2D.Controllers.PC.Keyboard;
@@ -8,7 +9,9 @@ import Core2D.Graphics.Graphics;
 import Core2D.Object2D.Object2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.ShaderUtils.FrameBufferObject;
-import SungearEngine2D.DebugDraw.CameraDebugLines;
+import SungearEngine2D.DebugDraw.CamerasDebugLines;
+import SungearEngine2D.DebugDraw.Gizmo;
+import SungearEngine2D.DebugDraw.ObjectsDebugLines;
 import SungearEngine2D.GUI.Views.MainView;
 import SungearEngine2D.DebugDraw.Grid;
 import org.joml.Vector2f;
@@ -17,6 +20,7 @@ import org.lwjgl.glfw.GLFW;
 
 import java.util.List;
 
+import static Core2D.Scene2D.SceneManager.currentSceneManager;
 import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 
@@ -24,48 +28,37 @@ public class GraphicsRenderer
 {
     private static int cellsNum = 501;
 
-    private static FrameBufferObject renderTarget;
+    private static FrameBufferObject sceneRenderTarget;
+    private static FrameBufferObject gameRenderTarget;
 
     public static void init()
     {
         Grid.init(new Vector2f(10000, 10000));
-        CameraDebugLines.init();
+        CamerasDebugLines.init();
+        ObjectsDebugLines.init();
+        Gizmo.init();
 
         Vector2i targetSize = Graphics.getScreenSize();
-        renderTarget = new FrameBufferObject(targetSize.x, targetSize.y, FrameBufferObject.BuffersTypes.COLOR_BUFFER, GL_TEXTURE0);
+        sceneRenderTarget = new FrameBufferObject(targetSize.x, targetSize.y, FrameBufferObject.BuffersTypes.COLOR_BUFFER, GL_TEXTURE0);
+        gameRenderTarget = new FrameBufferObject(targetSize.x, targetSize.y, FrameBufferObject.BuffersTypes.COLOR_BUFFER, GL_TEXTURE0);
     }
 
     public static void draw()
     {
-        if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) renderTarget.bind();
+        if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) sceneRenderTarget.bind();
         if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) glClear(GL_COLOR_BUFFER_BIT);
 
         Grid.draw();
 
-        SceneManager.drawCurrentScene2D();
+        currentSceneManager.drawCurrentScene2D();
 
-        Object inspectingObject = MainView.getInspectorView().getCurrentInspectingObject();
-        if(inspectingObject != null) {
-            if (inspectingObject instanceof Object2D && !((Object2D) inspectingObject).isShouldDestroy()) {
-                Object2D object2D = (Object2D) inspectingObject;
-                List<BoxCollider2DComponent> boxCollider2DComponents = object2D.getAllComponents(BoxCollider2DComponent.class);
-                List<CircleCollider2DComponent> circleCollider2DComponents = object2D.getAllComponents(CircleCollider2DComponent.class);
+        CamerasDebugLines.draw();
 
-                for (BoxCollider2DComponent boxCollider2DComponent : boxCollider2DComponents) {
-                    boxCollider2DComponent.getBoxCollider2D().draw(object2D);
-                }
+        ObjectsDebugLines.draw();
 
-                for (CircleCollider2DComponent circleCollider2DComponent : circleCollider2DComponents) {
-                    circleCollider2DComponent.getCircleCollider2D().draw(object2D);
-                }
-            }
-        }
+        Gizmo.draw();
 
-        inspectingObject = null;
-
-        CameraDebugLines.draw();
-
-        if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) renderTarget.unBind();
+        if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) sceneRenderTarget.unBind();
 
         if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && !MainView.isSomeViewFocusedExceptSceneView && !MainView.getInspectorView().isEditing()) {
             Vector2f mousePosition = Mouse.getMousePosition();
@@ -81,6 +74,14 @@ public class GraphicsRenderer
         if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && MainView.getInspectorView().isEditing()) {
             MainView.getInspectorView().setEditing(false);
         }
+
+        gameRenderTarget.bind();
+
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        currentSceneManager.drawCurrentScene2D();
+
+        gameRenderTarget.unBind();
     }
 
     /*
@@ -100,5 +101,6 @@ public class GraphicsRenderer
 
      */
 
-    public static FrameBufferObject getRenderTarget() { return renderTarget; }
+    public static FrameBufferObject getSceneRenderTarget() { return sceneRenderTarget; }
+    public static FrameBufferObject getGameRenderTarget() { return gameRenderTarget; }
 }

@@ -1,14 +1,19 @@
 package Core2D.Controllers.PC;
 
+import Core2D.Camera2D.CamerasManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Graphics.Graphics;
+import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
+import org.joml.Vector4f;
 
 import static org.lwjgl.glfw.GLFW.*;
 
 public class Mouse
 {
+    private static boolean cursorHidden = false;
+
     //Массив всех доступных кнопок в ASCII таблице / кодировке.
     private static boolean[] buttons = new boolean[GLFW_MOUSE_BUTTON_LAST];
 
@@ -93,9 +98,50 @@ public class Mouse
     // получаю позицию курсора
     public static Vector2f getMousePosition() { return mousePosition; }
 
+    public static Vector2f getMouseOGLPosition(Vector2f mousePosition)
+    {
+        float currentX = mousePosition.x / Graphics.getScreenSize().x * 2.0f - 1.0f;
+        Vector4f tmp = new Vector4f(currentX, 0, 0, 1);
+
+        Matrix4f viewProjection = new Matrix4f();
+        Matrix4f inverseView = new Matrix4f();
+        Matrix4f inverseProjection = new Matrix4f();
+
+        CamerasManager.getMainCamera2D().getTransform().getResultModelMatrix().invert(inverseView);
+        CamerasManager.getMainCamera2D().getProjectionMatrix().invert(inverseProjection);
+
+        inverseView.mul(inverseProjection, viewProjection);
+        tmp.mul(viewProjection);
+
+        currentX = tmp.x;
+
+        //float currentY = originalMousePosition.y - sceneViewWindowScreenPosition.y;
+        //currentY = ((currentY / sceneViewWindowSize.y) * 2.0f - 1.0f);
+        float currentY = mousePosition.y / Graphics.getScreenSize().y * 2.0f - 1.0f;
+
+        tmp = new Vector4f(0, currentY, 0, 1);
+        tmp.mul(viewProjection);
+
+        currentY = tmp.y;
+
+        return new Vector2f(currentX, currentY);
+    }
+
     public static Vector2f getScreenMousePosition() { return screenMousePosition; }
 
     public static Vector2f getViewportSize() { return viewportSize; }
 
     public static Vector2f getViewportPosition() { return viewportPosition; }
+
+    public static boolean isCursorHidden() { return cursorHidden; }
+    public static void setCursorHidden(boolean cursorHidden)
+    {
+        Mouse.cursorHidden = cursorHidden;
+
+        if(cursorHidden) {
+            glfwSetInputMode(Core2D.getWindow().getWindow(), GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+        } else {
+            glfwSetInputMode(Core2D.getWindow().getWindow(), GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+        }
+    }
 }

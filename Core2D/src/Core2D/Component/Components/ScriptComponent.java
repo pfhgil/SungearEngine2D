@@ -26,7 +26,7 @@ public class ScriptComponent extends Component implements AutoCloseable
     @Override
     public void update()
     {
-        if(SceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
+        if(SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
             script.update();
         }
     }
@@ -34,21 +34,21 @@ public class ScriptComponent extends Component implements AutoCloseable
     @Override
     public void deltaUpdate(float deltaTime)
     {
-        if(SceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
+        if(SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
             script.deltaUpdate(deltaTime);
         }
     }
 
     public void collider2DEnter(Object2D otherObj)
     {
-        if(SceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
+        if(SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
             script.collider2DEnter(otherObj);
         }
     }
 
     public void collider2DExit(Object2D otherObj)
     {
-        if(SceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
+        if(SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
             script.collider2DExit(otherObj);
         }
     }

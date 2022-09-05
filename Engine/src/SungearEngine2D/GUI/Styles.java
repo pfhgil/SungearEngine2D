@@ -17,6 +17,7 @@ public class Styles
 
         style.setWindowRounding(2.0f);
         style.setWindowTitleAlign(0.5f, 0.84f);
+        style.setWindowMinSize(1.0f, 1.0f);
         style.setChildRounding(2.0f);
         style.setFrameRounding(2.0f);
         style.setItemSpacing(5.0f, 4.0f);
@@ -76,8 +77,9 @@ public class Styles
 
         style.setWindowPadding(9.0f, 5.0f);
         style.setWindowRounding(0.0f);
+        style.setWindowMinSize(1.0f, 1.0f);
         style.setChildRounding(0.0f);
-        style.setFramePadding(5.0f, 3.0f);
+        style.setFramePadding(5, 3);
         style.setFrameRounding(0.0f);
         style.setItemSpacing(9.0f, 3.0f);
         style.setItemInnerSpacing(9.0f, 3.0f);

@@ -1,12 +1,9 @@
 package Core2D.Instancing.Primitives;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
-import Core2D.Core2D.Core2D;
-import Core2D.Core2D.Resources;
 import Core2D.Primitives.Line2D;
-import Core2D.Shader.Shader;
 import Core2D.Shader.ShaderProgram;
-import Core2D.ShaderUtils.ShaderUtils;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL46C;
@@ -17,8 +14,8 @@ import java.util.Iterator;
 import java.util.List;
 
 import static org.lwjgl.opengl.GL15C.*;
-import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
-import static org.lwjgl.opengl.GL20C.*;
+import static org.lwjgl.opengl.GL20C.glEnableVertexAttribArray;
+import static org.lwjgl.opengl.GL20C.glVertexAttribPointer;
 import static org.lwjgl.opengl.GL30C.glBindVertexArray;
 import static org.lwjgl.opengl.GL30C.glGenVertexArrays;
 import static org.lwjgl.opengl.GL33C.glVertexAttribDivisor;
@@ -61,31 +58,8 @@ public class LinesInstancing extends CommonDrawableObjectsParameters
 
     private void create()
     {
-        // загружаю шейдеры
-        Shader vertexShader = new Shader(Resources.ShadersTexts.Instancing.Primitives.Line2D.vertexShaderText, GL_VERTEX_SHADER);
-        Shader fragmentShader = new Shader(Resources.ShadersTexts.Instancing.Primitives.Line2D.fragmentShaderText, GL_FRAGMENT_SHADER);
-
         // создаю шейдерную программу
-        shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
-
-        vertexShader = null;
-        fragmentShader = null;
-
-        shaderProgram.bind();
-
-        ShaderUtils.setUniform(
-                shaderProgram.getHandler(),
-                "projectionMatrix",
-                Core2D.getProjectionMatrix()
-        );
-
-        ShaderUtils.setUniform(
-                shaderProgram.getHandler(),
-                "isUIInstancing",
-                isUIInstancing
-        );
-
-        shaderProgram.unBind();
+        shaderProgram = AssetManager.getShaderProgram("lines2DInstancingProgram");
 
         updateArray();
 
@@ -224,7 +198,6 @@ public class LinesInstancing extends CommonDrawableObjectsParameters
         while(lines2DIterator.hasNext()) {
             Line2D line2D = lines2DIterator.next();
             line2D.destroy();
-            line2D = null;
             lines2DIterator.remove();
         }
         lines2DIterator = null;
@@ -241,24 +214,11 @@ public class LinesInstancing extends CommonDrawableObjectsParameters
         shaderProgram.destroy();
         shaderProgram = null;
 
-        destroyParams();
+        //destroyParams();
     }
 
     public boolean isUIInstancing() { return isUIInstancing; }
-    public void setUIInstancing(boolean UIInstancing)
-    {
-        isUIInstancing = UIInstancing;
-
-        shaderProgram.bind();
-
-        ShaderUtils.setUniform(
-                shaderProgram.getHandler(),
-                "isUIInstancing",
-                isUIInstancing
-        );
-
-        shaderProgram.unBind();
-    }
+    public void setUIInstancing(boolean UIInstancing) { isUIInstancing = UIInstancing; }
 
     public float getLinesWidth() { return linesWidth; }
     public void setLinesWidth(float linesWidth) { this.linesWidth = linesWidth; }

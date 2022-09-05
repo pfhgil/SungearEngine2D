@@ -1,6 +1,8 @@
 package Core2D.Scripting;
 
+import Core2D.Camera2D.Camera2D;
 import Core2D.Component.Component;
+import Core2D.Deserializers.Camera2DDeserializer;
 import Core2D.Deserializers.ComponentDeserializer;
 import Core2D.Deserializers.Object2DDeserializer;
 import Core2D.Deserializers.WrappedObjectDeserializer;
@@ -34,6 +36,7 @@ public class ScriptTempValue
                             .registerTypeAdapter(Component.class, new ComponentDeserializer())
                             .registerTypeAdapter(WrappedObject.class, new WrappedObjectDeserializer())
                             .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
+                            .registerTypeAdapter(Camera2D.class, new Camera2DDeserializer())
                             .create();
 
                     JsonObject jsonObject = gson.toJsonTree(value).getAsJsonObject();
@@ -42,15 +45,31 @@ public class ScriptTempValue
                     if(wrappedObject.getObject() instanceof Double && field.getType().isAssignableFrom(float.class)) {
                         field.setFloat(script.getScriptClassInstance(), ((Double) value).floatValue());
                     } else if(wrappedObject.getObject() instanceof Object2D) {
-                        Object2D foundObject2D = SceneManager.getCurrentScene2D().findObject2DByID(((Object2D) wrappedObject.getObject()).getID());
+                        Object2D foundObject2D = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(((Object2D) wrappedObject.getObject()).getID());
                         field.set(script.getScriptClassInstance(), foundObject2D);
                         ((Object2D) wrappedObject.getObject()).destroy();
+                    } else if(wrappedObject.getObject() instanceof Camera2D) {
+                        Camera2D foundCamera2D = SceneManager.currentSceneManager.getCurrentScene2D().findCamera2DByID(((Camera2D) wrappedObject.getObject()).getID());
+                        field.set(script.getScriptClassInstance(), foundCamera2D);
                     } else {
-                        field.set(script.getScriptClassInstance(), wrappedObject.getObject());
+                        if(wrappedObject.getObject() != null) {
+                            System.out.println("value: " + wrappedObject.getObject() + ", field: " + field.getName());
+                            field.set(script.getScriptClassInstance(), wrappedObject.getObject());
+                        }
                     }
 
                     wrappedObject.setObject(null);
                     wrappedObject = null;
+                } else if(value instanceof WrappedObject) {
+                    if(((WrappedObject) value).getObject() instanceof Object2D) {
+                        Object2D foundObject2D = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(((Object2D) ((WrappedObject) value).getObject()).getID());
+                        field.set(script.getScriptClassInstance(), foundObject2D);
+                    }
+                    if(((WrappedObject) value).getObject() instanceof Camera2D) {
+                        Camera2D foundCamera2D = SceneManager.currentSceneManager.getCurrentScene2D().findCamera2DByID(((Camera2D) ((WrappedObject) value).getObject()).getID());
+                        field.set(script.getScriptClassInstance(), foundCamera2D);
+                    }
+                    ((WrappedObject) value).setObject(null);
                 }
                 /*
                 if(value instanceof Double && field.getType().isAssignableFrom(float.class)) {

@@ -43,6 +43,8 @@ public class Texture2D
 
     private int textureBlock = GL_TEXTURE0;
 
+    public Texture2D() { }
+
     // конструктор
     public Texture2D(InputStream inputStream)
     {
@@ -257,6 +259,18 @@ public class Texture2D
         glDeleteTextures(textureHandler);
     }
 
+    public void set(Texture2D texture2D)
+    {
+        textureHandler = texture2D.getTextureHandler();
+        textureBlock = texture2D.getGLTextureBlock();
+        source = texture2D.getSource();
+        width = texture2D.getWidth();
+        height = texture2D.getHeight();
+        channels = texture2D.getChannels();
+        format = texture2D.getFormat();
+        internalFormat = texture2D.getInternalFormat();
+    }
+
     public void bind()
     {
         // активирую нулевой текстурный блок
@@ -289,6 +303,12 @@ public class Texture2D
     public String getSource() { return source; }
 
     public int getParam() { return param; }
+
+    public int getChannels() { return channels; }
+
+    public int getFormat() { return format; }
+
+    public int getInternalFormat() { return internalFormat; }
 
     /*
     public void setTextureHandler(int textureHandler) { this.textureHandler = textureHandler; }

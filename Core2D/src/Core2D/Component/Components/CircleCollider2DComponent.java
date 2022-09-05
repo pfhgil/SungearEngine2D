@@ -40,8 +40,8 @@ public class CircleCollider2DComponent extends Component implements AutoCloseabl
     {
         Rigidbody2DComponent rigidbody2DComponent = object2D.getComponent(Rigidbody2DComponent.class);
         if(rigidbody2DComponent != null) {
-            if(SceneManager.getCurrentScene2D() != null) {
-                SceneManager.getCurrentScene2D().getPhysicsWorld().addCircleCollider2D(rigidbody2DComponent.getRigidbody2D(), circleCollider2D);
+            if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+                SceneManager.currentSceneManager.getCurrentScene2D().getPhysicsWorld().addCircleCollider2D(rigidbody2DComponent.getRigidbody2D(), circleCollider2D);
             }
         }
     }

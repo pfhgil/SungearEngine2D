@@ -14,6 +14,5 @@ public class GUISettings
         imGuiIO.setConfigFlags(ImGuiConfigFlags.DockingEnable);
         String s = Utils.inputStreamToString(Core2D.class.getResourceAsStream("/data/imgui/imgui.ini"));
         ImGui.loadIniSettingsFromMemory(s);
-        s = null;
     }
 }

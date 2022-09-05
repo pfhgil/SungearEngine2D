@@ -5,11 +5,9 @@ import Core2D.Camera2D.CamerasManager;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Component;
 import Core2D.Component.Components.TextureComponent;
-import Core2D.Core2D.Core2D;
 import Core2D.Instancing.ObjectsInstancing;
 import Core2D.Instancing.Primitives.LinesInstancing;
 import Core2D.Layering.Layer;
-import Core2D.Utils.WrappedObject;
 import Core2D.Layering.Layering;
 import Core2D.Object2D.Object2D;
 import Core2D.Primitives.Line2D;
@@ -18,12 +16,13 @@ import Core2D.UI.Button.Button;
 import Core2D.UI.InputField.InputField;
 import Core2D.UI.ProgressBar.ProgressBar;
 import Core2D.UI.Text.Text;
+import Core2D.Utils.WrappedObject;
+import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL11C;
 import org.lwjgl.opengl.GL46C;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.glLineWidth;
 import static org.lwjgl.opengl.GL11C.GL_LINES;
 import static org.lwjgl.opengl.GL11C.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL30C.glBindVertexArray;
@@ -32,7 +31,7 @@ public class Renderer
 {
     public void render(Object2D object2D)
     {
-        if(object2D.isActive()) {
+        if(object2D.isActive() && !object2D.isShouldDestroy()) {
             for(Component component : object2D.getComponents()) {
                 component.update();
             }
@@ -49,10 +48,29 @@ public class Renderer
                 object2D.getShaderProgram().bind();
 
                 object2D.update();
+
                 ShaderUtils.setUniform(
                         object2D.getShaderProgram().getHandler(),
                         "mvpMatrix",
                         object2D.getMvpMatrix()
+                );
+
+                ShaderUtils.setUniform(
+                        object2D.getShaderProgram().getHandler(),
+                        "color",
+                        object2D.getColor()
+                );
+
+                ShaderUtils.setUniform(
+                        object2D.getShaderProgram().getHandler(),
+                        "drawMode",
+                        object2D.getComponent(TextureComponent.class).getTextureDrawMode()
+                );
+
+                ShaderUtils.setUniform(
+                        object2D.getShaderProgram().getHandler(),
+                        "sampler",
+                        textureComponent.getTexture2D().getFormattedTextureBlock()
                 );
 
                 // нарисовать два треугольника
@@ -76,31 +94,37 @@ public class Renderer
 
     public void render(Text text)
     {
-        if(text.isActive()) {
+        if(text.isActive() && !text.isShouldDestroy()) {
             render(text.getTextObjectsInstancing());
         }
     }
 
     public void render(ProgressBar progressBar)
     {
-        if(progressBar.isActive()) {
+        if(progressBar.isActive() && !progressBar.isShouldDestroy()) {
             render(progressBar.getProgressBar());
         }
     }
 
     public void render(Line2D line2D)
     {
-        if(line2D.isActive()) {
+        if(line2D.isActive() && !line2D.isShouldDestroy()) {
             line2D.getVertexArrayObject().bind();
 
             // использовать шейдер
             line2D.getShaderProgram().bind();
 
             line2D.update();
+
             ShaderUtils.setUniform(
                     line2D.getShaderProgram().getHandler(),
                     "mvpMatrix",
                     line2D.getMvpMatrix()
+            );
+            ShaderUtils.setUniform(
+                    line2D.getShaderProgram().getHandler(),
+                    "color",
+                    new Vector4f(line2D.getColor())
             );
 
             glLineWidth(line2D.getLineWidth());
@@ -115,7 +139,7 @@ public class Renderer
 
     public void render(InputField inputField)
     {
-        if(inputField.isActive()) {
+        if(inputField.isActive() && !inputField.isShouldDestroy()) {
             render(inputField.getInputField());
             render(inputField.getText());
             if(inputField.isSelected()) {
@@ -128,7 +152,9 @@ public class Renderer
 
     public void render(ObjectsInstancing objectsInstancing)
     {
-        if(objectsInstancing.isActive() && objectsInstancing.getDrawableObjects2D().size() != 0) {
+        if(objectsInstancing.isActive() &&
+                objectsInstancing.getDrawableObjects2D().size() != 0 &&
+                !objectsInstancing.isShouldDestroy()) {
             objectsInstancing.update();
 
             objectsInstancing.getAtlasTexture2D().bind();
@@ -143,7 +169,19 @@ public class Renderer
                         "cameraMatrix",
                         CamerasManager.getMainCamera2D().getTransform().getModelMatrix()
                 );
+
+                ShaderUtils.setUniform(
+                        objectsInstancing.getShaderProgram().getHandler(),
+                        "projectionMatrix",
+                        CamerasManager.getMainCamera2D().getProjectionMatrix()
+                );
             }
+
+            ShaderUtils.setUniform(
+                    objectsInstancing.getShaderProgram().getHandler(),
+                    "isUIInstancing",
+                    objectsInstancing.isUIInstancing()
+            );
 
             GL46C.glDrawElementsInstanced(GL_TRIANGLES, 6, GL11C.GL_UNSIGNED_SHORT, 0, objectsInstancing.getDrawableObjects2D().size());
 
@@ -157,26 +195,34 @@ public class Renderer
 
     public void render(LinesInstancing linesInstancing)
     {
-        if(linesInstancing.isActive() && linesInstancing.getDrawableLines2D().size() != 0) {
+        if(linesInstancing.isActive() &&
+                linesInstancing.getDrawableLines2D().size() != 0 &&
+                !linesInstancing.isShouldDestroy()) {
             linesInstancing.update();
 
             glBindVertexArray(linesInstancing.getVAOID());
 
             linesInstancing.getShaderProgram().bind();
 
-            ShaderUtils.setUniform(
-                    linesInstancing.getShaderProgram().getHandler(),
-                    "projectionMatrix",
-                    Core2D.getProjectionMatrix()
-            );
+            if(CamerasManager.getMainCamera2D() != null) {
+                ShaderUtils.setUniform(
+                        linesInstancing.getShaderProgram().getHandler(),
+                        "projectionMatrix",
+                        CamerasManager.getMainCamera2D().getProjectionMatrix()
+                );
 
-            if (CamerasManager.getMainCamera2D() != null) {
                 ShaderUtils.setUniform(
                         linesInstancing.getShaderProgram().getHandler(),
                         "cameraMatrix",
                         CamerasManager.getMainCamera2D().getTransform().getModelMatrix()
                 );
             }
+
+            ShaderUtils.setUniform(
+                    linesInstancing.getShaderProgram().getHandler(),
+                    "isUIInstancing",
+                    linesInstancing.isUIInstancing()
+            );
 
             GL46C.glLineWidth(linesInstancing.getLinesWidth());
             GL46C.glDrawElementsInstanced(GL_LINES, 2, GL11C.GL_UNSIGNED_SHORT, 0, linesInstancing.getDrawableLines2D().size());
@@ -190,7 +236,7 @@ public class Renderer
 
     public void render(Button button)
     {
-        if(button.isActive()) {
+        if(button.isActive() && !button.isShouldDestroy()) {
             button.update();
             render(button.getButton());
             if(button.getText() != null) render(button.getText());
@@ -199,7 +245,7 @@ public class Renderer
 
     public void render(AtlasDrawing atlasDrawing)
     {
-        if(atlasDrawing.isActive()) {
+        if(atlasDrawing.isActive() && !atlasDrawing.isShouldDestroy()) {
             atlasDrawing.getAtlasTexture2D().bind();
 
             for (Object2D drawableObject2D : atlasDrawing.getDrawableObjects2D()) {
@@ -261,10 +307,17 @@ public class Renderer
             object2D.getShaderProgram().bind();
 
             object2D.update();
+
             ShaderUtils.setUniform(
                     object2D.getShaderProgram().getHandler(),
                     "mvpMatrix",
                     object2D.getMvpMatrix()
+            );
+
+            ShaderUtils.setUniform(
+                    object2D.getShaderProgram().getHandler(),
+                    "color",
+                    object2D.getColor()
             );
 
             // нарисовать два треугольника

@@ -1,10 +1,13 @@
 package SungearEngine2D.CameraController;
 
+import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Controllers.PC.Mouse;
 import Core2D.Core2D.Core2D;
 import Core2D.Input.UserInputCallback;
 import Core2D.Object2D.Object2D;
+import Core2D.Object2D.Transform;
+import SungearEngine2D.DebugDraw.Gizmo;
 import SungearEngine2D.GUI.Views.MainView;
 import SungearEngine2D.Main.Main;
 import org.joml.Vector2f;
@@ -19,7 +22,7 @@ public class CameraController
     // scale камеры, установленный с помощью колесика мышки
     private static Vector2f mouseCameraScale = new Vector2f(1);
 
-    public static boolean controlCamera = true;
+    public static boolean allowMove = true;
 
     public static void init()
     {
@@ -31,9 +34,10 @@ public class CameraController
 
             @Override
             public void onScroll(double xoffset, double yoffset) {
-                if(controlledCamera2DAnchor != null && !MainView.isSomeViewFocusedExceptSceneView && controlCamera) {
-                    mouseCameraScale.x += (float) (yoffset / 5.0f) * mouseCameraScale.x;
-                    mouseCameraScale.y += (float) (yoffset / 5.0f) * mouseCameraScale.y;
+                if(controlledCamera2DAnchor != null && !MainView.isSomeViewFocusedExceptSceneView && Main.getMainCamera2D().getID() == CamerasManager.getMainCamera2D().getID()) {
+                    Vector2f scale = new Vector2f((float) yoffset / 5.0f * mouseCameraScale.x, (float) yoffset / 5.0f * mouseCameraScale.y);
+                    mouseCameraScale.x += scale.x;
+                    mouseCameraScale.y += scale.y;
                     mouseCameraScale.x = Math.abs(mouseCameraScale.x);
                     mouseCameraScale.y = Math.abs(mouseCameraScale.y);
                 }
@@ -43,7 +47,7 @@ public class CameraController
 
     public static void control()
     {
-        if(controlCamera) {
+        if(Main.getMainCamera2D().getID() == CamerasManager.getMainCamera2D().getID() && allowMove) {
             if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
                 lastCursorPosition = new Vector2f(Mouse.getMousePosition());
             }
@@ -52,6 +56,7 @@ public class CameraController
             }
             if (controlledCamera2DAnchor != null && !MainView.isSomeViewFocusedExceptSceneView) {
                 if (Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
+                    controlledCamera2DAnchor.getComponent(TransformComponent.class).getTransform().setNeedToMoveToDestination(false);
                     Vector2f currentPosition = new Vector2f(Mouse.getMousePosition());
                     Vector2f difference = new Vector2f(currentPosition.x - lastCursorPosition.x, currentPosition.y - lastCursorPosition.y);
                     controlledCamera2DAnchor.getComponent(TransformComponent.class).getTransform().translate(difference.negate().div(Main.getMainCamera2D().getTransform().getScale()));

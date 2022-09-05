@@ -1,8 +1,6 @@
 package Core2D.Physics;
 
 import Core2D.Scene2D.Scene2D;
-import Core2D.Scene2D.SceneManager;
-import org.jbox2d.collision.shapes.MassData;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;

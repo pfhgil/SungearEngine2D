@@ -134,7 +134,7 @@ public class FileChooserWindow
         }
 
         ImGui.treeNodeEx(file.getName(), ImGuiTreeNodeFlags.Bullet | ImGuiTreeNodeFlags.NoTreePushOnOpen);
-        boolean opened = ImGui.isItemHovered() && ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left);
+        boolean opened = ImGui.isItemHovered() && ImGui.isMouseClicked(ImGuiMouseButton.Left);
 
         if(opened) {
             currentChosenFilePath = file.getPath();

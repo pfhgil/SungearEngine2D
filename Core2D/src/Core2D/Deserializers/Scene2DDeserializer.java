@@ -3,8 +3,6 @@ package Core2D.Deserializers;
 import Core2D.Camera2D.Camera2D;
 import Core2D.Layering.Layering;
 import Core2D.Scene2D.Scene2D;
-import Core2D.Scripting.ScriptTempValue;
-import Core2D.Scripting.ScriptTempValues;
 import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.Tag;
 import com.google.gson.*;
@@ -27,12 +25,24 @@ public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
         JsonArray tags = jsonObject.getAsJsonArray("tags");
         ScriptSystem scriptSystem = context.deserialize(jsonObject.get("scriptSystem"), ScriptSystem.class);
         int maxObjectID = jsonObject.get("maxObjectID").getAsInt();
+        JsonElement inBuildElem = jsonObject.get("inBuild");
+        boolean inBuild = false;
+        if(inBuildElem != null) {
+            inBuild = jsonObject.get("inBuild").getAsBoolean();
+        }
+        JsonElement isMainScene2DElem = jsonObject.get("isMainScene2D");
+        boolean isMainScene2D = false;
+        if(isMainScene2DElem != null) {
+            isMainScene2D = jsonObject.get("isMainScene2D").getAsBoolean();
+        }
 
         Scene2D scene2D = new Scene2D(name);
         scene2D.setScreenClearColor(screenClearColor);
         scene2D.setLayering(layering);
         scene2D.setScriptSystem(scriptSystem);
         scene2D.maxObjectID = maxObjectID;
+        scene2D.inBuild = inBuild;
+        scene2D.setMainScene2D(isMainScene2D);
 
         if(cameras2D != null) {
             for (JsonElement element : cameras2D) {
@@ -41,13 +51,17 @@ public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
             }
         }
 
-        Camera2D foundCamera2D = scene2D.findCamera2DByID(sceneMainCamera2D.getID());
-        scene2D.setSceneMainCamera2D(foundCamera2D);
+        if(sceneMainCamera2D != null) {
+            Camera2D foundCamera2D = scene2D.findCamera2DByID(sceneMainCamera2D.getID());
+            scene2D.setSceneMainCamera2D(foundCamera2D);
+        }
 
-        for(JsonElement element : tags) {
-            Tag tag = context.deserialize(element, Tag.class);
-            if(!tag.getName().equals("default")) {
-                scene2D.addTag(tag);
+        if(tags != null) {
+            for (JsonElement element : tags) {
+                Tag tag = context.deserialize(element, Tag.class);
+                if (!tag.getName().equals("default")) {
+                    scene2D.addTag(tag);
+                }
             }
         }
 

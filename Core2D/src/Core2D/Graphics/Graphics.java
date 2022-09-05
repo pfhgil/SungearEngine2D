@@ -1,5 +1,6 @@
 package Core2D.Graphics;
 
+import Core2D.Camera2D.CamerasManager;
 import Core2D.Controllers.PC.Keyboard;
 import Core2D.Controllers.PC.Mouse;
 import Core2D.Core2D.Core2D;
@@ -9,14 +10,15 @@ import Core2D.Object2D.Object2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.ShaderUtils.FrameBufferObject;
 import Core2D.Utils.ExceptionsUtils;
-import org.joml.*;
+import org.joml.Vector2f;
+import org.joml.Vector2i;
+import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11C;
 
-import java.lang.Math;
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -32,7 +34,7 @@ public abstract class Graphics
     }
 
     // матрица проекции
-    private static Matrix4f projectionMatrix;
+    //private static Matrix4f projectionMatrix;
 
     protected static int totalIterations = 0;
 
@@ -65,7 +67,7 @@ public abstract class Graphics
 
         Vector2i pickingRenderTargetSize = getScreenSize();
 
-        projectionMatrix = new Matrix4f().ortho2D(0, Core2D.getWindow().getSize().x, 0, Core2D.getWindow().getSize().y);
+        //projectionMatrix = new Matrix4f().ortho2D(0, Core2D.getWindow().getSize().x, 0, Core2D.getWindow().getSize().y);
 
         pickingRenderTarget = new FrameBufferObject(pickingRenderTargetSize.x, pickingRenderTargetSize.y, FrameBufferObject.BuffersTypes.COLOR_BUFFER, GL_TEXTURE0);
 
@@ -84,6 +86,17 @@ public abstract class Graphics
                 if(Settings.System.sleepSystem) {
                     Thread.sleep(10000);
                 }
+
+                Vector2i windowSize = Core2D.getWindow().getSize();
+                if(CamerasManager.getMainCamera2D() != null) {
+                    CamerasManager.getMainCamera2D().setViewportSize(new Vector2f(windowSize.x, windowSize.y));
+                }
+
+                if(SceneManager.currentSceneManager.getCurrentScene2D() != null && SceneManager.currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
+                    SceneManager.currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().setViewportSize(new Vector2f(windowSize.x, windowSize.y));
+                }
+                //GL11C.glViewport(0,  0, (int) CamerasManager.getMainCamera2D().getViewportSize().x, (int) CamerasManager.getMainCamera2D().getViewportSize().y);
+                //projectionMatrix = new Matrix4f().ortho2D(0, Core2D.getWindow().getSize().x, 0, Core2D.getWindow().getSize().y);
 
                 Core2D.getDeltaTimer().startFrame();
 
@@ -114,13 +127,13 @@ public abstract class Graphics
         }
     }
 
-    public static Vector3f getPixelColor(Vector2f oglPosition)
+    public static Vector4f getPixelColor(Vector2f oglPosition)
     {
 
-        ByteBuffer pixelBuffer = BufferUtils.createByteBuffer(3);
-        glReadPixels((int) oglPosition.x, (int) oglPosition.y, 1, 1, GL_RGB, GL_UNSIGNED_BYTE, pixelBuffer);
+        ByteBuffer pixelBuffer = BufferUtils.createByteBuffer(4);
+        glReadPixels((int) oglPosition.x, (int) oglPosition.y, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, pixelBuffer);
 
-        Vector3f selectedPixelColor = new Vector3f(pixelBuffer.get(0), pixelBuffer.get(1), pixelBuffer.get(2));
+        Vector4f selectedPixelColor = new Vector4f(pixelBuffer.get(0), pixelBuffer.get(1), pixelBuffer.get(2), pixelBuffer.get(3));
         pixelBuffer.clear();
         pixelBuffer = null;
 
@@ -150,16 +163,16 @@ public abstract class Graphics
 
         glDisable(GL_BLEND);
 
-        SceneManager.drawCurrentScene2DPicking();
+        SceneManager.currentSceneManager.drawCurrentScene2DPicking();
 
-        Vector3f selectedPixelColor = getPixelColor(oglPosition);
+        Vector4f selectedPixelColor = getPixelColor(oglPosition);
 
-        System.out.println("selectedPixelColor: " + selectedPixelColor.x + ", " + selectedPixelColor.y + ", " + selectedPixelColor.z);
+        System.out.println("selectedPixelColor: " + selectedPixelColor.x + ", " + selectedPixelColor.y + ", " + selectedPixelColor.z + ", " + selectedPixelColor.w);
 
         glEnable(GL_BLEND);
         pickingRenderTarget.unBind();
 
-        return SceneManager.getPickedObject2D(selectedPixelColor);
+        return SceneManager.currentSceneManager.getPickedObject2D(selectedPixelColor);
     }
 
     public static ViewMode getViewMode() { return viewMode; }
@@ -167,19 +180,22 @@ public abstract class Graphics
     {
         viewMode = newViewMode;
         if(viewMode == ViewMode.VIEW_MODE_2D) {
-            projectionMatrix = new Matrix4f().ortho2D(0, Core2D.getWindow().getSize().x, 0, Core2D.getWindow().getSize().y);
+            if(CamerasManager.getMainCamera2D() != null) {
+                CamerasManager.getMainCamera2D().setViewportSize(new Vector2f(Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y));
+            }
+            //projectionMatrix = new Matrix4f().ortho2D(0, Core2D.getWindow().getSize().x, 0, Core2D.getWindow().getSize().y);
         } else if(viewMode == ViewMode.VIEW_MODE_3D) {
-            // сделать настройки более гибкими
-            projectionMatrix = new Matrix4f().perspective(
-                    (float) Math.toRadians(90.0f),
-                    (float) Core2D.getWindow().getSize().x / Core2D.getWindow().getSize().y,
-                    0.1f,
-                    250.0f
-            );
+            if(CamerasManager.getMainCamera2D() != null) {
+                // сделать настройки более гибкими
+                CamerasManager.getMainCamera2D().getProjectionMatrix().perspective(
+                        (float) Math.toRadians(90.0f),
+                        (float) Core2D.getWindow().getSize().x / Core2D.getWindow().getSize().y,
+                        0.1f,
+                        250.0f
+                );
+            }
         }
     }
-
-    public static Matrix4f getProjectionMatrix() { return projectionMatrix; }
 
     public static FrameBufferObject getPickingRenderTarget() { return pickingRenderTarget; }
 

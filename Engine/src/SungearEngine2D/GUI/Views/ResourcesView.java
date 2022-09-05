@@ -1,16 +1,18 @@
 package SungearEngine2D.GUI.Views;
 
 import Core2D.Camera2D.CamerasManager;
-import Core2D.Core2D.Core2D;
 import Core2D.Log.Log;
+import Core2D.Object2D.Object2D;
+import Core2D.Prefab.Prefab;
+import Core2D.Project.ProjectsManager;
+import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Timer.Timer;
 import Core2D.Timer.TimerCallback;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.WrappedObject;
 import SungearEngine2D.Main.Main;
-import SungearEngine2D.Main.Settings;
-import SungearEngine2D.Project.ProjectsManager;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
@@ -24,12 +26,12 @@ import org.joml.Vector4f;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.charset.CoderResult;
 import java.util.List;
 import java.util.regex.MatchResult;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
+import static Core2D.Scene2D.SceneManager.currentSceneManager;
 import static SungearEngine2D.Utils.ResourcesUtils.getIconHandler;
 
 public class ResourcesView extends View
@@ -95,9 +97,36 @@ public class ResourcesView extends View
         if(!canOpenScene2D) {
             openScene2DTimer.startFrame();
         }
-
+        
         ImGui.begin("Resources", ImGuiWindowFlags.NoMove);
         {
+            ImVec2 windowSize = ImGui.getWindowSize();
+            ImGui.invisibleButton("ResourcesDropTarget", windowSize.x, windowSize.y);
+            ImGui.setItemAllowOverlap();
+
+            if(ImGui.beginDragDropTarget()) {
+                Object object = ImGui.acceptDragDropPayload("SceneWrappedObject");
+                if(object instanceof WrappedObject && ((WrappedObject) object).getObject() instanceof Object2D) {
+                    Object2D object2D = (Object2D) ((WrappedObject) object).getObject();
+                    Prefab prefab = new Prefab(object2D);
+                    prefab.save(currentDirectoryPath + "\\" + object2D.getName() + ".sgopref");
+
+                    /*
+                    Gson gson = new GsonBuilder()
+                            .setPrettyPrinting()
+                            .registerTypeAdapter(WrappedObject.class, new WrappedObjectDeserializer())
+                            .registerTypeAdapter(Component.class, new ComponentDeserializer())
+                            .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
+                            .create();
+                    String serializedObject2D = gson.toJson(object2D);
+                    FileUtils.serializeObject(currentDirectoryPath + "\\" + object2D.getName() + ".sgopref", serializedObject2D);
+
+                     */
+                }
+                ImGui.endDragDropTarget();
+            }
+
+
             showDirectoryResources();
 
             if(ImGui.isMouseClicked(ImGuiMouseButton.Right) && ImGui.isWindowHovered() && lastRightClickedFileID == -1) {
@@ -241,10 +270,31 @@ public class ResourcesView extends View
                 if(canOpenScene2D) {
                     canOpenScene2D = false;
                     MainView.getSceneView().stopPlayMode();
-                    SceneManager.loadScene(files[id].getPath());
+                    Scene2D scene2D = currentSceneManager.loadScene(files[id].getPath());
+                    if(!currentSceneManager.isScene2DExists(scene2D.getName())) {
+                        Log.showWarningChooseDialog("Scene2D " + scene2D.getName() + " not found in SceneManager!\nWould you like to add this scene2D in SceneManager?",
+                                "Yes",
+                                "No",
+                                new Log.DialogCallback() {
+                                    @Override
+                                    public void firstButtonClicked() {
+                                        currentSceneManager.getScenes().add(scene2D);
+                                    }
+
+                                    @Override
+                                    public void secondButtonClicked() {
+
+                                    }
+
+                                    @Override
+                                    public void thirdButtonClicked() {
+
+                                    }
+                                });
+                    }
                     CamerasManager.setMainCamera2D((Main.getMainCamera2D()));
-                    SceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;
-                    SceneManager.getCurrentScene2D().getScriptSystem().runScripts = false;
+                    scene2D.getPhysicsWorld().simulatePhysics = false;
+                    scene2D.getScriptSystem().runScripts = false;
                 }
             }
         }
@@ -259,6 +309,8 @@ public class ResourcesView extends View
 
         if(lastRightClickedFileID == id && !filenameEditing) {
             if(ImGui.beginPopupContextWindow("File")) {
+                String fileExtension = FilenameUtils.getExtension(files[id].getName());
+                String fileBaseName = FilenameUtils.getBaseName(files[id].getName());
                 if(ImGui.menuItem("Rename")) {
                     enableEditingFilename(files, id);
                 }
@@ -268,6 +320,17 @@ public class ResourcesView extends View
                 if(ImGui.menuItem("Delete")) {
                     try {
                         if(!isDirectory) {
+                            if(fileExtension.equals("sgs")) {
+                                Scene2D scene2D = currentSceneManager.getScene2D(fileBaseName);
+
+                                if(scene2D != null) {
+                                    scene2D.destroy();
+                                    if(currentSceneManager.getCurrentScene2D().getName().equals(scene2D.getName())) {
+                                        SceneManager.currentSceneManager.setCurrentScene2D((Scene2D) null);
+                                    }
+                                    currentSceneManager.getScenes().remove(scene2D);
+                                }
+                            }
                             org.apache.commons.io.FileUtils.delete(files[id]);
                         } else {
                             org.apache.commons.io.FileUtils.deleteDirectory(files[id]);

@@ -151,11 +151,11 @@ public class PhysicsWorld extends World
         if(rigidbody2DComponent != null) {
             Rigidbody2D rigidbody2D = rigidbody2DComponent.getRigidbody2D();
 
-            if(SceneManager.getCurrentScene2D() != null) {
+            if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
                 BodyDef bodyDef = new BodyDef();
                 bodyDef.position.set(0.0f, 0.0f);
                 bodyDef.type = rigidbody2D.getType();
-                rigidbody2D.setScene2D(SceneManager.getCurrentScene2D());
+                rigidbody2D.setScene2D(SceneManager.currentSceneManager.getCurrentScene2D());
                 rigidbody2D.setBody(createBody(bodyDef));
                 rigidbody2D.getBody().setUserData(object2D);
                 //System.out.println("name: " + object2D.getName() + ", mass: " + rigidbody2D.getMass());

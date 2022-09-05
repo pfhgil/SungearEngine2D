@@ -41,12 +41,20 @@ public class Settings
         }
         File core2DFile = new File(compilerDir.getAbsolutePath() + "/Core2D.jar");
         File chcpFile = new File(compilerDir.getAbsolutePath() + "/chcp.com");
+        File sevenZipFile = new File(compilerDir.getAbsolutePath() + "/7z.exe");
+        File applicationStarterFile = new File(compilerDir.getAbsolutePath() + "/ApplicationStarter.java");
 
         if(!core2DFile.exists()) {
             FileUtils.copyFile(Core2D.class.getResourceAsStream("/data/other/Core2D.jar"), core2DFile.getPath());
         }
         if(!chcpFile.exists()) {
             FileUtils.copyFile(Core2D.class.getResourceAsStream("/data/other/chcp.com"), chcpFile.getPath());
+        }
+        if(!sevenZipFile.exists()) {
+            FileUtils.copyFile(Core2D.class.getResourceAsStream("/data/other/7z.exe"), sevenZipFile.getPath());
+        }
+        if(!applicationStarterFile.exists()) {
+            FileUtils.copyFile(Core2D.class.getResourceAsStream("/data/other/ApplicationStarter.java"), applicationStarterFile.getPath());
         }
 
         MainView.getBottomMenuView().progressBarCurrent++;

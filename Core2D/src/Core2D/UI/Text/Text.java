@@ -1,18 +1,16 @@
 package Core2D.UI.Text;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
-import Core2D.Core2D.Resources;
 import Core2D.Instancing.ObjectsInstancing;
 import Core2D.Object2D.Object2D;
 import Core2D.Object2D.Transform;
-import Core2D.Shader.Shader;
 import Core2D.Shader.ShaderProgram;
 import Core2D.Utils.PositionsQuad;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.lwjgl.opengl.GL46C;
 
 import java.util.Arrays;
 
@@ -73,13 +71,7 @@ public class Text extends CommonDrawableObjectsParameters
 
     private void createShaderProgram()
     {
-        Shader vertexShader = new Shader(Resources.ShadersTexts.Instancing.Text.vertexShaderText, GL46C.GL_VERTEX_SHADER);
-        Shader fragmentShader = new Shader(Resources.ShadersTexts.Instancing.Text.fragmentShaderText, GL46C.GL_FRAGMENT_SHADER);
-
-        shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
-
-        fragmentShader = null;
-        vertexShader = null;
+        shaderProgram = AssetManager.getShaderProgram("textInstancingProgram");
     }
 
     private void calculateMinHeight()

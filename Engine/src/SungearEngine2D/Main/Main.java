@@ -11,6 +11,7 @@ import Core2D.Graphics.Graphics;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
+import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.CameraController.CameraController;
@@ -25,6 +26,8 @@ import org.lwjgl.glfw.GLFW;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+
+import static Core2D.Scene2D.SceneManager.currentSceneManager;
 
 public class Main
 {
@@ -69,16 +72,16 @@ public class Main
                                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                             }
 
-                            if(SceneManager.getCurrentScene2D() != null && SceneManager.getCurrentScene2D().isSceneLoaded()) {
+                            if(currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().isSceneLoaded()) {
                                 try {
                                     if (!Settings.Playmode.active) {
-                                        SceneManager.getCurrentScene2D().saveScriptsTempValues();
+                                        currentSceneManager.getCurrentScene2D().saveScriptsTempValues();
                                     }
 
                                     List<String> compiledScripts = new ArrayList<>();
 
-                                    for (int p = 0; p < SceneManager.getCurrentScene2D().getLayering().getLayers().size(); p++) {
-                                        Layer layer = SceneManager.getCurrentScene2D().getLayering().getLayers().get(p);
+                                    for (int p = 0; p < currentSceneManager.getCurrentScene2D().getLayering().getLayers().size(); p++) {
+                                        Layer layer = currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(p);
                                         if (layer != null && layer.getRenderingObjects() != null) {
                                             for (int i = 0; i < layer.getRenderingObjects().size(); i++) {
                                                 if (layer.getRenderingObjects().get(i).getObject() instanceof Object2D && !((Object2D) layer.getRenderingObjects().get(i).getObject()).isShouldDestroy()) {
@@ -107,7 +110,7 @@ public class Main
                                     }
 
                                     if (!Settings.Playmode.active) {
-                                        SceneManager.getCurrentScene2D().applyScriptsTempValues();
+                                        currentSceneManager.getCurrentScene2D().applyScriptsTempValues();
                                     }
                                 } catch(Exception e) {
                                     Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
@@ -120,9 +123,16 @@ public class Main
             }
 
             @Override
+            public void onExit() {
+                if(ProjectsManager.getCurrentProject() != null) {
+                    ProjectsManager.getCurrentProject().saveProject();
+                }
+            }
+
+            @Override
             public void onDrawFrame() {
                 mainCamera2D.getTransform().setScale(new Vector2f(MainView.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
-                mainCamera2D.follow(cameraAnchor.getComponent(TransformComponent.class).getTransform());
+                mainCamera2D.follow(cameraAnchor.getComponent(TransformComponent.class).getTransform(), 0.0f);
                 CameraController.control();
 
                 if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) GUI.draw();
@@ -133,8 +143,8 @@ public class Main
             }
 
             @Override
-            public void onDeltaUpdate(float v) {
-
+            public void onDeltaUpdate(float deltaTime) {
+                cameraAnchor.getComponent(TransformComponent.class).getTransform().update(deltaTime);
             }
         };
 

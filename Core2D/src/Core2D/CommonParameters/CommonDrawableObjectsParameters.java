@@ -2,9 +2,9 @@ package Core2D.CommonParameters;
 
 import Core2D.Layering.Layer;
 import Core2D.Scene2D.SceneManager;
+import Core2D.Utils.Tag;
 import Core2D.Utils.Utils;
 import Core2D.Utils.WrappedObject;
-import Core2D.Utils.Tag;
 
 public abstract class CommonDrawableObjectsParameters
 {
@@ -12,15 +12,16 @@ public abstract class CommonDrawableObjectsParameters
     protected boolean active = true;
     protected transient boolean shouldDestroy = false;
     protected transient Layer layer;
+    protected String layerName = "";
     protected Tag tag = new Tag();
     protected transient WrappedObject wrappedObject = new WrappedObject(this);
     protected int ID = 0;
 
     public void createNewID()
     {
-        if(SceneManager.getCurrentScene2D() != null) {
-            SceneManager.getCurrentScene2D().maxObjectID++;
-            ID = SceneManager.getCurrentScene2D().maxObjectID;
+        if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+            SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID++;
+            ID = SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID;
         } else {
             ID = Utils.getRandom(0, 1000000000);
         }
@@ -42,6 +43,7 @@ public abstract class CommonDrawableObjectsParameters
         }
 
         this.layer = layer;
+        this.layerName = layer.getName();
 
         this.layer.getRenderingObjects().remove(wrappedObject);
         this.layer.getRenderingObjects().add(wrappedObject);
@@ -62,6 +64,9 @@ public abstract class CommonDrawableObjectsParameters
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
+    public String getLayerName() { return layerName; }
+    public void setLayerName(String layerName) { this.layerName = layerName; }
+
     public void update()
     {
 
@@ -77,13 +82,9 @@ public abstract class CommonDrawableObjectsParameters
 
     }
 
+
     public void destroyParams()
     {
-       // tag.destroy();
-       // tag = null;
-        if(this.layer != null) {
-            this.layer.getRenderingObjects().remove(wrappedObject);
-        }
         this.layer = null;
         wrappedObject.setObject(null);
         wrappedObject = null;

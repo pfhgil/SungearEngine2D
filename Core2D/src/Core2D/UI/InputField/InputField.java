@@ -1,11 +1,11 @@
 package Core2D.UI.InputField;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Controllers.PC.Keyboard;
 import Core2D.Controllers.PC.Mouse;
 import Core2D.Core2D.Core2D;
-import Core2D.Core2D.Resources;
 import Core2D.Input.UserInputCallback;
 import Core2D.Object2D.Object2D;
 import Core2D.Object2D.Transform;
@@ -90,10 +90,10 @@ public class InputField extends CommonDrawableObjectsParameters
 
         cursor = new Cursor();
 
-        text = new Text(Resources.Fonts.COMIC_SANS_MS, "");
+        text = new Text(AssetManager.getFont("comicSansSM"), "");
         text.setColor(new Vector4f(0.0f, 0.0f, 0.0f, 1.0f));
 
-        takeGlyphWidthText = new Text(Resources.Fonts.COMIC_SANS_MS, "");
+        takeGlyphWidthText = new Text(AssetManager.getFont("comicSansSM"), "");
 
         userInputCallback = new UserInputCallback() {
             @Override

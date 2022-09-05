@@ -1,22 +1,16 @@
 package Core2D.Primitives;
 
-import Core2D.Camera2D.Camera2D;
+import Core2D.AssetManager.AssetManager;
 import Core2D.Camera2D.CamerasManager;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
-import Core2D.Core2D.Core2D;
-import Core2D.Core2D.Resources;
 import Core2D.Log.Log;
 import Core2D.Object2D.Transform;
-import Core2D.Shader.Shader;
 import Core2D.Shader.ShaderProgram;
 import Core2D.ShaderUtils.*;
 import Core2D.Utils.ExceptionsUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-
-import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
-import static org.lwjgl.opengl.GL20C.GL_VERTEX_SHADER;
 
 public class Line2D extends CommonDrawableObjectsParameters implements AutoCloseable
 {
@@ -41,30 +35,17 @@ public class Line2D extends CommonDrawableObjectsParameters implements AutoClose
             0, 1
     };
 
-    private ShaderProgram shaderProgram;
-
     private VertexArrayObject vertexArrayObject;
+
+    private ShaderProgram shaderProgram;
 
     private boolean isUIElement = false;
 
     private float lineWidth = 1.0f;
 
-    public Line2D(Vector2f start, Vector2f end)
+    public Line2D()
     {
-        data[0] = start.x;
-        data[1] = start.y;
-
-        data[2] = end.x;
-        data[3] = end.y;
-
-        Shader vertexShader = new Shader(Resources.ShadersTexts.Primitives.Line2D.vertexShaderText, GL_VERTEX_SHADER);
-        Shader fragmentShader = new Shader(Resources.ShadersTexts.Primitives.Line2D.fragmentShaderText, GL_FRAGMENT_SHADER);
-
-        // создаю шейдерную программу
-        shaderProgram = new ShaderProgram(vertexShader, fragmentShader);
-
-        vertexShader = null;
-        fragmentShader = null;
+        shaderProgram = AssetManager.getShaderProgram("line2DProgram");
 
         Vector4f col = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
         setColor(col);
@@ -110,9 +91,9 @@ public class Line2D extends CommonDrawableObjectsParameters implements AutoClose
     private void updateMVPMatrix()
     {
         if(CamerasManager.getMainCamera2D() != null && !isUIElement) {
-            mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(CamerasManager.getMainCamera2D().getTransform().getModelMatrix()).mul(transform.getModelMatrix());
+            mvpMatrix = new Matrix4f(CamerasManager.getMainCamera2D().getProjectionMatrix()).mul(CamerasManager.getMainCamera2D().getTransform().getModelMatrix()).mul(transform.getModelMatrix());
         } else {
-            mvpMatrix = new Matrix4f(Core2D.getProjectionMatrix()).mul(transform.getModelMatrix());
+            mvpMatrix = new Matrix4f().identity().mul(transform.getModelMatrix());
         }
     }
 
@@ -124,13 +105,10 @@ public class Line2D extends CommonDrawableObjectsParameters implements AutoClose
         transform.destroy();
         transform = null;
 
-        shaderProgram.destroy();
-        shaderProgram = null;
-
         vertexArrayObject.destroy();
         vertexArrayObject = null;
 
-        destroyParams();
+        //destroyParams();
 
         try {
             close();
@@ -140,25 +118,9 @@ public class Line2D extends CommonDrawableObjectsParameters implements AutoClose
     }
 
     public Vector4f getColor() { return color; }
-    public void setColor(Vector4f color)
-    {
-        this.color = new Vector4f(color);
-        color = null;
-
-        shaderProgram.bind();
-
-        ShaderUtils.setUniform(
-                shaderProgram.getHandler(),
-                "color",
-                new Vector4f(this.color)
-        );
-
-        shaderProgram.unBind();
-    }
+    public void setColor(Vector4f color) { this.color = new Vector4f(color); }
 
     public float[] getData() { return data; }
-
-    public ShaderProgram getShaderProgram() { return shaderProgram; }
 
     public VertexArrayObject getVertexArrayObject() { return vertexArrayObject; }
 
@@ -198,6 +160,9 @@ public class Line2D extends CommonDrawableObjectsParameters implements AutoClose
 
     public float getLineWidth() { return lineWidth; }
     public void setLineWidth(float lineWidth) { this.lineWidth = lineWidth; }
+
+    public ShaderProgram getShaderProgram() { return shaderProgram; }
+    public void setShaderProgram(ShaderProgram shaderProgram) { this.shaderProgram = shaderProgram; }
 
     @Override
     public void close() throws Exception {

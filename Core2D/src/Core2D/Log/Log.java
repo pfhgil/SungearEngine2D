@@ -1,7 +1,6 @@
 package Core2D.Log;
 
 import javax.swing.*;
-import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -152,6 +151,13 @@ public class Log
         public static String getAllLog() { return allLog.toString(); }
     }
 
+    public interface DialogCallback
+    {
+        void firstButtonClicked();
+        void secondButtonClicked();
+        void thirdButtonClicked();
+    }
+
     // показывает окно предупреждения
     public static void showWarningDialog(String msg)
     {
@@ -168,5 +174,28 @@ public class Log
     public static void showInfoDialog(String msg)
     {
         JOptionPane.showMessageDialog(null, msg, "Info", JOptionPane.INFORMATION_MESSAGE);
+    }
+
+    // показывает окно предупреждения с выбором
+    public static void showWarningChooseDialog(String msg, String leftBtnText, String rightBtnText, DialogCallback dialogCallback)
+    {
+        Object[] options = { leftBtnText, rightBtnText };
+
+        int n = JOptionPane.showOptionDialog(null,
+                msg,
+                "Warning",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE,
+                null,
+                options,
+                options[1]);
+
+        if(dialogCallback != null) {
+            if(n == 0) {
+                dialogCallback.firstButtonClicked();
+            } else if (n == 1) {
+                dialogCallback.secondButtonClicked();
+            }
+        }
     }
 }

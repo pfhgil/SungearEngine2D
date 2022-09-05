@@ -1,15 +1,14 @@
 package Core2D.UI.ProgressBar;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.CommonParameters.CommonDrawableObjectsParameters;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
-import Core2D.Core2D.Resources;
 import Core2D.Object2D.Object2D;
 import Core2D.ShaderUtils.ShaderUtils;
 import Core2D.Utils.Orientation;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.lwjgl.opengl.GL46C;
 
 // TODO: написать destroy метод
 public class ProgressBar extends CommonDrawableObjectsParameters
@@ -73,8 +72,8 @@ public class ProgressBar extends CommonDrawableObjectsParameters
     private void create()
     {
         progressBar = new Object2D();
-        progressBar.loadShader(Resources.ShadersTexts.ProgressBar.fragmentShaderText, GL46C.GL_FRAGMENT_SHADER);
-        progressBar.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.UI.ProgressBar.DEFAULT_PROGRESS_BAR_TEXTURE);
+        progressBar.setShaderProgram(AssetManager.getShaderProgram("progressBarProgram"));
+        progressBar.getComponent(TextureComponent.class).setTexture2D(AssetManager.getTexture2D("defaultProgressBarTexture"));
         progressBar.setUIElement(true);
         progressBar.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(0.64f * 2.0f, 0.16f * 2.0f));
 
