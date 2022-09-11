@@ -84,6 +84,13 @@ public class ShaderProgram implements Serializable
         glUseProgram(0);
     }
 
+    public void set(ShaderProgram shaderProgram)
+    {
+        this.programHandler = shaderProgram.getHandler();
+        this.vertexShader.set(shaderProgram.getVertexShader());
+        this.fragmentShader.set(shaderProgram.getFragmentShader());
+    }
+
     // геттеры и сеттеры
     public Shader getVertexShader() { return vertexShader; }
     public void setVertexShader(Shader _vertexShader) { vertexShader = _vertexShader; }

@@ -288,6 +288,7 @@ public class Texture2D
 
     public int getHeight() { return height; }
 
+    public void setTextureHandler(int textureHandler) { this.textureHandler = textureHandler; }
     public int getTextureHandler() { return textureHandler; }
 
     /**

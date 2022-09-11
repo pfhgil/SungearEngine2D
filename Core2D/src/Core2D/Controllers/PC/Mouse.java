@@ -82,6 +82,11 @@ public class Mouse
         mousePosition.y = currentY;
     }
 
+    public static void setMousePosition(Vector2f mousePosition)
+    {
+        Mouse.mousePosition.set(mousePosition);
+        glfwSetCursorPos(Core2D.getWindow().getWindow(), mousePosition.x, mousePosition.y);
+    }
 
     public static void setViewportSize(Vector2f viewportSize)
     {

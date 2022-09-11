@@ -126,7 +126,9 @@ public class Core2D extends Graphics
                             core2DUserCallback.onDeltaUpdate(deltaTime);
                         }
 
-                        CamerasManager.getMainCamera2D().getTransform().update(deltaTime);
+                        if(CamerasManager.getMainCamera2D() != null) {
+                            CamerasManager.getMainCamera2D().getTransform().update(deltaTime);
+                        }
                         SceneManager.currentSceneManager.updateCurrentScene2D(deltaTime);
                     }
                     totalIterations++;

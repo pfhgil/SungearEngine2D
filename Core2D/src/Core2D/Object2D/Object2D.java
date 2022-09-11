@@ -94,6 +94,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         addComponent(new TransformComponent());
         addComponent(new TextureComponent());
         getComponent(TextureComponent.class).setTexture2D(AssetManager.getTexture2D("whiteTexture"));
+        getComponent(TextureComponent.class).updateUV();
 
         if(Settings.Other.Picking.currentPickingColor.x < 255.0f) {
             Settings.Other.Picking.currentPickingColor.x++;
@@ -335,7 +336,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     public void setColor(Vector4f color) { this.color = new Vector4f(color); }
 
     public ShaderProgram getShaderProgram() { return shaderProgram; }
-    public void setShaderProgram(ShaderProgram shaderProgram) { this.shaderProgram = shaderProgram; }
+    public void setShaderProgram(ShaderProgram shaderProgram) { this.shaderProgram.set(shaderProgram); }
 
     public Matrix4f getMvpMatrix() { return mvpMatrix; }
 

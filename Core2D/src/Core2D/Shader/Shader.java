@@ -67,6 +67,12 @@ public class Shader implements Serializable, AutoCloseable
         return shaderType == GL_VERTEX_SHADER ? "GL_VERTEX_SHADER" : "GL_FRAGMENT_SHADER";
     }
 
+    public void set(Shader shader)
+    {
+        this.shaderHandler = shader.getHandler();
+        this.shaderType = shader.getType();
+    }
+
     // геттеры и сеттеры
     public int getHandler() { return shaderHandler; }
     public void setHandler(int shaderHandler) { this.shaderHandler = shaderHandler; }

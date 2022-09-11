@@ -159,7 +159,7 @@ public class TextureComponent extends Component implements NonDuplicated
         positionsQuad = null;
     }
 
-    private void updateUV()
+    public void updateUV()
     {
         if(object2D != null) {
             object2D.getData()[2] = UV[0];
