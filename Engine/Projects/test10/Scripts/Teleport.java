@@ -16,7 +16,8 @@ public class Teleport
     public void collider2DEnter(Object2D otherObj)
     {
         if(otherObj.getTag().getName().equals("player")) {
-            SceneManager.currentSceneManager.setCurrentScene2D("lvl1");
+            //dsfdfdf
+            SceneManager.currentSceneManager.setCurrentScene2D("lvlw");
         }
     }
     

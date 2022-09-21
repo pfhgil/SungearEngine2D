@@ -34,7 +34,7 @@ public class Utils
     // создает ShortBuffer, помещает туда data и возвращает получившийся буфер
     public static ShortBuffer createShortBuffer(short[] data)
     {
-        // создание float buffer для сортированных координат вершин
+        // создание short buffer для сортированных координат вершин
         ShortBuffer floatBuffer = MemoryUtil.memAllocShort(data.length);
         // помещаю данные в буфер
         floatBuffer.put(data);
@@ -42,6 +42,19 @@ public class Utils
         floatBuffer.flip();
 
         return floatBuffer;
+    }
+
+    // создает ByteBuffer, помещает туда data и возвращает получившийся буфер
+    public static ByteBuffer createByteBuffer(byte[] data)
+    {
+        // создание float buffer для сортированных координат вершин
+        ByteBuffer byteBuffer = MemoryUtil.memAlloc(data.length);
+        // помещаю данные в буфер
+        byteBuffer.put(data);
+        // переключение в ввод/вывод
+        byteBuffer.flip();
+
+        return byteBuffer;
     }
 
     public static ByteBuffer resourceToByteBuffer(InputStream inputStream) throws IOException
@@ -58,6 +71,8 @@ public class Utils
 
         // переключение в ввод/вывод
         buffer.flip();
+
+        b = null;
 
         return buffer;
     }
@@ -131,6 +146,15 @@ public class Utils
         return buffer;
     }
 
+    public static byte[] getByteBufferBytes(ByteBuffer buffer)
+    {
+        int length = buffer.slice().remaining();
+        Log.CurrentSession.println("buffer length: " + length, Log.MessageType.ERROR);
+        byte[] bytes = new byte[length];
+        buffer.get(bytes);
+        return bytes;
+    }
+
     public static int getRandom(int min, int max)
     {
         int dif = max - min;
@@ -146,13 +170,9 @@ public class Utils
     {
         Transform objectTransform = object2D.getComponent(TransformComponent.class).getTransform();
 
-        boolean intersect = mousePosition.x >= objectTransform.getPosition().x &&
+        return mousePosition.x >= objectTransform.getPosition().x &&
                 mousePosition.x <= objectTransform.getPosition().x + 100.0f * objectTransform.getScale().x &&
                 mousePosition.y >= objectTransform.getPosition().y &&
                 mousePosition.y <= objectTransform.getPosition().y + 100.0f * objectTransform.getScale().y;
-
-        objectTransform = null;
-
-        return intersect;
     }
 }

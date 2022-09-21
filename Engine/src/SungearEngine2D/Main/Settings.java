@@ -96,7 +96,7 @@ public class Settings
                     MainView.getBottomMenuView().showProgressBar = false;
                     dialogWindow.setActive(false);
                     createSettingsFile();
-                    settingsFile.setJdkPath("no path");
+                    settingsFile.jdkPath = "no path";
                     //Main.helpThread.interrupt();
                     return;
                 }
@@ -141,7 +141,7 @@ public class Settings
                         MainView.getBottomMenuView().showProgressBar = false;
                         dialogWindow.setActive(false);
                         createSettingsFile();
-                        settingsFile.setJdkPath("no path");
+                        settingsFile.jdkPath = "no path";
                         //Main.helpThread.interrupt();
                     }
 
@@ -160,7 +160,7 @@ public class Settings
                         }
 
                         settingsFile = new SettingsFile();
-                        settingsFile.setJdkPath(chosenJdkBinPath[0]);
+                        settingsFile.jdkPath = chosenJdkBinPath[0];
                         Gson gson = new GsonBuilder().setPrettyPrinting().create();
                         String data = gson.toJson(settingsFile);
 

@@ -1,5 +1,6 @@
 package SungearEngine2D.Debug;
 
+import Core2D.Graphics.Graphics;
 import Core2D.Log.Log;
 import Core2D.Primitives.Line2D;
 import org.joml.Vector2f;
@@ -17,18 +18,20 @@ public class DebugDraw
     public void draw()
     {
         for(Line2D line2D : lines) {
-            line2D.draw();
+            Graphics.getMainRenderer().render(line2D);
         }
     }
 
     public void addLine2D(Vector2f start, Vector2f end, Vector4f color, float lineWidth)
     {
         if(lines.size() + 1 > MAX_LINES) {
-            Log.CurrentSession.println("Can not add line2D to draw. Size of lines list is > MAX_LINES");
+            Log.CurrentSession.println("Can not add line2D to draw. Size of lines list is > MAX_LINES", Log.MessageType.ERROR);
             return;
         }
 
-        Line2D line2D = new Line2D(start, end);
+        Line2D line2D = new Line2D();
+        line2D.setStart(start);
+        line2D.setEnd(end);
         line2D.setColor(color);
         line2D.setLineWidth(lineWidth);
     }

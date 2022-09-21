@@ -13,6 +13,7 @@ import Core2D.Utils.FileUtils;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.WrappedObject;
 import SungearEngine2D.Main.Main;
+import SungearEngine2D.Main.Settings;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
@@ -268,33 +269,46 @@ public class ResourcesView extends View
         if(ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left) && ImGui.isItemHovered()) {
             if(FilenameUtils.getExtension(files[id].getName()).equals("sgs")) {
                 if(canOpenScene2D) {
-                    canOpenScene2D = false;
-                    MainView.getSceneView().stopPlayMode();
-                    Scene2D scene2D = currentSceneManager.loadScene(files[id].getPath());
-                    if(!currentSceneManager.isScene2DExists(scene2D.getName())) {
-                        Log.showWarningChooseDialog("Scene2D " + scene2D.getName() + " not found in SceneManager!\nWould you like to add this scene2D in SceneManager?",
-                                "Yes",
-                                "No",
-                                new Log.DialogCallback() {
-                                    @Override
-                                    public void firstButtonClicked() {
-                                        currentSceneManager.getScenes().add(scene2D);
-                                    }
+                    Scene2D scene2D = currentSceneManager.loadSceneAsCurrent(files[id].getPath());
+                    if(scene2D != null) {
+                        canOpenScene2D = false;
+                        Settings.Playmode.active = false;
+                        Settings.Playmode.paused = false;
+                        CamerasManager.setMainCamera2D(Main.getMainCamera2D());
+                        MainView.getInspectorView().setCurrentInspectingObject(null);
+                        if (currentSceneManager != null && currentSceneManager.getCurrentScene2D() != null) {
+                            currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;
+                            currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts = false;
+                        }
+                        if (!currentSceneManager.isScene2DExists(scene2D.getName())) {
+                            Log.showWarningChooseDialog("Scene2D " + scene2D.getName() + " not found in SceneManager!\nWould you like to add this scene2D in SceneManager?",
+                                    "Yes",
+                                    "No",
+                                    new Log.DialogCallback() {
+                                        @Override
+                                        public void firstButtonClicked() {
+                                            currentSceneManager.getScenes().add(scene2D);
+                                        }
 
-                                    @Override
-                                    public void secondButtonClicked() {
+                                        @Override
+                                        public void secondButtonClicked() {
 
-                                    }
+                                        }
 
-                                    @Override
-                                    public void thirdButtonClicked() {
+                                        @Override
+                                        public void thirdButtonClicked() {
 
-                                    }
-                                });
+                                        }
+                                    });
+                        }
+                        //currentSceneManager.setCurrentScene2D(scene2D.getName());
+                        currentSceneManager.getCurrentScene2D().setScenePath(files[id].getPath());
+
+                        scene2D.getPhysicsWorld().simulatePhysics = false;
+                        scene2D.getScriptSystem().runScripts = false;
+
+                        CamerasManager.setMainCamera2D((Main.getMainCamera2D()));
                     }
-                    CamerasManager.setMainCamera2D((Main.getMainCamera2D()));
-                    scene2D.getPhysicsWorld().simulatePhysics = false;
-                    scene2D.getScriptSystem().runScripts = false;
                 }
             }
         }

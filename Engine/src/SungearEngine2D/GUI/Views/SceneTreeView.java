@@ -72,27 +72,29 @@ public class SceneTreeView extends View
                 if (ImGui.treeNode("Scene2D " + currentSceneManager.getCurrentScene2D().getName())) {
                     if(ImGui.treeNode("Scene cameras")) {
                         int s = 0;
-                        for(int i = 0; i < currentSceneManager.getCurrentScene2D().getCameras2D().size(); i++) {
-                            ImGui.pushID("Scene2DCamera2D_" + s);
-                            boolean opened = ImGui.treeNodeEx(currentSceneManager.getCurrentScene2D().getCameras2D().get(i).getName(), ImGuiTreeNodeFlags.Bullet);
-                            if(ImGui.isItemHovered()) {
-                                if(ImGui.isMouseClicked(ImGuiMouseButton.Right)) {
-                                    MainView.getInspectorView().setCurrentInspectingObject(currentSceneManager.getCurrentScene2D().getCameras2D().get(i));
+                        if(currentSceneManager.getCurrentScene2D().getCameras2D() != null) {
+                            for (int i = 0; i < currentSceneManager.getCurrentScene2D().getCameras2D().size(); i++) {
+                                ImGui.pushID("Scene2DCamera2D_" + s);
+                                boolean opened = ImGui.treeNodeEx(currentSceneManager.getCurrentScene2D().getCameras2D().get(i).getName(), ImGuiTreeNodeFlags.Bullet);
+                                if (ImGui.isItemHovered()) {
+                                    if (ImGui.isMouseClicked(ImGuiMouseButton.Right)) {
+                                        MainView.getInspectorView().setCurrentInspectingObject(currentSceneManager.getCurrentScene2D().getCameras2D().get(i));
+                                    }
+                                    if (ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left)) {
+                                        Main.getCameraAnchor().getComponent(TransformComponent.class).getTransform().lerpMoveTo(currentSceneManager.getCurrentScene2D().getCameras2D().get(i).getTransform().getPosition(), new Vector2f(10));
+                                    }
                                 }
-                                if(ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left)) {
-                                    Main.getCameraAnchor().getComponent(TransformComponent.class).getTransform().lerpMoveTo(currentSceneManager.getCurrentScene2D().getCameras2D().get(i).getTransform().getPosition(), new Vector2f(10));
+                                if (opened) {
+                                    ImGui.treePop();
                                 }
+                                if (ImGui.beginDragDropSource()) {
+                                    ImGui.setDragDropPayload("SceneWrappedObject", currentSceneManager.getCurrentScene2D().getCameras2D().get(i));
+                                    ImGui.image(Resources.Textures.Icons.cameraIcon.getTextureHandler(), 25.0f, 25.0f);
+                                    ImGui.endDragDropSource();
+                                }
+                                ImGui.popID();
+                                s++;
                             }
-                            if(opened) {
-                                ImGui.treePop();
-                            }
-                            if (ImGui.beginDragDropSource()) {
-                                ImGui.setDragDropPayload("SceneWrappedObject", currentSceneManager.getCurrentScene2D().getCameras2D().get(i));
-                                ImGui.image(Resources.Textures.Icons.cameraIcon.getTextureHandler(), 25.0f, 25.0f);
-                                ImGui.endDragDropSource();
-                            }
-                            ImGui.popID();
-                            s++;
                         }
                         ImGui.treePop();
                     }
@@ -145,7 +147,7 @@ public class SceneTreeView extends View
                                         objectToActionIterator = -1;
                                     }
 
-                                    if (ImGui.beginDragDropTarget()) {
+                                    if(ImGui.beginDragDropTarget()) {
                                         Object droppedObject = ImGui.acceptDragDropPayload("SceneWrappedObject");
                                         if (droppedObject != null) {
                                             if (((WrappedObject) droppedObject).getObject() instanceof Object2D &&

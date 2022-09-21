@@ -22,7 +22,7 @@ public class Compiler
 
         File scriptFile = new File(path);
         if(scriptFile.exists()) {
-            File compilerPath = new File("./compiler");
+            File compilerPath = new File(".\\compiler");
 
             try {
                 MainView.getBottomMenuView().showProgressBar = true;
@@ -35,11 +35,14 @@ public class Compiler
                 // жду завершения процесса
                 proc.waitFor();
 
-                proc = Runtime.getRuntime().exec(Settings.getSettingsFile().getJdkPath() +
-                        "\\bin\\javac -cp " +
-                        compilerPath.getCanonicalPath() +
-                        "\\Core2D.jar " +
-                        scriptFile.getCanonicalPath());
+                String command = "\"" + Settings.getSettingsFile().getJdkPath() +
+                        "\\bin\\javac\" -cp " +
+                        "\"" + compilerPath.getCanonicalPath() + "\\Core2D.jar\" " +
+                        "\"" + scriptFile.getCanonicalPath() + "\"";
+
+                System.out.println(command);
+
+                proc = Runtime.getRuntime().exec(command);
 
                 // жду завершения процесса
                 proc.waitFor();

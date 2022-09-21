@@ -1,3 +1,3 @@
 {
-  "jdkPath": "C:\\Users\\user\\.jdks\\corretto-1.8.0_332"
+  "jdkPath": "C:\\Users\\stuka\\.jdks\\corretto-1.8.0_342"
 }

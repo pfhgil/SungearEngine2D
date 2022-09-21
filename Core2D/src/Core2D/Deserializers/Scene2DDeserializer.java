@@ -18,6 +18,7 @@ public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
         JsonObject jsonObject = jsonElement.getAsJsonObject();
 
         String name = jsonObject.get("name").getAsString();
+        String scenePath = jsonObject.get("scenePath").getAsString();
         Vector4f screenClearColor = context.deserialize(jsonObject.get("screenClearColor"), Vector4f.class);
         Layering layering = context.deserialize(jsonObject.get("layering"), Layering.class);
         JsonArray cameras2D = jsonObject.getAsJsonArray("cameras2D");
@@ -26,10 +27,13 @@ public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
         ScriptSystem scriptSystem = context.deserialize(jsonObject.get("scriptSystem"), ScriptSystem.class);
         int maxObjectID = jsonObject.get("maxObjectID").getAsInt();
         JsonElement inBuildElem = jsonObject.get("inBuild");
+        /*
         boolean inBuild = false;
         if(inBuildElem != null) {
             inBuild = jsonObject.get("inBuild").getAsBoolean();
         }
+
+         */
         JsonElement isMainScene2DElem = jsonObject.get("isMainScene2D");
         boolean isMainScene2D = false;
         if(isMainScene2DElem != null) {
@@ -41,8 +45,9 @@ public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
         scene2D.setLayering(layering);
         scene2D.setScriptSystem(scriptSystem);
         scene2D.maxObjectID = maxObjectID;
-        scene2D.inBuild = inBuild;
-        scene2D.setMainScene2D(isMainScene2D);
+        //scene2D.inBuild = inBuild;
+        scene2D.isMainScene2D = isMainScene2D;
+        scene2D.setScenePath(scenePath);
 
         if(cameras2D != null) {
             for (JsonElement element : cameras2D) {

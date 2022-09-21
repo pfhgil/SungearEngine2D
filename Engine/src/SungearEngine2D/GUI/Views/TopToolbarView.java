@@ -6,10 +6,12 @@ import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
+import SungearEngine2D.Builder.Builder;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindow;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindowCallback;
 import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindow;
 import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindowCallback;
+import SungearEngine2D.Main.Resources;
 import imgui.ImGui;
 import imgui.type.ImString;
 import org.joml.Vector2f;
@@ -229,10 +231,30 @@ public class TopToolbarView
 
                             @Override
                             public void onRightButtonClicked() {
+                                if(SceneManager.currentSceneManager.mainScene2D != null) {
+                                    Builder.build("TestGame");
+                                    // TODO: сделать билд
+                                    dialogWindow.setActive(false);
+                                    currentAction = "";
+                                } else {
+                                    Log.showWarningChooseDialog("The main Scene2D was not selected! Are sure you want to continue building the game?", "Yes", "No", new Log.DialogCallback() {
+                                        @Override
+                                        public void firstButtonClicked() {
+                                            // TODO: сделать билд
+                                        }
 
+                                        @Override
+                                        public void secondButtonClicked() {
+                                            dialogWindow.setActive(false);
+                                            currentAction = "";
+                                        }
 
-                                dialogWindow.setActive(false);
-                                currentAction = "";
+                                        @Override
+                                        public void thirdButtonClicked() {
+
+                                        }
+                                    });
+                                }
                             }
                         });
 
@@ -311,8 +333,33 @@ public class TopToolbarView
             }
 
             if(ImGui.beginMenu("Engine")) {
+                if(ImGui.menuItem("Reload resources")) {
+                    //Resources.load();
+                }
+
                 if(ImGui.menuItem("Settings")) {
                     // сделать
+                }
+
+                ImGui.endMenu();
+            }
+
+            if(ImGui.beginMenu("Scene Manager")) {
+                if(ImGui.beginMenu("Main Scene2D")) {
+                    if(SceneManager.currentSceneManager != null) {
+                        for (int i = 0; i < SceneManager.currentSceneManager.getScenes().size(); i++) {
+                            Scene2D scene2D = SceneManager.currentSceneManager.getScenes().get(i);
+                            boolean clicked = ImGui.menuItem(scene2D.getName());
+                            if (scene2D.isMainScene2D()) {
+                                ImGui.sameLine();
+                                ImGui.image(Resources.Textures.Icons.checkMarkIcon.getTextureHandler(), 12, 12);
+                            }
+                            if (clicked) {
+                                scene2D.setMainScene2D(!scene2D.isMainScene2D());
+                            }
+                        }
+                    }
+                    ImGui.endMenu();
                 }
 
                 ImGui.endMenu();

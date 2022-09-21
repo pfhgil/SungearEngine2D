@@ -45,6 +45,8 @@ public class Main
         core2DUserCallback = new Core2DUserCallback() {
             @Override
             public void onInit() {
+                Resources.load();
+
                 mainCamera2D = new Camera2D();
                 cameraAnchor = new Object2D();
                 cameraAnchor.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
@@ -120,6 +122,8 @@ public class Main
                     }
                 });
                 helpThread.start();
+
+                System.gc();
             }
 
             @Override
@@ -145,6 +149,7 @@ public class Main
             @Override
             public void onDeltaUpdate(float deltaTime) {
                 cameraAnchor.getComponent(TransformComponent.class).getTransform().update(deltaTime);
+                currentSceneManager.updateCurrentScene2D(deltaTime);
             }
         };
 

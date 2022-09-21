@@ -34,6 +34,17 @@ public class FileUtils
         //return result; // will return null if we didn't find anything
     }
 
+    public static String getRelativePath(File file, File folder)
+    {
+        String filePath = file.getAbsolutePath();
+        String folderPath = folder.getAbsolutePath();
+        if (filePath.startsWith(folderPath)) {
+            return filePath.substring(folderPath.length() + 1);
+        } else {
+            return null;
+        }
+    }
+
     public static File findFile(File dir, String name) {
         File result = null; // no need to store result as String, you're returning File anyway
         File[] dirlist  = dir.listFiles();
@@ -92,8 +103,10 @@ public class FileUtils
         return obj;
     }
 
-    public synchronized static void serializeObject(String path, Object obj)
+    public static void serializeObject(String path, Object obj)
     {
+        createFile(path);
+
         try {
             FileOutputStream fos = new FileOutputStream(path);
             ObjectOutputStream oos = new ObjectOutputStream(fos);

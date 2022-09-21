@@ -2,6 +2,7 @@ package Core2D.Project;
 
 import Core2D.Scene2D.SceneManager;
 
+import java.io.File;
 import java.io.Serializable;
 
 public class Project implements Serializable
@@ -29,12 +30,12 @@ public class Project implements Serializable
 
     public void saveProject()
     {
-        SceneManager.saveSceneManager(projectParentPath + "\\" + projectName + "\\SceneManager.sm");
+        SceneManager.saveSceneManager(projectPath + "\\SceneManager.sm");
     }
 
     public void loadProject()
     {
-        SceneManager.loadSceneManager(projectParentPath + "\\" + projectName + "\\SceneManager.sm");
+        SceneManager.loadSceneManager(projectPath + "\\SceneManager.sm");
     }
 
 
@@ -49,6 +50,7 @@ public class Project implements Serializable
         resourcesPath = projectPath + "\\Resources";
         scriptsPath = projectPath + "\\Scripts";
         scenesPath = projectPath + "\\Scenes";
+        projectParentPath = new File(projectParentPath).getParent();
     }
 
     public String getProjectName() { return projectName; }

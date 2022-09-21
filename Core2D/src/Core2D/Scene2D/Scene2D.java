@@ -10,6 +10,7 @@ import Core2D.Layering.Layering;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
 import Core2D.Physics.PhysicsWorld;
+import Core2D.Scripting.ScriptSceneObject;
 import Core2D.Scripting.ScriptTempValue;
 import Core2D.Scripting.ScriptTempValues;
 import Core2D.Systems.ScriptSystem;
@@ -53,7 +54,7 @@ public class Scene2D
 
     public boolean inBuild = false;
 
-    private boolean isMainScene2D = false;
+    public boolean isMainScene2D = false;
 
     public Scene2D()
     {
@@ -260,7 +261,16 @@ public class Scene2D
                             for (Field field : scriptComponent.getScript().getScriptClass().getFields()) {
                                 ScriptTempValue scriptTempValue = new ScriptTempValue();
 
-                                scriptTempValue.setValue(new WrappedObject(scriptComponent.getScript().getFieldValue(field)));
+                                Object value = scriptComponent.getScript().getFieldValue(field);
+                                if(value instanceof Object2D) {
+                                    Object2D object2D = (Object2D) value;
+                                    scriptTempValue.setValue(new WrappedObject(new ScriptSceneObject(object2D.getID(), object2D.getName(), SceneObjectType.TYPE_OBJECT2D)));
+                                } else if(value instanceof Camera2D) {
+                                    Camera2D camera2D = (Camera2D) value;
+                                    scriptTempValue.setValue(new WrappedObject(new ScriptSceneObject(camera2D.getID(), camera2D.getName(), SceneObjectType.TYPE_CAMERA2D)));
+                                } else {
+                                    scriptTempValue.setValue(new WrappedObject(scriptComponent.getScript().getFieldValue(field)));
+                                }
                                 scriptTempValue.setFieldName(field.getName());
                                 scriptTempValue.setScript(scriptComponent.getScript());
 
@@ -363,11 +373,13 @@ public class Scene2D
     public boolean isMainScene2D() { return isMainScene2D; }
     public void setMainScene2D(boolean mainScene2D)
     {
-        if(SceneManager.currentSceneManager.mainScene2D != null) {
+        if(SceneManager.currentSceneManager.mainScene2D != null && (mainScene2D || isMainScene2D)){
             SceneManager.currentSceneManager.mainScene2D.isMainScene2D = false;
             SceneManager.currentSceneManager.mainScene2D = null;
         }
         isMainScene2D = mainScene2D;
-        SceneManager.currentSceneManager.mainScene2D = this;
+        if(isMainScene2D) {
+            SceneManager.currentSceneManager.mainScene2D = this;
+        }
     }
 }

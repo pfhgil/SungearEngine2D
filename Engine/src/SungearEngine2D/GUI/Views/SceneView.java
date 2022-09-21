@@ -12,6 +12,7 @@ import Core2D.Deserializers.WrappedObjectDeserializer;
 import Core2D.Graphics.Graphics;
 import Core2D.Object2D.Object2D;
 import Core2D.Prefab.Prefab;
+import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.FileUtils;
@@ -232,7 +233,8 @@ public class SceneView extends View
         if(currentSceneManager.getCurrentScene2D() != null && Settings.Playmode.active) {
             Settings.Playmode.active = false;
             Settings.Playmode.paused = false;
-            currentSceneManager.loadScene(currentSceneManager.getCurrentScene2D().getScenePath());
+            currentSceneManager.loadSceneAsCurrent(currentSceneManager.getCurrentScene2D().getScenePath());
+            //currentSceneManager.setCurrentScene2D(scene2D.getName());
             CamerasManager.setMainCamera2D(Main.getMainCamera2D());
             MainView.getInspectorView().setCurrentInspectingObject(null);
             currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;

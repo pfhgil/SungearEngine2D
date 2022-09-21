@@ -23,7 +23,7 @@ import static org.lwjgl.stb.STBImage.stbi_load_from_memory;
 public class Texture2D
 {
     // id текстуры
-    private transient int textureHandler;
+    private transient int textureHandler = -1;
     // ширина текстуры
     private transient int width;
     // высота текстуры
@@ -91,8 +91,10 @@ public class Texture2D
         loadTexture(source);
     }
 
-    private void loadTexture(String source)
+    public void loadTexture(String source)
     {
+        destroy();
+
         this.source = source;
 
         // буфер для ширины текстуры
@@ -109,31 +111,19 @@ public class Texture2D
             width = widthBuffer.get(0);
             height = heightBuffer.get(0);
             channels = channelsBuffer.get(0);
-
         } catch (IOException e) {
             String exception = "Error while loading texture by source: " + source +". Error is: " + ExceptionsUtils.toString(e);
             Log.CurrentSession.println(exception, Log.MessageType.ERROR);
             exception = null;
         }
 
-        // если текстура поддерживает 4 канал (RGBA (Red Green Blue Alpha))
-        if(channels == 4) {
-            // на каждый из каналов будет выделять 8 бит (поэтому GL_RGBA8)
-            internalFormat = GL_RGBA8;
-            // текстура будет поддерживать GL_RGBA
-            format = GL_RGBA;
-        } else if(channels == 3) { // если альфа канал не поддерживается (RGB)
-            // на каждый из каналов будет выделять 8 бит (поэтому GL_RGB8)
-            internalFormat = GL_RGB8;
-            // текстура будет поддерживать GL_RGB
-            format = GL_RGB;
-        }
-
         createTexture();
     }
 
-    private void loadTexture(InputStream inputStream)
+    public void loadTexture(InputStream inputStream)
     {
+        destroy();
+
         // буфер для ширины текстуры
         IntBuffer widthBuffer = BufferUtils.createIntBuffer(1);
         // буфер для высоты текстуры
@@ -236,9 +226,18 @@ public class Texture2D
             glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
         }
 
+        //System.out.println("last tex handler: " + lastTextureHandler + ", current: " + textureHandler);
         glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, pixelsData);
 
         unBind();
+
+        /*
+        int glError = glGetError();
+        if(glError != -1) {
+            System.out.println("An OpenGL occurred: " + glError);
+        }
+
+         */
 
         // очищаю буфер с данными текстуры
         if(pixelsData != null) {
@@ -302,8 +301,10 @@ public class Texture2D
     public int getFormattedTextureBlock() { return textureBlock - GL_TEXTURE0; }
 
     public String getSource() { return source; }
+    public void setSource(String source) { this.source = source; }
 
     public int getParam() { return param; }
+    public void setParam(int param) { this.param = param; }
 
     public int getChannels() { return channels; }
 

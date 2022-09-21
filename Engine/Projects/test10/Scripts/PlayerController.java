@@ -7,12 +7,14 @@ import Core2D.Component.Components.*;
 import Core2D.Scene2D.*;
 import Core2D.Controllers.PC.*;
 import Core2D.Utils.*;
+import Core2D.Log.Log;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
 public class PlayerController
 {
+    // ghbdt
     @InspectorView
     public Object2D player;
 
@@ -35,14 +37,16 @@ public class PlayerController
         if(player != null) {
             Transform playerTransform = player.getComponent(TransformComponent.class).getTransform();
 
-            if(player != null) {
+            if(player != null && playerCamera != null) {
                 playerCamera.follow(playerTransform, deltaTime);
             }
 
             if(Keyboard.keyDown(GLFW.GLFW_KEY_D)) {
+                //Log.CurrentSession.println("right", Log.MessageType.ERROR);
                 playerTransform.translate(new Vector2f(movementSpeed * deltaTime, 0.0f));
             }
             if(Keyboard.keyDown(GLFW.GLFW_KEY_A)) {
+                Log.CurrentSession.println("left", Log.MessageType.ERROR);
                 playerTransform.translate(new Vector2f(-movementSpeed * deltaTime, 0.0f));
             }
 

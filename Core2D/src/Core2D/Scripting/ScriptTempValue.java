@@ -2,13 +2,11 @@ package Core2D.Scripting;
 
 import Core2D.Camera2D.Camera2D;
 import Core2D.Component.Component;
-import Core2D.Deserializers.Camera2DDeserializer;
-import Core2D.Deserializers.ComponentDeserializer;
-import Core2D.Deserializers.Object2DDeserializer;
-import Core2D.Deserializers.WrappedObjectDeserializer;
+import Core2D.Deserializers.*;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
 import Core2D.Scene2D.SceneManager;
+import Core2D.Scene2D.SceneObjectType;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.WrappedObject;
 import com.google.gson.Gson;
@@ -30,74 +28,41 @@ public class ScriptTempValue
         if(script != null && fieldName != null && value != null) {
             try {
                 Field field = script.getScriptClass().getField(fieldName);
+                WrappedObject wrappedObject = new WrappedObject(null);
                 if(value instanceof LinkedTreeMap) {
                     Gson gson = new GsonBuilder()
                             .setPrettyPrinting()
-                            .registerTypeAdapter(Component.class, new ComponentDeserializer())
                             .registerTypeAdapter(WrappedObject.class, new WrappedObjectDeserializer())
-                            .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
-                            .registerTypeAdapter(Camera2D.class, new Camera2DDeserializer())
+                            .registerTypeAdapter(ScriptSceneObject.class, new ScriptSceneObjectDeserializer())
                             .create();
 
                     JsonObject jsonObject = gson.toJsonTree(value).getAsJsonObject();
-                    WrappedObject wrappedObject = gson.fromJson(jsonObject.toString(), WrappedObject.class);
-
-                    if(wrappedObject.getObject() instanceof Double && field.getType().isAssignableFrom(float.class)) {
-                        field.setFloat(script.getScriptClassInstance(), ((Double) value).floatValue());
-                    } else if(wrappedObject.getObject() instanceof Object2D) {
-                        Object2D foundObject2D = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(((Object2D) wrappedObject.getObject()).getID());
-                        field.set(script.getScriptClassInstance(), foundObject2D);
-                        ((Object2D) wrappedObject.getObject()).destroy();
-                    } else if(wrappedObject.getObject() instanceof Camera2D) {
-                        Camera2D foundCamera2D = SceneManager.currentSceneManager.getCurrentScene2D().findCamera2DByID(((Camera2D) wrappedObject.getObject()).getID());
-                        field.set(script.getScriptClassInstance(), foundCamera2D);
-                    } else {
-                        if(wrappedObject.getObject() != null) {
-                            System.out.println("value: " + wrappedObject.getObject() + ", field: " + field.getName());
-                            field.set(script.getScriptClassInstance(), wrappedObject.getObject());
-                        }
-                    }
-
-                    wrappedObject.setObject(null);
-                    wrappedObject = null;
+                    wrappedObject = gson.fromJson(jsonObject.toString(), WrappedObject.class);
                 } else if(value instanceof WrappedObject) {
-                    if(((WrappedObject) value).getObject() instanceof Object2D) {
-                        Object2D foundObject2D = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(((Object2D) ((WrappedObject) value).getObject()).getID());
-                        field.set(script.getScriptClassInstance(), foundObject2D);
-                    }
-                    if(((WrappedObject) value).getObject() instanceof Camera2D) {
-                        Camera2D foundCamera2D = SceneManager.currentSceneManager.getCurrentScene2D().findCamera2DByID(((Camera2D) ((WrappedObject) value).getObject()).getID());
-                        field.set(script.getScriptClassInstance(), foundCamera2D);
-                    }
-                    ((WrappedObject) value).setObject(null);
+                    wrappedObject = (WrappedObject) value;
                 }
-                /*
-                if(value instanceof Double && field.getType().isAssignableFrom(float.class)) {
+
+                if(wrappedObject.getObject() instanceof Double && field.getType().isAssignableFrom(float.class)) {
                     field.setFloat(script.getScriptClassInstance(), ((Double) value).floatValue());
+                } else if(wrappedObject.getObject() instanceof ScriptSceneObject) {
+                    ScriptSceneObject object = (ScriptSceneObject) wrappedObject.getObject();
+                    switch(object.objectType) {
+                        case TYPE_OBJECT2D:
+                            Object2D foundObject2D = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(object.ID);
+                            field.set(script.getScriptClassInstance(), foundObject2D);
+                            break;
+                        case TYPE_CAMERA2D:
+                            Camera2D foundCamera2D = SceneManager.currentSceneManager.getCurrentScene2D().findCamera2DByID(object.ID);
+                            field.set(script.getScriptClassInstance(), foundCamera2D);
+                            break;
+                    }
+                    object = null;
                 } else {
-                        Gson gson = new GsonBuilder()
-                                .setPrettyPrinting()
-                                .registerTypeAdapter(Component.class, new ComponentDeserializer())
-                                //.registerTypeAdapter(WrappedObject.class, new WrappedObjectDeserializer())
-                                .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
-                                .create();
-                        JsonObject jsonObject = gson.toJsonTree(value).getAsJsonObject();
-                        Object outObj = gson.fromJson(jsonObject.toString(), Object.class);
-                        if(outObj instanceof Object2D) {
-                            System.out.println("dsdssdfsd");
-                            // сделать
-                            //Object2D foundObject2D = SceneManager.getCurrentScene2D().findObject2DByID();
-
-                            //field.set(script.getScriptClassInstance(), foundObject2D);
-                        }
-
-
-                    } else {
-                        field.set(script.getScriptClassInstance(), value);
+                    if(wrappedObject.getObject() != null) {
+                        //System.out.println("value: " + wrappedObject.getObject() + ", field: " + field.getName());
+                        field.set(script.getScriptClassInstance(), wrappedObject.getObject());
                     }
                 }
-
-                 */
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }

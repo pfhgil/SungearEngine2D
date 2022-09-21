@@ -1,5 +1,7 @@
 package Core2D.Scripting;
 
+import Core2D.Core2D.Core2D;
+import Core2D.Core2D.Core2DMode;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
 import Core2D.Utils.ExceptionsUtils;
@@ -49,13 +51,35 @@ public class Script
     }
 
     public void loadClass(String dirPath, String baseName) {
+        dirPath = dirPath.replace("\\", "/");
+        System.out.println("dirPath: " + dirPath);
+        Log.CurrentSession.println("Script dirPath: " + dirPath + ", baseName: " + baseName, Log.MessageType.INFO);
+
         URLClassLoader urlClassLoader = null;
         try {
-            File file = new File(dirPath);
+            if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+                File file = new File(dirPath);
 
-            urlClassLoader = URLClassLoader.newInstance(new URL[] {
-                    file.toURI().toURL()
-            });
+                Log.CurrentSession.println("firth", Log.MessageType.INFO);
+
+                urlClassLoader = URLClassLoader.newInstance(new URL[]{
+                        file.toURI().toURL()
+                });
+
+            } else {
+                Log.CurrentSession.println("second", Log.MessageType.INFO);
+                //TODO: доделать
+                /*
+                ByteClassLoader byteClassLoader = new ByteClassLoader();
+                scriptClass = byteClassLoader.loadClass(Core2D.class.getResourceAsStream(dirPath + "/" + baseName + ".class"), baseName);
+                Log.CurrentSession.println("path: " + dirPath + "/" + baseName + ".class", Log.MessageType.INFO);
+                 */
+                URL url = Core2D.class.getResource(dirPath);
+                urlClassLoader = URLClassLoader.newInstance(new URL[]{
+                        url
+                });
+                Log.CurrentSession.println("url: " + url.toString(), Log.MessageType.INFO);
+            }
 
             scriptClass = urlClassLoader.loadClass(baseName);
             scriptClassInstance = scriptClass.newInstance();

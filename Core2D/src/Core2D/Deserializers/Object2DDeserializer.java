@@ -7,6 +7,7 @@ import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
+import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
 import Core2D.Project.ProjectsManager;
 import Core2D.Texture2D.Texture2D;
@@ -83,8 +84,9 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                             textureComponent.getTexture2D().getGLTextureBlock()
                     );
                 } else {
+                    Log.CurrentSession.println("Texture source: " + textureComponent.getTexture2D().getSource(), Log.MessageType.INFO);
                     texture2D = new Texture2D(
-                            textureComponent.getTexture2D().getSource(),
+                            Core2D.class.getResourceAsStream(textureComponent.getTexture2D().getSource()),
                             textureComponent.getTexture2D().getParam(),
                             textureComponent.getTexture2D().getGLTextureBlock()
                     );
@@ -99,15 +101,22 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                 rigidbody2DComponent.set(component);
             } else if(component instanceof ScriptComponent) {
                 ScriptComponent scriptComponent = (ScriptComponent) component;
-                String scriptFileName = new File(scriptComponent.getScript().getPath()).getName();
-                String parentFileName = new File(scriptComponent.getScript().getPath()).getParentFile().getName();
-                File scriptFile = FileUtils.findFile(new File(ProjectsManager.getCurrentProject().getProjectPath()), parentFileName, scriptFileName);
+                if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+                    System.out.println(scriptComponent.getScript().getPath());
+                    String scriptFileName = new File(scriptComponent.getScript().getPath()).getName();
+                    String parentFileName = new File(scriptComponent.getScript().getPath()).getParentFile().getName();
+                    File scriptFile = FileUtils.findFile(new File(ProjectsManager.getCurrentProject().getProjectPath()), parentFileName, scriptFileName);
 
-                if(scriptFile != null) {
-                    System.out.println(scriptFile.getPath());
-                    scriptComponent.getScript().setPath(scriptFile.getPath() + ".java");
-                    //File scriptFile = new File(scriptComponent.getScript().getPath() + ".java");
+                    if (scriptFile != null) {
+                        System.out.println(scriptFile.getPath());
+                        scriptComponent.getScript().setPath(scriptFile.getPath() + ".java");
+                        //File scriptFile = new File(scriptComponent.getScript().getPath() + ".java");
 
+                        ScriptComponent sc = new ScriptComponent();
+                        object2D.addComponent(sc);
+                        sc.set(scriptComponent);
+                    }
+                } else {
                     ScriptComponent sc = new ScriptComponent();
                     object2D.addComponent(sc);
                     sc.set(scriptComponent);

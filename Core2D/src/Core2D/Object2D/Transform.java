@@ -130,7 +130,9 @@ public class Transform implements Serializable
         }
 
         boolean canUpdateRigigbody2D = true;
-        if(SceneManager.currentSceneManager.getCurrentScene2D() != null && !SceneManager.currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics) {
+        if(SceneManager.currentSceneManager.getCurrentScene2D() != null &&
+                SceneManager.currentSceneManager.getCurrentScene2D().getPhysicsWorld() != null &&
+                !SceneManager.currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics) {
             canUpdateRigigbody2D = false;
         }
         if(rigidbody2D != null && canUpdateRigigbody2D) {

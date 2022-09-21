@@ -18,6 +18,9 @@ public class SceneManagerDeserializer implements JsonDeserializer<SceneManager> 
         for(JsonElement element : scenes) {
             Scene2D scene2D = context.deserialize(element, Scene2D.class);
             sceneManager.getScenes().add(scene2D);
+            if(scene2D.isMainScene2D()) {
+                sceneManager.mainScene2D = scene2D;
+            }
         }
         return sceneManager;
     }
