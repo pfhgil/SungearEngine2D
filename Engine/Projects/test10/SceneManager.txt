@@ -331,7 +331,7 @@
         ]
       },
       "maxObjectID": 159,
-      "inBuild": true,
+      "inBuild": false,
       "isMainScene2D": true
     },
     {
@@ -409,7 +409,7 @@
         "scriptTempValuesList": []
       },
       "maxObjectID": 17,
-      "inBuild": true,
+      "inBuild": false,
       "isMainScene2D": false
     }
   ]

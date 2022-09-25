@@ -1,183 +1,51 @@
-[#FFFFFF] 2022/09/20 23:51:35 | [#008000] Log directory was founded!
-[#FFFFFF] 2022/09/20 23:51:35 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/09/20 23:51:49 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Scripts, baseName: PlayerController
-[#FFFFFF] 2022/09/20 23:51:49 | [#FFFFFF] firth
-[#FFFFFF] 2022/09/20 23:51:54 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Scripts, baseName: PlayerController
-[#FFFFFF] 2022/09/20 23:51:54 | [#FFFFFF] firth
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\Scenes\lvl1.sgs' already exists
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:55 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FF0000] left
-[#FFFFFF] 2022/09/20 23:51:56 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Scripts, baseName: PlayerController
-[#FFFFFF] 2022/09/20 23:51:56 | [#FFFFFF] firth
-[#FFFFFF] 2022/09/20 23:51:57 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Scripts, baseName: PlayerController
-[#FFFFFF] 2022/09/20 23:51:57 | [#FFFFFF] firth
-[#FFFFFF] 2022/09/20 23:52:07 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\Scenes\lvl1.sgs' already exists
-[#FFFFFF] 2022/09/20 23:52:07 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Scripts, baseName: PlayerController
-[#FFFFFF] 2022/09/20 23:52:07 | [#FFFFFF] firth
-[#FFFFFF] 2022/09/20 23:52:13 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/20 23:52:13 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.sm' already exists
-[#FFFFFF] 2022/09/20 23:52:13 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/20 23:52:13 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Scripts, baseName: PlayerController
-[#FFFFFF] 2022/09/20 23:52:13 | [#FFFFFF] firth
-[#FFFFFF] 2022/09/20 23:52:13 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/20 23:52:13 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out/SceneManager.sm' already exists
-[#FFFFFF] 2022/09/20 23:52:14 | [#008000] Script ApplicationStarter.java was successfully built!
-[#FFFFFF] 2022/09/20 23:52:14 | [#FFFFFF] 
-[#FFFFFF] 2022/09/20 23:52:31 | [#FF0000] Не удается найти указанный файл.
-ёхэЄ. 20, 2022 11:52:27 PM java.util.jar.Attributes read
-WARNING: Duplicate name in Manifest: Manifest-Version.
-Ensure that the manifest does not have duplicate entries, and
-that blank lines separate individual sections in both your
-manifest and in the META-INF/MANIFEST.MF entry in the jar file.
-
-[#FFFFFF] 2022/09/20 23:53:22 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/20 23:53:22 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.sm' already exists
-[#FFFFFF] 2022/09/20 23:53:22 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/20 23:53:23 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Scripts, baseName: PlayerController
-[#FFFFFF] 2022/09/20 23:53:23 | [#FFFFFF] firth
-[#FFFFFF] 2022/09/20 23:53:23 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/20 23:53:23 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out/SceneManager.sm' already exists
-[#FFFFFF] 2022/09/20 23:53:24 | [#008000] Script ApplicationStarter.java was successfully built!
-[#FFFFFF] 2022/09/20 23:53:24 | [#FFFFFF] 
-[#FFFFFF] 2022/09/20 23:53:40 | [#FF0000] Не удается найти указанный файл.
-ёхэЄ. 20, 2022 11:53:37 PM java.util.jar.Attributes read
-WARNING: Duplicate name in Manifest: Manifest-Version.
-Ensure that the manifest does not have duplicate entries, and
-that blank lines separate individual sections in both your
-manifest and in the META-INF/MANIFEST.MF entry in the jar file.
-
-[#FFFFFF] 2022/09/20 23:53:50 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\Scenes\lvl1.sgs' already exists
-[#FFFFFF] 2022/09/20 23:53:51 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Scripts, baseName: PlayerController
-[#FFFFFF] 2022/09/20 23:53:51 | [#FFFFFF] firth
-[#FFFFFF] 2022/09/20 23:53:54 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/20 23:53:54 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.sm' already exists
-[#FFFFFF] 2022/09/20 23:53:54 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/20 23:53:55 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Scripts, baseName: PlayerController
-[#FFFFFF] 2022/09/20 23:53:55 | [#FFFFFF] firth
-[#FFFFFF] 2022/09/20 23:53:55 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/20 23:53:55 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out/SceneManager.sm' already exists
-[#FFFFFF] 2022/09/20 23:53:56 | [#008000] Script ApplicationStarter.java was successfully built!
-[#FFFFFF] 2022/09/20 23:53:56 | [#FFFFFF] 
-[#FFFFFF] 2022/09/20 23:54:12 | [#FF0000] Не удается найти указанный файл.
-ёхэЄ. 20, 2022 11:54:09 PM java.util.jar.Attributes read
-WARNING: Duplicate name in Manifest: Manifest-Version.
-Ensure that the manifest does not have duplicate entries, and
-that blank lines separate individual sections in both your
-manifest and in the META-INF/MANIFEST.MF entry in the jar file.
-
-[#FFFFFF] 2022/09/20 23:54:21 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Scripts, baseName: PlayerController
-[#FFFFFF] 2022/09/20 23:54:21 | [#FFFFFF] firth
-[#FFFFFF] 2022/09/20 23:54:25 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/20 23:54:25 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.sm' already exists
-[#FFFFFF] 2022/09/20 23:54:25 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/20 23:54:25 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Scripts, baseName: PlayerController
-[#FFFFFF] 2022/09/20 23:54:25 | [#FFFFFF] firth
-[#FFFFFF] 2022/09/20 23:54:25 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/20 23:54:25 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out/SceneManager.sm' already exists
-[#FFFFFF] 2022/09/20 23:54:26 | [#008000] Script ApplicationStarter.java was successfully built!
-[#FFFFFF] 2022/09/20 23:54:26 | [#FFFFFF] 
-[#FFFFFF] 2022/09/20 23:54:43 | [#FF0000] Не удается найти указанный файл.
-ёхэЄ. 20, 2022 11:54:39 PM java.util.jar.Attributes read
-WARNING: Duplicate name in Manifest: Manifest-Version.
-Ensure that the manifest does not have duplicate entries, and
-that blank lines separate individual sections in both your
-manifest and in the META-INF/MANIFEST.MF entry in the jar file.
-
-[#FFFFFF] 2022/09/20 23:54:50 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/20 23:54:50 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.sm' already exists
+[#FFFFFF] 2022/09/22 22:20:41 | [#008000] Log directory was founded!
+[#FFFFFF] 2022/09/22 22:20:41 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/09/22 22:21:01 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Scripts, baseName: PlayerController
+[#FFFFFF] 2022/09/22 22:21:01 | [#FFFFFF] firth
+[#FFFFFF] 2022/09/22 22:21:11 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Scripts, baseName: PlayerController
+[#FFFFFF] 2022/09/22 22:21:11 | [#FFFFFF] firth
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\Scenes\lvl1.sgs' already exists
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:15 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:16 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:16 | [#FF0000] left
+[#FFFFFF] 2022/09/22 22:21:16 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Scripts, baseName: PlayerController
+[#FFFFFF] 2022/09/22 22:21:16 | [#FFFFFF] firth
+[#FFFFFF] 2022/09/22 22:22:34 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.txt' already exists
+[#FFFFFF] 2022/09/22 22:22:34 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.sm' already exists
