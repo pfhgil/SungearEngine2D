@@ -1,60 +1,44 @@
-[#FFFFFF] 2022/09/21 21:49:12 | [#008000] Log directory was founded!
-[#FFFFFF] 2022/09/21 21:49:12 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/09/21 21:49:13 | [#FFFFFF] Texture source: /Resources/textures/ferapont.png
-[#FFFFFF] 2022/09/21 21:49:13 | [#FFFFFF] Texture source: /Resources/textures/bg2.png
-[#FFFFFF] 2022/09/21 21:49:13 | [#FFFFFF] Script dirPath: /Scripts, baseName: PlayerController
-[#FFFFFF] 2022/09/21 21:49:13 | [#FFFFFF] second
-[#FFFFFF] 2022/09/21 21:49:13 | [#FFFFFF] url: jar:file:/D:/Pixelfield/Java%20Projects/SungearEngine2D/Engine/Projects/test10/out/TestGame.jar!/Scripts/
-[#FFFFFF] 2022/09/21 21:49:13 | [#FFFFFF] Texture source: /Resources/textures/bg2.png
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
-[#FFFFFF] 2022/09/21 22:29:56 | [#FF0000] left
+[#FFFFFF] 2022/09/26 21:10:03 | [#008000] Log directory was founded!
+[#FFFFFF] 2022/09/26 21:10:03 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/09/26 21:10:05 | [#FFFFFF] scene manager code: {
+  "scene2DStoredValues": [
+    {
+      "path": "/Scenes/lvl1.sgs",
+      "inBuild": true,
+      "isMainScene2D": true
+    },
+    {
+      "path": "/Scenes/lvl2.sgs",
+      "inBuild": true,
+      "isMainScene2D": false
+    }
+  ],
+  "mainScene2DPath": ""
+}
+[#FFFFFF] 2022/09/26 21:10:05 | [#FF0000] goo!!!!1
+[#FFFFFF] 2022/09/26 21:10:05 | [#FF0000] goo!!!!12222
+[#FFFFFF] 2022/09/26 21:10:05 | [#FF0000] goo!!!234324
+[#FFFFFF] 2022/09/26 21:10:05 | [#FFFFFF] Texture source: /Resources/Resources/textures/ferapont.png
+[#FFFFFF] 2022/09/26 21:10:05 | [#FFFFFF] Texture source: /Resources/Resources/textures/bg2.png
+[#FFFFFF] 2022/09/26 21:10:05 | [#FFFFFF] Script dirPath: /Resources/Scripts, baseName: PlayerController
+[#FFFFFF] 2022/09/26 21:10:05 | [#FFFFFF] second
+[#FFFFFF] 2022/09/26 21:10:05 | [#FF0000] buffer length: 1890
+[#FFFFFF] 2022/09/26 21:10:05 | [#FF0000] bytes length: 1890
+[#FFFFFF] 2022/09/26 21:10:05 | [#FFFFFF] path: /Resources/Scripts/PlayerController.class
+[#FFFFFF] 2022/09/26 21:10:05 | [#FFFFFF] Texture source: /Resources/Resources/textures/bg2.png
+[#FFFFFF] 2022/09/26 21:10:05 | [#FFFFFF] Texture source: /Resources/Resources/textures/tanks/ussr/is7/is7_hull.png
+[#FFFFFF] 2022/09/26 21:10:05 | [#FFFFFF] Script dirPath: /Resources/Scripts, baseName: TankController
+[#FFFFFF] 2022/09/26 21:10:05 | [#FFFFFF] second
+[#FFFFFF] 2022/09/26 21:10:05 | [#FF0000] buffer length: 3476
+[#FFFFFF] 2022/09/26 21:10:05 | [#FF0000] bytes length: 3476
+[#FFFFFF] 2022/09/26 21:10:05 | [#FFFFFF] path: /Resources/Scripts/TankController.class
+[#FFFFFF] 2022/09/26 21:10:05 | [#FFFFFF] Texture source: /Resources/Resources/textures/tanks/ussr/is7/is7_tower.png
+[#FFFFFF] 2022/09/26 21:10:05 | [#FFFFFF] Texture source: /Resources/Resources/textures/bg2.png
+[#FFFFFF] 2022/09/26 21:10:11 | [#FFFFFF] Texture source: /Resources/Resources/textures/ferapont.png
+[#FFFFFF] 2022/09/26 21:10:11 | [#FFFFFF] Texture source: /Resources/Resources/textures/tanks/ussr/is7/is7_hull.png
+[#FFFFFF] 2022/09/26 21:10:11 | [#FFFFFF] Script dirPath: /Resources/Scripts, baseName: TankController
+[#FFFFFF] 2022/09/26 21:10:11 | [#FFFFFF] second
+[#FFFFFF] 2022/09/26 21:10:11 | [#FF0000] buffer length: 3476
+[#FFFFFF] 2022/09/26 21:10:11 | [#FF0000] bytes length: 3476
+[#FFFFFF] 2022/09/26 21:10:11 | [#FFFFFF] path: /Resources/Scripts/TankController.class
+[#FFFFFF] 2022/09/26 21:10:11 | [#FFFFFF] Texture source: /Resources/Resources/textures/tanks/ussr/is7/is7_tower.png

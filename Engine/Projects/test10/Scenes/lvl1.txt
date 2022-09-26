@@ -1,0 +1,641 @@
+{
+  "name": "lvl1",
+  "scenePath": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\test10\\Scenes\\lvl1.sgs",
+  "layering": {
+    "layers": [
+      {
+        "renderingObjects": [
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -197.70413,
+                        "y": -35.912903
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 21.358784,
+                        "y": 20.152834
+                      },
+                      "centre": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\test10\\Resources\\Resources\\textures\\ferapont.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "textureDrawMode": 1,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "isUIElement": false,
+              "parentObject2DID": -1,
+              "childrenObjectsID": [],
+              "name": "ferapont",
+              "active": true,
+              "layerName": "other",
+              "tag": {
+                "name": "default"
+              },
+              "ID": 6
+            }
+          }
+        ],
+        "ID": 1,
+        "name": "other"
+      },
+      {
+        "renderingObjects": [
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -63.126,
+                        "y": 275.07336
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                      },
+                      "centre": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\test10\\Resources\\Resources\\textures\\bg2.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "textureDrawMode": 1,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.ScriptComponent",
+                  "properties": {
+                    "script": {
+                      "path": "D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Resources/Scripts\\PlayerController",
+                      "name": "PlayerController",
+                      "active": true
+                    }
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "isUIElement": false,
+              "parentObject2DID": -1,
+              "childrenObjectsID": [],
+              "name": "bg2",
+              "active": true,
+              "layerName": "default",
+              "tag": {
+                "name": "default"
+              },
+              "ID": 3
+            }
+          },
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -622.19727,
+                        "y": -783.34143
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 10.0,
+                        "y": 10.0
+                      },
+                      "centre": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\test10\\Resources\\Resources\\textures\\bg2.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "textureDrawMode": 1,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "isUIElement": false,
+              "parentObject2DID": -1,
+              "childrenObjectsID": [],
+              "name": "bg2",
+              "active": true,
+              "layerName": "default",
+              "tag": {
+                "name": "default"
+              },
+              "ID": 24
+            }
+          },
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -344.81644,
+                        "y": -17.242634
+                      },
+                      "rotation": -90.0,
+                      "scale": {
+                        "x": 1.72,
+                        "y": 0.72
+                      },
+                      "centre": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\test10\\Resources\\Resources\\textures\\tanks\\ussr\\is7\\is7_hull.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "textureDrawMode": 1,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.ScriptComponent",
+                  "properties": {
+                    "script": {
+                      "path": "D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Resources/Scripts\\TankController",
+                      "name": "TankController",
+                      "active": true
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.BoxCollider2DComponent",
+                  "properties": {
+                    "boxCollider2D": {
+                      "scale": {
+                        "x": 1.72,
+                        "y": 0.72
+                      },
+                      "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.Rigidbody2DComponent",
+                  "properties": {
+                    "rigidbody2D": {
+                      "bodyType": "STATIC",
+                      "density": 0.0,
+                      "restitution": 0.0,
+                      "friction": 0.0,
+                      "isSensor": false,
+                      "isFixedRotation": false
+                    }
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "isUIElement": false,
+              "parentObject2DID": -1,
+              "childrenObjectsID": [
+                241
+              ],
+              "name": "is7_hull",
+              "active": true,
+              "layerName": "default",
+              "tag": {
+                "name": "default"
+              },
+              "ID": 240
+            }
+          },
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -35.3,
+                        "y": 0.0
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 1.2,
+                        "y": 0.75
+                      },
+                      "centre": {
+                        "x": 40.0,
+                        "y": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\test10\\Resources\\Resources\\textures\\tanks\\ussr\\is7\\is7_tower.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "textureDrawMode": 1,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "isUIElement": false,
+              "parentObject2DID": 240,
+              "childrenObjectsID": [],
+              "name": "is7_tower",
+              "active": true,
+              "layerName": "default",
+              "tag": {
+                "name": "default"
+              },
+              "ID": 241
+            }
+          },
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": 422.56183,
+                        "y": -764.99347
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 10.0,
+                        "y": 10.0
+                      },
+                      "centre": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\test10\\Resources\\Resources\\textures\\bg2.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "textureDrawMode": 1,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "isUIElement": false,
+              "parentObject2DID": -1,
+              "childrenObjectsID": [],
+              "name": "bg2",
+              "active": true,
+              "layerName": "default",
+              "tag": {
+                "name": "default"
+              },
+              "ID": 314
+            }
+          }
+        ],
+        "ID": 0,
+        "name": "default"
+      }
+    ]
+  },
+  "cameras2D": [
+    {
+      "transform": {
+        "position": {
+          "x": -39.833874,
+          "y": 33.03692
+        },
+        "rotation": 0.0,
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "centre": {
+          "x": 0.0,
+          "y": 0.0
+        }
+      },
+      "name": "default",
+      "viewportSize": {
+        "x": 1600.0,
+        "y": 837.0
+      },
+      "ID": 213254418
+    }
+  ],
+  "sceneMainCamera2D": {
+    "transform": {
+      "position": {
+        "x": -39.833874,
+        "y": 33.03692
+      },
+      "rotation": 0.0,
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "centre": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "name": "default",
+    "viewportSize": {
+      "x": 1600.0,
+      "y": 837.0
+    },
+    "ID": 213254418
+  },
+  "screenClearColor": {
+    "x": 1.0,
+    "y": 1.0,
+    "z": 1.0,
+    "w": 1.0
+  },
+  "tags": [
+    {
+      "name": "default"
+    }
+  ],
+  "scriptSystem": {
+    "scriptTempValuesList": [
+      {
+        "scriptTempValues": [
+          {
+            "fieldName": "player",
+            "value": {
+              "type": "Core2D.Scripting.ScriptSceneObject",
+              "properties": {
+                "ID": 3,
+                "name": "bg2",
+                "objectType": "TYPE_OBJECT2D"
+              }
+            }
+          },
+          {
+            "fieldName": "playerCamera",
+            "value": {
+              "type": "Core2D.Scripting.ScriptSceneObject",
+              "properties": {
+                "ID": 213254418,
+                "name": "default",
+                "objectType": "TYPE_CAMERA2D"
+              }
+            }
+          },
+          {
+            "fieldName": "movementSpeed",
+            "value": {
+              "type": "java.lang.Float",
+              "properties": 400.0
+            }
+          },
+          {
+            "fieldName": "jumpForce",
+            "value": {
+              "type": "java.lang.Float",
+              "properties": 400.0
+            }
+          }
+        ]
+      },
+      {
+        "scriptTempValues": [
+          {
+            "fieldName": "tankHull",
+            "value": {
+              "type": "Core2D.Scripting.ScriptSceneObject",
+              "properties": {
+                "ID": 240,
+                "name": "is7_hull",
+                "objectType": "TYPE_OBJECT2D"
+              }
+            }
+          },
+          {
+            "fieldName": "tankTower",
+            "value": {
+              "type": "Core2D.Scripting.ScriptSceneObject",
+              "properties": {
+                "ID": 241,
+                "name": "is7_tower",
+                "objectType": "TYPE_OBJECT2D"
+              }
+            }
+          },
+          {
+            "fieldName": "crosshair",
+            "value": {}
+          },
+          {
+            "fieldName": "playerCamera",
+            "value": {
+              "type": "Core2D.Scripting.ScriptSceneObject",
+              "properties": {
+                "ID": 213254418,
+                "name": "default",
+                "objectType": "TYPE_CAMERA2D"
+              }
+            }
+          },
+          {
+            "fieldName": "forwardSpeed",
+            "value": {
+              "type": "java.lang.Float",
+              "properties": 400.0
+            }
+          },
+          {
+            "fieldName": "backSpeed",
+            "value": {
+              "type": "java.lang.Float",
+              "properties": 75.0
+            }
+          },
+          {
+            "fieldName": "rotationSpeed",
+            "value": {
+              "type": "java.lang.Float",
+              "properties": 60.0
+            }
+          },
+          {
+            "fieldName": "towerRotationSpeed",
+            "value": {
+              "type": "java.lang.Float",
+              "properties": 45.0
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "maxObjectID": 338,
+  "inBuild": false,
+  "isMainScene2D": true
+}

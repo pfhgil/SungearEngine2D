@@ -4,6 +4,7 @@ import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
+import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
 import org.apache.commons.io.FilenameUtils;
 
@@ -66,22 +67,27 @@ public class Script
                         file.toURI().toURL()
                 });
 
+                scriptClass = urlClassLoader.loadClass(baseName);
             } else {
                 Log.CurrentSession.println("second", Log.MessageType.INFO);
                 //TODO: доделать
-                /*
+
                 ByteClassLoader byteClassLoader = new ByteClassLoader();
                 scriptClass = byteClassLoader.loadClass(Core2D.class.getResourceAsStream(dirPath + "/" + baseName + ".class"), baseName);
                 Log.CurrentSession.println("path: " + dirPath + "/" + baseName + ".class", Log.MessageType.INFO);
-                 */
+                //Log.CurrentSession.println("path: " + dirPath + "/" + baseName + ".class" + " , s: " + s, Log.MessageType.INFO);
+
+                /*
                 URL url = Core2D.class.getResource(dirPath);
                 urlClassLoader = URLClassLoader.newInstance(new URL[]{
                         url
                 });
                 Log.CurrentSession.println("url: " + url.toString(), Log.MessageType.INFO);
+
+                 */
             }
 
-            scriptClass = urlClassLoader.loadClass(baseName);
+            //scriptClass = urlClassLoader.loadClass(baseName);
             scriptClassInstance = scriptClass.newInstance();
 
             path = dirPath + "\\" + baseName;

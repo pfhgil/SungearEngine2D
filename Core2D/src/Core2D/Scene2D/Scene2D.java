@@ -380,6 +380,7 @@ public class Scene2D
         isMainScene2D = mainScene2D;
         if(isMainScene2D) {
             SceneManager.currentSceneManager.mainScene2D = this;
+            SceneManager.currentSceneManager.mainScene2DPath = scenePath;
         }
     }
 }

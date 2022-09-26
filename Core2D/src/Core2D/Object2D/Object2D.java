@@ -438,7 +438,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     }
 
     public List<Integer> getChildrenObjectsID() { return childrenObjectsID; }
-    public void setChildrenObjectsID(List<Integer> childrenObjectsID) { this.childrenObjectsID.addAll(childrenObjectsID); }
+
     public void applyChildrenObjectsID()
     {
         if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {

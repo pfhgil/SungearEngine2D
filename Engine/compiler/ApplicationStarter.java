@@ -3,6 +3,9 @@ import Core2D.Utils.*;
 import Core2D.Scene2D.*;
 import Core2D.Core2D.Core2DUserCallback;
 import org.lwjgl.glfw.GLFW;
+import org.apache.commons.io.FilenameUtils;
+import java.io.File;
+import Core2D.Log.Log;
 
 public class ApplicationStarter
 {
@@ -13,9 +16,19 @@ public class ApplicationStarter
         Core2DUserCallback core2DUserCallback = new Core2DUserCallback() {
             @Override
             public void onInit() {
-                SceneManager.loadSceneManager(Core2D.class.getResourceAsStream("/SceneManager.sm"));
+                SceneManager.loadSceneManagerAsCurrent(Core2D.class.getResourceAsStream("/SceneManager.sm"));
+                Log.CurrentSession.println("goo!!!!1", Log.MessageType.ERROR);
                 if(SceneManager.currentSceneManager != null) {
-                    SceneManager.currentSceneManager.setCurrentScene2D(SceneManager.currentSceneManager.mainScene2D);
+                    Log.CurrentSession.println("goo!!!!12222", Log.MessageType.ERROR);
+                    String scene2DName = "";
+                    for(Scene2DStoredValues storedValues : SceneManager.currentSceneManager.getScene2DStoredValues()) {
+                        if(storedValues.isMainScene2D) {
+                            Log.CurrentSession.println("goo!!!234324", Log.MessageType.ERROR);
+                            scene2DName = FilenameUtils.getBaseName(new File(storedValues.path).getName());
+                            //break;
+                        }
+                    }
+                    SceneManager.currentSceneManager.setCurrentScene2D(SceneManager.currentSceneManager.getScene2D(scene2DName));
                 }
             }
 

@@ -27,6 +27,8 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
     @Override
     public Object2D deserialize(JsonElement jsonElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
     {
+        Object2D object2D = new Object2D();
+
         JsonObject jsonObject = jsonElement.getAsJsonObject();
 
         String name = jsonObject.get("name").getAsString();
@@ -43,14 +45,12 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
             layerName = layerNameJElement.getAsString();
         }
         JsonArray childrenObjectsIDJArray = jsonObject.getAsJsonArray("childrenObjectsID");
-        List<Integer> childrenObjectsID = new ArrayList<>();
         if(childrenObjectsIDJArray != null) {
             for(JsonElement element : childrenObjectsIDJArray) {
-                childrenObjectsID.add(context.deserialize(element, int.class));
+                object2D.getChildrenObjectsID().add(element.getAsInt());
             }
         }
 
-        Object2D object2D = new Object2D();
         object2D.removeComponent(object2D.getComponent(TextureComponent.class));
 
         object2D.setName(name);
@@ -62,7 +62,6 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
         object2D.setActive(active);
         object2D.setID(ID);
         object2D.setLayerName(layerName);
-        object2D.setChildrenObjectsID(childrenObjectsID);
 
         for(JsonElement element : components) {
             Component component = context.deserialize(element, Component.class);

@@ -35,7 +35,7 @@ public class Project implements Serializable
 
     public void loadProject()
     {
-        SceneManager.loadSceneManager(projectPath + "\\SceneManager.sm");
+        SceneManager.loadSceneManagerAsCurrent(projectPath + "\\SceneManager.sm");
     }
 
 

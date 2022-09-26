@@ -4,6 +4,7 @@ import Core2D.Component.Components.TransformComponent;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
 import Core2D.Object2D.Transform;
+import org.apache.commons.io.IOUtils;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.system.MemoryUtil;
@@ -59,8 +60,12 @@ public class Utils
 
     public static ByteBuffer resourceToByteBuffer(InputStream inputStream) throws IOException
     {
-        BufferedInputStream bfi = new BufferedInputStream(inputStream);
-
+        //BufferedInputStream bfi = new BufferedInputStream(inputStream);
+        byte[] bytes = IOUtils.toByteArray(inputStream);
+        ByteBuffer buffer = BufferUtils.createByteBuffer(bytes.length);
+        buffer.put(bytes);
+        buffer.flip();
+        /*
         // создаю buffer с размером fileChannel.size() + 1 (+1 для символа конца строки)
         ByteBuffer buffer = BufferUtils.createByteBuffer(bfi.available() + 1);
 
@@ -73,6 +78,8 @@ public class Utils
         buffer.flip();
 
         b = null;
+
+         */
 
         return buffer;
     }

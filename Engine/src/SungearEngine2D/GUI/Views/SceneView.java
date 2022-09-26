@@ -234,6 +234,7 @@ public class SceneView extends View
             Settings.Playmode.active = false;
             Settings.Playmode.paused = false;
             currentSceneManager.loadSceneAsCurrent(currentSceneManager.getCurrentScene2D().getScenePath());
+            //System.out.println(currentSceneManager.getCurrentScene2D().getScriptSystem().getScriptTempValuesList().get(0).getScriptTempValues().get(0).getValue());
             //currentSceneManager.setCurrentScene2D(scene2D.getName());
             CamerasManager.setMainCamera2D(Main.getMainCamera2D());
             MainView.getInspectorView().setCurrentInspectingObject(null);
@@ -255,12 +256,8 @@ public class SceneView extends View
     {
         ImVec2 windowSize = new ImVec2();
         ImGui.getContentRegionAvail(windowSize);
-        //windowSize.x -= ImGui.getScrollX();
-        //windowSize.y -= ImGui.getScrollY();
 
         float targetAspect = 16.0f / 9.0f;
-        //Vector2i engineWindowSize = Core2D.getWindow().getSize();
-        //float targetAspect = engineWindowSize.x / (float) engineWindowSize.y;
 
         float aspectWidth = windowSize.x;
         float aspectHeight = aspectWidth / targetAspect;
@@ -277,11 +274,6 @@ public class SceneView extends View
     {
         ImVec2 windowSize = new ImVec2();
         ImGui.getContentRegionAvail(windowSize);
-        //windowSize.x -= ImGui.getScrollX();
-        //windowSize.y -= ImGui.getScrollY();
-
-        //Vector2i engineWindowSize = Core2D.getWindow().getSize();
-        //float targetAspect = engineWindowSize.x / (float) engineWindowSize.y;
 
         float aspectWidth = windowSize.x;
         float aspectHeight = aspectWidth / targetAspect;
@@ -327,8 +319,6 @@ public class SceneView extends View
             TextureComponent textureComponent = newSceneObject2D.getComponent(TextureComponent.class);
             Texture2D texture2D = new Texture2D(file.getPath());
             textureComponent.setTexture2D(texture2D);
-
-            System.out.println("dsddsgfhjfhj");
 
             Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
             newSceneObject2D.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);

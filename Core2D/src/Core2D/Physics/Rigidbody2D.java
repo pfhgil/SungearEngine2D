@@ -2,6 +2,7 @@ package Core2D.Physics;
 
 import Core2D.Scene2D.Scene2D;
 import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
 import org.jbox2d.dynamics.Fixture;
 
@@ -15,7 +16,7 @@ public class Rigidbody2D
     private boolean isFixedRotation = false;
 
     // само тело
-    private transient Body body;
+    private transient Body body = new Body(new BodyDef(), new PhysicsWorld());
 
     private transient Scene2D scene2D;
 

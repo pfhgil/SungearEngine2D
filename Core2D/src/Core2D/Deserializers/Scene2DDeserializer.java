@@ -27,13 +27,11 @@ public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
         ScriptSystem scriptSystem = context.deserialize(jsonObject.get("scriptSystem"), ScriptSystem.class);
         int maxObjectID = jsonObject.get("maxObjectID").getAsInt();
         JsonElement inBuildElem = jsonObject.get("inBuild");
-        /*
         boolean inBuild = false;
         if(inBuildElem != null) {
             inBuild = jsonObject.get("inBuild").getAsBoolean();
         }
 
-         */
         JsonElement isMainScene2DElem = jsonObject.get("isMainScene2D");
         boolean isMainScene2D = false;
         if(isMainScene2DElem != null) {
@@ -45,7 +43,7 @@ public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
         scene2D.setLayering(layering);
         scene2D.setScriptSystem(scriptSystem);
         scene2D.maxObjectID = maxObjectID;
-        //scene2D.inBuild = inBuild;
+        scene2D.inBuild = inBuild;
         scene2D.isMainScene2D = isMainScene2D;
         scene2D.setScenePath(scenePath);
 

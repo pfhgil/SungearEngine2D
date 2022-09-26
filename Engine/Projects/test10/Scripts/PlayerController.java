@@ -46,8 +46,12 @@ public class PlayerController
                 playerTransform.translate(new Vector2f(movementSpeed * deltaTime, 0.0f));
             }
             if(Keyboard.keyDown(GLFW.GLFW_KEY_A)) {
-                Log.CurrentSession.println("left", Log.MessageType.ERROR);
+                //Log.CurrentSession.println("left", Log.MessageType.ERROR);
                 playerTransform.translate(new Vector2f(-movementSpeed * deltaTime, 0.0f));
+            }
+
+            if(Keyboard.keyReleased(GLFW.GLFW_KEY_Y)) {
+                SceneManager.currentSceneManager.setCurrentScene2D(SceneManager.currentSceneManager.getScene2D("lvl2"));
             }
 
             if(Keyboard.keyPressed(GLFW.GLFW_KEY_SPACE)) {

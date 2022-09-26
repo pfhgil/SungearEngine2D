@@ -8,6 +8,7 @@ import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.Scene2D;
+import Core2D.Scene2D.Scene2DStoredValues;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
@@ -15,11 +16,17 @@ import Core2D.Utils.Utils;
 import Core2D.Utils.WrappedObject;
 import SungearEngine2D.Main.Settings;
 import SungearEngine2D.Scripting.Compiler;
+import com.sun.tools.attach.VirtualMachine;
 import org.apache.commons.io.FilenameUtils;
+import sun.misc.Unsafe;
 
 import java.io.File;
 import java.io.FilenameFilter;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+import static Core2D.Scene2D.SceneManager.currentSceneManager;
 
 public class Builder
 {
@@ -36,20 +43,25 @@ public class Builder
 
                 // создаю SceneManager с выбранными сценами
                 SceneManager sceneManager = new SceneManager();
-                System.out.println(SceneManager.currentSceneManager.getScenes().get(0).getLayering());
-                for(Scene2D scene2D : SceneManager.currentSceneManager.getScenes()) {
-                    if(scene2D.inBuild) {
-                        sceneManager.getScenes().add(scene2D);
+                for(Scene2DStoredValues storedValues : SceneManager.currentSceneManager.getScene2DStoredValues()) {
+                    if(storedValues.inBuild) {
+                        Scene2DStoredValues newStoredValues = new Scene2DStoredValues();
+                        newStoredValues.path = storedValues.path;
+                        newStoredValues.inBuild = true;
+                        newStoredValues.isMainScene2D = storedValues.isMainScene2D;
+
+                        sceneManager.getScene2DStoredValues().add(newStoredValues);
                     }
                 }
-                SceneManager.saveSceneManager(outDirectory.getPath() + "/SceneManager.sm", sceneManager);
-                SceneManager newSceneManager = SceneManager.loadSceneManagerNotAsCurrent(outDirectory.getPath() + "/SceneManager.sm");
+                //SceneManager newSceneManager = SceneManager.loadSceneManagerNotAsCurrent(outDirectory.getPath() + "/SceneManager.sm");
 
                 // упаковываю ресурсы
-                packResources(outDirectory.getPath() + "\\resources", newSceneManager);
+                packResources(outDirectory.getPath() + "\\resources", sceneManager);
+
+                SceneManager.saveSceneManager(outDirectory.getPath() + "/SceneManager.sm", sceneManager);
 
                 // заново сохраняю этот SceneManager
-                SceneManager.saveSceneManager(outDirectory.getPath() + "/SceneManager.sm", newSceneManager);
+                //SceneManager.saveSceneManager(outDirectory.getPath() + "/SceneManager.sm", newSceneManager);
 
                 File applicationStarterClassFile = new File(".\\compiler\\ApplicationStarter.class");
                 File applicationStarterClassFile1 = new File(".\\compiler\\ApplicationStarter$1.class");
@@ -147,6 +159,7 @@ public class Builder
         }
     }
 
+    /*
     public static SceneManager packScenes2DInSceneManager(boolean inBuildMatters)
     {
         SceneManager sceneManager = new SceneManager();
@@ -159,12 +172,28 @@ public class Builder
         return sceneManager;
     }
 
+     */
+
     // упаковка ресурсов
     private static void packResources(String toDir, SceneManager sceneManager)
     {
         FileUtils.createFolder(toDir);
 
-        for(Scene2D scene2D : sceneManager.getScenes()) {
+        // лист всех сцен, которые нужно сохранить для билда
+        List<Scene2D> scenes2DToSaveInBuild = new ArrayList<>();
+
+        // сначала загружаю все сцены
+        for(Scene2DStoredValues storedValues : sceneManager.getScene2DStoredValues()) {
+            Scene2D scene2D = sceneManager.loadScene(storedValues.path);
+
+            if(scene2D != null) {
+                System.out.println("loaded scene2d: " + scene2D.getName());
+                scenes2DToSaveInBuild.add(scene2D);
+            }
+        }
+
+        // далее пробегаюсь по всем сценам и изменяю путь ресурсов у кажого объекта на относительный
+        for(Scene2D scene2D : scenes2DToSaveInBuild) {
             for(Layer layer : scene2D.getLayering().getLayers()) {
                 for(WrappedObject wrappedObject : layer.getRenderingObjects()) {
                     if(wrappedObject.getObject() instanceof Object2D) {
@@ -196,6 +225,35 @@ public class Builder
                     }
                 }
             }
+
+            // относительный путь сцены (относительно папки проекта)
+            String scene2DRelativePath = FileUtils.getRelativePath(new File(scene2D.getScenePath()),
+                    new File(ProjectsManager.getCurrentProject().getProjectPath()));
+
+            System.out.println("scene2d relative path: " + scene2DRelativePath);
+
+            // новый путь до сцены
+            File newScene2DFile = new File(toDir + "\\" + scene2DRelativePath);
+            // создаю все папки, которых нет
+            newScene2DFile.getParentFile().mkdirs();
+
+            String newScene2DPath = "/" + scene2DRelativePath.replace("\\", "/");
+
+            System.out.println(scene2D.getScriptSystem().getScriptTempValuesList().get(0).getScriptTempValues().get(0).getValue());
+
+            // сохраняю сцену
+            sceneManager.saveScene(scene2D, newScene2DFile.getPath());
+            // копирую сцену в эти папки
+            //FileUtils.copyFile(scene2D.getScenePath(), newScene2DFile.getPath(), false);
+
+            // нахожу нужные сохраняемые данные и изменяю путь до сцены
+            sceneManager.getScene2DStoredValues()
+                    .stream()
+                    .filter(p -> p.path.equals(scene2D.getScenePath()))
+                    .findFirst()
+                    .get().path = newScene2DPath;
+
+            scene2D.setScenePath(newScene2DPath);
         }
     }
 }

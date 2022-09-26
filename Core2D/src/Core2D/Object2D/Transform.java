@@ -367,7 +367,7 @@ public class Transform implements Serializable
 
     private void updateRigidbody2D()
     {
-        if(rigidbody2D != null) {
+        if(rigidbody2D != null && rigidbody2D.getBody() != null) {
             rigidbody2D.getBody().setTransform(new Vec2(position.x / PhysicsWorld.RATIO, position.y / PhysicsWorld.RATIO), (float) Math.toRadians(rotation));
         }
     }

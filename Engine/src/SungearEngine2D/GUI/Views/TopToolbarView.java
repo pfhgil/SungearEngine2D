@@ -5,6 +5,7 @@ import Core2D.Controllers.PC.Keyboard;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.Scene2D;
+import Core2D.Scene2D.Scene2DStoredValues;
 import Core2D.Scene2D.SceneManager;
 import SungearEngine2D.Builder.Builder;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindow;
@@ -14,8 +15,11 @@ import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindowCallback;
 import SungearEngine2D.Main.Resources;
 import imgui.ImGui;
 import imgui.type.ImString;
+import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
+
+import java.io.File;
 
 public class TopToolbarView
 {
@@ -210,9 +214,17 @@ public class TopToolbarView
                             @Override
                             public void onDraw() {
                                 ImGui.beginChild("ChooseScenes2DToAdd", dialogWindow.getWindowSize().x, dialogWindow.getWindowSize().y / 3.0f);
+                                /*
                                 for(Scene2D scene2D : SceneManager.currentSceneManager.getScenes()) {
                                     if(ImGui.checkbox(scene2D.getName(), scene2D.inBuild)) {
                                         scene2D.inBuild = !scene2D.inBuild;
+                                    }
+                                }
+
+                                 */
+                                for(Scene2DStoredValues storedValues : SceneManager.currentSceneManager.getScene2DStoredValues()) {
+                                    if(ImGui.checkbox(FilenameUtils.getBaseName(new File(storedValues.path).getName()), storedValues.inBuild)) {
+                                        storedValues.inBuild = !storedValues.inBuild;
                                     }
                                 }
                                 ImGui.endChild();
@@ -231,7 +243,10 @@ public class TopToolbarView
 
                             @Override
                             public void onRightButtonClicked() {
-                                if(SceneManager.currentSceneManager.mainScene2D != null) {
+                                boolean hasMainScene2D = SceneManager.currentSceneManager.getScene2DStoredValues()
+                                        .stream()
+                                        .anyMatch(s -> s.isMainScene2D);
+                                if(hasMainScene2D) {
                                     Builder.build("TestGame");
                                     // TODO: сделать билд
                                     dialogWindow.setActive(false);
@@ -347,15 +362,19 @@ public class TopToolbarView
             if(ImGui.beginMenu("Scene Manager")) {
                 if(ImGui.beginMenu("Main Scene2D")) {
                     if(SceneManager.currentSceneManager != null) {
-                        for (int i = 0; i < SceneManager.currentSceneManager.getScenes().size(); i++) {
-                            Scene2D scene2D = SceneManager.currentSceneManager.getScenes().get(i);
-                            boolean clicked = ImGui.menuItem(scene2D.getName());
-                            if (scene2D.isMainScene2D()) {
+                        for (int i = 0; i < SceneManager.currentSceneManager.getScene2DStoredValues().size(); i++) {
+                            Scene2DStoredValues storedValues = SceneManager.currentSceneManager.getScene2DStoredValues().get(i);
+                            boolean clicked = ImGui.menuItem(FilenameUtils.getBaseName(new File(storedValues.path).getName()));
+                            if (storedValues.isMainScene2D) {
                                 ImGui.sameLine();
                                 ImGui.image(Resources.Textures.Icons.checkMarkIcon.getTextureHandler(), 12, 12);
                             }
                             if (clicked) {
-                                scene2D.setMainScene2D(!scene2D.isMainScene2D());
+                                // убираю текущую сцену
+                                for (int k = 0; k < SceneManager.currentSceneManager.getScene2DStoredValues().size(); k++) {
+                                    SceneManager.currentSceneManager.getScene2DStoredValues().get(k).isMainScene2D = false;
+                                }
+                                storedValues.isMainScene2D = !storedValues.isMainScene2D;
                             }
                         }
                     }
@@ -423,10 +442,12 @@ public class TopToolbarView
                         scene2D.getPhysicsWorld().simulatePhysics = false;
                         scene2D.getScriptSystem().runScripts = false;
                         scene2D.setName(newSceneName.get());
-                        if (SceneManager.currentSceneManager.getScenes().size() == 0) {
+                        if (SceneManager.currentSceneManager.getScene2DStoredValues().size() == 0) {
                             SceneManager.currentSceneManager.setCurrentScene2D(scene2D);
                         }
-                        SceneManager.currentSceneManager.getScenes().add(scene2D);
+                        Scene2DStoredValues storedValues = new Scene2DStoredValues();
+                        storedValues.path = scene2D.getScenePath();
+                        SceneManager.currentSceneManager.getScene2DStoredValues().add(storedValues);
                         SceneManager.currentSceneManager.saveScene(scene2D, ResourcesView.currentDirectoryPath + "\\" + scene2D.getName() + ".sgs");
                         scene2D = null;
                     } else {

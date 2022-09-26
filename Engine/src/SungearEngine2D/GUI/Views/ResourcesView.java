@@ -6,6 +6,7 @@ import Core2D.Object2D.Object2D;
 import Core2D.Prefab.Prefab;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.Scene2D;
+import Core2D.Scene2D.Scene2DStoredValues;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Timer.Timer;
 import Core2D.Timer.TimerCallback;
@@ -287,7 +288,10 @@ public class ResourcesView extends View
                                     new Log.DialogCallback() {
                                         @Override
                                         public void firstButtonClicked() {
-                                            currentSceneManager.getScenes().add(scene2D);
+                                            Scene2DStoredValues storedValues = new Scene2DStoredValues();
+                                            storedValues.path = files[id].getPath();
+                                            currentSceneManager.getScene2DStoredValues().add(storedValues);
+                                            //scene2D.setScenePath(files[id].getPath());
                                         }
 
                                         @Override
@@ -342,7 +346,7 @@ public class ResourcesView extends View
                                     if(currentSceneManager.getCurrentScene2D().getName().equals(scene2D.getName())) {
                                         SceneManager.currentSceneManager.setCurrentScene2D((Scene2D) null);
                                     }
-                                    currentSceneManager.getScenes().remove(scene2D);
+                                    currentSceneManager.getScene2DStoredValues().removeIf(p -> p.path.equals(scene2D.getScenePath()));
                                 }
                             }
                             org.apache.commons.io.FileUtils.delete(files[id]);
