@@ -23,8 +23,6 @@ public class VertexBufferObject implements AutoCloseable
 
         create();
         putData();
-
-        data = null;
     }
 
     public VertexBufferObject(float[] data, int usage)
@@ -34,8 +32,6 @@ public class VertexBufferObject implements AutoCloseable
 
         create();
         putData();
-
-        data = null;
     }
     // создание буфера
     private void create()
@@ -71,8 +67,6 @@ public class VertexBufferObject implements AutoCloseable
         this.data = data;
 
         glBufferSubData(GL_ARRAY_BUFFER, 0, data);
-
-        data = null;
     }
     // связка
     public void bind()
@@ -90,11 +84,7 @@ public class VertexBufferObject implements AutoCloseable
     public int getHandler() { return handler; }
 
     public BufferLayout getLayout() { return layout; }
-    public void setLayout(BufferLayout layout)
-    {
-        this.layout = layout;
-        layout = null;
-    }
+    public void setLayout(BufferLayout layout) { this.layout = layout; }
 
     public float[] getData() { return data; }
 

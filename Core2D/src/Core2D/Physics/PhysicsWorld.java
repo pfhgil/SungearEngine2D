@@ -158,7 +158,6 @@ public class PhysicsWorld extends World
                 rigidbody2D.setScene2D(SceneManager.currentSceneManager.getCurrentScene2D());
                 rigidbody2D.setBody(createBody(bodyDef));
                 rigidbody2D.getBody().setUserData(object2D);
-                //System.out.println("name: " + object2D.getName() + ", mass: " + rigidbody2D.getMass());
 
                 List<BoxCollider2DComponent> boxCollider2DComponentList = object2D.getAllComponents(BoxCollider2DComponent.class);
                 List<CircleCollider2DComponent> circleCollider2DComponents = object2D.getAllComponents(CircleCollider2DComponent.class);

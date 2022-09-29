@@ -216,10 +216,6 @@ public class ObjectsInstancing extends CommonDrawableObjectsParameters
                     colorData[iter2] = color.get(k);
                     iter2++;
                 }
-
-                color = null;
-                modelMatrix = null;
-                texCoords = null;
             }
         }
     }
@@ -236,17 +232,14 @@ public class ObjectsInstancing extends CommonDrawableObjectsParameters
 
         glBindBuffer(GL_ARRAY_BUFFER, textureCoordsBuffer);
         glBufferData(GL_ARRAY_BUFFER, textureCoordsData, GL_DYNAMIC_DRAW);
-        //glBufferSubData(GL_ARRAY_BUFFER, 0, textureCoordsData);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         glBindBuffer(GL_ARRAY_BUFFER, matricesDataBuffer);
         glBufferData(GL_ARRAY_BUFFER, matricesData, GL_DYNAMIC_DRAW);
-        //glBufferSubData(GL_ARRAY_BUFFER, 0, matricesData);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
         glBufferData(GL_ARRAY_BUFFER, colorData, GL_DYNAMIC_DRAW);
-        //glBufferSubData(GL_ARRAY_BUFFER, 0, colorData);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 

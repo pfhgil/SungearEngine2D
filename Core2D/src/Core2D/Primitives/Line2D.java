@@ -47,9 +47,7 @@ public class Line2D extends CommonDrawableObjectsParameters implements AutoClose
     {
         shaderProgram = AssetManager.getShaderProgram("line2DProgram");
 
-        Vector4f col = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
-        setColor(col);
-        col = null;
+        setColor(new Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
 
         transform = new Transform();
 
@@ -73,9 +71,6 @@ public class Line2D extends CommonDrawableObjectsParameters implements AutoClose
         vertexArrayObject.putVBO(vertexBufferObject, false);
         vertexArrayObject.putIBO(indexBufferObject);
 
-        attributesLayout = null;
-        vertexBufferObject = null;
-        indexBufferObject = null;
         indices = null;
 
         // отвязываю vao
@@ -125,11 +120,7 @@ public class Line2D extends CommonDrawableObjectsParameters implements AutoClose
     public VertexArrayObject getVertexArrayObject() { return vertexArrayObject; }
 
     public Transform getTransform() { return transform; }
-    public void setTransform(Transform transform)
-    {
-        this.transform = transform;
-        transform = null;
-    }
+    public void setTransform(Transform transform) { this.transform = transform; }
 
     public Matrix4f getMvpMatrix() { return mvpMatrix; }
 

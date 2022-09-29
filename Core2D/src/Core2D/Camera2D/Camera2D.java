@@ -41,9 +41,6 @@ public class Camera2D implements Serializable, AutoCloseable
         System.out.println("camera id: " + ID);
     }
 
-    /**
-     * Исправить. Умножать на deltaTime, чтобы камера не "лагала"
-     **/
     public void follow(Transform transform, float deltaTime)
     {
         Vector2f pos = MatrixUtils.getPosition(transform.getResultModelMatrix());

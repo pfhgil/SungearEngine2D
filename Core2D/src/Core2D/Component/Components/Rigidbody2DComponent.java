@@ -41,9 +41,7 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated, Au
     {
         if(component instanceof Rigidbody2DComponent) {
             rigidbody2D.set(((Rigidbody2DComponent) component).getRigidbody2D());
-            //System.out.println("mass lol: " + ((Rigidbody2DComponent) component).getRigidbody2D().getMass());
         }
-        //super.set(component);
     }
 
     @Override

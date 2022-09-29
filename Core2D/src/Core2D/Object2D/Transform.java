@@ -136,8 +136,6 @@ public class Transform implements Serializable
             canUpdateRigigbody2D = false;
         }
         if(rigidbody2D != null && canUpdateRigigbody2D) {
-            //if(Settings.Debug.ENABLE_DEBUG_PHYSICS_DRAWING) rigidbody2D.draw();
-
             setPositionLikeRigidbody2D();
             setRotationLikeRigidbody2D();
         }
@@ -285,15 +283,6 @@ public class Transform implements Serializable
 
         scaleMatrix.identity();
         scaleMatrix.scale(this.scale.x, this.scale.y, 1.0f);
-
-        /*
-        if(rigidbody2D != null) {
-            if(rigidbody2D instanceof BoxCollider2D) {
-                ((BoxCollider2D) rigidbody2D).scale(scale);
-            }
-        }
-
-         */
 
         updateModelMatrix();
     }

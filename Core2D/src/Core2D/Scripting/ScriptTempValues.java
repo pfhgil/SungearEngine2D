@@ -3,7 +3,7 @@ package Core2D.Scripting;
 import java.util.ArrayList;
 import java.util.List;
 
-// обертка под все значения в скрпте script
+// обертка под все значения в одном скрипте объекта (хранятся только в рантайме)
 public class ScriptTempValues
 {
     private transient Script script;

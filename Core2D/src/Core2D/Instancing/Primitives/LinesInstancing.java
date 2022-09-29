@@ -175,17 +175,14 @@ public class LinesInstancing extends CommonDrawableObjectsParameters
 
         glBindBuffer(GL_ARRAY_BUFFER, verticesPositionsDataBuffer);
         glBufferData(GL_ARRAY_BUFFER, verticesPositionsData, GL_DYNAMIC_DRAW);
-        //glBufferSubData(GL_ARRAY_BUFFER, 0, textureCoordsData);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         glBindBuffer(GL_ARRAY_BUFFER, matricesDataBuffer);
         glBufferData(GL_ARRAY_BUFFER, matricesData, GL_DYNAMIC_DRAW);
-        //glBufferSubData(GL_ARRAY_BUFFER, 0, matricesData);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
         glBindBuffer(GL_ARRAY_BUFFER, colorBuffer);
         glBufferData(GL_ARRAY_BUFFER, colorData, GL_DYNAMIC_DRAW);
-        //glBufferSubData(GL_ARRAY_BUFFER, 0, colorData);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
 

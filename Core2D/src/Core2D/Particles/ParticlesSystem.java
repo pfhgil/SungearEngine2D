@@ -99,7 +99,6 @@ public class ParticlesSystem
     public void setParticlesSettings(ParticlesSettings particlesSettings)
     {
         this.particlesSettings = particlesSettings;
-        particlesSettings = null;
     }
 
     public Timer getCreateParticlesTimer() { return createParticlesTimer; }

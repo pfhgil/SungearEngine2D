@@ -30,8 +30,6 @@ public class Rigidbody2D
         setFriction(rigidbody2D.getFriction());
         setSensor(rigidbody2D.isSensor());
         setFixedRotation(rigidbody2D.isFixedRotation());
-
-        rigidbody2D = null;
     }
 
     public void destroy()
@@ -114,8 +112,6 @@ public class Rigidbody2D
         if(this.body != null) {
             body.setType(this.bodyType);
         }
-
-        bodyType = null;
     }
 
     public Body getBody() { return body; }

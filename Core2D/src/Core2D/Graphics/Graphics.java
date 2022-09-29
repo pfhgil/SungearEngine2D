@@ -32,10 +32,6 @@ public abstract class Graphics
         VIEW_MODE_2D,
         VIEW_MODE_3D
     }
-
-    // матрица проекции
-    //private static Matrix4f projectionMatrix;
-
     protected static int totalIterations = 0;
 
     private static ViewMode viewMode = ViewMode.VIEW_MODE_2D;

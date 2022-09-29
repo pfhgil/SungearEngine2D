@@ -16,7 +16,7 @@ import com.google.gson.internal.LinkedTreeMap;
 
 import java.lang.reflect.Field;
 
-// само одно значение в скрипте script
+// само одно временное значение в скрипте (хранятся только в рантайме)
 public class ScriptTempValue
 {
     private transient Script script;
@@ -56,10 +56,8 @@ public class ScriptTempValue
                             field.set(script.getScriptClassInstance(), foundCamera2D);
                             break;
                     }
-                    object = null;
                 } else {
                     if(wrappedObject.getObject() != null) {
-                        //System.out.println("value: " + wrappedObject.getObject() + ", field: " + field.getName());
                         field.set(script.getScriptClassInstance(), wrappedObject.getObject());
                     }
                 }

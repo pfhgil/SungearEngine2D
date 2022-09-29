@@ -18,8 +18,6 @@ public class ScriptComponent extends Component implements AutoCloseable
     {
         if(component instanceof ScriptComponent) {
             script.set(((ScriptComponent) component).getScript());
-
-            component = null;
         }
     }
 
@@ -56,9 +54,6 @@ public class ScriptComponent extends Component implements AutoCloseable
     @Override
     public void destroy()
     {
-        //script.destroy();
-        //script = null;
-
         object2D = null;
 
         try {

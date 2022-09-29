@@ -23,8 +23,6 @@ public class IndexBufferObject implements AutoCloseable
 
         create();
         putData();
-
-        data = null;
     }
     // создание буфера
     public void create()

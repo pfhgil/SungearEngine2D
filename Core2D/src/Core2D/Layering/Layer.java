@@ -35,8 +35,6 @@ public class Layer
             if (wrappedObject.getObject() instanceof Object2D) {
                 Object2D object2D = ((Object2D) wrappedObject.getObject());
 
-                //System.out.println("name: " + object2D.getName() + ", color: " + object2D.getPickColor().x + ", " + object2D.getPickColor().y + ", " + object2D.getPickColor().z);
-
                 Vector4f lastColor = new Vector4f(object2D.getColor());
 
                 object2D.setColor(new Vector4f(object2D.getPickColor().x / 255.0f, object2D.getPickColor().y / 255.0f, object2D.getPickColor().z / 255.0f,  1.0f));
@@ -49,9 +47,6 @@ public class Layer
                 if(textureComponent != null) {
                     textureComponent.setTextureDrawMode(TextureDrawModes.DEFAULT);
                 }
-
-                lastColor = null;
-                object2D = null;
             }
         }
     }

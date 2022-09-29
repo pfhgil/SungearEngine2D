@@ -2,6 +2,7 @@ package Core2D.ShaderUtils;
 
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
+import Core2D.Log.Log;
 
 import java.io.Serializable;
 import java.nio.ByteBuffer;
@@ -77,14 +78,14 @@ public class FrameBufferObject implements Serializable
         }
 
         if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-            // вывести ошибку
+            Log.CurrentSession.println("Error while creating FrameBufferObject!", Log.MessageType.ERROR);
         }
 
         // получаю код ошибки opengl
         int errorCode = glGetError();
         // проверка на ошибки
         if(errorCode != 0) {
-            // вывести ошибку
+            Log.CurrentSession.println("OpenGL error: " + errorCode, Log.MessageType.ERROR);
         }
 
         unBind();
@@ -121,8 +122,6 @@ public class FrameBufferObject implements Serializable
     {
         glActiveTexture(textureBlock);
         glBindTexture(GL_TEXTURE_2D, textureHandler);
-
-        //System.out.println("textureBlock: " + textureBlock + ", textureHandler: " + textureHandler);
     }
 
     // пересоздает fbo
@@ -147,7 +146,7 @@ public class FrameBufferObject implements Serializable
         int errorCode = glGetError();
         // проверка на ошибки
         if(errorCode != 0) {
-            // вывести ошибку
+            Log.CurrentSession.println("OpenGL error: " + errorCode, Log.MessageType.ERROR);
         }
 
         unBind();
@@ -169,20 +168,13 @@ public class FrameBufferObject implements Serializable
 
         glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
 
-        /*
-        if(glCheckFramebufferStatus(GL_RENDERBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-            System.out.println("RBO of FBO was not created! FBO type: " + type);
-        }
-
-         */
-
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, RBOHandler);
 
         // получаю код ошибки opengl
         int errorCode = glGetError();
         // проверка на ошибки
         if(errorCode != 0) {
-            // вывести ошибку
+            Log.CurrentSession.println("OpenGL error: " + errorCode, Log.MessageType.ERROR);
         }
 
         unBindRBO();
@@ -206,7 +198,7 @@ public class FrameBufferObject implements Serializable
         int errorCode = glGetError();
         // проверка на ошибки
         if(errorCode != 0) {
-            // вывести ошибку
+            Log.CurrentSession.println("OpenGL error: " + errorCode, Log.MessageType.ERROR);
         }
 
         glBindTexture(GL_TEXTURE_2D, 0);
@@ -274,9 +266,6 @@ public class FrameBufferObject implements Serializable
 
         float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
         glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
-
-        //float borderColor[] = { 0.1f, 0.1f, 0.1f, 1.0f };
-        //glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
 
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, textureHandler, 0);
 

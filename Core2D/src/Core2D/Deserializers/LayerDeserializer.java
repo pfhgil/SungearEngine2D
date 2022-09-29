@@ -27,14 +27,7 @@ public class LayerDeserializer implements JsonDeserializer<Layer>
             objParams.setLayer(layer);
 
             object.setObject(null);
-            object = null;
-            objParams = null;
         }
-
-        renderingObjects = null;
-        name = null;
-        jsonObject = null;
-
         return layer;
     }
 }

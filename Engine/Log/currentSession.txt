@@ -18,3 +18,5 @@ Ensure that the manifest does not have duplicate entries, and
 that blank lines separate individual sections in both your
 manifest and in the META-INF/MANIFEST.MF entry in the jar file.
 
+[#FFFFFF] 2022/09/26 21:39:30 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.txt' already exists
+[#FFFFFF] 2022/09/26 21:39:30 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.sm' already exists

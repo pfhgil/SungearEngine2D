@@ -114,7 +114,6 @@ public class Texture2D
         } catch (IOException e) {
             String exception = "Error while loading texture by source: " + source +". Error is: " + ExceptionsUtils.toString(e);
             Log.CurrentSession.println(exception, Log.MessageType.ERROR);
-            exception = null;
         }
 
         createTexture();
@@ -135,7 +134,6 @@ public class Texture2D
             pixelsData = stbi_load_from_memory(Core2D.Utils.Utils.resourceToByteBuffer(inputStream), widthBuffer, heightBuffer, channelsBuffer, 0);
 
             inputStream.close();
-            inputStream = null;
 
             // получаю из буферов размер и каналы загруженной текстуры
             width = widthBuffer.get(0);
@@ -145,7 +143,6 @@ public class Texture2D
         } catch (IOException e) {
             String exception = "Error while loading texture by source: " + source +". Error is: " + ExceptionsUtils.toString(e);
             Log.CurrentSession.println(exception, Log.MessageType.ERROR);
-            exception = null;
         }
 
         createTexture();
@@ -226,18 +223,9 @@ public class Texture2D
             glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
         }
 
-        //System.out.println("last tex handler: " + lastTextureHandler + ", current: " + textureHandler);
         glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, pixelsData);
 
         unBind();
-
-        /*
-        int glError = glGetError();
-        if(glError != -1) {
-            System.out.println("An OpenGL occurred: " + glError);
-        }
-
-         */
 
         // очищаю буфер с данными текстуры
         if(pixelsData != null) {
@@ -311,23 +299,4 @@ public class Texture2D
     public int getFormat() { return format; }
 
     public int getInternalFormat() { return internalFormat; }
-
-    /*
-    public void setTextureHandler(int textureHandler) { this.textureHandler = textureHandler; }
-
-    public int getWidth() { return width; }
-    public void setWidth(int width) { this.width = width; }
-
-    public int getHeight() { return height; }
-    public void setHeight(int height) { this.height = height; }
-
-    public int getChannels() { return channels; }
-    public void setChannels(int channels) { this.channels = channels; }
-
-    public ByteBuffer getPixelsData() { return pixelsData; }
-    public void setPixelsData(ByteBuffer pixelsData) { this.pixelsData = pixelsData; }
-
-    public String getSource() { return source; }
-    public void setSource(String source) { this.source = source; }
-     */
 }

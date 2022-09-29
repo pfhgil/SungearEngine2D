@@ -57,14 +57,12 @@ public abstract class ParticlesSettings
     public void setParticlesCreatePosition(Vector2f particlesCreatePosition)
     {
         this.particlesCreatePosition = particlesCreatePosition;
-        particlesCreatePosition = null;
     }
 
     public Vector2f getParticlesCreateScale() { return particlesCreateScale; }
     public void setParticlesCreateScale(Vector2f particlesCreateScale)
     {
         this.particlesCreateScale = particlesCreateScale;
-        particlesCreateScale = null;
     }
 
     public int getMaxParticlesNum() { return maxParticlesNum; }

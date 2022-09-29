@@ -50,9 +50,6 @@ public class VertexArrayObject implements AutoCloseable
             ibosIterator.remove();
         }
 
-        vbosIterator = null;
-        ibosIterator = null;
-
         VBOs = null;
         IBOs = null;
 
@@ -83,13 +80,11 @@ public class VertexArrayObject implements AutoCloseable
 
         // добавялю vbo в список
         VBOs.add(vertexBufferObject);
-        vertexBufferObject = null;
     }
     public void putIBO(IndexBufferObject indexBufferObject)
     {
         // добавляю IBO в список
         IBOs.add(indexBufferObject);
-        indexBufferObject = null;
     }
 
     public void updateVBO(VertexBufferObject VBO, float[] data)
@@ -97,8 +92,6 @@ public class VertexArrayObject implements AutoCloseable
         VBO.bind();
         glBufferSubData(GL_ARRAY_BUFFER, 0, data);
         VBO.unBind();
-        VBO = null;
-        data = null;
     }
 
     // геттеры и сеттеры

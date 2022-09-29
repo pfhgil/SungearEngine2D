@@ -66,9 +66,6 @@ public class Log
                     // записываю в файл лога информацию
                     fileWriter.write(str);
 
-                    dateFormat = null;
-                    date = null;
-
                     fileWriter.flush();
                     fileWriter.close();
                 } catch (IOException e) {
@@ -85,9 +82,6 @@ public class Log
                     showWarningDialog("LOG: File writer thread was not closed!");
                 }
             }
-
-            string = null;
-            fileWriter = null;
         }
 
         // создает файл лога для текущей сессии

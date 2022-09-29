@@ -294,7 +294,6 @@ public class Renderer
                 render((AtlasDrawing) object);
             }
         }
-        object = null;
     }
 
     public void renderWithoutTexture(Object2D object2D)

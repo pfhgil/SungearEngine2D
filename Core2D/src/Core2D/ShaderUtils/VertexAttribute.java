@@ -1,5 +1,8 @@
 package Core2D.ShaderUtils;
 
+import Core2D.Log.Log;
+import Core2D.Texture2D.Texture2D;
+
 import static org.lwjgl.opengl.GL11C.GL_FLOAT;
 import static org.lwjgl.opengl.GL11C.GL_INT;
 import static org.lwjgl.opengl.GL20C.GL_BOOL;
@@ -60,15 +63,14 @@ public class VertexAttribute
             case ShaderDataType.SHADER_DATA_TYPE_T_BOOLEAN: return 4;
         }
 
-        System.out.println("Error: unknown shader data type!");
+        Log.CurrentSession.println("Error: unknown shader data type!", Log.MessageType.ERROR);
         return 0;
     }
 
     // конвертация ShaderDataType в OpenGL тип данных
     public static int convertShaderDataTypeToOpenGLDataType(int type)
     {
-        switch(type)
-        {
+        switch(type) {
             case ShaderDataType.SHADER_DATA_TYPE_T_INT: return GL_INT;
             case ShaderDataType.SHADER_DATA_TYPE_T_INT2: return GL_INT;
             case ShaderDataType.SHADER_DATA_TYPE_T_INT3: return GL_INT;
@@ -85,10 +87,8 @@ public class VertexAttribute
             case ShaderDataType.SHADER_DATA_TYPE_T_BOOLEAN: return GL_BOOL;
         }
 
-        if(type == 0)
-        {
-            System.out.println("Can't convert to OpenGL type, because input data is unknown!");
-            Runtime.getRuntime().exit(-1);
+        if(type == 0) {
+            Log.CurrentSession.println("Can't convert to OpenGL type, because input data is unknown!", Log.MessageType.ERROR);
         }
 
         return 0;
@@ -121,14 +121,11 @@ public class VertexAttribute
 
         offset = 0;
         size = shaderDataTypeInByte(shaderDataType);
-
-        name = null;
     }
     // конструктор
     public VertexAttribute(int ID, String name, int shaderDataType)
     {
         this(ID, name, shaderDataType, false);
-        name = null;
     }
 
     // получить размер аттрибута
@@ -152,7 +149,10 @@ public class VertexAttribute
             case ShaderDataType.SHADER_DATA_TYPE_T_BOOLEAN: return 1;
         }
 
-        System.out.println("Error: unknown attribute size!");
+        Texture2D texture2D = new Texture2D();
+        texture2D.getGLTextureBlock();
+
+        Log.CurrentSession.println("Error: unknown attribute size!", Log.MessageType.ERROR);
         return 0;
     }
 

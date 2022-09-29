@@ -28,11 +28,7 @@ public class TransformComponent extends Component implements NonRemovable, NonDu
             TransformComponent transformComponent = (TransformComponent) component;
 
             this.transform.set(transformComponent.getTransform());
-
-            transformComponent = null;
         }
-
-        component = null;
     }
 
     @Override

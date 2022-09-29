@@ -52,10 +52,6 @@ public class ParticlesFactory
 
         respawnParticleTimer.start();
 
-        particlesSettings = null;
-
-        particleTransform = null;
-
         return respawnParticleTimer;
     }
 

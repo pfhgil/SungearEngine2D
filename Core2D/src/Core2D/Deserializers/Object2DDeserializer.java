@@ -70,20 +70,20 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
             } else if(component instanceof TextureComponent) {
                 TextureComponent textureComponent = (TextureComponent) component;
                 Texture2D texture2D = null;
+                // если режим работы ядра в движке
                 if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
                     String textureFileName = new File(textureComponent.getTexture2D().getSource()).getName();
                     String parentFileName = new File(textureComponent.getTexture2D().getSource()).getParentFile().getName();
+                    // найти текущий путь до текстуры
                     File textureFile = FileUtils.findFile(new File(ProjectsManager.getCurrentProject().getProjectPath()), parentFileName, textureFileName);
-
-                    //System.out.println("texture: " + textureFile.getPath());
 
                     texture2D = new Texture2D(
                             textureFile.getPath(),
                             textureComponent.getTexture2D().getParam(),
                             textureComponent.getTexture2D().getGLTextureBlock()
                     );
+                // если режим работы в билде
                 } else {
-                    Log.CurrentSession.println("Texture source: " + textureComponent.getTexture2D().getSource(), Log.MessageType.INFO);
                     texture2D = new Texture2D(
                             Core2D.class.getResourceAsStream(textureComponent.getTexture2D().getSource()),
                             textureComponent.getTexture2D().getParam(),
@@ -101,15 +101,12 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
             } else if(component instanceof ScriptComponent) {
                 ScriptComponent scriptComponent = (ScriptComponent) component;
                 if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                    System.out.println(scriptComponent.getScript().getPath());
                     String scriptFileName = new File(scriptComponent.getScript().getPath()).getName();
                     String parentFileName = new File(scriptComponent.getScript().getPath()).getParentFile().getName();
                     File scriptFile = FileUtils.findFile(new File(ProjectsManager.getCurrentProject().getProjectPath()), parentFileName, scriptFileName);
 
                     if (scriptFile != null) {
-                        System.out.println(scriptFile.getPath());
                         scriptComponent.getScript().setPath(scriptFile.getPath() + ".java");
-                        //File scriptFile = new File(scriptComponent.getScript().getPath() + ".java");
 
                         ScriptComponent sc = new ScriptComponent();
                         object2D.addComponent(sc);
@@ -123,8 +120,6 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
             } else {
                 object2D.addComponent(component);
             }
-
-            component = null;
         }
 
         return object2D;

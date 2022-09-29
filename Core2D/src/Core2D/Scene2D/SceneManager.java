@@ -6,7 +6,6 @@ import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
 import Core2D.Deserializers.*;
 import Core2D.Layering.Layer;
-import Core2D.Layering.LayerObject;
 import Core2D.Layering.Layering;
 import Core2D.Log.Log;
 import Core2D.Object2D.Object2D;
@@ -14,7 +13,6 @@ import Core2D.Scripting.ScriptSceneObject;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.WrappedObject;
-import com.google.gson.FieldAttributes;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.io.FilenameUtils;
@@ -28,7 +26,6 @@ import java.util.List;
 
 public class SceneManager
 {
-    //private List<Scene2D> scenes = new ArrayList<>();
     // пути до сцен
     private List<Scene2DStoredValues> scene2DStoredValues = new ArrayList<>();
 
@@ -46,7 +43,6 @@ public class SceneManager
             .registerTypeAdapter(Component.class, new ComponentDeserializer())
             .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
             .registerTypeAdapter(ScriptSceneObject.class, new ScriptSceneObjectDeserializer())
-            .registerTypeAdapter(LayerObject.class, new LayerObjectDeserializer())
             .registerTypeAdapter(Layer.class, new LayerDeserializer())
             .registerTypeAdapter(Layering.class, new LayeringDeserializer())
             .registerTypeAdapter(Scene2D.class, new Scene2DDeserializer())
@@ -88,7 +84,6 @@ public class SceneManager
         String serialized = gson.toJson(currentSceneManager);
         String newPath = new File(path).getParent() + "\\" + FilenameUtils.getBaseName(new File(path).getName()) + ".txt";
         FileUtils.createFile(newPath);
-        System.out.println(newPath);
         FileUtils.writeToFile(new File(newPath), serialized, false);
         FileUtils.serializeObject(path, serialized);
     }
@@ -98,7 +93,6 @@ public class SceneManager
         String serialized = gson.toJson(sceneManager);
         String newPath = new File(path).getParent() + "\\" + FilenameUtils.getBaseName(new File(path).getName()) + ".txt";
         FileUtils.createFile(newPath);
-        System.out.println(newPath);
         FileUtils.writeToFile(new File(newPath), serialized, false);
         FileUtils.serializeObject(path, serialized);
     }
@@ -110,14 +104,6 @@ public class SceneManager
         if(sceneManagerFile.exists()) {
             String deserialized = (String) FileUtils.deSerializeObject(path);
             return gson.fromJson(deserialized, SceneManager.class);
-            /*
-            for(Scene2D scene2D : currentSceneManager.getScenes()) {
-                if(scene2D.isMainScene2D) {
-                    currentSceneManager.mainScene2D = scene2D;
-                }
-            }
-
-             */
         }
 
         return new SceneManager();
@@ -125,15 +111,6 @@ public class SceneManager
 
     public static void loadSceneManagerAsCurrent(String path)
     {
-        /*
-        File sceneManagerFile = new File(path);
-
-        if(sceneManagerFile.exists()) {
-            String deserialized = (String) FileUtils.deSerializeObject(path);
-            currentSceneManager = gson.fromJson(deserialized, SceneManager.class);
-        }
-
-         */
         currentSceneManager = loadSceneManager(path);
     }
 
@@ -147,27 +124,14 @@ public class SceneManager
         String deserialized = (String) FileUtils.deSerializeObject(inputStream);
         if(deserialized != null && !deserialized.equals("")) {
             Log.CurrentSession.println("scene manager code: " + deserialized, Log.MessageType.INFO);
-            //currentSceneManager = gson.fromJson(deserialized, SceneManager.class);
             return gson.fromJson(deserialized, SceneManager.class);
-            /*
-            for(Scene2D scene2D : currentSceneManager.getScenes()) {
-                if(scene2D.isMainScene2D) {
-                    currentSceneManager.mainScene2D = scene2D;
-                }
-            }
-
-             */
         }
         return new SceneManager();
     }
 
     public void saveScene(Scene2D scene, String path)
     {
-        //scene.saveScriptsTempValues();
-
         String serialized = gson.toJson(scene);
-
-        System.out.println(serialized);
 
         File f = new File(path);
         String s = f.getParentFile().getPath() + "/" + FilenameUtils.getBaseName(f.getName()) + ".txt";
@@ -193,8 +157,6 @@ public class SceneManager
 
         deserializedScene2D.setScenePath(path);
 
-        //applyObject2DDependencies(currentScene2D);
-
         System.gc();
 
         return deserializedScene2D;
@@ -215,8 +177,6 @@ public class SceneManager
 
             System.gc();
 
-            //applyObject2DDependencies(deserializedScene2D);
-
             return deserializedScene2D;
         }
 
@@ -229,8 +189,7 @@ public class SceneManager
 
         if(sceneFile.exists()) {
             String deserialized = (String) FileUtils.deSerializeObject(path);
-            Scene2D scene2D = scene2DFromJson(path, deserialized);
-            return scene2D;
+            return scene2DFromJson(path, deserialized);
         } else {
             InputStream inputStream = Core2D.class.getResourceAsStream(path);
             String deserialized = (String) FileUtils.deSerializeObject(inputStream);
@@ -241,11 +200,11 @@ public class SceneManager
             } catch (IOException e) {
                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }
-            Scene2D scene2D = scene2DFromJson(path, deserialized);
-            return scene2D;
+            return scene2DFromJson(path, deserialized);
         }
     }
 
+    // применить все зависимости к объектам
     private void applyObject2DDependencies(Scene2D scene2D)
     {
         for(int i = 0; i < scene2D.getLayering().getLayers().size(); i++) {
@@ -259,18 +218,8 @@ public class SceneManager
         }
     }
 
-    //public List<Scene2D> getScenes() { return scenes; }
-
     public Scene2D getScene2D(String name)
     {
-        /*
-        for(Scene2D scn : scenes) {
-            if(scn.getName().equals(name)) {
-                return scn;
-            }
-        }
-
-         */
         for(Scene2DStoredValues storedValues : scene2DStoredValues) {
             File sceneFile = new File(storedValues.path);
             if(name.equals(FilenameUtils.getBaseName(sceneFile.getName()))) {

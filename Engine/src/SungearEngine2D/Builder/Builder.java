@@ -10,6 +10,7 @@ import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.Scene2DStoredValues;
 import Core2D.Scene2D.SceneManager;
+import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Utils;

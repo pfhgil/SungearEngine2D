@@ -36,7 +36,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     private transient Matrix4f mvpMatrix;
 
     // цвет
-    private Vector4f color;
+    private Vector4f color = new Vector4f();
 
     // размер объекта (дефолт - 100x100)
     private transient Vector2f size = new Vector2f(100.0f, 100.0f);
@@ -73,7 +73,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     private boolean isUIElement = false;
 
     // цвета для picking`а мышкой
-    private transient Vector3f pickColor;
+    private transient Vector3f pickColor = new Vector3f();
 
     public transient Object2D parentObject2D;
     private int parentObject2DID = -1;
@@ -85,9 +85,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     {
         shaderProgram = AssetManager.getShaderProgram("object2DProgram");
 
-        Vector4f col = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
-        setColor(col);
-        col = null;
+        setColor(new Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
 
         loadVAO();
 
@@ -109,8 +107,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
             }
         }
 
-        pickColor = null;
-        pickColor = new Vector3f(Settings.Other.Picking.currentPickingColor);
+        pickColor.set(Settings.Other.Picking.currentPickingColor);
 
         createNewID();
     }
@@ -134,13 +131,11 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         TextureComponent objectTextureComponent = object2D.getComponent(TextureComponent.class);
         objectTextureComponent.setTexture2D(objectTextureComponent.getTexture2D());
         addComponent(objectTextureComponent);
-        objectTextureComponent = null;
 
         if(object2D.getComponent(Rigidbody2DComponent.class) != null) {
             Rigidbody2DComponent rigidbody2DComponent = new Rigidbody2DComponent();
             rigidbody2DComponent.set(object2D.getComponent(Rigidbody2DComponent.class));
             addComponent(rigidbody2DComponent);
-            rigidbody2DComponent = null;
         }
 
         active = object2D.isActive();
@@ -150,8 +145,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         tag = object2D.getTag();
 
         isUIElement = object2D.isUIElement;
-
-        object2D = null;
 
         if(Settings.Other.Picking.currentPickingColor.x < 255.0f) {
             Settings.Other.Picking.currentPickingColor.x++;
@@ -166,15 +159,12 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
             }
         }
 
-        pickColor = null;
-        pickColor = new Vector3f(Settings.Other.Picking.currentPickingColor);
+        pickColor.set(Settings.Other.Picking.currentPickingColor);
 
         createNewID();
     }
 
-    /**
-     * @return New Object2D on current scene
-     */
+    //@return New Object2D on current scene
     public static Object2D instantiate()
     {
         if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
@@ -204,10 +194,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         vertexBufferObject.setLayout(attributesLayout);
         vertexArrayObject.putVBO(vertexBufferObject, false);
         vertexArrayObject.putIBO(indexBufferObject);
-
-        attributesLayout = null;
-        vertexBufferObject = null;
-        indexBufferObject = null;
 
         indices = null;
 
@@ -253,7 +239,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         while(componentsIterator.hasNext()) {
             Component component = componentsIterator.next();
             component.destroy();
-            component = null;
             componentsIterator.remove();
         }
 
@@ -264,7 +249,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
             Object2D child = childrenIterator.next();
             child.parentObject2D = null;
             child.destroy();
-            child = null;
             childrenIterator.remove();
         }
 
@@ -288,8 +272,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         components.add(component);
         component.object2D = this;
         component.init();
-
-        component = null;
     }
 
     public <T extends Component> List<T> getAllComponents(Class<T> componentClass)
@@ -348,15 +330,15 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     public boolean isUIElement() { return isUIElement; }
     public void setUIElement(boolean UIElement) { isUIElement = UIElement; }
 
-    //public List<SpriteAnimation> getSpriteAnimations() { return spriteAnimations; }
-
     public Vector3f getPickColor() { return pickColor; }
 
     public Object2D getParentObject2D() { return parentObject2D; }
     public void setParentObject2D(Object2D parentObject2D)
     {
         if(this.parentObject2D != null) {
+            // если у этого объекта больше нет родителя
             if(parentObject2D == null) {
+                // выполняю некоторые преобразования, чтобы этот зависимый объект встал на свою глобальную позицию обратно
                 Transform transform = getComponent(TransformComponent.class).getTransform();
                 Transform parentTransform = this.parentObject2D.getComponent(TransformComponent.class).getTransform();
                 transform.setParentTransform(null);
@@ -370,6 +352,7 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
         }
         this.parentObject2D = parentObject2D;
         if(parentObject2D != null) {
+            // выполняю некоторые преобразования, чтобы этот объект встал на нужную локальную позицию
             this.parentObject2DID = parentObject2D.getID();
             Transform transform = getComponent(TransformComponent.class).getTransform();
             Transform parentTransform = this.parentObject2D.getComponent(TransformComponent.class).getTransform();
@@ -455,7 +438,6 @@ public class Object2D extends CommonDrawableObjectsParameters implements Seriali
     @Override
     protected synchronized void finalize()
     {
-        SceneManager.currentSceneManager.getCurrentScene2D().objectsDestroyed++;
-        System.out.println("Objects destroyed: " + SceneManager.currentSceneManager.getCurrentScene2D().objectsDestroyed + ", name: " + name);
+        System.out.println("Object destroyed: " + name);
     }
 }

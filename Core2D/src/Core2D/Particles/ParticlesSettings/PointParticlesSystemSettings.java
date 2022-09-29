@@ -46,13 +46,11 @@ public class PointParticlesSystemSettings extends ParticlesSettings
     public void setMinCreateImpulse(Vector2f minCreateImpulse)
     {
         this.minCreateImpulse = minCreateImpulse;
-        minCreateImpulse = null;
     }
 
     public Vector2f getMaxCreateImpulse() { return maxCreateImpulse; }
     public void setMaxCreateImpulse(Vector2f maxCreateImpulse)
     {
         this.maxCreateImpulse = maxCreateImpulse;
-        maxCreateImpulse = null;
     }
 }

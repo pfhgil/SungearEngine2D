@@ -1,5 +1,6 @@
 package Core2D.Texture2D;
 
+// режимы отрисовки текстуры
 public class TextureDrawModes
 {
     public static final int NO_TEXTURE = 0;

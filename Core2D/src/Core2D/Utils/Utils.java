@@ -60,26 +60,13 @@ public class Utils
 
     public static ByteBuffer resourceToByteBuffer(InputStream inputStream) throws IOException
     {
-        //BufferedInputStream bfi = new BufferedInputStream(inputStream);
+        // создаю массив байтов и читаю байты из инпут стрима
         byte[] bytes = IOUtils.toByteArray(inputStream);
+        // создаю байт буффер размером с длину массива байтов
         ByteBuffer buffer = BufferUtils.createByteBuffer(bytes.length);
         buffer.put(bytes);
+        // перевожу буффер на чтение
         buffer.flip();
-        /*
-        // создаю buffer с размером fileChannel.size() + 1 (+1 для символа конца строки)
-        ByteBuffer buffer = BufferUtils.createByteBuffer(bfi.available() + 1);
-
-        byte[] b = new byte[bfi.available() + 1];
-
-        bfi.read(b);
-        buffer.put(b);
-
-        // переключение в ввод/вывод
-        buffer.flip();
-
-        b = null;
-
-         */
 
         return buffer;
     }

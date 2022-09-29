@@ -284,6 +284,7 @@ public class Scene2D
         }
     }
 
+    // применяет временные значения скриптов объектов, хранящиеся только при выполнении программы
     public void applyScriptsTempValues()
     {
         scriptSystem.applyTempValues();
@@ -297,6 +298,7 @@ public class Scene2D
                     if (scriptComponents.size() != 0) {
                         for (ScriptComponent scriptComponent : scriptComponents) {
                             long lastModified = new File(scriptComponent.getScript().getPath() + ".java").lastModified();
+                            // установка времени  последней  модификации на скрипт
                             scriptComponent.getScript().setLastModified(lastModified);
                         }
                     }

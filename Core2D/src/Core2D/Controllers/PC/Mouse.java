@@ -120,8 +120,6 @@ public class Mouse
 
         currentX = tmp.x;
 
-        //float currentY = originalMousePosition.y - sceneViewWindowScreenPosition.y;
-        //currentY = ((currentY / sceneViewWindowSize.y) * 2.0f - 1.0f);
         float currentY = mousePosition.y / Graphics.getScreenSize().y * 2.0f - 1.0f;
 
         tmp = new Vector4f(0, currentY, 0, 1);

@@ -24,8 +24,6 @@ public class BufferLayout
         attributes.addAll(Arrays.asList(_attributes));
 
         calcOffsetAndStride();
-
-        _attributes = null;
     }
 
     // вычисляю offset и stride
