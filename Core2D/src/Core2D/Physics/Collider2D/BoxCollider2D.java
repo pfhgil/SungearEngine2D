@@ -2,11 +2,16 @@ package Core2D.Physics.Collider2D;
 
 import Core2D.Physics.PhysicsWorld;
 import Core2D.Physics.Rigidbody2D;
+import Core2D.Scene2D.SceneManager;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Fixture;
 import org.joml.Vector2f;
 
+/**
+ * A square physical object required to detect intersections with other objects in the physical world. Use only with Rigidbody2D!
+ * @see PhysicsWorld
+ */
 public class BoxCollider2D
 {
     private transient Rigidbody2D rigidbody2D;
@@ -14,12 +19,6 @@ public class BoxCollider2D
 
     private Vector2f scale = new Vector2f(1.0f, 1.0f);
     private Vector2f offset = new Vector2f();
-
-    public void destroy()
-    {
-        rigidbody2D = null;
-        fixture = null;
-    }
 
     public void set(BoxCollider2D boxCollider2D)
     {

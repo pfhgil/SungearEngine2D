@@ -678,7 +678,7 @@ public class InspectorView extends View
                                 } else if(cs.isAssignableFrom(Camera2D.class)) {
                                     ImString string = new ImString("null");
                                     if(scriptComponent.getScript().getFieldValue(field) != null) {
-                                        string.set(((Camera2D) scriptComponent.getScript().getFieldValue(field)).getName(), true);
+                                        string.set(((Camera2D) scriptComponent.getScript().getFieldValue(field)).name, true);
                                     }
                                     ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
                                     if(ImGui.beginDragDropTarget()) {
@@ -754,7 +754,7 @@ public class InspectorView extends View
             ImGui.pushID("Camera2DName");
             {
                 if (ImGui.inputText("", inspectingObjectName)) {
-                    camera2D.setName(inspectingObjectName.get());
+                    camera2D.name = inspectingObjectName.get();
                     isEditing = true;
                 }
             }
@@ -891,7 +891,7 @@ public class InspectorView extends View
         } else if(currentInspectingObject instanceof Camera2D) {
             Camera2D camera2D = (Camera2D) currentInspectingObject;
 
-            inspectingObjectName.set(camera2D.getName(), true);
+            inspectingObjectName.set(camera2D.name, true);
 
             Transform transform = camera2D.getTransform();
             if (transform != null) {

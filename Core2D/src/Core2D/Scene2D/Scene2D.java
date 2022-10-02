@@ -2,13 +2,13 @@ package Core2D.Scene2D;
 
 import Core2D.Camera2D.Camera2D;
 import Core2D.Camera2D.CamerasManager;
-import Core2D.CommonParameters.CommonDrawableObjectsParameters;
+import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.ScriptComponent;
 import Core2D.Graphics.Graphics;
 import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
 import Core2D.Log.Log;
-import Core2D.Object2D.Object2D;
+import Core2D.Drawable.Object2D;
 import Core2D.Physics.PhysicsWorld;
 import Core2D.Scripting.ScriptSceneObject;
 import Core2D.Scripting.ScriptTempValue;
@@ -181,7 +181,7 @@ public class Scene2D
     {
         for(int i = 0; i < layering.getLayers().size(); i++) {
             for(int k = 0; k < layering.getLayers().get(i).getRenderingObjects().size(); k++) {
-                CommonDrawableObjectsParameters objParams = (CommonDrawableObjectsParameters) layering.getLayers().get(k).getRenderingObjects().get(k).getObject();
+                Drawable objParams = (Drawable) layering.getLayers().get(k).getRenderingObjects().get(k).getObject();
                 if(tag.getName().equals(objParams.getTag().getName())) {
                     objParams.setTag("default");
                 }
@@ -267,7 +267,7 @@ public class Scene2D
                                     scriptTempValue.setValue(new WrappedObject(new ScriptSceneObject(object2D.getID(), object2D.getName(), SceneObjectType.TYPE_OBJECT2D)));
                                 } else if(value instanceof Camera2D) {
                                     Camera2D camera2D = (Camera2D) value;
-                                    scriptTempValue.setValue(new WrappedObject(new ScriptSceneObject(camera2D.getID(), camera2D.getName(), SceneObjectType.TYPE_CAMERA2D)));
+                                    scriptTempValue.setValue(new WrappedObject(new ScriptSceneObject(camera2D.getID(), camera2D.name, SceneObjectType.TYPE_CAMERA2D)));
                                 } else {
                                     scriptTempValue.setValue(new WrappedObject(scriptComponent.getScript().getFieldValue(field)));
                                 }

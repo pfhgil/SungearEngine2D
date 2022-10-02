@@ -1,0 +1,145 @@
+{
+  "name": "lvl0",
+  "scenePath": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\test10\\Scenes\\lvl0.sgs",
+  "layering": {
+    "layers": [
+      {
+        "renderingObjects": [
+          {
+            "type": "Core2D.Object2D.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": 2.016037,
+                        "y": -8.356873
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 4.17,
+                        "y": 4.52
+                      },
+                      "centre": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    }
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\test10\\Resources\\textures\\ferapont.png",
+                      "param": 33071,
+                      "textureBlock": 33984
+                    },
+                    "active": true,
+                    "textureDrawMode": 1,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ]
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "isUIElement": false,
+              "parentObject2DID": -1,
+              "childrenObjectsID": [],
+              "name": "ferapont",
+              "active": true,
+              "layerName": "default",
+              "tag": {
+                "name": "default"
+              },
+              "ID": 3
+            }
+          }
+        ],
+        "ID": 0,
+        "name": "default"
+      }
+    ]
+  },
+  "cameras2D": [
+    {
+      "transform": {
+        "position": {
+          "x": 0.0,
+          "y": 0.0
+        },
+        "rotation": 0.0,
+        "scale": {
+          "x": 1.0,
+          "y": 1.0
+        },
+        "centre": {
+          "x": 0.0,
+          "y": 0.0
+        }
+      },
+      "name": "default",
+      "viewportSize": {
+        "x": 1600.0,
+        "y": 837.0
+      },
+      "ID": 741479282
+    }
+  ],
+  "sceneMainCamera2D": {
+    "transform": {
+      "position": {
+        "x": 0.0,
+        "y": 0.0
+      },
+      "rotation": 0.0,
+      "scale": {
+        "x": 1.0,
+        "y": 1.0
+      },
+      "centre": {
+        "x": 0.0,
+        "y": 0.0
+      }
+    },
+    "name": "default",
+    "viewportSize": {
+      "x": 1600.0,
+      "y": 837.0
+    },
+    "ID": 741479282
+  },
+  "screenClearColor": {
+    "x": 1.0,
+    "y": 1.0,
+    "z": 1.0,
+    "w": 1.0
+  },
+  "tags": [
+    {
+      "name": "default"
+    }
+  ],
+  "scriptSystem": {
+    "scriptTempValuesList": []
+  },
+  "maxObjectID": 6,
+  "inBuild": false,
+  "isMainScene2D": false
+}

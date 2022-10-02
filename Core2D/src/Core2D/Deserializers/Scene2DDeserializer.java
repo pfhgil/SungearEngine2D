@@ -1,13 +1,19 @@
 package Core2D.Deserializers;
 
 import Core2D.Camera2D.Camera2D;
+import Core2D.Drawable.Drawable;
+import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
+import Core2D.Log.Log;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Systems.ScriptSystem;
+import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.Tag;
+import Core2D.Utils.WrappedObject;
 import com.google.gson.*;
 import org.joml.Vector4f;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Type;
 
 public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
@@ -36,6 +42,24 @@ public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
         boolean isMainScene2D = false;
         if(isMainScene2DElem != null) {
             isMainScene2D = jsonObject.get("isMainScene2D").getAsBoolean();
+        }
+
+        for(Layer layer : layering.getLayers()) {
+            for(WrappedObject wrappedObject : layer.getRenderingObjects()) {
+                try {
+                    Drawable drawable = (Drawable) wrappedObject.getObject();
+
+                    Field layerField = drawable.getClass().getSuperclass().getDeclaredField("layer");
+                    layerField.setAccessible(true);
+                    layerField.set(drawable, layer);
+
+                    Field layerNameField = drawable.getClass().getSuperclass().getDeclaredField("layerName");
+                    layerNameField.setAccessible(true);
+                    layerNameField.set(drawable, layer.getName());
+                } catch (NoSuchFieldException | IllegalAccessException e) {
+                    Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                }
+            }
         }
 
         Scene2D scene2D = new Scene2D(name);

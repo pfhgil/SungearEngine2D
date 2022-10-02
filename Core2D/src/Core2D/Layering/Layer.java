@@ -1,9 +1,9 @@
 package Core2D.Layering;
 
-import Core2D.CommonParameters.CommonDrawableObjectsParameters;
+import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Graphics.Graphics;
-import Core2D.Object2D.Object2D;
+import Core2D.Drawable.Object2D;
 import Core2D.Texture2D.TextureDrawModes;
 import Core2D.Utils.WrappedObject;
 import org.joml.Vector4f;
@@ -63,8 +63,6 @@ public class Layer
                         pixelColor.w != 0.0f) {
                     return object2D;
                 }
-
-                object2D = null;
             }
         }
 
@@ -76,7 +74,7 @@ public class Layer
         Iterator<WrappedObject> layerObjectIterator = renderingObjects.iterator();
         while(layerObjectIterator.hasNext()) {
             WrappedObject wrappedObject = layerObjectIterator.next();
-            CommonDrawableObjectsParameters objParams = (CommonDrawableObjectsParameters) wrappedObject.getObject();
+            Drawable objParams = (Drawable) wrappedObject.getObject();
             if(objParams.isShouldDestroy()) {
                 if(wrappedObject.getObject() instanceof Object2D) {
                     Object2D object2D = (Object2D) wrappedObject.getObject();
@@ -99,7 +97,7 @@ public class Layer
         Iterator<WrappedObject> layerObjectIterator = renderingObjects.iterator();
         while(layerObjectIterator.hasNext()) {
             WrappedObject wrappedObject = layerObjectIterator.next();
-            CommonDrawableObjectsParameters objParams = (CommonDrawableObjectsParameters) wrappedObject.getObject();
+            Drawable objParams = (Drawable) wrappedObject.getObject();
             objParams.destroy();
             wrappedObject.setObject(null);
             layerObjectIterator.remove();

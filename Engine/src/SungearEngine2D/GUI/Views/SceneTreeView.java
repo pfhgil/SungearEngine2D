@@ -75,7 +75,7 @@ public class SceneTreeView extends View
                         if(currentSceneManager.getCurrentScene2D().getCameras2D() != null) {
                             for (int i = 0; i < currentSceneManager.getCurrentScene2D().getCameras2D().size(); i++) {
                                 ImGui.pushID("Scene2DCamera2D_" + s);
-                                boolean opened = ImGui.treeNodeEx(currentSceneManager.getCurrentScene2D().getCameras2D().get(i).getName(), ImGuiTreeNodeFlags.Bullet);
+                                boolean opened = ImGui.treeNodeEx(currentSceneManager.getCurrentScene2D().getCameras2D().get(i).name, ImGuiTreeNodeFlags.Bullet);
                                 if (ImGui.isItemHovered()) {
                                     if (ImGui.isMouseClicked(ImGuiMouseButton.Right)) {
                                         MainView.getInspectorView().setCurrentInspectingObject(currentSceneManager.getCurrentScene2D().getCameras2D().get(i));

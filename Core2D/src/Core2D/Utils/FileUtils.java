@@ -12,26 +12,10 @@ public class FileUtils
 {
     public static File findFile(File dir, String parentName, String name) {
         File parentFile = findFile(dir, parentName);
-        //File[] dirlist  = dir.listFiles();
-
-        /*
-        if(dirlist != null) {
-            for (int i = 0; i < dirlist.length; i++) {
-                if (dirlist[i].isDirectory()) {
-                    result = findFile(dirlist[i], name);
-                    if (result != null) break; // recursive call found the file; terminate the loop
-                } if (dirlist[i].getName().matches(name) && dirlist[i].getParentFile().getName().matches(parentName)) {
-                    return dirlist[i]; // found the file; return it
-                }
-            }
-        }
-
-         */
         if(parentFile != null) {
             return new File(parentFile.getPath() + "\\" + name);
         }
         return null;
-        //return result; // will return null if we didn't find anything
     }
 
     public static String getRelativePath(File file, File folder)
@@ -74,9 +58,6 @@ public class FileUtils
 
             objectOutputStream.close();
             fileInputStream.close();
-
-            objectOutputStream = null;
-            fileInputStream = null;
         } catch (IOException | ClassNotFoundException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -95,7 +76,6 @@ public class FileUtils
             obj = objectOutputStream.readObject();
 
             objectOutputStream.close();
-            objectOutputStream = null;
         } catch (IOException | ClassNotFoundException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -114,9 +94,6 @@ public class FileUtils
 
             oos.close();
             fos.close();
-
-            oos = null;
-            fos = null;
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -136,10 +113,8 @@ public class FileUtils
                 stringBuilder.append(scanner.next()); // соединяю fileText с scanner.next(). scanner.next - следующая линия
             }
             scanner.close();
-            scanner = null;
         } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-            //System.out.println("[FILE_OPERATIONS_READ_ALL_LINES] Error while reading all file (name: " + file.getName() + ") lines: " + e.toString());
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);;
         }
 
         return stringBuilder.toString();
@@ -163,12 +138,8 @@ public class FileUtils
 
             bufferedReader.close();
             inputStream.close();
-
-            bufferedReader = null;
-            inputStream = null;
         } catch (Exception e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-            //System.out.println("[FILE_OPERATIONS_READ_ALL_LINES] Error while reading all file (name: " + inputStream.toString() + ") lines: " + e.toString());
         }
 
         return stringBuilder.toString();

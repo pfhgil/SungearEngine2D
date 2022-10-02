@@ -41,24 +41,18 @@ public class TextureComponent extends Component implements NonDuplicated
 
         object2D.getShaderProgram().unBind();
 
-        object2D = null;
-
-        if(this.texture2D.getTextureHandler() != ((Texture2D) AssetManager.getAsset("whiteTexture").getAsset()).getTextureHandler()) {
+        if(this.texture2D.getTextureHandler() != ((Texture2D) AssetManager.getAsset("whiteTexture").assetObject).getTextureHandler()) {
             this.texture2D.destroy();
         }
-        this.texture2D = null;
-
-        UV = null;
     }
 
     @Override
     public void set(Component component)
     {
         if(component instanceof TextureComponent) {
-            if (this.texture2D.getTextureHandler() != ((Texture2D) AssetManager.getAsset("whiteTexture").getAsset()).getTextureHandler()) {
+            if (this.texture2D.getTextureHandler() != ((Texture2D) AssetManager.getAsset("whiteTexture").assetObject).getTextureHandler()) {
                 this.texture2D.destroy();
             }
-            this.texture2D = null;
             this.texture2D = new Texture2D();
 
             TextureComponent textureComponent = (TextureComponent) component;
@@ -67,8 +61,6 @@ public class TextureComponent extends Component implements NonDuplicated
             setActive(textureComponent.isActive());
             setUV(textureComponent.getUV());
         }
-
-        component = null;
     }
 
     @Override
@@ -109,8 +101,6 @@ public class TextureComponent extends Component implements NonDuplicated
         this.UV = UV;
 
         updateUV();
-
-        UV = null;
     }
     public void setUV(Vector2f bottomLeft, Vector2f upLeft, Vector2f upRight, Vector2f bottomRight)
     {
@@ -127,11 +117,6 @@ public class TextureComponent extends Component implements NonDuplicated
         UV[7] = bottomRight.y;
 
         updateUV();
-
-        bottomLeft = null;
-        upLeft = null;
-        upRight = null;
-        bottomRight = null;
     }
     public void setUV(PositionsQuad positionsQuad)
     {
@@ -155,8 +140,6 @@ public class TextureComponent extends Component implements NonDuplicated
         UV[7] = resP3.y;
 
         updateUV();
-
-        positionsQuad = null;
     }
 
     public void updateUV()
@@ -176,7 +159,6 @@ public class TextureComponent extends Component implements NonDuplicated
 
             VertexBufferObject vbo = object2D.getVertexArrayObject().getVBOs().get(0);
             object2D.getVertexArrayObject().updateVBO(vbo, object2D.getData());
-            vbo = null;
         }
     }
 }

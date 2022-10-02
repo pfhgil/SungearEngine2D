@@ -5,7 +5,7 @@ import Core2D.Component.Components.CircleCollider2DComponent;
 import Core2D.Component.Components.Rigidbody2DComponent;
 import Core2D.Component.Components.ScriptComponent;
 import Core2D.Log.Log;
-import Core2D.Object2D.Object2D;
+import Core2D.Drawable.Object2D;
 import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.Physics.Collider2D.CircleCollider2D;
 import Core2D.Scene2D.SceneManager;

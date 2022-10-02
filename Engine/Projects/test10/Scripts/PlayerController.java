@@ -38,7 +38,7 @@ public class PlayerController
             Transform playerTransform = player.getComponent(TransformComponent.class).getTransform();
 
             if(player != null && playerCamera != null) {
-                playerCamera.follow(playerTransform, deltaTime);
+                playerCamera.follow(playerTransform);
             }
 
             if(Keyboard.keyDown(GLFW.GLFW_KEY_D)) {

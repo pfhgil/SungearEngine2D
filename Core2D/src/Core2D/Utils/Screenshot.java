@@ -57,6 +57,7 @@ public class Screenshot
         }
     }
 
+    @Deprecated
     // сделать скрин и сохранить по пути toPath
     public static void take(String toDir, boolean applyBlur, int radius, float brightnessCoeff)
     {

@@ -1,6 +1,7 @@
 package Core2D.Physics;
 
 import Core2D.Scene2D.Scene2D;
+import Core2D.Scene2D.SceneManager;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;
@@ -34,8 +35,9 @@ public class Rigidbody2D
 
     public void destroy()
     {
-        body = null;
-        scene2D = null;
+        if(SceneManager.currentSceneManager.getCurrentScene2D() != null && SceneManager.currentSceneManager.getCurrentScene2D().getPhysicsWorld() != null) {
+            SceneManager.currentSceneManager.getCurrentScene2D().getPhysicsWorld().destroyBody(body);
+        }
     }
 
     public float getDensity() { return density; }

@@ -2,8 +2,8 @@ package Core2D.Utils;
 
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Log.Log;
-import Core2D.Object2D.Object2D;
-import Core2D.Object2D.Transform;
+import Core2D.Drawable.Object2D;
+import Core2D.Transform.Transform;
 import org.apache.commons.io.IOUtils;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;

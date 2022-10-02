@@ -1,12 +1,12 @@
 package Core2D.Prefab;
 
-import Core2D.CommonParameters.CommonDrawableObjectsParameters;
+import Core2D.Drawable.Drawable;
 import Core2D.Component.Component;
 import Core2D.Deserializers.ComponentDeserializer;
 import Core2D.Deserializers.Object2DDeserializer;
 import Core2D.Deserializers.PrefabDeserializer;
 import Core2D.Layering.Layer;
-import Core2D.Object2D.Object2D;
+import Core2D.Drawable.Object2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.FileUtils;
 import com.google.gson.Gson;
@@ -60,7 +60,7 @@ public class Prefab
     public void applyObjectsToScene()
     {
         if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-            CommonDrawableObjectsParameters prefParams = (CommonDrawableObjectsParameters) prefabObject;
+            Drawable prefParams = (Drawable) prefabObject;
             Object2D parentObject = (Object2D) prefabObject;
             Layer layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer(prefParams.getLayerName());
             if(layer == null) {
@@ -71,8 +71,8 @@ public class Prefab
             prefParams.setLayer(layer);
             parentObject.getChildrenObjectsID().clear();
             for (Prefab prefab : childrenObjects) {
-                if (prefab.getPrefabObject() instanceof CommonDrawableObjectsParameters) {
-                    CommonDrawableObjectsParameters params = (CommonDrawableObjectsParameters) prefab.getPrefabObject();
+                if (prefab.getPrefabObject() instanceof Drawable) {
+                    Drawable params = (Drawable) prefab.getPrefabObject();
                     layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer(params.getLayerName());
                     if(layer == null) {
                         layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default");
@@ -92,7 +92,7 @@ public class Prefab
         for (Prefab prefab : pref.getChildrenObjects()) {
             Object2D parentObj = (Object2D) pref.getPrefabObject();
             if (prefab.getPrefabObject() instanceof Object2D) {
-                CommonDrawableObjectsParameters params = (CommonDrawableObjectsParameters) prefab.getPrefabObject();
+                Drawable params = (Drawable) prefab.getPrefabObject();
                 Layer layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer(params.getLayerName());
                 if(layer == null) {
                     layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default");

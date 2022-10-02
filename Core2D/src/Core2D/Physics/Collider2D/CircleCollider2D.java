@@ -14,20 +14,12 @@ public class CircleCollider2D
     private Vector2f offset = new Vector2f(0.0f, 0.0f);
     private float radius = 50.0f;
 
-    public void destroy()
-    {
-        rigidbody2D = null;
-        fixture = null;
-    }
-
     public void set(CircleCollider2D circleCollider2D)
     {
         this.offset = null;
 
         setOffset(circleCollider2D.getOffset());
         setRadius(circleCollider2D.getRadius());
-
-        circleCollider2D = null;
     }
 
     private void updateShape()

@@ -1,12 +1,10 @@
 package Core2D.Scripting;
 
 import Core2D.Camera2D.Camera2D;
-import Core2D.Component.Component;
 import Core2D.Deserializers.*;
 import Core2D.Log.Log;
-import Core2D.Object2D.Object2D;
+import Core2D.Drawable.Object2D;
 import Core2D.Scene2D.SceneManager;
-import Core2D.Scene2D.SceneObjectType;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.WrappedObject;
 import com.google.gson.Gson;
@@ -33,7 +31,7 @@ public class ScriptTempValue
                     Gson gson = new GsonBuilder()
                             .setPrettyPrinting()
                             .registerTypeAdapter(WrappedObject.class, new WrappedObjectDeserializer())
-                            .registerTypeAdapter(ScriptSceneObject.class, new ScriptSceneObjectDeserializer())
+                            //.registerTypeAdapter(ScriptSceneObject.class, new ScriptSceneObjectDeserializer())
                             .create();
 
                     JsonObject jsonObject = gson.toJsonTree(value).getAsJsonObject();

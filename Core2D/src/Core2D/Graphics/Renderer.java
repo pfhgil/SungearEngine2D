@@ -1,21 +1,21 @@
 package Core2D.Graphics;
 
-import Core2D.AtlasDrawing.AtlasDrawing;
+import Core2D.Drawable.AtlasDrawing;
 import Core2D.Camera2D.CamerasManager;
-import Core2D.CommonParameters.CommonDrawableObjectsParameters;
+import Core2D.Drawable.Drawable;
 import Core2D.Component.Component;
 import Core2D.Component.Components.TextureComponent;
-import Core2D.Instancing.ObjectsInstancing;
-import Core2D.Instancing.Primitives.LinesInstancing;
+import Core2D.Drawable.Instancing.ObjectsInstancing;
+import Core2D.Drawable.Instancing.LinesInstancing;
 import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
-import Core2D.Object2D.Object2D;
-import Core2D.Primitives.Line2D;
+import Core2D.Drawable.Object2D;
+import Core2D.Drawable.Primitives.Line2D;
 import Core2D.ShaderUtils.ShaderUtils;
-import Core2D.UI.Button.Button;
-import Core2D.UI.InputField.InputField;
-import Core2D.UI.ProgressBar.ProgressBar;
-import Core2D.UI.Text.Text;
+import Core2D.Drawable.UI.Button.Button;
+import Core2D.Drawable.UI.InputField.InputField;
+import Core2D.Drawable.UI.ProgressBar.ProgressBar;
+import Core2D.Drawable.UI.Text.Text;
 import Core2D.Utils.WrappedObject;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;
@@ -273,7 +273,7 @@ public class Renderer
     public void render(WrappedObject wrappedObject)
     {
         Object object = wrappedObject.getObject();
-        if(object instanceof CommonDrawableObjectsParameters && ((CommonDrawableObjectsParameters) object).isActive()) {
+        if(object instanceof Drawable && ((Drawable) object).isActive()) {
             if(object instanceof Line2D) {
                 render((Line2D) object);
             } else if(object instanceof Object2D) {

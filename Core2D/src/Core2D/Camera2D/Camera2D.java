@@ -1,47 +1,69 @@
 package Core2D.Camera2D;
 
-import Core2D.Controllers.PC.Mouse;
 import Core2D.Core2D.Core2D;
-import Core2D.Graphics.Graphics;
-import Core2D.Object2D.Transform;
+import Core2D.Transform.Transform;
 import Core2D.Scene2D.SceneManager;
-import Core2D.Utils.MathUtils;
-import Core2D.Utils.MatrixUtils;
 import Core2D.Utils.Utils;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 
 import java.io.Serializable;
 
-// TODO: сделать id для камеры
-public class Camera2D implements Serializable, AutoCloseable
+/**
+ * Camera2D class. The camera has no components yet
+ */
+public class Camera2D implements Serializable
 {
-    private Transform transform;
+    /**
+     * Camera transform.
+     */
+    private Transform transform = new Transform();
 
-    private String name = "default";
+    /**
+     * Camera name. Default name is "default"
+     */
+    public String name = "default";
 
+    /**
+     * Camera viewport size.
+     */
     private Vector2f viewportSize = new Vector2f(Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y);
 
+    /**
+     * Camera projection matrix.
+     * By default, it is: ortho2D(left: -viewportSize.x / 2.0f, right: viewportSize.x / 2.0f, bottom: -viewportSize.y / 2.0f, top: viewportSize.y / 2.0f)
+     */
     private transient Matrix4f projectionMatrix = new Matrix4f().ortho2D(-viewportSize.x / 2.0f, viewportSize.x / 2.0f, -viewportSize.y / 2.0f, viewportSize.y / 2.0f);
 
+    /**
+     * Camera ID on scene
+     */
     private int ID;
 
+    /**
+     * Camera constructor. Initializes transform and ID.
+     * Шf the current scene is null,
+     * then ID is equal to a random number from 0 to 1000000000,
+     * in another case ID is equal to the ID of the last object on the scene + 1.
+     */
     public Camera2D()
     {
-        transform = new Transform();
-        //transform.getCustomMatrix().ortho(0, viewportSize.x, 0, viewportSize.y, 0.0f, 100.0f);
-
-        if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+        if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
             SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID++;
             ID = SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID;
         } else {
             ID = Utils.getRandom(0, 1000000000);
         }
-
-        System.out.println("camera id: " + ID);
     }
 
-    public void follow(Transform transform, float deltaTime)
+    /**
+     * The camera follows the transform position.
+     * New camera positio
+     * //@param transform Someone`s transform.
+     */
+
+    /*
+    public void follow(Transform transform)
     {
         Vector2f pos = MatrixUtils.getPosition(transform.getResultModelMatrix());
 
@@ -63,10 +85,10 @@ public class Camera2D implements Serializable, AutoCloseable
         this.transform.translate(difference);
     }
 
-    public Transform getTransform() { return transform; }
+     */
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+
+    public Transform getTransform() { return transform; }
 
     public Vector2f getViewportSize() { return viewportSize; }
     public void setViewportSize(Vector2f viewportSize)
@@ -79,10 +101,4 @@ public class Camera2D implements Serializable, AutoCloseable
     public Matrix4f getProjectionMatrix() { return projectionMatrix; }
 
     public int getID() { return ID; }
-    public void setID(int ID) { this.ID = ID; }
-
-    @Override
-    public void close() throws Exception {
-
-    }
 }

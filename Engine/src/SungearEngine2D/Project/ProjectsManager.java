@@ -1,5 +1,9 @@
 package SungearEngine2D.Project;
 
+import Core2D.AssetManager.Asset;
+import Core2D.AssetManager.AssetManager;
+import Core2D.AtlasDrawing.AtlasDrawing;
+import Core2D.Camera2D.Camera2D;
 import Core2D.Utils.FileUtils;
 import SungearEngine2D.GUI.Views.ResourcesView;
 

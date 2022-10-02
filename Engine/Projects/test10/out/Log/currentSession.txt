@@ -1,44 +1,16 @@
-[#FFFFFF] 2022/09/27 22:32:42 | [#008000] Log directory was founded!
-[#FFFFFF] 2022/09/27 22:32:42 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/09/27 22:32:43 | [#FFFFFF] scene manager code: {
+[#FFFFFF] 2022/10/01 21:31:19 | [#008000] Log directory was founded!
+[#FFFFFF] 2022/10/01 21:31:19 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/10/01 21:31:21 | [#FFFFFF] scene manager code: {
   "scene2DStoredValues": [
     {
-      "path": "/Scenes/lvl1.sgs",
+      "path": "/Scenes/lvl0.sgs",
       "inBuild": true,
       "isMainScene2D": true
-    },
-    {
-      "path": "/Scenes/lvl2.sgs",
-      "inBuild": true,
-      "isMainScene2D": false
     }
   ],
   "mainScene2DPath": ""
 }
-[#FFFFFF] 2022/09/27 22:32:43 | [#FF0000] goo!!!!1
-[#FFFFFF] 2022/09/27 22:32:43 | [#FF0000] goo!!!!12222
-[#FFFFFF] 2022/09/27 22:32:43 | [#FF0000] goo!!!234324
-[#FFFFFF] 2022/09/27 22:32:43 | [#FFFFFF] Texture source: /Resources/Resources/textures/ferapont.png
-[#FFFFFF] 2022/09/27 22:32:43 | [#FFFFFF] Texture source: /Resources/Resources/textures/bg2.png
-[#FFFFFF] 2022/09/27 22:32:43 | [#FFFFFF] Script dirPath: /Resources/Scripts, baseName: PlayerController
-[#FFFFFF] 2022/09/27 22:32:43 | [#FFFFFF] second
-[#FFFFFF] 2022/09/27 22:32:43 | [#FF0000] buffer length: 1890
-[#FFFFFF] 2022/09/27 22:32:43 | [#FF0000] bytes length: 1890
-[#FFFFFF] 2022/09/27 22:32:43 | [#FFFFFF] path: /Resources/Scripts/PlayerController.class
-[#FFFFFF] 2022/09/27 22:32:43 | [#FFFFFF] Texture source: /Resources/Resources/textures/bg2.png
-[#FFFFFF] 2022/09/27 22:32:43 | [#FFFFFF] Texture source: /Resources/Resources/textures/tanks/ussr/is7/is7_hull.png
-[#FFFFFF] 2022/09/27 22:32:43 | [#FFFFFF] Script dirPath: /Resources/Scripts, baseName: TankController
-[#FFFFFF] 2022/09/27 22:32:43 | [#FFFFFF] second
-[#FFFFFF] 2022/09/27 22:32:43 | [#FF0000] buffer length: 3476
-[#FFFFFF] 2022/09/27 22:32:43 | [#FF0000] bytes length: 3476
-[#FFFFFF] 2022/09/27 22:32:43 | [#FFFFFF] path: /Resources/Scripts/TankController.class
-[#FFFFFF] 2022/09/27 22:32:43 | [#FFFFFF] Texture source: /Resources/Resources/textures/tanks/ussr/is7/is7_tower.png
-[#FFFFFF] 2022/09/27 22:32:43 | [#FFFFFF] Texture source: /Resources/Resources/textures/bg2.png
-[#FFFFFF] 2022/09/27 22:33:02 | [#FFFFFF] Texture source: /Resources/Resources/textures/ferapont.png
-[#FFFFFF] 2022/09/27 22:33:02 | [#FFFFFF] Texture source: /Resources/Resources/textures/tanks/ussr/is7/is7_hull.png
-[#FFFFFF] 2022/09/27 22:33:02 | [#FFFFFF] Script dirPath: /Resources/Scripts, baseName: TankController
-[#FFFFFF] 2022/09/27 22:33:02 | [#FFFFFF] second
-[#FFFFFF] 2022/09/27 22:33:02 | [#FF0000] buffer length: 3476
-[#FFFFFF] 2022/09/27 22:33:02 | [#FF0000] bytes length: 3476
-[#FFFFFF] 2022/09/27 22:33:02 | [#FFFFFF] path: /Resources/Scripts/TankController.class
-[#FFFFFF] 2022/09/27 22:33:02 | [#FFFFFF] Texture source: /Resources/Resources/textures/tanks/ussr/is7/is7_tower.png
+[#FFFFFF] 2022/10/01 21:31:21 | [#FF0000] goo!!!!1
+[#FFFFFF] 2022/10/01 21:31:21 | [#FF0000] goo!!!!12222
+[#FFFFFF] 2022/10/01 21:31:21 | [#FF0000] goo!!!234324
+[#FFFFFF] 2022/10/01 21:31:21 | [#FFFFFF] Texture source: /out/resources/Resources/textures/ferapont.png

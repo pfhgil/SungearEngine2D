@@ -1,7 +1,7 @@
 package Core2D.Particles;
 
-import Core2D.Instancing.ObjectsInstancing;
-import Core2D.Object2D.Object2D;
+import Core2D.Drawable.Object2D;
+import Core2D.Drawable.Instancing.ObjectsInstancing;
 import Core2D.Particles.ParticlesSettings.ParticlesSettings;
 import Core2D.Timer.Timer;
 import Core2D.Timer.TimerCallback;

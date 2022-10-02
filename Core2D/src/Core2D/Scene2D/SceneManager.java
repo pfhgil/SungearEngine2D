@@ -1,15 +1,11 @@
 package Core2D.Scene2D;
 
-import Core2D.Camera2D.Camera2D;
 import Core2D.Component.Component;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
 import Core2D.Deserializers.*;
-import Core2D.Layering.Layer;
-import Core2D.Layering.Layering;
 import Core2D.Log.Log;
-import Core2D.Object2D.Object2D;
-import Core2D.Scripting.ScriptSceneObject;
+import Core2D.Drawable.Object2D;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.WrappedObject;
@@ -39,15 +35,9 @@ public class SceneManager
     private static Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .registerTypeAdapter(WrappedObject.class, new WrappedObjectDeserializer())
-            .registerTypeAdapter(Camera2D.class, new Camera2DDeserializer())
             .registerTypeAdapter(Component.class, new ComponentDeserializer())
             .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
-            .registerTypeAdapter(ScriptSceneObject.class, new ScriptSceneObjectDeserializer())
-            .registerTypeAdapter(Layer.class, new LayerDeserializer())
-            .registerTypeAdapter(Layering.class, new LayeringDeserializer())
             .registerTypeAdapter(Scene2D.class, new Scene2DDeserializer())
-            .registerTypeAdapter(SceneManager.class, new SceneManagerDeserializer())
-            .registerTypeAdapter(Scene2DStoredValues.class, new Scene2DStoredValuesDeserializer())
             .create();
 
     public static SceneManager currentSceneManager = new SceneManager();

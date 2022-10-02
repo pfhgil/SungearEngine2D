@@ -1,10 +1,9 @@
 package Core2D.Deserializers;
 
 import Core2D.Log.Log;
-import Core2D.Object2D.Object2D;
+import Core2D.Drawable.Object2D;
 import Core2D.Prefab.Prefab;
 import Core2D.Utils.ExceptionsUtils;
-import Core2D.Utils.WrappedObject;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;

@@ -7,7 +7,7 @@ import Core2D.Physics.Rigidbody2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.ExceptionsUtils;
 
-public class Rigidbody2DComponent extends Component implements NonDuplicated, AutoCloseable
+public class Rigidbody2DComponent extends Component implements NonDuplicated
 {
     private Rigidbody2D rigidbody2D;
 
@@ -19,20 +19,9 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated, Au
     @Override
     public void destroy()
     {
-        rigidbody2D.getBody().setUserData(null);
-        rigidbody2D.getScene2D().getPhysicsWorld().destroyBody(rigidbody2D.getBody());
         rigidbody2D.destroy();
-        rigidbody2D = null;
         if(object2D.getComponent(TransformComponent.class) != null) {
             object2D.getComponent(TransformComponent.class).getTransform().setRigidbody2D(null);
-        }
-
-        object2D = null;
-
-        try {
-            close();
-        } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
 
@@ -54,9 +43,4 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated, Au
     }
 
     public Rigidbody2D getRigidbody2D() { return rigidbody2D; }
-
-    @Override
-    public void close() throws Exception {
-
-    }
 }

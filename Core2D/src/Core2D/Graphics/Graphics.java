@@ -6,7 +6,7 @@ import Core2D.Controllers.PC.Mouse;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
 import Core2D.Log.Log;
-import Core2D.Object2D.Object2D;
+import Core2D.Drawable.Object2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.ShaderUtils.FrameBufferObject;
 import Core2D.Utils.ExceptionsUtils;

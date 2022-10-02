@@ -64,7 +64,6 @@ public class GraphicsRenderer
             Vector2f mousePosition = Mouse.getMousePosition();
 
             Object2D pickedObject2D = Graphics.getPickedObject2D(mousePosition);
-            //System.out.println("pickedObject2D: " + pickedObject2D + ", cur: " + mousePosition.x + ", " + mousePosition.y);
 
             if(pickedObject2D != null) {
                 MainView.getInspectorView().setCurrentInspectingObject(pickedObject2D);
@@ -83,23 +82,6 @@ public class GraphicsRenderer
 
         gameRenderTarget.unBind();
     }
-
-    /*
-    private static void DrawPicking()
-    {
-        pickingRenderTarget.Bind();
-        glClear(GL_COLOR_BUFFER_BIT);
-        glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        glDisable(GL_BLEND);
-
-        Core2D.getSceneManager2D().DrawCurrentScene2D();
-        glReadPixels();
-
-        glEnable(GL_BLEND);
-        pickingRenderTarget.UnBind();
-    }
-
-     */
 
     public static FrameBufferObject getSceneRenderTarget() { return sceneRenderTarget; }
     public static FrameBufferObject getGameRenderTarget() { return gameRenderTarget; }

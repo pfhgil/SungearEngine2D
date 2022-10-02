@@ -239,15 +239,14 @@ public class Texture2D
     public void destroy()
     {
         if(pixelsData != null) pixelsData.clear();
-        pixelsData = null;
-
-        source = null;
 
         glDeleteTextures(textureHandler);
     }
 
     public void set(Texture2D texture2D)
     {
+        destroy();
+
         textureHandler = texture2D.getTextureHandler();
         textureBlock = texture2D.getGLTextureBlock();
         source = texture2D.getSource();
@@ -279,12 +278,12 @@ public class Texture2D
     public int getTextureHandler() { return textureHandler; }
 
     /**
-     * @return textureBlock
+     * @return OpenGL texture block
      */
     public int getGLTextureBlock() { return textureBlock; }
 
     /**
-     * @return textureBlock - GL_TEXTURE0
+     * @return Formatted texture block (textureBlock - GL_TEXTURE0)
      */
     public int getFormattedTextureBlock() { return textureBlock - GL_TEXTURE0; }
 

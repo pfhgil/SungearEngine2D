@@ -1,22 +1,20 @@
-[#FFFFFF] 2022/09/26 21:08:40 | [#008000] Log directory was founded!
-[#FFFFFF] 2022/09/26 21:08:40 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/09/26 21:09:09 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/26 21:09:09 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.sm' already exists
-[#FFFFFF] 2022/09/26 21:09:16 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Resources/Scripts, baseName: PlayerController
-[#FFFFFF] 2022/09/26 21:09:16 | [#FFFFFF] firth
-[#FFFFFF] 2022/09/26 21:09:16 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Resources/Scripts, baseName: TankController
-[#FFFFFF] 2022/09/26 21:09:16 | [#FFFFFF] firth
-[#FFFFFF] 2022/09/26 21:09:17 | [#FFFFFF] Script dirPath: D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/test10/Resources/Scripts, baseName: TankController
-[#FFFFFF] 2022/09/26 21:09:17 | [#FFFFFF] firth
-[#FFFFFF] 2022/09/26 21:09:17 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/26 21:09:25 | [#008000] Script ApplicationStarter.java was successfully built!
-[#FFFFFF] 2022/09/26 21:09:25 | [#FFFFFF] 
-[#FFFFFF] 2022/09/26 21:09:51 | [#FF0000] Не удается найти указанный файл.
-ёхэЄ. 26, 2022 9:09:48 PM java.util.jar.Attributes read
+[#FFFFFF] 2022/10/01 21:26:23 | [#008000] Log directory was founded!
+[#FFFFFF] 2022/10/01 21:26:23 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/10/01 21:26:23 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2022/10/01 21:26:24 | [#008000] Core2D started!
+[#FFFFFF] 2022/10/01 21:26:29 | [#FF0000] OpenGL error: 1280
+[#FFFFFF] 2022/10/01 21:26:55 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.txt' already exists
+[#FFFFFF] 2022/10/01 21:26:55 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.sm' already exists
+[#FFFFFF] 2022/10/01 21:26:55 | [#FF0000] Folder by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out\resources' already exists
+[#FFFFFF] 2022/10/01 21:26:56 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out\SceneManager.txt' already exists
+[#FFFFFF] 2022/10/01 21:27:14 | [#008000] Script ApplicationStarter.java was successfully built!
+[#FFFFFF] 2022/10/01 21:27:14 | [#FFFFFF] 
+[#FFFFFF] 2022/10/01 21:27:38 | [#FF0000] Не удается найти указанный файл.
+юъЄ. 01, 2022 9:27:35 PM java.util.jar.Attributes read
 WARNING: Duplicate name in Manifest: Manifest-Version.
 Ensure that the manifest does not have duplicate entries, and
 that blank lines separate individual sections in both your
 manifest and in the META-INF/MANIFEST.MF entry in the jar file.
 
-[#FFFFFF] 2022/09/26 21:39:30 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.txt' already exists
-[#FFFFFF] 2022/09/26 21:39:30 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.sm' already exists
+[#FFFFFF] 2022/10/01 21:31:27 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.txt' already exists
+[#FFFFFF] 2022/10/01 21:31:27 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.sm' already exists

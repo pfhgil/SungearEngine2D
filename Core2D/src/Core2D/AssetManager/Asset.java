@@ -1,19 +1,24 @@
 package Core2D.AssetManager;
 
+/**
+ * Asset class.
+ */
 public class Asset
 {
-    private Object asset;
-    private String name;
+    /**
+     * Stores the asset itself.
+     */
+    public Object assetObject;
+    /**
+     * Asset name
+     */
+    public String name;
 
-    public Asset(Object asset, String name)
+    public Asset() { }
+
+    public Asset(Object assetObject, String name)
     {
-        this.asset = asset;
+        this.assetObject = assetObject;
         this.name = name;
     }
-
-    public Object getAsset() { return asset; }
-    public void setAsset(Object asset) { this.asset = asset; }
-
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
 }

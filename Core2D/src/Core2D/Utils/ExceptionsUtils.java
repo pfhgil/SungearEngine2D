@@ -11,9 +11,6 @@ public class ExceptionsUtils
         PrintWriter pw = new PrintWriter(sw);
         e.printStackTrace(pw);
 
-        String sStackTrace = "";
-        sStackTrace = sw.toString();
-
-        return sStackTrace;
+        return sw.toString();
     }
 }

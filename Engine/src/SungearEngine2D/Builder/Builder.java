@@ -240,8 +240,6 @@ public class Builder
 
             String newScene2DPath = "/" + scene2DRelativePath.replace("\\", "/");
 
-            System.out.println(scene2D.getScriptSystem().getScriptTempValuesList().get(0).getScriptTempValues().get(0).getValue());
-
             // сохраняю сцену
             sceneManager.saveScene(scene2D, newScene2DFile.getPath());
             // копирую сцену в эти папки

@@ -136,7 +136,7 @@ public class Main
             @Override
             public void onDrawFrame() {
                 mainCamera2D.getTransform().setScale(new Vector2f(MainView.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
-                mainCamera2D.follow(cameraAnchor.getComponent(TransformComponent.class).getTransform(), 0.0f);
+                mainCamera2D.getTransform().setPosition(cameraAnchor.getComponent(TransformComponent.class).getTransform().getPosition());
                 CameraController.control();
 
                 if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) GUI.draw();

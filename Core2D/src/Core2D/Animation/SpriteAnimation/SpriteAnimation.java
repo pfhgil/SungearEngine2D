@@ -1,7 +1,7 @@
 package Core2D.Animation.SpriteAnimation;
 
 import Core2D.Component.Components.TextureComponent;
-import Core2D.Object2D.Object2D;
+import Core2D.Drawable.Object2D;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.PositionsQuad;
 
@@ -10,6 +10,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+@Deprecated
 public class SpriteAnimation
 {
     private List<PositionsQuad> atlasTexturesPositions = new ArrayList<>();

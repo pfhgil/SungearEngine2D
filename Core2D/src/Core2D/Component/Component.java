@@ -1,6 +1,6 @@
 package Core2D.Component;
 
-import Core2D.Object2D.Object2D;
+import Core2D.Drawable.Object2D;
 
 public abstract class Component
 {

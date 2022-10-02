@@ -1,8 +1,8 @@
 package Core2D.Layering;
 
-import Core2D.CommonParameters.CommonDrawableObjectsParameters;
+import Core2D.Drawable.Drawable;
 import Core2D.Log.Log;
-import Core2D.Object2D.Object2D;
+import Core2D.Drawable.Object2D;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
@@ -93,7 +93,7 @@ public class Layering {
     public void deleteLayer(Layer layer)
     {
         for(int i = 0; i < layer.getRenderingObjects().size(); i++) {
-            CommonDrawableObjectsParameters objParams = (CommonDrawableObjectsParameters) layer.getRenderingObjects().get(i).getObject();
+            Drawable objParams = (Drawable) layer.getRenderingObjects().get(i).getObject();
             objParams.setLayer(getLayer("default"));
         }
 
@@ -108,7 +108,6 @@ public class Layering {
         while(layerIterator.hasNext()) {
             Layer layer = layerIterator.next();
             layer.destroy();
-            layer = null;
             layerIterator.remove();
         }
     }

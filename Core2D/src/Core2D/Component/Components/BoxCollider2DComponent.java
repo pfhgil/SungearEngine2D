@@ -1,35 +1,25 @@
 package Core2D.Component.Components;
 
 import Core2D.Component.Component;
-import Core2D.Log.Log;
 import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.Scene2D.SceneManager;
-import Core2D.Utils.ExceptionsUtils;
 
-public class BoxCollider2DComponent extends Component implements AutoCloseable
+/**
+ * The Box Collider 2D component.
+ * @see Core2D.Physics.PhysicsWorld
+ * @see BoxCollider2D
+ * @see Rigidbody2DComponent
+ * @see Core2D.Physics.Rigidbody2D
+ * @see Component
+ */
+public class BoxCollider2DComponent extends Component
 {
-    private BoxCollider2D boxCollider2D;
+    private BoxCollider2D boxCollider2D = new BoxCollider2D();
 
-    public BoxCollider2DComponent()
-    {
-        boxCollider2D = new BoxCollider2D();
-    }
-
-    @Override
-    public void destroy()
-    {
-        boxCollider2D.destroy();
-        boxCollider2D = null;
-
-        object2D = null;
-
-        try {
-            close();
-        } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-        }
-    }
-
+    /**
+     * Applies component parameters to this component.
+     * @param component BoxCollider2DComponent.
+     */
     @Override
     public void set(Component component)
     {
@@ -38,6 +28,11 @@ public class BoxCollider2DComponent extends Component implements AutoCloseable
         }
     }
 
+    /**
+     * Initializes the component.
+     * Adds BoxCollider2D to the physical world if the Object2D to which this component is bound has a Rigidbody2DComponent,
+     * and the current scene is not null (set).
+     */
     @Override
     public void init()
     {
@@ -50,9 +45,4 @@ public class BoxCollider2DComponent extends Component implements AutoCloseable
     }
 
     public BoxCollider2D getBoxCollider2D() { return boxCollider2D; }
-
-    @Override
-    public void close() throws Exception {
-
-    }
 }

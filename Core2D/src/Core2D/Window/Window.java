@@ -3,6 +3,8 @@ package Core2D.Window;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
 import Core2D.Graphics.Graphics;
+import Core2D.Log.Log;
+import Core2D.Utils.ExceptionsUtils;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.*;
 import org.lwjgl.opengl.GL11C;
@@ -63,106 +65,92 @@ public class Window
 
     private void create()
     {
-        System.out.println("начало инициализации окна");
+        try {
+            Log.CurrentSession.println("Starting Core2D...", Log.MessageType.INFO);
+            System.out.println("начало инициализации окна");
 
-        GLFWErrorCallback.createPrint(System.err).set();
+            GLFWErrorCallback.createPrint(System.err).set();
 
-        // инициализация GLFW
-        if (!glfwInit())
-            throw new IllegalStateException("Unable to initialize GLFW!"); // если не удалось инициализировать GLFW, выдать исключение
+            // инициализация GLFW
+            if (!glfwInit())
+                throw new IllegalStateException("Unable to initialize GLFW!"); // если не удалось инициализировать GLFW, выдать исключение
 
-        // конфигурация GLFW
-        glfwDefaultWindowHints(); // установка для будущего окна дефолтных настроек
-        glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // окно будет невидимым после его создания
-        //glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // окну нельзя будет изменять размер
+            // конфигурация GLFW
+            glfwDefaultWindowHints(); // установка для будущего окна дефолтных настроек
+            glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // окно будет невидимым после его создания
+            //glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // окну нельзя будет изменять размер
 
-        if(hintsNames != null) {
-            for(int i = 0; i < hintsNames.length; i++) {
-                glfwWindowHint(hintsNames[i], hintsValues[i]);
+            if (hintsNames != null) {
+                for (int i = 0; i < hintsNames.length; i++) {
+                    glfwWindowHint(hintsNames[i], hintsValues[i]);
+                }
             }
+
+            // создание окна
+            window = glfwCreateWindow(size.x, size.y, name, NULL, NULL);
+            if (window == NULL)
+                throw new RuntimeException("Failed to create GLFW window!"); // если окно не создалось, выдать исключение
+
+            // добавление обработчика на нажатие клавиш
+            glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
+                // если нажатая кнопка == escape, то окно закрывается
+                if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
+                    glfwSetWindowShouldClose(window, true);
+                }
+            });
+
+            glfwSetWindowIconifyCallback(window, new GLFWWindowIconifyCallbackI() {
+                @Override
+                public void invoke(long window, boolean iconified) {
+                    Settings.System.sleepSystem = iconified;
+                }
+            });
+
+            // проталкивается стак для следующего кадра
+            try (MemoryStack stack = stackPush()) {
+                IntBuffer pWidth = stack.mallocInt(1); // создаю IntBuffer для получения ширины окна
+                IntBuffer pHeight = stack.mallocInt(1); // создаю IntBuffer для получения высоты окна
+
+                // получить размер окна, переданный в glfwCreateWindow
+                glfwGetWindowSize(window, pWidth, pHeight);
+
+                // получить разрешение монитора
+                GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
+
+                // поставить окно посередине
+                glfwSetWindowPos(
+                        window,
+                        (vidmode.width() - pWidth.get(0)) / 2,
+                        (vidmode.height() - pHeight.get(0)) / 2
+                );
+            }
+
+            // сделать контекст OpenGL текущим
+            glfwMakeContextCurrent(window);
+            // включить вертикальную синхронизацию (частота кадров синхронизируется с герцовкой монитора)
+            glfwSwapInterval(0);
+
+            // сделать окно видимым
+            glfwShowWindow(window);
+
+            glfwSetInputMode(window, GLFW_LOCK_KEY_MODS, GLFW_TRUE);
+
+            glfwSetWindowSizeCallback(window, new GLFWWindowSizeCallbackI() {
+                @Override
+                public void invoke(long window, int width, int height) {
+                    size.x = width;
+                    size.y = height;
+
+                    // сделать настройки более гибкими
+                    Graphics.setViewMode(Graphics.getViewMode());
+                    GL11C.glViewport(0, 0, size.x, size.y);
+                }
+            });
+
+            Log.CurrentSession.println("Core2D started!", Log.MessageType.SUCCESS);
+        } catch(Exception e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
-
-        // создание окна
-        window = glfwCreateWindow(size.x, size.y, name, NULL, NULL);
-        if (window == NULL)
-            throw new RuntimeException("Failed to create GLFW window!"); // если окно не создалось, выдать исключение
-
-        // добавление обработчика на нажатие клавиш
-        glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
-            // если нажатая кнопка == escape, то окно закрывается
-            if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
-                glfwSetWindowShouldClose(window, true);
-            }
-        });
-
-        glfwSetWindowIconifyCallback(window, new GLFWWindowIconifyCallbackI() {
-            @Override
-            public void invoke(long window, boolean iconified) {
-                Settings.System.sleepSystem = iconified;
-            }
-        });
-
-        // проталкивается стак для следующего кадра
-        try (MemoryStack stack = stackPush()) {
-            IntBuffer pWidth = stack.mallocInt(1); // создаю IntBuffer для получения ширины окна
-            IntBuffer pHeight = stack.mallocInt(1); // создаю IntBuffer для получения высоты окна
-
-            // получить размер окна, переданный в glfwCreateWindow
-            glfwGetWindowSize(window, pWidth, pHeight);
-
-            // получить разрешение монитора
-            GLFWVidMode vidmode = glfwGetVideoMode(glfwGetPrimaryMonitor());
-
-            // поставить окно посередине
-            glfwSetWindowPos(
-                    window,
-                    (vidmode.width() - pWidth.get(0)) / 2,
-                    (vidmode.height() - pHeight.get(0)) / 2
-            );
-        }
-
-        // сделать контекст OpenGL текущим
-        glfwMakeContextCurrent(window);
-        // включить вертикальную синхронизацию (частота кадров синхронизируется с герцовкой монитора)
-        glfwSwapInterval(0);
-
-        // сделать окно видимым
-        glfwShowWindow(window);
-
-        glfwSetInputMode(window, GLFW_LOCK_KEY_MODS , GLFW_TRUE);
-
-        glfwSetWindowSizeCallback(window, new GLFWWindowSizeCallbackI() {
-            @Override
-            public void invoke(long window, int width, int height) {
-                size.x = width;
-                size.y = height;
-
-                // сделать настройки более гибкими
-                Graphics.setViewMode(Graphics.getViewMode());
-                GL11C.glViewport(0,  0, size.x, size.y);
-            }
-        });
-
-        /*
-        glfwSetFramebufferSizeCallback(window, new GLFWFramebufferSizeCallbackI() {
-            @Override
-            public void invoke(long window, int width, int height) {
-                size.x = width;
-                size.y = height;
-
-                // сделать настройки более гибкими
-                Graphics.setViewMode(Graphics.getViewMode());
-                GL11C.glViewport(0,  0, size.x, size.y);
-
-                System.out.println("lol1");
-            }
-        });
-
-         */
-
-
-
-        System.out.println("окно проинициализировано");
     }
 
     public long getWindow() { return window; }

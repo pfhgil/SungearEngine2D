@@ -7,7 +7,6 @@ public class Tag
     public Tag(String name)
     {
         this.name = name;
-        name = null;
     }
 
     public Tag() {}

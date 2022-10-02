@@ -22,13 +22,12 @@ public class ByteClassLoader extends URLClassLoader
             Log.CurrentSession.println("bytes length: " + bytes.length, Log.MessageType.ERROR);
             cls = defineClass(className, bytes, 0, bytes.length);
         } catch (IOException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-        } finally {
             try {
                 resource.close();
-            } catch (IOException e) {
-                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+            } catch (IOException ex) {
+                Log.CurrentSession.println(ExceptionsUtils.toString(ex), Log.MessageType.ERROR);
             }
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
         return cls;

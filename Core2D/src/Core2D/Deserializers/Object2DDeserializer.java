@@ -7,8 +7,7 @@ import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
-import Core2D.Log.Log;
-import Core2D.Object2D.Object2D;
+import Core2D.Drawable.Object2D;
 import Core2D.Project.ProjectsManager;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.FileUtils;
@@ -18,8 +17,6 @@ import org.joml.Vector4f;
 
 import java.io.File;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
 
 // TODO: исправить загрузку ресурсов по пути
 public class Object2DDeserializer implements JsonDeserializer<Object2D>

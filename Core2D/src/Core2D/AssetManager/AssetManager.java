@@ -5,7 +5,7 @@ import Core2D.Log.Log;
 import Core2D.Shader.Shader;
 import Core2D.Shader.ShaderProgram;
 import Core2D.Texture2D.Texture2D;
-import Core2D.UI.Text.Font;
+import Core2D.Drawable.UI.Text.Font;
 import Core2D.Utils.FileUtils;
 
 import java.util.ArrayList;
@@ -14,10 +14,19 @@ import java.util.List;
 import static org.lwjgl.opengl.GL20.GL_FRAGMENT_SHADER;
 import static org.lwjgl.opengl.GL20C.GL_VERTEX_SHADER;
 
+/**
+ * It is needed for storing all assets and for their proper use.
+ */
 public class AssetManager
 {
+    /**
+     * All assets.
+     */
     private static List<Asset> assets = new ArrayList<>();
 
+    /**
+     * Initializes the base assets
+     */
     public static void init()
     {
         String line2DVertexShaderText  = FileUtils.readAllFile(Core2D.class.getResourceAsStream("/data/Shaders/Primitives/Line2D/vertexShader.glsl"));
@@ -85,11 +94,16 @@ public class AssetManager
         addAsset(new Asset(comicSansSM, "comicSansSM"));
     }
 
+    /**
+     * Adds a new asset.
+     * If an asset with the same name already exists, an error is output to the log,
+     * in another case, it adds a new asset to the list of all assets.
+     */
     public static void addAsset(Asset asset)
     {
         for(Asset a : assets) {
-            if (a.getName().equals(asset.getName())) {
-                Log.CurrentSession.println("Error while adding shader program \"" + asset.getName() + "\". Shader program with this name is already exists", Log.MessageType.ERROR);
+            if (a.name.equals(asset.name)) {
+                Log.CurrentSession.println("Error while adding shader program \"" + asset.name + "\". Shader program with this name is already exists", Log.MessageType.ERROR);
                 break;
             }
         }
@@ -97,43 +111,59 @@ public class AssetManager
         assets.add(asset);
     }
 
+    /**
+     * @param name Name of asset.
+     * @return Null if the asset is not found and shader program if the asset is found.
+     */
     public static ShaderProgram getShaderProgram(String name)
     {
         for(Asset asset : assets) {
-            if(asset.getName().equals(name) && asset.getAsset() instanceof ShaderProgram) {
-                return (ShaderProgram) asset.getAsset();
+            if(asset.name.equals(name) && asset.assetObject instanceof ShaderProgram) {
+                return (ShaderProgram) asset.assetObject;
             }
         }
 
         return null;
     }
 
+    /**
+     * @param name Name of asset.
+     * @return Null if the asset is not found and texture if the asset is found.
+     */
     public static Texture2D getTexture2D(String name)
     {
         for(Asset asset : assets) {
-            if(asset.getName().equals(name) && asset.getAsset() instanceof Texture2D) {
-                return (Texture2D) asset.getAsset();
+            if(asset.name.equals(name) && asset.assetObject instanceof Texture2D) {
+                return (Texture2D) asset.assetObject;
             }
         }
 
         return null;
     }
 
+    /**
+     * @param name Name of asset.
+     * @return Null if the asset is not found and font if the asset is found.
+     */
     public static Font getFont(String name)
     {
         for(Asset asset : assets) {
-            if(asset.getName().equals(name) && asset.getAsset() instanceof Font) {
-                return (Font) asset.getAsset();
+            if(asset.name.equals(name) && asset.assetObject instanceof Font) {
+                return (Font) asset.assetObject;
             }
         }
 
         return null;
     }
 
+    /**
+     * @param name Name of asset.
+     * @return Null if the asset is not found and asset if the asset is found.
+     */
     public static Asset getAsset(String name)
     {
         for(Asset asset : assets) {
-            if(asset.getName().equals(name)) {
+            if(asset.name.equals(name)) {
                 return asset;
             }
         }

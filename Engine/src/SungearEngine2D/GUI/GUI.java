@@ -47,37 +47,15 @@ public class GUI
                 }
             }
         });
-
-        /*
-        line2D = new Line2D(new Vector2f(50.0f, 50.0f), new Vector2f(1000.0f, 1000.0f));
-        line2D.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 1.0f));
-
-        object2D = new Object2D();
-        object2D.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-
-         */
     }
 
     public static void draw()
     {
-        //line2D.Draw();
-        //line2D.setEnd(new Vector2f(Main.getMainCamera2D().getTransform().getPosition()).negate().add(new Vector2f(Mouse.GetMousePosition())).mul(new Vector2f(1.0f / Main.getMainCamera2D().getTransform().getScale().x, 1.0f / Main.getMainCamera2D().getTransform().getScale().y)));
-        //object2D.Draw();
-
         renderer.startFrame();
 
         MainView.draw();
 
         Settings.drawImGUI();
-
-        /*
-        ImGui.begin("click view");
-
-        ImGui.image(Graphics.getPickingRenderTarget().getTextureHandler(), 100.0f, 100.0f);
-
-        ImGui.end();
-
-         */
 
         renderer.endFrame();
     }

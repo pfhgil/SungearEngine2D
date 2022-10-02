@@ -58,7 +58,7 @@ public class TankController
         if(tankHull != null) {
             Transform playerTransform = tankHull.getComponent(TransformComponent.class).getTransform();
 
-            playerCamera.follow(playerTransform, deltaTime);
+            playerCamera.follow(playerTransform);
 
             float m = 0.0f;
 
