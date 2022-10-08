@@ -1,0 +1,25 @@
+{
+  "scene2DStoredValues": [
+    {
+      "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\ghjkdsf.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl0.sgs",
+      "inBuild": true,
+      "isMainScene2D": true
+    },
+    {
+      "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl1.sgs",
+      "inBuild": true,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl2.sgs",
+      "inBuild": true,
+      "isMainScene2D": false
+    }
+  ],
+  "mainScene2DPath": ""
+}

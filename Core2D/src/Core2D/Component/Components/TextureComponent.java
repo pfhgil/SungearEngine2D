@@ -4,6 +4,7 @@ import Core2D.AssetManager.AssetManager;
 import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
 import Core2D.Log.Log;
+import Core2D.Scripting.Script;
 import Core2D.ShaderUtils.VertexBufferObject;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Texture2D.TextureDrawModes;
@@ -11,10 +12,15 @@ import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.PositionsQuad;
 import org.joml.Vector2f;
 
+/**
+ * The TextureComponent. This component is NonDuplicated.
+ * @see Texture2D
+ * @see NonDuplicated
+ */
 public class TextureComponent extends Component implements NonDuplicated
 {
     private Texture2D texture2D = new Texture2D();
-    private boolean active = true;
+
     private int textureDrawMode = TextureDrawModes.DEFAULT;
 
     private float[] UV = new float[] {
@@ -27,11 +33,10 @@ public class TextureComponent extends Component implements NonDuplicated
             1.0f, 0.0f,
     };
 
-    public TextureComponent()
-    {
-
-    }
-
+    /**
+     * Removes the texture if it does not equal the white texture. Sets the texture draw mode to NO_TEXTURE.
+     * @see Component#destroy()
+     */
     @Override
     public void destroy()
     {
@@ -46,6 +51,16 @@ public class TextureComponent extends Component implements NonDuplicated
         }
     }
 
+    /**
+     * Applies component parameters to this component.
+     * Removes the past texture if it does not equal the white texture.
+     * Sets a new texture from the passed TextureComponent, UV for it, and whether it is active.
+     * @see Component#set(Component)
+     * @see TextureComponent#setTexture2D(Texture2D)
+     * @see TextureComponent#setActive(boolean)
+     * @see TextureComponent#setUV(float[])
+     * @param component TextureComponent.
+     */
     @Override
     public void set(Component component)
     {
@@ -63,6 +78,11 @@ public class TextureComponent extends Component implements NonDuplicated
         }
     }
 
+    /**
+     * Initializes the component.
+     * Sets default UV (0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 0.0), and also sets the white texture.
+     * @see Component#init()
+     */
     @Override
     public void init()
     {
@@ -71,6 +91,11 @@ public class TextureComponent extends Component implements NonDuplicated
     }
 
     public Texture2D getTexture2D() { return texture2D; }
+
+    /**
+     * Sets a new texture and changes the texture rendering mode to DEFAULT.
+     * @param texture2D Texture2D.
+     */
     public void setTexture2D(Texture2D texture2D)
     {
         this.texture2D.set(texture2D);
@@ -80,7 +105,19 @@ public class TextureComponent extends Component implements NonDuplicated
         }
     }
 
+    /**
+     * @see Component#isActive()
+     * @return active.
+     */
+    @Override
     public boolean isActive() { return active; }
+
+    /**
+     * Sets whether the texture is active. If active, the texture rendering mode changes to DEFAULT, if not, then to NO_TEXTURE.
+     * @see Component#setActive(boolean)
+     * @param active Is component active.
+     */
+    @Override
     public void setActive(boolean active)
     {
         this.active = active;
@@ -96,12 +133,32 @@ public class TextureComponent extends Component implements NonDuplicated
     public void setTextureDrawMode(int textureDrawMode) { this.textureDrawMode = textureDrawMode; }
 
     public float[] getUV() { return UV; }
+
+    /**
+     * Sets the UV for the texture. You should describe UV as follows:
+     * {
+     *     point0.x, point0.y (lower left point),
+     *     point1.x, point1.y (upper left point),
+     *     point2.x, point2.y (upper right point),
+     *     point3.x, point3.y (lower right point)
+     * }
+     * @param UV UV.
+     */
     public void setUV(float[] UV)
     {
         this.UV = UV;
 
         updateUV();
     }
+
+    /**
+     * Sets the UV for the texture.
+     * @see TextureComponent#setUV(float[])
+     * @param bottomLeft bottom left point.
+     * @param upLeft upper left point.
+     * @param upRight upper right point.
+     * @param bottomRight bottom right point.
+     */
     public void setUV(Vector2f bottomLeft, Vector2f upLeft, Vector2f upRight, Vector2f bottomRight)
     {
         UV[0] = bottomLeft.x;
@@ -118,14 +175,17 @@ public class TextureComponent extends Component implements NonDuplicated
 
         updateUV();
     }
+
+    /**
+     * Sets the UV for the texture.
+     * @see PositionsQuad
+     */
     public void setUV(PositionsQuad positionsQuad)
     {
-        Vector2f offset = new Vector2f(1.0f / positionsQuad.getAtlasSize().x / 2.0f, 1.0f / positionsQuad.getAtlasSize().y / 2.0f);
-
-        Vector2f resP0 = new Vector2f(positionsQuad.getLeftBottom().x / positionsQuad.getAtlasSize().x + offset.x, positionsQuad.getLeftBottom().y / positionsQuad.getAtlasSize().y + offset.y);
-        Vector2f resP1 = new Vector2f(positionsQuad.getLeftTop().x / positionsQuad.getAtlasSize().x + offset.x, positionsQuad.getLeftTop().y / positionsQuad.getAtlasSize().y);
+        Vector2f resP0 = new Vector2f(positionsQuad.getLeftBottom().x / positionsQuad.getAtlasSize().x, positionsQuad.getLeftBottom().y / positionsQuad.getAtlasSize().y);
+        Vector2f resP1 = new Vector2f(positionsQuad.getLeftTop().x / positionsQuad.getAtlasSize().x, positionsQuad.getLeftTop().y / positionsQuad.getAtlasSize().y);
         Vector2f resP2 = new Vector2f(positionsQuad.getRightTop().x / positionsQuad.getAtlasSize().x, positionsQuad.getRightTop().y / positionsQuad.getAtlasSize().y);
-        Vector2f resP3 = new Vector2f(positionsQuad.getRightBottom().x / positionsQuad.getAtlasSize().x, positionsQuad.getRightBottom().y / positionsQuad.getAtlasSize().y + offset.y);
+        Vector2f resP3 = new Vector2f(positionsQuad.getRightBottom().x / positionsQuad.getAtlasSize().x, positionsQuad.getRightBottom().y / positionsQuad.getAtlasSize().y);
 
         UV[0] = resP0.x;
         UV[1] = resP0.y;
@@ -142,6 +202,10 @@ public class TextureComponent extends Component implements NonDuplicated
         updateUV();
     }
 
+    /**
+     * Updates the UV of the bound object in the data array, and also updates the VBO of the bound object.
+     * @see Core2D.Drawable.Object2D
+     */
     public void updateUV()
     {
         if(object2D != null) {
@@ -157,8 +221,10 @@ public class TextureComponent extends Component implements NonDuplicated
             object2D.getData()[14] = UV[6];
             object2D.getData()[15] = UV[7];
 
-            VertexBufferObject vbo = object2D.getVertexArrayObject().getVBOs().get(0);
-            object2D.getVertexArrayObject().updateVBO(vbo, object2D.getData());
+            if(object2D.getVertexArrayObject() != null) {
+                VertexBufferObject vbo = object2D.getVertexArrayObject().getVBOs().get(0);
+                object2D.getVertexArrayObject().updateVBO(vbo, object2D.getData());
+            }
         }
     }
 }

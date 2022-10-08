@@ -1,6 +1,5 @@
 package SungearEngine2D.Utils;
 
-import SungearEngine2D.GUI.Views.MainView;
 import SungearEngine2D.Main.Resources;
 import org.apache.commons.io.FilenameUtils;
 

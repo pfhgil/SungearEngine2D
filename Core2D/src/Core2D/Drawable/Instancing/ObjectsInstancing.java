@@ -260,10 +260,8 @@ public class ObjectsInstancing extends Drawable
         while(objects2DIterator.hasNext()) {
             Object2D object2D = objects2DIterator.next();
             object2D.destroy();
-            object2D = null;
             objects2DIterator.remove();
         }
-        objects2DIterator = null;
         drawableObjects2D = null;
 
         atlasTexture2D = null;

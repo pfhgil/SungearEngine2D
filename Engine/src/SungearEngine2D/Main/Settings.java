@@ -8,7 +8,8 @@ import SungearEngine2D.GUI.Views.MainView;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindow;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindowCallback;
 import SungearEngine2D.Utils.ResourcesUtils;
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import imgui.ImGui;
 import imgui.ImVec2;
 
@@ -30,10 +31,7 @@ public class Settings
 
     public static void initCompiler()
     {
-        MainView.getBottomMenuView().showProgressBar = true;
-        MainView.getBottomMenuView().progressBarDest = 1.0f;
-        MainView.getBottomMenuView().progressBarCurrent = 0.0f;
-        MainView.getBottomMenuView().progressBarText = "Initializing compiler...  ";
+        MainView.getBottomMenuView().startProgressBar(1.0f, 0.0f, "Initializing compiler...  ");
 
         File compilerDir = new File("./compiler");
         if(!compilerDir.exists()) {
@@ -58,7 +56,7 @@ public class Settings
         }
 
         MainView.getBottomMenuView().progressBarCurrent++;
-        MainView.getBottomMenuView().showProgressBar = false;
+        MainView.getBottomMenuView().finishProgressBar();
     }
 
     public static void loadSettingsFile()
@@ -86,14 +84,11 @@ public class Settings
             if(settingsFile.getJdkPath().equals("")) {
                 dialogWindow.setActive(false);
 
-                MainView.getBottomMenuView().showProgressBar = true;
-                MainView.getBottomMenuView().progressBarDest = 1.0f;
-                MainView.getBottomMenuView().progressBarCurrent = 0.0f;
-                MainView.getBottomMenuView().progressBarText = "Finding JDKs...  ";
+                MainView.getBottomMenuView().startProgressBar(1.0f, 0.0f, "Finding JDKs...  ");
 
                 File jdksDir = FileUtils.findFile(new File("C:\\Users"), ".jdks");
                 if(!jdksDir.exists()) {
-                    MainView.getBottomMenuView().showProgressBar = false;
+                    MainView.getBottomMenuView().finishProgressBar();
                     dialogWindow.setActive(false);
                     createSettingsFile();
                     settingsFile.jdkPath = "no path";
@@ -138,7 +133,7 @@ public class Settings
 
                     @Override
                     public void onLeftButtonClicked() {
-                        MainView.getBottomMenuView().showProgressBar = false;
+                        MainView.getBottomMenuView().finishProgressBar();
                         dialogWindow.setActive(false);
                         createSettingsFile();
                         settingsFile.jdkPath = "no path";
@@ -147,7 +142,7 @@ public class Settings
 
                     @Override
                     public void onRightButtonClicked() {
-                        MainView.getBottomMenuView().showProgressBar = false;
+                        MainView.getBottomMenuView().finishProgressBar();
                         dialogWindow.setActive(false);
 
                         try {

@@ -23,7 +23,6 @@ public class FrameBufferObject implements Serializable
         private static final long serialVersionUID = 810L;
 
 
-
         // буфер глубины
         public static final int DEPTH_BUFFER = 0;
         // буфер цвета

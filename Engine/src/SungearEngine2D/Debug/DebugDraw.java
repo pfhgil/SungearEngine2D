@@ -1,8 +1,8 @@
 package SungearEngine2D.Debug;
 
+import Core2D.Drawable.Primitives.Line2D;
 import Core2D.Graphics.Graphics;
 import Core2D.Log.Log;
-import Core2D.Primitives.Line2D;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 

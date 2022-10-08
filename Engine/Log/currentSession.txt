@@ -1,20 +1,30 @@
-[#FFFFFF] 2022/10/01 21:26:23 | [#008000] Log directory was founded!
-[#FFFFFF] 2022/10/01 21:26:23 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/10/01 21:26:23 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2022/10/01 21:26:24 | [#008000] Core2D started!
-[#FFFFFF] 2022/10/01 21:26:29 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/10/01 21:26:55 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.txt' already exists
-[#FFFFFF] 2022/10/01 21:26:55 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.sm' already exists
-[#FFFFFF] 2022/10/01 21:26:55 | [#FF0000] Folder by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out\resources' already exists
-[#FFFFFF] 2022/10/01 21:26:56 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\out\SceneManager.txt' already exists
-[#FFFFFF] 2022/10/01 21:27:14 | [#008000] Script ApplicationStarter.java was successfully built!
-[#FFFFFF] 2022/10/01 21:27:14 | [#FFFFFF] 
-[#FFFFFF] 2022/10/01 21:27:38 | [#FF0000] Не удается найти указанный файл.
-юъЄ. 01, 2022 9:27:35 PM java.util.jar.Attributes read
+[#FFFFFF] 2022/10/08 23:17:56 | [#008000] Log directory was founded!
+[#FFFFFF] 2022/10/08 23:17:56 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/10/08 23:17:56 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2022/10/08 23:17:56 | [#008000] Core2D started!
+[#FFFFFF] 2022/10/08 23:17:56 | [#FFFFFF] LWJGL version is 3.3.1 build 7
+[#FFFFFF] 2022/10/08 23:18:01 | [#FF0000] OpenGL error: 1280
+[#FFFFFF] 2022/10/08 23:18:01 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2022/10/08 23:18:21 | [#FFFF00] Attention! Builder uses a separate thread to build the game, so all OpenGL commands won't work.
+[#FFFFFF] 2022/10/08 23:18:21 | [#FFFFFF] Creating the necessary files... 
+[#FFFFFF] 2022/10/08 23:18:21 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2022/10/08 23:18:21 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.sm' already exists
+[#FFFFFF] 2022/10/08 23:18:21 | [#FFFFFF] Preparing resources for packaging... 
+[#FFFFFF] 2022/10/08 23:18:21 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\out\SceneManager.txt' already exists
+[#FFFFFF] 2022/10/08 23:18:21 | [#FFFFFF] Copying necessary files... 
+[#FFFFFF] 2022/10/08 23:18:21 | [#FFFFFF] Compiling script ApplicationStarter.java... 
+[#FFFFFF] 2022/10/08 23:18:24 | [#008000] Script ApplicationStarter.java was successfully built!
+[#FFFFFF] 2022/10/08 23:18:24 | [#FFFFFF] Creating manifest file... 
+[#FFFFFF] 2022/10/08 23:18:24 | [#FFFFFF] Creating builder.bat file... 
+[#FFFFFF] 2022/10/08 23:18:24 | [#FFFFFF] Creating openBuilder.bat file... 
+[#FFFFFF] 2022/10/08 23:18:24 | [#FFFFFF] Starting openBuilder.bat... 
+[#FFFFFF] 2022/10/08 23:18:24 | [#FFFFFF] 
+[#FFFFFF] 2022/10/08 23:18:49 | [#FF0000] Не удается найти указанный файл.
+юъЄ. 08, 2022 11:18:46 PM java.util.jar.Attributes read
 WARNING: Duplicate name in Manifest: Manifest-Version.
 Ensure that the manifest does not have duplicate entries, and
 that blank lines separate individual sections in both your
 manifest and in the META-INF/MANIFEST.MF entry in the jar file.
 
-[#FFFFFF] 2022/10/01 21:31:27 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.txt' already exists
-[#FFFFFF] 2022/10/01 21:31:27 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\test10\SceneManager.sm' already exists
+[#FFFFFF] 2022/10/08 23:19:55 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2022/10/08 23:19:55 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.sm' already exists

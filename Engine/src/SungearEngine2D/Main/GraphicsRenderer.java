@@ -1,27 +1,22 @@
 package SungearEngine2D.Main;
 
-import Core2D.Camera2D.CamerasManager;
-import Core2D.Component.Components.BoxCollider2DComponent;
-import Core2D.Component.Components.CircleCollider2DComponent;
-import Core2D.Controllers.PC.Keyboard;
-import Core2D.Controllers.PC.Mouse;
+import Core2D.Drawable.Object2D;
 import Core2D.Graphics.Graphics;
-import Core2D.Object2D.Object2D;
-import Core2D.Scene2D.SceneManager;
+import Core2D.Input.PC.Keyboard;
+import Core2D.Input.PC.Mouse;
 import Core2D.ShaderUtils.FrameBufferObject;
 import SungearEngine2D.DebugDraw.CamerasDebugLines;
 import SungearEngine2D.DebugDraw.Gizmo;
+import SungearEngine2D.DebugDraw.Grid;
 import SungearEngine2D.DebugDraw.ObjectsDebugLines;
 import SungearEngine2D.GUI.Views.MainView;
-import SungearEngine2D.DebugDraw.Grid;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFW;
 
-import java.util.List;
-
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 
 public class GraphicsRenderer

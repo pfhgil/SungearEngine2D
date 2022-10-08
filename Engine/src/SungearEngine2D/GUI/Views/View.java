@@ -1,7 +1,7 @@
 package SungearEngine2D.GUI.Views;
 
-import Core2D.Controllers.PC.Mouse;
 import Core2D.Core2D.Core2D;
+import Core2D.Input.PC.Mouse;
 import imgui.ImGui;
 import imgui.ImVec2;
 import org.joml.Vector2f;

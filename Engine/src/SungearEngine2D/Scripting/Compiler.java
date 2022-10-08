@@ -9,7 +9,6 @@ import SungearEngine2D.Main.Settings;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class Compiler
@@ -25,10 +24,7 @@ public class Compiler
             File compilerPath = new File(".\\compiler");
 
             try {
-                MainView.getBottomMenuView().showProgressBar = true;
-                MainView.getBottomMenuView().progressBarDest = 1.0f;
-                MainView.getBottomMenuView().progressBarCurrent = 0.0f;
-                MainView.getBottomMenuView().progressBarText = "Compiling script " + scriptFile.getName() + "... ";
+                MainView.getBottomMenuView().startProgressBar(1.0f, 0.0f, "Compiling script " + scriptFile.getName() + "... ");
 
                 Process proc = Runtime.getRuntime().exec(compilerPath.getCanonicalPath() + "\\chcp.com 65001");
 
@@ -78,7 +74,7 @@ public class Compiler
             }
 
             MainView.getBottomMenuView().progressBarCurrent++;
-            MainView.getBottomMenuView().showProgressBar = false;
+            MainView.getBottomMenuView().finishProgressBar();
 
             return result;
         } else {

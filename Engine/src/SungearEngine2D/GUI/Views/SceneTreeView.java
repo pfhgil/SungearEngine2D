@@ -1,9 +1,7 @@
 package SungearEngine2D.GUI.Views;
 
-import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Components.TransformComponent;
-import Core2D.Object2D.Object2D;
-import Core2D.Scene2D.SceneManager;
+import Core2D.Drawable.Object2D;
 import Core2D.Utils.MatrixUtils;
 import Core2D.Utils.WrappedObject;
 import SungearEngine2D.Main.Main;

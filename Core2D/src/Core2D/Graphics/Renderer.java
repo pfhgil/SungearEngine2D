@@ -87,8 +87,6 @@ public class Renderer
             } else {
                 renderWithoutTexture(object2D);
             }
-
-            textureComponent = null;
         }
     }
 
@@ -258,6 +256,7 @@ public class Renderer
 
     public void render(Layering layering)
     {
+
         for(Layer layer : layering.getLayers()) {
             render(layer);
         }

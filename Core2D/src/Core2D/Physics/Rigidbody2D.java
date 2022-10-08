@@ -23,8 +23,6 @@ public class Rigidbody2D
 
     public void set(Rigidbody2D rigidbody2D)
     {
-        this.bodyType = null;
-
         setType(rigidbody2D.getType());
         setDensity(rigidbody2D.getDensity());
         setRestitution(rigidbody2D.getRestitution());

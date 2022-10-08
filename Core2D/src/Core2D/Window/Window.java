@@ -1,6 +1,5 @@
 package Core2D.Window;
 
-import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
 import Core2D.Graphics.Graphics;
 import Core2D.Log.Log;
@@ -18,9 +17,13 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window
 {
+    public static Vector2i defaultWindowSize = new Vector2i(1080, 720);
+
+    public static String defaultWindowName = "Powered by Core2D";
+
     private long window;
-    private Vector2i size = new Vector2i(1000, 1000);
-    private String name = "Core2D Window";
+    private Vector2i size = new Vector2i(defaultWindowSize);
+    private String name = defaultWindowName;
     private int[] hintsNames;
     private int[] hintsValues;
 
@@ -81,6 +84,10 @@ public class Window
             //glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // окну нельзя будет изменять размер
 
             if (hintsNames != null) {
+                if(hintsNames.length != hintsValues.length) {
+                    throw new RuntimeException("Hints names length must be == hints values length!");
+                }
+
                 for (int i = 0; i < hintsNames.length; i++) {
                     glfwWindowHint(hintsNames[i], hintsValues[i]);
                 }
@@ -102,7 +109,7 @@ public class Window
             glfwSetWindowIconifyCallback(window, new GLFWWindowIconifyCallbackI() {
                 @Override
                 public void invoke(long window, boolean iconified) {
-                    Settings.System.sleepSystem = iconified;
+                    Settings.Core2D.sleepCore2D = iconified;
                 }
             });
 
@@ -135,16 +142,13 @@ public class Window
 
             glfwSetInputMode(window, GLFW_LOCK_KEY_MODS, GLFW_TRUE);
 
-            glfwSetWindowSizeCallback(window, new GLFWWindowSizeCallbackI() {
-                @Override
-                public void invoke(long window, int width, int height) {
-                    size.x = width;
-                    size.y = height;
+            glfwSetWindowSizeCallback(window, (window, width, height) -> {
+                size.x = width;
+                size.y = height;
 
-                    // сделать настройки более гибкими
-                    Graphics.setViewMode(Graphics.getViewMode());
-                    GL11C.glViewport(0, 0, size.x, size.y);
-                }
+                // сделать настройки более гибкими
+                Graphics.setViewMode(Graphics.getViewMode());
+                GL11C.glViewport(0, 0, size.x, size.y);
             });
 
             Log.CurrentSession.println("Core2D started!", Log.MessageType.SUCCESS);

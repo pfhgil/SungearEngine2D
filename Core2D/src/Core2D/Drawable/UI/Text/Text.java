@@ -116,7 +116,6 @@ public class Text extends Drawable
 
         if(textObjectsInstancing != null) {
             textObjectsInstancing.destroy();
-            textObjectsInstancing = null;
         }
 
         this.text = text;
@@ -179,10 +178,6 @@ public class Text extends Drawable
 
         calculateMinHeight();
 
-        noSpacesText = null;
-        textChars = null;
-        fontImageSize = null;
-
         setPosition(position);
     }
 
@@ -210,19 +205,14 @@ public class Text extends Drawable
                 currentCharPosition.y -= currentDownStep;
                 currentCharPosition.x = position.x;
             } else {
-                Transform charTransform = textObjectsInstancing.getDrawableObjects2D().get(i).getComponent(TransformComponent.class).getTransform();
+                Transform charTransform = textObjectsInstancing.getDrawableObjects2D().get(iter).getComponent(TransformComponent.class).getTransform();
 
                 charTransform.setPosition(new Vector2f(currentCharPosition).add(new Vector2f(currentGlyph.getOffset()).negate().mul(scale)));
                 currentCharPosition.x += charTransform.getScale().x * 100.0f;
 
                 iter++;
-
-                charTransform = null;
             }
         }
-
-        textChars = null;
-        currentCharPosition = null;
     }
 
     public Vector2f getScale() { return scale; }
@@ -256,8 +246,6 @@ public class Text extends Drawable
             allHeight += curHeight;
 
             if(curHeight > maxHeight) maxHeight = curHeight;
-
-            charTransform = null;
         }
 
         averageHeight = allHeight / textObjectsInstancing.getDrawableObjects2D().size();

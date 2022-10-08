@@ -1,5 +1,6 @@
 package SungearEngine2D.GUI.Views;
 
+import Core2D.Log.Log;
 import imgui.ImGui;
 import imgui.ImGuiWindowClass;
 import imgui.ImVec2;
@@ -43,5 +44,19 @@ public class BottomMenuView
         }
 
         ImGui.end();
+    }
+
+    public void startProgressBar(float progressBarDest, float progressBarCurrent, String text)
+    {
+        this.showProgressBar = true;
+        this.progressBarDest = progressBarDest;
+        this.progressBarCurrent = progressBarCurrent;
+        this.progressBarText = text;
+        Log.CurrentSession.println(text, Log.MessageType.INFO);
+    }
+
+    public void finishProgressBar()
+    {
+        this.showProgressBar = false;
     }
 }

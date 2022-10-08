@@ -4,6 +4,8 @@ import Core2D.Component.Component;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
 import Core2D.Deserializers.*;
+import Core2D.Input.PC.Keyboard;
+import Core2D.Input.PC.Mouse;
 import Core2D.Log.Log;
 import Core2D.Drawable.Object2D;
 import Core2D.Utils.ExceptionsUtils;
@@ -239,6 +241,9 @@ public class SceneManager
         if(currentScene2D != null) {
             applyObject2DDependencies(currentScene2D);
         }
+
+        Keyboard.handleKeyboardInput();
+        Mouse.handleMouseInput();
     }
     public void setCurrentScene2D(String name)
     {

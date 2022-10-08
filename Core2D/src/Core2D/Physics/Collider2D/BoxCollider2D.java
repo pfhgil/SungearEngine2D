@@ -27,8 +27,6 @@ public class BoxCollider2D
 
         setOffset(boxCollider2D.getOffset());
         setScale(boxCollider2D.getScale());
-
-        boxCollider2D = null;
     }
 
     private void updateShape()
@@ -44,6 +42,13 @@ public class BoxCollider2D
             rigidbody2D.getBody().destroyFixture(fixture);
 
             fixture = newFixture;
+        }
+    }
+
+    public void destroy()
+    {
+        if(rigidbody2D != null) {
+            rigidbody2D.getBody().destroyFixture(fixture);
         }
     }
 

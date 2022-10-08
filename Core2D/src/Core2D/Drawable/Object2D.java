@@ -8,6 +8,7 @@ import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Component.NonDuplicated;
 import Core2D.Component.NonRemovable;
+import Core2D.Core2D.Core2DUserCallback;
 import Core2D.Core2D.Settings;
 import Core2D.Log.Log;
 import Core2D.Transform.Transform;
@@ -179,26 +180,28 @@ public class Object2D extends Drawable implements Serializable
 
     private void loadVAO()
     {
-        vertexArrayObject = new VertexArrayObject();
-        // VBO вершин (VBO - Vertex Buffer Object. Может хранить в себе цвета, позиции вершин и т.д.)
-        VertexBufferObject vertexBufferObject = new VertexBufferObject(data);
-        // IBO вершин (IBO - Index Buffer Object. IBO хранит в себе индексы вершин, по которым будут соединяться вершины)
-        IndexBufferObject indexBufferObject = new IndexBufferObject(indices);
+        if(Thread.currentThread().getName().equals("main")) {
+            vertexArrayObject = new VertexArrayObject();
+            // VBO вершин (VBO - Vertex Buffer Object. Может хранить в себе цвета, позиции вершин и т.д.)
+            VertexBufferObject vertexBufferObject = new VertexBufferObject(data);
+            // IBO вершин (IBO - Index Buffer Object. IBO хранит в себе индексы вершин, по которым будут соединяться вершины)
+            IndexBufferObject indexBufferObject = new IndexBufferObject(indices);
 
-        // создаю описание аттрибутов в шейдерной программе
-        BufferLayout attributesLayout = new BufferLayout(
-                new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2),
-                new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2)
-        );
+            // создаю описание аттрибутов в шейдерной программе
+            BufferLayout attributesLayout = new BufferLayout(
+                    new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2),
+                    new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2)
+            );
 
-        vertexBufferObject.setLayout(attributesLayout);
-        vertexArrayObject.putVBO(vertexBufferObject, false);
-        vertexArrayObject.putIBO(indexBufferObject);
+            vertexBufferObject.setLayout(attributesLayout);
+            vertexArrayObject.putVBO(vertexBufferObject, false);
+            vertexArrayObject.putIBO(indexBufferObject);
 
-        indices = null;
+            indices = null;
 
-        // отвязываю vao
-        vertexArrayObject.unBind();
+            // отвязываю vao
+            vertexArrayObject.unBind();
+        }
     }
 
     @Override
@@ -235,24 +238,12 @@ public class Object2D extends Drawable implements Serializable
     {
         shouldDestroy = true;
 
-        Iterator<Component> componentsIterator = components.iterator();
-        while(componentsIterator.hasNext()) {
-            Component component = componentsIterator.next();
-            component.destroy();
-            componentsIterator.remove();
-        }
-
-        Iterator<Object2D> childrenIterator = childrenObjects.iterator();
-        while(childrenIterator.hasNext()) {
-            Object2D child = childrenIterator.next();
-            child.destroy();
-            childrenIterator.remove();
-        }
-
         if(vertexArrayObject != null) {
             vertexArrayObject.destroy();
             vertexArrayObject = null;
         }
+
+        System.out.println("Object2D " + name + " destroyed");
 
         //destroyParams();
     }

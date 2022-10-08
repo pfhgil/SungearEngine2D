@@ -1,7 +1,7 @@
 package SungearEngine2D.GUI.Views;
 
 import Core2D.Camera2D.Camera2D;
-import Core2D.Controllers.PC.Keyboard;
+import Core2D.Input.PC.Keyboard;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.Scene2D;
@@ -247,28 +247,12 @@ public class TopToolbarView
                                         .stream()
                                         .anyMatch(s -> s.isMainScene2D);
                                 if(hasMainScene2D) {
-                                    Builder.build("TestGame");
+                                    Builder.startBuild( "TestGame");
                                     // TODO: сделать билд
                                     dialogWindow.setActive(false);
                                     currentAction = "";
                                 } else {
-                                    Log.showWarningChooseDialog("The main Scene2D was not selected! Are sure you want to continue building the game?", "Yes", "No", new Log.DialogCallback() {
-                                        @Override
-                                        public void firstButtonClicked() {
-                                            // TODO: сделать билд
-                                        }
-
-                                        @Override
-                                        public void secondButtonClicked() {
-                                            dialogWindow.setActive(false);
-                                            currentAction = "";
-                                        }
-
-                                        @Override
-                                        public void thirdButtonClicked() {
-
-                                        }
-                                    });
+                                    Log.showErrorDialog("The main Scene2D was not selected!");
                                 }
                             }
                         });
@@ -364,6 +348,7 @@ public class TopToolbarView
                     if(SceneManager.currentSceneManager != null) {
                         for (int i = 0; i < SceneManager.currentSceneManager.getScene2DStoredValues().size(); i++) {
                             Scene2DStoredValues storedValues = SceneManager.currentSceneManager.getScene2DStoredValues().get(i);
+                            System.out.println(storedValues.path);
                             boolean clicked = ImGui.menuItem(FilenameUtils.getBaseName(new File(storedValues.path).getName()));
                             if (storedValues.isMainScene2D) {
                                 ImGui.sameLine();
@@ -431,9 +416,12 @@ public class TopToolbarView
                     if (ProjectsManager.getCurrentProject() != null) {
                         MainView.getSceneView().stopPlayMode();
                         if (SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-                            SceneManager.currentSceneManager.getCurrentScene2D().destroy();
+                            //SceneManager.currentSceneManager.getCurrentScene2D().destroy();
                         }
                         Scene2D scene2D = new Scene2D();
+                        scene2D.setName(newSceneName.get());
+
+                        String scenePath = ResourcesView.currentDirectoryPath + "\\" + scene2D.getName() + ".sgs";
 
                         Camera2D camera2D = new Camera2D();
                         scene2D.getCameras2D().add(camera2D);
@@ -441,15 +429,16 @@ public class TopToolbarView
 
                         scene2D.getPhysicsWorld().simulatePhysics = false;
                         scene2D.getScriptSystem().runScripts = false;
-                        scene2D.setName(newSceneName.get());
+                        scene2D.setScenePath(scenePath);
                         if (SceneManager.currentSceneManager.getScene2DStoredValues().size() == 0) {
                             SceneManager.currentSceneManager.setCurrentScene2D(scene2D);
                         }
+
                         Scene2DStoredValues storedValues = new Scene2DStoredValues();
                         storedValues.path = scene2D.getScenePath();
+                        System.out.println(storedValues.path);
                         SceneManager.currentSceneManager.getScene2DStoredValues().add(storedValues);
-                        SceneManager.currentSceneManager.saveScene(scene2D, ResourcesView.currentDirectoryPath + "\\" + scene2D.getName() + ".sgs");
-                        scene2D = null;
+                        SceneManager.currentSceneManager.saveScene(scene2D, scenePath);
                     } else {
                         Log.showErrorDialog("Can not create new scene2D! First create or open project.");
                     }

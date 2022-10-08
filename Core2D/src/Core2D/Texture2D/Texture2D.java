@@ -150,103 +150,105 @@ public class Texture2D
 
     private void createTexture()
     {
-        // если текстура поддерживает 4 канал (RGBA (Red Green Blue Alpha))
-        if(channels == 4) {
-            // на каждый из каналов будет выделять 8 бит (поэтому GL_RGBA8)
-            internalFormat = GL_RGBA8;
-            // текстура будет поддерживать GL_RGBA
-            format = GL_RGBA;
-        } else if(channels == 3) { // если альфа канал не поддерживается (RGB)
-            // на каждый из каналов будет выделять 8 бит (поэтому GL_RGB8)
-            internalFormat = GL_RGB8;
-            // текстура будет поддерживать GL_RGB
-            format = GL_RGB;
-        }
+        if(Thread.currentThread().getName().equals("main")) {
+            // если текстура поддерживает 4 канал (RGBA (Red Green Blue Alpha))
+            if (channels == 4) {
+                // на каждый из каналов будет выделять 8 бит (поэтому GL_RGBA8)
+                internalFormat = GL_RGBA8;
+                // текстура будет поддерживать GL_RGBA
+                format = GL_RGBA;
+            } else if (channels == 3) { // если альфа канал не поддерживается (RGB)
+                // на каждый из каналов будет выделять 8 бит (поэтому GL_RGB8)
+                internalFormat = GL_RGB8;
+                // текстура будет поддерживать GL_RGB
+                format = GL_RGB;
+            }
 
-        // активирую нулевой текстурный блок
-        glActiveTexture(textureBlock);
+            // активирую нулевой текстурный блок
+            glActiveTexture(textureBlock);
 
-        // создание текстуры
-        textureHandler = glGenTextures();
-        bind();
+            // создание текстуры
+            textureHandler = glGenTextures();
+            bind();
 
-        // сохраняю данные текстуры
-        glTexStorage2D(textureHandler, 1, internalFormat, width, height);
+            // сохраняю данные текстуры
+            glTexStorage2D(textureHandler, 1, internalFormat, width, height);
 
-        // текстура будет растягиваться под фигуру
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, param);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, param);
+            // текстура будет растягиваться под фигуру
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, param);
+            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, param);
 
-        // ставлю режим выравнивания данных текстуры по 1 байту (чтобы цвет текстуры был правильный)
-        glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+            // ставлю режим выравнивания данных текстуры по 1 байту (чтобы цвет текстуры был правильный)
+            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 
-        // устанавливаю параметры текстуры
+            // устанавливаю параметры текстуры
 
-        // если качество текстур в настройках == low
-        if(Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality == Settings.QualityType.LOW) {
-            // фильтрация текстур, которая выбирает тексель, центр которого находится ближе всего к текстурной координате
-            // тексель = пикселю поскольку содержит цвет и альфа компонент
-            // текстура будет пискельная
-            // более быстрый метод, но текстура выглядит плохо
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        } else if(Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality == Settings.QualityType.MEDIUM) { // если качество текстур в настройках == medium
-            // использует ближайший мипмап-уровень и отбирает его с помощью метода линейной интерполяции
-            // линейная интерполяция — это определение коэффициентов прямой линии, проходящей через две заданные точки. значения в точке определяются по формуле прямой линии
-            // мипмап - уровень детализации
-            // текстура будет с эффектом сглаживания
-            // средний по быстроте метод, но текстура выглядит уже лучше
+            // если качество текстур в настройках == low
+            if (Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality == Settings.QualityType.LOW) {
+                // фильтрация текстур, которая выбирает тексель, центр которого находится ближе всего к текстурной координате
+                // тексель = пикселю поскольку содержит цвет и альфа компонент
+                // текстура будет пискельная
+                // более быстрый метод, но текстура выглядит плохо
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+            } else if (Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality == Settings.QualityType.MEDIUM) { // если качество текстур в настройках == medium
+                // использует ближайший мипмап-уровень и отбирает его с помощью метода линейной интерполяции
+                // линейная интерполяция — это определение коэффициентов прямой линии, проходящей через две заданные точки. значения в точке определяются по формуле прямой линии
+                // мипмап - уровень детализации
+                // текстура будет с эффектом сглаживания
+                // средний по быстроте метод, но текстура выглядит уже лучше
 
-            // генерирую мипмап. без него не будет работать (черная текстура)
-            glGenerateMipmap(GL_TEXTURE_2D);
+                // генерирую мипмап. без него не будет работать (черная текстура)
+                glGenerateMipmap(GL_TEXTURE_2D);
 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST);
 
-            // использовать сгенерированный мипмап
-            glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
-        } else if(Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality == Settings.QualityType.HIGH) { // если качество текстур в настройках == high
-            // линейная интерполяция между двумя мипмап-текстурами, которые наиболее точно соответствуют размеру пикселя, и затем выбор интерполированного уровня при помощи «метода ближайших соседей».
-            // метод ближайших соседей - метод, выбирающий тексель, центр которого находится ближе всего к текстурной координате
-            // линейная интерполяция — это определение коэффициентов прямой линии, проходящей через две заданные точки. значения в точке определяются по формуле прямой линии
-            // мипмап - уровень детализации
-            // текстура будет с лучшим эффектом сглаживания
-            // самый медленный метод, но текстура выглядит лучшим образом
+                // использовать сгенерированный мипмап
+                glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+            } else if (Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality == Settings.QualityType.HIGH) { // если качество текстур в настройках == high
+                // линейная интерполяция между двумя мипмап-текстурами, которые наиболее точно соответствуют размеру пикселя, и затем выбор интерполированного уровня при помощи «метода ближайших соседей».
+                // метод ближайших соседей - метод, выбирающий тексель, центр которого находится ближе всего к текстурной координате
+                // линейная интерполяция — это определение коэффициентов прямой линии, проходящей через две заданные точки. значения в точке определяются по формуле прямой линии
+                // мипмап - уровень детализации
+                // текстура будет с лучшим эффектом сглаживания
+                // самый медленный метод, но текстура выглядит лучшим образом
 
-            // генерирую мипмап. без него не будет работать (черная текстура)
-            glGenerateMipmap(GL_TEXTURE_2D);
+                // генерирую мипмап. без него не будет работать (черная текстура)
+                glGenerateMipmap(GL_TEXTURE_2D);
 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
+                glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 
-            // использовать сгенерированный мипмап
-            glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
-        }
+                // использовать сгенерированный мипмап
+                glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+            }
 
-        glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, pixelsData);
+            glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, pixelsData);
 
-        unBind();
+            unBind();
 
-        // очищаю буфер с данными текстуры
-        if(pixelsData != null) {
-            stbi_image_free(pixelsData);
-            pixelsData.clear();
-            pixelsData = null;
+            // очищаю буфер с данными текстуры
+            if (pixelsData != null) {
+                stbi_image_free(pixelsData);
+                pixelsData.clear();
+                pixelsData = null;
+            }
         }
     }
 
     // удаление текстур
     public void destroy()
     {
-        if(pixelsData != null) pixelsData.clear();
+        if(Thread.currentThread().getName().equals("main")) {
+            if (pixelsData != null) pixelsData.clear();
 
-        glDeleteTextures(textureHandler);
+            glDeleteTextures(textureHandler);
+        }
     }
 
     public void set(Texture2D texture2D)
     {
-        destroy();
-
         textureHandler = texture2D.getTextureHandler();
         textureBlock = texture2D.getGLTextureBlock();
         source = texture2D.getSource();
@@ -259,13 +261,17 @@ public class Texture2D
 
     public void bind()
     {
-        // активирую нулевой текстурный блок
-        glActiveTexture(textureBlock);
-        glBindTexture(GL_TEXTURE_2D, textureHandler);
+        if(Thread.currentThread().getName().equals("main")) {
+            // активирую нулевой текстурный блок
+            glActiveTexture(textureBlock);
+            glBindTexture(GL_TEXTURE_2D, textureHandler);
+        }
     }
     public void unBind()
     {
-        glBindTexture(GL_TEXTURE_2D, 0);
+        if(Thread.currentThread().getName().equals("main")) {
+            glBindTexture(GL_TEXTURE_2D, 0);
+        }
     }
 
     // геттеры и сеттеры

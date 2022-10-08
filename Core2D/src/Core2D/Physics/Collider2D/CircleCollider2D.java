@@ -39,6 +39,13 @@ public class CircleCollider2D
         }
     }
 
+    public void destroy()
+    {
+        if(rigidbody2D != null) {
+            rigidbody2D.getBody().destroyFixture(fixture);
+        }
+    }
+
     public Rigidbody2D getRigidbody2D() { return rigidbody2D; }
     public void setRigidbody2D(Rigidbody2D rigidbody2D) { this.rigidbody2D = rigidbody2D; }
 

@@ -1,8 +1,10 @@
 package Core2D.Camera2D;
 
 import Core2D.Core2D.Core2D;
+import Core2D.Input.PC.Mouse;
 import Core2D.Transform.Transform;
 import Core2D.Scene2D.SceneManager;
+import Core2D.Utils.MatrixUtils;
 import Core2D.Utils.Utils;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -14,9 +16,6 @@ import java.io.Serializable;
  */
 public class Camera2D implements Serializable
 {
-    /**
-     * Camera transform.
-     */
     private Transform transform = new Transform();
 
     /**
@@ -24,15 +23,8 @@ public class Camera2D implements Serializable
      */
     public String name = "default";
 
-    /**
-     * Camera viewport size.
-     */
     private Vector2f viewportSize = new Vector2f(Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y);
 
-    /**
-     * Camera projection matrix.
-     * By default, it is: ortho2D(left: -viewportSize.x / 2.0f, right: viewportSize.x / 2.0f, bottom: -viewportSize.y / 2.0f, top: viewportSize.y / 2.0f)
-     */
     private transient Matrix4f projectionMatrix = new Matrix4f().ortho2D(-viewportSize.x / 2.0f, viewportSize.x / 2.0f, -viewportSize.y / 2.0f, viewportSize.y / 2.0f);
 
     /**
@@ -62,6 +54,7 @@ public class Camera2D implements Serializable
      * //@param transform Someone`s transform.
      */
 
+
     /*
     public void follow(Transform transform)
     {
@@ -86,6 +79,8 @@ public class Camera2D implements Serializable
     }
 
      */
+
+
 
 
     public Transform getTransform() { return transform; }

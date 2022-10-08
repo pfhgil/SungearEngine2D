@@ -5,7 +5,7 @@ import Core2D.Utils.ExceptionsUtils;
 
 import static org.lwjgl.opengl.GL15C.*;
 
-public class VertexBufferObject implements AutoCloseable
+public class VertexBufferObject
 {
     // id буфера
     private int handler;
@@ -49,12 +49,6 @@ public class VertexBufferObject implements AutoCloseable
 
         if(layout != null) layout.destroy();
         layout = null;
-
-        try {
-            close();
-        } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-        }
     }
     // положить данные в буфер
     public void putData()
@@ -89,9 +83,4 @@ public class VertexBufferObject implements AutoCloseable
     public float[] getData() { return data; }
 
     public int getUsage() { return usage; }
-
-    @Override
-    public void close() throws Exception {
-
-    }
 }

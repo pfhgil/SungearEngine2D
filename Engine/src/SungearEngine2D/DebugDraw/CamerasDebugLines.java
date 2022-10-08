@@ -1,19 +1,19 @@
 package SungearEngine2D.DebugDraw;
 
 import Core2D.Camera2D.Camera2D;
-import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
+import Core2D.Drawable.Object2D;
+import Core2D.Drawable.Primitives.Line2D;
 import Core2D.Graphics.Graphics;
-import Core2D.Object2D.Object2D;
-import Core2D.Object2D.Transform;
-import Core2D.Primitives.Line2D;
-import Core2D.Scene2D.SceneManager;
+import Core2D.Transform.Transform;
 import Core2D.Utils.MathUtils;
 import SungearEngine2D.GUI.Views.MainView;
 import SungearEngine2D.Main.Resources;
-import org.joml.*;
+import org.joml.Vector2f;
+import org.joml.Vector2i;
+import org.joml.Vector4f;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
 

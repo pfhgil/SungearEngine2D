@@ -3,19 +3,27 @@ package Core2D.Component.Components;
 import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
 import Core2D.Log.Log;
+import Core2D.Physics.Collider2D.CircleCollider2D;
 import Core2D.Physics.Rigidbody2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.ExceptionsUtils;
 
+/**
+ * The Rigidbody2D component.
+ * @see Core2D.Physics.PhysicsWorld
+ * @see Rigidbody2D
+ * @see BoxCollider2DComponent
+ * @see CircleCollider2DComponent
+ * @see Component
+ */
 public class Rigidbody2DComponent extends Component implements NonDuplicated
 {
-    private Rigidbody2D rigidbody2D;
+    private Rigidbody2D rigidbody2D = new Rigidbody2D();
 
-    public Rigidbody2DComponent()
-    {
-        rigidbody2D = new Rigidbody2D();
-    }
-
+    /**
+     * Removes Rigidbody2D from the physical world.
+     * @see Component#destroy()
+     */
     @Override
     public void destroy()
     {
@@ -25,6 +33,11 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated
         }
     }
 
+    /**
+     * Applies component parameters to this component.
+     * @see Component#set(Component)
+     * @param component Rigidbody2DComponent.
+     */
     @Override
     public void set(Component component)
     {
@@ -33,6 +46,13 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated
         }
     }
 
+    /**
+     * Initializes the component.
+     * Adds Rigidbody2D to the physical world if the current scene is not null (set).
+     * Sets this Rigidbody2D for the TransformComponent of the object to which this Rigidbody2DComponent is bound.
+     * @see Component#init()
+     * @see TransformComponent
+     */
     @Override
     public void init()
     {

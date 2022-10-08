@@ -4,15 +4,14 @@ import Core2D.Camera2D.Camera2D;
 import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Components.ScriptComponent;
 import Core2D.Component.Components.TransformComponent;
-import Core2D.Controllers.PC.Keyboard;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DUserCallback;
+import Core2D.Drawable.Object2D;
 import Core2D.Graphics.Graphics;
+import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
-import Core2D.Object2D.Object2D;
 import Core2D.Project.ProjectsManager;
-import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.CameraController.CameraController;
 import SungearEngine2D.GUI.GUI;
@@ -28,6 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
+import static org.lwjgl.opengl.GL11.*;
 
 public class Main
 {
@@ -143,7 +143,7 @@ public class Main
 
                 GraphicsRenderer.draw();
 
-                Core2D.getWindow().setName("Sungear Engine 2D. FPS: " + Core2D.getDeltaTimer().getFPS());
+                //Core2D.getWindow().setName("Sungear Engine 2D. FPS: " + Core2D.getDeltaTimer().getFPS());
             }
 
             @Override
@@ -154,7 +154,8 @@ public class Main
         };
 
         Core2D.core2DUserCallback = core2DUserCallback;
-        Core2D.start("Sungear Engine 2D", new int[] { GLFW.GLFW_SAMPLES }, new int[] { 8 });
+        Core2D.start();
+        //Core2D.start("Sungear Engine 2D", new int[] { GLFW.GLFW_SAMPLES }, new int[] { 8 });
     }
 
     public static Object2D getCameraAnchor() { return cameraAnchor; }

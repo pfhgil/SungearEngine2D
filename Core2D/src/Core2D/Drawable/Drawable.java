@@ -91,7 +91,6 @@ public abstract class Drawable
     public void setTag(String tag)
     {
         this.tag.setName(tag);
-        tag = null;
     }
 
     public void setID(int ID) { this.ID = ID; }

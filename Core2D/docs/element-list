@@ -5,7 +5,7 @@ Core2D.Camera2D
 Core2D.Drawable
 Core2D.Component
 Core2D.Component.Components
-Core2D.Controllers.PC
+Core2D.Input.PC
 Core2D.Core2D
 Core2D.Deserializers
 Core2D.Graphics

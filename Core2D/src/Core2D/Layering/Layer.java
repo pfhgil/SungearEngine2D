@@ -1,5 +1,6 @@
 package Core2D.Layering;
 
+import Core2D.Component.Component;
 import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Graphics.Graphics;
@@ -81,6 +82,20 @@ public class Layer
                     if (object2D.getParentObject2D() != null) {
                         object2D.getParentObject2D().removeChild(object2D);
                         object2D.parentObject2D = null;
+                    }
+
+                    Iterator<Component> componentsIterator = object2D.getComponents().iterator();
+                    while(componentsIterator.hasNext()) {
+                        Component component = componentsIterator.next();
+                        component.destroy();
+                        componentsIterator.remove();
+                    }
+
+                    Iterator<Object2D> childrenIterator = object2D.getChildrenObjects().iterator();
+                    while(childrenIterator.hasNext()) {
+                        Object2D child = childrenIterator.next();
+                        child.destroy();
+                        childrenIterator.remove();
                     }
                 }
                 objParams.destroyParams();

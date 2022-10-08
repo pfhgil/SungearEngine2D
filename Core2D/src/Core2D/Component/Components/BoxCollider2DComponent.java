@@ -5,7 +5,7 @@ import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.Scene2D.SceneManager;
 
 /**
- * The Box Collider 2D component.
+ * The BoxCollider2D component.
  * @see Core2D.Physics.PhysicsWorld
  * @see BoxCollider2D
  * @see Rigidbody2DComponent
@@ -17,7 +17,18 @@ public class BoxCollider2DComponent extends Component
     private BoxCollider2D boxCollider2D = new BoxCollider2D();
 
     /**
+     * Removes BoxCollider2D from the physical world.
+     * @see Component#destroy()
+     */
+    @Override
+    public void destroy()
+    {
+        boxCollider2D.destroy();
+    }
+
+    /**
      * Applies component parameters to this component.
+     * @see Component#set(Component)
      * @param component BoxCollider2DComponent.
      */
     @Override
@@ -32,6 +43,7 @@ public class BoxCollider2DComponent extends Component
      * Initializes the component.
      * Adds BoxCollider2D to the physical world if the Object2D to which this component is bound has a Rigidbody2DComponent,
      * and the current scene is not null (set).
+     * @see Component#init()
      */
     @Override
     public void init()

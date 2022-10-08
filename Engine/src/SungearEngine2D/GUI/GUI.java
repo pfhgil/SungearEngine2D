@@ -6,6 +6,7 @@ import Core2D.Utils.FileUtils;
 import SungearEngine2D.GUI.Views.MainView;
 import SungearEngine2D.GUI.Views.ResourcesView;
 import SungearEngine2D.Main.Settings;
+import imgui.ImGui;
 import org.apache.commons.io.FilenameUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWDropCallback;

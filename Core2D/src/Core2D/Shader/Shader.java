@@ -7,7 +7,7 @@ import java.io.Serializable;
 
 import static org.lwjgl.opengl.GL20C.*;
 
-public class Shader implements Serializable, AutoCloseable
+public class Shader implements Serializable
 {
     // id шейдера
     private transient int shaderHandler;
@@ -16,49 +16,45 @@ public class Shader implements Serializable, AutoCloseable
 
     public Shader(String shaderCode, int _shaderType)
     {
-        shaderType = _shaderType;
+        if(Thread.currentThread().getName().equals("main")) {
+            shaderType = _shaderType;
 
-        // создаю шейдер shaderType типа
-        shaderHandler = glCreateShader(shaderType);
+            // создаю шейдер shaderType типа
+            shaderHandler = glCreateShader(shaderType);
 
-        // указываю текст шейдера
-        glShaderSource(shaderHandler, shaderCode);
-        // компилирую шейдер
-        glCompileShader(shaderHandler);
+            // указываю текст шейдера
+            glShaderSource(shaderHandler, shaderCode);
+            // компилирую шейдер
+            glCompileShader(shaderHandler);
 
-        // получение статуса компиляции шейдера
-        int compileStatus = 0;
-        compileStatus = glGetShaderi(shaderHandler, GL_COMPILE_STATUS);
+            // получение статуса компиляции шейдера
+            int compileStatus = 0;
+            compileStatus = glGetShaderi(shaderHandler, GL_COMPILE_STATUS);
 
-        // если статус компиляции шейдера = 0 (не скомпилирован), то выводить ошибку и удалять шейдер из памяти
-        if(compileStatus == 0) {
-            // получение максимальной длины ошибки
-            int maxErrorStringLength = 0;
-            maxErrorStringLength = glGetShaderi(shaderHandler, GL_INFO_LOG_LENGTH);
+            // если статус компиляции шейдера = 0 (не скомпилирован), то выводить ошибку и удалять шейдер из памяти
+            if (compileStatus == 0) {
+                // получение максимальной длины ошибки
+                int maxErrorStringLength = 0;
+                maxErrorStringLength = glGetShaderi(shaderHandler, GL_INFO_LOG_LENGTH);
 
-            // получение строки ошибки
-            String errorString = "";
-            errorString = glGetShaderInfoLog(shaderHandler, maxErrorStringLength);
+                // получение строки ошибки
+                String errorString = "";
+                errorString = glGetShaderInfoLog(shaderHandler, maxErrorStringLength);
 
-            // удаление шейдера
-            destroy();
+                // удаление шейдера
+                destroy();
 
-            // вывод ошибки в консоль
-            Log.CurrentSession.println("Error while creating and compiling shader. Core2D.Shader type is: " + shaderTypeToString(shaderType) + ". Error is: " + errorString, Log.MessageType.ERROR);
+                // вывод ошибки в консоль
+                Log.CurrentSession.println("Error while creating and compiling shader. Core2D.Shader type is: " + shaderTypeToString(shaderType) + ". Error is: " + errorString, Log.MessageType.ERROR);
+            }
         }
-
-        shaderCode = null;
     }
 
     public void destroy()
     {
-        // удаление шейдера
-        glDeleteShader(shaderHandler);
-
-        try {
-            close();
-        } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        if(Thread.currentThread().getName().equals("main")) {
+            // удаление шейдера
+            glDeleteShader(shaderHandler);
         }
     }
 
@@ -79,9 +75,4 @@ public class Shader implements Serializable, AutoCloseable
 
     public int getType() { return shaderType; }
     public void setType(int shaderType) { this.shaderType = shaderType; }
-
-    @Override
-    public void close() throws Exception {
-
-    }
 }

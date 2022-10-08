@@ -3,7 +3,8 @@ package Core2D.Core2D;
 import Core2D.AssetManager.AssetManager;
 import Core2D.Camera2D.CamerasManager;
 import Core2D.Graphics.Graphics;
-import Core2D.Input.Core2DInputCallback;
+import Core2D.Input.Core2DInputCallbacks;
+import Core2D.Input.Core2DUserInputCallback;
 import Core2D.Log.Log;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Timer.Timer;
@@ -16,57 +17,86 @@ import org.lwjgl.Version;
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 
+/**
+ * Core2D. Extends Graphics class. Responsible for starting the application or game.
+ * @see Graphics
+ */
 public class Core2D extends Graphics
 {
     private static Window window;
 
     private static Core2D core2D;
 
-    private static Core2DInputCallback core2DInputCallback;
+    /**
+     * Core2D input callbacks. You can add your input callback using Core2D.getCore2DInputCallbacks().getUserInputCallbacks().add(...)
+     * @see Core2DInputCallbacks#getCore2DUserInputCallbacks()
+     * @see Core2DUserInputCallback
+     */
+    private static Core2DInputCallbacks core2DInputCallbacks;
 
+    /**
+     * Core2D use callback. Defines the methods onInit(), onExit(), onDrawFrame(), onDeltaUpdate(...).
+     * @see Core2DUserCallback
+     */
     public static Core2DUserCallback core2DUserCallback;
-
-    // поток для сборка мусора
-    private static Thread gcThread;
-    private static boolean gcThreadRunning = false;
 
     private static Timer deltaTimer = new Timer(1.0f, true);
 
+    /**
+     * Current operating mode of the Core2D.
+     * @see Core2DMode
+     */
     public static Core2DMode core2DMode = Core2DMode.IN_ENGINE;
 
+    /**
+     * Starts Core2D.
+     */
     public static void start() {
-        Log.CurrentSession.createCurrentSession();
-
-        window = new Window();
-        core2D = new Core2D();
-        core2D.run();
+        create(Window.defaultWindowName, Window.defaultWindowSize, new int[] {}, new int[] {});
     }
 
+    /**
+     * Starts Core2D.
+     * @param windowName The name of the window that will be created when Core2D is launched.
+     */
     public static void start(String windowName) {
-        Log.CurrentSession.createCurrentSession();
-
-        window = new Window(windowName);
-        core2D = new Core2D();
-        core2D.run();
+        create(windowName, Window.defaultWindowSize, new int[] {}, new int[] {});
     }
 
+    /**
+     * Starts Core2D.
+     * @param windowName The name of the window that will be created when Core2D is launched.
+     * @param windowSize The size of the window that will be created when Core2D is launched.
+     */
     public static void start(String windowName, Vector2i windowSize) {
-        Log.CurrentSession.createCurrentSession();
-
-        window = new Window(windowName, windowSize);
-        core2D = new Core2D();
-        core2D.run();
+        create(windowName, windowSize, new int[] {}, new int[] {});
     }
 
+    /**
+     * Starts Core2D.
+     * Warning! Length of windowHintsNames must be == length of windowHintsValues.
+     * @param windowName The name of the window that will be created when Core2D is launched.
+     * @param windowHintsNames Names of hints to launch the window.
+     * @param windowHintsValues Values of hints to launch the window.
+     */
     public static void start(String windowName, int[] windowHintsNames, int[] windowHintsValues) {
-        Log.CurrentSession.createCurrentSession();
-
-        window = new Window(windowName, windowHintsNames, windowHintsValues);
-        core2D = new Core2D();
-        core2D.run();
+        create(windowName, Window.defaultWindowSize, windowHintsNames, windowHintsValues);
     }
 
+    /**
+     * Starts Core2D.
+     * Warning! Length of windowHintsNames must be == length of windowHintsValues.
+     * @param windowName The name of the window that will be created when Core2D is launched.
+     * @param windowSize The size of the window that will be created when Core2D is launched.
+     * @param windowHintsNames Names of hints to launch the window.
+     * @param windowHintsValues Values of hints to launch the window.
+     */
     public static void start(String windowName, Vector2i windowSize, int[] windowHintsNames, int[] windowHintsValues) {
+        create(windowName, windowSize, windowHintsNames, windowHintsValues);
+    }
+
+    private static void create(String windowName, Vector2i windowSize, int[] windowHintsNames, int[] windowHintsValues)
+    {
         Log.CurrentSession.createCurrentSession();
 
         window = new Window(windowName, windowSize, windowHintsNames, windowHintsValues);
@@ -76,7 +106,7 @@ public class Core2D extends Graphics
 
     // запустить игру
     private void run() {
-        System.out.println("LWJGL version is " + Version.getVersion());
+        Log.CurrentSession.println("LWJGL version is " + Version.getVersion(), Log.MessageType.INFO);
 
         try {
             initCore();
@@ -94,28 +124,11 @@ public class Core2D extends Graphics
         try {
             Graphics.init();
 
-            core2DInputCallback = new Core2DInputCallback();
+            core2DInputCallbacks = new Core2DInputCallbacks();
 
             /** инициализация **/
 
             AssetManager.init();
-
-            gcThread = new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    while (true) {
-                        if (gcThreadRunning) {
-                            // сбор мусора каждые 10 сек =)
-                            try {
-                                Thread.sleep(10000);
-                            } catch (InterruptedException e) {
-                                e.printStackTrace();
-                            }
-                            Runtime.getRuntime().gc();
-                        }
-                    }
-                }
-            });
 
             deltaTimer.getTimerCallbacks().add(new TimerCallback() {
                 @Override
@@ -150,6 +163,9 @@ public class Core2D extends Graphics
         }
     }
 
+    /**
+     * Stops Core2D. Calls the onExit() method in the core2DUserCallback.
+     */
     public static void stopCore2D() {
         // освобождать колбэки окна и удалять окно
         glfwFreeCallbacks(window.getWindow());
@@ -159,8 +175,6 @@ public class Core2D extends Graphics
         glfwTerminate();
         glfwSetErrorCallback(null).free();
 
-        stopGCThread();
-
         if(Core2D.core2DUserCallback != null) {
             Core2D.core2DUserCallback.onExit();
         }
@@ -168,26 +182,17 @@ public class Core2D extends Graphics
         System.exit(130);
     }
 
-    public static void startGCThread() {
-        gcThreadRunning = true;
-        gcThread.start();
-    }
-
-    public static void stopGCThread() {
-        if (gcThreadRunning) {
-            gcThreadRunning = false;
-            gcThread.interrupt();
-        }
-    }
-
     public static Window getWindow() {
         return window;
     }
 
-    public static Core2DInputCallback getCore2DInputCallback() {
-        return core2DInputCallback;
+    public static Core2DInputCallbacks getCore2DInputCallback() {
+        return core2DInputCallbacks;
     }
 
+    /**
+     * @return Cyclic timer.
+     */
     public static Timer getDeltaTimer() {
         return deltaTimer;
     }

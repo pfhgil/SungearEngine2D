@@ -2,8 +2,8 @@ package SungearEngine2D.DebugDraw;
 
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
+import Core2D.Drawable.Object2D;
 import Core2D.Graphics.Graphics;
-import Core2D.Object2D.Object2D;
 import SungearEngine2D.Main.Resources;
 import org.joml.Vector2f;
 import org.joml.Vector4f;

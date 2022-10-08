@@ -3,44 +3,60 @@ package SungearEngine2D.Builder;
 import Core2D.Component.Components.ScriptComponent;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Core2D.Core2D;
+import Core2D.Drawable.Object2D;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
-import Core2D.Object2D.Object2D;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.Scene2DStoredValues;
 import Core2D.Scene2D.SceneManager;
-import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Utils;
 import Core2D.Utils.WrappedObject;
+import SungearEngine2D.GUI.Views.MainView;
 import SungearEngine2D.Main.Settings;
 import SungearEngine2D.Scripting.Compiler;
-import com.sun.tools.attach.VirtualMachine;
-import org.apache.commons.io.FilenameUtils;
-import sun.misc.Unsafe;
 
 import java.io.File;
-import java.io.FilenameFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static Core2D.Scene2D.SceneManager.currentSceneManager;
-
 public class Builder
 {
-    public static void build(String buildName)
+    private static String buildName = "";
+
+    private static Thread buildThread = new Thread(new Runnable() {
+        @Override
+        public void run() {
+            Log.CurrentSession.println("Attention! Builder uses a separate thread to build the game, so all OpenGL commands won't work.", Log.MessageType.WARNING);
+            build();
+        }
+    });
+
+    public static void startBuild(String buildName)
+    {
+        Builder.buildName = buildName;
+        buildThread.start();
+    }
+
+    private static void build()
     {
         try {
             if (ProjectsManager.getCurrentProject() != null) {
+                MainView.getBottomMenuView().startProgressBar(3.0f, 0.0f, "Creating the necessary files... ");
+
                 SceneManager.saveSceneManager(ProjectsManager.getCurrentProject().getProjectPath() + "\\SceneManager.sm");
+
+                MainView.getBottomMenuView().progressBarCurrent++;
 
                 File outDirectory = new File(ProjectsManager.getCurrentProject().getProjectPath() + "\\out");
                 if (!outDirectory.exists()) {
                     FileUtils.createFolder(outDirectory.getPath());
                 }
+
+                MainView.getBottomMenuView().progressBarCurrent++;
 
                 // создаю SceneManager с выбранными сценами
                 SceneManager sceneManager = new SceneManager();
@@ -54,15 +70,19 @@ public class Builder
                         sceneManager.getScene2DStoredValues().add(newStoredValues);
                     }
                 }
-                //SceneManager newSceneManager = SceneManager.loadSceneManagerNotAsCurrent(outDirectory.getPath() + "/SceneManager.sm");
 
+                MainView.getBottomMenuView().progressBarCurrent++;
+
+                MainView.getBottomMenuView().startProgressBar(sceneManager.getScene2DStoredValues().size(), 0.0f, "Preparing resources for packaging... ");
                 // упаковываю ресурсы
-                packResources(outDirectory.getPath() + "\\resources", sceneManager);
+                prepareResources(outDirectory.getPath() + "\\resources", sceneManager);
 
                 SceneManager.saveSceneManager(outDirectory.getPath() + "/SceneManager.sm", sceneManager);
 
                 // заново сохраняю этот SceneManager
                 //SceneManager.saveSceneManager(outDirectory.getPath() + "/SceneManager.sm", newSceneManager);
+
+                MainView.getBottomMenuView().startProgressBar(5.0f, 0.0f, "Copying necessary files... ");
 
                 File applicationStarterClassFile = new File(".\\compiler\\ApplicationStarter.class");
                 File applicationStarterClassFile1 = new File(".\\compiler\\ApplicationStarter$1.class");
@@ -70,27 +90,39 @@ public class Builder
                 // копирую файл Core2D.jar в папку sourcesDirectoryPath
                 FileUtils.copyFile(Core2D.class.getResourceAsStream("/data/other/Core2D.jar"), outDirectory.getPath() + "/Core2D.jar");
 
+                MainView.getBottomMenuView().progressBarCurrent++;
+
                 // копирую файл кодировки в папку sourcesDirectoryPath
                 FileUtils.copyFile(Core2D.class.getResourceAsStream("/data/other/chcp.com"), outDirectory.getPath() + "/chcp.com");
 
+                MainView.getBottomMenuView().progressBarCurrent++;
+
                 // копирую файл 7z.exe
                 FileUtils.copyFile(Core2D.class.getResourceAsStream("/data/other/7z.exe"), outDirectory.getPath() + "/7z.exe");
+
+                MainView.getBottomMenuView().progressBarCurrent++;
 
                 Compiler.compileScript(".\\compiler\\ApplicationStarter.java");
 
                 // копирую файл ApplicationStarter
                 FileUtils.copyFile(applicationStarterClassFile.getCanonicalPath(), outDirectory.getPath() + "/ApplicationStarter.class", false);
+                MainView.getBottomMenuView().progressBarCurrent++;
                 FileUtils.copyFile(applicationStarterClassFile1.getCanonicalPath(), outDirectory.getPath() + "/ApplicationStarter$1.class", false);
+                MainView.getBottomMenuView().progressBarCurrent++;
 
                 // создаю файл манифеста
                 String manifestFileData = "Manifest-Version: 1.0\n" +
                         "Main-Class: ApplicationStarter\n" +
                         "Class-Path: Core2D.jar\n";
 
+                MainView.getBottomMenuView().startProgressBar(1.0f, 0.0f, "Creating manifest file... ");
                 File manifestFile = FileUtils.createFile(outDirectory.getPath() + "/manifest.txt");
                 FileUtils.writeToFile(manifestFile, manifestFileData, false);
+                MainView.getBottomMenuView().progressBarCurrent++;
 
+                MainView.getBottomMenuView().startProgressBar(2.0f, 0.0f, "Creating builder.bat file... ");
                 File builderBatFile = FileUtils.createFile(outDirectory.getPath() + "\\builder.bat");
+                MainView.getBottomMenuView().progressBarCurrent++;
 
                 String builderBatFileData = "@echo off\n" +
                         // устанавливаю кодировку, чтобы был русский текст
@@ -129,18 +161,25 @@ public class Builder
                         "echo build finished. check log.";
 
                 FileUtils.writeToFile(builderBatFile, builderBatFileData, false);
+                MainView.getBottomMenuView().progressBarCurrent++;
 
                 // создаю файл, который будет открывать builder
                 String openBuilderBatFileData = "cd /d " + builderBatFile.getParentFile().getPath() + "\n" +
                         "builder.bat";
 
+                MainView.getBottomMenuView().startProgressBar(2.0f, 0.0f, "Creating openBuilder.bat file... ");
                 File openBuilderBatFile = FileUtils.createFile(outDirectory.getPath() + "/openBuilder.bat");
+                MainView.getBottomMenuView().progressBarCurrent++;
                 FileUtils.writeToFile(openBuilderBatFile, openBuilderBatFileData, false);
+                MainView.getBottomMenuView().progressBarCurrent++;
 
+                MainView.getBottomMenuView().startProgressBar(3.0f, 0.0f, "Starting openBuilder.bat... ");
                 // открываю файл openBuilder
                 ProcessBuilder pb = new ProcessBuilder(outDirectory.getPath() + "/openBuilder.bat");
+                MainView.getBottomMenuView().progressBarCurrent++;
                 try {
                     Process proc = pb.start();
+                    MainView.getBottomMenuView().progressBarCurrent++;
 
                     // принт вывода и ошибок
                     Log.CurrentSession.println(Utils.outputStreamToString(proc.getOutputStream()), Log.MessageType.INFO);
@@ -151,32 +190,23 @@ public class Builder
                 } catch (InterruptedException | IOException e) {
                     Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                 }
+                MainView.getBottomMenuView().progressBarCurrent++;
 
                 // удаляю bat файл для билда
                 builderBatFile.delete();
+
+                MainView.getBottomMenuView().leftSideInfo = "File " + Builder.buildName + ".jar was successfully built!";
+                MainView.getBottomMenuView().leftSideInfoColor.set(0.0f, 1.0f, 0.0f, 1.0f);
+                Builder.buildName = "";
+                MainView.getBottomMenuView().finishProgressBar();
             }
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
 
-    /*
-    public static SceneManager packScenes2DInSceneManager(boolean inBuildMatters)
-    {
-        SceneManager sceneManager = new SceneManager();
-
-        for(Scene2D scene2D : SceneManager.currentSceneManager.getScenes()) {
-            Scene2D loadedScene2D = SceneManager.currentSceneManager.loadScene(scene2D.getScenePath());
-
-        }
-
-        return sceneManager;
-    }
-
-     */
-
     // упаковка ресурсов
-    private static void packResources(String toDir, SceneManager sceneManager)
+    private static void prepareResources(String toDir, SceneManager sceneManager)
     {
         FileUtils.createFolder(toDir);
 
@@ -254,5 +284,7 @@ public class Builder
 
             scene2D.setScenePath(newScene2DPath);
         }
+
+        MainView.getBottomMenuView().progressBarCurrent++;
     }
 }

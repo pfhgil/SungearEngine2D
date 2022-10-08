@@ -3,7 +3,7 @@ package Core2D.Drawable.UI.Button;
 import Core2D.AssetManager.AssetManager;
 import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.TransformComponent;
-import Core2D.Controllers.PC.Mouse;
+import Core2D.Input.PC.Mouse;
 import Core2D.Drawable.Object2D;
 import Core2D.Transform.Transform;
 import Core2D.Drawable.UI.Text.Text;

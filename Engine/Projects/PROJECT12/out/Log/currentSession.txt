@@ -1,0 +1,186 @@
+[#FFFFFF] 2022/10/08 23:03:38 | [#008000] Log directory was founded!
+[#FFFFFF] 2022/10/08 23:03:38 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/10/08 23:03:38 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2022/10/08 23:03:38 | [#008000] Core2D started!
+[#FFFFFF] 2022/10/08 23:03:38 | [#FFFFFF] LWJGL version is 3.3.1 build 7
+[#FFFFFF] 2022/10/08 23:03:39 | [#FFFFFF] scene manager code: {
+  "scene2DStoredValues": [
+    {
+      "path": "/Scenes/lvl0.sgs",
+      "inBuild": true,
+      "isMainScene2D": true
+    },
+    {
+      "path": "/Scenes/lvl1.sgs",
+      "inBuild": true,
+      "isMainScene2D": false
+    },
+    {
+      "path": "/Scenes/lvl2.sgs",
+      "inBuild": true,
+      "isMainScene2D": false
+    }
+  ],
+  "mainScene2DPath": ""
+}
+[#FFFFFF] 2022/10/08 23:03:39 | [#FF0000] goo!!!!1
+[#FFFFFF] 2022/10/08 23:03:39 | [#FF0000] goo!!!!12222
+[#FFFFFF] 2022/10/08 23:03:39 | [#FF0000] goo!!!234324
+[#FFFFFF] 2022/10/08 23:03:40 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:40 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:41 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:41 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:41 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:41 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:41 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:41 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:41 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:41 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:41 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:41 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:41 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:41 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:41 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:41 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:41 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:42 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:42 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:42 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:42 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:42 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:42 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:42 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:42 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:42 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:42 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:42 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:42 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:42 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:42 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:42 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:42 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:42 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:42 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:42 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:42 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:42 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:42 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:43 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:43 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:43 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:43 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:43 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:43 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:43 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:43 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:44 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:44 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:44 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:44 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:44 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:44 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:44 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:44 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:44 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:44 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:44 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:44 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:44 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:44 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:44 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:44 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:44 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:44 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:45 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:45 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:45 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:45 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:45 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:45 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:45 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:45 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:45 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:45 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:45 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:45 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:46 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:46 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:46 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:46 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:46 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:46 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:46 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:46 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:46 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:47 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:47 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:47 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:47 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:47 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:47 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:47 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:47 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:47 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:48 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:48 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:48 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:49 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:49 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:49 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:49 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:49 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:49 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:50 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:50 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:50 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:50 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:50 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:50 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:51 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:51 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:51 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:52 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:52 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:52 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:53 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:53 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:53 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:53 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:53 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:53 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:54 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:54 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:54 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:54 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:54 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:54 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:54 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:54 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:54 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:55 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:55 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:55 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:56 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/08 23:03:56 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:56 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:56 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/08 23:03:56 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:56 | [#FF0000] bytes length: 1440
+[#FFFFFF] 2022/10/08 23:03:57 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/08 23:03:57 | [#FF0000] buffer length: 1440
+[#FFFFFF] 2022/10/08 23:03:57 | [#FF0000] bytes length: 1440

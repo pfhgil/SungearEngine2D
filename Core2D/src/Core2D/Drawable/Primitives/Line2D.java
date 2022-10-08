@@ -10,7 +10,7 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-public class Line2D extends Drawable implements AutoCloseable
+public class Line2D extends Drawable
 {
     // трансформации объекта
     private Transform transform;
@@ -141,9 +141,4 @@ public class Line2D extends Drawable implements AutoCloseable
 
     public ShaderProgram getShaderProgram() { return shaderProgram; }
     public void setShaderProgram(ShaderProgram shaderProgram) { this.shaderProgram = shaderProgram; }
-
-    @Override
-    public void close() throws Exception {
-
-    }
 }

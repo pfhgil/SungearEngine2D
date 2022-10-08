@@ -2,16 +2,38 @@ package Core2D.Component.Components;
 
 import Core2D.Component.Component;
 import Core2D.Log.Log;
+import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.Physics.Collider2D.CircleCollider2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.ExceptionsUtils;
 
+/**
+ * The CircleCollider2D component.
+ * @see Core2D.Physics.PhysicsWorld
+ * @see CircleCollider2D
+ * @see Rigidbody2DComponent
+ * @see Core2D.Physics.Rigidbody2D
+ * @see Component
+ */
 public class CircleCollider2DComponent extends Component
 {
-    private CircleCollider2D circleCollider2D;
+    private CircleCollider2D circleCollider2D = new CircleCollider2D();
 
-    public CircleCollider2DComponent() { circleCollider2D = new CircleCollider2D(); }
+    /**
+     * Removes CircleCollider2D from the physical world.
+     * @see Component#destroy()
+     */
+    @Override
+    public void destroy()
+    {
+        circleCollider2D.destroy();
+    }
 
+    /**
+     * Applies component parameters to this component.
+     * @see Component#set(Component)
+     * @param component CircleCollider2DComponent.
+     */
     @Override
     public void set(Component component)
     {
@@ -20,6 +42,12 @@ public class CircleCollider2DComponent extends Component
         }
     }
 
+    /**
+     * Initializes the component.
+     * Adds CircleCollider2D to the physical world if the Object2D to which this component is bound has a Rigidbody2DComponent,
+     * and the current scene is not null (set).
+     * @see Component#init()
+     */
     @Override
     public void init()
     {

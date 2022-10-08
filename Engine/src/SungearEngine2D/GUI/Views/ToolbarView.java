@@ -1,12 +1,11 @@
 package SungearEngine2D.GUI.Views;
 
-import Core2D.Controllers.PC.Keyboard;
+import Core2D.Input.Core2DUserInputCallback;
+import Core2D.Input.PC.Keyboard;
 import SungearEngine2D.DebugDraw.Gizmo;
 import SungearEngine2D.Main.Resources;
 import imgui.ImGui;
-import imgui.ImGuiStyle;
 import imgui.ImGuiWindowClass;
-import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;

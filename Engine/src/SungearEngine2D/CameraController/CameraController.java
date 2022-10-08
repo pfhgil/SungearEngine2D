@@ -2,12 +2,10 @@ package SungearEngine2D.CameraController;
 
 import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Components.TransformComponent;
-import Core2D.Controllers.PC.Mouse;
 import Core2D.Core2D.Core2D;
-import Core2D.Input.UserInputCallback;
-import Core2D.Object2D.Object2D;
-import Core2D.Object2D.Transform;
-import SungearEngine2D.DebugDraw.Gizmo;
+import Core2D.Drawable.Object2D;
+import Core2D.Input.Core2DUserInputCallback;
+import Core2D.Input.PC.Mouse;
 import SungearEngine2D.GUI.Views.MainView;
 import SungearEngine2D.Main.Main;
 import org.joml.Vector2f;
@@ -26,7 +24,7 @@ public class CameraController
 
     public static void init()
     {
-        Core2D.getCore2DInputCallback().getUserInputCallbacks().add(new UserInputCallback() {
+        Core2D.getCore2DInputCallback().getCore2DUserInputCallbacks().add(new Core2DUserInputCallback() {
             @Override
             public void onInput(int i, String s, int i1) {
 

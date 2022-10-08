@@ -1,0 +1,20 @@
+{
+  "scene2DStoredValues": [
+    {
+      "path": "/Scenes/lvl0.sgs",
+      "inBuild": true,
+      "isMainScene2D": true
+    },
+    {
+      "path": "/Scenes/lvl1.sgs",
+      "inBuild": true,
+      "isMainScene2D": false
+    },
+    {
+      "path": "/Scenes/lvl2.sgs",
+      "inBuild": true,
+      "isMainScene2D": false
+    }
+  ],
+  "mainScene2DPath": ""
+}

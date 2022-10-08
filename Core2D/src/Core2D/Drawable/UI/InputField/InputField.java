@@ -3,10 +3,10 @@ package Core2D.Drawable.UI.InputField;
 import Core2D.AssetManager.AssetManager;
 import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.TransformComponent;
-import Core2D.Controllers.PC.Keyboard;
-import Core2D.Controllers.PC.Mouse;
+import Core2D.Input.Core2DUserInputCallback;
+import Core2D.Input.PC.Keyboard;
+import Core2D.Input.PC.Mouse;
 import Core2D.Core2D.Core2D;
-import Core2D.Input.UserInputCallback;
 import Core2D.Drawable.Object2D;
 import Core2D.Transform.Transform;
 import Core2D.Drawable.UI.Text.Text;
@@ -67,7 +67,7 @@ public class InputField extends Drawable
     private Text takeGlyphWidthText;
     private Cursor cursor;
 
-    private UserInputCallback userInputCallback;
+    private Core2DUserInputCallback core2DUserInputCallback;
 
     private float cursorOffsetX = 5.0f;
     // делитель отступа для курсора
@@ -95,7 +95,7 @@ public class InputField extends Drawable
 
         takeGlyphWidthText = new Text(AssetManager.getFont("comicSansSM"), "");
 
-        userInputCallback = new UserInputCallback() {
+        core2DUserInputCallback = new Core2DUserInputCallback() {
             @Override
             public void onInput(int key, String keyName, int mods) {
                 int capsLockMod = mods & GLFW.GLFW_MOD_CAPS_LOCK;
@@ -171,7 +171,7 @@ public class InputField extends Drawable
             }
         };
 
-        Core2D.getCore2DInputCallback().getUserInputCallbacks().add(userInputCallback);
+        Core2D.getCore2DInputCallback().getCore2DUserInputCallbacks().add(core2DUserInputCallback);
     }
 
     @Override

@@ -12,7 +12,7 @@ public class PositionsQuad
     private Vector2f rightTop = new Vector2f();
     private Vector2f rightBottom = new Vector2f();
 
-    private Vector2f atlasSize = new Vector2f();
+    private Vector2f atlasSize = new Vector2f(1.0f);
 
     public PositionsQuad() { }
 

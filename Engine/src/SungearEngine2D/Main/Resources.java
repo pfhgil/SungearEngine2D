@@ -1,10 +1,8 @@
 package SungearEngine2D.Main;
 
 import Core2D.Core2D.Core2D;
-import Core2D.Core2D.Settings;
 import Core2D.Texture2D.Texture2D;
 import org.lwjgl.opengl.GL13;
-import org.w3c.dom.Text;
 
 // TODO: в дальнейшем все это перенести в AssetManager
 public class Resources
