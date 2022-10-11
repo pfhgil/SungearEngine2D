@@ -1,3 +1,0 @@
-{
-  "jdkPath": "C:\\Users\\stuka\\.jdks\\corretto-1.8.0_342"
-}

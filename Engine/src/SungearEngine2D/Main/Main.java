@@ -51,6 +51,8 @@ public class Main
                 cameraAnchor = new Object2D();
                 cameraAnchor.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
                 cameraAnchor.getComponent(TransformComponent.class).getTransform().setPosition(new Vector2f(-50.0f, -50.0f));
+
+                mainCamera2D.getTransform().setParentTransform(cameraAnchor.getComponent(TransformComponent.class).getTransform());
                 CamerasManager.setMainCamera2D(mainCamera2D);
 
                 CameraController.controlledCamera2DAnchor = cameraAnchor;
@@ -65,7 +67,6 @@ public class Main
                     @Override
                     public void run() {
                         Settings.initCompiler();
-                        Settings.loadSettingsFile();
 
                         while(true) {
                             try {
@@ -123,6 +124,8 @@ public class Main
                 });
                 helpThread.start();
 
+                Settings.loadSettingsFile();
+
                 System.gc();
             }
 
@@ -135,8 +138,7 @@ public class Main
 
             @Override
             public void onDrawFrame() {
-                mainCamera2D.getTransform().setScale(new Vector2f(MainView.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
-                mainCamera2D.getTransform().setPosition(cameraAnchor.getComponent(TransformComponent.class).getTransform().getPosition());
+                cameraAnchor.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(MainView.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
                 CameraController.control();
 
                 if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) GUI.draw();

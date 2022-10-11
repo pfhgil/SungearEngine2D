@@ -1,6 +1,6 @@
-[#FFFFFF] 2022/10/01 21:31:19 | [#008000] Log directory was founded!
-[#FFFFFF] 2022/10/01 21:31:19 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/10/01 21:31:21 | [#FFFFFF] scene manager code: {
+[#FFFFFF] 2022/10/08 23:38:21 | [#008000] Log directory was founded!
+[#FFFFFF] 2022/10/08 23:38:21 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/10/08 23:38:23 | [#FFFFFF] scene manager code: {
   "scene2DStoredValues": [
     {
       "path": "/Scenes/lvl0.sgs",
@@ -10,7 +10,7 @@
   ],
   "mainScene2DPath": ""
 }
-[#FFFFFF] 2022/10/01 21:31:21 | [#FF0000] goo!!!!1
-[#FFFFFF] 2022/10/01 21:31:21 | [#FF0000] goo!!!!12222
-[#FFFFFF] 2022/10/01 21:31:21 | [#FF0000] goo!!!234324
-[#FFFFFF] 2022/10/01 21:31:21 | [#FFFFFF] Texture source: /out/resources/Resources/textures/ferapont.png
+[#FFFFFF] 2022/10/08 23:38:23 | [#FF0000] goo!!!!1
+[#FFFFFF] 2022/10/08 23:38:23 | [#FF0000] goo!!!!12222
+[#FFFFFF] 2022/10/08 23:38:23 | [#FF0000] goo!!!234324
+[#FFFFFF] 2022/10/08 23:38:23 | [#FFFFFF] Texture source: /out/resources/Resources/textures/ferapont.png

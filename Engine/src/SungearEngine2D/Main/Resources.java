@@ -47,6 +47,10 @@ public class Resources
 
             public static Texture2D checkMarkIcon = new Texture2D();
 
+            public static Texture2D xIcon = new Texture2D();
+
+            public static Texture2D collapseIcon = new Texture2D();
+
             public static void load() {
                 directoryIcon.loadTexture(Core2D.class.getResourceAsStream("/data/icons/directory.png"));
                 imageFileIcon.loadTexture(Core2D.class.getResourceAsStream("/data/icons/image_file.png"));
@@ -72,6 +76,8 @@ public class Resources
                 noneIcon.loadTexture(Core2D.class.getResourceAsStream("/data/icons/none.png"));
 
                 checkMarkIcon.loadTexture(Core2D.class.getResourceAsStream("/data/icons/check_mark.png"));
+                xIcon.loadTexture(Core2D.class.getResourceAsStream("/data/icons/x_icon.png"));
+                collapseIcon.loadTexture(Core2D.class.getResourceAsStream("/data/icons/collapse_icon.png"));
             }
         }
 

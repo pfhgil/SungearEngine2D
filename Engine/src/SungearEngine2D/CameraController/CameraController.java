@@ -5,7 +5,9 @@ import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Drawable.Object2D;
 import Core2D.Input.Core2DUserInputCallback;
+import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
+import Core2D.Transform.Transform;
 import SungearEngine2D.GUI.Views.MainView;
 import SungearEngine2D.Main.Main;
 import org.joml.Vector2f;
@@ -57,7 +59,7 @@ public class CameraController
                     controlledCamera2DAnchor.getComponent(TransformComponent.class).getTransform().setNeedToMoveToDestination(false);
                     Vector2f currentPosition = new Vector2f(Mouse.getMousePosition());
                     Vector2f difference = new Vector2f(currentPosition.x - lastCursorPosition.x, currentPosition.y - lastCursorPosition.y);
-                    controlledCamera2DAnchor.getComponent(TransformComponent.class).getTransform().translate(difference.negate().div(Main.getMainCamera2D().getTransform().getScale()));
+                    Main.getMainCamera2D().getTransform().translate(difference);
                     lastCursorPosition = currentPosition;
                 }
             /*
