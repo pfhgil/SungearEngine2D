@@ -344,20 +344,30 @@ public class Gizmo
                         MathUtils.rotate(offset, -MatrixUtils.getRotation(object2DTransform.getParentTransform().getResultModelMatrix()),
                                 new Vector2f(0.0f, 0.0f));
                     }
-                    if (selectedGizmoTool.getName().equals("gizmo.yArrow")) {
-                        object2D.getComponent(TransformComponent.class).getTransform().translate(new Vector2f(0.0f, -offset.y));
-                    } else if (selectedGizmoTool.getName().equals("gizmo.xArrow")) {
-                        object2D.getComponent(TransformComponent.class).getTransform().translate(new Vector2f(-offset.x, 0.0f));
-                    } else if (selectedGizmoTool.getName().equals("gizmo.centrePoint")) {
-                        object2D.getComponent(TransformComponent.class).getTransform().translate(new Vector2f(-offset.x, -offset.y));
-                    } else if (selectedGizmoTool.getName().equals("gizmo.rotationHandler")) {
-                        object2D.getComponent(TransformComponent.class).getTransform().rotate(-offset.x);
-                    } else if (selectedGizmoTool.getName().equals("gizmo.yScaleHandler")) {
-                        object2D.getComponent(TransformComponent.class).getTransform().scale(new Vector2f(0.0f, -offset.y * scaleSensitivity.y));
-                    } else if (selectedGizmoTool.getName().equals("gizmo.xScaleHandler")) {
-                        object2D.getComponent(TransformComponent.class).getTransform().scale(new Vector2f(-offset.x * scaleSensitivity.x, 0.0f));
-                    } else if (selectedGizmoTool.getName().equals("gizmo.centrePointToEditCentre")) {
-                        object2D.getComponent(TransformComponent.class).getTransform().getCentre().add(new Vector2f(offset).negate());
+                    Transform objTransform = object2D.getComponent(TransformComponent.class).getTransform();
+                    switch (selectedGizmoTool.getName()) {
+                        case "gizmo.yArrow":
+                            objTransform.translate(new Vector2f(0.0f, -offset.y));
+                            break;
+                        case "gizmo.xArrow":
+                            objTransform.translate(new Vector2f(-offset.x, 0.0f));
+                            break;
+                        case "gizmo.centrePoint":
+                            objTransform.translate(new Vector2f(-offset.x, -offset.y));
+                            break;
+                        case "gizmo.rotationHandler":
+                            Vector2f p = objTransform.getPosition();
+                            objTransform.setRotation((float)(Math.atan2(mouseOGLPosition.y-p.y, mouseOGLPosition.x-p.x)/Math.PI/2f)*360f-(360f/4f));
+                            break;
+                        case "gizmo.yScaleHandler":
+                            objTransform.scale(new Vector2f(0.0f, -offset.y * scaleSensitivity.y));
+                            break;
+                        case "gizmo.xScaleHandler":
+                            objTransform.scale(new Vector2f(-offset.x * scaleSensitivity.x, 0.0f));
+                            break;
+                        case "gizmo.centrePointToEditCentre":
+                            objTransform.getCentre().add(new Vector2f(offset).negate());
+                            break;
                     }
                 }
             }
