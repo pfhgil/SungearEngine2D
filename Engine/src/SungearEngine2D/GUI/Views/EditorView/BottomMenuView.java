@@ -69,6 +69,8 @@ public class BottomMenuView
 
         tasksList.removeIf(bottomProgressBarElement -> !bottomProgressBarElement.isAlive());
 
+        maxProgressBarWidth = 0.0f;
+
         //maxProgressBarWidth = 0.0f;
         if(tasksList.size() > 0) {
             showProgressBar(tasksList.get(0), new Vector2f(0.0f, -10.0f));
@@ -97,10 +99,10 @@ public class BottomMenuView
             for (int i = 1; i < tasksList.size(); i++) {
                 showProgressBar(tasksList.get(i));
             }
-            ImGui.setWindowSize(maxProgressBarWidth, 100.0f);
+            ImGui.setWindowSize(maxProgressBarWidth + 18.0f, 100.0f);
             Vector2i glfwWindowSize = Core2D.getWindow().getSize();
             ImVec2 imGuiWindowSize = ImGui.getWindowSize();
-            ImGui.setWindowPos(glfwWindowSize.x - maxProgressBarWidth, glfwWindowSize.y - imGuiWindowSize.y - 50.0f);
+            ImGui.setWindowPos(glfwWindowSize.x - maxProgressBarWidth - 18.0f, glfwWindowSize.y - imGuiWindowSize.y - 50.0f);
             ImGui.end();
         }
     }

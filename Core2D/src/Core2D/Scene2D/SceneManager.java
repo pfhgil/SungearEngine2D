@@ -249,18 +249,7 @@ public class SceneManager
     {
         Scene2D scene2D = getScene2D(name);
 
-        if (currentScene2D != null) {
-            currentScene2D.setSceneLoaded(false);
-        }
-        currentScene2D = scene2D;
-
-        if (currentScene2D != null) {
-            currentScene2D.load();
-        }
-
-        if(currentScene2D != null) {
-            applyObject2DDependencies(currentScene2D);
-        }
+        setCurrentScene2D(scene2D);
     }
     public Scene2D getCurrentScene2D() { return currentScene2D; }
 

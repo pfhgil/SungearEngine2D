@@ -28,18 +28,11 @@ public class Builder
 {
     private static String buildName = "";
 
-    private static Thread buildThread = new Thread(new Runnable() {
-        @Override
-        public void run() {
-            Log.CurrentSession.println("Attention! Builder uses a separate thread to build the game, so all OpenGL commands won't work.", Log.MessageType.WARNING);
-            build();
-        }
-    });
-
     public static void startBuild(String buildName)
     {
+        Log.CurrentSession.println("Attention! Builder uses a separate thread to build the game, so all OpenGL commands won't work.", Log.MessageType.WARNING);
         Builder.buildName = buildName;
-        buildThread.start();
+        build();
     }
 
     private static void build()

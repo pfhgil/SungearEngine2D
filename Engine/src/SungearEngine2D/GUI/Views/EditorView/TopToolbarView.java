@@ -51,7 +51,7 @@ public class TopToolbarView
         dialogWindow.setLeftButtonText("Close");
 
         fileChooserWindow = new FileChooserWindow(FileChooserWindow.FileChooserMode.CHOOSE_DIRECTORY);
-        fileChooserWindow.getDialogWindow().setActive(false);
+        fileChooserWindow.setActive(false);
         fileChooserWindow.setDirectoryChooserWindowCallback(new FileChooserWindowCallback() {
             @Override
             public void onLeftButtonClicked() {
@@ -89,7 +89,7 @@ public class TopToolbarView
                                 ImGui.sameLine();
                                 if(ImGui.button("Browse...")) {
                                     dialogWindow.setActive(false);
-                                    fileChooserWindow.getDialogWindow().setActive(true);
+                                    fileChooserWindow.setActive(true);
                                 }
                             }
 
@@ -160,7 +160,7 @@ public class TopToolbarView
                                 ImGui.sameLine();
                                 if(ImGui.button("Browse...")) {
                                     dialogWindow.setActive(false);
-                                    fileChooserWindow.getDialogWindow().setActive(true);
+                                    fileChooserWindow.setActive(true);
                                 }
                             }
 

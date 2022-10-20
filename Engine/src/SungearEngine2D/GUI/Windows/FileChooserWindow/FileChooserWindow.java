@@ -8,15 +8,13 @@ import imgui.flag.ImGuiTreeNodeFlags;
 
 import java.io.File;
 
-public class FileChooserWindow
+public class FileChooserWindow extends DialogWindow
 {
     public enum FileChooserMode
     {
         CHOOSE_FILE,
         CHOOSE_DIRECTORY
     }
-
-    private DialogWindow dialogWindow;
 
     private String currentChosenFilePath = "";
     private String initialDirectoryPath = "";
@@ -29,12 +27,14 @@ public class FileChooserWindow
 
     public FileChooserWindow(FileChooserMode fileChooserMode)
     {
+        super("Choose directory", "Cancel", "Choose");
         this.fileChooserMode = fileChooserMode;
         create();
     }
 
     public FileChooserWindow(String initialDirectoryPath, FileChooserMode fileChooserMode)
     {
+        super("Choose directory", "Cancel", "Choose");
         this.initialDirectoryPath = initialDirectoryPath;
         this.fileChooserMode = fileChooserMode;
         create();
@@ -45,13 +45,11 @@ public class FileChooserWindow
         File f = new File("");
         initialDirectoryPath = f.getAbsolutePath();
 
-        dialogWindow = new DialogWindow("Choose directory", "Cancel", "Choose");
-        //dialogWindow.setWindowSize(new Vector2f(250.0f, dialogWindow.getWindowSize().y));
-        dialogWindow.setDialogWindowCallback(new DialogWindowCallback() {
+        setDialogWindowCallback(new DialogWindowCallback() {
             @Override
             public void onDraw() {
                 ImGui.text("Chosen directory path: " + currentChosenFilePath);
-                ImGui.beginChild("Browser", dialogWindow.getCurrentWindowSize().x - 17, dialogWindow.getCurrentWindowSize().y - 75, true);
+                ImGui.beginChild("Browser", getCurrentWindowSize().x - 17, getCurrentWindowSize().y - 75, true);
 
                 File[] disks = File.listRoots();
                 for(File disk : disks) {
@@ -69,14 +67,14 @@ public class FileChooserWindow
             @Override
             public void onLeftButtonClicked() {
                 fileChooserWindowCallback.onLeftButtonClicked();
-                dialogWindow.setActive(false);
+                setActive(false);
                 needToScroll = true;
             }
 
             @Override
             public void onRightButtonClicked() {
                 fileChooserWindowCallback.onRightButtonClicked(currentChosenFilePath);
-                dialogWindow.setActive(false);
+                setActive(false);
                 needToScroll = true;
             }
         });
@@ -143,10 +141,8 @@ public class FileChooserWindow
 
     public void draw()
     {
-        dialogWindow.draw();
+        super.draw();
     }
-
-    public DialogWindow getDialogWindow() { return dialogWindow; }
 
     public FileChooserMode getFileChooserMode() { return fileChooserMode; }
     public void setFileChooserMode(FileChooserMode fileChooserMode) { this.fileChooserMode = fileChooserMode; }

@@ -34,7 +34,7 @@ public class Camera2D implements Serializable
 
     /**
      * Camera constructor. Initializes transform and ID.
-     * Шf the current scene is null,
+     * If the current scene is null,
      * then ID is equal to a random number from 0 to 1000000000,
      * in another case ID is equal to the ID of the last object on the scene + 1.
      */

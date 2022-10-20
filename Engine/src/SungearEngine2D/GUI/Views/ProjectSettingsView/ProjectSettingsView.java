@@ -4,6 +4,7 @@ import Core2D.Core2D.Core2D;
 import Core2D.Project.ProjectsManager;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindow;
+import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindowCallback;
 import imgui.ImGui;
 import imgui.ImGuiWindowClass;
 import imgui.ImVec2;
@@ -53,6 +54,7 @@ public class ProjectSettingsView extends View
     public void init()
     {
         dockspaceID = ImGui.getID("ProjectSettingsViewDockspace");
+        fileChooserWindow.setActive(false);
     }
 
     public void draw()
@@ -128,7 +130,44 @@ public class ProjectSettingsView extends View
             }
             if(ImGui.button("Cancel", 50.0f, 25.0f)) {
                 active = false;
+                ProjectsManager.getCurrentProject().getProjectSettings().loadSettings(ProjectsManager.getCurrentProject().getProjectSettingsPath());
             }
+
+            ImGui.setNextWindowClass(windowClass);
+            ImGui.begin("MainSettingsView", ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoResize);
+
+            ImGui.setCursorPos(9.0f, 5.0f);
+
+            ImGui.text("JDK path");
+
+            ImGui.sameLine();
+
+            ImString input = new ImString(ProjectsManager.getCurrentProject().getProjectSettings().getJdkPath(), 256);
+            ImGui.pushID("JDKPathInput");
+            if(ImGui.inputText("", input)) {
+                ProjectsManager.getCurrentProject().getProjectSettings().setJdkPath(input.get());
+            }
+            ImGui.popID();
+
+            ImGui.sameLine();
+
+            if(ImGui.button("Browse...")) {
+                fileChooserWindow.setActive(true);
+                fileChooserWindow.setDirectoryChooserWindowCallback(new FileChooserWindowCallback() {
+                    @Override
+                    public void onLeftButtonClicked() {
+                        fileChooserWindow.setActive(false);
+                    }
+
+                    @Override
+                    public void onRightButtonClicked(String chosenDirectory) {
+                        ProjectsManager.getCurrentProject().getProjectSettings().setJdkPath(chosenDirectory);
+                        fileChooserWindow.setActive(false);
+                    }
+                });
+            }
+
+            ImGui.end();
 
             ImGui.end();
             /*
@@ -150,6 +189,8 @@ public class ProjectSettingsView extends View
 
             ImGui.end();
             ImGui.popStyleVar(1);
+
+            fileChooserWindow.draw();
 
             update();
         }
