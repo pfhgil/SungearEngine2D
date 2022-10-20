@@ -13,7 +13,7 @@ import Core2D.Transform.Transform;
 import Core2D.Utils.MathUtils;
 import Core2D.Utils.MatrixUtils;
 import SungearEngine2D.CameraController.CameraController;
-import SungearEngine2D.GUI.Views.MainView;
+import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Resources;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
@@ -118,8 +118,8 @@ public class Gizmo
 
     public static void draw()
     {
-        if(MainView.getInspectorView().getCurrentInspectingObject() instanceof Object2D && active) {
-            Object2D object2D = (Object2D) MainView.getInspectorView().getCurrentInspectingObject();
+        if(ViewsManager.getInspectorView().getCurrentInspectingObject() instanceof Object2D && active) {
+            Object2D object2D = (Object2D) ViewsManager.getInspectorView().getCurrentInspectingObject();
             if(!object2D.isShouldDestroy()) {
                 Transform object2DTransform = object2D.getComponent(TransformComponent.class).getTransform();
                 Vector2f object2DPosition = new Vector2f(MatrixUtils.getPosition(object2DTransform.getResultModelMatrix()));
@@ -146,9 +146,9 @@ public class Gizmo
                 centrePoint.getComponent(TransformComponent.class).getTransform().setPosition(object2DPosition);
                 centrePointToEditCentre.getComponent(TransformComponent.class).getTransform().setPosition(new Vector2f(object2DCentrePosition));
                 //Transform rotationCircleTransform = rotationCircle.getComponent(TransformComponent.class).getTransform();
-                rotationCircle.getTransform().setPosition(object2DPosition);
+                rotationCircle.getTransform().setPosition(object2DCentrePosition);
                 rotationHandlerTransform.setPosition(new Vector2f(rotationCircle.getTransform().getPosition()).add(new Vector2f(0.0f, rotationCircle.getRadius())));
-                Vector2f rotationOffset = new Vector2f(object2DPosition).add(new Vector2f(rotationHandlerTransform.getPosition()).negate());
+                Vector2f rotationOffset = new Vector2f(object2DCentrePosition).add(new Vector2f(rotationHandlerTransform.getPosition()).negate());
                 rotationHandlerTransform.setRotationAround(object2DRotation, rotationOffset);
                 float parentRotation = 0.0f;
                 Vector2f yScaleLineEnd = new Vector2f(0.0f, 350.0f);
@@ -321,7 +321,7 @@ public class Gizmo
                                 selectedGizmoTool.getColor().z * 0.75f,
                                 selectedGizmoTool.getColor().w));
                         CameraController.allowMove = false;
-                        lastMousePosition.set(MainView.getSceneView().getMouseOGLPosition(Mouse.getMousePosition()));
+                        lastMousePosition.set(ViewsManager.getSceneView().getMouseOGLPosition(Mouse.getMousePosition()));
                     }
                 }
 
@@ -335,7 +335,7 @@ public class Gizmo
                 }
 
                 if (Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_1) && selectedGizmoTool != null) {
-                    Vector2f mouseOGLPosition = new Vector2f(MainView.getSceneView().getMouseOGLPosition(Mouse.getMousePosition()));
+                    Vector2f mouseOGLPosition = new Vector2f(ViewsManager.getSceneView().getMouseOGLPosition(Mouse.getMousePosition()));
 
                     Vector2f offset = new Vector2f(lastMousePosition).add(new Vector2f(mouseOGLPosition).negate());
                     Vector2f notRotatedOffset = new Vector2f(offset);
@@ -344,20 +344,24 @@ public class Gizmo
                         MathUtils.rotate(offset, -MatrixUtils.getRotation(object2DTransform.getParentTransform().getResultModelMatrix()),
                                 new Vector2f(0.0f, 0.0f));
                     }
-                    if (selectedGizmoTool.getName().equals("gizmo.yArrow")) {
-                        object2D.getComponent(TransformComponent.class).getTransform().translate(new Vector2f(0.0f, -offset.y));
-                    } else if (selectedGizmoTool.getName().equals("gizmo.xArrow")) {
-                        object2D.getComponent(TransformComponent.class).getTransform().translate(new Vector2f(-offset.x, 0.0f));
-                    } else if (selectedGizmoTool.getName().equals("gizmo.centrePoint")) {
-                        object2D.getComponent(TransformComponent.class).getTransform().translate(new Vector2f(-offset.x, -offset.y));
-                    } else if (selectedGizmoTool.getName().equals("gizmo.rotationHandler")) {
-                        object2D.getComponent(TransformComponent.class).getTransform().rotate(-offset.x);
-                    } else if (selectedGizmoTool.getName().equals("gizmo.yScaleHandler")) {
-                        object2D.getComponent(TransformComponent.class).getTransform().scale(new Vector2f(0.0f, -offset.y * scaleSensitivity.y));
-                    } else if (selectedGizmoTool.getName().equals("gizmo.xScaleHandler")) {
-                        object2D.getComponent(TransformComponent.class).getTransform().scale(new Vector2f(-offset.x * scaleSensitivity.x, 0.0f));
-                    } else if (selectedGizmoTool.getName().equals("gizmo.centrePointToEditCentre")) {
-                        object2D.getComponent(TransformComponent.class).getTransform().getCentre().add(new Vector2f(offset).negate());
+                    switch (selectedGizmoTool.getName()) {
+                        case "gizmo.yArrow" -> object2DTransform.translate(new Vector2f(0.0f, -offset.y));
+                        case "gizmo.xArrow" -> object2DTransform.translate(new Vector2f(-offset.x, 0.0f));
+                        case "gizmo.centrePoint" -> object2DTransform.translate(new Vector2f(-offset.x, -offset.y));
+                        case "gizmo.rotationHandler" -> {
+                            Vector2f p = new Vector2f(object2DCentrePosition);
+                            if(object2DTransform.getParentTransform() != null) {
+                                Vector2f parentPosition = MatrixUtils.getPosition(object2DTransform.getParentTransform().getResultModelMatrix());
+                                MathUtils.rotate(mouseOGLPosition, -MatrixUtils.getRotation(object2DTransform.getParentTransform().getResultModelMatrix()), parentPosition);
+                            }
+                            object2DTransform.setRotation((float) (Math.atan2(mouseOGLPosition.y - p.y, mouseOGLPosition.x - p.x) / Math.PI / 2f) * 360f - (360f / 4f));
+                        }
+                        case "gizmo.yScaleHandler" ->
+                                object2DTransform.scale(new Vector2f(0.0f, -offset.y * scaleSensitivity.y));
+                        case "gizmo.xScaleHandler" ->
+                                object2DTransform.scale(new Vector2f(-offset.x * scaleSensitivity.x, 0.0f));
+                        case "gizmo.centrePointToEditCentre" ->
+                                object2DTransform.getCentre().add(new Vector2f(offset).negate());
                     }
                 }
             }

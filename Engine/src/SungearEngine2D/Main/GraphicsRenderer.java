@@ -9,7 +9,7 @@ import SungearEngine2D.DebugDraw.CamerasDebugLines;
 import SungearEngine2D.DebugDraw.Gizmo;
 import SungearEngine2D.DebugDraw.Grid;
 import SungearEngine2D.DebugDraw.ObjectsDebugLines;
-import SungearEngine2D.GUI.Views.MainView;
+import SungearEngine2D.GUI.Views.ViewsManager;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFW;
@@ -55,18 +55,18 @@ public class GraphicsRenderer
 
         if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) sceneRenderTarget.unBind();
 
-        if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && !MainView.isSomeViewFocusedExceptSceneView && !MainView.getInspectorView().isEditing()) {
+        if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && !ViewsManager.isSomeViewFocusedExceptSceneView && !ViewsManager.getInspectorView().isEditing()) {
             Vector2f mousePosition = Mouse.getMousePosition();
 
             Object2D pickedObject2D = Graphics.getPickedObject2D(mousePosition);
 
             if(pickedObject2D != null) {
-                MainView.getInspectorView().setCurrentInspectingObject(pickedObject2D);
+                ViewsManager.getInspectorView().setCurrentInspectingObject(pickedObject2D);
             }
         }
 
-        if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && MainView.getInspectorView().isEditing()) {
-            MainView.getInspectorView().setEditing(false);
+        if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && ViewsManager.getInspectorView().isEditing()) {
+            ViewsManager.getInspectorView().setEditing(false);
         }
 
         gameRenderTarget.bind();

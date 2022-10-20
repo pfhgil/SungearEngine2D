@@ -16,8 +16,7 @@ import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Utils;
 import Core2D.Utils.WrappedObject;
-import SungearEngine2D.GUI.Views.MainView;
-import SungearEngine2D.Main.Settings;
+import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
 
 import java.io.File;
@@ -50,7 +49,7 @@ public class Builder
             SceneManager sceneManager = new SceneManager();
             File outDirectory = new File("");
 
-            MainView.getBottomMenuView().addTaskToList(new StoppableTask("Creating the necessary files...", 3.0f, 0.0f) {
+            ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Creating the necessary files...", 3.0f, 0.0f) {
                 @Override
                 public void run() {
                     SceneManager.saveSceneManager(ProjectsManager.getCurrentProject().getProjectPath() + "\\SceneManager.sm");
@@ -144,9 +143,9 @@ public class Builder
                             // устанавливаю кодировку, чтобы был русский текст
                             "chcp 65001\n" +
                             // указываю путь до bin jdk
-                            "set bin=\"" + Settings.getSettingsFile().jdkPath + "\"\n" +
+                            "set bin=\"" + ProjectsManager.getCurrentProject().getProjectSettings().getJdkPath() + "\"\n" +
                             // указываю путь до javac
-                            "set ppath=%bin%;\"" + Settings.getSettingsFile().jdkPath + "\\javac.exe\"\n" +
+                            "set ppath=%bin%;\"" + ProjectsManager.getCurrentProject().getProjectSettings().getJdkPath() + "\\javac.exe\"\n" +
                             // создаю jar с именем buildName, классом ApplicationStarter, манифестом
                             "jar cvmf manifest.txt " + buildName + ".jar ApplicationStarter.class ApplicationStarter$1.class\n" +
                             // удаляю папку core2d
@@ -217,8 +216,8 @@ public class Builder
                     // удаляю bat файл для билда
                     builderBatFile.delete();
 
-                    MainView.getBottomMenuView().leftSideInfo = "File " + Builder.buildName + ".jar was successfully built!";
-                    MainView.getBottomMenuView().leftSideInfoColor.set(0.0f, 1.0f, 0.0f, 1.0f);
+                    ViewsManager.getBottomMenuView().leftSideInfo = "File " + Builder.buildName + ".jar was successfully built!";
+                    ViewsManager.getBottomMenuView().leftSideInfoColor.set(0.0f, 1.0f, 0.0f, 1.0f);
                     Builder.buildName = "";
                 }
             });

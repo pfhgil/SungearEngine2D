@@ -9,7 +9,7 @@ import Core2D.Drawable.Primitives.Line2D;
 import Core2D.Graphics.Graphics;
 import Core2D.Transform.Transform;
 import Core2D.Utils.MathUtils;
-import SungearEngine2D.GUI.Views.MainView;
+import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Resources;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
@@ -47,11 +47,11 @@ public class CamerasDebugLines
 
     public static void draw() {
         Vector2i windowSize = Core2D.getWindow().getSize();
-        if (MainView.getInspectorView().getCurrentInspectingObject() instanceof Camera2D
+        if (ViewsManager.getInspectorView().getCurrentInspectingObject() instanceof Camera2D
                 && currentSceneManager.getCurrentScene2D() != null
                 && currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null
-                && ((Camera2D) MainView.getInspectorView().getCurrentInspectingObject()).getID() != currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().getID()) {
-            Camera2D camera2D = (Camera2D) MainView.getInspectorView().getCurrentInspectingObject();
+                && ((Camera2D) ViewsManager.getInspectorView().getCurrentInspectingObject()).getID() != currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().getID()) {
+            Camera2D camera2D = (Camera2D) ViewsManager.getInspectorView().getCurrentInspectingObject();
 
             Vector2f pointOne = new Vector2f(-camera2D.getTransform().getPosition().x - windowSize.x / 2.0f, -camera2D.getTransform().getPosition().y - windowSize.y / 2.0f);
             Vector2f pointThree = new Vector2f((-camera2D.getTransform().getPosition().x + windowSize.x / 2.0f), (-camera2D.getTransform().getPosition().y + windowSize.y / 2.0f));

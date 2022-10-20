@@ -13,7 +13,7 @@ import Core2D.Physics.Collider2D.CircleCollider2D;
 import Core2D.Transform.Transform;
 import Core2D.Utils.MathUtils;
 import Core2D.Utils.MatrixUtils;
-import SungearEngine2D.GUI.Views.MainView;
+import SungearEngine2D.GUI.Views.ViewsManager;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -46,8 +46,8 @@ public class ObjectsDebugLines
 
     public static void draw()
     {
-        if(MainView.getInspectorView().getCurrentInspectingObject() instanceof Object2D) {
-            Object2D object2D = (Object2D) MainView.getInspectorView().getCurrentInspectingObject();
+        if(ViewsManager.getInspectorView().getCurrentInspectingObject() instanceof Object2D) {
+            Object2D object2D = (Object2D) ViewsManager.getInspectorView().getCurrentInspectingObject();
             if(!object2D.isShouldDestroy()) {
 
                 for (Line2D line2D : currentPickedObject2DDebugLines) {

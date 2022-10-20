@@ -33,8 +33,8 @@ C  [imgui-java64.dll+0x7f41b]
 
 Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
 j  imgui.ImGui.nHasDragDropPayload(Ljava/lang/String;)Z+0
-J 1949 c1 SungearEngine2D.GUI.Views.SceneTreeView.draw()V (528 bytes) @ 0x0000001b08d21594 [0x0000001b08d20860+0x0000000000000d34]
-J 1893 c1 SungearEngine2D.GUI.Views.MainView.draw()V (126 bytes) @ 0x0000001b08d08e74 [0x0000001b08d08b60+0x0000000000000314]
+J 1949 c1 SungearEngine2D.GUI.Views.EditorView.SceneTreeView.draw()V (528 bytes) @ 0x0000001b08d21594 [0x0000001b08d20860+0x0000000000000d34]
+J 1893 c1 SungearEngine2D.GUI.Views.ViewsManager.draw()V (126 bytes) @ 0x0000001b08d08e74 [0x0000001b08d08b60+0x0000000000000314]
 J 1803 c1 SungearEngine2D.Main.Main$1.onDrawFrame()V (83 bytes) @ 0x0000001b08ce5d24 [0x0000001b08ce55c0+0x0000000000000764]
 j  Core2D.Graphics.Graphics.draw()V+168
 j  Core2D.Core2D.Core2D.run()V+45

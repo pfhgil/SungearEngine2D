@@ -7,8 +7,7 @@ import Core2D.Drawable.Object2D;
 import Core2D.Input.Core2DUserInputCallback;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
-import Core2D.Transform.Transform;
-import SungearEngine2D.GUI.Views.MainView;
+import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
@@ -34,7 +33,7 @@ public class CameraController
 
             @Override
             public void onScroll(double xoffset, double yoffset) {
-                if(controlledCamera2DAnchor != null && !MainView.isSomeViewFocusedExceptSceneView && Main.getMainCamera2D().getID() == CamerasManager.getMainCamera2D().getID()) {
+                if(controlledCamera2DAnchor != null && !ViewsManager.isSomeViewFocusedExceptSceneView && Main.getMainCamera2D().getID() == CamerasManager.getMainCamera2D().getID()) {
                     Vector2f scale = new Vector2f((float) yoffset / 5.0f * mouseCameraScale.x, (float) yoffset / 5.0f * mouseCameraScale.y);
                     mouseCameraScale.x += scale.x;
                     mouseCameraScale.y += scale.y;
@@ -54,7 +53,7 @@ public class CameraController
             if (Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
                 lastCursorPosition = new Vector2f(Mouse.getMousePosition());
             }
-            if (controlledCamera2DAnchor != null && !MainView.isSomeViewFocusedExceptSceneView) {
+            if (controlledCamera2DAnchor != null && !ViewsManager.isSomeViewFocusedExceptSceneView) {
                 if (Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
                     controlledCamera2DAnchor.getComponent(TransformComponent.class).getTransform().setNeedToMoveToDestination(false);
                     Vector2f currentPosition = new Vector2f(Mouse.getMousePosition());
@@ -62,13 +61,14 @@ public class CameraController
                     Main.getMainCamera2D().getTransform().translate(difference);
                     lastCursorPosition = currentPosition;
                 }
+
+            if(Keyboard.keyDown(GLFW.GLFW_KEY_K)) {
+                Main.getMainCamera2D().getTransform().rotate(1.0f);
+            }
+            if(Keyboard.keyDown(GLFW.GLFW_KEY_J)) {
+                Main.getMainCamera2D().getTransform().rotate(-1.0f);
+            }
             /*
-            if(Keyboard.KeyDown(GLFW.GLFW_KEY_S)) {
-                Main.getMainCamera2D().getTransform().getModelMatrix().translate(new Vector3f(0.0f, 0.0f, -1f));
-            }
-            if(Keyboard.KeyDown(GLFW.GLFW_KEY_W)) {
-                Main.getMainCamera2D().getTransform().getModelMatrix().translate(new Vector3f(0.0f, 0.0f, 1f));
-            }
             if(Keyboard.KeyReleased(GLFW.GLFW_KEY_V)) {
                 if(Core2D.getViewMode() == Graphics.ViewMode.VIEW_MODE_2D) {
                     Core2D.setViewMode(Graphics.ViewMode.VIEW_MODE_3D);

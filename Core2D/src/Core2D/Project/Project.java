@@ -17,6 +17,9 @@ public class Project implements Serializable
     private String scriptsPath;
     private String scenesPath;
 
+    private ProjectSettings projectSettings = new ProjectSettings();
+    private String projectSettingsPath;
+
     public Project(String projectParentPath, String projectName)
     {
         this.projectParentPath = projectParentPath;
@@ -26,16 +29,22 @@ public class Project implements Serializable
         resourcesPath = projectParentPath + "\\" + projectName + "\\Resources";
         scriptsPath = projectParentPath + "\\" + projectName + "\\Scripts";
         scenesPath = projectParentPath + "\\" + projectName + "\\Scenes";
+        projectSettingsPath = projectParentPath + "\\" + projectName + "\\ProjectSettings.txt";
+
+        projectSettings = new ProjectSettings();
+        getProjectSettings().saveSettings(projectSettingsPath);
     }
 
     public void saveProject()
     {
         SceneManager.saveSceneManager(projectPath + "\\SceneManager.sm");
+        getProjectSettings().saveSettings(projectSettingsPath);
     }
 
     public void loadProject()
     {
         SceneManager.loadSceneManagerAsCurrent(projectPath + "\\SceneManager.sm");
+        getProjectSettings().loadSettings(projectSettingsPath);
     }
 
 
@@ -50,6 +59,7 @@ public class Project implements Serializable
         resourcesPath = projectPath + "\\Resources";
         scriptsPath = projectPath + "\\Scripts";
         scenesPath = projectPath + "\\Scenes";
+        projectSettingsPath = projectPath + "\\ProjectSettings.txt";
         projectParentPath = new File(projectParentPath).getParent();
     }
 
@@ -60,4 +70,14 @@ public class Project implements Serializable
     public String getScriptsPath() { return scriptsPath; }
 
     public String getScenesPath() { return scenesPath; }
+
+    public ProjectSettings getProjectSettings()
+    {
+        if(projectSettings == null) {
+            projectSettings = new ProjectSettings();
+        }
+        return projectSettings;
+    }
+
+    public String getProjectSettingsPath() { return projectSettingsPath; }
 }

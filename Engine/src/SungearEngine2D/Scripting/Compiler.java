@@ -1,11 +1,12 @@
 package SungearEngine2D.Scripting;
 
 import Core2D.Log.Log;
+import Core2D.Project.ProjectsManager;
 import Core2D.Tasks.StoppableTask;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.Utils;
-import SungearEngine2D.GUI.Views.MainView;
-import SungearEngine2D.Main.Settings;
+import SungearEngine2D.GUI.Views.ViewsManager;
+import SungearEngine2D.Main.EngineSettings;
 
 import java.io.File;
 import java.io.IOException;
@@ -24,7 +25,7 @@ public class Compiler
         if(scriptFile.exists()) {
             File compilerPath = new File(".\\compiler");
 
-            MainView.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + scriptFile.getName() + "... ", 1.0f, 0.0f) {
+            ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + scriptFile.getName() + "... ", 1.0f, 0.0f) {
                 @Override
                 public void run() {
                     try {
@@ -33,7 +34,7 @@ public class Compiler
                         // жду завершения процесса
                         proc.waitFor();
 
-                        String command = "\"" + Settings.getSettingsFile().getJdkPath() +
+                        String command = "\"" + ProjectsManager.getCurrentProject().getProjectSettings().getJdkPath() +
                                 "\\bin\\javac\" -cp " +
                                 "\"" + compilerPath.getCanonicalPath() + "\\Core2D.jar\" " +
                                 "\"" + scriptFile.getCanonicalPath() + "\"";
@@ -58,18 +59,18 @@ public class Compiler
                             if (notCompiledScripts.contains(scriptFile.getName())) {
                                 notCompiledScripts.add(scriptFile.getName());
                             }
-                            MainView.getBottomMenuView().leftSideInfo = "Script " + scriptFile.getName() + " was not compiled. Fix all errors before entering the playmode";
-                            MainView.getBottomMenuView().leftSideInfoColor.set(1.0f, 0.0f, 0.0f, 1.0f);
+                            ViewsManager.getBottomMenuView().leftSideInfo = "Script " + scriptFile.getName() + " was not compiled. Fix all errors before entering the playmode";
+                            ViewsManager.getBottomMenuView().leftSideInfoColor.set(1.0f, 0.0f, 0.0f, 1.0f);
                         }
                         if (outputString.equals("") && errorString.equals("")) {
-                            MainView.getBottomMenuView().leftSideInfo = "Script " + scriptFile.getName() + " was successfully built!";
-                            MainView.getBottomMenuView().leftSideInfoColor.set(0.0f, 1.0f, 0.0f, 1.0f);
+                            ViewsManager.getBottomMenuView().leftSideInfo = "Script " + scriptFile.getName() + " was successfully built!";
+                            ViewsManager.getBottomMenuView().leftSideInfoColor.set(0.0f, 1.0f, 0.0f, 1.0f);
                             Log.CurrentSession.println("Script " + scriptFile.getName() + " was successfully built!", Log.MessageType.SUCCESS);
                             result[0] = true;
                             notCompiledScripts.remove(scriptFile.getName());
                         }
 
-                        Settings.Playmode.canEnterPlaymode = notCompiledScripts.size() == 0;
+                        EngineSettings.Playmode.canEnterPlaymode = notCompiledScripts.size() == 0;
                     } catch (InterruptedException | IOException e) {
                         Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
 

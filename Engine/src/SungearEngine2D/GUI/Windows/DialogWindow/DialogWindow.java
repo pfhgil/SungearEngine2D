@@ -1,7 +1,7 @@
 package SungearEngine2D.GUI.Windows.DialogWindow;
 
 import Core2D.Core2D.Core2D;
-import SungearEngine2D.GUI.Views.MainView;
+import SungearEngine2D.GUI.Views.ViewsManager;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiCond;
@@ -52,7 +52,7 @@ public class DialogWindow
             ImGui.setNextWindowPos(Core2D.getWindow().getSize().x / 2.0f - windowSize.x / 2.0f, Core2D.getWindow().getSize().y / 2.0f - windowSize.y / 2.0f, ImGuiCond.Appearing);
             ImGui.setNextWindowSize(windowSize.x, windowSize.y, ImGuiCond.Appearing);
             ImGui.begin(windowName, ImGuiWindowFlags.NoDocking | ImGuiWindowFlags.NoCollapse);
-            if(MainView.getCurrentFocusedDialogWindow() == id) {
+            if(ViewsManager.getCurrentFocusedDialogWindow() == id) {
                 ImGui.setWindowFocus();
             }
 
@@ -108,7 +108,7 @@ public class DialogWindow
     {
         this.windowName = windowName;
         id = ImGui.getID(windowName);
-        MainView.setCurrentFocusedDialogWindow(id);
+        ViewsManager.setCurrentFocusedDialogWindow(id);
     }
 
     public String getMiddleButtonText() { return middleButtonText; }

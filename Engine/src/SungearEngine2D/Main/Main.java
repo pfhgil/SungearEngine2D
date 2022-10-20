@@ -15,7 +15,7 @@ import Core2D.Project.ProjectsManager;
 import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.CameraController.CameraController;
 import SungearEngine2D.GUI.GUI;
-import SungearEngine2D.GUI.Views.MainView;
+import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector2f;
@@ -27,7 +27,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
-import static org.lwjgl.opengl.GL11.*;
 
 public class Main
 {
@@ -50,9 +49,9 @@ public class Main
                 mainCamera2D = new Camera2D();
                 cameraAnchor = new Object2D();
                 cameraAnchor.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-                cameraAnchor.getComponent(TransformComponent.class).getTransform().setPosition(new Vector2f(-50.0f, -50.0f));
+                cameraAnchor.getComponent(TransformComponent.class).getTransform().setPosition(new Vector2f(0.0f, 0.0f));
 
-                mainCamera2D.getTransform().setParentTransform(cameraAnchor.getComponent(TransformComponent.class).getTransform());
+                //mainCamera2D.getTransform().setParentTransform(cameraAnchor.getComponent(TransformComponent.class).getTransform());
                 CamerasManager.setMainCamera2D(mainCamera2D);
 
                 CameraController.controlledCamera2DAnchor = cameraAnchor;
@@ -66,7 +65,7 @@ public class Main
                 helpThread = new Thread(new Runnable() {
                     @Override
                     public void run() {
-                        Settings.initCompiler();
+                        EngineSettings.initCompiler();
 
                         while(true) {
                             try {
@@ -77,7 +76,7 @@ public class Main
 
                             if(currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().isSceneLoaded()) {
                                 try {
-                                    if (!Settings.Playmode.active) {
+                                    if (!EngineSettings.Playmode.active) {
                                         currentSceneManager.getCurrentScene2D().saveScriptsTempValues();
                                     }
 
@@ -98,7 +97,7 @@ public class Main
                                                         }
                                                         long lastModified = new File(scriptComponents.get(k).getScript().getPath() + ".java").lastModified();
                                                         if (lastModified != scriptComponents.get(k).getScript().getLastModified()) {
-                                                            Settings.Playmode.canEnterPlaymode = false;
+                                                            EngineSettings.Playmode.canEnterPlaymode = false;
                                                             scriptComponents.get(k).getScript().setLastModified(lastModified);
                                                             boolean compiled = Compiler.compileScript(scriptComponents.get(k).getScript().getPath() + ".java");
                                                             if (compiled) {
@@ -112,7 +111,7 @@ public class Main
                                         }
                                     }
 
-                                    if (!Settings.Playmode.active) {
+                                    if (!EngineSettings.Playmode.active) {
                                         currentSceneManager.getCurrentScene2D().applyScriptsTempValues();
                                     }
                                 } catch(Exception e) {
@@ -123,8 +122,6 @@ public class Main
                     }
                 });
                 helpThread.start();
-
-                Settings.loadSettingsFile();
 
                 System.gc();
             }
@@ -138,7 +135,8 @@ public class Main
 
             @Override
             public void onDrawFrame() {
-                cameraAnchor.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(MainView.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
+                mainCamera2D.getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
+                //cameraAnchor.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
                 CameraController.control();
 
                 if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) GUI.draw();

@@ -114,7 +114,7 @@
                         "x": -418.3355,
                         "y": -279.9065
                       },
-                      "rotation": 0.0,
+                      "rotation": -70.11994,
                       "scale": {
                         "x": 1.6224378,
                         "y": 1.8697143
@@ -290,7 +290,7 @@
       }
     ]
   },
-  "maxObjectID": 65,
+  "maxObjectID": 73,
   "inBuild": false,
   "isMainScene2D": false
 }

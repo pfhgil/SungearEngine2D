@@ -16,6 +16,7 @@ public class ProjectsManager
         FileUtils.createFolder(projectPath + "\\" + projectName + "\\Resources");
         FileUtils.createFolder(projectPath + "\\" + projectName + "\\Scripts");
         FileUtils.createFolder(projectPath + "\\" + projectName + "\\Scenes");
+        FileUtils.createFile(projectPath + "\\" + projectName + "\\ProjectSettings.txt");
 
         FileUtils.serializeObject(projectPath + "\\" + projectName + "\\" + projectName + ".sgp", project);
 

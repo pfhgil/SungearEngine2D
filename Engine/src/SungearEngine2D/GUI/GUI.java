@@ -3,10 +3,8 @@ package SungearEngine2D.GUI;
 import Core2D.Core2D.Core2D;
 import Core2D.Project.ProjectsManager;
 import Core2D.Utils.FileUtils;
-import SungearEngine2D.GUI.Views.MainView;
-import SungearEngine2D.GUI.Views.ResourcesView;
-import SungearEngine2D.Main.Settings;
-import imgui.ImGui;
+import SungearEngine2D.GUI.Views.ViewsManager;
+import SungearEngine2D.GUI.Views.EditorView.ResourcesView;
 import org.apache.commons.io.FilenameUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWDropCallback;
@@ -26,14 +24,14 @@ public class GUI
         GUISettings.init();
 
         renderer.startFrame();
-        MainView.init();
+        ViewsManager.init();
         renderer.endFrame();
 
         GLFW.glfwSetDropCallback(Core2D.getWindow().getWindow(), new GLFWDropCallback() {
             @Override
             public void invoke(long window, int count, long names) {
                 GLFW.glfwFocusWindow(window);
-                if(MainView.getResourcesView().isHovered()) {
+                if(ViewsManager.getResourcesView().isHovered()) {
                     String[] paths = new String[count];
 
                     for (int i = 0; i < paths.length; i++) {
@@ -54,9 +52,7 @@ public class GUI
     {
         renderer.startFrame();
 
-        MainView.draw();
-
-        Settings.drawImGUI();
+        ViewsManager.draw();
 
         renderer.endFrame();
     }
