@@ -39,7 +39,6 @@ public class Compiler
                                 "\"" + compilerPath.getCanonicalPath() + "\\Core2D.jar\" " +
                                 "\"" + scriptFile.getCanonicalPath() + "\"";
 
-                        System.out.println(command);
 
                         proc = Runtime.getRuntime().exec(command);
 

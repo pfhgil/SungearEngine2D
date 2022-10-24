@@ -244,6 +244,10 @@ public class SceneManager
 
         Keyboard.handleKeyboardInput();
         Mouse.handleMouseInput();
+
+        if(currentScene2D.getSceneMainCamera2D() != null) {
+            currentScene2D.getSceneMainCamera2D().getTransform().set(currentScene2D.getSceneMainCamera2D().getTransform());
+        }
     }
     public void setCurrentScene2D(String name)
     {

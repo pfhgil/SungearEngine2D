@@ -209,9 +209,9 @@ public class Builder
                     // удаляю bat файл для билда
                     builderBatFile.delete();
 
-                    ViewsManager.getBottomMenuView().leftSideInfo = "File " + Builder.buildName + ".jar was successfully built!";
+                    ViewsManager.getBottomMenuView().leftSideInfo = "File " + buildName + ".jar was successfully built!";
                     ViewsManager.getBottomMenuView().leftSideInfoColor.set(0.0f, 1.0f, 0.0f, 1.0f);
-                    Builder.buildName = "";
+                    buildName = "";
                 }
             });
             /*
@@ -270,7 +270,7 @@ public class Builder
                         Object2D object2D = (Object2D) wrappedObject.getObject();
                         TextureComponent textureComponent = object2D.getComponent(TextureComponent.class);
                         // относительный путь текстуры (относительно папки проекта)
-                        String textureRelativePath = FileUtils.getRelativePath(new File(textureComponent.getTexture2D().getSource()),
+                        String textureRelativePath = FileUtils.getRelativePath(new File(textureComponent.getTexture2D().source),
                                 new File(ProjectsManager.getCurrentProject().getProjectPath()));
                         // новый путь до текстуры
                         File newTextureFile = new File(toDir + "\\" + textureRelativePath);
@@ -278,9 +278,9 @@ public class Builder
                         newTextureFile.getParentFile().mkdirs();
                         System.out.println("relative path: " + textureRelativePath);
                         // копирую файл в эти папки
-                        FileUtils.copyFile(textureComponent.getTexture2D().getSource(), newTextureFile.getPath(), false);
+                        FileUtils.copyFile(textureComponent.getTexture2D().source, newTextureFile.getPath(), false);
                         // устанавливаю для текстурного компонента путь в билде (относительный)
-                        textureComponent.getTexture2D().setSource("/" + textureRelativePath.replace("\\", "/"));
+                        textureComponent.getTexture2D().source = "/" + textureRelativePath.replace("\\", "/");
 
                         // то же самое для скриптов
                         ScriptComponent scriptComponent = object2D.getComponent(ScriptComponent.class);

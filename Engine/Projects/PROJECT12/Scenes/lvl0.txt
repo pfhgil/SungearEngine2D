@@ -14,6 +14,191 @@
                   "properties": {
                     "transform": {
                       "position": {
+                        "x": -172.08026,
+                        "y": -285.0991
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 1.6224378,
+                        "y": 1.8697143
+                      },
+                      "centre": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    },
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Resources\\textures\\player.png",
+                      "param": 33071,
+                      "textureBlock": 33984,
+                      "blendSourceFactor": 770,
+                      "blendDestinationFactor": 771
+                    },
+                    "textureDrawMode": 1,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ],
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.Rigidbody2DComponent",
+                  "properties": {
+                    "rigidbody2D": {
+                      "bodyType": "DYNAMIC",
+                      "density": 1.0,
+                      "restitution": 0.1,
+                      "friction": 0.1,
+                      "isSensor": false,
+                      "isFixedRotation": true
+                    },
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.BoxCollider2DComponent",
+                  "properties": {
+                    "boxCollider2D": {
+                      "scale": {
+                        "x": 0.59,
+                        "y": 1.0
+                      },
+                      "offset": {
+                        "x": -4.0,
+                        "y": 10.0
+                      }
+                    },
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.ScriptComponent",
+                  "properties": {
+                    "script": {
+                      "path": "D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/PROJECT12/Scripts\\SceneController",
+                      "name": "SceneController",
+                      "active": true
+                    },
+                    "active": true
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 0.99607843,
+                "z": 0.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "isUIElement": false,
+              "parentObject2DID": -1,
+              "childrenObjectsID": [],
+              "name": "player",
+              "active": true,
+              "layerName": "bg",
+              "tag": {
+                "name": "default"
+              },
+              "ID": 9
+            }
+          },
+          {
+            "type": "Core2D.Drawable.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -585.64124,
+                        "y": -247.44254
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 66.55306,
+                        "y": 49.798008
+                      },
+                      "centre": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    },
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Resources\\textures\\ferapont.png",
+                      "param": 33071,
+                      "textureBlock": 33984,
+                      "blendSourceFactor": 32771,
+                      "blendDestinationFactor": 771
+                    },
+                    "textureDrawMode": 1,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ],
+                    "active": true
+                  }
+                }
+              ],
+              "color": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "isUIElement": false,
+              "parentObject2DID": -1,
+              "childrenObjectsID": [],
+              "name": "ferapont",
+              "active": true,
+              "layerName": "bg",
+              "tag": {
+                "name": "default"
+              },
+              "ID": 121
+            }
+          }
+        ],
+        "ID": 1,
+        "name": "bg"
+      },
+      {
+        "renderingObjects": [
+          {
+            "type": "Core2D.Drawable.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
                         "x": -146.14651,
                         "y": -552.3631
                       },
@@ -36,7 +221,9 @@
                     "texture2D": {
                       "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Resources\\textures\\ferapont.png",
                       "param": 33071,
-                      "textureBlock": 33984
+                      "textureBlock": 33984,
+                      "blendSourceFactor": 770,
+                      "blendDestinationFactor": 771
                     },
                     "textureDrawMode": 1,
                     "UV": [
@@ -111,10 +298,10 @@
                   "properties": {
                     "transform": {
                       "position": {
-                        "x": -418.3355,
-                        "y": -279.9065
+                        "x": -172.08026,
+                        "y": -285.0991
                       },
-                      "rotation": -70.11994,
+                      "rotation": 0.0,
                       "scale": {
                         "x": 1.6224378,
                         "y": 1.8697143
@@ -133,7 +320,9 @@
                     "texture2D": {
                       "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Resources\\textures\\player.png",
                       "param": 33071,
-                      "textureBlock": 33984
+                      "textureBlock": 33984,
+                      "blendSourceFactor": 770,
+                      "blendDestinationFactor": 771
                     },
                     "textureDrawMode": 1,
                     "UV": [
@@ -155,10 +344,10 @@
                     "rigidbody2D": {
                       "bodyType": "DYNAMIC",
                       "density": 1.0,
-                      "restitution": 1.0,
+                      "restitution": 0.1,
                       "friction": 0.1,
                       "isSensor": false,
-                      "isFixedRotation": false
+                      "isFixedRotation": true
                     },
                     "active": true
                   }
@@ -209,6 +398,75 @@
               },
               "ID": 9
             }
+          },
+          {
+            "type": "Core2D.Drawable.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -658.6706,
+                        "y": -282.32123
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 4.17,
+                        "y": 4.52
+                      },
+                      "centre": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    },
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Resources\\textures\\ferapont.png",
+                      "param": 33071,
+                      "textureBlock": 33984,
+                      "blendSourceFactor": 770,
+                      "blendDestinationFactor": 771
+                    },
+                    "textureDrawMode": 1,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ],
+                    "active": true
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 0.53333336
+              },
+              "drawingMode": 4,
+              "isUIElement": false,
+              "parentObject2DID": -1,
+              "childrenObjectsID": [],
+              "name": "ferapont",
+              "active": true,
+              "layerName": "default",
+              "tag": {
+                "name": "default"
+              },
+              "ID": 123
+            }
           }
         ],
         "ID": 0,
@@ -220,8 +478,8 @@
     {
       "transform": {
         "position": {
-          "x": 0.0,
-          "y": 0.0
+          "x": 390.0,
+          "y": 238.0
         },
         "rotation": 0.0,
         "scale": {
@@ -244,8 +502,8 @@
   "sceneMainCamera2D": {
     "transform": {
       "position": {
-        "x": 0.0,
-        "y": 0.0
+        "x": 390.0,
+        "y": 238.0
       },
       "rotation": 0.0,
       "scale": {
@@ -285,12 +543,59 @@
               "type": "java.lang.String",
               "properties": "lvl1"
             }
+          },
+          {
+            "fieldName": "movableObject2D",
+            "value": {
+              "type": "Core2D.Scripting.ScriptSceneObject",
+              "properties": {
+                "ID": 9,
+                "name": "player",
+                "objectType": "TYPE_OBJECT2D"
+              }
+            }
+          },
+          {
+            "fieldName": "speed",
+            "value": {
+              "type": "java.lang.Float",
+              "properties": 200.0
+            }
+          }
+        ]
+      },
+      {
+        "scriptTempValues": [
+          {
+            "fieldName": "levelName",
+            "value": {
+              "type": "java.lang.String",
+              "properties": "lvl1"
+            }
+          },
+          {
+            "fieldName": "movableObject2D",
+            "value": {
+              "type": "Core2D.Scripting.ScriptSceneObject",
+              "properties": {
+                "ID": 9,
+                "name": "player",
+                "objectType": "TYPE_OBJECT2D"
+              }
+            }
+          },
+          {
+            "fieldName": "speed",
+            "value": {
+              "type": "java.lang.Float",
+              "properties": 200.0
+            }
           }
         ]
       }
     ]
   },
-  "maxObjectID": 95,
+  "maxObjectID": 137,
   "inBuild": false,
   "isMainScene2D": false
 }

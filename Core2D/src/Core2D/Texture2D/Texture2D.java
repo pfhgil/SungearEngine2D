@@ -14,7 +14,7 @@ import static org.lwjgl.opengl.GL11.*;
 import static org.lwjgl.opengl.GL12.GL_CLAMP_TO_EDGE;
 import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
-import static org.lwjgl.opengl.GL14.GL_GENERATE_MIPMAP;
+import static org.lwjgl.opengl.GL14.*;
 import static org.lwjgl.opengl.GL30.glGenerateMipmap;
 import static org.lwjgl.opengl.GL42.glTexStorage2D;
 import static org.lwjgl.stb.STBImage.stbi_image_free;
@@ -33,15 +33,18 @@ public class Texture2D
     // информация о пикселях текстуры
     private transient ByteBuffer pixelsData;
     // путь до текстуры
-    private String source;
+    public String source;
     // формат текстуры. сколько каналов и какие каналы будет поддерживать текстура
     private transient int format;
     // сколько бит будет занимать каждый из каналов
     private transient int internalFormat;
 
-    private int param = GL_CLAMP_TO_EDGE;
+    public int param = GL_CLAMP_TO_EDGE;
 
     private int textureBlock = GL_TEXTURE0;
+
+    public int blendSourceFactor = GL_SRC_ALPHA;
+    public int blendDestinationFactor = GL_ONE_MINUS_SRC_ALPHA;
 
     public Texture2D() { }
 
@@ -251,12 +254,14 @@ public class Texture2D
     {
         textureHandler = texture2D.getTextureHandler();
         textureBlock = texture2D.getGLTextureBlock();
-        source = texture2D.getSource();
+        source = texture2D.source;
         width = texture2D.getWidth();
         height = texture2D.getHeight();
         channels = texture2D.getChannels();
         format = texture2D.getFormat();
         internalFormat = texture2D.getInternalFormat();
+        blendSourceFactor = texture2D.blendSourceFactor;
+        blendDestinationFactor = texture2D.blendDestinationFactor;
     }
 
     public void bind()
@@ -265,13 +270,56 @@ public class Texture2D
             // активирую нулевой текстурный блок
             glActiveTexture(textureBlock);
             glBindTexture(GL_TEXTURE_2D, textureHandler);
+            glBlendFunc(blendSourceFactor, blendDestinationFactor);
         }
     }
     public void unBind()
     {
         if(Thread.currentThread().getName().equals("main")) {
             glBindTexture(GL_TEXTURE_2D, 0);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         }
+    }
+
+    public static String blendFactorToString(int blendFactor)
+    {
+        return switch(blendFactor) {
+            case GL_ZERO -> "GL_ZERO";
+            case GL_ONE -> "GL_ONE";
+            case GL_SRC_COLOR -> "GL_SRC_COLOR";
+            case GL_ONE_MINUS_SRC_COLOR -> "GL_ONE_MINUS_SRC_COLOR";
+            case GL_DST_COLOR -> "GL_DST_COLOR";
+            case GL_ONE_MINUS_DST_COLOR -> "GL_ONE_MINUS_DST_COLOR";
+            case GL_SRC_ALPHA -> "GL_SRC_ALPHA";
+            case GL_ONE_MINUS_SRC_ALPHA -> "GL_ONE_MINUS_SRC_ALPHA";
+            case GL_DST_ALPHA -> "GL_DST_ALPHA";
+            case GL_ONE_MINUS_DST_ALPHA -> "GL_ONE_MINUS_DST_ALPHA";
+            case GL_CONSTANT_COLOR -> "GL_CONSTANT_COLOR";
+            case GL_ONE_MINUS_CONSTANT_COLOR -> "GL_ONE_MINUS_CONSTANT_COLOR";
+            case GL_CONSTANT_ALPHA -> "GL_CONSTANT_ALPHA";
+            case GL_ONE_MINUS_CONSTANT_ALPHA -> "GL_ONE_MINUS_CONSTANT_ALPHA";
+            default -> "UNKNOWN";
+        };
+    }
+
+    public static int[] getAllBlendFactors()
+    {
+        return new int[] {
+                GL_ZERO,
+                GL_ONE,
+                GL_SRC_COLOR,
+                GL_ONE_MINUS_SRC_COLOR,
+                GL_DST_COLOR,
+                GL_ONE_MINUS_DST_COLOR,
+                GL_SRC_ALPHA,
+                GL_ONE_MINUS_SRC_ALPHA,
+                GL_DST_ALPHA,
+                GL_ONE_MINUS_DST_ALPHA,
+                GL_CONSTANT_COLOR,
+                GL_ONE_MINUS_CONSTANT_COLOR,
+                GL_CONSTANT_ALPHA,
+                GL_ONE_MINUS_CONSTANT_ALPHA
+        };
     }
 
     // геттеры и сеттеры
@@ -280,7 +328,6 @@ public class Texture2D
 
     public int getHeight() { return height; }
 
-    public void setTextureHandler(int textureHandler) { this.textureHandler = textureHandler; }
     public int getTextureHandler() { return textureHandler; }
 
     /**
@@ -292,12 +339,6 @@ public class Texture2D
      * @return Formatted texture block (textureBlock - GL_TEXTURE0)
      */
     public int getFormattedTextureBlock() { return textureBlock - GL_TEXTURE0; }
-
-    public String getSource() { return source; }
-    public void setSource(String source) { this.source = source; }
-
-    public int getParam() { return param; }
-    public void setParam(int param) { this.param = param; }
 
     public int getChannels() { return channels; }
 

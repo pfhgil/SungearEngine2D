@@ -96,15 +96,11 @@ public class Rigidbody2D
     }
     public String typeToString()
     {
-        if(body.getType() == BodyType.DYNAMIC) {
-            return "Dynamic";
-        } else if(body.getType() == BodyType.STATIC) {
-            return "Static";
-        } else if(body.getType() == BodyType.KINEMATIC) {
-            return "Kinematic";
-        }
-
-        return "Unknown";
+        return switch(body.getType()) {
+            case DYNAMIC -> "Dynamic";
+            case STATIC -> "Static";
+            case KINEMATIC -> "Kinematic";
+        };
     }
     public void setType(BodyType bodyType)
     {

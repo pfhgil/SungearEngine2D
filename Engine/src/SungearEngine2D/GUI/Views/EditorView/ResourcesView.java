@@ -259,7 +259,7 @@ public class ResourcesView extends View
 
         if(ImGui.beginDragDropSource()) {
             ImGui.setDragDropPayload("File", files[id]);
-            ViewsManager.getInspectorView().setDroppingFile(files[id]);
+            ViewsManager.getInspectorView().droppingFile = files[id];
             currentMovingFile = files[id];
 
             ImGui.image(textureID, iconImageSize.x / 2.0f, iconImageSize.y / 2.0f, 0, 0, 1, 1, 1.0f, 1.0f, 1.0f, 0.5f);

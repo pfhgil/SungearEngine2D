@@ -1,9 +1,9 @@
-[#FFFFFF] 2022/10/21 00:07:17 | [#008000] Log directory was founded!
-[#FFFFFF] 2022/10/21 00:07:17 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/10/21 00:07:17 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2022/10/21 00:07:18 | [#008000] Core2D started!
-[#FFFFFF] 2022/10/21 00:07:18 | [#FFFFFF] LWJGL version is 3.3.1 build 7
-[#FFFFFF] 2022/10/21 00:07:18 | [#FFFFFF] scene manager code: {
+[#FFFFFF] 2022/10/22 00:49:47 | [#008000] Log directory was founded!
+[#FFFFFF] 2022/10/22 00:49:47 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/10/22 00:49:47 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2022/10/22 00:49:48 | [#008000] Core2D started!
+[#FFFFFF] 2022/10/22 00:49:48 | [#FFFFFF] LWJGL version is 3.3.1 build 7
+[#FFFFFF] 2022/10/22 00:49:48 | [#FFFFFF] scene manager code: {
   "scene2DStoredValues": [
     {
       "path": "/Scenes/lvl0.sgs",
@@ -23,61 +23,57 @@
   ],
   "mainScene2DPath": ""
 }
-[#FFFFFF] 2022/10/21 00:07:18 | [#FF0000] goo!!!!1
-[#FFFFFF] 2022/10/21 00:07:18 | [#FF0000] goo!!!!12222
-[#FFFFFF] 2022/10/21 00:07:18 | [#FF0000] goo!!!234324
-[#FFFFFF] 2022/10/21 00:07:19 | [#FF0000] buffer length: 1440
-[#FFFFFF] 2022/10/21 00:07:19 | [#FF0000] bytes length: 1440
-[#FFFFFF] 2022/10/21 00:07:19 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/21 00:07:23 | [#FFFFFF] level name: lvl1
-[#FFFFFF] 2022/10/21 00:07:23 | [#FF0000] buffer length: 1440
-[#FFFFFF] 2022/10/21 00:07:23 | [#FF0000] bytes length: 1440
-[#FFFFFF] 2022/10/21 00:07:23 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/21 00:07:23 | [#FFFFFF] level name: lvl2
-[#FFFFFF] 2022/10/21 00:07:23 | [#FF0000] buffer length: 1440
-[#FFFFFF] 2022/10/21 00:07:23 | [#FF0000] bytes length: 1440
-[#FFFFFF] 2022/10/21 00:07:23 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/21 00:07:23 | [#FFFFFF] level name: lvl0
-[#FFFFFF] 2022/10/21 00:07:23 | [#FF0000] buffer length: 1440
-[#FFFFFF] 2022/10/21 00:07:23 | [#FF0000] bytes length: 1440
-[#FFFFFF] 2022/10/21 00:07:23 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/21 00:07:23 | [#FFFFFF] level name: lvl1
-[#FFFFFF] 2022/10/21 00:07:24 | [#FF0000] buffer length: 1440
-[#FFFFFF] 2022/10/21 00:07:24 | [#FF0000] bytes length: 1440
-[#FFFFFF] 2022/10/21 00:07:24 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/21 00:07:24 | [#FFFFFF] level name: lvl2
-[#FFFFFF] 2022/10/21 00:07:24 | [#FF0000] buffer length: 1440
-[#FFFFFF] 2022/10/21 00:07:24 | [#FF0000] bytes length: 1440
-[#FFFFFF] 2022/10/21 00:07:24 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/21 00:07:24 | [#FFFFFF] level name: lvl0
-[#FFFFFF] 2022/10/21 00:07:24 | [#FF0000] buffer length: 1440
-[#FFFFFF] 2022/10/21 00:07:24 | [#FF0000] bytes length: 1440
-[#FFFFFF] 2022/10/21 00:07:24 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/21 00:07:24 | [#FFFFFF] level name: lvl1
-[#FFFFFF] 2022/10/21 00:07:24 | [#FF0000] buffer length: 1440
-[#FFFFFF] 2022/10/21 00:07:24 | [#FF0000] bytes length: 1440
-[#FFFFFF] 2022/10/21 00:07:24 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/21 00:07:24 | [#FFFFFF] level name: lvl2
-[#FFFFFF] 2022/10/21 00:07:24 | [#FF0000] buffer length: 1440
-[#FFFFFF] 2022/10/21 00:07:24 | [#FF0000] bytes length: 1440
-[#FFFFFF] 2022/10/21 00:07:24 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/21 00:07:24 | [#FFFFFF] level name: lvl0
-[#FFFFFF] 2022/10/21 00:07:24 | [#FF0000] buffer length: 1440
-[#FFFFFF] 2022/10/21 00:07:24 | [#FF0000] bytes length: 1440
-[#FFFFFF] 2022/10/21 00:07:24 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/21 00:07:25 | [#FFFFFF] level name: lvl1
-[#FFFFFF] 2022/10/21 00:07:25 | [#FF0000] buffer length: 1440
-[#FFFFFF] 2022/10/21 00:07:25 | [#FF0000] bytes length: 1440
-[#FFFFFF] 2022/10/21 00:07:25 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/21 00:07:25 | [#FFFFFF] level name: lvl2
-[#FFFFFF] 2022/10/21 00:07:25 | [#FF0000] buffer length: 1440
-[#FFFFFF] 2022/10/21 00:07:25 | [#FF0000] bytes length: 1440
-[#FFFFFF] 2022/10/21 00:07:25 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/21 00:07:25 | [#FFFFFF] level name: lvl0
-[#FFFFFF] 2022/10/21 00:07:25 | [#FF0000] buffer length: 1440
-[#FFFFFF] 2022/10/21 00:07:25 | [#FF0000] bytes length: 1440
-[#FFFFFF] 2022/10/21 00:07:25 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/21 00:07:25 | [#FFFFFF] level name: lvl1
-[#FFFFFF] 2022/10/21 00:07:25 | [#FF0000] buffer length: 1440
-[#FFFFFF] 2022/10/21 00:07:25 | [#FF0000] bytes length: 1440
-[#FFFFFF] 2022/10/21 00:07:25 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/22 00:49:48 | [#FF0000] goo!!!!1
+[#FFFFFF] 2022/10/22 00:49:48 | [#FF0000] goo!!!!12222
+[#FFFFFF] 2022/10/22 00:49:48 | [#FF0000] goo!!!234324
+[#FFFFFF] 2022/10/22 00:49:49 | [#FF0000] buffer length: 2120
+[#FFFFFF] 2022/10/22 00:49:49 | [#FF0000] bytes length: 2120
+[#FFFFFF] 2022/10/22 00:49:49 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/22 00:50:10 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/22 00:50:10 | [#FF0000] buffer length: 2120
+[#FFFFFF] 2022/10/22 00:50:10 | [#FF0000] bytes length: 2120
+[#FFFFFF] 2022/10/22 00:50:10 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/22 00:50:11 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/22 00:50:11 | [#FF0000] buffer length: 2120
+[#FFFFFF] 2022/10/22 00:50:11 | [#FF0000] bytes length: 2120
+[#FFFFFF] 2022/10/22 00:50:11 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/22 00:50:11 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/22 00:50:11 | [#FF0000] buffer length: 2120
+[#FFFFFF] 2022/10/22 00:50:11 | [#FF0000] bytes length: 2120
+[#FFFFFF] 2022/10/22 00:50:11 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/22 00:50:12 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/22 00:50:12 | [#FF0000] buffer length: 2120
+[#FFFFFF] 2022/10/22 00:50:12 | [#FF0000] bytes length: 2120
+[#FFFFFF] 2022/10/22 00:50:12 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/22 00:50:12 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/22 00:50:12 | [#FF0000] buffer length: 2120
+[#FFFFFF] 2022/10/22 00:50:12 | [#FF0000] bytes length: 2120
+[#FFFFFF] 2022/10/22 00:50:12 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/22 00:50:12 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/22 00:50:12 | [#FF0000] buffer length: 2120
+[#FFFFFF] 2022/10/22 00:50:12 | [#FF0000] bytes length: 2120
+[#FFFFFF] 2022/10/22 00:50:12 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/22 00:50:13 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/22 00:50:13 | [#FF0000] buffer length: 2120
+[#FFFFFF] 2022/10/22 00:50:13 | [#FF0000] bytes length: 2120
+[#FFFFFF] 2022/10/22 00:50:13 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/22 00:50:13 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/22 00:50:13 | [#FF0000] buffer length: 2120
+[#FFFFFF] 2022/10/22 00:50:13 | [#FF0000] bytes length: 2120
+[#FFFFFF] 2022/10/22 00:50:13 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/22 00:50:13 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/22 00:50:13 | [#FF0000] buffer length: 2120
+[#FFFFFF] 2022/10/22 00:50:13 | [#FF0000] bytes length: 2120
+[#FFFFFF] 2022/10/22 00:50:14 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/22 00:50:14 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/10/22 00:50:14 | [#FF0000] buffer length: 2120
+[#FFFFFF] 2022/10/22 00:50:14 | [#FF0000] bytes length: 2120
+[#FFFFFF] 2022/10/22 00:50:14 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/22 00:50:14 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/10/22 00:50:14 | [#FF0000] buffer length: 2120
+[#FFFFFF] 2022/10/22 00:50:14 | [#FF0000] bytes length: 2120
+[#FFFFFF] 2022/10/22 00:50:14 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/22 00:50:15 | [#FFFFFF] level name: lvl0
+[#FFFFFF] 2022/10/22 00:50:15 | [#FF0000] buffer length: 2120
+[#FFFFFF] 2022/10/22 00:50:15 | [#FF0000] bytes length: 2120
+[#FFFFFF] 2022/10/22 00:50:15 | [#FFFFFF] simulate physics: true

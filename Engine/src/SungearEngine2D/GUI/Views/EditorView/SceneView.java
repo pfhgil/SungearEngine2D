@@ -224,9 +224,6 @@ public class SceneView extends View
             EngineSettings.Playmode.active = false;
             EngineSettings.Playmode.paused = false;
             currentSceneManager.loadSceneAsCurrent(currentSceneManager.getCurrentScene2D().getScenePath());
-            //System.out.println(currentSceneManager.getCurrentScene2D().getScriptSystem().getScriptTempValuesList().get(0).getScriptTempValues().get(0).getValue());
-            //currentSceneManager.setCurrentScene2D(scene2D.getName());
-            CamerasManager.setMainCamera2D(Main.getMainCamera2D());
             ViewsManager.getInspectorView().setCurrentInspectingObject(null);
             currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;
             currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts = false;

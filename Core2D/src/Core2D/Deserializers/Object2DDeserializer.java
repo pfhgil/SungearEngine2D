@@ -69,24 +69,27 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                 Texture2D texture2D = null;
                 // если режим работы ядра в движке
                 if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                    String textureFileName = new File(textureComponent.getTexture2D().getSource()).getName();
-                    String parentFileName = new File(textureComponent.getTexture2D().getSource()).getParentFile().getName();
+                    String textureFileName = new File(textureComponent.getTexture2D().source).getName();
+                    String parentFileName = new File(textureComponent.getTexture2D().source).getParentFile().getName();
                     // найти текущий путь до текстуры
                     File textureFile = FileUtils.findFile(new File(ProjectsManager.getCurrentProject().getProjectPath()), parentFileName, textureFileName);
 
                     texture2D = new Texture2D(
                             textureFile.getPath(),
-                            textureComponent.getTexture2D().getParam(),
+                            textureComponent.getTexture2D().param,
                             textureComponent.getTexture2D().getGLTextureBlock()
                     );
                 // если режим работы в билде
                 } else {
                     texture2D = new Texture2D(
-                            Core2D.class.getResourceAsStream(textureComponent.getTexture2D().getSource()),
-                            textureComponent.getTexture2D().getParam(),
+                            Core2D.class.getResourceAsStream(textureComponent.getTexture2D().source),
+                            textureComponent.getTexture2D().param,
                             textureComponent.getTexture2D().getGLTextureBlock()
                     );
                 }
+
+                texture2D.blendSourceFactor = textureComponent.getTexture2D().blendSourceFactor;
+                texture2D.blendDestinationFactor = textureComponent.getTexture2D().blendDestinationFactor;
 
                 object2D.addComponent(component);
                 object2D.getComponent(TextureComponent.class).set(component);

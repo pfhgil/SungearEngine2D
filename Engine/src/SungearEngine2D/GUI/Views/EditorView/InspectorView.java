@@ -10,7 +10,6 @@ import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Texture2D.Texture2D;
-import Core2D.Transform.Transform;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.Tag;
 import Core2D.Utils.WrappedObject;
@@ -32,30 +31,29 @@ import org.jbox2d.dynamics.BodyType;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.opengl.GL11;
 
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.List;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
+import static org.lwjgl.opengl.GL11.GL_DST_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_DST_COLOR;
+import static org.lwjgl.opengl.GL11.GL_ONE;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_DST_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_DST_COLOR;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_COLOR;
+import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
+import static org.lwjgl.opengl.GL11.GL_SRC_COLOR;
+import static org.lwjgl.opengl.GL11C.*;
+import static org.lwjgl.opengl.GL14.*;
 
 public class InspectorView extends View
 {
     // текущий просматриваемый объект
     private Object currentInspectingObject;
-
-    // если просматриваемый объект - object2D
-    private ImString inspectingObjectName = new ImString();
-
-    private float[] inspectingObject2DColor = new float[4];
-
-    private float[] inspectingObjectPosition = new float[2];
-    private float[] inspectingObjectRotation = new float[1];
-    private float[] inspectingObjectScale = new float[2];
-
-    private float[] inspectingObjectCentre = new float[2];
-
-    private ImString inspectingObject2DTextureName = new ImString();
 
     private boolean isEditing = false;
 
@@ -86,7 +84,7 @@ public class InspectorView extends View
     private int currentHoveredComponentID = -1;
 
     // текущий перемещаемый в это окно файл
-    private File droppingFile;
+    public File droppingFile;
 
     public InspectorView()
     {
@@ -147,8 +145,9 @@ public class InspectorView extends View
             ImGui.sameLine();
             ImGui.pushID("Object2DName");
             {
-                if (ImGui.inputText("", inspectingObjectName)) {
-                    inspectingObject2D.setName(inspectingObjectName.get());
+                ImString name = new ImString(inspectingObject2D.getName(), 256);
+                if (ImGui.inputText("", name)) {
+                    inspectingObject2D.setName(name.get());
                     isEditing = true;
                 }
             }
@@ -320,7 +319,6 @@ public class InspectorView extends View
                             inspectingObject2D.setTag(tags.get(i).getName());
                         }
                     }
-                    tags = null;
 
                     ImGui.separator();
 
@@ -439,8 +437,13 @@ public class InspectorView extends View
 
             ImGui.separator();
 
-            if (ImGui.colorEdit4("Color", inspectingObject2DColor)) {
-                inspectingObject2D.setColor(new Vector4f(inspectingObject2DColor));
+            float[] col = new float[] {
+                    inspectingObject2D.getColor().x,
+                            inspectingObject2D.getColor().y,
+                            inspectingObject2D.getColor().z,
+                            inspectingObject2D.getColor().w };
+            if (ImGui.colorEdit4("Color", col)) {
+                inspectingObject2D.setColor(new Vector4f(col));
                 isEditing = true;
             }
 
@@ -508,87 +511,118 @@ public class InspectorView extends View
                 }
 
                 if (opened) {
-                    if (componentName.equals("Transform")) {
-                        TransformComponent transformComponent = ((TransformComponent) inspectingObject2D.getComponents().get(i));
-                        if (ImGui.dragFloat2("Position", inspectingObjectPosition)) {
-                            transformComponent.getTransform().setPosition(new Vector2f(inspectingObjectPosition));
-                            isEditing = true;
-                        }
-                        if (ImGui.dragFloat("Rotation", inspectingObjectRotation)) {
-                            transformComponent.getTransform().setRotation(inspectingObjectRotation[0]);
-                            isEditing = true;
-                        }
-                        if (ImGui.dragFloat2("Scale", inspectingObjectScale, 0.01f)) {
-                            transformComponent.getTransform().setScale(new Vector2f(inspectingObjectScale));
-                            isEditing = true;
-                        }
-                        if (ImGui.dragFloat2("Centre", inspectingObjectCentre, 0.01f)) {
-                            transformComponent.getTransform().setCentre(new Vector2f(inspectingObjectCentre));
-                            isEditing = true;
-                        }
+                    switch (componentName) {
+                        case "Transform" -> {
+                            TransformComponent transformComponent = ((TransformComponent) inspectingObject2D.getComponents().get(i));
+                            float[] pos = new float[]{
+                                    transformComponent.getTransform().getPosition().x,
+                                    transformComponent.getTransform().getPosition().y
+                            };
+                            float[] rotation = new float[]{
+                                    transformComponent.getTransform().getRotation()
+                            };
+                            float[] scale = new float[]{
+                                    transformComponent.getTransform().getScale().x,
+                                    transformComponent.getTransform().getScale().y
+                            };
+                            float[] centre = new float[]{
+                                    transformComponent.getTransform().getCentre().x,
+                                    transformComponent.getTransform().getCentre().y
+                            };
 
-                    } else if (componentName.equals("Texture")) {
-                        ImGui.inputText("Source", inspectingObject2DTextureName, ImGuiInputTextFlags.ReadOnly);
+                            if (ImGui.dragFloat2("Position", pos)) {
+                                transformComponent.getTransform().setPosition(new Vector2f(pos));
+                                isEditing = true;
+                            }
+                            if (ImGui.dragFloat("Rotation", rotation)) {
+                                transformComponent.getTransform().setRotation(rotation[0]);
+                                isEditing = true;
+                            }
+                            if (ImGui.dragFloat2("Scale", scale, 0.01f)) {
+                                transformComponent.getTransform().setScale(new Vector2f(scale));
+                                isEditing = true;
+                            }
+                            if (ImGui.dragFloat2("Centre", centre, 0.01f)) {
+                                transformComponent.getTransform().setCentre(new Vector2f(centre));
+                                isEditing = true;
+                            }
+                        }
+                        case "Texture" -> {
+                            TextureComponent textureComponent = (TextureComponent) inspectingObject2D.getComponents().get(i);
+                            ImString textureName = new ImString(new File(textureComponent.getTexture2D().source).getName());
+                            ImGui.inputText("Source", textureName, ImGuiInputTextFlags.ReadOnly);
+                            if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
+                                if (ImGui.beginDragDropTarget()) {
+                                    Object imageFile = ImGui.acceptDragDropPayload("File");
+                                    if (imageFile != null) {
+                                        textureName.set(ViewsManager.getResourcesView().getCurrentMovingFile().getName(), true);
+                                        textureComponent.setTexture2D(new Texture2D(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()));
+                                        ViewsManager.getResourcesView().setCurrentMovingFile(null);
+                                    }
 
-                        if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
-                            if (ImGui.beginDragDropTarget()) {
-                                Object imageFile = ImGui.acceptDragDropPayload("File");
-                                if (imageFile != null) {
-                                    inspectingObject2DTextureName.set(ViewsManager.getResourcesView().getCurrentMovingFile().getName(), true);
-                                    ((TextureComponent) inspectingObject2D.getComponents().get(i)).setTexture2D(new Texture2D(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()));
-                                    ViewsManager.getResourcesView().setCurrentMovingFile(null);
+                                    ImGui.endDragDropTarget();
+                                }
+                            }
+
+                            if (ImGui.beginCombo("Blend source factor", Texture2D.blendFactorToString(textureComponent.getTexture2D().blendSourceFactor))) {
+                                for(int factor : Texture2D.getAllBlendFactors()) {
+                                    if (ImGui.selectable(Texture2D.blendFactorToString(factor))) {
+                                        textureComponent.getTexture2D().blendSourceFactor = factor;
+                                    }
+                                }
+                                ImGui.endCombo();
+                            }
+
+                            if (ImGui.beginCombo("Blend destination factor", Texture2D.blendFactorToString(textureComponent.getTexture2D().blendDestinationFactor))) {
+                                for(int factor : Texture2D.getAllBlendFactors()) {
+                                    if (ImGui.selectable(Texture2D.blendFactorToString(factor))) {
+                                        textureComponent.getTexture2D().blendDestinationFactor = factor;
+                                    }
+                                }
+                                ImGui.endCombo();
+                            }
+                        }
+                        case "Rigidbody2D" -> {
+                            Rigidbody2DComponent rigidbody2DComponent = ((Rigidbody2DComponent) inspectingObject2D.getComponents().get(i));
+                            if (ImGui.beginCombo("Type", rigidbody2DComponent.getRigidbody2D().typeToString())) {
+
+                                if (ImGui.selectable("Dynamic")) {
+                                    rigidbody2DComponent.getRigidbody2D().setType(BodyType.DYNAMIC);
                                 }
 
-                                ImGui.endDragDropTarget();
+                                if (ImGui.selectable("Static")) {
+                                    rigidbody2DComponent.getRigidbody2D().setType(BodyType.STATIC);
+                                }
+
+                                if (ImGui.selectable("Kinematic")) {
+                                    rigidbody2DComponent.getRigidbody2D().setType(BodyType.KINEMATIC);
+                                }
+
+                                //System.out.println("x: " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.x + ", " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.y);
+
+                                ImGui.endCombo();
                             }
-                        }
-                    } else if (componentName.equals("Rigidbody2D")) {
-                        Rigidbody2DComponent rigidbody2DComponent = ((Rigidbody2DComponent) inspectingObject2D.getComponents().get(i));
-                        if (ImGui.beginCombo("Type", rigidbody2DComponent.getRigidbody2D().typeToString())) {
-
-                            if (ImGui.selectable("Dynamic")) {
-                                rigidbody2DComponent.getRigidbody2D().setType(BodyType.DYNAMIC);
+                            float[] density = new float[] { rigidbody2DComponent.getRigidbody2D().getDensity() };
+                            if (ImGui.dragFloat("Density", density, 0.01f)) {
+                                rigidbody2DComponent.getRigidbody2D().setDensity(density[0]);
                             }
-
-                            if (ImGui.selectable("Static")) {
-                                rigidbody2DComponent.getRigidbody2D().setType(BodyType.STATIC);
+                            float[] restitution = new float[] { rigidbody2DComponent.getRigidbody2D().getRestitution() };
+                            if (ImGui.dragFloat("Restitution", restitution, 0.01f)) {
+                                rigidbody2DComponent.getRigidbody2D().setRestitution(restitution[0]);
                             }
-
-                            if (ImGui.selectable("Kinematic")) {
-                                rigidbody2DComponent.getRigidbody2D().setType(BodyType.KINEMATIC);
+                            float[] friction = new float[] { rigidbody2DComponent.getRigidbody2D().getFriction() };
+                            if (ImGui.dragFloat("Friction", friction, 0.01f)) {
+                                rigidbody2DComponent.getRigidbody2D().setFriction(friction[0]);
                             }
-
-                            //System.out.println("x: " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.x + ", " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.y);
-
-                            ImGui.endCombo();
+                            ImGui.separator();
+                            if (ImGui.checkbox("Sensor", rigidbody2DComponent.getRigidbody2D().isSensor())) {
+                                rigidbody2DComponent.getRigidbody2D().setSensor(!rigidbody2DComponent.getRigidbody2D().isSensor());
+                            }
+                            if (ImGui.checkbox("Fixed rotation", rigidbody2DComponent.getRigidbody2D().isFixedRotation())) {
+                                rigidbody2DComponent.getRigidbody2D().setFixedRotation(!rigidbody2DComponent.getRigidbody2D().isFixedRotation());
+                            }
+                            ImGui.separator();
                         }
-
-                        float[] density = new float[]{rigidbody2DComponent.getRigidbody2D().getDensity()};
-                        if (ImGui.dragFloat("Density", density, 0.01f)) {
-                            rigidbody2DComponent.getRigidbody2D().setDensity(density[0]);
-                        }
-
-                        float[] restitution = new float[]{rigidbody2DComponent.getRigidbody2D().getRestitution()};
-                        if (ImGui.dragFloat("Restitution", restitution, 0.01f)) {
-                            rigidbody2DComponent.getRigidbody2D().setRestitution(restitution[0]);
-                        }
-
-                        float[] friction = new float[]{rigidbody2DComponent.getRigidbody2D().getFriction()};
-                        if (ImGui.dragFloat("Friction", friction, 0.01f)) {
-                            rigidbody2DComponent.getRigidbody2D().setFriction(friction[0]);
-                        }
-
-                        ImGui.separator();
-
-                        if(ImGui.checkbox("Sensor", rigidbody2DComponent.getRigidbody2D().isSensor())) {
-                            rigidbody2DComponent.getRigidbody2D().setSensor(!rigidbody2DComponent.getRigidbody2D().isSensor());
-                        }
-
-                        if(ImGui.checkbox("Fixed rotation", rigidbody2DComponent.getRigidbody2D().isFixedRotation())) {
-                            rigidbody2DComponent.getRigidbody2D().setFixedRotation(!rigidbody2DComponent.getRigidbody2D().isFixedRotation());
-                        }
-
-                        ImGui.separator();
 
                         /*
                         ImGui.text("Mass data");
@@ -599,111 +633,103 @@ public class InspectorView extends View
                         }
 
                          */
-                    } else if (componentName.equals("BoxCollider2D")) {
-                        BoxCollider2DComponent boxCollider2DComponent = ((BoxCollider2DComponent) inspectingObject2D.getComponents().get(i));
+                        case "BoxCollider2D" -> {
+                            BoxCollider2DComponent boxCollider2DComponent = ((BoxCollider2DComponent) inspectingObject2D.getComponents().get(i));
 
-                        float[] offset = new float[]{boxCollider2DComponent.getBoxCollider2D().getOffset().x, boxCollider2DComponent.getBoxCollider2D().getOffset().y};
-                        ImGui.pushID("BoxCollider2DOffsetDragFloat_" + i);
-                        {
-                            if (ImGui.dragFloat2("Offset", offset)) {
-                                boxCollider2DComponent.getBoxCollider2D().setOffset(new Vector2f(offset[0], offset[1]));
+                            float[] offset = new float[]{boxCollider2DComponent.getBoxCollider2D().getOffset().x, boxCollider2DComponent.getBoxCollider2D().getOffset().y};
+                            ImGui.pushID("BoxCollider2DOffsetDragFloat_" + i);
+                            {
+                                if (ImGui.dragFloat2("Offset", offset)) {
+                                    boxCollider2DComponent.getBoxCollider2D().setOffset(new Vector2f(offset[0], offset[1]));
+                                }
                             }
-                        }
-                        ImGui.popID();
+                            ImGui.popID();
 
-                        float[] scale = new float[]{boxCollider2DComponent.getBoxCollider2D().getScale().x, boxCollider2DComponent.getBoxCollider2D().getScale().y};
-                        ImGui.pushID("BoxCollider2DScaleDragFloat_" + i);
-                        {
-                            if (ImGui.dragFloat2("Scale", scale, 0.01f)) {
-                                boxCollider2DComponent.getBoxCollider2D().setScale(new Vector2f(scale[0], scale[1]));
+                            float[] scale = new float[]{boxCollider2DComponent.getBoxCollider2D().getScale().x, boxCollider2DComponent.getBoxCollider2D().getScale().y};
+                            ImGui.pushID("BoxCollider2DScaleDragFloat_" + i);
+                            {
+                                if (ImGui.dragFloat2("Scale", scale, 0.01f)) {
+                                    boxCollider2DComponent.getBoxCollider2D().setScale(new Vector2f(scale[0], scale[1]));
+                                }
                             }
+                            ImGui.popID();
                         }
-                        ImGui.popID();
-                    } else if (componentName.equals("CircleCollider2D")) {
-                        CircleCollider2DComponent circleCollider2DComponent = ((CircleCollider2DComponent) inspectingObject2D.getComponents().get(i));
+                        case "CircleCollider2D" -> {
+                            CircleCollider2DComponent circleCollider2DComponent = ((CircleCollider2DComponent) inspectingObject2D.getComponents().get(i));
 
-                        float[] offset = new float[]{circleCollider2DComponent.getCircleCollider2D().getOffset().x, circleCollider2DComponent.getCircleCollider2D().getOffset().y};
-                        ImGui.pushID("CircleCollider2DOffsetDragFloat_" + i);
-                        {
-                            if (ImGui.dragFloat2("Offset", offset)) {
-                                circleCollider2DComponent.getCircleCollider2D().setOffset(new Vector2f(offset[0], offset[1]));
+                            float[] offset = new float[]{circleCollider2DComponent.getCircleCollider2D().getOffset().x, circleCollider2DComponent.getCircleCollider2D().getOffset().y};
+                            ImGui.pushID("CircleCollider2DOffsetDragFloat_" + i);
+                            {
+                                if (ImGui.dragFloat2("Offset", offset)) {
+                                    circleCollider2DComponent.getCircleCollider2D().setOffset(new Vector2f(offset[0], offset[1]));
+                                }
                             }
-                        }
-                        ImGui.popID();
+                            ImGui.popID();
 
-                        float[] radius = new float[]{circleCollider2DComponent.getCircleCollider2D().getRadius()};
-                        ImGui.pushID("CircleCollider2DRadiusDragFloat_" + i);
-                        {
-                            if (ImGui.dragFloat("Radius", radius, 0.01f)) {
-                                circleCollider2DComponent.getCircleCollider2D().setRadius(radius[0]);
+                            float[] radius = new float[]{circleCollider2DComponent.getCircleCollider2D().getRadius()};
+                            ImGui.pushID("CircleCollider2DRadiusDragFloat_" + i);
+                            {
+                                if (ImGui.dragFloat("Radius", radius, 0.01f)) {
+                                    circleCollider2DComponent.getCircleCollider2D().setRadius(radius[0]);
+                                }
                             }
+                            ImGui.popID();
                         }
-                        ImGui.popID();
-                    } else if (componentName.equals("ScriptComponent")) {
-                        ScriptComponent scriptComponent = (ScriptComponent) inspectingObject2D.getComponents().get(i);
+                        case "ScriptComponent" -> {
+                            ScriptComponent scriptComponent = (ScriptComponent) inspectingObject2D.getComponents().get(i);
 
-                       // System.out.println(scriptComponent.getScript().getScriptClass());
+                            // System.out.println(scriptComponent.getScript().getScriptClass());
 
-                        List<Field> inspectorViewFields = scriptComponent.getScript().getInspectorViewFields();
+                            List<Field> inspectorViewFields = scriptComponent.getScript().getInspectorViewFields();
+                            if (inspectorViewFields.size() != 0) {
+                                for (Field field : inspectorViewFields) {
+                                    Class<?> cs = field.getType();
 
-                        if(inspectorViewFields.size() != 0) {
-                            for(Field field : inspectorViewFields) {
-                                Class<?> cs = field.getType();
-
-                                if(cs.isAssignableFrom(float.class)) {
-                                    float[] floats = new float[] { (float) scriptComponent.getScript().getFieldValue(field) };
-                                    if(ImGui.dragFloat(field.getName(), floats)) {
-                                        scriptComponent.getScript().setFieldValue(field, floats[0]);
-                                    }
-                                } else if(cs.isAssignableFrom(String.class)) {
-                                    ImString string = new ImString((String) scriptComponent.getScript().getFieldValue(field),  128);
-
-                                    ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.CallbackAlways);
-
-                                    scriptComponent.getScript().setFieldValue(field, string.get());
-                                } else if(cs.isAssignableFrom(Object2D.class)) {
-                                    ImString string = new ImString("null");
-                                    if(scriptComponent.getScript().getFieldValue(field) != null) {
-                                        string.set(((Object2D) scriptComponent.getScript().getFieldValue(field)).getName(), true);
-                                    }
-                                    ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
-                                    if(ImGui.beginDragDropTarget()) {
-                                        Object droppedObject = ImGui.acceptDragDropPayload("SceneWrappedObject");
-                                        if(droppedObject instanceof WrappedObject && ((WrappedObject) droppedObject).getObject() instanceof Object2D) {
-                                            Object2D object2D = (Object2D) ((WrappedObject) droppedObject).getObject();
-
-                                            scriptComponent.getScript().setFieldValue(field, object2D);
+                                    if (cs.isAssignableFrom(float.class)) {
+                                        float[] floats = new float[]{(float) scriptComponent.getScript().getFieldValue(field)};
+                                        if (ImGui.dragFloat(field.getName(), floats)) {
+                                            scriptComponent.getScript().setFieldValue(field, floats[0]);
                                         }
-                                        ImGui.endDragDropTarget();
-                                    }
-                                } else if(cs.isAssignableFrom(Camera2D.class)) {
-                                    ImString string = new ImString("null");
-                                    if(scriptComponent.getScript().getFieldValue(field) != null) {
-                                        string.set(((Camera2D) scriptComponent.getScript().getFieldValue(field)).name, true);
-                                    }
-                                    ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
-                                    if(ImGui.beginDragDropTarget()) {
-                                        Object droppedObject = ImGui.acceptDragDropPayload("SceneWrappedObject");
-                                        if(droppedObject instanceof Camera2D) {
-                                            Camera2D camera2D = (Camera2D) droppedObject;
+                                    } else if (cs.isAssignableFrom(String.class)) {
+                                        ImString string = new ImString((String) scriptComponent.getScript().getFieldValue(field), 128);
 
-                                            scriptComponent.getScript().setFieldValue(field, camera2D);
+                                        ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.CallbackAlways);
+
+                                        scriptComponent.getScript().setFieldValue(field, string.get());
+                                    } else if (cs.isAssignableFrom(Object2D.class)) {
+                                        ImString string = new ImString("null");
+                                        if (scriptComponent.getScript().getFieldValue(field) != null) {
+                                            string.set(((Object2D) scriptComponent.getScript().getFieldValue(field)).getName(), true);
                                         }
-                                        ImGui.endDragDropTarget();
+                                        ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
+                                        if (ImGui.beginDragDropTarget()) {
+                                            Object droppedObject = ImGui.acceptDragDropPayload("SceneWrappedObject");
+                                            if (droppedObject instanceof WrappedObject && ((WrappedObject) droppedObject).getObject() instanceof Object2D) {
+                                                Object2D object2D = (Object2D) ((WrappedObject) droppedObject).getObject();
+
+                                                scriptComponent.getScript().setFieldValue(field, object2D);
+                                            }
+                                            ImGui.endDragDropTarget();
+                                        }
+                                    } else if (cs.isAssignableFrom(Camera2D.class)) {
+                                        ImString string = new ImString("null");
+                                        if (scriptComponent.getScript().getFieldValue(field) != null) {
+                                            string.set(((Camera2D) scriptComponent.getScript().getFieldValue(field)).name, true);
+                                        }
+                                        ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
+                                        if (ImGui.beginDragDropTarget()) {
+                                            Object droppedObject = ImGui.acceptDragDropPayload("SceneWrappedObject");
+                                            if (droppedObject instanceof Camera2D) {
+                                                Camera2D camera2D = (Camera2D) droppedObject;
+
+                                                scriptComponent.getScript().setFieldValue(field, camera2D);
+                                            }
+                                            ImGui.endDragDropTarget();
+                                        }
                                     }
                                 }
                             }
-
-                            //ImGui.separator();
                         }
-
-                        /*
-                        if(ImGui.button("Compile")) {
-                            Compiler.compileScript(scriptComponent.getScript().getPath() + ".java");
-                            scriptComponent.getScript().loadClass(new File(scriptComponent.getScript().getPath()).getParent(), FilenameUtils.getBaseName(new File(scriptComponent.getScript().getPath()).getName()));
-                        }
-
-                         */
                     }
                 }
 
@@ -754,8 +780,9 @@ public class InspectorView extends View
         if(camera2D != null) {
             ImGui.pushID("Camera2DName");
             {
-                if (ImGui.inputText("", inspectingObjectName)) {
-                    camera2D.name = inspectingObjectName.get();
+                ImString name = new ImString(camera2D.name, 256);
+                if (ImGui.inputText("", name)) {
+                    camera2D.name = name.get();
                     isEditing = true;
                 }
             }
@@ -763,16 +790,28 @@ public class InspectorView extends View
 
             ImGui.separator();
 
-            if (ImGui.dragFloat2("Position", inspectingObjectPosition)) {
-                camera2D.getTransform().setPosition(new Vector2f(inspectingObjectPosition));
+            float[] pos = new float[] {
+                    camera2D.getTransform().getPosition().x,
+                    camera2D.getTransform().getPosition().y
+            };
+            float[] rotation = new float[] {
+                    camera2D.getTransform().getRotation()
+            };
+            float[] scale = new float[] {
+                    camera2D.getTransform().getScale().x,
+                    camera2D.getTransform().getScale().y
+            };
+
+            if (ImGui.dragFloat2("Position", pos)) {
+                camera2D.getTransform().setPosition(new Vector2f(pos));
                 isEditing = true;
             }
-            if (ImGui.dragFloat("Rotation", inspectingObjectRotation)) {
-                camera2D.getTransform().setRotation(inspectingObjectRotation[0]);
+            if (ImGui.dragFloat("Rotation", rotation)) {
+                camera2D.getTransform().setRotation(rotation[0]);
                 isEditing = true;
             }
-            if (ImGui.dragFloat2("Scale", inspectingObjectScale, 0.01f)) {
-                camera2D.getTransform().setScale(new Vector2f(inspectingObjectScale));
+            if (ImGui.dragFloat2("Scale", scale, 0.01f)) {
+                camera2D.getTransform().setScale(new Vector2f(scale));
                 isEditing = true;
             }
 
@@ -855,63 +894,10 @@ public class InspectorView extends View
         }
     }
 
-    public void setCurrentInspectingObject(Object currentInspectingObject)
-    {
-        this.currentInspectingObject = currentInspectingObject;
-
-        if(currentInspectingObject instanceof Object2D) {
-            Object2D inspectingObject2D = ((Object2D) currentInspectingObject);
-
-            if(!inspectingObject2D.isShouldDestroy()) {
-                inspectingObjectName.set(inspectingObject2D.getName(), true);
-
-                inspectingObject2DColor[0] = inspectingObject2D.getColor().x;
-                inspectingObject2DColor[1] = inspectingObject2D.getColor().y;
-                inspectingObject2DColor[2] = inspectingObject2D.getColor().z;
-                inspectingObject2DColor[3] = inspectingObject2D.getColor().w;
-
-                TransformComponent transformComponent = inspectingObject2D.getComponent(TransformComponent.class);
-                if (transformComponent != null) {
-                    inspectingObjectPosition[0] = transformComponent.getTransform().getPosition().x;
-                    inspectingObjectPosition[1] = transformComponent.getTransform().getPosition().y;
-
-                    inspectingObjectRotation[0] = transformComponent.getTransform().getRotation();
-
-                    inspectingObjectScale[0] = transformComponent.getTransform().getScale().x;
-                    inspectingObjectScale[1] = transformComponent.getTransform().getScale().y;
-
-                    inspectingObjectCentre[0] = transformComponent.getTransform().getCentre().x;
-                    inspectingObjectCentre[1] = transformComponent.getTransform().getCentre().y;
-                }
-
-                TextureComponent textureComponent = inspectingObject2D.getComponent(TextureComponent.class);
-                if (textureComponent != null) {
-                    inspectingObject2DTextureName.set(FilenameUtils.getName(textureComponent.getTexture2D().getSource()));
-                }
-            }
-        } else if(currentInspectingObject instanceof Camera2D) {
-            Camera2D camera2D = (Camera2D) currentInspectingObject;
-
-            inspectingObjectName.set(camera2D.name, true);
-
-            Transform transform = camera2D.getTransform();
-            if (transform != null) {
-                inspectingObjectPosition[0] = transform.getPosition().x;
-                inspectingObjectPosition[1] = transform.getPosition().y;
-
-                inspectingObjectRotation[0] = transform.getRotation();
-
-                inspectingObjectScale[0] = transform.getScale().x;
-                inspectingObjectScale[1] = transform.getScale().y;
-            }
-        }
-    }
+    public void setCurrentInspectingObject(Object currentInspectingObject) { this.currentInspectingObject = currentInspectingObject; }
 
     public Object getCurrentInspectingObject() { return currentInspectingObject; }
 
     public boolean isEditing() { return isEditing; }
     public void setEditing(boolean editing) { isEditing = editing; }
-
-    public File getDroppingFile() { return droppingFile; }
-    public void setDroppingFile(File droppingFile) { this.droppingFile = droppingFile; }
 }

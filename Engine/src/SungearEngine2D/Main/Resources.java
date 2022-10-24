@@ -87,7 +87,7 @@ public class Resources
 
             public static void load()
             {
-                gridChunkTexture.setParam(GL13.GL_REPEAT);
+                gridChunkTexture.param = GL13.GL_REPEAT;
                 gridChunkTexture.loadTexture(Core2D.class.getResourceAsStream("/data/grid/grid.png"));
             }
         }
