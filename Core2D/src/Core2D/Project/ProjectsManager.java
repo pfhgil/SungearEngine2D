@@ -1,5 +1,6 @@
 package Core2D.Project;
 
+import Core2D.Log.Log;
 import Core2D.Utils.FileUtils;
 
 import java.io.File;

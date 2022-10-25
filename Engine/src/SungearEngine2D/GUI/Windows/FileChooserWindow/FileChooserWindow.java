@@ -8,7 +8,6 @@ import imgui.flag.ImGuiTreeNodeFlags;
 import imgui.type.ImString;
 
 import java.io.File;
-import java.nio.file.Paths;
 
 public class FileChooserWindow extends DialogWindow
 {
@@ -16,13 +15,13 @@ public class FileChooserWindow extends DialogWindow
     {
         CHOOSE_FILE,
         CHOOSE_DIRECTORY,
-        CHOOSE_NEW_FILE
+        CREATE_NEW_FILE
     }
 
     private String currentChosenFilePath = "";
     private String initialDirectoryPath = "";
 
-
+    private ImString output = new ImString();
     private FileChooserWindowCallback fileChooserWindowCallback;
 
     private FileChooserMode fileChooserMode;
@@ -34,6 +33,9 @@ public class FileChooserWindow extends DialogWindow
         super("Choose directory", "Cancel", "Choose");
         this.fileChooserMode = fileChooserMode;
         create();
+    }
+    public FileChooserWindow setOutput(ImString val){
+        output = val; return this;
     }
 
     public FileChooserWindow(String initialDirectoryPath, FileChooserMode fileChooserMode)
@@ -53,7 +55,7 @@ public class FileChooserWindow extends DialogWindow
             @Override
             public void onDraw() {
                 ImGui.text("Chosen directory path: " + currentChosenFilePath);
-                if (fileChooserMode == FileChooserMode.CHOOSE_NEW_FILE){
+                if (fileChooserMode == FileChooserMode.CREATE_NEW_FILE){
                     ImGui.text("File name:"); ImGui.sameLine();
                     ImGui.inputText("Name...", newFileName);
                 }
@@ -82,6 +84,7 @@ public class FileChooserWindow extends DialogWindow
             @Override
             public void onRightButtonClicked() {
                 fileChooserWindowCallback.onRightButtonClicked(currentChosenFilePath);
+                output.set(currentChosenFilePath);
                 setActive(false);
                 needToScroll = true;
             }
@@ -108,7 +111,7 @@ public class FileChooserWindow extends DialogWindow
         }
         if(ImGui.isItemClicked()) {
             if(fileChooserMode == FileChooserMode.CHOOSE_DIRECTORY) {
-                currentChosenFilePath = dir.getPath() + File.pathSeparator + newFileName.get();
+                currentChosenFilePath = dir.getPath();
             }
         }
         if(clicked) {
@@ -119,7 +122,7 @@ public class FileChooserWindow extends DialogWindow
                     if (dir0.isDirectory()) {
                         showDirectory(dir0, false);
                     } else if(dir0.isFile() && (fileChooserMode == FileChooserMode.CHOOSE_FILE ||
-                            fileChooserMode == FileChooserMode.CHOOSE_NEW_FILE)) {
+                            fileChooserMode == FileChooserMode.CREATE_NEW_FILE)) {
                         showFile(dir0);
                     }
                 }

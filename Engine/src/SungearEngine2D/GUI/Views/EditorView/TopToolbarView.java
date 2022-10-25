@@ -66,20 +66,8 @@ public class TopToolbarView
                 projectPath.set(chosenDirectory);
             }
         });
-        buildOutPathChooserWindow = new FileChooserWindow(FileChooserWindow.FileChooserMode.CHOOSE_NEW_FILE);
-        buildOutPathChooserWindow.setActive(false);
-        buildOutPathChooserWindow.setDirectoryChooserWindowCallback(new FileChooserWindowCallback() {
-            @Override
-            public void onLeftButtonClicked() {
-                dialogWindow.setActive(true);
-            }
-
-            @Override
-            public void onRightButtonClicked(String chosenDirectory) {
-                dialogWindow.setActive(true);
-                buildOutPath.set(chosenDirectory);
-            }
-        });
+        buildOutPathChooserWindow = new FileChooserWindow(FileChooserWindow.FileChooserMode.CREATE_NEW_FILE);
+        buildOutPathChooserWindow.setOutput(buildOutPath).setActive(false);
     }
 
     public void draw()
@@ -231,12 +219,12 @@ public class TopToolbarView
                         dialogWindow.setDialogWindowCallback(new DialogWindowCallback() {
                             @Override
                             public void onDraw() {
-                                ImGui.inputText("path...", buildOutPath); ImGui.sameLine();
-                                if (ImGui.button("browse...")){
+                                ImGui.inputText("Path...", buildOutPath); ImGui.sameLine();
+                                if (ImGui.button("Browse...")){
                                     dialogWindow.setActive(false);
                                     fileChooserWindow.setActive(true);
                                 }
-                                ImGui.text("Выберите сцену");
+                                ImGui.text("Scenes to build:");
                                 ImGui.beginChild("ChooseScenes2DToAdd", dialogWindow.getWindowSize().x, dialogWindow.getWindowSize().y / 3.0f);
 
                                 /*
