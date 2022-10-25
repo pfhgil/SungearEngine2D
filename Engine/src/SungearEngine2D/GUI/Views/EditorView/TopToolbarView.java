@@ -32,6 +32,8 @@ public class TopToolbarView
     private ImString newFileName = new ImString();
 
     private ImString newSceneName = new ImString();
+    private ImString buildOutPath = new ImString();
+    private  FileChooserWindow buildOutPathChooserWindow;
 
     // текущий тип файла, который нужно создать
     private String currentFileTypeNeedCreate = "";
@@ -62,6 +64,20 @@ public class TopToolbarView
             public void onRightButtonClicked(String chosenDirectory) {
                 dialogWindow.setActive(true);
                 projectPath.set(chosenDirectory);
+            }
+        });
+        buildOutPathChooserWindow = new FileChooserWindow(FileChooserWindow.FileChooserMode.CHOOSE_NEW_FILE);
+        buildOutPathChooserWindow.setActive(false);
+        buildOutPathChooserWindow.setDirectoryChooserWindowCallback(new FileChooserWindowCallback() {
+            @Override
+            public void onLeftButtonClicked() {
+                dialogWindow.setActive(true);
+            }
+
+            @Override
+            public void onRightButtonClicked(String chosenDirectory) {
+                dialogWindow.setActive(true);
+                buildOutPath.set(chosenDirectory);
             }
         });
     }
@@ -215,7 +231,14 @@ public class TopToolbarView
                         dialogWindow.setDialogWindowCallback(new DialogWindowCallback() {
                             @Override
                             public void onDraw() {
+                                ImGui.inputText("path...", buildOutPath); ImGui.sameLine();
+                                if (ImGui.button("browse...")){
+                                    dialogWindow.setActive(false);
+                                    fileChooserWindow.setActive(true);
+                                }
+                                ImGui.text("Выберите сцену");
                                 ImGui.beginChild("ChooseScenes2DToAdd", dialogWindow.getWindowSize().x, dialogWindow.getWindowSize().y / 3.0f);
+
                                 /*
                                 for(Scene2D scene2D : SceneManager.currentSceneManager.getScenes()) {
                                     if(ImGui.checkbox(scene2D.getName(), scene2D.inBuild)) {
@@ -229,7 +252,9 @@ public class TopToolbarView
                                         storedValues.inBuild = !storedValues.inBuild;
                                     }
                                 }
+
                                 ImGui.endChild();
+
                             }
 
                             @Override
