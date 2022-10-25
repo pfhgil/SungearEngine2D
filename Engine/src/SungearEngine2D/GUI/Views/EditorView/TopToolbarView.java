@@ -33,7 +33,6 @@ public class TopToolbarView
 
     private ImString newSceneName = new ImString();
     private ImString buildOutPath = new ImString();
-    private  FileChooserWindow buildOutPathChooserWindow;
 
     // текущий тип файла, который нужно создать
     private String currentFileTypeNeedCreate = "";
@@ -54,20 +53,8 @@ public class TopToolbarView
 
         fileChooserWindow = new FileChooserWindow(FileChooserWindow.FileChooserMode.CHOOSE_DIRECTORY);
         fileChooserWindow.setActive(false);
-        fileChooserWindow.setDirectoryChooserWindowCallback(new FileChooserWindowCallback() {
-            @Override
-            public void onLeftButtonClicked() {
-                dialogWindow.setActive(true);
-            }
 
-            @Override
-            public void onRightButtonClicked(String chosenDirectory) {
-                dialogWindow.setActive(true);
-                projectPath.set(chosenDirectory);
-            }
-        });
-        buildOutPathChooserWindow = new FileChooserWindow(FileChooserWindow.FileChooserMode.CREATE_NEW_FILE);
-        buildOutPathChooserWindow.setOutput(buildOutPath).setActive(false);
+
     }
 
     public void draw()
@@ -79,7 +66,7 @@ public class TopToolbarView
             if(ImGui.beginMenu("File")) {
                 if(ImGui.beginMenu("New...")) {
                     if(ImGui.menuItem("Project")) {
-                        fileChooserWindow.setFileChooserMode(FileChooserWindow.FileChooserMode.CHOOSE_DIRECTORY);
+
 
                         dialogWindow.setWindowName("New project");
                         dialogWindow.setRightButtonText("Create");
@@ -93,6 +80,9 @@ public class TopToolbarView
                                 ImGui.sameLine();
                                 if(ImGui.button("Browse...")) {
                                     dialogWindow.setActive(false);
+                                    fileChooserWindow.setFileChooserMode(FileChooserWindow.FileChooserMode.CHOOSE_DIRECTORY);
+                                    fileChooserWindow.setOutput(projectPath);
+                                    fileChooserWindow.setActiveWindow(dialogWindow);
                                     fileChooserWindow.setActive(true);
                                 }
                             }
@@ -148,7 +138,7 @@ public class TopToolbarView
 
                 if(ImGui.beginMenu("Open")) {
                     if(ImGui.menuItem("Project")) {
-                        fileChooserWindow.setFileChooserMode(FileChooserWindow.FileChooserMode.CHOOSE_FILE);
+
 
                         dialogWindow.setWindowName("Open project");
                         dialogWindow.setRightButtonText("Open");
@@ -164,6 +154,9 @@ public class TopToolbarView
                                 ImGui.sameLine();
                                 if(ImGui.button("Browse...")) {
                                     dialogWindow.setActive(false);
+                                    fileChooserWindow.setFileChooserMode(FileChooserWindow.FileChooserMode.CHOOSE_FILE);
+                                    fileChooserWindow.setOutput(projectPath);
+                                    fileChooserWindow.setActiveWindow(dialogWindow);
                                     fileChooserWindow.setActive(true);
                                 }
                             }
@@ -219,9 +212,12 @@ public class TopToolbarView
                         dialogWindow.setDialogWindowCallback(new DialogWindowCallback() {
                             @Override
                             public void onDraw() {
-                                ImGui.inputText("Path...", buildOutPath); ImGui.sameLine();
+                                ImGui.inputText("##", buildOutPath); ImGui.sameLine();
                                 if (ImGui.button("Browse...")){
                                     dialogWindow.setActive(false);
+                                    fileChooserWindow.setOutput(buildOutPath);
+                                    fileChooserWindow.setActiveWindow(dialogWindow);
+                                    fileChooserWindow.setFileChooserMode(FileChooserWindow.FileChooserMode.CREATE_NEW_FILE);
                                     fileChooserWindow.setActive(true);
                                 }
                                 ImGui.text("Scenes to build:");
