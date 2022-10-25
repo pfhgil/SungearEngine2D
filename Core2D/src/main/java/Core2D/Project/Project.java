@@ -1,6 +1,7 @@
 package Core2D.Project;
 
 import Core2D.Scene2D.SceneManager;
+import Core2D.Utils.FileUtils;
 
 import java.io.File;
 import java.io.Serializable;
@@ -24,26 +25,25 @@ public class Project implements Serializable
     {
         this.projectParentPath = projectParentPath;
         this.projectName = projectName;
-        this.projectPath = projectParentPath + "\\" + projectName;
+        this.projectPath = projectParentPath + File.separator + projectName;
 
-        resourcesPath = projectParentPath + "\\" + projectName + "\\Resources";
-        scriptsPath = projectParentPath + "\\" + projectName + "\\Scripts";
-        scenesPath = projectParentPath + "\\" + projectName + "\\Scenes";
-        projectSettingsPath = projectParentPath + "\\" + projectName + "\\ProjectSettings.txt";
+        resourcesPath = this.projectPath + File.separator + "Resources";
+        scriptsPath = this.projectPath + File.separator + "Scripts";
+        scenesPath = this.projectPath + File.separator + "Scenes";
+        projectSettingsPath = this.projectPath + File.separator + "ProjectSettings.txt";
 
         projectSettings = new ProjectSettings();
-        getProjectSettings().saveSettings(projectSettingsPath);
     }
 
     public void saveProject()
     {
-        SceneManager.saveSceneManager(projectPath + "\\SceneManager.sm");
+        SceneManager.saveSceneManager(projectPath + File.separator + "SceneManager.sm");
         getProjectSettings().saveSettings(projectSettingsPath);
     }
 
     public void loadProject()
     {
-        SceneManager.loadSceneManagerAsCurrent(projectPath + "\\SceneManager.sm");
+        SceneManager.loadSceneManagerAsCurrent(projectPath + File.separator + "SceneManager.sm");
         getProjectSettings().loadSettings(projectSettingsPath);
     }
 
@@ -56,10 +56,10 @@ public class Project implements Serializable
     public void setProjectPath(String projectPath)
     {
         this.projectPath = projectPath;
-        resourcesPath = projectPath + "\\Resources";
-        scriptsPath = projectPath + "\\Scripts";
-        scenesPath = projectPath + "\\Scenes";
-        projectSettingsPath = projectPath + "\\ProjectSettings.txt";
+        resourcesPath = projectPath + File.separator + "Resources";
+        scriptsPath = projectPath + File.separator + "Scripts";
+        scenesPath = projectPath + File.separator + "Scenes";
+        projectSettingsPath = projectPath + File.separator + "ProjectSettings.txt";
         projectParentPath = new File(projectParentPath).getParent();
     }
 

@@ -7,6 +7,8 @@ import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
 
 import java.awt.*;
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.Scanner;
 
 public class LogView extends View

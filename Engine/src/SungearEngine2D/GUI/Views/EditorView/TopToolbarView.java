@@ -32,6 +32,8 @@ public class TopToolbarView
     private ImString newFileName = new ImString();
 
     private ImString newSceneName = new ImString();
+    private ImString buildOutPath = new ImString();
+    private  FileChooserWindow buildOutPathChooserWindow;
 
     // текущий тип файла, который нужно создать
     private String currentFileTypeNeedCreate = "";
@@ -64,6 +66,8 @@ public class TopToolbarView
                 projectPath.set(chosenDirectory);
             }
         });
+        buildOutPathChooserWindow = new FileChooserWindow(FileChooserWindow.FileChooserMode.CREATE_NEW_FILE);
+        buildOutPathChooserWindow.setOutput(buildOutPath).setActive(false);
     }
 
     public void draw()
@@ -215,7 +219,14 @@ public class TopToolbarView
                         dialogWindow.setDialogWindowCallback(new DialogWindowCallback() {
                             @Override
                             public void onDraw() {
+                                ImGui.inputText("Path...", buildOutPath); ImGui.sameLine();
+                                if (ImGui.button("Browse...")){
+                                    dialogWindow.setActive(false);
+                                    fileChooserWindow.setActive(true);
+                                }
+                                ImGui.text("Scenes to build:");
                                 ImGui.beginChild("ChooseScenes2DToAdd", dialogWindow.getWindowSize().x, dialogWindow.getWindowSize().y / 3.0f);
+
                                 /*
                                 for(Scene2D scene2D : SceneManager.currentSceneManager.getScenes()) {
                                     if(ImGui.checkbox(scene2D.getName(), scene2D.inBuild)) {
@@ -229,7 +240,9 @@ public class TopToolbarView
                                         storedValues.inBuild = !storedValues.inBuild;
                                     }
                                 }
+
                                 ImGui.endChild();
+
                             }
 
                             @Override

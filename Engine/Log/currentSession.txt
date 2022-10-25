@@ -1,17 +1,8 @@
-[#FFFFFF] 2022/10/24 23:31:26 | [#008000] Log directory was founded!
-[#FFFFFF] 2022/10/24 23:31:26 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/10/24 23:31:26 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2022/10/24 23:31:26 | [#008000] Core2D started!
-[#FFFFFF] 2022/10/24 23:31:26 | [#FFFFFF] LWJGL version is 3.3.1 build 7
-[#FFFFFF] 2022/10/24 23:31:32 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/10/24 23:31:32 | [#FFFFFF] Initializing compiler...  
-[#FFFFFF] 2022/10/24 23:31:44 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/24 23:31:50 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes/lvl0.txt' already exists
-[#FFFFFF] 2022/10/24 23:31:50 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl0.sgs' already exists
-[#FFFFFF] 2022/10/24 23:31:51 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/24 23:32:05 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes/lvl0.txt' already exists
-[#FFFFFF] 2022/10/24 23:32:05 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl0.sgs' already exists
-[#FFFFFF] 2022/10/24 23:32:06 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/24 23:32:13 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
-[#FFFFFF] 2022/10/24 23:32:13 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.sm' already exists
-[#FFFFFF] 2022/10/24 23:32:13 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\ProjectSettings.txt' already exists
+[#FFFFFF] 2022/10/25 19:32:01 | [#008000] Log directory was founded!
+[#FFFFFF] 2022/10/25 19:32:01 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/10/25 19:32:01 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2022/10/25 19:32:01 | [#008000] Core2D started!
+[#FFFFFF] 2022/10/25 19:32:01 | [#FFFFFF] LWJGL version is 3.3.1 build 7
+[#FFFFFF] 2022/10/25 19:32:06 | [#FF0000] OpenGL error: 1280
+[#FFFFFF] 2022/10/25 19:32:06 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2022/10/25 19:32:54 | [#FFFFFF] simulate physics: true
