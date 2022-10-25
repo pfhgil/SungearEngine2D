@@ -1,0 +1,65 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/main/java'
+        }
+    }
+}
+
+jar {
+//    manifest {
+//        attributes(
+//                'Main-Class': 'see.SeeTaskManagerMain'
+//        )
+//    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+dependencies {
+//    implementation files('libs/something_local.jar')
+    implementation name: 'commons-io-2.11.0'
+    implementation name: 'gson-2.9.0'
+    implementation name: 'jbox2d-library-2.1.2.2'
+    implementation name: 'joml-1.10.2'
+    implementation name: 'lwjgl'
+    implementation name: 'lwjgl-glfw'
+    implementation name: 'lwjgl-glfw-natives-windows'
+    implementation name: 'lwjgl-glfw-sources'
+    implementation name: 'lwjgl-natives-windows'
+    implementation name: 'lwjgl-openal'
+    implementation name: 'lwjgl-openal-natives-windows'
+    implementation name: 'lwjgl-openal-sources'
+    implementation name: 'lwjgl-opengl'
+    implementation name: 'lwjgl-opengl-natives-windows'
+    implementation name: 'lwjgl-opengl-sources'
+    implementation name: 'lwjgl-sources'
+    implementation name: 'lwjgl-stb'
+    implementation name: 'lwjgl-stb-natives-windows'
+    implementation name: 'lwjgl-stb-sources'
+    implementation name: 'slf4j-api-2.0.0-alpha5'
+    implementation name: 'slf4j-simple-2.0.0-alpha5'
+    implementation name: 'slick'
+    implementation name: 'slick-util'
+}
