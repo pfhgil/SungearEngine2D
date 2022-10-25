@@ -17,7 +17,11 @@ public class ProjectSettings implements Serializable
 
     public void saveSettings(String path)
     {
-        File projectSettingsFile = FileUtils.createFile(path);
+
+        File projectSettingsFile = new File(path);
+        if (!projectSettingsFile.exists()){
+            FileUtils.createFile(path);
+        }
 
         String settingsString = gson.toJson(this);
         FileUtils.writeToFile(projectSettingsFile, settingsString, false);
