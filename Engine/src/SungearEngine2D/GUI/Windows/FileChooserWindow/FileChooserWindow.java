@@ -5,19 +5,23 @@ import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindowCallback;
 import imgui.ImGui;
 import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiTreeNodeFlags;
+import imgui.type.ImString;
 
 import java.io.File;
+import java.nio.file.Paths;
 
 public class FileChooserWindow extends DialogWindow
 {
     public enum FileChooserMode
     {
         CHOOSE_FILE,
-        CHOOSE_DIRECTORY
+        CHOOSE_DIRECTORY,
+        CHOOSE_NEW_FILE
     }
 
     private String currentChosenFilePath = "";
     private String initialDirectoryPath = "";
+
 
     private FileChooserWindowCallback fileChooserWindowCallback;
 
@@ -49,14 +53,18 @@ public class FileChooserWindow extends DialogWindow
             @Override
             public void onDraw() {
                 ImGui.text("Chosen directory path: " + currentChosenFilePath);
+                if (fileChooserMode == FileChooserMode.CHOOSE_NEW_FILE){
+                    ImGui.text("File name:"); ImGui.sameLine();
+                    ImGui.inputText("Name...", newFileName);
+                }
                 ImGui.beginChild("Browser", getCurrentWindowSize().x - 17, getCurrentWindowSize().y - 75, true);
 
                 File[] disks = File.listRoots();
                 for(File disk : disks) {
                     showDirectory(disk, true);
                 }
-
                 ImGui.endChild();
+
             }
 
             @Override
@@ -100,7 +108,7 @@ public class FileChooserWindow extends DialogWindow
         }
         if(ImGui.isItemClicked()) {
             if(fileChooserMode == FileChooserMode.CHOOSE_DIRECTORY) {
-                currentChosenFilePath = dir.getPath();
+                currentChosenFilePath = dir.getPath() + File.pathSeparator + newFileName.get();
             }
         }
         if(clicked) {
@@ -110,7 +118,8 @@ public class FileChooserWindow extends DialogWindow
                 for (File dir0 : dirs) {
                     if (dir0.isDirectory()) {
                         showDirectory(dir0, false);
-                    } else if(dir0.isFile() && fileChooserMode == FileChooserMode.CHOOSE_FILE) {
+                    } else if(dir0.isFile() && (fileChooserMode == FileChooserMode.CHOOSE_FILE ||
+                            fileChooserMode == FileChooserMode.CHOOSE_NEW_FILE)) {
                         showFile(dir0);
                     }
                 }
@@ -136,9 +145,11 @@ public class FileChooserWindow extends DialogWindow
 
         if(opened) {
             currentChosenFilePath = file.getPath();
+            newFileName.set(file.getName());
         }
     }
-
+    private ImString newFileName = new ImString();
+    public void setNewFileName(String value){ newFileName.set(value); }
     public void draw()
     {
         super.draw();
