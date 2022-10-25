@@ -1,13 +1,3 @@
-.idea
-build
-.gradle
-classes
-local.properties
-*.iml
-**/out/*
-target
-node_modules
-webpack.generated.js
-pnpmfile.js
-/shelf/
-/workspace.xml
+/Engine/out/
+/Engine/Log/
+/Engine/compiler/
