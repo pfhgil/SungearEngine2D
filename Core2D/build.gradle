@@ -4,6 +4,7 @@ plugins {
 
 group 'org.example'
 version '1.0-SNAPSHOT'
+version = ''
 
 repositories {
     mavenCentral()
@@ -29,6 +30,10 @@ jar {
 //                'Main-Class': 'see.SeeTaskManagerMain'
 //        )
 //    }
+    //FatJar
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
 }
 
 repositories {
