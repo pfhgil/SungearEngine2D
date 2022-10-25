@@ -10,6 +10,7 @@ import Core2D.Log.Log;
 import Core2D.Drawable.Object2D;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
+import Core2D.Utils.Utils;
 import Core2D.Utils.WrappedObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -33,14 +34,6 @@ public class SceneManager
     // путь до главной сцены
     public String mainScene2DPath = "";
     public transient Scene2D mainScene2D;
-
-    private static Gson gson = new GsonBuilder()
-            .setPrettyPrinting()
-            .registerTypeAdapter(WrappedObject.class, new WrappedObjectDeserializer())
-            .registerTypeAdapter(Component.class, new ComponentDeserializer())
-            .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
-            .registerTypeAdapter(Scene2D.class, new Scene2DDeserializer())
-            .create();
 
     public static SceneManager currentSceneManager = new SceneManager();
 
@@ -73,7 +66,7 @@ public class SceneManager
 
     public static void saveSceneManager(String path)
     {
-        String serialized = gson.toJson(currentSceneManager);
+        String serialized = Utils.gson.toJson(currentSceneManager);
         String newPath = new File(path).getParent() + "\\" + FilenameUtils.getBaseName(new File(path).getName()) + ".txt";
         FileUtils.createFile(newPath);
         FileUtils.writeToFile(new File(newPath), serialized, false);
@@ -82,7 +75,7 @@ public class SceneManager
 
     public static void saveSceneManager(String path, SceneManager sceneManager)
     {
-        String serialized = gson.toJson(sceneManager);
+        String serialized = Utils.gson.toJson(sceneManager);
         String newPath = new File(path).getParent() + "\\" + FilenameUtils.getBaseName(new File(path).getName()) + ".txt";
         FileUtils.createFile(newPath);
         FileUtils.writeToFile(new File(newPath), serialized, false);
@@ -95,7 +88,7 @@ public class SceneManager
 
         if(sceneManagerFile.exists()) {
             String deserialized = (String) FileUtils.deSerializeObject(path);
-            return gson.fromJson(deserialized, SceneManager.class);
+            return Utils.gson.fromJson(deserialized, SceneManager.class);
         }
 
         return new SceneManager();
@@ -116,14 +109,14 @@ public class SceneManager
         String deserialized = (String) FileUtils.deSerializeObject(inputStream);
         if(deserialized != null && !deserialized.equals("")) {
             Log.CurrentSession.println("scene manager code: " + deserialized, Log.MessageType.INFO);
-            return gson.fromJson(deserialized, SceneManager.class);
+            return Utils.gson.fromJson(deserialized, SceneManager.class);
         }
         return new SceneManager();
     }
 
     public void saveScene(Scene2D scene, String path)
     {
-        String serialized = gson.toJson(scene);
+        String serialized = Utils.gson.toJson(scene);
 
         File f = new File(path);
         String s = f.getParentFile().getPath() + "/" + FilenameUtils.getBaseName(f.getName()) + ".txt";
@@ -162,7 +155,7 @@ public class SceneManager
             Settings.Other.Picking.currentPickingColor.z = 0.0f;
 
             Scene2D scene2D = new Scene2D();
-            Scene2D deserializedScene2D = gson.fromJson(deserializedScene2DString, Scene2D.class);
+            Scene2D deserializedScene2D = Utils.gson.fromJson(deserializedScene2DString, Scene2D.class);
             deserializedScene2D.setPhysicsWorld(scene2D.getPhysicsWorld());
 
             deserializedScene2D.setScenePath(scene2DPath);

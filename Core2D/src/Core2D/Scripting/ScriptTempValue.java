@@ -6,6 +6,7 @@ import Core2D.Log.Log;
 import Core2D.Drawable.Object2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.Utils;
 import Core2D.Utils.WrappedObject;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -28,14 +29,8 @@ public class ScriptTempValue
                 Field field = script.getScriptClass().getField(fieldName);
                 WrappedObject wrappedObject = new WrappedObject(null);
                 if(value instanceof LinkedTreeMap) {
-                    Gson gson = new GsonBuilder()
-                            .setPrettyPrinting()
-                            .registerTypeAdapter(WrappedObject.class, new WrappedObjectDeserializer())
-                            //.registerTypeAdapter(ScriptSceneObject.class, new ScriptSceneObjectDeserializer())
-                            .create();
-
-                    JsonObject jsonObject = gson.toJsonTree(value).getAsJsonObject();
-                    wrappedObject = gson.fromJson(jsonObject.toString(), WrappedObject.class);
+                    JsonObject jsonObject = Utils.gson.toJsonTree(value).getAsJsonObject();
+                    wrappedObject = Utils.gson.fromJson(jsonObject.toString(), WrappedObject.class);
                 } else if(value instanceof WrappedObject) {
                     wrappedObject = (WrappedObject) value;
                 }

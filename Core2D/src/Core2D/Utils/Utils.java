@@ -1,9 +1,15 @@
 package Core2D.Utils;
 
+import Core2D.Component.Component;
 import Core2D.Component.Components.TransformComponent;
+import Core2D.Deserializers.*;
 import Core2D.Log.Log;
 import Core2D.Drawable.Object2D;
+import Core2D.Prefab.Prefab;
+import Core2D.Scene2D.Scene2D;
 import Core2D.Transform.Transform;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import org.apache.commons.io.IOUtils;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
@@ -19,6 +25,17 @@ import java.util.Random;
 public class Utils
 {
     private static Random random = new Random();
+
+    public static Gson gson = new GsonBuilder()
+            .setPrettyPrinting()
+            .registerTypeAdapter(Prefab.class, new PrefabDeserializer())
+            .registerTypeAdapter(Component.class, new ComponentDeserializer())
+            .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
+            .registerTypeAdapter(WrappedObject.class, new WrappedObjectDeserializer())
+            .registerTypeAdapter(Component.class, new ComponentDeserializer())
+            .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
+            .registerTypeAdapter(Scene2D.class, new Scene2DDeserializer())
+            .create();
 
     // создает FloatBuffer, помещает туда data и возвращает получившийся буфер
     public static FloatBuffer createFloatBuffer(float[] data)

@@ -9,6 +9,7 @@ import Core2D.Layering.Layer;
 import Core2D.Drawable.Object2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.FileUtils;
+import Core2D.Utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -33,14 +34,7 @@ public class Prefab
     public void save(String path)
     {
         if(prefabObject instanceof Object2D) {
-            Gson gson = new GsonBuilder()
-                    .setPrettyPrinting()
-                    .registerTypeAdapter(Prefab.class, new PrefabDeserializer())
-                    .registerTypeAdapter(Component.class, new ComponentDeserializer())
-                    .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
-                    .create();
-
-            String serialized = gson.toJson(this);
+            String serialized = Utils.gson.toJson(this);
             FileUtils.serializeObject(path, serialized);
         }
     }
@@ -48,13 +42,7 @@ public class Prefab
     public static Prefab load(String path)
     {
         String deSerialized = (String) FileUtils.deSerializeObject(path);
-        Gson gson = new GsonBuilder()
-                .setPrettyPrinting()
-                .registerTypeAdapter(Prefab.class, new PrefabDeserializer())
-                .registerTypeAdapter(Component.class, new ComponentDeserializer())
-                .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
-                .create();
-        return gson.fromJson(deSerialized, Prefab.class);
+        return Utils.gson.fromJson(deSerialized, Prefab.class);
     }
 
     public void applyObjectsToScene()

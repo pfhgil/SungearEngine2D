@@ -2,6 +2,7 @@ package Core2D.Project;
 
 import Core2D.Log.Log;
 import Core2D.Utils.FileUtils;
+import Core2D.Utils.Utils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
@@ -11,19 +12,17 @@ import java.io.Serializable;
 public class ProjectSettings implements Serializable
 {
     private String jdkPath = "No JDK";
-    private transient Gson gson = new GsonBuilder().setPrettyPrinting().create();
 
     private transient boolean saved = false;
 
     public void saveSettings(String path)
     {
-
         File projectSettingsFile = new File(path);
         if (!projectSettingsFile.exists()){
             FileUtils.createFile(path);
         }
 
-        String settingsString = gson.toJson(this);
+        String settingsString = Utils.gson.toJson(this);
         FileUtils.writeToFile(projectSettingsFile, settingsString, false);
         saved = true;
     }
@@ -33,7 +32,7 @@ public class ProjectSettings implements Serializable
         File projectSettingsFile = new File(path);
         if(projectSettingsFile.exists()) {
             String settingsString = FileUtils.readAllFile(new File(path));
-            ProjectSettings projectSettings = gson.fromJson(settingsString, ProjectSettings.class);
+            ProjectSettings projectSettings = Utils.gson.fromJson(settingsString, ProjectSettings.class);
             set(projectSettings);
         } else {
             Log.CurrentSession.println("Can not load project settings file! File by path \"" + path + "\" does not exist!", Log.MessageType.ERROR);
