@@ -12,16 +12,16 @@ public class ProjectsManager
     {
         Project project = new Project(projectPath, projectName);
 
-        FileUtils.createFolder(projectPath + "\\" + projectName);
-        FileUtils.createFolder(projectPath + "\\" + projectName + "\\Resources");
-        FileUtils.createFolder(projectPath + "\\" + projectName + "\\Scripts");
-        FileUtils.createFolder(projectPath + "\\" + projectName + "\\Scenes");
-        FileUtils.createFile(projectPath + "\\" + projectName + "\\ProjectSettings.txt");
+        FileUtils.createFolder(project.getProjectPath());
+        FileUtils.createFolder(project.getResourcesPath());
+        FileUtils.createFolder(project.getScriptsPath());
+        FileUtils.createFolder(project.getScenesPath());
+        FileUtils.createFile(project.getProjectSettingsPath());
 
-        FileUtils.serializeObject(projectPath + "\\" + projectName + "\\" + projectName + ".sgp", project);
+        FileUtils.serializeObject(projectPath + File.separator + projectName + File.separator + projectName + ".sgp", project);
 
         currentProject = project;
-        currentProject.saveProject();
+        currentProject.saveProject();//а бл
         //ResourcesView.currentDirectoryPath = currentProject.getProjectPath();
     }
 

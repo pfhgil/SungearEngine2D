@@ -1,7 +1,15 @@
-[#FFFFFF] 2022/10/25 15:53:29 | [#008000] Log directory was founded!
-[#FFFFFF] 2022/10/25 15:53:29 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/10/25 15:53:29 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2022/10/25 15:53:29 | [#008000] Core2D started!
-[#FFFFFF] 2022/10/25 15:53:29 | [#FFFFFF] LWJGL version is 3.3.1 build 7
-[#FFFFFF] 2022/10/25 15:53:31 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/10/25 15:53:31 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2022/10/25 16:50:51 | [#008000] Log directory was founded!
+[#FFFFFF] 2022/10/25 16:50:51 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/10/25 16:50:51 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2022/10/25 16:50:52 | [#008000] Core2D started!
+[#FFFFFF] 2022/10/25 16:50:52 | [#FFFFFF] LWJGL version is 3.3.1 build 7
+[#FFFFFF] 2022/10/25 16:50:54 | [#FF0000] OpenGL error: 1280
+[#FFFFFF] 2022/10/25 16:50:54 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2022/10/25 16:51:06 | [#FF0000] D:\java\2dengine\projects\dadada\ProjectSettings.txt
+[#FFFFFF] 2022/10/25 16:51:06 | [#FF0000] D:\java\2dengine\projects\dadada\dadada.sgp
+[#FFFFFF] 2022/10/25 16:51:06 | [#FF0000] D:\java\2dengine\projects\dadada\SceneManager.txt
+[#FFFFFF] 2022/10/25 16:51:06 | [#FF0000] D:\java\2dengine\projects\dadada\SceneManager.sm
+[#FFFFFF] 2022/10/25 16:51:12 | [#FF0000] D:\java\2dengine\projects\dadada\SceneManager.txt
+[#FFFFFF] 2022/10/25 16:51:12 | [#FF0000] File by path 'D:\java\2dengine\projects\dadada\SceneManager.txt' already exists
+[#FFFFFF] 2022/10/25 16:51:12 | [#FF0000] D:\java\2dengine\projects\dadada\SceneManager.sm
+[#FFFFFF] 2022/10/25 16:51:12 | [#FF0000] File by path 'D:\java\2dengine\projects\dadada\SceneManager.sm' already exists
