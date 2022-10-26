@@ -23,7 +23,7 @@ public class SceneController
 
     public void update()
     {
-        //dfdf
+        //dfdfjjj
         if(Keyboard.keyPressed(GLFW.GLFW_KEY_C)) {
             Log.CurrentSession.println("level name: " + levelName, Log.MessageType.INFO);
             SceneManager.currentSceneManager.setCurrentScene2D(SceneManager.currentSceneManager.getScene2D(levelName));
@@ -34,9 +34,9 @@ public class SceneController
     {
         if(movableObject2D != null) {
             Transform transform = movableObject2D.getComponent(TransformComponent.class).getTransform();
-
+            //tgf
             if(Keyboard.keyDown(GLFW.GLFW_KEY_SPACE)) {
-                playerTransform.applyLinearImpulse(new Vector2f(0.0f, 1000 * deltaTime), new Vector2f());
+                transform.applyLinearImpulse(new Vector2f(0.0f, 1000 * deltaTime), new Vector2f());
             }
             if(Keyboard.keyDown(GLFW.GLFW_KEY_D)) {
                 transform.translate(new Vector2f(speed * deltaTime, 0.0f));

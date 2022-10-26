@@ -21,6 +21,9 @@ sourceSets {
         java {
             srcDir 'src/main/java'
         }
+        resources  {
+            srcDir 'resources/'
+        }
     }
 }
 
@@ -31,6 +34,7 @@ jar {
 //        )
 //    }
     //FatJar
+    duplicatesStrategy = DuplicatesStrategy.INCLUDE
     from {
         configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
     }

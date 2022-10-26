@@ -367,17 +367,6 @@
                     },
                     "active": true
                   }
-                },
-                {
-                  "type": "Core2D.Component.Components.ScriptComponent",
-                  "properties": {
-                    "script": {
-                      "path": "D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/PROJECT12/Scripts\\SceneController",
-                      "name": "SceneController",
-                      "active": true
-                    },
-                    "active": true
-                  }
                 }
               ],
               "color": {
@@ -466,6 +455,155 @@
                 "name": "default"
               },
               "ID": 123
+            }
+          },
+          {
+            "type": "Core2D.Drawable.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -64.16781,
+                        "y": -167.41173
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 0.8,
+                        "y": 0.24
+                      },
+                      "centre": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    },
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Resources\\textures\\tanks\\ussr\\is7.png",
+                      "param": 33071,
+                      "textureBlock": 33984,
+                      "blendSourceFactor": 770,
+                      "blendDestinationFactor": 771
+                    },
+                    "textureDrawMode": 1,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ],
+                    "active": true
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "isUIElement": false,
+              "parentObject2DID": -1,
+              "childrenObjectsID": [],
+              "name": "is7",
+              "active": true,
+              "layerName": "default",
+              "tag": {
+                "name": "default"
+              },
+              "ID": 201
+            }
+          },
+          {
+            "type": "Core2D.Drawable.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -27.735916,
+                        "y": -280.0175
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 14.891108,
+                        "y": 3.1261303
+                      },
+                      "centre": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    },
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Resources\\textures\\tanks\\ussr\\is7.png",
+                      "param": 33071,
+                      "textureBlock": 33984,
+                      "blendSourceFactor": 770,
+                      "blendDestinationFactor": 771
+                    },
+                    "textureDrawMode": 1,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ],
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.ScriptComponent",
+                  "properties": {
+                    "script": {
+                      "path": "D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/PROJECT12/Scripts\\SceneController",
+                      "name": "SceneController",
+                      "active": true
+                    },
+                    "active": true
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "isUIElement": false,
+              "parentObject2DID": -1,
+              "childrenObjectsID": [],
+              "name": "is7",
+              "active": true,
+              "layerName": "default",
+              "tag": {
+                "name": "default"
+              },
+              "ID": 203
             }
           }
         ],
@@ -570,7 +708,7 @@
             "fieldName": "levelName",
             "value": {
               "type": "java.lang.String",
-              "properties": "lvl1"
+              "properties": ""
             }
           },
           {
@@ -578,8 +716,8 @@
             "value": {
               "type": "Core2D.Scripting.ScriptSceneObject",
               "properties": {
-                "ID": 9,
-                "name": "player",
+                "ID": 203,
+                "name": "is7",
                 "objectType": "TYPE_OBJECT2D"
               }
             }
@@ -595,7 +733,7 @@
       }
     ]
   },
-  "maxObjectID": 137,
+  "maxObjectID": 212,
   "inBuild": false,
   "isMainScene2D": false
 }

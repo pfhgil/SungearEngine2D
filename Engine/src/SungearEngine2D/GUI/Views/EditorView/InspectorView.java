@@ -9,6 +9,7 @@ import Core2D.Drawable.Object2D;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
+import Core2D.Tasks.StoppableTask;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.Tag;
@@ -754,16 +755,9 @@ public class InspectorView extends View
                 if (ImGui.beginDragDropTarget()) {
                     if (FilenameUtils.getExtension(droppingFile.getName()).equals("java")) {
                         Object droppedFile = ImGui.acceptDragDropPayload("File");
-                        if (droppedFile instanceof File) {
-                            File javaFile = (File) droppedFile;
+                        if (droppedFile instanceof File javaFile) {
 
-                            boolean compiled = Compiler.compileScript(javaFile.getPath());
-                            if(compiled) {
-                                ScriptComponent scriptComponent = new ScriptComponent();
-                                scriptComponent.getScript().loadClass(javaFile.getParent(), FilenameUtils.getBaseName(javaFile.getName()));
-
-                                inspectingObject2D.addComponent(scriptComponent);
-                            }
+                            compileAndAddScriptComponent(javaFile, inspectingObject2D);
                         }
                     }
                     ImGui.endDragDropTarget();
@@ -772,6 +766,24 @@ public class InspectorView extends View
 
             drawAction();
         }
+    }
+
+    private void compileAndAddScriptComponent(File javaFile, Object2D inspectingObject2D)
+    {
+        ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + javaFile.getName() + "... ", 1.0f, 0.0f) {
+            @Override
+            public void run()
+            {
+                boolean compiled = Compiler.compileScript(javaFile.getPath());
+
+                if(compiled) {
+                    ScriptComponent scriptComponent = new ScriptComponent();
+                    scriptComponent.getScript().loadClass(javaFile.getParent(), FilenameUtils.getBaseName(javaFile.getName()));
+
+                    inspectingObject2D.addComponent(scriptComponent);
+                }
+            }
+        });
     }
 
     private void inspectCamera2D(Camera2D camera2D)
