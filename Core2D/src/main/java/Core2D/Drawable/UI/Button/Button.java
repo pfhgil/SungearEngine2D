@@ -1,6 +1,8 @@
 package Core2D.Drawable.UI.Button;
 
 import Core2D.AssetManager.AssetManager;
+import Core2D.Core2D.Core2D;
+import Core2D.Drawable.AtlasDrawing;
 import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Input.PC.Mouse;
@@ -12,6 +14,8 @@ import Core2D.Utils.Utils;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.function.Consumer;
 
 // TODO: написать destroy метод
 public class Button extends Drawable
@@ -34,6 +38,7 @@ public class Button extends Drawable
     // обратный множитель
     private Vector4f backMultiplier = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
 
+    private final Consumer<Button> render = Core2D.getMainRenderer()::render;
     public Button(String name, String text, UIElementCallback uiElementCallback)
     {
         this.name = name;
@@ -115,6 +120,12 @@ public class Button extends Drawable
         if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
             originalClickPosition = new Vector2f(mousePosition);
         }
+    }
+
+    @Override
+    public void render()
+    {
+        render.accept(this);
     }
 
     private void updateTextPosition()

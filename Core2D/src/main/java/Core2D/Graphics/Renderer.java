@@ -273,25 +273,7 @@ public class Renderer
     {
         Object object = wrappedObject.getObject();
         if(object instanceof Drawable && ((Drawable) object).isActive()) {
-            if(object instanceof Line2D) {
-                render((Line2D) object);
-            } else if(object instanceof Object2D) {
-                render((Object2D) object);
-            } else if(object instanceof Text) {
-                render((Text) object);
-            } else if(object instanceof ProgressBar) {
-                render((ProgressBar) object);
-            } else if(object instanceof InputField) {
-                render((InputField) object);
-            } else if(object instanceof ObjectsInstancing) {
-                render((ObjectsInstancing) object);
-            } else if(object instanceof LinesInstancing) {
-                render((LinesInstancing) object);
-            } else if(object instanceof Button) {
-                render((Button) object);
-            } else if(object instanceof AtlasDrawing) {
-                render((AtlasDrawing) object);
-            }
+            ((Drawable) object).render();
         }
     }
 

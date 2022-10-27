@@ -1,8 +1,7 @@
-[#FFFFFF] 2022/10/27 17:58:46 | [#008000] Log directory was founded!
-[#FFFFFF] 2022/10/27 17:58:46 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/10/27 17:58:46 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2022/10/27 17:58:46 | [#008000] Core2D started!
-[#FFFFFF] 2022/10/27 17:58:46 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
-[#FFFFFF] 2022/10/27 17:58:49 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/10/27 17:58:50 | [#FFFFFF] Initializing compiler...  
-[#FFFFFF] 2022/10/27 17:58:53 | [#FF0000] File by path 'D:\java\2dengine\netnoda\SceneManager.txt' already exists
+[#FFFFFF] 2022/10/28 00:03:51 | [#008000] Log directory was founded!
+[#FFFFFF] 2022/10/28 00:03:51 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/10/28 00:03:51 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2022/10/28 00:03:52 | [#008000] Core2D started!
+[#FFFFFF] 2022/10/28 00:03:52 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2022/10/28 00:03:57 | [#FF0000] OpenGL error: 1280
+[#FFFFFF] 2022/10/28 00:03:58 | [#FFFFFF] Initializing compiler...  

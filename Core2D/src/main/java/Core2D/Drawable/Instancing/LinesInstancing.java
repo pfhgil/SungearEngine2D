@@ -1,6 +1,8 @@
 package Core2D.Drawable.Instancing;
 
 import Core2D.AssetManager.AssetManager;
+import Core2D.Core2D.Core2D;
+import Core2D.Drawable.AtlasDrawing;
 import Core2D.Drawable.Drawable;
 import Core2D.Drawable.Primitives.Line2D;
 import Core2D.Shader.ShaderProgram;
@@ -12,6 +14,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static org.lwjgl.opengl.GL15C.*;
 import static org.lwjgl.opengl.GL20C.glEnableVertexAttribArray;
@@ -41,6 +44,8 @@ public class LinesInstancing extends Drawable
     private int vao;
 
     private float linesWidth = 1.0f;
+
+    private final Consumer<LinesInstancing> render = Core2D.getMainRenderer()::render;
 
     public LinesInstancing(Line2D[] drawableLines2D, boolean isUIInstancing)
     {
@@ -209,6 +214,12 @@ public class LinesInstancing extends Drawable
         shaderProgram = null;
 
         //destroyParams();
+    }
+
+    @Override
+    public void render()
+    {
+        render.accept(this);
     }
 
     public boolean isUIInstancing() { return isUIInstancing; }

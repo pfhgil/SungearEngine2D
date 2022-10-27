@@ -1,6 +1,8 @@
 package Core2D.Drawable.UI.ProgressBar;
 
 import Core2D.AssetManager.AssetManager;
+import Core2D.Core2D.Core2D;
+import Core2D.Drawable.AtlasDrawing;
 import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
@@ -9,6 +11,8 @@ import Core2D.ShaderUtils.ShaderUtils;
 import Core2D.Utils.Orientation;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+
+import java.util.function.Consumer;
 
 // TODO: написать destroy метод
 public class ProgressBar extends Drawable
@@ -30,6 +34,8 @@ public class ProgressBar extends Drawable
     private int orientation = Orientation.HORIZONTAL;
 
     private Object2D progressBar;
+
+    private final Consumer<ProgressBar> render = Core2D.getMainRenderer()::render;
 
     public ProgressBar(float maxValue)
     {
@@ -97,6 +103,12 @@ public class ProgressBar extends Drawable
 
         progressBar.destroy();
         progressBar = null;
+    }
+
+    @Override
+    public void render()
+    {
+        render.accept(this);
     }
 
     public Object2D getProgressBar() { return progressBar; }

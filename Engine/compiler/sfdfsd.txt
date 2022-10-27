@@ -1,0 +1,1 @@
+"C:\Users\stuka\.jdks\corretto-15.0.2\bin\\javac.exe" -cp "D:\Pixelfield\Java Projects\SungearEngine2D\Engine\compiler\Core2D.jar" "D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scripts\SceneController.java"

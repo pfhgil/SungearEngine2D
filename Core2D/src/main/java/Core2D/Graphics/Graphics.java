@@ -69,7 +69,7 @@ public abstract class Graphics
         while (!glfwWindowShouldClose(Core2D.Core2D.Core2D.getWindow().getWindow())) {
             try {
                 if(Settings.Core2D.sleepCore2D) {
-                    Thread.sleep(10000);
+                    Thread.sleep(1000);
                 }
 
                 Vector2i windowSize = Core2D.Core2D.Core2D.getWindow().getSize();

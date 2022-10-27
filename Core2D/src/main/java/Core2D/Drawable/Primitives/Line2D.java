@@ -2,6 +2,8 @@ package Core2D.Drawable.Primitives;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Camera2D.CamerasManager;
+import Core2D.Core2D.Core2D;
+import Core2D.Drawable.AtlasDrawing;
 import Core2D.Drawable.Drawable;
 import Core2D.Transform.Transform;
 import Core2D.Shader.ShaderProgram;
@@ -9,6 +11,9 @@ import Core2D.ShaderUtils.*;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+
+import javax.sound.sampled.Line;
+import java.util.function.Consumer;
 
 public class Line2D extends Drawable
 {
@@ -40,6 +45,8 @@ public class Line2D extends Drawable
     private boolean isUIElement = false;
 
     private float lineWidth = 1.0f;
+
+    private final Consumer<Line2D> render = Core2D.getMainRenderer()::render;
 
     public Line2D()
     {
@@ -97,6 +104,12 @@ public class Line2D extends Drawable
 
         vertexArrayObject.destroy();
         vertexArrayObject = null;
+    }
+
+    @Override
+    public void render()
+    {
+        render.accept(this);
     }
 
     public Vector4f getColor() { return color; }

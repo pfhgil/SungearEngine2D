@@ -6,6 +6,8 @@ import Core2D.Utils.Tag;
 import Core2D.Utils.Utils;
 import Core2D.Utils.WrappedObject;
 
+import java.util.function.Consumer;
+
 /**
  * Abstract class for all rendered objects. Contains general parameters and methods for rendered objects.
  */
@@ -52,6 +54,7 @@ public abstract class Drawable
      * If there is no current scene, it sets a random ID from 0 to 1000000000,
      * in another case it sets the ID equal to the ID of the last created object on the scene + 1.
      */
+
     public void createNewID()
     {
         if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
@@ -62,6 +65,11 @@ public abstract class Drawable
         }
 
         System.out.println("object id: " + ID);
+    }
+
+    public void render()
+    {
+
     }
 
     /**

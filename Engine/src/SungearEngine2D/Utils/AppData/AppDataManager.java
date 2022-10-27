@@ -1,33 +1,33 @@
 package SungearEngine2D.Utils.AppData;
 
-import Core2D.Log.Log;
 import Core2D.Utils.FileUtils;
 
 import java.io.File;
-import java.io.IOException;
 
 public class AppDataManager {
 
-    private static final File AppDataDirectory = new File(System.getenv("APPDATA")); public static File getAppDataDirectory() { return AppDataDirectory; }
-    private static final File RoamingDirectory = new File(AppDataDirectory.getAbsolutePath() + File.separator + "Roaming"); public static File getRoamingDirectory() { return RoamingDirectory; }
-    private static final File LocalDirectory = new File(AppDataDirectory.getAbsolutePath()+File.separator + "Local"); public static File getLocalDirectory() { return LocalDirectory; }
+    private static final File appDataDirectory = new File(System.getenv("APPDATA")); public static File getAppDataDirectory() { return appDataDirectory; }
+    private static final File roamingDirectory = new File(appDataDirectory.getAbsolutePath() + File.separator + "Sungear Engine 2D"); public static File getRoamingDirectory() { return roamingDirectory; }
+    private static final File localDirectory = new File(appDataDirectory.getAbsolutePath() + File.separator + "Sungear Engine 2D"); public static File getLocalDirectory() { return localDirectory; }
 
     private static UserSettings settings; public static UserSettings getSettings() { return settings; }
 
     public static void init(){
         settings = UserSettings.getUserSettings();
     }
-    public static File createRoamingDirectory(){
-        if (!RoamingDirectory.exists()){
-            FileUtils.createFolder(RoamingDirectory);
+    public static File createRoamingDirectory()
+    {
+        if (!roamingDirectory.exists()){
+            FileUtils.createFolder(roamingDirectory);
         }
-        return RoamingDirectory;
+        return roamingDirectory;
     }
-    public static File createLocalDirectory(){
-        if (!LocalDirectory.exists()){
-            FileUtils.createFolder(LocalDirectory);
+    public static File createLocalDirectory()
+    {
+        if (!localDirectory.exists()){
+            FileUtils.createFolder(localDirectory);
         }
-        return LocalDirectory;
+        return localDirectory;
     }
 }
 

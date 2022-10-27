@@ -22,6 +22,7 @@ import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
+import java.util.Iterator;
 
 public class TopToolbarView
 {
@@ -193,12 +194,14 @@ public class TopToolbarView
 
                         currentAction = "File/Open/Project";
                     }
-                    if (ImGui.beginMenu("Recent projects")){
-                        for (var e: UserSettings.instance.lastProjects) {
-                            if (ImGui.menuItem(e)){
-                                ProjectsManager.loadProject(e);
-                                UserSettings.instance.addLastProject(e);
-                            }
+                    if (ImGui.beginMenu("Recent projects")) {
+                        int size = UserSettings.instance.lastProjects.size();
+                         for(int i = 0; i < size; i++) {
+                             String projectPath = UserSettings.instance.lastProjects.get(i);
+                             if (ImGui.menuItem(projectPath)) {
+                                 ProjectsManager.loadProject(projectPath);
+                                 UserSettings.instance.addLastProject(projectPath);
+                             }
                         }
                         ImGui.endMenu();
                     }

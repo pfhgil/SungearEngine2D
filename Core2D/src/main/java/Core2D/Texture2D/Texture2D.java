@@ -270,14 +270,14 @@ public class Texture2D
             // активирую нулевой текстурный блок
             glActiveTexture(textureBlock);
             glBindTexture(GL_TEXTURE_2D, textureHandler);
-            glBlendFunc(blendSourceFactor, blendDestinationFactor);
+            //glBlendFunc(blendSourceFactor, blendDestinationFactor);
         }
     }
     public void unBind()
     {
         if(Thread.currentThread().getName().equals("main")) {
             glBindTexture(GL_TEXTURE_2D, 0);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+            //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         }
     }
 

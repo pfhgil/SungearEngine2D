@@ -1,6 +1,7 @@
 package Core2D.Drawable.UI.InputField;
 
 import Core2D.AssetManager.AssetManager;
+import Core2D.Drawable.AtlasDrawing;
 import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Input.Core2DUserInputCallback;
@@ -14,6 +15,8 @@ import Core2D.Utils.Utils;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
+
+import java.util.function.Consumer;
 
 /**
  * ДОДЕЛАТЬ
@@ -81,6 +84,8 @@ public class InputField extends Drawable
 
     // delta time
     private float dt = 0.0f;
+
+    private final Consumer<InputField> render = Core2D.getMainRenderer()::render;
 
     public InputField()
     {
@@ -188,6 +193,12 @@ public class InputField extends Drawable
         dt = deltaTime;
 
         cursor.update(deltaTime);
+    }
+
+    @Override
+    public void render()
+    {
+        render.accept(this);
     }
 
     public void setPosition(Vector2f position)

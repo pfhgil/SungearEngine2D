@@ -8,14 +8,18 @@ import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Component.NonDuplicated;
 import Core2D.Component.NonRemovable;
+import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DUserCallback;
 import Core2D.Core2D.Settings;
+import Core2D.Graphics.Graphics;
+import Core2D.Graphics.Renderer;
 import Core2D.Log.Log;
 import Core2D.Transform.Transform;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Shader.ShaderProgram;
 import Core2D.ShaderUtils.*;
 import Core2D.Utils.MatrixUtils;
+import Core2D.Window.Window;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
@@ -25,6 +29,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
@@ -81,6 +88,8 @@ public class Object2D extends Drawable implements Serializable
 
     private transient List<Object2D> childrenObjects = new ArrayList<>();
     private List<Integer> childrenObjectsID = new ArrayList<>();
+
+    private final Consumer<Object2D> render = Core2D.getMainRenderer()::render;
 
     public Object2D()
     {
@@ -218,6 +227,12 @@ public class Object2D extends Drawable implements Serializable
                 component.deltaUpdate(deltaTime);
             }
         }
+    }
+
+    @Override
+    public void render()
+    {
+        render.accept(this);
     }
 
     private void updateMVPMatrix()

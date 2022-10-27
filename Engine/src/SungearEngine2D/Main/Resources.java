@@ -1,8 +1,13 @@
 package SungearEngine2D.Main;
 
 import Core2D.Core2D.Core2D;
+import Core2D.Shader.Shader;
+import Core2D.Shader.ShaderProgram;
 import Core2D.Texture2D.Texture2D;
+import Core2D.Utils.FileUtils;
+import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
+import org.lwjgl.opengl.GL46C;
 
 // TODO: в дальнейшем все это перенести в AssetManager
 public class Resources
@@ -11,7 +16,7 @@ public class Resources
     {
         //Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality = Settings.QualityType.MEDIUM;
         Textures.Icons.load();
-        Textures.Grid.load();
+        Shaders.Grid.load();
         Textures.Gizmo.load();
         //Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality = Settings.QualityType.LOW;
 
@@ -81,17 +86,6 @@ public class Resources
             }
         }
 
-        public static class Grid
-        {
-            public static Texture2D gridChunkTexture = new Texture2D();
-
-            public static void load()
-            {
-                gridChunkTexture.param = GL13.GL_REPEAT;
-                gridChunkTexture.loadTexture(Core2D.class.getResourceAsStream("/data/grid/grid.png"));
-            }
-        }
-
         public static class Gizmo
         {
             public static Texture2D gizmoArrow = new Texture2D();
@@ -103,6 +97,21 @@ public class Resources
                 gizmoArrow.loadTexture(Core2D.class.getResourceAsStream("/data/gizmo/gizmo_arrow.png"));
                 gizmoPoint.loadTexture(Core2D.class.getResourceAsStream("/data/gizmo/gizmo_point.png"));
                 gizmoCircle.loadTexture(Core2D.class.getResourceAsStream("/data/gizmo/gizmo_circle.png"));
+            }
+        }
+    }
+
+    public class Shaders
+    {
+        public static class Grid
+        {
+            public static ShaderProgram gridShaderProgram;
+
+            public static void load()
+            {
+                Shader fragmentShader = new Shader(FileUtils.readAllFile(Core2D.class.getResourceAsStream("/data/shaders/grid/fragmentShader.glsl")), GL46C.GL_FRAGMENT_SHADER);
+                Shader vertexShader = new Shader(FileUtils.readAllFile(Core2D.class.getResourceAsStream("/data/shaders/grid/vertexShader.glsl")), GL46C.GL_VERTEX_SHADER);
+                gridShaderProgram = new ShaderProgram(fragmentShader, vertexShader);
             }
         }
     }

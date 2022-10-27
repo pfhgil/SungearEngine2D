@@ -2,6 +2,8 @@ package Core2D.Drawable.Instancing;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Camera2D.CamerasManager;
+import Core2D.Core2D.Core2D;
+import Core2D.Drawable.AtlasDrawing;
 import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
@@ -17,6 +19,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
+import java.util.function.Consumer;
 
 import static org.lwjgl.opengl.GL15C.*;
 import static org.lwjgl.opengl.GL20C.glEnableVertexAttribArray;
@@ -62,6 +65,8 @@ public class ObjectsInstancing extends Drawable
     private int indexBuffer;
     private int vao;
 
+    private final Consumer<ObjectsInstancing> render = Core2D.getMainRenderer()::render;
+
     public ObjectsInstancing(Object2D[] drawableObjects2D, Texture2D atlasTexture2D, boolean isUIInstancing)
     {
         if(drawableObjects2D != null) {
@@ -69,12 +74,9 @@ public class ObjectsInstancing extends Drawable
         } else {
             this.drawableObjects2D = new ArrayList<>();
         }
-        drawableObjects2D = null;
 
         this.atlasTexture2D = atlasTexture2D;
         this.isUIInstancing = isUIInstancing;
-
-        atlasTexture2D = null;
 
         create();
     }
@@ -277,6 +279,12 @@ public class ObjectsInstancing extends Drawable
         indices = null;
 
         //destroyParams();
+    }
+
+    @Override
+    public void render()
+    {
+        render.accept(this);
     }
 
     public List<Object2D> getDrawableObjects2D() { return drawableObjects2D; }

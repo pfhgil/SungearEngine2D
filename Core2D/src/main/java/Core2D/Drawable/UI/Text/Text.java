@@ -1,6 +1,8 @@
 package Core2D.Drawable.UI.Text;
 
 import Core2D.AssetManager.AssetManager;
+import Core2D.Core2D.Core2D;
+import Core2D.Drawable.AtlasDrawing;
 import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
@@ -13,6 +15,7 @@ import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 import java.util.Arrays;
+import java.util.function.Consumer;
 
 public class Text extends Drawable
 {
@@ -50,6 +53,8 @@ public class Text extends Drawable
     private ShaderProgram shaderProgram;
 
     private boolean isUIElement = true;
+
+    private final Consumer<Text> render = Core2D.getMainRenderer()::render;
 
     public Text(Font font)
     {
@@ -103,6 +108,12 @@ public class Text extends Drawable
         chars = null;
 
         shaderProgram = null;
+    }
+
+    @Override
+    public void render()
+    {
+        render.accept(this);
     }
 
     public String getText() { return text; }
