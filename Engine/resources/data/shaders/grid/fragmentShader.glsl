@@ -1,8 +1,8 @@
 #version 330 core
 
-precision mediump float;
+precision highp float;
 
-out mediump vec4 fragColor;
+out highp vec4 fragColor;
 
 // режим отрисовки
 // 0 - без текстуры
@@ -10,37 +10,55 @@ out mediump vec4 fragColor;
 // 2 - для pick object (текстура используется. от нее берется только альфа)
 uniform int drawMode;
 uniform sampler2D sampler;
+
+uniform vec2 cameraScale;
+
 uniform mediump vec4 color;
-uniform float cameraScale;
-uniform mat4 modelMatrix;
 
 in vec2 vs_textureCoords;
-in vec2 posAttr;
-float gridScale = 0.05;
 
-float rlog10 = log(10.);
-
-float log10(float x) { return log(x) / rlog10; }
-
-float getScaleMultiple(float scale){
-    return pow(10., (floor(log10(scale))));
-}
-float distToLine(float pos, float mul){
-    return pos/mul - floor(pos/mul + gridScale);
-}
 void main()
 {
     if(drawMode == 0) {
-        //dispose;
-    }
-    if(color == vec4(1)) {
+        fragColor = color;
+    } else if(drawMode == 1) {
+        vec2 texCoord = vec2(vs_textureCoords);
+        texCoord /= cameraScale;
 
+        vec4 resultCol = vec4(1.0, 1.0, 1.0, 0.0);
+
+        float lineWidth = 0.0005;
+        float lineDivisor = 0.005;
+
+        vec2 normalizedCoord = texCoord - ((lineDivisor + lineWidth) * vec2(int(texCoord.x / (lineDivisor + lineWidth)), int(texCoord.y / (lineDivisor + lineWidth))));
+
+        if(normalizedCoord.y > (lineDivisor - lineWidth)) {
+            float a = 0.0;
+            if(normalizedCoord.y < lineDivisor) {
+                a = normalizedCoord.y / lineDivisor;
+            } else {
+                a = lineDivisor / normalizedCoord.y;
+            }
+
+            float res = 1.0 - a;
+            resultCol = vec4(res, res, res, 1);
+        }
+        if(normalizedCoord.x > (lineDivisor - lineWidth)) {
+            float a = 0.0;
+            if(normalizedCoord.x < lineDivisor) {
+                a = normalizedCoord.x / lineDivisor;
+            } else {
+                a = lineDivisor / normalizedCoord.x;
+            }
+
+            float res = 1.0 - a;
+            resultCol = vec4(res, res, res, 1);
+        }
+
+        fragColor = resultCol;
+    } else if(drawMode == 2) {
+        vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0f - vs_textureCoords.y));
+
+        fragColor = color * vec4(1.0, 1.0, 1.0, textureColor.w);
     }
-    vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0f - vs_textureCoords.y));
-    vec4 color = vec4(1);
-    float multiplier = getScaleMultiple(cameraScale);
-    vec2 fragPosition = (modelMatrix * vec4(posAttr, 1.0, 1.0)).xy;
-    color -= distToLine(fragPosition.x, multiplier)<=gridScale || distToLine(fragPosition.y, multiplier)<=gridScale ?
-            vec4(1) : vec4(0);
-    fragColor = vec4(color.xyz, 1.0);
 }

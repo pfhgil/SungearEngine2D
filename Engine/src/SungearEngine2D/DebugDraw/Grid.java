@@ -28,7 +28,7 @@ public class Grid
                 0.1f, 0.1f,
                 0.1f, 0.0f
         });
-        //grid.setUIElement(true);
+        grid.setUIElement(true);
         //grid.setColor(new Vector4f(0.3f, 0.3f, 0.3f, 1.0f));
         grid.setShaderProgram(Resources.Shaders.Grid.gridShaderProgram);
         //grid.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Icons.object2DFileIcon);
@@ -45,7 +45,7 @@ public class Grid
         ShaderUtils.setUniform(
                 grid.getShaderProgram().getHandler(),
                 "cameraScale",
-                Main.getMainCamera2D().getTransform().getScale().x);
+                Main.getMainCamera2D().getTransform().getScale());
 
         /*
         ShaderUtils.setUniform(
