@@ -6,9 +6,18 @@ import java.io.*;
 import java.util.List;
 
 public class UserSettings implements Serializable {
+
+    public List<String> lastProjects;
+
+    public List<String> getLastProjects() { return lastProjects; }
+    public void setLastProjects(List<String> lastProjects) { this.lastProjects = lastProjects; }
+
+
     private static final long serialVersionUID = 1L;
     public static String fileName = "UserSettings.dat";
-    public static UserSettings getUserSettings(){
+    public transient static UserSettings instance;
+
+    public static UserSettings getUserSettings(){ // Получает текущие настройки
         var usFile = new File(AppDataManager.getRoamingDirectory().getAbsolutePath() + File.separator + fileName);
         if (usFile.exists()){
             try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("person.dat")))
@@ -23,7 +32,8 @@ public class UserSettings implements Serializable {
         }
         return instance;
     }
-    public void save(){
+
+    public void save(){ //Сохраняет текущие настройки
         var usFile = new File(AppDataManager.createRoamingDirectory() + File.separator + fileName);
         usFile.delete();
         try{
@@ -40,14 +50,11 @@ public class UserSettings implements Serializable {
         }
 
     }
+
     UserSettings(){
         if (instance!=null)
             throw new RuntimeException("multipleInstanceError: UserSettings already exist");
         instance = this;
     }
-    public transient static UserSettings instance;
 
-    public List<String> getLastProjects() { return lastProjects; }
-    public void setLastProjects(List<String> lastProjects) { this.lastProjects = lastProjects; }
-    public List<String> lastProjects;
 }

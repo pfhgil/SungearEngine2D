@@ -6,23 +6,13 @@ import java.io.File;
 import java.io.IOException;
 
 public class AppDataManager {
-    private static AppDataManager istance = new AppDataManager();
 
-    public static File getAppDataDirectory() {
-        return AppDataDirectory;
-    }
-    public static File getRoamingDirectory() {
-        return RoamingDirectory;
-    }
-    public static File getLocalDirectory() {
-        return LocalDirectory;
-    }
-    private static File AppDataDirectory = new File(System.getenv("APPDATA"));
-    private static File RoamingDirectory = new File(AppDataDirectory.getAbsolutePath() + File.separator + "Roaming");
-    private static File LocalDirectory = new File(AppDataDirectory.getAbsolutePath()+File.separator + "Local");
+    private static File AppDataDirectory = new File(System.getenv("APPDATA")); public static File getAppDataDirectory() { return AppDataDirectory; }
+    private static File RoamingDirectory = new File(AppDataDirectory.getAbsolutePath() + File.separator + "Roaming"); public static File getRoamingDirectory() { return RoamingDirectory; }
+    private static File LocalDirectory = new File(AppDataDirectory.getAbsolutePath()+File.separator + "Local"); public static File getLocalDirectory() { return LocalDirectory; }
 
-    public static UserSettings getSettings() { return settings; }
-    private static UserSettings settings = UserSettings.getUserSettings();
+    private static UserSettings settings = UserSettings.getUserSettings(); public static UserSettings getSettings() { return settings; }
+
 
     public static File createRoamingDirectory(){
         try {
