@@ -14,6 +14,7 @@ import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindowCallback;
 import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindow;
 import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindowCallback;
 import SungearEngine2D.Main.Resources;
+import SungearEngine2D.Utils.AppData.UserSettings;
 import imgui.ImGui;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
@@ -177,6 +178,8 @@ public class TopToolbarView
                             @Override
                             public void onRightButtonClicked() {
                                 ProjectsManager.loadProject(projectPath.get());
+                                UserSettings.instance.addLastProject(projectPath.get());
+
                                 //ResourcesView.currentDirectoryPath = projectPath.get();
                                 //Core2D.getSceneManager2D().loadScene(ProjectsManager.getCurrentProject().getScenesPath() + "\\lvl0.txt");
                                 //Core2D.getSceneManager2D().loadScene(ProjectsManager.getCurrentProject().getScenesPath() + "\\lvl0.txt");
@@ -190,6 +193,16 @@ public class TopToolbarView
 
                         currentAction = "File/Open/Project";
                     }
+                    if (ImGui.beginMenu("Recent projects")){
+                        for (var e: UserSettings.instance.lastProjects) {
+                            if (ImGui.menuItem(e)){
+                                ProjectsManager.loadProject(e);
+                                UserSettings.instance.addLastProject(e);
+                            }
+                        }
+                        ImGui.endMenu();
+                    }
+
 
                     ImGui.endMenu();
                 }

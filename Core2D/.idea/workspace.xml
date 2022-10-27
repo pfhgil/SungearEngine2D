@@ -9,38 +9,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f5f8ac80-ad56-4c77-9869-c4208084a0d7" name="Changes" comment="idk">
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+    <list default="true" id="f5f8ac80-ad56-4c77-9869-c4208084a0d7" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Utils/FileUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Utils/FileUtils.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/libs/Core2D.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/artifacts/Core2D_jar/Core2D.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/compiler/Core2D.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/compiler/Core2D.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/libs/Core2D.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/libs/Core2D.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/InspectorView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/InspectorView$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/InspectorView$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/InspectorView$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/InspectorView$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/InspectorView$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/InspectorView$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/InspectorView$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/InspectorView.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/InspectorView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/TopToolbarView$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/TopToolbarView$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/TopToolbarView$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/TopToolbarView$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/TopToolbarView$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/TopToolbarView$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/TopToolbarView$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/TopToolbarView$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/TopToolbarView$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/TopToolbarView$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/TopToolbarView$6.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/TopToolbarView.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Views/EditorView/TopToolbarView.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Windows/FileChooserWindow/FileChooserWindow$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Windows/FileChooserWindow/FileChooserWindow$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Windows/FileChooserWindow/FileChooserWindow$FileChooserMode.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Windows/FileChooserWindow/FileChooserWindow$FileChooserMode.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Windows/FileChooserWindow/FileChooserWindow.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/GUI/Windows/FileChooserWindow/FileChooserWindow.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/Scripting/Compiler.class" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/out/production/SungearEngine2D/SungearEngine2D/Scripting/Compiler.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +96,7 @@
       <DebugAllEnabled>false</DebugAllEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="Core2D [clean]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="Core2D [clean]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
@@ -153,11 +123,6 @@
       <item itemvalue="Shell Script.clean" />
       <item itemvalue="Shell Script.build" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Gradle.Core2D [clean]" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
