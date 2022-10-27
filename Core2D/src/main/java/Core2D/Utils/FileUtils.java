@@ -46,12 +46,13 @@ public class FileUtils
         return result; // will return null if we didn't find anything
     }
 
-    public static Object deSerializeObject(String path)
+    public static Object deSerializeObject(String path) { return deSerializeObject(new File(path)); }
+    public static Object deSerializeObject(File file)
     {
         Object obj = null;
 
         try {
-            FileInputStream fileInputStream = new FileInputStream(path);
+            FileInputStream fileInputStream = new FileInputStream(file);
             ObjectInputStream objectOutputStream = new ObjectInputStream(fileInputStream);
 
             obj = objectOutputStream.readObject();
@@ -64,7 +65,6 @@ public class FileUtils
 
         return obj;
     }
-
     public static Object deSerializeObject(InputStream inputStream)
     {
         Object obj = null;
@@ -82,13 +82,19 @@ public class FileUtils
 
         return obj;
     }
+    public static File reCreateFile(String path){ return reCreateFile(new File(path)); }
+    public static File reCreateFile(File file){
+        if (file.exists())
+            file.delete();
+        return createFile(file);
+    }
 
-    public static void serializeObject(String path, Object obj)
+    public static void serializeObject(String path, Object obj) { serializeObject(new File(path), obj); }
+    public static void serializeObject(File file, Object obj)
     {
-        createFile(path);
-
+        reCreateFile(file);
         try {
-            FileOutputStream fos = new FileOutputStream(path);
+            FileOutputStream fos = new FileOutputStream(file);
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(obj);
 
@@ -100,6 +106,7 @@ public class FileUtils
     }
 
     // чтение всего файла
+    public static String readAllFile(String path) { return readAllFile(new File(path)); }
     public static String readAllFile(File file)
     {
         StringBuilder stringBuilder = null; // для операций со строками
@@ -146,6 +153,7 @@ public class FileUtils
     }
 
     // записывает данные в файл
+    public static void writeToFile(String path, String data, boolean append) { writeToFile(new File(path), data, append); }
     public static void writeToFile(File file, String data, boolean append)
     {
         FileWriter fileWriter = null;
@@ -160,8 +168,8 @@ public class FileUtils
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
-
     // записывает данные в файл
+    public static void writeToFile(String path, byte[] data, boolean append) { writeToFile(new File(path), data, append); }
     public static void writeToFile(File file, byte[] data, boolean append)
     {
         FileOutputStream outputStream = null;
@@ -178,15 +186,14 @@ public class FileUtils
     }
 
     // создание папки
-    public static File createFolder(String path)
+    public static File createFolder(String path) {return createFolder(new File(path)); }
+    public static File createFolder(File folder)
     {
-        // файл с путем path
-        File folder = new File(path);
         // если папки не существует, то создаю папку
         if(!folder.exists()) {
-            if(!folder.mkdir()) Log.CurrentSession.println("Folder by path '" + path + "' was not created!", Log.MessageType.ERROR);
+            if(!folder.mkdir()) Log.CurrentSession.println("Folder by path '" + folder.getAbsolutePath() + "' was not created!", Log.MessageType.ERROR);
         } else {
-            Log.CurrentSession.println("Folder by path '" + path + "' already exists", Log.MessageType.ERROR);
+            Log.CurrentSession.println("Folder by path '" + folder.getAbsolutePath() + "' already exists", Log.MessageType.ERROR);
         }
 
         return folder;
@@ -196,16 +203,19 @@ public class FileUtils
     public static File createFile(String path)
     {
         // файл с путем path
-        File file = new File(path);
+        return createFile(new File(path));
+    }
+    public static File createFile(File file)
+    {
         // если файла не существует, то создаю файл
         if(!file.exists()) {
             try {
-                if(!file.createNewFile()) Log.CurrentSession.println("File by path '" + path + "' was not created!", Log.MessageType.ERROR);
+                if(!file.createNewFile()) Log.CurrentSession.println("File by path '" + file.getPath() + "' was not created!", Log.MessageType.ERROR);
             } catch (IOException e) {
                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }
         } else {
-            Log.CurrentSession.println("File by path '" + path + "' already exists", Log.MessageType.ERROR);
+            Log.CurrentSession.println("File by path '" + file.getPath() + "' already exists", Log.MessageType.ERROR);
         }
 
         return file;

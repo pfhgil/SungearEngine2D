@@ -1,6 +1,7 @@
 package SungearEngine2D.Utils.AppData;
 
 import Core2D.Log.Log;
+import Core2D.Utils.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -15,24 +16,16 @@ public class AppDataManager {
 
 
     public static File createRoamingDirectory(){
-        try {
-            if (!getRoamingDirectory().exists())
-                getRoamingDirectory().createNewFile();
-        } catch (IOException e){
-            Log.CurrentSession.println("Can't create " + getRoamingDirectory(), Log.MessageType.ERROR);
-            return null;
+        if (!RoamingDirectory.exists()){
+            FileUtils.createFolder(RoamingDirectory);
         }
         return RoamingDirectory;
     }
     public static File createLocalDirectory(){
-        try {
-            if (!getLocalDirectory().exists())
-                getLocalDirectory().createNewFile();
-        } catch (IOException e){
-            Log.CurrentSession.println("Can't create " + getLocalDirectory(), Log.MessageType.ERROR);
-            return null;
+        if (!LocalDirectory.exists()){
+            FileUtils.createFolder(LocalDirectory);
         }
-        return  LocalDirectory;
+        return LocalDirectory;
     }
 }
 

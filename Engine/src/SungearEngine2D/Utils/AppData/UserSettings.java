@@ -1,6 +1,7 @@
 package SungearEngine2D.Utils.AppData;
 
 import Core2D.Log.Log;
+import Core2D.Utils.FileUtils;
 
 import java.io.*;
 import java.util.List;
@@ -20,13 +21,7 @@ public class UserSettings implements Serializable {
     public static UserSettings getUserSettings(){ // Получает текущие настройки
         var usFile = new File(AppDataManager.getRoamingDirectory().getAbsolutePath() + File.separator + fileName);
         if (usFile.exists()){
-            try(ObjectInputStream ois = new ObjectInputStream(new FileInputStream("person.dat")))
-            {
-                 instance=(UserSettings) ois.readObject();
-            }
-            catch(Exception ex){
-                System.out.println(ex.getMessage());
-            }
+            instance = (UserSettings) FileUtils.deSerializeObject(usFile);
         } else{
             instance = new UserSettings();
         }
@@ -40,15 +35,7 @@ public class UserSettings implements Serializable {
             usFile.createNewFile();
         } catch (IOException e){}
 
-        try {
-            FileOutputStream outputStream = new FileOutputStream(usFile);
-            ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream);
-            objectOutputStream.writeObject(this);
-            objectOutputStream.close();
-        } catch (IOException e){
-            Log.CurrentSession.println("Can't save settings in \"" + usFile.getAbsolutePath() + "\" with error:\n" + e.toString(), Log.MessageType.ERROR);
-        }
-
+        FileUtils.serializeObject(usFile, this);
     }
 
     UserSettings(){
