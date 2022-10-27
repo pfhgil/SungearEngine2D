@@ -1,3 +1,5 @@
-/Engine/out/
-/Engine/Log/
-/Engine/compiler/
+**/.idea
+**/Log
+**/out/production
+**/Projects
+**/.gradle
