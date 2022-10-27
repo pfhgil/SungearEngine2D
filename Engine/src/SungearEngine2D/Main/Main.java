@@ -17,6 +17,7 @@ import SungearEngine2D.CameraController.CameraController;
 import SungearEngine2D.GUI.GUI;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
+import SungearEngine2D.Utils.AppData.AppDataManager;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -40,7 +41,7 @@ public class Main
     public static void main(String[] main)
     {
         Graphics.setScreenClearColor(new Vector4f(0.65f, 0.65f, 0.65f, 1.0f));
-
+        AppDataManager.init();
         core2DUserCallback = new Core2DUserCallback() {
             @Override
             public void onInit() {
