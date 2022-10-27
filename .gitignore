@@ -1,3 +1,16 @@
 /Engine/out/
 /Engine/Log/
 /Engine/compiler/
+/Engine/.idea
+/Engine/build
+/Engine/.gradle
+/Engine/classes
+/Engine/local.properties
+/Engine/*.iml
+/Engine/**/out/*
+/Engine/target
+/Engine/node_modules
+/Engine/webpack.generated.js
+/Engine/pnpmfile.js
+/shelf/
+/workspace.xml
