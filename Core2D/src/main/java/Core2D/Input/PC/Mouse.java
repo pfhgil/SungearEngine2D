@@ -3,10 +3,8 @@ package Core2D.Input.PC;
 import Core2D.Camera2D.CamerasManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Graphics.Graphics;
-import org.joml.Matrix4f;
-import org.joml.Vector2f;
-import org.joml.Vector2i;
-import org.joml.Vector4f;
+import Core2D.Utils.MatrixUtils;
+import org.joml.*;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -141,29 +139,32 @@ public class Mouse
      */
     public static Vector2f getMouseOGLPosition(Vector2f mousePosition)
     {
-        float currentX = mousePosition.x / Graphics.getScreenSize().x * 2.0f - 1.0f;
-        Vector4f tmp = new Vector4f(currentX, 0, 0, 1);
+        if(CamerasManager.getMainCamera2D() != null) {
+            float currentX = mousePosition.x / Graphics.getScreenSize().x * 2.0f - 1.0f;
+            Vector4f tmp = new Vector4f(currentX, 0, 0, 1);
 
-        Matrix4f viewProjection = new Matrix4f();
-        Matrix4f inverseView = new Matrix4f();
-        Matrix4f inverseProjection = new Matrix4f();
+            Matrix4f viewProjection = new Matrix4f();
+            Matrix4f inverseView = new Matrix4f();
+            Matrix4f inverseProjection = new Matrix4f();
 
-        CamerasManager.getMainCamera2D().getViewMatrix().invert(inverseView);
-        CamerasManager.getMainCamera2D().getProjectionMatrix().invert(inverseProjection);
+            CamerasManager.getMainCamera2D().getViewMatrix().invert(inverseView);
+            CamerasManager.getMainCamera2D().getProjectionMatrix().invert(inverseProjection);
 
-        inverseView.mul(inverseProjection, viewProjection);
-        tmp.mul(viewProjection);
+            inverseView.mul(inverseProjection, viewProjection);
+            tmp.mul(viewProjection);
 
-        currentX = tmp.x;
+            currentX = tmp.x;
 
-        float currentY = mousePosition.y / Graphics.getScreenSize().y * 2.0f - 1.0f;
+            float currentY = mousePosition.y / Graphics.getScreenSize().y * 2.0f - 1.0f;
 
-        tmp = new Vector4f(0, currentY, 0, 1);
-        tmp.mul(viewProjection);
+            tmp = new Vector4f(0, currentY, 0, 1);
+            tmp.mul(viewProjection);
 
-        currentY = tmp.y;
+            currentY = tmp.y;
 
-        return new Vector2f(currentX, currentY);
+            return new Vector2f(currentX, currentY);
+        }
+        return new Vector2f();
     }
 
     public static Vector2f getScreenMousePosition() { return screenMousePosition; }

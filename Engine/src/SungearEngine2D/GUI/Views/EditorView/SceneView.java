@@ -343,7 +343,7 @@ public class SceneView extends View
         Matrix4f inverseView = new Matrix4f();
         Matrix4f inverseProjection = new Matrix4f();
 
-        CamerasManager.getMainCamera2D().getTransform().getModelMatrix().invert(inverseView);
+        CamerasManager.getMainCamera2D().getViewMatrix().invert(inverseView);
         CamerasManager.getMainCamera2D().getProjectionMatrix().invert(inverseProjection);
 
         inverseView.mul(inverseProjection, viewProjection);
@@ -351,8 +351,6 @@ public class SceneView extends View
 
         currentX = tmp.x;
 
-        //float currentY = originalMousePosition.y - sceneViewWindowScreenPosition.y;
-        //currentY = ((currentY / sceneViewWindowSize.y) * 2.0f - 1.0f);
         float currentY = mousePosition.y / Graphics.getScreenSize().y * 2.0f - 1.0f;
 
         tmp = new Vector4f(0, currentY, 0, 1);
