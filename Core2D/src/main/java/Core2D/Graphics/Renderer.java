@@ -165,7 +165,7 @@ public class Renderer
                 ShaderUtils.setUniform(
                         objectsInstancing.getShaderProgram().getHandler(),
                         "cameraMatrix",
-                        CamerasManager.getMainCamera2D().getTransform().getModelMatrix()
+                        CamerasManager.getMainCamera2D().getViewMatrix()
                 );
 
                 ShaderUtils.setUniform(
@@ -212,7 +212,7 @@ public class Renderer
                 ShaderUtils.setUniform(
                         linesInstancing.getShaderProgram().getHandler(),
                         "cameraMatrix",
-                        CamerasManager.getMainCamera2D().getTransform().getModelMatrix()
+                        CamerasManager.getMainCamera2D().getViewMatrix()
                 );
             }
 

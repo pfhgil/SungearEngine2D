@@ -10,6 +10,7 @@ out highp vec4 fragColor;
 // 2 - для pick object (текстура используется. от нее берется только альфа)
 uniform int drawMode;
 uniform sampler2D sampler;
+uniform int level;
 
 uniform vec2 cameraScale;
 
@@ -17,11 +18,18 @@ uniform mediump vec4 color;
 
 in vec2 vs_textureCoords;
 
+float grid(vec2 st, float res)
+{
+    vec2 grid = fract(st * res);
+    return (step(res, grid.x) * step(res, grid.y));
+}
+
 void main()
 {
     if(drawMode == 0) {
         fragColor = color;
     } else if(drawMode == 1) {
+        /*
         vec2 texCoord = vec2(vs_textureCoords);
         texCoord /= cameraScale;
 
@@ -51,11 +59,15 @@ void main()
                 a = lineDivisor / normalizedCoord.x;
             }
 
-            float res = 1.0 - a;
             resultCol = vec4(res, res, res, 1);
         }
+        */
+        float a = 10;
+        vec2 grid_uv = vs_textureCoords.xy * (1.0f / cameraScale.x * level * 100.0); // scale
+        float x = grid(grid_uv, cameraScale.x * level / 100.0); // resolution
 
-        fragColor = resultCol;
+        fragColor.rgb = vec3(0.5) * x;
+        fragColor.a = 1.0;
     } else if(drawMode == 2) {
         vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0f - vs_textureCoords.y));
 

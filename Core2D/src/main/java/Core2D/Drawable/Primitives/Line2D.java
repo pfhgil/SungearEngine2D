@@ -91,7 +91,7 @@ public class Line2D extends Drawable
     private void updateMVPMatrix()
     {
         if(CamerasManager.getMainCamera2D() != null && !isUIElement) {
-            mvpMatrix = new Matrix4f(CamerasManager.getMainCamera2D().getProjectionMatrix()).mul(CamerasManager.getMainCamera2D().getTransform().getModelMatrix()).mul(transform.getModelMatrix());
+            mvpMatrix = new Matrix4f(CamerasManager.getMainCamera2D().getProjectionMatrix()).mul(CamerasManager.getMainCamera2D().getViewMatrix()).mul(transform.getModelMatrix());
         } else {
             mvpMatrix = new Matrix4f().identity().mul(transform.getModelMatrix());
         }

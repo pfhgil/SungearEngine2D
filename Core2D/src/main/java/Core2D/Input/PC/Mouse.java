@@ -148,7 +148,7 @@ public class Mouse
         Matrix4f inverseView = new Matrix4f();
         Matrix4f inverseProjection = new Matrix4f();
 
-        CamerasManager.getMainCamera2D().getTransform().getResultModelMatrix().invert(inverseView);
+        CamerasManager.getMainCamera2D().getViewMatrix().invert(inverseView);
         CamerasManager.getMainCamera2D().getProjectionMatrix().invert(inverseProjection);
 
         inverseView.mul(inverseProjection, viewProjection);

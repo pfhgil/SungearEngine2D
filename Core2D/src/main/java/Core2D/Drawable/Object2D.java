@@ -25,10 +25,12 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
+import javax.swing.*;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Timer;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
@@ -241,7 +243,7 @@ public class Object2D extends Drawable implements Serializable
 
         if(CamerasManager.getMainCamera2D() != null && !isUIElement) {
 
-            mvpMatrix = new Matrix4f(CamerasManager.getMainCamera2D().getProjectionMatrix()).mul(CamerasManager.getMainCamera2D().getTransform().getModelMatrix())
+            mvpMatrix = new Matrix4f(CamerasManager.getMainCamera2D().getProjectionMatrix()).mul(CamerasManager.getMainCamera2D().getViewMatrix())
                     .mul(modelMatrix);
         } else {
             mvpMatrix = new Matrix4f().mul(modelMatrix);
@@ -320,7 +322,10 @@ public class Object2D extends Drawable implements Serializable
     public void setColor(Vector4f color) { this.color = new Vector4f(color); }
 
     public ShaderProgram getShaderProgram() { return shaderProgram; }
-    public void setShaderProgram(ShaderProgram shaderProgram) { this.shaderProgram.set(shaderProgram); }
+    public void setShaderProgram(ShaderProgram shaderProgram)
+    {
+        this.shaderProgram = shaderProgram;
+    }
 
     public Matrix4f getMvpMatrix() { return mvpMatrix; }
 

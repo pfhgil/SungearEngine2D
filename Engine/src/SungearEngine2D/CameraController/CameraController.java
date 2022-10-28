@@ -58,26 +58,22 @@ public class CameraController
                     controlledCamera2DAnchor.getComponent(TransformComponent.class).getTransform().setNeedToMoveToDestination(false);
                     Vector2f currentPosition = new Vector2f(Mouse.getMousePosition());
                     Vector2f difference = new Vector2f(currentPosition.x - lastCursorPosition.x, currentPosition.y - lastCursorPosition.y);
-                    Main.getMainCamera2D().getTransform().translate(difference);
+                    Main.getMainCamera2D().getTransform().translate(new Vector2f(difference.x * (1.0f / mouseCameraScale.x), difference.y * (1.0f / mouseCameraScale.y)));
                     lastCursorPosition = currentPosition;
                 }
 
-            if(Keyboard.keyDown(GLFW.GLFW_KEY_K)) {
-                Main.getMainCamera2D().getTransform().rotate(1.0f);
-            }
-            if(Keyboard.keyDown(GLFW.GLFW_KEY_J)) {
-                Main.getMainCamera2D().getTransform().rotate(-1.0f);
-            }
-            /*
-            if(Keyboard.KeyReleased(GLFW.GLFW_KEY_V)) {
-                if(Core2D.getViewMode() == Graphics.ViewMode.VIEW_MODE_2D) {
-                    Core2D.setViewMode(Graphics.ViewMode.VIEW_MODE_3D);
-                } else {
-                    Core2D.setViewMode(Graphics.ViewMode.VIEW_MODE_2D);
+                if (Keyboard.keyDown(GLFW.GLFW_KEY_K)) {
+                    Main.getMainCamera2D().getTransform().rotate(1.0f);
                 }
-            }
-
-             */
+                if (Keyboard.keyDown(GLFW.GLFW_KEY_J)) {
+                    Main.getMainCamera2D().getTransform().rotate(-1.0f);
+                }
+                if (Keyboard.keyReleased(GLFW.GLFW_KEY_R)) {
+                    Main.getMainCamera2D().getTransform().setPosition(new Vector2f(0.0f, 0.0f));
+                }
+                if (Keyboard.keyReleased(GLFW.GLFW_KEY_L)) {
+                    Main.getMainCamera2D().getTransform().setRotation(0.0f);
+                }
             }
         }
     }
