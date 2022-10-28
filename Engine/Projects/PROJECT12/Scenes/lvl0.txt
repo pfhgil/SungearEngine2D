@@ -289,6 +289,17 @@
                     },
                     "active": true
                   }
+                },
+                {
+                  "type": "Core2D.Component.Components.ScriptComponent",
+                  "properties": {
+                    "script": {
+                      "path": "D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/PROJECT12/Scripts\\SceneController",
+                      "name": "SceneController",
+                      "active": true
+                    },
+                    "active": true
+                  }
                 }
               ],
               "color": {
@@ -423,8 +434,8 @@
         "m21": 0.0,
         "m22": 1.0,
         "m23": 0.0,
-        "m30": 390.0,
-        "m31": 238.0,
+        "m30": 0.0,
+        "m31": 0.0,
         "m32": 1.0,
         "m33": 1.0,
         "properties": 18
@@ -466,8 +477,8 @@
       "m21": 0.0,
       "m22": 1.0,
       "m23": 0.0,
-      "m30": 390.0,
-      "m31": 238.0,
+      "m30": 0.0,
+      "m31": 0.0,
       "m32": 1.0,
       "m33": 1.0,
       "properties": 18
@@ -485,9 +496,39 @@
     }
   ],
   "scriptSystem": {
-    "scriptTempValuesList": []
+    "scriptTempValuesList": [
+      {
+        "scriptTempValues": [
+          {
+            "fieldName": "levelName",
+            "value": {
+              "type": "java.lang.String",
+              "properties": "lvl1"
+            }
+          },
+          {
+            "fieldName": "movableObject2D",
+            "value": {
+              "type": "Core2D.Scripting.ScriptSceneObject",
+              "properties": {
+                "ID": 9,
+                "name": "player",
+                "objectType": "TYPE_OBJECT2D"
+              }
+            }
+          },
+          {
+            "fieldName": "speed",
+            "value": {
+              "type": "java.lang.Float",
+              "properties": 200.0
+            }
+          }
+        ]
+      }
+    ]
   },
-  "maxObjectID": 248,
+  "maxObjectID": 298,
   "inBuild": false,
   "isMainScene2D": false
 }

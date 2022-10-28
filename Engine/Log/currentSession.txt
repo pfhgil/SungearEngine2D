@@ -1,9 +1,58 @@
-[#FFFFFF] 2022/10/28 21:40:02 | [#008000] Log directory was founded!
-[#FFFFFF] 2022/10/28 21:40:02 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/10/28 21:40:02 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2022/10/28 21:40:02 | [#008000] Core2D started!
-[#FFFFFF] 2022/10/28 21:40:02 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
-[#FFFFFF] 2022/10/28 21:40:08 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/10/28 21:40:08 | [#FFFFFF] Initializing compiler...  
-[#FFFFFF] 2022/10/28 21:40:19 | [#FFFFFF] simulate physics: true
-[#FFFFFF] 2022/10/28 21:40:42 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2022/10/28 23:39:00 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/10/28 23:39:00 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2022/10/28 23:39:00 | [#008000] Core2D started!
+[#FFFFFF] 2022/10/28 23:39:00 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2022/10/28 23:39:07 | [#FF0000] OpenGL error: 1280
+[#FFFFFF] 2022/10/28 23:39:07 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2022/10/28 23:39:19 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/28 23:39:22 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl0.txt' already exists
+[#FFFFFF] 2022/10/28 23:39:23 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/28 23:39:25 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl0.txt' already exists
+[#FFFFFF] 2022/10/28 23:39:26 | [#FFFFFF] rigidbody2d: Core2D.Physics.Rigidbody2D@489115ef, body: org.jbox2d.dynamics.Body@3857f613
+[#FFFFFF] 2022/10/28 23:39:26 | [#FFFFFF] rigidbody2d: Core2D.Physics.Rigidbody2D@489115ef, body: org.jbox2d.dynamics.Body@3857f613
+[#FFFFFF] 2022/10/28 23:39:31 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/28 23:39:34 | [#FFFF00] Attention! Builder uses a separate thread to build the game, so all OpenGL commands won't work.
+[#FFFFFF] 2022/10/28 23:39:34 | [#FFFFFF] Creating the necessary files...
+[#FFFFFF] 2022/10/28 23:39:34 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2022/10/28 23:39:34 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\out\SceneManager.txt' already exists
+[#FFFFFF] 2022/10/28 23:39:37 | [#008000] Script ApplicationStarter.java was successfully built!
+[#FFFFFF] 2022/10/28 23:39:37 | [#FFFFFF] 
+[#FFFFFF] 2022/10/28 23:40:06 | [#FF0000] Не удается найти указанный файл.
+юъЄ. 28, 2022 11:40:01 PM java.util.jar.Attributes read
+WARNING: Duplicate name in Manifest: Manifest-Version.
+Ensure that the manifest does not have duplicate entries, and
+that blank lines separate individual sections in both your
+manifest and in the META-INF/MANIFEST.MF entry in the jar file.
+
+[#FFFFFF] 2022/10/28 23:40:16 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/10/28 23:40:19 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/10/28 23:42:38 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/10/28 23:42:40 | [#FF0000] D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scripts\SceneController.java:37: error: illegal start of expression
+                Log.CurrentSession.println("rigidbody2d: " + rigidbody2D + ", body: " + rigidbody2D.getBody() + ", " + , Log.MessageType.INFO);
+                                                                                                                       ^
+1 error
+
+[#FFFFFF] 2022/10/28 23:43:12 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/10/28 23:43:14 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/10/28 23:43:21 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl0.txt' already exists
+[#FFFFFF] 2022/10/28 23:43:32 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/28 23:43:43 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl0.txt' already exists
+[#FFFFFF] 2022/10/28 23:43:44 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/28 23:43:45 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl0.txt' already exists
+[#FFFFFF] 2022/10/28 23:43:47 | [#FFFFFF] rigidbody2d: Core2D.Physics.Rigidbody2D@20d525, body: org.jbox2d.dynamics.Body@6200f9cb, DYNAMIC
+[#FFFFFF] 2022/10/28 23:43:47 | [#FFFFFF] rigidbody2d: Core2D.Physics.Rigidbody2D@20d525, body: org.jbox2d.dynamics.Body@6200f9cb, DYNAMIC
+[#FFFFFF] 2022/10/28 23:43:49 | [#FFFFFF] simulate physics: true
+[#FFFFFF] 2022/10/28 23:44:06 | [#FFFF00] Attention! Builder uses a separate thread to build the game, so all OpenGL commands won't work.
+[#FFFFFF] 2022/10/28 23:44:06 | [#FFFFFF] Creating the necessary files...
+[#FFFFFF] 2022/10/28 23:44:06 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2022/10/28 23:44:07 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\out\SceneManager.txt' already exists
+[#FFFFFF] 2022/10/28 23:44:09 | [#008000] Script ApplicationStarter.java was successfully built!
+[#FFFFFF] 2022/10/28 23:44:09 | [#FFFFFF] 
+[#FFFFFF] 2022/10/28 23:44:34 | [#FF0000] Не удается найти указанный файл.
+юъЄ. 28, 2022 11:44:30 PM java.util.jar.Attributes read
+WARNING: Duplicate name in Manifest: Manifest-Version.
+Ensure that the manifest does not have duplicate entries, and
+that blank lines separate individual sections in both your
+manifest and in the META-INF/MANIFEST.MF entry in the jar file.
+
+[#FFFFFF] 2022/10/28 23:45:22 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists

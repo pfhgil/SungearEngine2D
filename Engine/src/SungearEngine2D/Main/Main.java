@@ -12,6 +12,7 @@ import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
+import Core2D.Tasks.StoppableTask;
 import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.CameraController.CameraController;
 import SungearEngine2D.GUI.GUI;
@@ -100,11 +101,19 @@ public class Main
                                                         if (lastModified != scriptComponents.get(k).getScript().getLastModified()) {
                                                             EngineSettings.Playmode.canEnterPlaymode = false;
                                                             scriptComponents.get(k).getScript().setLastModified(lastModified);
-                                                            boolean compiled = Compiler.compileScript(scriptComponents.get(k).getScript().getPath() + ".java");
-                                                            if (compiled) {
-                                                                scriptComponents.get(k).getScript().loadClass(new File(scriptComponents.get(k).getScript().getPath()).getParent(), FilenameUtils.getBaseName(new File(scriptComponents.get(k).getScript().getPath()).getName()));
-                                                            }
-                                                            compiledScripts.add(scriptComponents.get(k).getScript().getName());
+
+                                                            int finalK = k;
+                                                            String scriptPath = scriptComponents.get(finalK).getScript().getPath();
+                                                            ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
+                                                                public void run()
+                                                                {
+                                                                    boolean compiled = Compiler.compileScript(scriptPath + ".java");
+                                                                    if (compiled) {
+                                                                        scriptComponents.get(finalK).getScript().loadClass(new File(scriptPath).getParent(), FilenameUtils.getBaseName(new File(scriptPath).getName()));
+                                                                    }
+                                                                    compiledScripts.add(scriptComponents.get(finalK).getScript().getName());
+                                                                }
+                                                            });
                                                         }
                                                     }
                                                 }

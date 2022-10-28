@@ -82,10 +82,20 @@ public class FileUtils
 
         return obj;
     }
+
+    public static File reCreateFolder(String path){ return reCreateFolder(new File(path)); }
+    public static File reCreateFolder(File folder){
+        if (folder.exists()) {
+            folder.delete();
+        }
+        return createFolder(folder);
+    }
+
     public static File reCreateFile(String path){ return reCreateFile(new File(path)); }
     public static File reCreateFile(File file){
-        if (file.exists())
+        if (file.exists()) {
             file.delete();
+        }
         return createFile(file);
     }
 
@@ -191,7 +201,9 @@ public class FileUtils
     {
         // если папки не существует, то создаю папку
         if(!folder.exists()) {
-            if(!folder.mkdir()) Log.CurrentSession.println("Folder by path '" + folder.getAbsolutePath() + "' was not created!", Log.MessageType.ERROR);
+            if(!folder.mkdir()) {
+                Log.CurrentSession.println("Folder by path '" + folder.getAbsolutePath() + "' was not created!", Log.MessageType.ERROR);
+            }
         } else {
             Log.CurrentSession.println("Folder by path '" + folder.getAbsolutePath() + "' already exists", Log.MessageType.ERROR);
         }
@@ -210,7 +222,9 @@ public class FileUtils
         // если файла не существует, то создаю файл
         if(!file.exists()) {
             try {
-                if(!file.createNewFile()) Log.CurrentSession.println("File by path '" + file.getPath() + "' was not created!", Log.MessageType.ERROR);
+                if(!file.createNewFile()) {
+                    Log.CurrentSession.println("File by path '" + file.getPath() + "' was not created!", Log.MessageType.ERROR);
+                }
             } catch (IOException e) {
                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }

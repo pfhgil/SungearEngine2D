@@ -1,5 +1,7 @@
 package Core2D.Log;
 
+import Core2D.Utils.FileUtils;
+
 import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
@@ -35,51 +37,53 @@ public class Log
 
         // записывает в файл лога информацию (новая строка)
         public static void println(String string, MessageType messageType) {
-            FileWriter fileWriter = null;
-            try {
-                fileWriter = new FileWriter(currentSessionFile, true);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-            if (fileWriter != null) {
+            if(new File(directoryPath + File.separator + currentSessionFileName).exists()) {
+                FileWriter fileWriter = null;
                 try {
-                    // получаю текущую дату, час, минуту, секунду
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                    Date date = new Date();
-
-                    String str = "";
-                    if(messageType == MessageType.SUCCESS) {
-                        str = "[#FFFFFF] " + dateFormat.format(date) + " | [#008000] " + string + "\n";
-                        successLog.append(str);
-                    } else if(messageType == MessageType.INFO) {
-                        str = "[#FFFFFF] " + dateFormat.format(date) + " | [#FFFFFF] " + string + "\n";
-                        infoLog.append(str);
-                    } else if(messageType == MessageType.WARNING) {
-                        str = "[#FFFFFF] " + dateFormat.format(date) + " | [#FFFF00] " + string + "\n";
-                        warningLog.append(str);
-                    } else if(messageType == MessageType.ERROR) {
-                        str = "[#FFFFFF] " + dateFormat.format(date) + " | [#FF0000] " + string + "\n";
-                        errorLog.append(str);
-                    }
-                    allLog.append(str);
-                    // записываю в файл лога информацию
-                    fileWriter.write(str);
-
-                    fileWriter.flush();
-                    fileWriter.close();
+                    fileWriter = new FileWriter(new File(directoryPath + File.separator + currentSessionFileName), true);
                 } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+                if (fileWriter != null) {
+                    try {
+                        // получаю текущую дату, час, минуту, секунду
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                        Date date = new Date();
+
+                        String str = "";
+                        if (messageType == MessageType.SUCCESS) {
+                            str = "[#FFFFFF] " + dateFormat.format(date) + " | [#008000] " + string + "\n";
+                            successLog.append(str);
+                        } else if (messageType == MessageType.INFO) {
+                            str = "[#FFFFFF] " + dateFormat.format(date) + " | [#FFFFFF] " + string + "\n";
+                            infoLog.append(str);
+                        } else if (messageType == MessageType.WARNING) {
+                            str = "[#FFFFFF] " + dateFormat.format(date) + " | [#FFFF00] " + string + "\n";
+                            warningLog.append(str);
+                        } else if (messageType == MessageType.ERROR) {
+                            str = "[#FFFFFF] " + dateFormat.format(date) + " | [#FF0000] " + string + "\n";
+                            errorLog.append(str);
+                        }
+                        allLog.append(str);
+                        // записываю в файл лога информацию
+                        fileWriter.write(str);
+
+                        fileWriter.flush();
+                        fileWriter.close();
+                    } catch (IOException e) {
+                        showWarningDialog("LOG: String was not logged!");
+                    }
+                } else {
                     showWarningDialog("LOG: String was not logged!");
                 }
-            } else {
-                showWarningDialog("LOG: String was not logged!");
-            }
 
-            if (fileWriter != null) {
-                try {
-                    fileWriter.close();
-                } catch (IOException e) {
-                    showWarningDialog("LOG: File writer thread was not closed!");
+                if (fileWriter != null) {
+                    try {
+                        fileWriter.close();
+                    } catch (IOException e) {
+                        showWarningDialog("LOG: File writer thread was not closed!");
+                    }
                 }
             }
         }
@@ -87,51 +91,29 @@ public class Log
         // создает файл лога для текущей сессии
         public static void createCurrentSession() {
             File directoryFile = new File(directoryPath);
-            File _currentSessionFile = new File(directoryPath + "/" + currentSessionFileName);
+            File currentSessionFile = new File(directoryPath + File.separator + currentSessionFileName);
 
-            // проверяю, существует ли папка для логов
-            if (!directoryFile.exists()) {
-                // если папка не существует, создаю её
-                if (directoryFile.mkdir()) {
-                    if (_currentSessionFile.exists()) {
-                        if (!_currentSessionFile.delete()) {
-                            showWarningDialog("LOG: Current session log file was not deleted!");
-                        }
-                    }
-                    try {
-                        if (_currentSessionFile.createNewFile()) {
-                            currentSessionFile = _currentSessionFile;
+            FileUtils.reCreateFolder(directoryFile);
+            currentSessionFile = FileUtils.reCreateFile(currentSessionFile);
 
-                            println("Log directory was not founded! It was created.", MessageType.INFO);
-                            println("Current session log file was created!", MessageType.SUCCESS);
-                        } else {
-                            showWarningDialog("LOG: Current session log file was not created!");
-                        }
-                    } catch (IOException e) {
-                        showWarningDialog("LOG: Current session log file was not created!");
-                    }
-                } else {
-                    showWarningDialog("LOG: Log directory was not created!");
-                }
-            } else {
-                if (_currentSessionFile.exists()) {
-                    if (!_currentSessionFile.delete()) {
-                        showWarningDialog("LOG: Current session log file was not deleted!");
-                    }
-                }
-                try {
-                    if (_currentSessionFile.createNewFile()) {
-                        currentSessionFile = _currentSessionFile;
-
-                        println("Log directory was founded!", MessageType.SUCCESS);
-                        println("Current session log file was created!", MessageType.SUCCESS);
-                    } else {
-                        showWarningDialog("LOG: Current session log file was not created!");
-                    }
-                } catch (IOException e) {
-                    showWarningDialog("LOG: Current session log file was not created!");
-                }
+            if(currentSessionFile.exists()) {
+                println("Current session log file was created!", MessageType.SUCCESS);
             }
+        }
+
+        public static void clearAllLog()
+        {
+            successLog.setLength(0);
+            infoLog.setLength(0);
+            warningLog.setLength(0);
+            errorLog.setLength(0);
+            allLog.setLength(0);
+
+            successLog.trimToSize();
+            infoLog.trimToSize();
+            warningLog.trimToSize();
+            errorLog.trimToSize();
+            allLog.trimToSize();
         }
 
         public static String getSuccessLog() { return successLog.toString(); }

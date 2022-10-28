@@ -8,6 +8,7 @@ import Core2D.Scripting.*;
 import Core2D.Component.*;
 import Core2D.Component.Components.*;
 import Core2D.Transform.*;
+import Core2D.Physics.*;
 import org.joml.Vector2f;
 
 public class SceneController
@@ -23,16 +24,24 @@ public class SceneController
 
     public void update()
     {
-        //dfdfjjj
+        //dfdfjjjdff
         if(Keyboard.keyPressed(GLFW.GLFW_KEY_C)) {
             Log.CurrentSession.println("level name: " + levelName, Log.MessageType.INFO);
             SceneManager.currentSceneManager.setCurrentScene2D(SceneManager.currentSceneManager.getScene2D(levelName));
+        }
+
+        if(Keyboard.keyPressed(GLFW.GLFW_KEY_U)) {
+            if(movableObject2D != null && !movableObject2D.isShouldDestroy()) {
+                Rigidbody2D rigidbody2D = movableObject2D.getComponent(Rigidbody2DComponent.class).getRigidbody2D();
+
+                Log.CurrentSession.println("rigidbody2d: " + rigidbody2D + ", body: " + rigidbody2D.getBody() + ", " + rigidbody2D.getBody().getType(), Log.MessageType.INFO);
+            }
         }
     }
     
     public void deltaUpdate(float deltaTime)
     {
-        if(movableObject2D != null) {
+        if(movableObject2D != null && !movableObject2D.isShouldDestroy()) {
             Transform transform = movableObject2D.getComponent(TransformComponent.class).getTransform();
             //tgf
             if(Keyboard.keyDown(GLFW.GLFW_KEY_SPACE)) {
