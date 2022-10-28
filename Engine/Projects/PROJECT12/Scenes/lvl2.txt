@@ -36,7 +36,9 @@
                     "texture2D": {
                       "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Resources\\textures\\ferapont.png",
                       "param": 33071,
-                      "textureBlock": 33984
+                      "textureBlock": 33984,
+                      "blendSourceFactor": 770,
+                      "blendDestinationFactor": 771
                     },
                     "textureDrawMode": 1,
                     "UV": [
@@ -104,6 +106,7 @@
               "isUIElement": false,
               "parentObject2DID": -1,
               "childrenObjectsID": [],
+              "render": {},
               "name": "ferapont",
               "active": true,
               "layerName": "default",
@@ -111,6 +114,117 @@
                 "name": "default"
               },
               "ID": 6
+            }
+          },
+          {
+            "type": "Core2D.Drawable.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -402.84714,
+                        "y": -15.989922
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                      },
+                      "centre": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    },
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Resources\\textures\\ferapont.png",
+                      "param": 33071,
+                      "textureBlock": 33984,
+                      "blendSourceFactor": 770,
+                      "blendDestinationFactor": 771
+                    },
+                    "textureDrawMode": 1,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ],
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.BoxCollider2DComponent",
+                  "properties": {
+                    "boxCollider2D": {
+                      "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                      },
+                      "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    },
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.Rigidbody2DComponent",
+                  "properties": {
+                    "rigidbody2D": {
+                      "bodyType": "STATIC",
+                      "density": 1.0,
+                      "restitution": 0.0,
+                      "friction": 0.1,
+                      "isSensor": false,
+                      "isFixedRotation": false
+                    },
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.ScriptComponent",
+                  "properties": {
+                    "script": {
+                      "path": "D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/PROJECT12/Scripts\\SceneController",
+                      "name": "SceneController",
+                      "active": true
+                    },
+                    "active": true
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 1.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "isUIElement": false,
+              "parentObject2DID": -1,
+              "childrenObjectsID": [],
+              "render": {},
+              "name": "ferapont",
+              "active": true,
+              "layerName": "default",
+              "tag": {
+                "name": "default"
+              },
+              "ID": 16
             }
           }
         ],
@@ -141,7 +255,26 @@
         "x": 1600.0,
         "y": 837.0
       },
-      "ID": 97789409
+      "ID": 97789409,
+      "viewMatrix": {
+        "m00": 1.0,
+        "m01": 0.0,
+        "m02": 0.0,
+        "m03": 0.0,
+        "m10": 0.0,
+        "m11": 1.0,
+        "m12": 0.0,
+        "m13": 0.0,
+        "m20": 0.0,
+        "m21": 0.0,
+        "m22": 1.0,
+        "m23": 0.0,
+        "m30": 0.0,
+        "m31": 0.0,
+        "m32": 1.0,
+        "m33": 1.0,
+        "properties": 18
+      }
     }
   ],
   "sceneMainCamera2D": {
@@ -165,7 +298,26 @@
       "x": 1600.0,
       "y": 837.0
     },
-    "ID": 97789409
+    "ID": 97789409,
+    "viewMatrix": {
+      "m00": 1.0,
+      "m01": 0.0,
+      "m02": 0.0,
+      "m03": 0.0,
+      "m10": 0.0,
+      "m11": 1.0,
+      "m12": 0.0,
+      "m13": 0.0,
+      "m20": 0.0,
+      "m21": 0.0,
+      "m22": 1.0,
+      "m23": 0.0,
+      "m30": 0.0,
+      "m31": 0.0,
+      "m32": 1.0,
+      "m33": 1.0,
+      "properties": 18
+    }
   },
   "screenClearColor": {
     "x": 1.0,
@@ -188,12 +340,52 @@
               "type": "java.lang.String",
               "properties": "lvl0"
             }
+          },
+          {
+            "fieldName": "movableObject2D",
+            "value": {
+              "type": "Core2D.Scripting.ScriptSceneObject",
+              "properties": {
+                "ID": 6,
+                "name": "ferapont",
+                "objectType": "TYPE_OBJECT2D"
+              }
+            }
+          },
+          {
+            "fieldName": "speed",
+            "value": {
+              "type": "java.lang.Float",
+              "properties": 200.0
+            }
+          }
+        ]
+      },
+      {
+        "scriptTempValues": [
+          {
+            "fieldName": "levelName",
+            "value": {
+              "type": "java.lang.String",
+              "properties": ""
+            }
+          },
+          {
+            "fieldName": "movableObject2D",
+            "value": {}
+          },
+          {
+            "fieldName": "speed",
+            "value": {
+              "type": "java.lang.Float",
+              "properties": 200.0
+            }
           }
         ]
       }
     ]
   },
-  "maxObjectID": 9,
+  "maxObjectID": 16,
   "inBuild": false,
   "isMainScene2D": false
 }

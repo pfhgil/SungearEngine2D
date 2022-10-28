@@ -101,14 +101,10 @@ public class Camera2D implements Serializable
         float rotation = MatrixUtils.getRotation(transform.getResultModelMatrix());
         Vector2f scale = MatrixUtils.getScale(transform.getResultModelMatrix());
 
-        Vector2f midOffset = new Vector2f(viewportSize.x * 0.5f * scale.x, viewportSize.y * 0.5f * scale.y);
-
         viewMatrix.identity();
 
         viewMatrix.scale(new Vector3f(scale.x, scale.y, 1.0f));
-        viewMatrix.translate(new Vector3f(midOffset.x, midOffset.y, 0.0f));
         viewMatrix.rotate((float) Math.toRadians(rotation), 0.0f, 0.0f, 1.0f);
-        viewMatrix.translate(new Vector3f(-midOffset.x, -midOffset.y, 0.0f));
         viewMatrix.translate(new Vector3f(position.x, position.y, 1.0f));
 
         return viewMatrix;
