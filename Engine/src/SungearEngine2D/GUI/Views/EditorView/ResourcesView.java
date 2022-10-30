@@ -294,6 +294,7 @@ public class ResourcesView extends View
                                             Scene2DStoredValues storedValues = new Scene2DStoredValues();
                                             storedValues.path = files[id].getPath();
                                             currentSceneManager.getScene2DStoredValues().add(storedValues);
+                                            SceneManager.saveSceneManager(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + "SceneManager.sm");
                                             //scene2D.setScenePath(files[id].getPath());
                                         }
 
