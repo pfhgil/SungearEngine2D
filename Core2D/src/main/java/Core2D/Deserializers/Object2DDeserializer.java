@@ -8,6 +8,7 @@ import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.Drawable.Object2D;
+import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.FileUtils;
@@ -70,16 +71,32 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                 Texture2D texture2D = null;
                 // если режим работы ядра в движке
                 if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                    String textureFileName = new File(textureComponent.getTexture2D().source).getName();
-                    String parentFileName = new File(textureComponent.getTexture2D().source).getParentFile().getName();
-                    // найти текущий путь до текстуры
-                    File textureFile = FileUtils.findFile(new File(ProjectsManager.getCurrentProject().getProjectPath()), parentFileName, textureFileName);
+                    String textureFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + textureComponent.getTexture2D().source;
+                    String textureLastPath = textureComponent.getTexture2D().source;
 
-                    texture2D = new Texture2D(
-                            textureFile.getPath(),
-                            textureComponent.getTexture2D().param,
-                            textureComponent.getTexture2D().getGLTextureBlock()
-                    );
+                    if(new File(textureFullPath).exists()) {
+                        texture2D = new Texture2D(
+                                textureFullPath,
+                                textureComponent.getTexture2D().param,
+                                textureComponent.getTexture2D().getGLTextureBlock()
+                        );
+                        texture2D.source = textureLastPath;
+                    } else { // для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
+                        // чтобы это исправить загружаем по этому пути текстуру, находим относительный путь и присваиваем его source для того,
+                        // чтобы в следующий раз выполнился блок кода выше
+                        if(new File(textureComponent.getTexture2D().source).exists()) {
+                            String relativePath = FileUtils.getRelativePath(
+                                    new File(textureComponent.getTexture2D().source),
+                                    new File(ProjectsManager.getCurrentProject().getProjectPath())
+                            );
+                            texture2D = new Texture2D(
+                                    textureComponent.getTexture2D().source,
+                                    textureComponent.getTexture2D().param,
+                                    textureComponent.getTexture2D().getGLTextureBlock()
+                            );
+                            texture2D.source = relativePath;
+                        }
+                    }
                 // если режим работы в билде
                 } else {
                     texture2D = new Texture2D(
@@ -100,16 +117,32 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
             } else if(component instanceof ScriptComponent) {
                 ScriptComponent scriptComponent = (ScriptComponent) component;
                 if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                    String scriptFileName = new File(scriptComponent.getScript().getPath()).getName();
-                    String parentFileName = new File(scriptComponent.getScript().getPath()).getParentFile().getName();
-                    File scriptFile = FileUtils.findFile(new File(ProjectsManager.getCurrentProject().getProjectPath()), parentFileName, scriptFileName);
+                    scriptComponent.getScript().path = scriptComponent.getScript().path.replaceAll(".java", "");
 
-                    if (scriptFile != null) {
-                        scriptComponent.getScript().setPath(scriptFile.getPath() + ".java");
+                    String fullScriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponent.getScript().path + ".java";
+                    String lastScriptPath = scriptComponent.getScript().path;
 
+                    if(new File(fullScriptPath).exists()) {
                         ScriptComponent sc = new ScriptComponent();
+                        scriptComponent.getScript().path = fullScriptPath;
                         object2D.addComponent(sc);
                         sc.set(scriptComponent);
+                        sc.getScript().path = lastScriptPath;
+                    } else {// для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
+                        // чтобы это исправить загружаем по этому пути скрипт, находим относительный путь и присваиваем его path для того,
+                        // чтобы в следующий раз выполнился блок кода вышe
+                        if(new File(scriptComponent.getScript().path + ".java").exists()) {
+                            String relativePath = FileUtils.getRelativePath(
+                                    new File(scriptComponent.getScript().path + ".java"),
+                                    new File(ProjectsManager.getCurrentProject().getProjectPath())
+                            );
+                            ScriptComponent sc = new ScriptComponent();
+                            object2D.addComponent(sc);
+                            scriptComponent.getScript().path += ".java";
+                            sc.set(scriptComponent);
+                            relativePath = relativePath.replace(".java", "");
+                            sc.getScript().path = relativePath;
+                        }
                     }
                 } else {
                     ScriptComponent sc = new ScriptComponent();

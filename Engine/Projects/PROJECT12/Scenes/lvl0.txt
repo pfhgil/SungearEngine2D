@@ -39,7 +39,6 @@
                   "type": "Core2D.Component.Components.TextureComponent",
                   "properties": {
                     "texture2D": {
-                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Resources\\textures\\ferapont.png",
                       "param": 33071,
                       "textureBlock": 33984,
                       "blendSourceFactor": 1,
@@ -139,7 +138,6 @@
                   "type": "Core2D.Component.Components.TextureComponent",
                   "properties": {
                     "texture2D": {
-                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Resources\\textures\\ferapont.png",
                       "param": 33071,
                       "textureBlock": 33984,
                       "blendSourceFactor": 1,
@@ -209,7 +207,6 @@
                   "type": "Core2D.Component.Components.TextureComponent",
                   "properties": {
                     "texture2D": {
-                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Resources\\textures\\player.png",
                       "param": 33071,
                       "textureBlock": 33984,
                       "blendSourceFactor": 770,
@@ -427,7 +424,7 @@
       }
     ]
   },
-  "maxObjectID": 380,
+  "maxObjectID": 385,
   "inBuild": false,
   "isMainScene2D": false
 }

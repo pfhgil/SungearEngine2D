@@ -6,6 +6,7 @@ import Core2D.Utils.FileUtils;
 
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class UserSettings implements Serializable {
@@ -44,6 +45,8 @@ public class UserSettings implements Serializable {
         var usFile = new File(AppDataManager.getRoamingDirectory().getAbsolutePath() + File.separator + fileName);
         if (usFile.exists()) {
             instance = (UserSettings) FileUtils.deSerializeObject(usFile);
+
+            instance.lastProjects.removeIf(lastProjectPath -> !new File(lastProjectPath).exists());
         } else {
             instance = new UserSettings();
             instance.init();

@@ -181,10 +181,6 @@ public class TopToolbarView
                                 ProjectsManager.loadProject(projectPath.get());
                                 UserSettings.instance.addLastProject(projectPath.get());
 
-                                //ResourcesView.currentDirectoryPath = projectPath.get();
-                                //Core2D.getSceneManager2D().loadScene(ProjectsManager.getCurrentProject().getScenesPath() + "\\lvl0.txt");
-                                //Core2D.getSceneManager2D().loadScene(ProjectsManager.getCurrentProject().getScenesPath() + "\\lvl0.txt");
-
                                 projectPath.set("");
 
                                 dialogWindow.setActive(false);
@@ -194,13 +190,19 @@ public class TopToolbarView
 
                         currentAction = "File/Open/Project";
                     }
-                    if (ImGui.beginMenu("Recent projects")) {
+                    if (ImGui.beginMenu("Last projects")) {
                         int size = UserSettings.instance.lastProjects.size();
                          for(int i = 0; i < size; i++) {
                              String projectPath = UserSettings.instance.lastProjects.get(i);
                              if (ImGui.menuItem(projectPath)) {
-                                 ProjectsManager.loadProject(projectPath);
-                                 UserSettings.instance.addLastProject(projectPath);
+                                 if(!new File(projectPath).exists()) {
+                                     Log.CurrentSession.println("It is not possible to load the project on the path \"" + projectPath + "\". Such a file does not exist.", Log.MessageType.ERROR);
+                                     Log.showErrorDialog("It is not possible to load the project. See log for more info.");
+                                     UserSettings.instance.lastProjects.remove(projectPath);
+                                 } else {
+                                     ProjectsManager.loadProject(projectPath);
+                                     UserSettings.instance.addLastProject(projectPath);
+                                 }
                              }
                         }
                         ImGui.endMenu();

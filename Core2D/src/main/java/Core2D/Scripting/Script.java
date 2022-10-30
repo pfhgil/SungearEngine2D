@@ -20,7 +20,7 @@ import java.util.List;
 
 public class Script
 {
-    private String path;
+    public String path;
     private String name;
 
     private transient Method updateMethod;
@@ -48,7 +48,7 @@ public class Script
         collider2DEnterMethod = null;
         collider2DExitMethod = null;
 
-        loadClass(new File(script.getPath()).getParent(), FilenameUtils.getBaseName(script.getName()));
+        loadClass(new File(script.path).getParent(), FilenameUtils.getBaseName(script.getName()));
     }
 
     public void loadClass(String dirPath, String baseName) {

@@ -97,19 +97,22 @@ public class Main
                                                         if (alreadyCompiled) {
                                                             continue;
                                                         }
-                                                        long lastModified = new File(scriptComponents.get(k).getScript().getPath() + ".java").lastModified();
+                                                        long lastModified = new File(scriptComponents.get(k).getScript().path + ".java").lastModified();
                                                         if (lastModified != scriptComponents.get(k).getScript().getLastModified()) {
                                                             EngineSettings.Playmode.canEnterPlaymode = false;
                                                             scriptComponents.get(k).getScript().setLastModified(lastModified);
 
                                                             int finalK = k;
-                                                            String scriptPath = scriptComponents.get(finalK).getScript().getPath();
+                                                            String scriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponents.get(finalK).getScript().path;
+                                                            String lastScriptPath = scriptComponents.get(finalK).getScript().path;
                                                             ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
                                                                 public void run()
                                                                 {
-                                                                    boolean compiled = Compiler.compileScript(scriptPath + ".java");
+                                                                    String newScriptPath = scriptPath.replace(".java", "");
+                                                                    boolean compiled = Compiler.compileScript(newScriptPath + ".java");
                                                                     if (compiled) {
                                                                         scriptComponents.get(finalK).getScript().loadClass(new File(scriptPath).getParent(), FilenameUtils.getBaseName(new File(scriptPath).getName()));
+                                                                        scriptComponents.get(finalK).getScript().path = lastScriptPath;
                                                                     }
                                                                     compiledScripts.add(scriptComponents.get(finalK).getScript().getName());
                                                                 }

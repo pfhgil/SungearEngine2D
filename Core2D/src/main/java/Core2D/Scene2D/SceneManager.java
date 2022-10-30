@@ -174,16 +174,19 @@ public class SceneManager
             return scene2DFromJson(path, deserialized);
         } else {
             InputStream inputStream = Core2D.class.getResourceAsStream(path);
-            String deserialized = (String) FileUtils.deSerializeObject(inputStream);
-            try {
-                if(inputStream != null) {
-                    inputStream.close();
+            if(inputStream != null) {
+                String deserialized = (String) FileUtils.deSerializeObject(inputStream);
+                try {
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
+                } catch (IOException e) {
+                    Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                 }
-            } catch (IOException e) {
-                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                return scene2DFromJson(path, deserialized);
             }
-            return scene2DFromJson(path, deserialized);
         }
+        return null;
     }
 
     // применить все зависимости к объектам

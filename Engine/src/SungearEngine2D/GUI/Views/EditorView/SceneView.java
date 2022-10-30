@@ -8,7 +8,9 @@ import Core2D.Drawable.Object2D;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.PC.Mouse;
 import Core2D.Prefab.Prefab;
+import Core2D.Project.ProjectsManager;
 import Core2D.Texture2D.Texture2D;
+import Core2D.Utils.FileUtils;
 import Core2D.Utils.MathUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.View;
@@ -302,10 +304,13 @@ public class SceneView extends View
         if(extension.equals("png") || extension.equals("jpg")) {
             Object2D newSceneObject2D = new Object2D();
 
-            // TODO: сделать папку, которая будет для ресурсов (папку можно будет отметить как ресурсной) и чтобы только оттуда можно было дропать файлы (она будет использоваться для билд)
+            String relativePath = FileUtils.getRelativePath(
+                    new File(file.getPath()),
+                    new File(ProjectsManager.getCurrentProject().getProjectPath()));
             TextureComponent textureComponent = newSceneObject2D.getComponent(TextureComponent.class);
             Texture2D texture2D = new Texture2D(file.getPath());
             textureComponent.setTexture2D(texture2D);
+            textureComponent.getTexture2D().source = relativePath;
 
             Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
             newSceneObject2D.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);

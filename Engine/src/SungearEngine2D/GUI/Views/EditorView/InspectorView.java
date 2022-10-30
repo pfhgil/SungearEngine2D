@@ -9,9 +9,11 @@ import Core2D.Drawable.Object2D;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
+import Core2D.Project.ProjectsManager;
 import Core2D.Tasks.StoppableTask;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.FileUtils;
 import Core2D.Utils.Tag;
 import Core2D.Utils.WrappedObject;
 import SungearEngine2D.GUI.Views.ViewsManager;
@@ -557,7 +559,11 @@ public class InspectorView extends View
                                     Object imageFile = ImGui.acceptDragDropPayload("File");
                                     if (imageFile != null) {
                                         textureName.set(ViewsManager.getResourcesView().getCurrentMovingFile().getName(), true);
+                                        String relativePath = FileUtils.getRelativePath(
+                                                new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
+                                                new File(ProjectsManager.getCurrentProject().getProjectPath()));
                                         textureComponent.setTexture2D(new Texture2D(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()));
+                                        textureComponent.getTexture2D().source = relativePath;
                                         ViewsManager.getResourcesView().setCurrentMovingFile(null);
                                     }
 
@@ -624,16 +630,6 @@ public class InspectorView extends View
                             }
                             ImGui.separator();
                         }
-
-                        /*
-                        ImGui.text("Mass data");
-                        ImGui.newLine();
-                        float[] mass = new float[] { rigidbody2DComponent.getRigidbody2D().getMass() };
-                        if (ImGui.dragFloat("Mass", mass, 0.01f)) {
-                            rigidbody2DComponent.getRigidbody2D().setMass(mass[0]);
-                        }
-
-                         */
                         case "BoxCollider2D" -> {
                             BoxCollider2DComponent boxCollider2DComponent = ((BoxCollider2DComponent) inspectingObject2D.getComponents().get(i));
 
@@ -777,8 +773,13 @@ public class InspectorView extends View
                 boolean compiled = Compiler.compileScript(javaFile.getPath());
 
                 if(compiled) {
+                    String relativePath = FileUtils.getRelativePath(
+                            new File(javaFile.getPath()),
+                            new File(ProjectsManager.getCurrentProject().getProjectPath())
+                    );
                     ScriptComponent scriptComponent = new ScriptComponent();
                     scriptComponent.getScript().loadClass(javaFile.getParent(), FilenameUtils.getBaseName(javaFile.getName()));
+                    scriptComponent.getScript().path = relativePath;
 
                     inspectingObject2D.addComponent(scriptComponent);
                 }

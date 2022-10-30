@@ -272,6 +272,7 @@ public class ResourcesView extends View
         if(ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left) && ImGui.isItemHovered()) {
             if(FilenameUtils.getExtension(files[id].getName()).equals("sgs")) {
                 if(canOpenScene2D) {
+                    System.out.println("dfdfsdfsd");
                     Scene2D scene2D = currentSceneManager.loadSceneAsCurrent(files[id].getPath());
                     if(scene2D != null) {
                         canOpenScene2D = false;
@@ -341,15 +342,12 @@ public class ResourcesView extends View
                     try {
                         if(!isDirectory) {
                             if(fileExtension.equals("sgs")) {
-                                Scene2D scene2D = currentSceneManager.getScene2D(fileBaseName);
-
-                                if(scene2D != null) {
-                                    scene2D.destroy();
-                                    if(currentSceneManager.getCurrentScene2D().getName().equals(scene2D.getName())) {
-                                        SceneManager.currentSceneManager.setCurrentScene2D((Scene2D) null);
-                                    }
-                                    currentSceneManager.getScene2DStoredValues().removeIf(p -> p.path.equals(scene2D.getScenePath()));
+                                if(currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().getScenePath().equals(files[id].getPath())) {
+                                    currentSceneManager.getCurrentScene2D().destroy();
+                                    SceneManager.currentSceneManager.setCurrentScene2D((Scene2D) null);
                                 }
+                                currentSceneManager.getScene2DStoredValues().removeIf(p -> p.path.equals(files[id].getPath()));
+                                ProjectsManager.getCurrentProject().saveProject();
                             }
                             org.apache.commons.io.FileUtils.delete(files[id]);
                         } else {

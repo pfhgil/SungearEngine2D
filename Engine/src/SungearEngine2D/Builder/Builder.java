@@ -232,7 +232,6 @@ public class Builder
             Scene2D scene2D = sceneManager.loadScene(storedValues.path);
 
             if(scene2D != null) {
-                System.out.println("loaded scene2d: " + scene2D.getName());
                 scenes2DToSaveInBuild.add(scene2D);
             }
         }
@@ -244,28 +243,28 @@ public class Builder
                     if(wrappedObject.getObject() instanceof Object2D) {
                         Object2D object2D = (Object2D) wrappedObject.getObject();
                         TextureComponent textureComponent = object2D.getComponent(TextureComponent.class);
-                        // относительный путь текстуры (относительно папки проекта)
-                        String textureRelativePath = FileUtils.getRelativePath(new File(textureComponent.getTexture2D().source),
-                                new File(ProjectsManager.getCurrentProject().getProjectPath()));
                         // новый путь до текстуры
-                        File newTextureFile = new File(toDir + "\\" + textureRelativePath);
+                        File newTextureFile = new File(toDir + "\\" + textureComponent.getTexture2D().source);
                         // создаю все папки, которых нет
                         newTextureFile.getParentFile().mkdirs();
-                        System.out.println("relative path: " + textureRelativePath);
                         // копирую файл в эти папки
-                        FileUtils.copyFile(textureComponent.getTexture2D().source, newTextureFile.getPath(), false);
+                        FileUtils.copyFile(ProjectsManager.getCurrentProject().getProjectPath() +
+                                File.separator +
+                                textureComponent.getTexture2D().source,
+                                newTextureFile.getPath(), false);
                         // устанавливаю для текстурного компонента путь в билде (относительный)
-                        textureComponent.getTexture2D().source = "/" + textureRelativePath.replace("\\", "/");
+                        textureComponent.getTexture2D().source = "/" + textureComponent.getTexture2D().source.replace("\\", "/");
 
                         // то же самое для скриптов
                         ScriptComponent scriptComponent = object2D.getComponent(ScriptComponent.class);
                         if(scriptComponent != null) {
-                            String scriptRelativePath = FileUtils.getRelativePath(new File(scriptComponent.getScript().getPath()),
-                                    new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                            File newScriptFile = new File(toDir + "\\" + scriptRelativePath);
+                            File newScriptFile = new File(toDir + "\\" + scriptComponent.getScript().path);
                             newScriptFile.getParentFile().mkdirs();
-                            FileUtils.copyFile(scriptComponent.getScript().getPath() + ".class", newScriptFile.getPath() + ".class", false);
-                            scriptComponent.getScript().setPath("/" + scriptRelativePath.replace("\\", "/"));
+                            FileUtils.copyFile(ProjectsManager.getCurrentProject().getProjectPath() +
+                                    File.separator +
+                                    scriptComponent.getScript().path + ".class",
+                                    newScriptFile.getPath() + ".class", false);
+                            scriptComponent.getScript().path = "/" + scriptComponent.getScript().path.replace("\\", "/");
                         }
                     }
                 }
