@@ -148,11 +148,8 @@ public class PhysicsWorld extends World
     public void addRigidbody2D(Object2D object2D)
     {
         Rigidbody2DComponent rigidbody2DComponent = object2D.getComponent(Rigidbody2DComponent.class);
-        Log.CurrentSession.println("KEK1", Log.MessageType.INFO);
         if(rigidbody2DComponent != null) {
             Rigidbody2D rigidbody2D = rigidbody2DComponent.getRigidbody2D();
-
-            Log.CurrentSession.println("KEK2", Log.MessageType.INFO);
 
             BodyDef bodyDef = new BodyDef();
 
@@ -169,11 +166,9 @@ public class PhysicsWorld extends World
             for (BoxCollider2DComponent boxCollider2DComponent : boxCollider2DComponentList) {
                 addBoxCollider2D(rigidbody2D, boxCollider2DComponent.getBoxCollider2D());
             }
-
             for (CircleCollider2DComponent circleCollider2DComponent : circleCollider2DComponents) {
                 addCircleCollider2D(rigidbody2D, circleCollider2DComponent.getCircleCollider2D());
             }
-            Log.CurrentSession.println("kek3", Log.MessageType.INFO);
         }
     }
 
@@ -198,8 +193,6 @@ public class PhysicsWorld extends World
         Fixture fixture = body.createFixture(fixtureDef);
         boxCollider2D.setFixture(fixture);
         boxCollider2D.setRigidbody2D(rigidbody2D);
-
-        Log.CurrentSession.println("Box collider 2d created", Log.MessageType.INFO);
     }
 
     public void addCircleCollider2D(Rigidbody2D rigidbody2D, CircleCollider2D circleCollider2D)
@@ -223,7 +216,5 @@ public class PhysicsWorld extends World
         Fixture fixture = body.createFixture(fixtureDef);
         circleCollider2D.setFixture(fixture);
         circleCollider2D.setRigidbody2D(rigidbody2D);
-
-        Log.CurrentSession.println("Circle collider 2d created", Log.MessageType.INFO);
     }
 }

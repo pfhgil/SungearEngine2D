@@ -241,7 +241,6 @@ public class SceneManager
     }
     public void setCurrentScene2D(String name)
     {
-        //(currentScene2D = new Scene2D();
         Scene2D scene2D = getScene2D(name);
 
         setCurrentScene2D(scene2D);

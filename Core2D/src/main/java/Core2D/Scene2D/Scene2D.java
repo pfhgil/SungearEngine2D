@@ -152,7 +152,6 @@ public class Scene2D
         }
 
         physicsWorld.simulatePhysics = true;
-        Log.CurrentSession.println("simulate physics: " + physicsWorld.simulatePhysics, Log.MessageType.INFO);
 
         sceneLoaded = true;
     }

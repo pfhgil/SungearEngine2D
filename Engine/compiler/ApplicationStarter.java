@@ -17,13 +17,10 @@ public class ApplicationStarter
             @Override
             public void onInit() {
                 SceneManager.loadSceneManagerAsCurrent(Core2D.class.getResourceAsStream("/SceneManager.sm"));
-                Log.CurrentSession.println("goo!!!!1", Log.MessageType.ERROR);
                 if(SceneManager.currentSceneManager != null) {
-                    Log.CurrentSession.println("goo!!!!12222", Log.MessageType.ERROR);
                     String scene2DName = "";
                     for(Scene2DStoredValues storedValues : SceneManager.currentSceneManager.getScene2DStoredValues()) {
                         if(storedValues.isMainScene2D) {
-                            Log.CurrentSession.println("goo!!!234324", Log.MessageType.ERROR);
                             scene2DName = FilenameUtils.getBaseName(new File(storedValues.path).getName());
                             //break;
                         }

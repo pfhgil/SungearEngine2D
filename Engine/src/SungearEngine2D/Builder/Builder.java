@@ -216,33 +216,6 @@ public class Builder
                     buildName = "";
                 }
             });
-            /*
-            // открываю файл openBuilder
-            ProcessBuilder pb = new ProcessBuilder(outDirectory.getPath() + "/openBuilder.bat");
-            MainView.getBottomMenuView().progressBarCurrent++;
-            try {
-                Process proc = pb.start();
-                MainView.getBottomMenuView().progressBarCurrent++;
-
-                // принт вывода и ошибок
-                Log.CurrentSession.println(Utils.outputStreamToString(proc.getOutputStream()), Log.MessageType.INFO);
-                Log.CurrentSession.println(Utils.inputStreamToString(proc.getErrorStream()), Log.MessageType.ERROR);
-
-                // жду завершения процесса
-                proc.waitFor();
-            } catch (InterruptedException | IOException e) {
-                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-            }
-            MainView.getBottomMenuView().progressBarCurrent++;
-
-            // удаляю bat файл для билда
-            builderBatFile[0].delete();
-
-            MainView.getBottomMenuView().leftSideInfo = "File " + Builder.buildName + ".jar was successfully built!";
-            MainView.getBottomMenuView().leftSideInfoColor.set(0.0f, 1.0f, 0.0f, 1.0f);
-            Builder.buildName = "";
-
-             */
         }
     }
 
