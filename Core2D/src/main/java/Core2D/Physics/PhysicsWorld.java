@@ -148,29 +148,32 @@ public class PhysicsWorld extends World
     public void addRigidbody2D(Object2D object2D)
     {
         Rigidbody2DComponent rigidbody2DComponent = object2D.getComponent(Rigidbody2DComponent.class);
+        Log.CurrentSession.println("KEK1", Log.MessageType.INFO);
         if(rigidbody2DComponent != null) {
             Rigidbody2D rigidbody2D = rigidbody2DComponent.getRigidbody2D();
 
-            if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-                BodyDef bodyDef = new BodyDef();
+            Log.CurrentSession.println("KEK2", Log.MessageType.INFO);
+
+            BodyDef bodyDef = new BodyDef();
+
+            if (SceneManager.currentSceneManager.getCurrentScene2D() != null) {
                 rigidbody2D.setScene2D(SceneManager.currentSceneManager.getCurrentScene2D());
-                rigidbody2D.setBody(createBody(bodyDef));
-                rigidbody2D.set(rigidbody2D);
-                rigidbody2D.getBody().setUserData(object2D);
-
-                List<BoxCollider2DComponent> boxCollider2DComponentList = object2D.getAllComponents(BoxCollider2DComponent.class);
-                List<CircleCollider2DComponent> circleCollider2DComponents = object2D.getAllComponents(CircleCollider2DComponent.class);
-
-                for(BoxCollider2DComponent boxCollider2DComponent : boxCollider2DComponentList) {
-                    addBoxCollider2D(rigidbody2D, boxCollider2DComponent.getBoxCollider2D());
-                }
-
-                for(CircleCollider2DComponent circleCollider2DComponent : circleCollider2DComponents) {
-                    addCircleCollider2D(rigidbody2D, circleCollider2DComponent.getCircleCollider2D());
-                }
-            } else {
-                Log.CurrentSession.println("Error while creating Rigidbody2D. Core2D.getSceneManager2D().getCurrentScene2D() == null", Log.MessageType.ERROR);
             }
+            rigidbody2D.setBody(createBody(bodyDef));
+            rigidbody2D.set(rigidbody2D);
+            rigidbody2D.getBody().setUserData(object2D);
+
+            List<BoxCollider2DComponent> boxCollider2DComponentList = object2D.getAllComponents(BoxCollider2DComponent.class);
+            List<CircleCollider2DComponent> circleCollider2DComponents = object2D.getAllComponents(CircleCollider2DComponent.class);
+
+            for (BoxCollider2DComponent boxCollider2DComponent : boxCollider2DComponentList) {
+                addBoxCollider2D(rigidbody2D, boxCollider2DComponent.getBoxCollider2D());
+            }
+
+            for (CircleCollider2DComponent circleCollider2DComponent : circleCollider2DComponents) {
+                addCircleCollider2D(rigidbody2D, circleCollider2DComponent.getCircleCollider2D());
+            }
+            Log.CurrentSession.println("kek3", Log.MessageType.INFO);
         }
     }
 
@@ -179,7 +182,6 @@ public class PhysicsWorld extends World
         Body body = rigidbody2D.getBody();
         if(body == null) {
             Log.CurrentSession.println("Can not add BoxCollider2D. body == null", Log.MessageType.ERROR);
-
             return;
         }
 
@@ -196,6 +198,8 @@ public class PhysicsWorld extends World
         Fixture fixture = body.createFixture(fixtureDef);
         boxCollider2D.setFixture(fixture);
         boxCollider2D.setRigidbody2D(rigidbody2D);
+
+        Log.CurrentSession.println("Box collider 2d created", Log.MessageType.INFO);
     }
 
     public void addCircleCollider2D(Rigidbody2D rigidbody2D, CircleCollider2D circleCollider2D)
@@ -203,7 +207,6 @@ public class PhysicsWorld extends World
         Body body = rigidbody2D.getBody();
         if(body == null) {
             Log.CurrentSession.println("Can not add CircleCollider2D. body == null", Log.MessageType.ERROR);
-
             return;
         }
 
@@ -220,5 +223,7 @@ public class PhysicsWorld extends World
         Fixture fixture = body.createFixture(fixtureDef);
         circleCollider2D.setFixture(fixture);
         circleCollider2D.setRigidbody2D(rigidbody2D);
+
+        Log.CurrentSession.println("Circle collider 2d created", Log.MessageType.INFO);
     }
 }

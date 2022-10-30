@@ -73,6 +73,8 @@ public class Builder
                     current = 0.0f;
                     destination = sceneManager.getScene2DStoredValues().size();
 
+                    //SceneManager.currentSceneManager.setCurrentScene2D(new Scene2D());
+
                     prepareResources(outDirectory.getPath() + "\\resources", sceneManager, this);
 
                     SceneManager.saveSceneManager(outDirectory.getPath() + "/SceneManager.sm", sceneManager);

@@ -53,9 +53,7 @@ public class CircleCollider2DComponent extends Component
     {
         Rigidbody2DComponent rigidbody2DComponent = object2D.getComponent(Rigidbody2DComponent.class);
         if(rigidbody2DComponent != null) {
-            if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-                SceneManager.currentSceneManager.getCurrentScene2D().getPhysicsWorld().addCircleCollider2D(rigidbody2DComponent.getRigidbody2D(), circleCollider2D);
-            }
+            SceneManager.currentSceneManager.getTmpPhysicsWorld().addCircleCollider2D(rigidbody2DComponent.getRigidbody2D(), circleCollider2D);
         }
     }
 

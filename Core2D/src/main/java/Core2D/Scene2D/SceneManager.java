@@ -1,19 +1,15 @@
 package Core2D.Scene2D;
 
-import Core2D.Component.Component;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
-import Core2D.Deserializers.*;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
 import Core2D.Log.Log;
 import Core2D.Drawable.Object2D;
+import Core2D.Physics.PhysicsWorld;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Utils;
-import Core2D.Utils.WrappedObject;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector4f;
 
@@ -36,6 +32,8 @@ public class SceneManager
     public transient Scene2D mainScene2D;
 
     public static SceneManager currentSceneManager = new SceneManager();
+
+    public transient PhysicsWorld tmpPhysicsWorld = new PhysicsWorld();
 
     public void drawCurrentScene2D()
     {
@@ -133,11 +131,9 @@ public class SceneManager
             currentScene2D = null;
         }
         System.gc();
-        Scene2D scene2D = new Scene2D();
-        currentScene2D = scene2D;
 
         Scene2D deserializedScene2D = loadScene(path);
-        deserializedScene2D.setPhysicsWorld(scene2D.getPhysicsWorld());
+        deserializedScene2D.setPhysicsWorld(tmpPhysicsWorld);
         setCurrentScene2D(deserializedScene2D);
 
         deserializedScene2D.setScenePath(path);
@@ -154,9 +150,10 @@ public class SceneManager
             Settings.Other.Picking.currentPickingColor.y = 0.0f;
             Settings.Other.Picking.currentPickingColor.z = 0.0f;
 
-            Scene2D scene2D = new Scene2D();
+            tmpPhysicsWorld = new PhysicsWorld();
+
             Scene2D deserializedScene2D = Utils.gson.fromJson(deserializedScene2DString, Scene2D.class);
-            deserializedScene2D.setPhysicsWorld(scene2D.getPhysicsWorld());
+            deserializedScene2D.setPhysicsWorld(tmpPhysicsWorld);
 
             deserializedScene2D.setScenePath(scene2DPath);
 
@@ -244,6 +241,7 @@ public class SceneManager
     }
     public void setCurrentScene2D(String name)
     {
+        //(currentScene2D = new Scene2D();
         Scene2D scene2D = getScene2D(name);
 
         setCurrentScene2D(scene2D);
@@ -251,4 +249,6 @@ public class SceneManager
     public Scene2D getCurrentScene2D() { return currentScene2D; }
 
     public List<Scene2DStoredValues> getScene2DStoredValues() { return scene2DStoredValues; }
+
+    public PhysicsWorld getTmpPhysicsWorld() { return tmpPhysicsWorld; }
 }

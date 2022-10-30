@@ -50,9 +50,7 @@ public class BoxCollider2DComponent extends Component
     {
         Rigidbody2DComponent rigidbody2DComponent = object2D.getComponent(Rigidbody2DComponent.class);
         if(rigidbody2DComponent != null) {
-            if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-                SceneManager.currentSceneManager.getCurrentScene2D().getPhysicsWorld().addBoxCollider2D(rigidbody2DComponent.getRigidbody2D(), boxCollider2D);
-            }
+            SceneManager.currentSceneManager.getTmpPhysicsWorld().addBoxCollider2D(rigidbody2DComponent.getRigidbody2D(), boxCollider2D);
         }
     }
 

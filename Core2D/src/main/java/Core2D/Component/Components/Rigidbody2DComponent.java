@@ -56,9 +56,8 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated
     @Override
     public void init()
     {
-        if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-            SceneManager.currentSceneManager.getCurrentScene2D().getPhysicsWorld().addRigidbody2D(object2D);
-        }
+        Log.CurrentSession.println("KEK0", Log.MessageType.INFO);
+        SceneManager.currentSceneManager.getTmpPhysicsWorld().addRigidbody2D(object2D);
         object2D.getComponent(TransformComponent.class).getTransform().setRigidbody2D(this.getRigidbody2D());
     }
 

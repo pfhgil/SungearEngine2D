@@ -4,108 +4,7 @@
   "layering": {
     "layers": [
       {
-        "renderingObjects": [
-          {
-            "type": "Core2D.Drawable.Object2D",
-            "properties": {
-              "components": [
-                {
-                  "type": "Core2D.Component.Components.TransformComponent",
-                  "properties": {
-                    "transform": {
-                      "position": {
-                        "x": -172.08026,
-                        "y": -285.0991
-                      },
-                      "rotation": 0.0,
-                      "scale": {
-                        "x": 1.6224378,
-                        "y": 1.8697143
-                      },
-                      "centre": {
-                        "x": 0.0,
-                        "y": 0.0
-                      }
-                    },
-                    "active": true
-                  }
-                },
-                {
-                  "type": "Core2D.Component.Components.TextureComponent",
-                  "properties": {
-                    "texture2D": {
-                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Resources\\textures\\player.png",
-                      "param": 33071,
-                      "textureBlock": 33984,
-                      "blendSourceFactor": 770,
-                      "blendDestinationFactor": 771
-                    },
-                    "textureDrawMode": 1,
-                    "UV": [
-                      0.0,
-                      0.0,
-                      0.0,
-                      1.0,
-                      1.0,
-                      1.0,
-                      1.0,
-                      0.0
-                    ],
-                    "active": true
-                  }
-                },
-                {
-                  "type": "Core2D.Component.Components.Rigidbody2DComponent",
-                  "properties": {
-                    "rigidbody2D": {
-                      "bodyType": "DYNAMIC",
-                      "density": 1.0,
-                      "restitution": 0.1,
-                      "friction": 0.1,
-                      "isSensor": false,
-                      "isFixedRotation": true
-                    },
-                    "active": true
-                  }
-                },
-                {
-                  "type": "Core2D.Component.Components.BoxCollider2DComponent",
-                  "properties": {
-                    "boxCollider2D": {
-                      "scale": {
-                        "x": 0.59,
-                        "y": 1.0
-                      },
-                      "offset": {
-                        "x": -4.0,
-                        "y": 10.0
-                      }
-                    },
-                    "active": true
-                  }
-                }
-              ],
-              "color": {
-                "x": 1.0,
-                "y": 0.99607843,
-                "z": 0.0,
-                "w": 1.0
-              },
-              "drawingMode": 4,
-              "isUIElement": false,
-              "parentObject2DID": -1,
-              "childrenObjectsID": [],
-              "render": {},
-              "name": "player",
-              "active": true,
-              "layerName": "bg",
-              "tag": {
-                "name": "default"
-              },
-              "ID": 9
-            }
-          }
-        ],
+        "renderingObjects": [],
         "ID": 1,
         "name": "bg"
       },
@@ -161,20 +60,6 @@
                   }
                 },
                 {
-                  "type": "Core2D.Component.Components.Rigidbody2DComponent",
-                  "properties": {
-                    "rigidbody2D": {
-                      "bodyType": "STATIC",
-                      "density": 1.0,
-                      "restitution": 0.0,
-                      "friction": 0.1,
-                      "isSensor": false,
-                      "isFixedRotation": false
-                    },
-                    "active": true
-                  }
-                },
-                {
                   "type": "Core2D.Component.Components.BoxCollider2DComponent",
                   "properties": {
                     "boxCollider2D": {
@@ -186,6 +71,20 @@
                         "x": -56.0,
                         "y": 0.0
                       }
+                    },
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.Rigidbody2DComponent",
+                  "properties": {
+                    "rigidbody2D": {
+                      "bodyType": "STATIC",
+                      "density": 1.0,
+                      "restitution": 0.0,
+                      "friction": 0.1,
+                      "isSensor": false,
+                      "isFixedRotation": false
                     },
                     "active": true
                   }
@@ -209,117 +108,6 @@
                 "name": "default"
               },
               "ID": 7
-            }
-          },
-          {
-            "type": "Core2D.Drawable.Object2D",
-            "properties": {
-              "components": [
-                {
-                  "type": "Core2D.Component.Components.TransformComponent",
-                  "properties": {
-                    "transform": {
-                      "position": {
-                        "x": -172.08026,
-                        "y": -285.0991
-                      },
-                      "rotation": 0.0,
-                      "scale": {
-                        "x": 1.6224378,
-                        "y": 1.8697143
-                      },
-                      "centre": {
-                        "x": 0.0,
-                        "y": 0.0
-                      }
-                    },
-                    "active": true
-                  }
-                },
-                {
-                  "type": "Core2D.Component.Components.TextureComponent",
-                  "properties": {
-                    "texture2D": {
-                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Resources\\textures\\player.png",
-                      "param": 33071,
-                      "textureBlock": 33984,
-                      "blendSourceFactor": 770,
-                      "blendDestinationFactor": 771
-                    },
-                    "textureDrawMode": 1,
-                    "UV": [
-                      0.0,
-                      0.0,
-                      0.0,
-                      1.0,
-                      1.0,
-                      1.0,
-                      1.0,
-                      0.0
-                    ],
-                    "active": true
-                  }
-                },
-                {
-                  "type": "Core2D.Component.Components.Rigidbody2DComponent",
-                  "properties": {
-                    "rigidbody2D": {
-                      "bodyType": "DYNAMIC",
-                      "density": 1.0,
-                      "restitution": 0.1,
-                      "friction": 0.1,
-                      "isSensor": false,
-                      "isFixedRotation": true
-                    },
-                    "active": true
-                  }
-                },
-                {
-                  "type": "Core2D.Component.Components.BoxCollider2DComponent",
-                  "properties": {
-                    "boxCollider2D": {
-                      "scale": {
-                        "x": 0.59,
-                        "y": 1.0
-                      },
-                      "offset": {
-                        "x": -4.0,
-                        "y": 10.0
-                      }
-                    },
-                    "active": true
-                  }
-                },
-                {
-                  "type": "Core2D.Component.Components.ScriptComponent",
-                  "properties": {
-                    "script": {
-                      "path": "D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/PROJECT12/Scripts\\SceneController",
-                      "name": "SceneController",
-                      "active": true
-                    },
-                    "active": true
-                  }
-                }
-              ],
-              "color": {
-                "x": 1.0,
-                "y": 0.99607843,
-                "z": 0.0,
-                "w": 1.0
-              },
-              "drawingMode": 4,
-              "isUIElement": false,
-              "parentObject2DID": -1,
-              "childrenObjectsID": [],
-              "render": {},
-              "name": "player",
-              "active": true,
-              "layerName": "default",
-              "tag": {
-                "name": "default"
-              },
-              "ID": 9
             }
           },
           {
@@ -390,6 +178,117 @@
                 "name": "default"
               },
               "ID": 123
+            }
+          },
+          {
+            "type": "Core2D.Drawable.Object2D",
+            "properties": {
+              "components": [
+                {
+                  "type": "Core2D.Component.Components.TransformComponent",
+                  "properties": {
+                    "transform": {
+                      "position": {
+                        "x": -184.61539,
+                        "y": -287.1795
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 1.76,
+                        "y": 2.04
+                      },
+                      "centre": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    },
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.TextureComponent",
+                  "properties": {
+                    "texture2D": {
+                      "source": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Resources\\textures\\player.png",
+                      "param": 33071,
+                      "textureBlock": 33984,
+                      "blendSourceFactor": 770,
+                      "blendDestinationFactor": 771
+                    },
+                    "textureDrawMode": 1,
+                    "UV": [
+                      0.0,
+                      0.0,
+                      0.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      1.0,
+                      0.0
+                    ],
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.BoxCollider2DComponent",
+                  "properties": {
+                    "boxCollider2D": {
+                      "scale": {
+                        "x": 0.61,
+                        "y": 1.06
+                      },
+                      "offset": {
+                        "x": -4.0,
+                        "y": 14.0
+                      }
+                    },
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.ScriptComponent",
+                  "properties": {
+                    "script": {
+                      "path": "D:/Pixelfield/Java Projects/SungearEngine2D/Engine/Projects/PROJECT12/Scripts\\SceneController",
+                      "name": "SceneController",
+                      "active": true
+                    },
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.Rigidbody2DComponent",
+                  "properties": {
+                    "rigidbody2D": {
+                      "bodyType": "DYNAMIC",
+                      "density": 1.0,
+                      "restitution": 0.0,
+                      "friction": 0.1,
+                      "isSensor": false,
+                      "isFixedRotation": false
+                    },
+                    "active": true
+                  }
+                }
+              ],
+              "color": {
+                "x": 1.0,
+                "y": 1.0,
+                "z": 0.0,
+                "w": 1.0
+              },
+              "drawingMode": 4,
+              "isUIElement": false,
+              "parentObject2DID": -1,
+              "childrenObjectsID": [],
+              "render": {},
+              "name": "player",
+              "active": true,
+              "layerName": "default",
+              "tag": {
+                "name": "default"
+              },
+              "ID": 363
             }
           }
         ],
@@ -511,7 +410,7 @@
             "value": {
               "type": "Core2D.Scripting.ScriptSceneObject",
               "properties": {
-                "ID": 9,
+                "ID": 363,
                 "name": "player",
                 "objectType": "TYPE_OBJECT2D"
               }
@@ -528,7 +427,7 @@
       }
     ]
   },
-  "maxObjectID": 298,
+  "maxObjectID": 363,
   "inBuild": false,
   "isMainScene2D": false
 }

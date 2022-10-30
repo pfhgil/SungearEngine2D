@@ -60,6 +60,7 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
         object2D.setID(ID);
         object2D.setLayerName(layerName);
 
+        Rigidbody2DComponent rigidbody2DComponent = null;
         for(JsonElement element : components) {
             Component component = context.deserialize(element, Component.class);
             if(component instanceof TransformComponent) {
@@ -95,9 +96,7 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                 object2D.getComponent(TextureComponent.class).set(component);
                 object2D.getComponent(TextureComponent.class).setTexture2D(texture2D);
             } else if(component instanceof Rigidbody2DComponent) {
-                Rigidbody2DComponent rigidbody2DComponent = new Rigidbody2DComponent();
-                object2D.addComponent(rigidbody2DComponent);
-                rigidbody2DComponent.set(component);
+                rigidbody2DComponent = (Rigidbody2DComponent) component;
             } else if(component instanceof ScriptComponent) {
                 ScriptComponent scriptComponent = (ScriptComponent) component;
                 if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
@@ -120,6 +119,12 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
             } else {
                 object2D.addComponent(component);
             }
+        }
+
+        // в самом конце добавляю rigidbody2d, чтобы не было путаницы с порядком десериализации колладейров и rigidbody2d
+        if(rigidbody2DComponent != null) {
+            object2D.addComponent(rigidbody2DComponent);
+            rigidbody2DComponent.set(rigidbody2DComponent);
         }
 
         return object2D;
