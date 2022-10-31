@@ -1,6 +1,7 @@
 package Core2D.Graphics;
 
 import Core2D.Camera2D.CamerasManager;
+import Core2D.Core2D.Core2D;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
 import Core2D.Core2D.Settings;
@@ -8,6 +9,7 @@ import Core2D.Log.Log;
 import Core2D.Drawable.Object2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.ShaderUtils.FrameBufferObject;
+import Core2D.Timer.Timer;
 import Core2D.Utils.ExceptionsUtils;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
@@ -64,34 +66,46 @@ public abstract class Graphics
         System.gc();
 
         // цикл отрисовки (работает до тех пор, пока окно не должно быть закрыто)
-        Core2D.Core2D.Core2D.getDeltaTimer().start();
+        Core2D.getDeltaTimer().start();
 
-        while (!glfwWindowShouldClose(Core2D.Core2D.Core2D.getWindow().getWindow())) {
+        float frameCap = 1.0f / Settings.Core2D.destinationFPS;
+
+        float initTime = Timer.getTimeInSeconds();
+
+        while (!glfwWindowShouldClose(Core2D.getWindow().getWindow())) {
             try {
                 if(Settings.Core2D.sleepCore2D) {
                     Thread.sleep(1000);
                 }
 
-                Vector2i windowSize = Core2D.Core2D.Core2D.getWindow().getSize();
-                if(CamerasManager.getMainCamera2D() != null) {
+                long delay = (long) (Math.min(frameCap - Core2D.getDeltaTimer().getDeltaTime(), frameCap) * 1000.0f);
+
+                if(delay > 0) {
+                    Thread.sleep(delay);
+                }
+
+                //System.out.println("delay: " + delay + ", delta: " + Core2D.getDeltaTimer().getDeltaTime());
+
+                Core2D.getDeltaTimer().startFrame();
+
+                Vector2i windowSize = Core2D.getWindow().getSize();
+                if (CamerasManager.getMainCamera2D() != null) {
                     CamerasManager.getMainCamera2D().setViewportSize(new Vector2f(windowSize.x, windowSize.y));
                 }
 
-                if(SceneManager.currentSceneManager.getCurrentScene2D() != null && SceneManager.currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
+                if (SceneManager.currentSceneManager.getCurrentScene2D() != null && SceneManager.currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
                     SceneManager.currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().setViewportSize(new Vector2f(windowSize.x, windowSize.y));
                 }
 
-                Core2D.Core2D.Core2D.getDeltaTimer().startFrame();
-
-                if(!screenCleared) {
+                if (!screenCleared) {
                     GL11C.glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, screenClearColor.w);
                     screenCleared = true;
                 }
 
                 GL11C.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-                if (Core2D.Core2D.Core2D.core2DUserCallback != null) {
-                    Core2D.Core2D.Core2D.core2DUserCallback.onDrawFrame();
+                if (Core2D.core2DUserCallback != null) {
+                    Core2D.core2DUserCallback.onDrawFrame();
                 }
 
                 //physics.BodiesUpdate();
@@ -100,7 +114,7 @@ public abstract class Graphics
                 Mouse.handleMouseInput();
 
                 // заменяет цветовой буфер (большой буфер, содержащий значения цвета для каждого пикселя в GLFW окне), который использовался для отрисовки во время текущей итерации и показывает результат на экране
-                glfwSwapBuffers(Core2D.Core2D.Core2D.getWindow().getWindow());
+                glfwSwapBuffers(Core2D.getWindow().getWindow());
 
                 // брать сообщения из очереди и обрабатывать их
                 glfwPollEvents();
@@ -163,7 +177,7 @@ public abstract class Graphics
         viewMode = newViewMode;
         if(viewMode == ViewMode.VIEW_MODE_2D) {
             if(CamerasManager.getMainCamera2D() != null) {
-                CamerasManager.getMainCamera2D().setViewportSize(new Vector2f(Core2D.Core2D.Core2D.getWindow().getSize().x, Core2D.Core2D.Core2D.getWindow().getSize().y));
+                CamerasManager.getMainCamera2D().setViewportSize(new Vector2f(Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y));
             }
             //projectionMatrix = new Matrix4f().ortho2D(0, Core2D.getWindow().getSize().x, 0, Core2D.getWindow().getSize().y);
         } else if(viewMode == ViewMode.VIEW_MODE_3D) {
@@ -171,7 +185,7 @@ public abstract class Graphics
                 // сделать настройки более гибкими
                 CamerasManager.getMainCamera2D().getProjectionMatrix().perspective(
                         (float) Math.toRadians(90.0f),
-                        (float) Core2D.Core2D.Core2D.getWindow().getSize().x / Core2D.Core2D.Core2D.getWindow().getSize().y,
+                        (float) Core2D.getWindow().getSize().x / Core2D.getWindow().getSize().y,
                         0.1f,
                         250.0f
                 );

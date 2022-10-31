@@ -2,7 +2,8 @@ package SungearEngine2D.GUI.Views;
 
 import Core2D.Core2D.Core2D;
 import SungearEngine2D.GUI.Views.EditorView.*;
-import SungearEngine2D.GUI.Views.ProjectSettingsView.ProjectSettingsView;
+import SungearEngine2D.GUI.Views.Other.EngineSettingsView;
+import SungearEngine2D.GUI.Views.Other.ProjectSettingsView;
 import imgui.ImGui;
 import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiStyleVar;
@@ -31,6 +32,7 @@ public class ViewsManager
     private static ToolbarView toolbarView;
 
     private static ProjectSettingsView projectSettingsView;
+    private static EngineSettingsView engineSettingsView;
 
     public static void init()
     {
@@ -48,6 +50,7 @@ public class ViewsManager
         toolbarView = new ToolbarView();
 
         projectSettingsView = new ProjectSettingsView();
+        engineSettingsView = new EngineSettingsView();
     }
 
     public static void draw()
@@ -98,6 +101,10 @@ public class ViewsManager
         if(projectSettingsView.active) {
             projectSettingsView.draw();
         }
+
+        if(engineSettingsView.active) {
+            engineSettingsView.draw();
+        }
     }
 
     public static InspectorView getInspectorView() { return inspectorView; }
@@ -115,6 +122,8 @@ public class ViewsManager
     public static BottomMenuView getBottomMenuView() {  return bottomMenuView;  }
 
     public static ProjectSettingsView getProjectSettingsView() { return projectSettingsView; }
+
+    public static EngineSettingsView getEngineSettingsView() { return engineSettingsView; }
 
     public static int getCurrentFocusedDialogWindow() { return currentFocusedDialogWindow; }
     public static void setCurrentFocusedDialogWindow(int currentFocusedDialogWindow)

@@ -5,12 +5,14 @@ import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
 import Core2D.Log.Log;
 import Core2D.Scripting.Script;
+import Core2D.ShaderUtils.ShaderUtils;
 import Core2D.ShaderUtils.VertexBufferObject;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Texture2D.TextureDrawModes;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.PositionsQuad;
 import org.joml.Vector2f;
+import org.joml.Vector4f;
 
 /**
  * The TextureComponent. This component is NonDuplicated.

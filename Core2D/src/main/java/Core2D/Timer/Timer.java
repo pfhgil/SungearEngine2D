@@ -81,6 +81,10 @@ public class Timer
 
             difference = (System.nanoTime() - startTime);
 
+            long currentTime = System.nanoTime();
+            deltaTime = (currentTime - lastTime) / 1000.0f / 1000.0f / 1000.0f;
+            lastTime = currentTime;
+
             framesPerDestTime++;
 
             if(difference / 1000.0f / 1000.0f / 1000.0f >= destTime) {
@@ -99,10 +103,6 @@ public class Timer
                     active = false;
                 }
             }
-
-            long currentTime = System.nanoTime();
-            deltaTime = (currentTime - lastTime) / 1000.0f / 1000.0f / 1000.0f;
-            lastTime = currentTime;
 
             deltaUpdate();
         }
@@ -125,6 +125,13 @@ public class Timer
                 timerCallback.deltaUpdate(deltaTime);
             }
         }
+    }
+
+    public static float getTimeInSeconds() {
+        return (float) System.nanoTime() / (float) 1000000000L;
+    }
+    public static long getTimeInMilliseconds() {
+        return System.currentTimeMillis();
     }
 
     public String getName() { return name; }

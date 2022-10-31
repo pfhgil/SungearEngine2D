@@ -1,22 +1,6 @@
-[#FFFFFF] 2022/10/30 16:13:46 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/10/30 16:13:46 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2022/10/30 16:13:46 | [#008000] Core2D started!
-[#FFFFFF] 2022/10/30 16:13:46 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
-[#FFFFFF] 2022/10/30 16:13:52 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/10/30 16:13:52 | [#FFFFFF] Initializing compiler...  
-[#FFFFFF] 2022/10/30 16:14:06 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
-[#FFFFFF] 2022/10/30 16:14:10 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
-[#FFFFFF] 2022/10/30 16:14:17 | [#FFFF00] Attention! Builder uses a separate thread to build the game, so all OpenGL commands won't work.
-[#FFFFFF] 2022/10/30 16:14:17 | [#FFFFFF] Creating the necessary files...
-[#FFFFFF] 2022/10/30 16:14:17 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
-[#FFFFFF] 2022/10/30 16:14:17 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\out\SceneManager.txt' already exists
-[#FFFFFF] 2022/10/30 16:14:20 | [#008000] Script ApplicationStarter.java was successfully built!
-[#FFFFFF] 2022/10/30 16:14:20 | [#FFFFFF] 
-[#FFFFFF] 2022/10/30 16:14:49 | [#FF0000] Не удается найти указанный файл.
-юъЄ. 30, 2022 4:14:45 PM java.util.jar.Attributes read
-WARNING: Duplicate name in Manifest: Manifest-Version.
-Ensure that the manifest does not have duplicate entries, and
-that blank lines separate individual sections in both your
-manifest and in the META-INF/MANIFEST.MF entry in the jar file.
-
-[#FFFFFF] 2022/10/30 16:16:18 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2022/10/31 23:18:03 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/10/31 23:18:03 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2022/10/31 23:18:03 | [#008000] Core2D started!
+[#FFFFFF] 2022/10/31 23:18:03 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2022/10/31 23:18:09 | [#FF0000] OpenGL error: 1280
+[#FFFFFF] 2022/10/31 23:18:09 | [#FFFFFF] Initializing compiler...  
