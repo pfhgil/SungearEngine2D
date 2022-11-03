@@ -4,3 +4,6 @@
 **/Projects
 **/.gradle
 **/build/
+**/*.sm
+**/*.sgp
+**/*.txt
