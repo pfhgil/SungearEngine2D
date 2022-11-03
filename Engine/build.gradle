@@ -1,0 +1,40 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+version = ''
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src'
+        }
+        resources  {
+            srcDir 'resources/'
+        }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs '../Core2D/build/libs'
+        dirs 'libs'
+    }
+}
+
+dependencies {
+    implementation files('libs/Core2D.jar')
+    implementation name: 'imgui-app-1.84.1.3'
+}

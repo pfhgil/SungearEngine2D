@@ -18,44 +18,39 @@ import Core2D.Utils.Utils;
 import Core2D.Utils.WrappedObject;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
+import SungearEngine2D.exception.SungearEngineError;
+import SungearEngine2D.exception.SungearEngineException;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Builder
-{
+public class Builder {
     private static String buildName = "";
 
-    public static void startBuild(String buildName)
-    {
+    public static void startBuild(String buildName) {
         Log.CurrentSession.println("Attention! Builder uses a separate thread to build the game, so all OpenGL commands won't work.", Log.MessageType.WARNING);
         Builder.buildName = buildName;
         build();
     }
 
-    private static void build()
-    {
+    private static void build() {
         if (ProjectsManager.getCurrentProject() != null) {
             // создаю SceneManager с выбранными сценами
             SceneManager sceneManager = new SceneManager();
             File outDirectory = new File("");
-
             ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Creating the necessary files...", 3.0f, 0.0f) {
                 @Override
                 public void run() {
                     SceneManager.saveSceneManager(ProjectsManager.getCurrentProject().getProjectPath() + "\\SceneManager.sm");
-
                     current++;
-
                     File outDirectory = new File(ProjectsManager.getCurrentProject().getProjectPath() + "\\out");
                     if (!outDirectory.exists()) {
                         FileUtils.createFolder(outDirectory.getPath());
                     }
-
                     current++;
-
                     for (Scene2DStoredValues storedValues : SceneManager.currentSceneManager.getScene2DStoredValues()) {
                         if (storedValues.inBuild) {
                             Scene2DStoredValues newStoredValues = new Scene2DStoredValues();
@@ -66,43 +61,28 @@ public class Builder
                             sceneManager.getScene2DStoredValues().add(newStoredValues);
                         }
                     }
-
                     current++;
-
                     text = "Preparing resources for packaging...";
                     current = 0.0f;
                     destination = sceneManager.getScene2DStoredValues().size();
-
                     //SceneManager.currentSceneManager.setCurrentScene2D(new Scene2D());
-
                     prepareResources(outDirectory.getPath() + "\\resources", sceneManager, this);
-
                     SceneManager.saveSceneManager(outDirectory.getPath() + "/SceneManager.sm", sceneManager);
-
                     text = "Copying necessary files...";
                     destination = 5.0f;
                     current = 0.0f;
-
                     File applicationStarterClassFile = new File(".\\compiler\\ApplicationStarter.class");
                     File applicationStarterClassFile1 = new File(".\\compiler\\ApplicationStarter$1.class");
-
                     // копирую файл Core2D.jar в папку sourcesDirectoryPath
                     FileUtils.copyFile(Core2D.class.getResourceAsStream("/data/other/Core2D.jar"), outDirectory.getPath() + "/Core2D.jar");
-
                     current++;
-
                     // копирую файл кодировки в папку sourcesDirectoryPath
                     FileUtils.copyFile(Core2D.class.getResourceAsStream("/data/other/chcp.com"), outDirectory.getPath() + "/chcp.com");
-
                     current++;
-
                     // копирую файл 7z.exe
                     FileUtils.copyFile(Core2D.class.getResourceAsStream("/data/other/7z.exe"), outDirectory.getPath() + "/7z.exe");
-
                     current++;
-
                     Compiler.compileScript(".\\compiler\\ApplicationStarter.java");
-
                     // копирую файл ApplicationStarter
                     try {
                         FileUtils.copyFile(applicationStarterClassFile.getCanonicalPath(), outDirectory.getPath() + "/ApplicationStarter.class", false);
@@ -113,27 +93,21 @@ public class Builder
                         Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                         current += 2.0f;
                     }
-
                     text = "Creating manifest file...";
                     destination = 1.0f;
                     current = 0.0f;
-
                     // создаю файл манифеста
                     String manifestFileData = "Manifest-Version: 1.0\n" +
                             "Main-Class: ApplicationStarter\n" +
                             "Class-Path: Core2D.jar\n";
-
                     File manifestFile = FileUtils.createFile(outDirectory.getPath() + "/manifest.txt");
                     FileUtils.writeToFile(manifestFile, manifestFileData, false);
                     current++;
-
                     text = "Creating builder.bat file...";
                     destination = 2.0f;
                     current = 0.0f;
-
                     File builderBatFile = FileUtils.createFile(outDirectory.getPath() + "\\builder.bat");
                     current++;
-
                     String builderBatFileData = "@echo off\n" +
                             // устанавливаю кодировку, чтобы был русский текст
                             "chcp 65001\n" +
@@ -169,48 +143,38 @@ public class Builder
                             // удаляю папку resources
                             "rd /s /q resources\n" +
                             "echo build finished. check log.";
-
                     FileUtils.writeToFile(builderBatFile, builderBatFileData, false);
                     current++;
-
                     // создаю файл, который будет открывать builder
                     String openBuilderBatFileData = "cd /d " + builderBatFile.getParentFile().getPath() + "\n" +
                             "builder.bat";
-
                     text = "Creating openBuilder.bat file...";
                     destination = 2.0f;
                     current = 0.0f;
-
                     File openBuilderBatFile = FileUtils.createFile(outDirectory.getPath() + "/openBuilder.bat");
                     current++;
                     FileUtils.writeToFile(openBuilderBatFile, openBuilderBatFileData, false);
                     current++;
-
                     text = "Starting openBuilder.bat...";
                     destination = 3.0f;
                     current = 0.0f;
-
                     // открываю файл openBuilder
                     ProcessBuilder pb = new ProcessBuilder(outDirectory.getPath() + "/openBuilder.bat");
                     destination++;
                     try {
                         Process proc = pb.start();
                         destination++;
-
                         // принт вывода и ошибок
                         Log.CurrentSession.println(Utils.outputStreamToString(proc.getOutputStream()), Log.MessageType.INFO);
                         Log.CurrentSession.println(Utils.inputStreamToString(proc.getErrorStream()), Log.MessageType.ERROR);
-
                         // жду завершения процесса
                         proc.waitFor();
                     } catch (InterruptedException | IOException e) {
                         Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                     }
                     destination++;
-
                     // удаляю bat файл для билда
                     builderBatFile.delete();
-
                     ViewsManager.getBottomMenuView().leftSideInfo = "File " + buildName + ".jar was successfully built!";
                     ViewsManager.getBottomMenuView().leftSideInfoColor.set(0.0f, 1.0f, 0.0f, 1.0f);
                     buildName = "";
@@ -220,27 +184,22 @@ public class Builder
     }
 
     // упаковка ресурсов
-    private static void prepareResources(String toDir, SceneManager sceneManager, Task task)
-    {
+    private static void prepareResources(String toDir, SceneManager sceneManager, Task task) {
         FileUtils.createFolder(toDir);
-
         // лист всех сцен, которые нужно сохранить для билда
         List<Scene2D> scenes2DToSaveInBuild = new ArrayList<>();
-
         // сначала загружаю все сцены
-        for(Scene2DStoredValues storedValues : sceneManager.getScene2DStoredValues()) {
+        for (Scene2DStoredValues storedValues : sceneManager.getScene2DStoredValues()) {
             Scene2D scene2D = sceneManager.loadScene(storedValues.path);
-
-            if(scene2D != null) {
+            if (scene2D != null) {
                 scenes2DToSaveInBuild.add(scene2D);
             }
         }
-
         // далее пробегаюсь по всем сценам и изменяю путь ресурсов у кажого объекта на относительный
-        for(Scene2D scene2D : scenes2DToSaveInBuild) {
-            for(Layer layer : scene2D.getLayering().getLayers()) {
-                for(WrappedObject wrappedObject : layer.getRenderingObjects()) {
-                    if(wrappedObject.getObject() instanceof Object2D) {
+        for (Scene2D scene2D : scenes2DToSaveInBuild) {
+            for (Layer layer : scene2D.getLayering().getLayers()) {
+                for (WrappedObject wrappedObject : layer.getRenderingObjects()) {
+                    if (wrappedObject.getObject() instanceof Object2D) {
                         Object2D object2D = (Object2D) wrappedObject.getObject();
                         TextureComponent textureComponent = object2D.getComponent(TextureComponent.class);
                         // новый путь до текстуры
@@ -249,55 +208,90 @@ public class Builder
                         newTextureFile.getParentFile().mkdirs();
                         // копирую файл в эти папки
                         FileUtils.copyFile(ProjectsManager.getCurrentProject().getProjectPath() +
-                                File.separator +
-                                textureComponent.getTexture2D().source,
+                                        File.separator +
+                                        textureComponent.getTexture2D().source,
                                 newTextureFile.getPath(), false);
                         // устанавливаю для текстурного компонента путь в билде (относительный)
                         textureComponent.getTexture2D().source = "/" + textureComponent.getTexture2D().source.replace("\\", "/");
-
                         // то же самое для скриптов
                         ScriptComponent scriptComponent = object2D.getComponent(ScriptComponent.class);
-                        if(scriptComponent != null) {
+                        if (scriptComponent != null) {
                             File newScriptFile = new File(toDir + "\\" + scriptComponent.getScript().path);
                             newScriptFile.getParentFile().mkdirs();
                             FileUtils.copyFile(ProjectsManager.getCurrentProject().getProjectPath() +
-                                    File.separator +
-                                    scriptComponent.getScript().path + ".class",
+                                            File.separator +
+                                            scriptComponent.getScript().path + ".class",
                                     newScriptFile.getPath() + ".class", false);
                             scriptComponent.getScript().path = "/" + scriptComponent.getScript().path.replace("\\", "/");
                         }
                     }
                 }
             }
-
             // относительный путь сцены (относительно папки проекта)
-            String scene2DRelativePath = FileUtils.getRelativePath(new File(scene2D.getScenePath()),
-                    new File(ProjectsManager.getCurrentProject().getProjectPath()));
-
+            String scene2DRelativePath = FileUtils.getRelativePath(new File(scene2D.getScenePath()), new File(ProjectsManager.getCurrentProject().getProjectPath()));
             System.out.println("scene2d relative path: " + scene2DRelativePath);
-
             // новый путь до сцены
             File newScene2DFile = new File(toDir + "\\" + scene2DRelativePath);
             // создаю все папки, которых нет
             newScene2DFile.getParentFile().mkdirs();
-
             String newScene2DPath = "/" + scene2DRelativePath.replace("\\", "/");
-
             // сохраняю сцену
             sceneManager.saveScene(scene2D, newScene2DFile.getPath());
             // копирую сцену в эти папки
             //FileUtils.copyFile(scene2D.getScenePath(), newScene2DFile.getPath(), false);
-
             // нахожу нужные сохраняемые данные и изменяю путь до сцены
             sceneManager.getScene2DStoredValues()
                     .stream()
                     .filter(p -> p.path.equals(scene2D.getScenePath()))
                     .findFirst()
                     .get().path = newScene2DPath;
-
             scene2D.setScenePath(newScene2DPath);
         }
-
         task.current++;
     }
+
+//    public static void main(String[] args) throws IOException, SungearEngineException {
+//        URL resource = Builder.class.getClassLoader().getResource("utils/win/bat2exe.exe");
+//        String gameName = "MyGame";
+//        String[] classPathLib = new String[] {"Core2D.jar"};
+//        File javaPath = new File("java");
+//        File jarSourceFolder = new File("Q:\\download\\test\\source");
+//        File exeTargetFolder = new File("Q:\\download\\test\\target");
+//        File bat2ExeUtilPath = new File(resource.getPath());
+//        new Builder().validateFileSystemState(jarSourceFolder, exeTargetFolder, bat2ExeUtilPath)
+//                .createBat(javaPath, gameName, classPathLib, jarSourceFolder)
+//                .createExe(jarSourceFolder, exeTargetFolder, bat2ExeUtilPath);
+//    }
+
+    public Builder createBat(File javaPath, String gameName, String[] classPathLibs, File jarSourceFolder) throws IOException {
+        File batFile = new File(String.format("%s/%s.bat", jarSourceFolder.getAbsolutePath(), gameName));
+        batFile.createNewFile();
+        Files.writeString(batFile.toPath(), String.format("%s -cp \"%s\" -jar \"%s.jar\"", javaPath.getAbsolutePath(), String.join(";", classPathLibs), gameName));
+        return this;
+    }
+
+    public void createExe(File jarSourceFolder, File exeTargetFolder, File bat2ExeUtilPath) throws SungearEngineException, IOException {
+        Runtime.getRuntime().exec(String.format("%s /source:%s /target:%s /s /y", bat2ExeUtilPath.getAbsolutePath(), jarSourceFolder.getAbsolutePath(), exeTargetFolder.getAbsolutePath()));
+    }
+
+    private Builder validateFileSystemState(File jarBuildFolder, File exeBuildFolder, File batToExeUtilPath) throws SungearEngineException {
+        if (!jarBuildFolder.canRead()) {
+            throw new SungearEngineException(SungearEngineError.THERE_ARE_NO_PERMISSIONS, String.format("read file or dir %s", batToExeUtilPath.getAbsolutePath()));
+        }
+        if (!batToExeUtilPath.canExecute()) {
+            throw new SungearEngineException(SungearEngineError.THERE_ARE_NO_PERMISSIONS, String.format("execute file or dir %s", batToExeUtilPath.getAbsolutePath()));
+        }
+        if (!batToExeUtilPath.canRead()) {
+            throw new SungearEngineException(SungearEngineError.THERE_ARE_NO_PERMISSIONS, String.format("read file or dir %s", batToExeUtilPath.getAbsolutePath()));
+        }
+        exeBuildFolder.mkdirs();
+        if (!exeBuildFolder.canRead()) {
+            throw new SungearEngineException(SungearEngineError.THERE_ARE_NO_PERMISSIONS, String.format("read file or dir %s", batToExeUtilPath.getAbsolutePath()));
+        }
+        if (!exeBuildFolder.canWrite()) {
+            throw new SungearEngineException(SungearEngineError.THERE_ARE_NO_PERMISSIONS, String.format("write file or dir %s", batToExeUtilPath.getAbsolutePath()));
+        }
+        return this;
+    }
+
 }
