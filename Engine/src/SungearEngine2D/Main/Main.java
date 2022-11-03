@@ -6,6 +6,7 @@ import Core2D.Component.Components.ScriptComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DUserCallback;
+import Core2D.Core2D.Settings;
 import Core2D.Drawable.Object2D;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.PC.Keyboard;
@@ -148,6 +149,8 @@ public class Main
 
             @Override
             public void onDrawFrame() {
+                Core2D.getWindow().setName("Sungear Engine 2D. FPS: " + Core2D.getDeltaTimer().getFPS());
+
                 mainCamera2D.getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
                 //cameraAnchor.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
                 CameraController.control();
@@ -166,6 +169,7 @@ public class Main
             }
         };
 
+        Settings.Core2D.destinationFPS = 60;
         Core2D.core2DUserCallback = core2DUserCallback;
         Core2D.start();
         //Core2D.start("Sungear Engine 2D", new int[] { GLFW.GLFW_SAMPLES }, new int[] { 8 });

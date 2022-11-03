@@ -8,6 +8,7 @@ import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.Scene2DStoredValues;
 import Core2D.Scene2D.SceneManager;
 import SungearEngine2D.Builder.Builder;
+import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindow;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindowCallback;
@@ -219,7 +220,6 @@ public class TopToolbarView
 
                     if (ImGui.menuItem("Project settings")) {
                         ViewsManager.getProjectSettingsView().active = true;
-                        // сделать
                     }
 
                     if (ImGui.menuItem("Build project")) {
@@ -364,7 +364,7 @@ public class TopToolbarView
                 }
 
                 if(ImGui.menuItem("Settings")) {
-                    // сделать
+                    ViewsManager.getEngineSettingsView().active = true;
                 }
 
                 ImGui.endMenu();

@@ -61,7 +61,7 @@ public class ShaderUtils
             // передача в uniform вектора
             GL32C.glUniform4f(uniformLocation, vector4f.x, vector4f.y, vector4f.z, vector4f.w);
         } else {
-            Log.CurrentSession.println("Uniform with name \"" + uniformName + "\" was not found!", Log.MessageType.ERROR);
+            //Log.CurrentSession.println("Uniform with name \"" + uniformName + "\" was not found!", Log.MessageType.ERROR);
         }
     }
     public static void setUniform(int programHandler, String uniformName, int _int)

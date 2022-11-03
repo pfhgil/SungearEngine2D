@@ -212,6 +212,8 @@ public class Object2D extends Drawable implements Serializable
 
             // отвязываю vao
             vertexArrayObject.unBind();
+
+
         }
     }
 

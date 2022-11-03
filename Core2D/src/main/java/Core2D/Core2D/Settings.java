@@ -37,6 +37,8 @@ public class Settings
          * If true then the Core2D needs to fall asleep.
          */
         public static boolean sleepCore2D = false;
+
+        public static int destinationFPS = 60;
     }
 
     public static class Other

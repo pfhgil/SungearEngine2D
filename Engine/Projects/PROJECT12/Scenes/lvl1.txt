@@ -1,6 +1,6 @@
 {
   "name": "lvl1",
-  "scenePath": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\PROJECT12\\Scenes\\lvl1.sgs",
+  "scenePath": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl1.sgs",
   "layering": {
     "layers": [
       {
@@ -528,7 +528,7 @@
       }
     ]
   },
-  "maxObjectID": 47,
+  "maxObjectID": 59,
   "inBuild": false,
   "isMainScene2D": false
 }
