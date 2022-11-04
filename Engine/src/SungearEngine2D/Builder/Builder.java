@@ -23,6 +23,7 @@ import SungearEngine2D.exception.SungearEngineException;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
@@ -62,15 +63,19 @@ public class Builder {
                         }
                     }
                     current++;
+
                     text = "Preparing resources for packaging...";
                     current = 0.0f;
                     destination = sceneManager.getScene2DStoredValues().size();
+
                     //SceneManager.currentSceneManager.setCurrentScene2D(new Scene2D());
                     prepareResources(outDirectory.getPath() + "\\resources", sceneManager, this);
                     SceneManager.saveSceneManager(outDirectory.getPath() + "/SceneManager.sm", sceneManager);
+
                     text = "Copying necessary files...";
                     destination = 5.0f;
                     current = 0.0f;
+
                     File applicationStarterClassFile = new File(".\\compiler\\ApplicationStarter.class");
                     File applicationStarterClassFile1 = new File(".\\compiler\\ApplicationStarter$1.class");
                     // копирую файл Core2D.jar в папку sourcesDirectoryPath
@@ -93,9 +98,11 @@ public class Builder {
                         Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                         current += 2.0f;
                     }
+
                     text = "Creating manifest file...";
                     destination = 1.0f;
                     current = 0.0f;
+
                     // создаю файл манифеста
                     String manifestFileData = "Manifest-Version: 1.0\n" +
                             "Main-Class: ApplicationStarter\n" +
@@ -103,9 +110,11 @@ public class Builder {
                     File manifestFile = FileUtils.createFile(outDirectory.getPath() + "/manifest.txt");
                     FileUtils.writeToFile(manifestFile, manifestFileData, false);
                     current++;
+
                     text = "Creating builder.bat file...";
                     destination = 2.0f;
                     current = 0.0f;
+
                     File builderBatFile = FileUtils.createFile(outDirectory.getPath() + "\\builder.bat");
                     current++;
                     String builderBatFileData = "@echo off\n" +
@@ -137,7 +146,7 @@ public class Builder {
                             // обновляю манифест в jar
                             "jar umf manifest.txt " + buildName + ".jar\n" +
                             // удаляю все оставшиеся от билда файлы
-                            "del /q ApplicationStarter.class ApplicationStarter$1.class manifest.txt openBuilder.bat chcp.com Core2D.jar 7z.exe SceneManager.sm\n" +
+                            "del /q ApplicationStarter.class ApplicationStarter$1.class manifest.txt openBuilder.bat chcp.com 7z.exe SceneManager.sm\n" +
                             // удаляю папку core2d
                             "rd /s /q core2d\n" +
                             // удаляю папку resources
@@ -148,33 +157,73 @@ public class Builder {
                     // создаю файл, который будет открывать builder
                     String openBuilderBatFileData = "cd /d " + builderBatFile.getParentFile().getPath() + "\n" +
                             "builder.bat";
+
                     text = "Creating openBuilder.bat file...";
                     destination = 2.0f;
                     current = 0.0f;
+
                     File openBuilderBatFile = FileUtils.createFile(outDirectory.getPath() + "/openBuilder.bat");
                     current++;
                     FileUtils.writeToFile(openBuilderBatFile, openBuilderBatFileData, false);
                     current++;
+
                     text = "Starting openBuilder.bat...";
                     destination = 3.0f;
                     current = 0.0f;
+
                     // открываю файл openBuilder
                     ProcessBuilder pb = new ProcessBuilder(outDirectory.getPath() + "/openBuilder.bat");
                     destination++;
                     try {
-                        Process proc = pb.start();
+                        Process toJarBuildProc = pb.start();
                         destination++;
                         // принт вывода и ошибок
-                        Log.CurrentSession.println(Utils.outputStreamToString(proc.getOutputStream()), Log.MessageType.INFO);
-                        Log.CurrentSession.println(Utils.inputStreamToString(proc.getErrorStream()), Log.MessageType.ERROR);
+                        Log.CurrentSession.println(Utils.outputStreamToString(toJarBuildProc.getOutputStream()), Log.MessageType.INFO);
+                        Log.CurrentSession.println(Utils.inputStreamToString(toJarBuildProc.getErrorStream()), Log.MessageType.ERROR);
                         // жду завершения процесса
-                        proc.waitFor();
-                    } catch (InterruptedException | IOException e) {
+                        toJarBuildProc.waitFor();
+
+                        text = "Translating jar to exe...";
+                        destination = 3.0f;
+                        current = 0.0f;
+
+                        URL resource = Builder.class.getClassLoader().getResource("utils/win/bat2exe.bat");
+                        String[] classPathLib = new String[] { "Core2D.jar" };
+                        File javaPath = new File(ProjectsManager.getCurrentProject().getProjectSettings().getJdkPath() + "\\bin\\java.exe");
+                        File jarSourceFolder = new File(outDirectory.getPath());
+                        File exeTargetFolder = new File(outDirectory.getPath());
+                        File bat2ExeUtilPath = new File(resource.getPath().replace("%20", " "));
+                        Builder b = new Builder().validateFileSystemState(jarSourceFolder, exeTargetFolder, bat2ExeUtilPath);
+                        destination++;
+                        b.createBat(javaPath, buildName, classPathLib, jarSourceFolder);
+                        destination++;
+                        Process toExeBuildProc = b.createExe(jarSourceFolder, exeTargetFolder, bat2ExeUtilPath);
+                        destination++;
+
+                        // принт вывода и ошибок
+                        Log.CurrentSession.println(Utils.outputStreamToString(toExeBuildProc.getOutputStream()), Log.MessageType.INFO);
+                        Log.CurrentSession.println(Utils.inputStreamToString(toExeBuildProc.getErrorStream()), Log.MessageType.ERROR);
+
+                        toExeBuildProc.waitFor();
+                    } catch (InterruptedException | IOException | SungearEngineException e) {
                         Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                     }
                     destination++;
-                    // удаляю bat файл для билда
+                    // удаление оставшихся файлов
                     builderBatFile.delete();
+                    File core2DFile = new File(builderBatFile.getParent() + "\\Core2D.jar");
+                    File gameJarFile = new File(builderBatFile.getParent() + "\\" + buildName + ".jar");
+                    File gameBatFile = new File(builderBatFile.getParent() + "\\" + buildName + ".bat");
+                    if(core2DFile.exists()) {
+                        core2DFile.delete();
+                    }
+                    if(gameJarFile.exists()) {
+                        gameJarFile.delete();
+                    }
+                    if(gameBatFile.exists()) {
+                        gameBatFile.delete();
+                    }
+
                     ViewsManager.getBottomMenuView().leftSideInfo = "File " + buildName + ".jar was successfully built!";
                     ViewsManager.getBottomMenuView().leftSideInfoColor.set(0.0f, 1.0f, 0.0f, 1.0f);
                     buildName = "";
@@ -183,7 +232,7 @@ public class Builder {
         }
     }
 
-    // упаковка ресурсов
+    // подготовка ресурсов
     private static void prepareResources(String toDir, SceneManager sceneManager, Task task) {
         FileUtils.createFolder(toDir);
         // лист всех сцен, которые нужно сохранить для билда
@@ -270,8 +319,8 @@ public class Builder {
         return this;
     }
 
-    public void createExe(File jarSourceFolder, File exeTargetFolder, File bat2ExeUtilPath) throws SungearEngineException, IOException {
-        Runtime.getRuntime().exec(String.format("%s /source:%s /target:%s /s /y", bat2ExeUtilPath.getAbsolutePath(), jarSourceFolder.getAbsolutePath(), exeTargetFolder.getAbsolutePath()));
+    public Process createExe(File jarSourceFolder, File exeTargetFolder, File bat2ExeUtilPath) throws SungearEngineException, IOException {
+        return Runtime.getRuntime().exec(String.format("%s /source:%s /target:%s /s /y", bat2ExeUtilPath.getAbsolutePath(), jarSourceFolder.getAbsolutePath(), exeTargetFolder.getAbsolutePath()));
     }
 
     private Builder validateFileSystemState(File jarBuildFolder, File exeBuildFolder, File batToExeUtilPath) throws SungearEngineException {

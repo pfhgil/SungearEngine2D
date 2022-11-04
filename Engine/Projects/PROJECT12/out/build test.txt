@@ -1,1 +1,0 @@
-"C:\Users\stuka\.jdks\corretto-17.0.5\bin\java.exe" -jar "D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\out\TestGame.jar"
