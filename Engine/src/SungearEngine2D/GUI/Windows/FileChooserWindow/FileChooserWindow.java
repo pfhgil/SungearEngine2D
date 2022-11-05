@@ -51,8 +51,9 @@ public class FileChooserWindow extends DialogWindow
         create();
     }
     private void close(){
-        if (activeWindow!=null)
+        if (activeWindow != null) {
             activeWindow.setActive(true);
+        }
         setActive(false);
     }
 
@@ -91,19 +92,20 @@ public class FileChooserWindow extends DialogWindow
 
             @Override
             public void onLeftButtonClicked() {
-                if (fileChooserWindowCallback != null)
+                if (fileChooserWindowCallback != null) {
                     fileChooserWindowCallback.onLeftButtonClicked();
+                }
                 close();
-
             }
 
             @Override
             public void onRightButtonClicked() {
-                if (fileChooserWindowCallback != null)
+                if (fileChooserWindowCallback != null) {
                     fileChooserWindowCallback.onRightButtonClicked(currentChosenFilePath +
-                            (fileChooserMode==FileChooserMode.CREATE_NEW_FILE ? newFileName.get() : ""));
+                            (fileChooserMode == FileChooserMode.CREATE_NEW_FILE ? newFileName.get() : ""));
+                }
                 output.set(currentChosenFilePath +
-                        (fileChooserMode==FileChooserMode.CREATE_NEW_FILE ? newFileName.get() : ""));
+                        (fileChooserMode == FileChooserMode.CREATE_NEW_FILE ? newFileName.get() : ""));
                 close();
             }
 

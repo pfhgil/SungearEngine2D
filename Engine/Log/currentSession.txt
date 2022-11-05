@@ -1,23 +1,92 @@
-[#FFFFFF] 2022/11/05 00:59:59 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/11/05 00:59:59 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2022/11/05 00:59:59 | [#008000] Core2D started!
-[#FFFFFF] 2022/11/05 00:59:59 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
-[#FFFFFF] 2022/11/05 01:00:05 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/11/05 01:00:05 | [#FFFFFF] Initializing compiler...  
-[#FFFFFF] 2022/11/05 01:00:12 | [#FFFF00] Attention! Builder uses a separate thread to build the game, so all OpenGL commands won't work.
-[#FFFFFF] 2022/11/05 01:00:12 | [#FFFFFF] Creating the necessary files...
-[#FFFFFF] 2022/11/05 01:00:12 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
-[#FFFFFF] 2022/11/05 01:00:13 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\out\SceneManager.txt' already exists
-[#FFFFFF] 2022/11/05 01:00:15 | [#008000] Script ApplicationStarter.java was successfully built!
-[#FFFFFF] 2022/11/05 01:00:15 | [#FFFFFF] 
-[#FFFFFF] 2022/11/05 01:00:44 | [#FF0000] Не удается найти указанный файл.
-эю с. 05, 2022 1:00:37 AM java.util.jar.Attributes read
-WARNING: Duplicate name in Manifest: Manifest-Version.
-Ensure that the manifest does not have duplicate entries, and
-that blank lines separate individual sections in both your
-manifest and in the META-INF/MANIFEST.MF entry in the jar file.
-
-[#FFFFFF] 2022/11/05 01:00:44 | [#FFFFFF] 
-[#FFFFFF] 2022/11/05 01:00:58 | [#FF0000] Файл не найден
-
-[#FFFFFF] 2022/11/05 01:01:47 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2022/11/05 23:19:34 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/11/05 23:19:34 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2022/11/05 23:19:35 | [#008000] Core2D started!
+[#FFFFFF] 2022/11/05 23:19:35 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2022/11/05 23:19:41 | [#FF0000] OpenGL error: 1280
+[#FFFFFF] 2022/11/05 23:19:41 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2022/11/05 23:20:17 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl1.txt' already exists
+[#FFFFFF] 2022/11/05 23:20:18 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:20:18 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:20:19 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:20:19 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:20:19 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:20:19 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:20:19 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:20:19 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:20:19 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:20:19 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:20:20 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:20:23 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/05 23:20:23 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/05 23:20:23 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/05 23:20:30 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:20:31 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:20:31 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:20:31 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:20:31 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:20:31 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:20:31 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:20:31 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:20:31 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:20:31 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:20:32 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:20:32 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:20:32 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:20:32 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:20:32 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:20:32 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:20:32 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:20:33 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:20:33 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:20:33 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:20:33 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:20:34 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:20:34 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:20:34 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:20:34 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:20:34 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:20:34 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:20:34 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:20:34 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:20:36 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/05 23:20:36 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/05 23:20:38 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/05 23:20:39 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/05 23:20:41 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/05 23:20:42 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/05 23:20:46 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/05 23:20:47 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/05 23:20:47 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/05 23:20:47 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/05 23:20:47 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/05 23:20:57 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:20:59 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:21:00 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:21:01 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:21:01 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:21:01 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:21:01 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:21:04 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/05 23:21:05 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:21:06 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:21:07 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:21:09 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:21:12 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:21:14 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:21:15 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:21:15 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:21:16 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:21:17 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/05 23:21:17 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:21:18 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:21:19 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:21:20 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:21:22 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:21:23 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:21:24 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:21:25 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:21:25 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:21:26 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:21:27 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/05 23:21:27 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/05 23:21:50 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists

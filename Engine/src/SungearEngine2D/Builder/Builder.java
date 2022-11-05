@@ -18,6 +18,7 @@ import Core2D.Utils.Utils;
 import Core2D.Utils.WrappedObject;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
+import SungearEngine2D.Utils.AppData.AppDataManager;
 import SungearEngine2D.exception.SungearEngineError;
 import SungearEngine2D.exception.SungearEngineException;
 
@@ -29,11 +30,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Builder {
-    private static String buildName = "";
+    public static String outDirectoryPath = "";
+
+    public static void startBuild() {
+        startBuild(AppDataManager.getSettings().lastBuildName);
+    }
 
     public static void startBuild(String buildName) {
         Log.CurrentSession.println("Attention! Builder uses a separate thread to build the game, so all OpenGL commands won't work.", Log.MessageType.WARNING);
-        Builder.buildName = buildName;
+        AppDataManager.getSettings().lastBuildName = buildName;
         build();
     }
 
@@ -41,16 +46,12 @@ public class Builder {
         if (ProjectsManager.getCurrentProject() != null) {
             // создаю SceneManager с выбранными сценами
             SceneManager sceneManager = new SceneManager();
-            File outDirectory = new File("");
             ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Creating the necessary files...", 3.0f, 0.0f) {
                 @Override
                 public void run() {
                     SceneManager.saveSceneManager(ProjectsManager.getCurrentProject().getProjectPath() + "\\SceneManager.sm");
                     current++;
-                    File outDirectory = new File(ProjectsManager.getCurrentProject().getProjectPath() + "\\out");
-                    if (!outDirectory.exists()) {
-                        FileUtils.createFolder(outDirectory.getPath());
-                    }
+                    File outDirectory = new File(AppDataManager.getSettings().lastBuildOutPath);
                     current++;
                     for (Scene2DStoredValues storedValues : SceneManager.currentSceneManager.getScene2DStoredValues()) {
                         if (storedValues.inBuild) {
@@ -125,7 +126,7 @@ public class Builder {
                             // указываю путь до javac
                             "set ppath=%bin%;\"" + ProjectsManager.getCurrentProject().getProjectSettings().getJdkPath() + "\\javac.exe\"\n" +
                             // создаю jar с именем buildName, классом ApplicationStarter, манифестом
-                            "jar cvmf manifest.txt " + buildName + ".jar ApplicationStarter.class ApplicationStarter$1.class\n" +
+                            "jar cvmf manifest.txt " + AppDataManager.getSettings().lastBuildName + ".jar ApplicationStarter.class ApplicationStarter$1.class\n" +
                             // удаляю папку core2d
                             "rd core2d\n" +
                             // создаю папку core2d
@@ -137,14 +138,14 @@ public class Builder {
                             // возвращаюсь обратно
                             "cd..\n" +
                             // помещаю все распакованные файлы в jar-файл buildName
-                            "7z a " + buildName + ".jar core2d/. -ssc\n" +
+                            "7z a " + AppDataManager.getSettings().lastBuildName + ".jar core2d/. -ssc\n" +
                             // помещаю все ресурсы в jar-файл buildName
-                            "7z a " + buildName + ".jar resources/. -ssc\n" +
+                            "7z a " + AppDataManager.getSettings().lastBuildName + ".jar resources/. -ssc\n" +
                             // помещаю все ресурсы в jar-файл (сделать позже)
                             //"7z a " + buildName + ".jar " + resourcesDirectoryPath + "/. -ssc\n" +
-                            "7z a " + buildName + ".jar SceneManager.sm -ssc\n" +
+                            "7z a " + AppDataManager.getSettings().lastBuildName + ".jar SceneManager.sm -ssc\n" +
                             // обновляю манифест в jar
-                            "jar umf manifest.txt " + buildName + ".jar\n" +
+                            "jar umf manifest.txt " + AppDataManager.getSettings().lastBuildName + ".jar\n" +
                             // удаляю все оставшиеся от билда файлы
                             "del /q ApplicationStarter.class ApplicationStarter$1.class manifest.txt openBuilder.bat chcp.com 7z.exe SceneManager.sm\n" +
                             // удаляю папку core2d
@@ -195,7 +196,7 @@ public class Builder {
                         File bat2ExeUtilPath = new File(resource.getPath().replace("%20", " "));
                         Builder b = new Builder().validateFileSystemState(jarSourceFolder, exeTargetFolder, bat2ExeUtilPath);
                         destination++;
-                        b.createBat(javaPath, buildName, classPathLib, jarSourceFolder);
+                        b.createBat(javaPath, AppDataManager.getSettings().lastBuildName, classPathLib, jarSourceFolder);
                         destination++;
                         Process toExeBuildProc = b.createExe(jarSourceFolder, exeTargetFolder, bat2ExeUtilPath);
                         destination++;
@@ -212,8 +213,8 @@ public class Builder {
                     // удаление оставшихся файлов
                     builderBatFile.delete();
                     File core2DFile = new File(builderBatFile.getParent() + "\\Core2D.jar");
-                    File gameJarFile = new File(builderBatFile.getParent() + "\\" + buildName + ".jar");
-                    File gameBatFile = new File(builderBatFile.getParent() + "\\" + buildName + ".bat");
+                    File gameJarFile = new File(builderBatFile.getParent() + "\\" + AppDataManager.getSettings().lastBuildName + ".jar");
+                    File gameBatFile = new File(builderBatFile.getParent() + "\\" + AppDataManager.getSettings().lastBuildName + ".bat");
                     if(core2DFile.exists()) {
                         core2DFile.delete();
                     }
@@ -224,9 +225,8 @@ public class Builder {
                         gameBatFile.delete();
                     }
 
-                    ViewsManager.getBottomMenuView().leftSideInfo = "File " + buildName + ".jar was successfully built!";
+                    ViewsManager.getBottomMenuView().leftSideInfo = "File " + AppDataManager.getSettings().lastBuildName + ".jar was successfully built!";
                     ViewsManager.getBottomMenuView().leftSideInfoColor.set(0.0f, 1.0f, 0.0f, 1.0f);
-                    buildName = "";
                 }
             });
         }

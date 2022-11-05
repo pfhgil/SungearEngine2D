@@ -42,6 +42,7 @@ public class Main
 
     public static void main(String[] main)
     {
+        Settings.Core2D.destinationFPS = 60;
         Graphics.setScreenClearColor(new Vector4f(0.65f, 0.65f, 0.65f, 1.0f));
         AppDataManager.init();
         core2DUserCallback = new Core2DUserCallback() {
@@ -169,7 +170,6 @@ public class Main
             }
         };
 
-        Settings.Core2D.destinationFPS = 60;
         Core2D.core2DUserCallback = core2DUserCallback;
         Core2D.start();
         //Core2D.start("Sungear Engine 2D", new int[] { GLFW.GLFW_SAMPLES }, new int[] { 8 });

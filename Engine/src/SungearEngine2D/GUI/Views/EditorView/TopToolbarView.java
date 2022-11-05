@@ -7,6 +7,8 @@ import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.Scene2DStoredValues;
 import Core2D.Scene2D.SceneManager;
+import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.FileUtils;
 import SungearEngine2D.Builder.Builder;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.GUI.Views.ViewsManager;
@@ -15,6 +17,7 @@ import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindowCallback;
 import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindow;
 import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindowCallback;
 import SungearEngine2D.Main.Resources;
+import SungearEngine2D.Utils.AppData.AppDataManager;
 import SungearEngine2D.Utils.AppData.UserSettings;
 import imgui.ImGui;
 import imgui.type.ImString;
@@ -23,6 +26,7 @@ import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Iterator;
 
 public class TopToolbarView
@@ -35,7 +39,8 @@ public class TopToolbarView
     private ImString newFileName = new ImString();
 
     private ImString newSceneName = new ImString();
-    private ImString buildOutPath = new ImString();
+
+    private ImString buildOutPath = new ImString(AppDataManager.getSettings().lastBuildOutPath);
 
     // текущий тип файла, который нужно создать
     private String currentFileTypeNeedCreate = "";
@@ -56,8 +61,6 @@ public class TopToolbarView
 
         fileChooserWindow = new FileChooserWindow(FileChooserWindow.FileChooserMode.CHOOSE_DIRECTORY);
         fileChooserWindow.setActive(false);
-
-
     }
 
     public void draw()
@@ -69,8 +72,6 @@ public class TopToolbarView
             if(ImGui.beginMenu("File")) {
                 if(ImGui.beginMenu("New...")) {
                     if(ImGui.menuItem("Project")) {
-
-
                         dialogWindow.setWindowName("New project");
                         dialogWindow.setRightButtonText("Create");
                         dialogWindow.setActive(true);
@@ -230,14 +231,23 @@ public class TopToolbarView
                         dialogWindow.setDialogWindowCallback(new DialogWindowCallback() {
                             @Override
                             public void onDraw() {
-                                ImGui.inputText("##", buildOutPath); ImGui.sameLine();
+                                ImGui.inputText("##", buildOutPath);
+                                AppDataManager.getSettings().lastBuildOutPath = buildOutPath.get();
+
+                                ImGui.sameLine();
                                 if (ImGui.button("Browse...")){
                                     dialogWindow.setActive(false);
                                     fileChooserWindow.setOutput(buildOutPath);
                                     fileChooserWindow.setActiveWindow(dialogWindow);
-                                    fileChooserWindow.setFileChooserMode(FileChooserWindow.FileChooserMode.CREATE_NEW_FILE);
+                                    fileChooserWindow.setFileChooserMode(FileChooserWindow.FileChooserMode.CHOOSE_DIRECTORY);
                                     fileChooserWindow.setActive(true);
                                 }
+
+                                ImString buildNameString = new ImString(AppDataManager.getSettings().lastBuildName, 256);
+                                if(ImGui.inputText("Build name", buildNameString)) {
+                                    AppDataManager.getSettings().lastBuildName = buildNameString.get();
+                                }
+
                                 ImGui.text("Scenes to build:");
                                 ImGui.beginChild("ChooseScenes2DToAdd", dialogWindow.getWindowSize().x, dialogWindow.getWindowSize().y / 3.0f);
 
@@ -276,10 +286,66 @@ public class TopToolbarView
                                         .stream()
                                         .anyMatch(s -> s.isMainScene2D);
                                 if (hasMainScene2D) {
-                                    Builder.startBuild("TestGame");
-                                    // TODO: сделать билд
-                                    dialogWindow.setActive(false);
-                                    currentAction = "";
+                                    AppDataManager.getSettings().save();
+                                    Log.showWarningChooseDialog("Warning! The directory will be completely cleared.",
+                                            "Continue",
+                                            "Cancel",
+                                            new Log.DialogCallback() {
+                                                @Override
+                                                public void firstButtonClicked() {
+                                                    File lastBuildOutFile = new File(AppDataManager.getSettings().lastBuildOutPath);
+                                                    if(lastBuildOutFile.exists()) {
+                                                        try {
+                                                            org.apache.commons.io.FileUtils.cleanDirectory(new File(AppDataManager.getSettings().lastBuildOutPath));
+                                                        } catch (IOException e) {
+                                                            Log.CurrentSession.println(ExceptionsUtils.toString(e) + "\n\tCaused by: " + e.getCause(), Log.MessageType.ERROR);
+                                                        }
+                                                        Builder.startBuild();
+                                                        dialogWindow.setActive(false);
+                                                        currentAction = "";
+                                                    } else {
+                                                        Log.showWarningChooseDialog("The directory does not exist. Do you want to create it and continue build?",
+                                                                "Yes",
+                                                                "No",
+                                                                new Log.DialogCallback() {
+                                                                    @Override
+                                                                    public void firstButtonClicked() {
+                                                                        FileUtils.createFolder(AppDataManager.getSettings().lastBuildOutPath);
+                                                                        try {
+                                                                            org.apache.commons.io.FileUtils.cleanDirectory(new File(AppDataManager.getSettings().lastBuildOutPath));
+                                                                        } catch (IOException e) {
+                                                                            Log.CurrentSession.println(ExceptionsUtils.toString(e) + "\n\tCaused by: " + e.getCause(), Log.MessageType.ERROR);
+                                                                        }
+                                                                        Builder.startBuild();
+                                                                        dialogWindow.setActive(false);
+                                                                        currentAction = "";
+                                                                    }
+
+                                                                    @Override
+                                                                    public void secondButtonClicked() {
+                                                                        dialogWindow.setActive(false);
+                                                                        currentAction = "";
+                                                                    }
+
+                                                                    @Override
+                                                                    public void thirdButtonClicked() {
+
+                                                                    }
+                                                                });
+                                                    }
+                                                }
+
+                                                @Override
+                                                public void secondButtonClicked() {
+                                                    dialogWindow.setActive(false);
+                                                    currentAction = "";
+                                                }
+
+                                                @Override
+                                                public void thirdButtonClicked() {
+
+                                                }
+                                            });
                                 } else {
                                     Log.showErrorDialog("The main Scene2D was not selected!");
                                 }
@@ -393,6 +459,13 @@ public class TopToolbarView
                     ImGui.endMenu();
                 }
 
+                ImGui.endMenu();
+            }
+
+            if(ImGui.beginMenu("Views")) {
+                if(ImGui.menuItem("Debugger")) {
+                    ViewsManager.getDebuggerView().active = true;
+                }
                 ImGui.endMenu();
             }
         }

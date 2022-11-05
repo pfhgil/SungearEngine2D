@@ -68,16 +68,13 @@ public abstract class Graphics
         // цикл отрисовки (работает до тех пор, пока окно не должно быть закрыто)
         Core2D.getDeltaTimer().start();
 
-        float frameCap = 1.0f / Settings.Core2D.destinationFPS;
-
-        float initTime = Timer.getTimeInSeconds();
-
         while (!glfwWindowShouldClose(Core2D.getWindow().getWindow())) {
             try {
                 if(Settings.Core2D.sleepCore2D) {
                     Thread.sleep(1000);
                 }
 
+                float frameCap = 1.0f / Settings.Core2D.destinationFPS;
                 long delay = (long) (Math.min(frameCap - Core2D.getDeltaTimer().getDeltaTime(), frameCap) * 1000.0f);
 
                 if(delay > 0) {

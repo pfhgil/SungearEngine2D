@@ -1,6 +1,7 @@
 package SungearEngine2D.GUI.Views;
 
 import Core2D.Core2D.Core2D;
+import SungearEngine2D.GUI.Views.DebuggerView.DebuggerView;
 import SungearEngine2D.GUI.Views.EditorView.*;
 import SungearEngine2D.GUI.Views.Other.EngineSettingsView;
 import SungearEngine2D.GUI.Views.Other.ProjectSettingsView;
@@ -34,6 +35,8 @@ public class ViewsManager
     private static ProjectSettingsView projectSettingsView;
     private static EngineSettingsView engineSettingsView;
 
+    private static DebuggerView debuggerView;
+
     public static void init()
     {
         mainDockspaceID = ImGui.getID("Main dockspace");
@@ -51,6 +54,8 @@ public class ViewsManager
 
         projectSettingsView = new ProjectSettingsView();
         engineSettingsView = new EngineSettingsView();
+
+        debuggerView = new DebuggerView();
     }
 
     public static void draw()
@@ -95,6 +100,8 @@ public class ViewsManager
             bottomMenuView.draw();
 
             toolbarView.draw();
+
+            debuggerView.draw();
         }
         ImGui.end();
 
@@ -124,6 +131,8 @@ public class ViewsManager
     public static ProjectSettingsView getProjectSettingsView() { return projectSettingsView; }
 
     public static EngineSettingsView getEngineSettingsView() { return engineSettingsView; }
+
+    public static DebuggerView getDebuggerView() { return debuggerView; }
 
     public static int getCurrentFocusedDialogWindow() { return currentFocusedDialogWindow; }
     public static void setCurrentFocusedDialogWindow(int currentFocusedDialogWindow)

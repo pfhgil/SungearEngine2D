@@ -1,8 +1,10 @@
 package SungearEngine2D.GUI.Views.Other;
 
 import Core2D.Core2D.Core2D;
+import Core2D.Core2D.Settings;
 import Core2D.Project.ProjectsManager;
 import SungearEngine2D.GUI.Views.View;
+import SungearEngine2D.Utils.AppData.AppDataManager;
 import imgui.ImGui;
 import imgui.ImGuiWindowClass;
 import imgui.ImVec2;
@@ -12,6 +14,8 @@ import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.internal.flag.ImGuiDockNodeFlags;
 import imgui.type.ImBoolean;
+import imgui.type.ImFloat;
+import imgui.type.ImInt;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 
@@ -91,23 +95,23 @@ public class EngineSettingsView extends View
             ImGui.begin("MiniMenu##Engine", ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoResize);
 
             ImVec2 miniMenuWindowSize = ImGui.getWindowSize();
-            //if(!ProjectsManager.getCurrentProject().getProjectSettings().isSaved()) {
+            if(!AppDataManager.getSettings().isSaved()) {
                 ImGui.setCursorPos(miniMenuWindowSize.x - 185.0f, 14.0f);
-                if(ImGui.button("OK", 50.0f, 25.0f)) {
-                    //ProjectsManager.getCurrentProject().getProjectSettings().saveSettings(ProjectsManager.getCurrentProject().getProjectSettingsPath());
+                if (ImGui.button("OK", 50.0f, 25.0f)) {
+                    AppDataManager.getSettings().save();
                     active = false;
                 }
                 ImGui.sameLine();
-                if(ImGui.button("Apply", 50.0f, 25.0f)) {
-                    //ProjectsManager.getCurrentProject().getProjectSettings().saveSettings(ProjectsManager.getCurrentProject().getProjectSettingsPath());
+                if (ImGui.button("Apply", 50.0f, 25.0f)) {
+                    AppDataManager.getSettings().save();
                 }
                 ImGui.sameLine();
-            //} else {
-               // ImGui.setCursorPos(miniMenuWindowSize.x - 67.0f, 14.0f);
-            //}
+            } else {
+                ImGui.setCursorPos(miniMenuWindowSize.x - 67.0f, 14.0f);
+            }
             if(ImGui.button("Cancel", 50.0f, 25.0f)) {
                 active = false;
-                //ProjectsManager.getCurrentProject().getProjectSettings().loadSettings(ProjectsManager.getCurrentProject().getProjectSettingsPath());
+                AppDataManager.getSettings().load();
             }
 
             ImGui.setNextWindowClass(windowClass);
@@ -115,8 +119,16 @@ public class EngineSettingsView extends View
 
             ImGui.setCursorPos(9.0f, 5.0f);
 
-            if(currentBarType.equals("Project")) {
+            if(currentBarType.equals("Graphics")) {
+                ImGui.text("FPS limit");
+                ImGui.sameLine();
 
+                ImGui.pushID("FPSLimitInputField");
+                ImInt fps = new ImInt(AppDataManager.getSettings().getDestinationFPS());
+                if(ImGui.inputInt("", fps)) {
+                    AppDataManager.getSettings().setDestinationFPS(fps.get());
+                }
+                ImGui.popID();
             }
 
             ImGui.end();

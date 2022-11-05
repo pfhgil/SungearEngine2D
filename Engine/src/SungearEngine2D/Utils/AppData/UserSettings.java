@@ -1,5 +1,6 @@
 package SungearEngine2D.Utils.AppData;
 
+import Core2D.Core2D.Settings;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
@@ -10,13 +11,29 @@ import java.util.Iterator;
 import java.util.List;
 
 public class UserSettings implements Serializable {
+    public List<String> lastProjects;
+    private int destinationFPS = Settings.Core2D.destinationFPS;
+    public String lastBuildName = "";
+    public String lastBuildOutPath = "";
+
+    private transient boolean saved = true;
+
+    private static final long serialVersionUID = 1L;
+    public static String fileName = "UserSettings.dat";
+    public static UserSettings instance;
 
     public void init()
     {
         lastProjects = new ArrayList<>();
     }
 
-    public List<String> lastProjects;
+    public UserSettings()
+    {
+        if (instance != null) {
+            throw new RuntimeException("multipleInstanceError: UserSettings already exist");
+        }
+        instance = this;
+    }
 
     public void addLastProject(String path)
     {
@@ -30,14 +47,16 @@ public class UserSettings implements Serializable {
         UserSettings.instance.save();
     }
 
-    public List<String> getLastProjects() { return lastProjects; }
-
-    public void setLastProjects(List<String> lastProjects) { this.lastProjects = lastProjects; }
-
-
-    private static final long serialVersionUID = 1L;
-    public static String fileName = "UserSettings.dat";
-    public static UserSettings instance;
+    public UserSettings load()
+    {
+        var usFile = new File(AppDataManager.getRoamingDirectory().getAbsolutePath() + File.separator + fileName);
+        if (usFile.exists()) {
+            UserSettings us = (UserSettings) FileUtils.deSerializeObject(usFile);
+            Settings.Core2D.destinationFPS = us.destinationFPS;
+            return us;
+        }
+        return null;
+    }
 
     // Получает текущие настройки
     public static UserSettings getUserSettings()
@@ -45,7 +64,7 @@ public class UserSettings implements Serializable {
         var usFile = new File(AppDataManager.getRoamingDirectory().getAbsolutePath() + File.separator + fileName);
         if (usFile.exists()) {
             instance = (UserSettings) FileUtils.deSerializeObject(usFile);
-
+            Settings.Core2D.destinationFPS = instance.destinationFPS;
             instance.lastProjects.removeIf(lastProjectPath -> !new File(lastProjectPath).exists());
         } else {
             instance = new UserSettings();
@@ -66,13 +85,20 @@ public class UserSettings implements Serializable {
         }
 
         FileUtils.serializeObject(usFile, this);
+        saved = true;
     }
 
-    public UserSettings()
+    public int getDestinationFPS() { return destinationFPS; }
+    public void setDestinationFPS(int destinationFPS)
     {
-        if (instance != null) {
-            throw new RuntimeException("multipleInstanceError: UserSettings already exist");
-        }
-        instance = this;
+        this.destinationFPS = destinationFPS;
+        Settings.Core2D.destinationFPS = destinationFPS;
+        saved = false;
     }
+
+    public boolean isSaved() { return saved; }
+
+    public List<String> getLastProjects() { return lastProjects; }
+
+    public void setLastProjects(List<String> lastProjects) { this.lastProjects = lastProjects; }
 }

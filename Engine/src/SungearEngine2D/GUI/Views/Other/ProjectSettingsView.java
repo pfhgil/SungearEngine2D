@@ -123,7 +123,6 @@ public class ProjectSettingsView extends View
             ImGui.setCursorPos(9.0f, 5.0f);
 
             if(currentBarType.equals("Project")) {
-
                 ImGui.text("JDK path");
 
                 ImGui.sameLine();
