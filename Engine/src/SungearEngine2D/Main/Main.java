@@ -20,6 +20,7 @@ import SungearEngine2D.GUI.GUI;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Utils.AppData.AppDataManager;
+import SungearEngine2D.Utils.Debugger;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -48,6 +49,7 @@ public class Main
         core2DUserCallback = new Core2DUserCallback() {
             @Override
             public void onInit() {
+                //Debugger.init();
                 Resources.load();
 
                 mainCamera2D = new Camera2D();

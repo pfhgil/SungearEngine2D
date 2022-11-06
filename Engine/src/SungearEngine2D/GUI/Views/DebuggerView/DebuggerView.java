@@ -46,6 +46,7 @@ public class DebuggerView extends View
             ImGui.end();
 
             ImGui.begin("GPU");
+            ImGui.text("GPU usage: " + Debugger.GPU.getGPUUsagePercentage() + " MB");
             ImGui.end();
 
             ImGui.begin("Memory");

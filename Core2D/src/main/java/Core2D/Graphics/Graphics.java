@@ -68,19 +68,14 @@ public abstract class Graphics
         // цикл отрисовки (работает до тех пор, пока окно не должно быть закрыто)
         Core2D.getDeltaTimer().start();
 
+        long capDiff = System.currentTimeMillis();
+        long capInit = System.currentTimeMillis();
+
         while (!glfwWindowShouldClose(Core2D.getWindow().getWindow())) {
             try {
                 if(Settings.Core2D.sleepCore2D) {
                     Thread.sleep(1000);
                 }
-
-                float frameCap = 1.0f / Settings.Core2D.destinationFPS;
-                long delay = (long) (Math.min(frameCap - Core2D.getDeltaTimer().getDeltaTime(), frameCap) * 1000.0f);
-
-                if(delay > 0) {
-                    Thread.sleep(delay);
-                }
-
                 //System.out.println("delay: " + delay + ", delta: " + Core2D.getDeltaTimer().getDeltaTime());
 
                 Core2D.getDeltaTimer().startFrame();
@@ -115,6 +110,19 @@ public abstract class Graphics
 
                 // брать сообщения из очереди и обрабатывать их
                 glfwPollEvents();
+
+                if(Settings.Core2D.destinationFPS > 0) {
+                    capDiff = System.currentTimeMillis() - capInit;
+                    long delay = 1000 / Settings.Core2D.destinationFPS;
+                    if(capDiff < delay) {
+                        try {
+                            Thread.sleep(delay - capDiff);
+                        } catch (Exception e) {
+                            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                        }
+                    }
+                    capInit = System.currentTimeMillis();
+                }
             } catch (Exception e) {
                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }
