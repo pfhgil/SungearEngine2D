@@ -51,6 +51,13 @@
       </state>
     </system>
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
@@ -142,7 +149,9 @@
       <workItem from="1667219330953" duration="8404000" />
       <workItem from="1667561764351" duration="3361000" />
       <workItem from="1667663899993" duration="1938000" />
-      <workItem from="1667729267857" duration="2653000" />
+      <workItem from="1667729267857" duration="2656000" />
+      <workItem from="1667825894568" duration="7045000" />
+      <workItem from="1667852956619" duration="1478000" />
     </task>
     <servers />
   </component>

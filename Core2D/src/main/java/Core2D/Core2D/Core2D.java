@@ -1,6 +1,7 @@
 package Core2D.Core2D;
 
 import Core2D.AssetManager.AssetManager;
+import Core2D.Audio.OpenAL;
 import Core2D.Camera2D.CamerasManager;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.Core2DInputCallbacks;
@@ -123,6 +124,7 @@ public class Core2D extends Graphics
     private void initCore() {
         try {
             Graphics.init();
+            OpenAL.init();
 
             core2DInputCallbacks = new Core2DInputCallbacks();
 

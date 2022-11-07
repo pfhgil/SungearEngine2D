@@ -74,6 +74,15 @@ public class CameraController
                 if (Keyboard.keyReleased(GLFW.GLFW_KEY_L)) {
                     Main.getMainCamera2D().getTransform().setRotation(0.0f);
                 }
+                if(Keyboard.keyReleased(GLFW.GLFW_KEY_F)) {
+                    Main.fuckYouAudio.start();
+                }
+                if(Keyboard.keyReleased(GLFW.GLFW_KEY_P)) {
+                    Main.fuckYouAudio.pause();
+                }
+                if(Keyboard.keyReleased(GLFW.GLFW_KEY_T)) {
+                    Main.fuckYouAudio.stop();
+                }
             }
         }
     }

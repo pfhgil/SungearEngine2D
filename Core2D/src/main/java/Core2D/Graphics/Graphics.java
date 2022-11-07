@@ -122,6 +122,7 @@ public abstract class Graphics
                         }
                     }
                     capInit = System.currentTimeMillis();
+                    
                 }
             } catch (Exception e) {
                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);

@@ -1,5 +1,6 @@
 package SungearEngine2D.Main;
 
+import Core2D.Audio.BackgroundAudio;
 import Core2D.Camera2D.Camera2D;
 import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Components.ScriptComponent;
@@ -22,11 +23,21 @@ import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Utils.AppData.AppDataManager;
 import SungearEngine2D.Utils.Debugger;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.io.IOUtils;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
+import org.lwjgl.openal.*;
 
+import javax.sound.sampled.AudioFormat;
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,6 +51,9 @@ public class Main
     private static Camera2D mainCamera2D;
 
     public static Thread helpThread;
+
+    // TODO: delete this
+    public static BackgroundAudio fuckYouAudio = new BackgroundAudio();
 
     public static void main(String[] main)
     {
@@ -139,6 +153,15 @@ public class Main
                     }
                 });
                 helpThread.start();
+
+                /**
+                 * OpenAL TEST
+                 */
+
+                fuckYouAudio.loadAndSetup(Core2D.class.getResourceAsStream("/data/audio/audio_1.wav"));
+
+                /** -------------------- */
+
 
                 System.gc();
             }
