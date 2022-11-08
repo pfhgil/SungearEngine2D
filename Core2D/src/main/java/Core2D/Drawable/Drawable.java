@@ -6,8 +6,6 @@ import Core2D.Utils.Tag;
 import Core2D.Utils.Utils;
 import Core2D.Utils.WrappedObject;
 
-import java.util.function.Consumer;
-
 /**
  * Abstract class for all rendered objects. Contains general parameters and methods for rendered objects.
  */

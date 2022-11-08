@@ -1,8 +1,5 @@
 package Core2D.ShaderUtils;
 
-import Core2D.Log.Log;
-import Core2D.Utils.ExceptionsUtils;
-
 import static org.lwjgl.opengl.GL15C.*;
 
 public class VertexBufferObject

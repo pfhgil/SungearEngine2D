@@ -4,8 +4,6 @@ import Core2D.Log.Log;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Utils;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.File;
 import java.io.Serializable;

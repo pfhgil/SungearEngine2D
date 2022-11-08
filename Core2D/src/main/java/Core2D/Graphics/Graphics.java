@@ -2,14 +2,13 @@ package Core2D.Graphics;
 
 import Core2D.Camera2D.CamerasManager;
 import Core2D.Core2D.Core2D;
+import Core2D.Core2D.Settings;
+import Core2D.Drawable.Object2D;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
-import Core2D.Core2D.Settings;
 import Core2D.Log.Log;
-import Core2D.Drawable.Object2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.ShaderUtils.FrameBufferObject;
-import Core2D.Timer.Timer;
 import Core2D.Utils.ExceptionsUtils;
 import org.joml.Vector2f;
 import org.joml.Vector2i;

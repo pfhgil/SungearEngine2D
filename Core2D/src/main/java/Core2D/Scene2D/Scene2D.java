@@ -2,13 +2,13 @@ package Core2D.Scene2D;
 
 import Core2D.Camera2D.Camera2D;
 import Core2D.Camera2D.CamerasManager;
-import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.ScriptComponent;
+import Core2D.Drawable.Drawable;
+import Core2D.Drawable.Object2D;
 import Core2D.Graphics.Graphics;
 import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
 import Core2D.Log.Log;
-import Core2D.Drawable.Object2D;
 import Core2D.Physics.PhysicsWorld;
 import Core2D.Scripting.ScriptSceneObject;
 import Core2D.Scripting.ScriptTempValue;

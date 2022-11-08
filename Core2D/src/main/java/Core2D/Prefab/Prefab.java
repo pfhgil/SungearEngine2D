@@ -1,17 +1,11 @@
 package Core2D.Prefab;
 
 import Core2D.Drawable.Drawable;
-import Core2D.Component.Component;
-import Core2D.Deserializers.ComponentDeserializer;
-import Core2D.Deserializers.Object2DDeserializer;
-import Core2D.Deserializers.PrefabDeserializer;
-import Core2D.Layering.Layer;
 import Core2D.Drawable.Object2D;
+import Core2D.Layering.Layer;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Utils;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.util.ArrayList;
 import java.util.List;

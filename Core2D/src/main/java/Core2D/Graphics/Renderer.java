@@ -1,21 +1,21 @@
 package Core2D.Graphics;
 
-import Core2D.Drawable.AtlasDrawing;
 import Core2D.Camera2D.CamerasManager;
-import Core2D.Drawable.Drawable;
 import Core2D.Component.Component;
 import Core2D.Component.Components.TextureComponent;
-import Core2D.Drawable.Instancing.ObjectsInstancing;
+import Core2D.Drawable.AtlasDrawing;
+import Core2D.Drawable.Drawable;
 import Core2D.Drawable.Instancing.LinesInstancing;
-import Core2D.Layering.Layer;
-import Core2D.Layering.Layering;
+import Core2D.Drawable.Instancing.ObjectsInstancing;
 import Core2D.Drawable.Object2D;
 import Core2D.Drawable.Primitives.Line2D;
-import Core2D.ShaderUtils.ShaderUtils;
 import Core2D.Drawable.UI.Button.Button;
 import Core2D.Drawable.UI.InputField.InputField;
 import Core2D.Drawable.UI.ProgressBar.ProgressBar;
 import Core2D.Drawable.UI.Text.Text;
+import Core2D.Layering.Layer;
+import Core2D.Layering.Layering;
+import Core2D.ShaderUtils.ShaderUtils;
 import Core2D.Utils.WrappedObject;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11;

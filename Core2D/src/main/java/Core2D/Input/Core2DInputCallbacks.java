@@ -2,8 +2,6 @@ package Core2D.Input;
 
 import Core2D.Core2D.Core2D;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.glfw.GLFWKeyCallbackI;
-import org.lwjgl.glfw.GLFWScrollCallback;
 
 import java.util.ArrayList;
 import java.util.List;

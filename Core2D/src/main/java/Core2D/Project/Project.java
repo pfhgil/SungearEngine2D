@@ -1,7 +1,6 @@
 package Core2D.Project;
 
 import Core2D.Scene2D.SceneManager;
-import Core2D.Utils.FileUtils;
 
 import java.io.File;
 import java.io.Serializable;

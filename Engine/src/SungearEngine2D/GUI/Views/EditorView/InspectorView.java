@@ -1,5 +1,6 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
+import Core2D.Audio.Audio;
 import Core2D.Camera2D.Camera2D;
 import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Component;
@@ -471,6 +472,8 @@ public class InspectorView extends View
                     componentName = "CircleCollider2D";
                 } else if (inspectingObject2D.getComponents().get(i) instanceof ScriptComponent) {
                     componentName = "ScriptComponent";
+                } else if (inspectingObject2D.getComponents().get(i) instanceof AudioComponent) {
+                    componentName = "AudioComponent";
                 }
 
                 ImGui.pushID(componentName + i);
@@ -552,8 +555,8 @@ public class InspectorView extends View
                         }
                         case "Texture" -> {
                             TextureComponent textureComponent = (TextureComponent) inspectingObject2D.getComponents().get(i);
-                            ImString textureName = new ImString(new File(textureComponent.getTexture2D().source).getName());
-                            ImGui.inputText("Source", textureName, ImGuiInputTextFlags.ReadOnly);
+                            ImString textureName = new ImString(new File(textureComponent.getTexture2D().path).getName());
+                            ImGui.inputText("Path", textureName, ImGuiInputTextFlags.ReadOnly);
                             if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
                                 if (ImGui.beginDragDropTarget()) {
                                     Object imageFile = ImGui.acceptDragDropPayload("File");
@@ -563,7 +566,7 @@ public class InspectorView extends View
                                                 new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
                                                 new File(ProjectsManager.getCurrentProject().getProjectPath()));
                                         textureComponent.setTexture2D(new Texture2D(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()));
-                                        textureComponent.getTexture2D().source = relativePath;
+                                        textureComponent.getTexture2D().path = relativePath;
                                         ViewsManager.getResourcesView().setCurrentMovingFile(null);
                                     }
 
@@ -591,6 +594,8 @@ public class InspectorView extends View
                         }
                         case "Rigidbody2D" -> {
                             Rigidbody2DComponent rigidbody2DComponent = ((Rigidbody2DComponent) inspectingObject2D.getComponents().get(i));
+
+                            ImGui.pushID("Rigidbody2DType");
                             if (ImGui.beginCombo("Type", rigidbody2DComponent.getRigidbody2D().typeToString())) {
 
                                 if (ImGui.selectable("Dynamic")) {
@@ -609,6 +614,8 @@ public class InspectorView extends View
 
                                 ImGui.endCombo();
                             }
+                            ImGui.popID();
+
                             float[] density = new float[] { rigidbody2DComponent.getRigidbody2D().getDensity() };
                             if (ImGui.dragFloat("Density", density, 0.01f)) {
                                 rigidbody2DComponent.getRigidbody2D().setDensity(density[0]);
@@ -727,6 +734,48 @@ public class InspectorView extends View
                                 }
                             }
                         }
+                        case "AudioComponent" -> {
+                            AudioComponent audioComponent = (AudioComponent) inspectingObject2D.getComponents().get(i);
+
+                            ImString audioName = new ImString(new File(audioComponent.getAudio().path).getName());
+                            ImGui.inputText("Path", audioName, ImGuiInputTextFlags.ReadOnly);
+                            if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
+                                if (ImGui.beginDragDropTarget()) {
+                                    Object audioFile = ImGui.acceptDragDropPayload("File");
+                                    if (audioFile != null) {
+                                        audioName.set(ViewsManager.getResourcesView().getCurrentMovingFile().getName(), true);
+                                        String relativePath = FileUtils.getRelativePath(
+                                                new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
+                                                new File(ProjectsManager.getCurrentProject().getProjectPath()));
+                                        audioComponent.getAudio().loadAndSetup(ViewsManager.getResourcesView().getCurrentMovingFile().getPath());
+                                        audioComponent.getAudio().path = relativePath;
+                                        ViewsManager.getResourcesView().setCurrentMovingFile(null);
+                                    }
+
+                                    ImGui.endDragDropTarget();
+                                }
+                            }
+
+                            ImGui.pushID("AudioType");
+                            if (ImGui.beginCombo("Type", audioComponent.getAudio().audioType.toString())) {
+                                if (ImGui.selectable("Background")) {
+                                    audioComponent.getAudio().audioType = Audio.AudioType.BACKGROUND;
+                                }
+
+                                if (ImGui.selectable("Worldspace")) {
+                                    audioComponent.getAudio().audioType = Audio.AudioType.WORLDSPACE;
+                                }
+
+                                //System.out.println("x: " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.x + ", " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.y);
+
+                                ImGui.endCombo();
+                            }
+                            ImGui.popID();
+
+                            if(ImGui.button("Start")) {
+                                audioComponent.getAudio().start();
+                            }
+                        }
                     }
                 }
 
@@ -749,11 +798,25 @@ public class InspectorView extends View
 
             if(droppingFile != null) {
                 if (ImGui.beginDragDropTarget()) {
-                    if (FilenameUtils.getExtension(droppingFile.getName()).equals("java")) {
+                    String extension = FilenameUtils.getExtension(droppingFile.getName());
+                    if (extension.equals("java")) {
                         Object droppedFile = ImGui.acceptDragDropPayload("File");
                         if (droppedFile instanceof File javaFile) {
-
                             compileAndAddScriptComponent(javaFile, inspectingObject2D);
+                        }
+                    } else if(extension.equals("wav")) {
+                        Object droppedFile = ImGui.acceptDragDropPayload("File");
+                        if(droppedFile instanceof File audioFile) {
+                            AudioComponent audioComponent = new AudioComponent();
+                            audioComponent.getAudio().loadAndSetup(audioFile.getPath());
+
+                            String relativePath = FileUtils.getRelativePath(
+                                    new File(audioFile.getPath()),
+                                    new File(ProjectsManager.getCurrentProject().getProjectPath())
+                            );
+                            audioComponent.getAudio().path = relativePath;
+
+                            inspectingObject2D.addComponent(audioComponent);
                         }
                     }
                     ImGui.endDragDropTarget();
@@ -880,6 +943,10 @@ public class InspectorView extends View
                         }
                         if (ImGui.selectable("CircleCollider2D")) {
                             ((Object2D) currentInspectingObject).addComponent(new CircleCollider2DComponent());
+                            action = "";
+                        }
+                        if(ImGui.selectable("Audio")) {
+                            ((Object2D) currentInspectingObject).addComponent(new AudioComponent());
                             action = "";
                         }
                     } catch (Exception e) {

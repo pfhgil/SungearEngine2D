@@ -3,7 +3,6 @@ package Core2D.Component.Components;
 import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
 import Core2D.Component.NonRemovable;
-import Core2D.Texture2D.Texture2D;
 import Core2D.Transform.Transform;
 
 /**

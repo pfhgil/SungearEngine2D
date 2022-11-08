@@ -1,9 +1,8 @@
 package Core2D.Camera2D;
 
 import Core2D.Core2D.Core2D;
-import Core2D.Input.PC.Mouse;
-import Core2D.Transform.Transform;
 import Core2D.Scene2D.SceneManager;
+import Core2D.Transform.Transform;
 import Core2D.Utils.MatrixUtils;
 import Core2D.Utils.Utils;
 import org.joml.Matrix4f;

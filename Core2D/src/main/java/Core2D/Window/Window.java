@@ -5,7 +5,9 @@ import Core2D.Graphics.Graphics;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 import org.joml.Vector2i;
-import org.lwjgl.glfw.*;
+import org.lwjgl.glfw.GLFWErrorCallback;
+import org.lwjgl.glfw.GLFWVidMode;
+import org.lwjgl.glfw.GLFWWindowIconifyCallbackI;
 import org.lwjgl.opengl.GL11C;
 import org.lwjgl.system.MemoryStack;
 

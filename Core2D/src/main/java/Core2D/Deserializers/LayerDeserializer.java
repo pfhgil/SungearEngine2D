@@ -15,7 +15,7 @@ public class LayerDeserializer implements JsonDeserializer<Layer>
         JsonObject jsonObject = jsonElement.getAsJsonObject();
 
         String name = jsonObject.get("name").getAsString();
-        int ID = context.deserialize(jsonObject.get("ID"), int.class);
+        int ID = jsonObject.get("ID").getAsInt();
         JsonArray renderingObjects = jsonObject.getAsJsonArray("renderingObjects");
 
         Layer layer = new Layer(ID, name);

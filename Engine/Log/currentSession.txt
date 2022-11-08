@@ -1,6 +1,7 @@
-[#FFFFFF] 2022/11/07 23:54:23 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/11/07 23:54:23 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2022/11/07 23:54:23 | [#008000] Core2D started!
-[#FFFFFF] 2022/11/07 23:54:23 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
-[#FFFFFF] 2022/11/07 23:54:28 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/11/07 23:54:28 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2022/11/08 23:37:30 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/11/08 23:37:30 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2022/11/08 23:37:30 | [#008000] Core2D started!
+[#FFFFFF] 2022/11/08 23:37:30 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2022/11/08 23:37:36 | [#FF0000] OpenGL error: 1280
+[#FFFFFF] 2022/11/08 23:37:36 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2022/11/08 23:38:26 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists

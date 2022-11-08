@@ -310,7 +310,7 @@ public class SceneView extends View
             TextureComponent textureComponent = newSceneObject2D.getComponent(TextureComponent.class);
             Texture2D texture2D = new Texture2D(file.getPath());
             textureComponent.setTexture2D(texture2D);
-            textureComponent.getTexture2D().source = relativePath;
+            textureComponent.getTexture2D().path = relativePath;
 
             Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
             newSceneObject2D.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);

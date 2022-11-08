@@ -2,11 +2,10 @@ package Core2D.Drawable.Instancing;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Camera2D.CamerasManager;
-import Core2D.Core2D.Core2D;
-import Core2D.Drawable.AtlasDrawing;
-import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
+import Core2D.Core2D.Core2D;
+import Core2D.Drawable.Drawable;
 import Core2D.Drawable.Object2D;
 import Core2D.Shader.ShaderProgram;
 import Core2D.ShaderUtils.ShaderUtils;

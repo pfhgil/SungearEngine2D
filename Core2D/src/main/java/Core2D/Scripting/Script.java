@@ -2,8 +2,8 @@ package Core2D.Scripting;
 
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
-import Core2D.Log.Log;
 import Core2D.Drawable.Object2D;
+import Core2D.Log.Log;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
 import org.apache.commons.io.FilenameUtils;

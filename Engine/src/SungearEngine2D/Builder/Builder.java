@@ -252,16 +252,16 @@ public class Builder {
                         Object2D object2D = (Object2D) wrappedObject.getObject();
                         TextureComponent textureComponent = object2D.getComponent(TextureComponent.class);
                         // новый путь до текстуры
-                        File newTextureFile = new File(toDir + "\\" + textureComponent.getTexture2D().source);
+                        File newTextureFile = new File(toDir + "\\" + textureComponent.getTexture2D().path);
                         // создаю все папки, которых нет
                         newTextureFile.getParentFile().mkdirs();
                         // копирую файл в эти папки
                         FileUtils.copyFile(ProjectsManager.getCurrentProject().getProjectPath() +
                                         File.separator +
-                                        textureComponent.getTexture2D().source,
+                                        textureComponent.getTexture2D().path,
                                 newTextureFile.getPath(), false);
                         // устанавливаю для текстурного компонента путь в билде (относительный)
-                        textureComponent.getTexture2D().source = "/" + textureComponent.getTexture2D().source.replace("\\", "/");
+                        textureComponent.getTexture2D().path = "/" + textureComponent.getTexture2D().path.replace("\\", "/");
                         // то же самое для скриптов
                         ScriptComponent scriptComponent = object2D.getComponent(ScriptComponent.class);
                         if (scriptComponent != null) {

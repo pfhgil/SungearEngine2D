@@ -2,10 +2,10 @@ package Core2D.Scene2D;
 
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
+import Core2D.Drawable.Object2D;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
 import Core2D.Log.Log;
-import Core2D.Drawable.Object2D;
 import Core2D.Physics.PhysicsWorld;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;

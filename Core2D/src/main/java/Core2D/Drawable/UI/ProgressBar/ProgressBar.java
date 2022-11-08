@@ -1,11 +1,10 @@
 package Core2D.Drawable.UI.ProgressBar;
 
 import Core2D.AssetManager.AssetManager;
-import Core2D.Core2D.Core2D;
-import Core2D.Drawable.AtlasDrawing;
-import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
+import Core2D.Core2D.Core2D;
+import Core2D.Drawable.Drawable;
 import Core2D.Drawable.Object2D;
 import Core2D.ShaderUtils.ShaderUtils;
 import Core2D.Utils.Orientation;

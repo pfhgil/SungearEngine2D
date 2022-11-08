@@ -1,7 +1,6 @@
 package Core2D.Shader;
 
 import Core2D.Log.Log;
-import Core2D.Utils.ExceptionsUtils;
 
 import java.io.Serializable;
 

@@ -2,7 +2,6 @@ package Core2D.Drawable.Instancing;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Core2D.Core2D;
-import Core2D.Drawable.AtlasDrawing;
 import Core2D.Drawable.Drawable;
 import Core2D.Drawable.Primitives.Line2D;
 import Core2D.Shader.ShaderProgram;

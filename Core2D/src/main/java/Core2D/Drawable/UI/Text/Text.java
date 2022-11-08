@@ -1,15 +1,14 @@
 package Core2D.Drawable.UI.Text;
 
 import Core2D.AssetManager.AssetManager;
-import Core2D.Core2D.Core2D;
-import Core2D.Drawable.AtlasDrawing;
-import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
+import Core2D.Core2D.Core2D;
+import Core2D.Drawable.Drawable;
 import Core2D.Drawable.Instancing.ObjectsInstancing;
 import Core2D.Drawable.Object2D;
-import Core2D.Transform.Transform;
 import Core2D.Shader.ShaderProgram;
+import Core2D.Transform.Transform;
 import Core2D.Utils.PositionsQuad;
 import org.joml.Vector2f;
 import org.joml.Vector4f;

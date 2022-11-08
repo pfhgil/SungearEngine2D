@@ -1,16 +1,15 @@
 package Core2D.Drawable.UI.InputField;
 
 import Core2D.AssetManager.AssetManager;
-import Core2D.Drawable.AtlasDrawing;
-import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.TransformComponent;
+import Core2D.Core2D.Core2D;
+import Core2D.Drawable.Drawable;
+import Core2D.Drawable.Object2D;
+import Core2D.Drawable.UI.Text.Text;
 import Core2D.Input.Core2DUserInputCallback;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
-import Core2D.Core2D.Core2D;
-import Core2D.Drawable.Object2D;
 import Core2D.Transform.Transform;
-import Core2D.Drawable.UI.Text.Text;
 import Core2D.Utils.Utils;
 import org.joml.Vector2f;
 import org.joml.Vector4f;

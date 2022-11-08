@@ -3,6 +3,7 @@ package Core2D.Texture2D;
 import Core2D.Core2D.Settings;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
+import com.google.gson.annotations.SerializedName;
 import org.lwjgl.BufferUtils;
 
 import java.io.IOException;
@@ -32,8 +33,11 @@ public class Texture2D
     private transient int channels;
     // информация о пикселях текстуры
     private transient ByteBuffer pixelsData;
+
+    @SerializedName("source")
     // путь до текстуры
-    public String source;
+    public String path;
+
     // формат текстуры. сколько каналов и какие каналы будет поддерживать текстура
     private transient int format;
     // сколько бит будет занимать каждый из каналов
@@ -55,9 +59,9 @@ public class Texture2D
     }
 
     // конструктор
-    public Texture2D(String source)
+    public Texture2D(String path)
     {
-        loadTexture(source);
+        loadTexture(path);
     }
 
     // конструктор
@@ -78,27 +82,27 @@ public class Texture2D
     }
 
     // конструктор
-    public Texture2D(String source, int param)
+    public Texture2D(String path, int param)
     {
         this.param = param;
 
-        loadTexture(source);
+        loadTexture(path);
     }
 
     // конструктор
-    public Texture2D(String source, int param, int textureBlock)
+    public Texture2D(String path, int param, int textureBlock)
     {
         this.param = param;
         this.textureBlock = textureBlock;
 
-        loadTexture(source);
+        loadTexture(path);
     }
 
     public void loadTexture(String source)
     {
         destroy();
 
-        this.source = source;
+        this.path = source;
 
         // буфер для ширины текстуры
         IntBuffer widthBuffer = BufferUtils.createIntBuffer(1);
@@ -144,7 +148,7 @@ public class Texture2D
             channels = channelsBuffer.get(0);
 
         } catch (IOException e) {
-            String exception = "Error while loading texture by source: " + source +". Error is: " + ExceptionsUtils.toString(e);
+            String exception = "Error while loading texture by source: " + path +". Error is: " + ExceptionsUtils.toString(e);
             Log.CurrentSession.println(exception, Log.MessageType.ERROR);
         }
 
@@ -254,7 +258,7 @@ public class Texture2D
     {
         textureHandler = texture2D.getTextureHandler();
         textureBlock = texture2D.getGLTextureBlock();
-        source = texture2D.source;
+        path = texture2D.path;
         width = texture2D.getWidth();
         height = texture2D.getHeight();
         channels = texture2D.getChannels();

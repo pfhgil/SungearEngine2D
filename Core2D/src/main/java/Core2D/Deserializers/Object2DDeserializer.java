@@ -1,14 +1,12 @@
 package Core2D.Deserializers;
 
+import Core2D.Audio.Audio;
+import Core2D.Audio.AudioInfo;
 import Core2D.Component.Component;
-import Core2D.Component.Components.Rigidbody2DComponent;
-import Core2D.Component.Components.ScriptComponent;
-import Core2D.Component.Components.TextureComponent;
-import Core2D.Component.Components.TransformComponent;
+import Core2D.Component.Components.*;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.Drawable.Object2D;
-import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.FileUtils;
@@ -71,8 +69,8 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                 Texture2D texture2D = null;
                 // если режим работы ядра в движке
                 if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                    String textureFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + textureComponent.getTexture2D().source;
-                    String textureLastPath = textureComponent.getTexture2D().source;
+                    String textureFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + textureComponent.getTexture2D().path;
+                    String textureLastPath = textureComponent.getTexture2D().path;
 
                     if(new File(textureFullPath).exists()) {
                         texture2D = new Texture2D(
@@ -80,27 +78,27 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                                 textureComponent.getTexture2D().param,
                                 textureComponent.getTexture2D().getGLTextureBlock()
                         );
-                        texture2D.source = textureLastPath;
+                        texture2D.path = textureLastPath;
                     } else { // для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
                         // чтобы это исправить загружаем по этому пути текстуру, находим относительный путь и присваиваем его source для того,
                         // чтобы в следующий раз выполнился блок кода выше
-                        if(new File(textureComponent.getTexture2D().source).exists()) {
+                        if(new File(textureComponent.getTexture2D().path).exists()) {
                             String relativePath = FileUtils.getRelativePath(
-                                    new File(textureComponent.getTexture2D().source),
+                                    new File(textureComponent.getTexture2D().path),
                                     new File(ProjectsManager.getCurrentProject().getProjectPath())
                             );
                             texture2D = new Texture2D(
-                                    textureComponent.getTexture2D().source,
+                                    textureComponent.getTexture2D().path,
                                     textureComponent.getTexture2D().param,
                                     textureComponent.getTexture2D().getGLTextureBlock()
                             );
-                            texture2D.source = relativePath;
+                            texture2D.path = relativePath;
                         }
                     }
                 // если режим работы в билде
                 } else {
                     texture2D = new Texture2D(
-                            Core2D.class.getResourceAsStream(textureComponent.getTexture2D().source),
+                            Core2D.class.getResourceAsStream(textureComponent.getTexture2D().path),
                             textureComponent.getTexture2D().param,
                             textureComponent.getTexture2D().getGLTextureBlock()
                     );
@@ -149,6 +147,36 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                     object2D.addComponent(sc);
                     sc.set(scriptComponent);
                 }
+            } else if(component instanceof AudioComponent) {
+                AudioComponent audioComponent = (AudioComponent) component;
+                Audio audio = new Audio();
+                // если режим работы ядра в движке
+                if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+                    String audioFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + audioComponent.getAudio().path;
+                    String audioLastPath = audioComponent.getAudio().path;
+
+                    if(new File(audioFullPath).exists()) {
+                        audio.loadAndSetup(audioFullPath);
+                        audio.path = audioLastPath;
+                    } else { // для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
+                        // чтобы это исправить загружаем по этому пути текстуру, находим относительный путь и присваиваем его source для того,
+                        // чтобы в следующий раз выполнился блок кода выше
+                        if(new File(audioComponent.getAudio().path).exists()) {
+                            String relativePath = FileUtils.getRelativePath(
+                                    new File(audioComponent.getAudio().path),
+                                    new File(ProjectsManager.getCurrentProject().getProjectPath())
+                            );
+
+                            audio.loadAndSetup(audioComponent.getAudio().path);
+                            audio.path = relativePath;
+                        }
+                    }
+                    // если режим работы в билде
+                } else {
+                    audio.loadAndSetup(Core2D.class.getResourceAsStream(audioComponent.getAudio().path));
+                }
+
+                object2D.addComponent(audioComponent);
             } else {
                 object2D.addComponent(component);
             }

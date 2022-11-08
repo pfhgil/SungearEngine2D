@@ -1,11 +1,12 @@
 package Core2D.AssetManager;
 
+import Core2D.Audio.AudioInfo;
 import Core2D.Core2D.Core2D;
+import Core2D.Drawable.UI.Text.Font;
 import Core2D.Log.Log;
 import Core2D.Shader.Shader;
 import Core2D.Shader.ShaderProgram;
 import Core2D.Texture2D.Texture2D;
-import Core2D.Drawable.UI.Text.Font;
 import Core2D.Utils.FileUtils;
 
 import java.util.ArrayList;
@@ -150,6 +151,17 @@ public class AssetManager
         for(Asset asset : assets) {
             if(asset.name.equals(name) && asset.assetObject instanceof Font) {
                 return (Font) asset.assetObject;
+            }
+        }
+
+        return null;
+    }
+
+    public static AudioInfo getAudioInfo(String name)
+    {
+        for(Asset asset : assets) {
+            if(asset.name.equals(name) && asset.assetObject instanceof AudioInfo) {
+                return (AudioInfo) asset.assetObject;
             }
         }
 

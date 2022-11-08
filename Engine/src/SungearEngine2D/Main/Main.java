@@ -1,6 +1,6 @@
 package SungearEngine2D.Main;
 
-import Core2D.Audio.BackgroundAudio;
+import Core2D.Audio.Audio;
 import Core2D.Camera2D.Camera2D;
 import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Components.ScriptComponent;
@@ -53,7 +53,7 @@ public class Main
     public static Thread helpThread;
 
     // TODO: delete this
-    public static BackgroundAudio fuckYouAudio = new BackgroundAudio();
+    public static Audio fuckYouAudio = new Audio();
 
     public static void main(String[] main)
     {

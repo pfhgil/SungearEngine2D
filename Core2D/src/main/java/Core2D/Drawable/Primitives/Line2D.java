@@ -3,16 +3,14 @@ package Core2D.Drawable.Primitives;
 import Core2D.AssetManager.AssetManager;
 import Core2D.Camera2D.CamerasManager;
 import Core2D.Core2D.Core2D;
-import Core2D.Drawable.AtlasDrawing;
 import Core2D.Drawable.Drawable;
-import Core2D.Transform.Transform;
 import Core2D.Shader.ShaderProgram;
 import Core2D.ShaderUtils.*;
+import Core2D.Transform.Transform;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
-import javax.sound.sampled.Line;
 import java.util.function.Consumer;
 
 public class Line2D extends Drawable

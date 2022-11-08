@@ -2,11 +2,8 @@ package Core2D.Component.Components;
 
 import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
-import Core2D.Log.Log;
-import Core2D.Physics.Collider2D.CircleCollider2D;
 import Core2D.Physics.Rigidbody2D;
 import Core2D.Scene2D.SceneManager;
-import Core2D.Utils.ExceptionsUtils;
 
 /**
  * The Rigidbody2D component.

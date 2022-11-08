@@ -1,10 +1,10 @@
 package Core2D.Layering;
 
 import Core2D.Component.Component;
-import Core2D.Drawable.Drawable;
 import Core2D.Component.Components.TextureComponent;
-import Core2D.Graphics.Graphics;
+import Core2D.Drawable.Drawable;
 import Core2D.Drawable.Object2D;
+import Core2D.Graphics.Graphics;
 import Core2D.Texture2D.TextureDrawModes;
 import Core2D.Utils.WrappedObject;
 import org.joml.Vector4f;

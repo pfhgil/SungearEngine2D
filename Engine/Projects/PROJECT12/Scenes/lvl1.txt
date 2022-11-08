@@ -14,8 +14,8 @@
                   "properties": {
                     "transform": {
                       "position": {
-                        "x": -238.36974,
-                        "y": -343.37946
+                        "x": 1000.0,
+                        "y": 1000.0
                       },
                       "rotation": 0.0,
                       "scale": {
@@ -82,10 +82,44 @@
                   }
                 },
                 {
+                  "type": "Core2D.Component.Components.AudioComponent",
+                  "properties": {
+                    "audio": {
+                      "path": "audio\\audio_1.wav",
+                      "name": "",
+                      "audioInfo": {
+                        "buffer": 4,
+                        "audioPath": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\audio\\audio_1.wav",
+                        "audioName": "audio_1",
+                        "frameLength": 52992,
+                        "audioLength": 1201
+                      },
+                      "source": 2,
+                      "transform": {
+                        "position": {
+                          "x": 0.0,
+                          "y": 0.0
+                        },
+                        "rotation": 0.0,
+                        "scale": {
+                          "x": 1.0,
+                          "y": 1.0
+                        },
+                        "centre": {
+                          "x": 0.0,
+                          "y": 0.0
+                        }
+                      },
+                      "audioType": "WORLDSPACE"
+                    },
+                    "active": true
+                  }
+                },
+                {
                   "type": "Core2D.Component.Components.Rigidbody2DComponent",
                   "properties": {
                     "rigidbody2D": {
-                      "bodyType": "DYNAMIC",
+                      "bodyType": "STATIC",
                       "density": 1.0,
                       "restitution": 0.0,
                       "friction": 0.1,
@@ -528,7 +562,7 @@
       }
     ]
   },
-  "maxObjectID": 67,
+  "maxObjectID": 135,
   "inBuild": false,
   "isMainScene2D": false
 }

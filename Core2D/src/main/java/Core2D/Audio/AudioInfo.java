@@ -24,7 +24,7 @@ public class AudioInfo
 
     public String audioName = "";
 
-    private AudioFormat audioFormat;
+    private transient AudioFormat audioFormat;
 
     private long frameLength;
 

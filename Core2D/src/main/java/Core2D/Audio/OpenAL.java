@@ -37,5 +37,6 @@ public class OpenAL
         // настройки listener
         AL10.alListener3f(AL10.AL_VELOCITY, 0f, 0f, 0f);
         AL10.alListener3f(AL10.AL_ORIENTATION, 0f, 0f, -1f);
+        AL11.alDistanceModel(AL11.AL_INVERSE_DISTANCE_CLAMPED);
     }
 }
