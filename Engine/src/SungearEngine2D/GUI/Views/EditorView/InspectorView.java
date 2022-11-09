@@ -691,13 +691,17 @@ public class InspectorView extends View
 
                                     if (cs.isAssignableFrom(float.class)) {
                                         float[] floats = new float[]{(float) scriptComponent.getScript().getFieldValue(field)};
+                                        ImGui.pushID(field.getName() + "_" + i);
                                         if (ImGui.dragFloat(field.getName(), floats)) {
                                             scriptComponent.getScript().setFieldValue(field, floats[0]);
                                         }
+                                        ImGui.popID();
                                     } else if (cs.isAssignableFrom(String.class)) {
                                         ImString string = new ImString((String) scriptComponent.getScript().getFieldValue(field), 128);
 
+                                        ImGui.pushID(field.getName() + "_" + i);
                                         ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.CallbackAlways);
+                                        ImGui.popID();
 
                                         scriptComponent.getScript().setFieldValue(field, string.get());
                                     } else if (cs.isAssignableFrom(Object2D.class)) {
@@ -705,7 +709,11 @@ public class InspectorView extends View
                                         if (scriptComponent.getScript().getFieldValue(field) != null) {
                                             string.set(((Object2D) scriptComponent.getScript().getFieldValue(field)).getName(), true);
                                         }
+
+                                        ImGui.pushID(field.getName() + "_" + i);
                                         ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
+                                        ImGui.popID();
+
                                         if (ImGui.beginDragDropTarget()) {
                                             Object droppedObject = ImGui.acceptDragDropPayload("SceneWrappedObject");
                                             if (droppedObject instanceof WrappedObject && ((WrappedObject) droppedObject).getObject() instanceof Object2D) {
@@ -720,7 +728,11 @@ public class InspectorView extends View
                                         if (scriptComponent.getScript().getFieldValue(field) != null) {
                                             string.set(((Camera2D) scriptComponent.getScript().getFieldValue(field)).name, true);
                                         }
+
+                                        ImGui.pushID(field.getName() + "_" + i);
                                         ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
+                                        ImGui.popID();
+
                                         if (ImGui.beginDragDropTarget()) {
                                             Object droppedObject = ImGui.acceptDragDropPayload("SceneWrappedObject");
                                             if (droppedObject instanceof Camera2D) {
@@ -738,7 +750,11 @@ public class InspectorView extends View
                             AudioComponent audioComponent = (AudioComponent) inspectingObject2D.getComponents().get(i);
 
                             ImString audioName = new ImString(new File(audioComponent.getAudio().path).getName());
+
+                            ImGui.pushID("AudioPath_" + i);
                             ImGui.inputText("Path", audioName, ImGuiInputTextFlags.ReadOnly);
+                            ImGui.popID();
+
                             if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
                                 if (ImGui.beginDragDropTarget()) {
                                     Object audioFile = ImGui.acceptDragDropPayload("File");
@@ -756,15 +772,19 @@ public class InspectorView extends View
                                 }
                             }
 
-                            ImGui.pushID("AudioType");
+                            ImGui.pushID("AudioType_" + i);
                             if (ImGui.beginCombo("Type", audioComponent.getAudio().audioType.toString())) {
+                                ImGui.pushID("AudioTypeSelectable0_" + i);
                                 if (ImGui.selectable("Background")) {
                                     audioComponent.getAudio().audioType = Audio.AudioType.BACKGROUND;
                                 }
+                                ImGui.popID();
 
+                                ImGui.pushID("AudioTypeSelectable1_" + i);
                                 if (ImGui.selectable("Worldspace")) {
                                     audioComponent.getAudio().audioType = Audio.AudioType.WORLDSPACE;
                                 }
+                                ImGui.popID();
 
                                 //System.out.println("x: " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.x + ", " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.y);
 
@@ -772,9 +792,43 @@ public class InspectorView extends View
                             }
                             ImGui.popID();
 
+                            float[] maxDistance = new float[] { audioComponent.getAudio().getMaxDistance() };
+                            ImGui.pushID("AudioMaxDistanceDragFloat_" + i);
+                            if(ImGui.dragFloat("Max distance", maxDistance)) {
+                                float res = Math.max(0, maxDistance[0]);
+                                audioComponent.getAudio().setMaxDistance(res);
+                            }
+                            ImGui.popID();
+
+                            float[] referenceDistance = new float[] { audioComponent.getAudio().getReferenceDistance() };
+                            ImGui.pushID("AudioReferenceDistanceDragFloat_" + i);
+                            if(ImGui.dragFloat("Reference distance", referenceDistance)) {
+                                float res = Math.max(0, referenceDistance[0]);
+                                audioComponent.getAudio().setReferenceDistance(res);
+                            }
+                            ImGui.popID();
+
+                            float[] rolloffFactor = new float[] { audioComponent.getAudio().getRolloffFactor() };
+                            ImGui.pushID("AudioRolloffFactorDragFloat_" + i);
+                            if(ImGui.dragFloat("Rolloff factor", rolloffFactor, 0.05f)) {
+                                float res = Math.max(0, rolloffFactor[0]);
+                                audioComponent.getAudio().setRolloffFactor(res);
+                            }
+                            ImGui.popID();
+
+                            float[] volumePercent = new float[] { audioComponent.getAudio().volumePercent };
+                            ImGui.pushID("AudioVolumePercentDragFloat_" + i);
+                            if(ImGui.dragFloat("Volume percent", volumePercent)) {
+                                float res = Math.max(0, Math.min(volumePercent[0], 100.0f));
+                                audioComponent.getAudio().volumePercent = res;
+                            }
+                            ImGui.popID();
+
+                            ImGui.pushID("AudioStartButton_" + i);
                             if(ImGui.button("Start")) {
                                 audioComponent.getAudio().start();
                             }
+                            ImGui.popID();
                         }
                     }
                 }

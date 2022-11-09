@@ -34,6 +34,11 @@ public class Audio
 
     public AudioType audioType = AudioType.BACKGROUND;
 
+    private float maxDistance = 100.0f;
+    private float referenceDistance = 25.0f;
+    private float rolloffFactor = 0.1f;
+    public float volumePercent = 100.0f;
+
     public void loadAndSetup(String path)
     {
         audioInfo = AudioInfo.loadAudio(path);
@@ -59,9 +64,9 @@ public class Audio
 
         AL10.alSourcei(source, AL10.AL_SOURCE_RELATIVE, AL10.AL_TRUE);
 
-        AL10.alSourcef(source, AL10.AL_MAX_DISTANCE, 100.0f);
-        AL10.alSourcef(source, AL10.AL_REFERENCE_DISTANCE, 25f);
-        AL10.alSourcef(source, AL10.AL_ROLLOFF_FACTOR, 0.1f);
+        setMaxDistance(maxDistance);
+        setReferenceDistance(referenceDistance);
+        setRolloffFactor(rolloffFactor);
     }
 
     public void deltaUpdate(float deltaTime)
@@ -74,23 +79,26 @@ public class Audio
         if(audioType == AudioType.WORLDSPACE) {
             Vector2f position = MatrixUtils.getPosition(transform.getResultModelMatrix());
 
-            //System.out.println("source pos: " + position.x + ", " + position.y);
             AL10.alSource3f(source, AL10.AL_POSITION, position.x, position.y, 0f);
 
             float distance = position.distance(new Vector2f(0.0f, 0.0f));
-            float referenceDistance = AL10.alGetSourcef(source, AL10.AL_REFERENCE_DISTANCE);
-            float maxDistance = AL10.alGetSourcef(source, AL10.AL_MAX_DISTANCE);
-            float rolloffFactor = AL10.alGetSourcef(source, AL10.AL_ROLLOFF_FACTOR);
 
             //System.out.println(String.format("distance: %f, referenceDistance: %f, maxDistance: %f, rolloffFactor: %f", distance, referenceDistance, maxDistance, rolloffFactor));
 
-            distance = Math.max(distance, referenceDistance);
+            //distance = Math.max(distance, referenceDistance);
             //distance = Math.min(distance, maxDistance);
-            float gain = referenceDistance / (referenceDistance + rolloffFactor * (distance - referenceDistance));
+            float gain = Math.max(0.0f, 1.0f - distance / maxDistance);
+            //float gain = (float) Math.pow((distance / referenceDistance), -rolloffFactor) * (volumePercent / 100.0f);
+
+            if(Float.isNaN(gain)) {
+                gain = 0.0f;
+            }
+            System.out.println("gain^ " + gain);
 
             AL10.alSourcef(source, AL10.AL_GAIN, gain);
         } else if(audioType == AudioType.BACKGROUND) {
             AL10.alSource3f(source, AL10.AL_POSITION, 0f, 0f, 0f);
+            AL10.alSourcef(source, AL10.AL_GAIN, volumePercent / 100.0f);
         }
     }
 
@@ -123,4 +131,25 @@ public class Audio
     public int getSource() { return source; }
 
     public Transform getTransform() { return transform; }
+
+    public float getMaxDistance() { return maxDistance; }
+    public void setMaxDistance(float maxDistance)
+    {
+        this.maxDistance = maxDistance;
+        AL10.alSourcef(source, AL10.AL_MAX_DISTANCE, maxDistance);
+    }
+
+    public float getReferenceDistance() { return referenceDistance; }
+    public void setReferenceDistance(float referenceDistance)
+    {
+        this.referenceDistance = referenceDistance;
+        AL10.alSourcef(source, AL10.AL_REFERENCE_DISTANCE, referenceDistance);
+    }
+
+    public float getRolloffFactor() { return rolloffFactor; }
+    public void setRolloffFactor(float rolloffFactor)
+    {
+        this.rolloffFactor = rolloffFactor;
+        AL10.alSourcef(source, AL10.AL_ROLLOFF_FACTOR, rolloffFactor);
+    }
 }

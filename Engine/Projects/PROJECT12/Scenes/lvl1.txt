@@ -14,8 +14,8 @@
                   "properties": {
                     "transform": {
                       "position": {
-                        "x": 1000.0,
-                        "y": 1000.0
+                        "x": 0.0,
+                        "y": 0.0
                       },
                       "rotation": 0.0,
                       "scale": {
@@ -110,7 +110,11 @@
                           "y": 0.0
                         }
                       },
-                      "audioType": "WORLDSPACE"
+                      "audioType": "WORLDSPACE",
+                      "maxDistance": 100.0,
+                      "referenceDistance": 66.0,
+                      "rolloffFactor": 0.1,
+                      "volumePercent": 100.0
                     },
                     "active": true
                   }
@@ -562,7 +566,7 @@
       }
     ]
   },
-  "maxObjectID": 135,
+  "maxObjectID": 163,
   "inBuild": false,
   "isMainScene2D": false
 }
