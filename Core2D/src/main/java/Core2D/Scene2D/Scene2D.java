@@ -11,16 +11,13 @@ import Core2D.Layering.Layering;
 import Core2D.Log.Log;
 import Core2D.Physics.PhysicsWorld;
 import Core2D.Project.ProjectsManager;
-import Core2D.Scripting.ScriptSceneObject;
 import Core2D.Scripting.ScriptTempValue;
-import Core2D.Scripting.ScriptTempValues;
 import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.Tag;
 import Core2D.Utils.WrappedObject;
 import org.joml.Vector4f;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -131,21 +128,6 @@ public class Scene2D
 
         Graphics.setScreenClearColor(screenClearColor);
 
-        int k = 0;
-        if(scriptSystem.getScriptTempValuesList().size() != 0) {
-            for (Layer layer : layering.getLayers()) {
-                for (WrappedObject wrappedObject : layer.getRenderingObjects()) {
-                    if (wrappedObject.getObject() instanceof Object2D) {
-                        List<ScriptComponent> scriptComponents = ((Object2D) wrappedObject.getObject()).getAllComponents(ScriptComponent.class);
-
-                        for (ScriptComponent scriptComponent : scriptComponents) {
-                            scriptSystem.getScriptTempValuesList().get(k).setScript(scriptComponent.getScript());
-                            k++;
-                        }
-                    }
-                }
-            }
-        }
         applyScriptsTempValues();
 
         if(sceneMainCamera2D != null) {
@@ -246,70 +228,13 @@ public class Scene2D
 
     public void saveScriptsTempValues()
     {
-        for(int i = 0; i < scriptSystem.getScriptTempValuesList().size(); i++) {
-            scriptSystem.getScriptTempValuesList().get(i).destroy();
-        }
-
-        scriptSystem.getScriptTempValuesList().clear();
-
-        for(Layer layer : layering.getLayers()) {
-            for(int i = 0; i < layer.getRenderingObjects().size(); i++) {
-                WrappedObject wrappedObject = layer.getRenderingObjects().get(i);
-                if(wrappedObject.getObject() instanceof Object2D && !((Object2D) wrappedObject.getObject()).isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponents = ((Object2D) wrappedObject.getObject()).getAllComponents(ScriptComponent.class);
-
-                    if(scriptComponents.size() != 0) {
-                        for (ScriptComponent scriptComponent : scriptComponents) {
-                            ScriptTempValues scriptTempValues = new ScriptTempValues();
-                            for (Field field : scriptComponent.getScript().getScriptClass().getFields()) {
-                                ScriptTempValue scriptTempValue = new ScriptTempValue();
-
-                                Object value = scriptComponent.getScript().getFieldValue(field);
-                                if(value instanceof Object2D) {
-                                    Object2D object2D = (Object2D) value;
-                                    scriptTempValue.setValue(new WrappedObject(new ScriptSceneObject(object2D.getID(), object2D.getName(), SceneObjectType.TYPE_OBJECT2D)));
-                                } else if(value instanceof Camera2D) {
-                                    Camera2D camera2D = (Camera2D) value;
-                                    scriptTempValue.setValue(new WrappedObject(new ScriptSceneObject(camera2D.getID(), camera2D.name, SceneObjectType.TYPE_CAMERA2D)));
-                                } else {
-                                    scriptTempValue.setValue(new WrappedObject(scriptComponent.getScript().getFieldValue(field)));
-                                }
-                                scriptTempValue.setFieldName(field.getName());
-                                scriptTempValue.setScript(scriptComponent.getScript());
-
-                                scriptTempValues.getScriptTempValues().add(scriptTempValue);
-                            }
-                            scriptSystem.getScriptTempValuesList().add(scriptTempValues);
-                        }
-                    }
-                }
-            }
-        }
+        ScriptSystem.saveScriptsTempValues(this);
     }
 
     // применяет временные значения скриптов объектов, хранящиеся только при выполнении программы
     public void applyScriptsTempValues()
     {
-        scriptSystem.applyTempValues();
-
-        for (Layer layer : layering.getLayers()) {
-            for(int i = 0; i < layer.getRenderingObjects().size(); i++) {
-                WrappedObject wrappedObject = layer.getRenderingObjects().get(i);
-                if (wrappedObject.getObject() instanceof Object2D && !((Object2D) wrappedObject.getObject()).isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponents = ((Object2D) wrappedObject.getObject()).getAllComponents(ScriptComponent.class);
-
-                    if (scriptComponents.size() != 0) {
-                        for (ScriptComponent scriptComponent : scriptComponents) {
-                            if(ProjectsManager.getCurrentProject() != null) {
-                                long lastModified = new File(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponent.getScript().path + ".java").lastModified();
-                                // установка времени  последней  модификации на скрипт
-                                scriptComponent.getScript().setLastModified(lastModified);
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        ScriptSystem.applyScriptsTempValues(this);
     }
 
     public void destroy()

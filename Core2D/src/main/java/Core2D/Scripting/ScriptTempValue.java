@@ -2,9 +2,9 @@ package Core2D.Scripting;
 
 import Core2D.Camera2D.Camera2D;
 import Core2D.Component.Component;
-import Core2D.Component.Components.ScriptComponent;
 import Core2D.Drawable.Object2D;
 import Core2D.Log.Log;
+import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.Utils;
@@ -12,27 +12,44 @@ import Core2D.Utils.WrappedObject;
 import com.google.gson.JsonObject;
 import com.google.gson.internal.LinkedTreeMap;
 
+import java.io.File;
 import java.lang.reflect.Field;
 
 // само одно временное значение в скрипте (хранятся только в рантайме)
 public class ScriptTempValue
 {
-    private transient Script script;
     private String fieldName;
     private Object value;
 
-    public void applyToScript()
+    public WrappedObject getScriptFieldValue(Script script)
+    {
+        WrappedObject wrappedObject = new WrappedObject(null);
+        if(script != null && fieldName != null && value != null) {
+            try {
+                Field field = script.getScriptClass().getField(fieldName);
+                wrappedObject = new WrappedObject(null);
+                if (value instanceof LinkedTreeMap) {
+                    JsonObject jsonObject = Utils.gson.toJsonTree(value).getAsJsonObject();
+                    wrappedObject = Utils.gson.fromJson(jsonObject.toString(), WrappedObject.class);
+                } else if (value instanceof WrappedObject) {
+                    wrappedObject = (WrappedObject) value;
+                }
+            } catch (NoSuchFieldException e) {
+                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+            }
+        }
+
+        return wrappedObject;
+    }
+
+    public void applyToScript(Script script)
     {
         if(script != null && fieldName != null && value != null) {
             try {
                 Field field = script.getScriptClass().getField(fieldName);
-                WrappedObject wrappedObject = new WrappedObject(null);
-                if(value instanceof LinkedTreeMap) {
-                    JsonObject jsonObject = Utils.gson.toJsonTree(value).getAsJsonObject();
-                    wrappedObject = Utils.gson.fromJson(jsonObject.toString(), WrappedObject.class);
-                } else if(value instanceof WrappedObject) {
-                    wrappedObject = (WrappedObject) value;
-                }
+                WrappedObject wrappedObject = getScriptFieldValue(script);
+
+                //System.out.println("fieldName: " + fieldName + ", wrappedObject.getObject(): " + wrappedObject.getObject() + ", script name: " + script.getName() + ", script class: " + script.getScriptClass());
 
                 //System.out.println(wrappedObject.getObject());
 
@@ -69,12 +86,17 @@ public class ScriptTempValue
             } catch (NoSuchFieldException | IllegalAccessException e) {
                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }
+
+            if(ProjectsManager.getCurrentProject() != null) {
+                long lastModified = new File(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + script.path + ".java").lastModified();
+                // установка времени  последней  модификации на скрипт
+                script.setLastModified(lastModified);
+            }
         }
     }
 
     public void destroy()
     {
-        script = null;
         fieldName = null;
         value = null;
     }
@@ -84,7 +106,4 @@ public class ScriptTempValue
 
     public Object getValue() { return value; }
     public void setValue(Object value) { this.value = value; }
-
-    public Script getScript() { return script; }
-    public void setScript(Script script) { this.script = script; }
 }

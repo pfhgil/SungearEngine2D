@@ -14,10 +14,10 @@
                   "properties": {
                     "transform": {
                       "position": {
-                        "x": 384.89743,
-                        "y": -6.271757
+                        "x": 128.56747,
+                        "y": 122.97012
                       },
-                      "rotation": 8.006019,
+                      "rotation": 0.0,
                       "scale": {
                         "x": 1.0,
                         "y": 1.7650651
@@ -102,7 +102,120 @@
                     "script": {
                       "path": "Scripts\\SceneController",
                       "name": "SceneController",
-                      "active": true
+                      "active": true,
+                      "lastModified": 1668199414076,
+                      "scriptTempValues": [
+                        {
+                          "fieldName": "levelName",
+                          "value": {
+                            "type": "java.lang.String",
+                            "properties": "lvl2"
+                          }
+                        },
+                        {
+                          "fieldName": "movableObject2D",
+                          "value": {
+                            "type": "Core2D.Scripting.ScriptSceneObject",
+                            "properties": {
+                              "ID": 5,
+                              "name": "ferapont",
+                              "objectType": "TYPE_OBJECT2D"
+                            }
+                          }
+                        },
+                        {
+                          "fieldName": "camera2D",
+                          "value": {
+                            "type": "Core2D.Scripting.ScriptSceneObject",
+                            "properties": {
+                              "ID": 10,
+                              "name": "default",
+                              "objectType": "TYPE_CAMERA2D"
+                            }
+                          }
+                        },
+                        {
+                          "fieldName": "fuckYouSound",
+                          "value": {
+                            "type": "Core2D.Component.Components.AudioComponent",
+                            "properties": {
+                              "audio": {
+                                "path": "audio\\audio_1.wav",
+                                "name": "",
+                                "audioInfo": {
+                                  "buffer": 2,
+                                  "frameLength": 52992,
+                                  "audioLength": 1201
+                                },
+                                "source": 2,
+                                "transform": {
+                                  "position": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                  },
+                                  "rotation": 0.0,
+                                  "scale": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                  },
+                                  "centre": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                  }
+                                },
+                                "audioType": "WORLDSPACE",
+                                "maxDistance": 750.0,
+                                "referenceDistance": 25.0,
+                                "rolloffFactor": 0.1,
+                                "volumePercent": 100.0
+                              },
+                              "object2DID": 5,
+                              "componentID": 6,
+                              "active": true
+                            }
+                          }
+                        },
+                        {
+                          "fieldName": "someComponent",
+                          "value": {
+                            "type": "Core2D.Component.Components.TransformComponent",
+                            "properties": {
+                              "transform": {
+                                "position": {
+                                  "x": 128.56747,
+                                  "y": 122.97012
+                                },
+                                "rotation": 0.0,
+                                "scale": {
+                                  "x": 1.0,
+                                  "y": 1.7650651
+                                },
+                                "centre": {
+                                  "x": 0.0,
+                                  "y": 0.0
+                                }
+                              },
+                              "object2DID": 5,
+                              "componentID": 0,
+                              "active": true
+                            }
+                          }
+                        },
+                        {
+                          "fieldName": "speed",
+                          "value": {
+                            "type": "java.lang.Float",
+                            "properties": 200.0
+                          }
+                        },
+                        {
+                          "fieldName": "impulse",
+                          "value": {
+                            "type": "java.lang.Float",
+                            "properties": 10000.0
+                          }
+                        }
+                      ]
                     },
                     "object2DID": 5,
                     "componentID": 7,
@@ -110,15 +223,33 @@
                   }
                 },
                 {
+                  "type": "Core2D.Component.Components.BoxCollider2DComponent",
+                  "properties": {
+                    "boxCollider2D": {
+                      "scale": {
+                        "x": 1.0,
+                        "y": 1.53
+                      },
+                      "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    },
+                    "object2DID": 5,
+                    "componentID": 8,
+                    "active": true
+                  }
+                },
+                {
                   "type": "Core2D.Component.Components.Rigidbody2DComponent",
                   "properties": {
                     "rigidbody2D": {
-                      "bodyType": "STATIC",
-                      "density": 1.0,
+                      "bodyType": "DYNAMIC",
+                      "density": 0.3,
                       "restitution": 0.0,
-                      "friction": 0.1,
+                      "friction": 0.0,
                       "isSensor": false,
-                      "isFixedRotation": false
+                      "isFixedRotation": true
                     },
                     "object2DID": 5,
                     "componentID": 5,
@@ -155,7 +286,7 @@
                   "properties": {
                     "transform": {
                       "position": {
-                        "x": -194.22354,
+                        "x": -200.96199,
                         "y": 95.72561
                       },
                       "rotation": 0.0,
@@ -477,8 +608,8 @@
       },
       "name": "default",
       "viewportSize": {
-        "x": 1080.0,
-        "y": 720.0
+        "x": 1600.0,
+        "y": 837.0
       },
       "ID": 10,
       "viewMatrix": {
@@ -520,8 +651,8 @@
     },
     "name": "default",
     "viewportSize": {
-      "x": 1080.0,
-      "y": 720.0
+      "x": 1600.0,
+      "y": 837.0
     },
     "ID": 10,
     "viewMatrix": {
@@ -555,118 +686,8 @@
       "name": "default"
     }
   ],
-  "scriptSystem": {
-    "scriptTempValuesList": [
-      {
-        "scriptTempValues": [
-          {
-            "fieldName": "levelName",
-            "value": {
-              "type": "java.lang.String",
-              "properties": ""
-            }
-          },
-          {
-            "fieldName": "movableObject2D",
-            "value": {
-              "type": "Core2D.Scripting.ScriptSceneObject",
-              "properties": {
-                "ID": 5,
-                "name": "ferapont",
-                "objectType": "TYPE_OBJECT2D"
-              }
-            }
-          },
-          {
-            "fieldName": "camera2D",
-            "value": {
-              "type": "Core2D.Scripting.ScriptSceneObject",
-              "properties": {
-                "ID": 10,
-                "name": "default",
-                "objectType": "TYPE_CAMERA2D"
-              }
-            }
-          },
-          {
-            "fieldName": "fuckYouSound",
-            "value": {
-              "type": "Core2D.Component.Components.AudioComponent",
-              "properties": {
-                "audio": {
-                  "path": "audio\\audio_1.wav",
-                  "name": "",
-                  "audioInfo": {
-                    "buffer": 2,
-                    "frameLength": 52992,
-                    "audioLength": 1201
-                  },
-                  "source": 2,
-                  "transform": {
-                    "position": {
-                      "x": 0.0,
-                      "y": 0.0
-                    },
-                    "rotation": 0.0,
-                    "scale": {
-                      "x": 1.0,
-                      "y": 1.0
-                    },
-                    "centre": {
-                      "x": 0.0,
-                      "y": 0.0
-                    }
-                  },
-                  "audioType": "WORLDSPACE",
-                  "maxDistance": 750.0,
-                  "referenceDistance": 25.0,
-                  "rolloffFactor": 0.1,
-                  "volumePercent": 100.0
-                },
-                "object2DID": 5,
-                "componentID": 6,
-                "active": true
-              }
-            }
-          },
-          {
-            "fieldName": "someComponent",
-            "value": {
-              "type": "Core2D.Component.Components.TransformComponent",
-              "properties": {
-                "transform": {
-                  "position": {
-                    "x": 384.89743,
-                    "y": -6.271757
-                  },
-                  "rotation": 8.006019,
-                  "scale": {
-                    "x": 1.0,
-                    "y": 1.7650651
-                  },
-                  "centre": {
-                    "x": 0.0,
-                    "y": 0.0
-                  }
-                },
-                "object2DID": 5,
-                "componentID": 0,
-                "active": true
-              }
-            }
-          },
-          {
-            "fieldName": "speed",
-            "value": {
-              "type": "java.lang.Float",
-              "properties": 200.0
-            }
-          }
-        ]
-      }
-    ]
-  },
-  "maxObjectID": 390,
+  "scriptSystem": {},
+  "maxObjectID": 541,
   "inBuild": false,
   "isMainScene2D": false
 }

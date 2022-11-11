@@ -23,10 +23,12 @@
                         "y": 1.0
                       },
                       "centre": {
-                        "x": 0.0,
-                        "y": 0.0
+                        "x": 100.0,
+                        "y": 100.0
                       }
                     },
+                    "object2DID": 6,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -51,22 +53,8 @@
                       1.0,
                       0.0
                     ],
-                    "active": true
-                  }
-                },
-                {
-                  "type": "Core2D.Component.Components.BoxCollider2DComponent",
-                  "properties": {
-                    "boxCollider2D": {
-                      "scale": {
-                        "x": 1.0,
-                        "y": 1.0
-                      },
-                      "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                      }
-                    },
+                    "object2DID": 6,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -76,8 +64,116 @@
                     "script": {
                       "path": "Scripts\\SceneController",
                       "name": "SceneController",
-                      "active": true
+                      "active": true,
+                      "lastModified": 1668199162120,
+                      "scriptTempValues": [
+                        {
+                          "fieldName": "levelName",
+                          "value": {
+                            "type": "java.lang.String",
+                            "properties": "lvl1"
+                          }
+                        },
+                        {
+                          "fieldName": "movableObject2D",
+                          "value": {
+                            "type": "Core2D.Scripting.ScriptSceneObject",
+                            "properties": {
+                              "ID": 6,
+                              "name": "ferapont",
+                              "objectType": "TYPE_OBJECT2D"
+                            }
+                          }
+                        },
+                        {
+                          "fieldName": "camera2D",
+                          "value": {
+                            "type": "Core2D.Scripting.ScriptSceneObject",
+                            "properties": {
+                              "ID": 97789409,
+                              "name": "default",
+                              "objectType": "TYPE_CAMERA2D"
+                            }
+                          }
+                        },
+                        {
+                          "fieldName": "fuckYouSound",
+                          "value": {
+                            "type": "Core2D.Component.Components.AudioComponent",
+                            "properties": {
+                              "audio": {
+                                "path": "audio\\audio_1.wav",
+                                "name": "",
+                                "audioInfo": {
+                                  "buffer": 2,
+                                  "frameLength": 52992,
+                                  "audioLength": 1201
+                                },
+                                "source": 2,
+                                "transform": {
+                                  "position": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                  },
+                                  "rotation": 0.0,
+                                  "scale": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                  },
+                                  "centre": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                  }
+                                },
+                                "audioType": "WORLDSPACE",
+                                "maxDistance": 750.0,
+                                "referenceDistance": 25.0,
+                                "rolloffFactor": 0.1,
+                                "volumePercent": 100.0
+                              },
+                              "object2DID": 6,
+                              "componentID": 2,
+                              "active": true
+                            }
+                          }
+                        },
+                        {
+                          "fieldName": "someComponent",
+                          "value": {
+                            "type": "Core2D.Component.Components.TransformComponent",
+                            "properties": {
+                              "transform": {
+                                "position": {
+                                  "x": -444.0,
+                                  "y": 168.80246
+                                },
+                                "rotation": 0.0,
+                                "scale": {
+                                  "x": 1.0,
+                                  "y": 1.0
+                                },
+                                "centre": {
+                                  "x": 100.0,
+                                  "y": 100.0
+                                }
+                              },
+                              "object2DID": 6,
+                              "componentID": 0,
+                              "active": true
+                            }
+                          }
+                        },
+                        {
+                          "fieldName": "speed",
+                          "value": {
+                            "type": "java.lang.Float",
+                            "properties": 200.0
+                          }
+                        }
+                      ]
                     },
+                    "object2DID": 6,
+                    "componentID": 1,
                     "active": true
                   }
                 },
@@ -89,8 +185,6 @@
                       "name": "",
                       "audioInfo": {
                         "buffer": 2,
-                        "audioPath": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\audio\\audio_1.wav",
-                        "audioName": "audio_1",
                         "frameLength": 52992,
                         "audioLength": 1201
                       },
@@ -111,11 +205,28 @@
                         }
                       },
                       "audioType": "WORLDSPACE",
-                      "maxDistance": 100.0,
+                      "maxDistance": 750.0,
                       "referenceDistance": 25.0,
                       "rolloffFactor": 0.1,
                       "volumePercent": 100.0
                     },
+                    "object2DID": 6,
+                    "componentID": 2,
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.CircleCollider2DComponent",
+                  "properties": {
+                    "circleCollider2D": {
+                      "offset": {
+                        "x": 0.0,
+                        "y": 0.0
+                      },
+                      "radius": 50.0
+                    },
+                    "object2DID": 6,
+                    "componentID": 3,
                     "active": true
                   }
                 },
@@ -130,6 +241,8 @@
                       "isSensor": false,
                       "isFixedRotation": false
                     },
+                    "object2DID": 6,
+                    "componentID": 0,
                     "active": true
                   }
                 }
@@ -176,6 +289,8 @@
                         "y": 0.0
                       }
                     },
+                    "object2DID": 16,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -200,6 +315,8 @@
                       1.0,
                       0.0
                     ],
+                    "object2DID": 16,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -216,6 +333,8 @@
                         "y": 0.0
                       }
                     },
+                    "object2DID": 16,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -230,6 +349,8 @@
                       "isSensor": false,
                       "isFixedRotation": false
                     },
+                    "object2DID": 16,
+                    "componentID": 0,
                     "active": true
                   }
                 }
@@ -276,6 +397,8 @@
                         "y": 0.0
                       }
                     },
+                    "object2DID": 68,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -300,6 +423,8 @@
                       1.0,
                       0.0
                     ],
+                    "object2DID": 68,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -316,6 +441,8 @@
                         "y": -682.0
                       }
                     },
+                    "object2DID": 68,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -332,6 +459,8 @@
                         "y": 0.0
                       }
                     },
+                    "object2DID": 68,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -348,6 +477,8 @@
                         "y": 0.0
                       }
                     },
+                    "object2DID": 68,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -364,6 +495,8 @@
                         "y": -510.0
                       }
                     },
+                    "object2DID": 68,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -380,6 +513,8 @@
                         "y": -385.0
                       }
                     },
+                    "object2DID": 68,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -396,6 +531,8 @@
                         "y": -155.0
                       }
                     },
+                    "object2DID": 68,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -412,6 +549,8 @@
                         "y": -212.0
                       }
                     },
+                    "object2DID": 68,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -428,6 +567,8 @@
                         "y": 77.0
                       }
                     },
+                    "object2DID": 68,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -444,6 +585,8 @@
                         "y": 202.0
                       }
                     },
+                    "object2DID": 68,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -460,6 +603,8 @@
                         "y": 356.0
                       }
                     },
+                    "object2DID": 68,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -476,6 +621,8 @@
                         "y": 534.0
                       }
                     },
+                    "object2DID": 68,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -492,6 +639,8 @@
                         "y": 653.0
                       }
                     },
+                    "object2DID": 68,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -506,6 +655,8 @@
                       "isSensor": false,
                       "isFixedRotation": false
                     },
+                    "object2DID": 68,
+                    "componentID": 0,
                     "active": true
                   }
                 }
@@ -555,8 +706,8 @@
       },
       "name": "default",
       "viewportSize": {
-        "x": 1080.0,
-        "y": 720.0
+        "x": 1600.0,
+        "y": 837.0
       },
       "ID": 97789409,
       "viewMatrix": {
@@ -598,8 +749,8 @@
     },
     "name": "default",
     "viewportSize": {
-      "x": 1080.0,
-      "y": 720.0
+      "x": 1600.0,
+      "y": 837.0
     },
     "ID": 97789409,
     "viewMatrix": {
@@ -633,40 +784,8 @@
       "name": "default"
     }
   ],
-  "scriptSystem": {
-    "scriptTempValuesList": [
-      {
-        "scriptTempValues": [
-          {
-            "fieldName": "levelName",
-            "value": {
-              "type": "java.lang.String",
-              "properties": "lvl1"
-            }
-          },
-          {
-            "fieldName": "movableObject2D",
-            "value": {
-              "type": "Core2D.Scripting.ScriptSceneObject",
-              "properties": {
-                "ID": 6,
-                "name": "ferapont",
-                "objectType": "TYPE_OBJECT2D"
-              }
-            }
-          },
-          {
-            "fieldName": "speed",
-            "value": {
-              "type": "java.lang.Float",
-              "properties": 200.0
-            }
-          }
-        ]
-      }
-    ]
-  },
-  "maxObjectID": 78,
+  "scriptSystem": {},
+  "maxObjectID": 113,
   "inBuild": false,
   "isMainScene2D": false
 }

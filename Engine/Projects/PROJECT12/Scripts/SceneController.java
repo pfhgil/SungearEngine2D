@@ -10,6 +10,7 @@ import Core2D.Component.Components.*;
 import Core2D.Transform.*;
 import Core2D.Physics.*;
 import org.joml.Vector2f;
+import Core2D.Utils.*;
 
 public class SceneController
 {
@@ -31,9 +32,11 @@ public class SceneController
     @InspectorView
     public float speed = 200.0f;
 
+    @InspectorView
+    public float impulse = 100.0f;
+
     public void update()
     {
-        //d
         if(Keyboard.keyPressed(GLFW.GLFW_KEY_C)) {
             Log.CurrentSession.println("level name: " + levelName, Log.MessageType.INFO);
             SceneManager.currentSceneManager.setCurrentScene2D(SceneManager.currentSceneManager.getScene2D(levelName));
@@ -48,11 +51,6 @@ public class SceneController
 
             if(fuckYouSound != null) {
                 fuckYouSound.audio.start();
-                Log.CurrentSession.println("id: " + fuckYouSound.audio.source, Log.MessageType.INFO);
-            }
-
-            if(someComponent != null) {
-                someComponent.getTransform().rotate(1.0f);
             }
         }
     }
@@ -63,13 +61,21 @@ public class SceneController
             Transform transform = movableObject2D.getComponent(TransformComponent.class).getTransform();
             //tgf
             if(Keyboard.keyDown(GLFW.GLFW_KEY_SPACE)) {
-                transform.applyLinearImpulse(new Vector2f(0.0f, 1000 * deltaTime), new Vector2f());
+                transform.applyLinearImpulse(new Vector2f(0.0f, impulse * deltaTime), new Vector2f());
+                //transform.applyTorque(200.0f);
+                //transform.applyForce(new Vector2f(0.0f, 10000 * deltaTime), new Vector2f(transform.getCentre()));
             }
             if(Keyboard.keyDown(GLFW.GLFW_KEY_D)) {
                 transform.translate(new Vector2f(speed * deltaTime, 0.0f));
+                //transform.applyLinearImpulse(new Vector2f(0.0f, 10000 * deltaTime), new Vector2f(transform.getCentre()));
             }
             if(Keyboard.keyDown(GLFW.GLFW_KEY_A)) {
                 transform.translate(new Vector2f(-speed * deltaTime, 0.0f));
+            }
+
+            if(camera2D != null) {
+                Vector2f pos = MatrixUtils.getPosition(transform.getResultModelMatrix());
+                camera2D.getTransform().setPosition(new Vector2f(pos).negate());
             }
         }
     }

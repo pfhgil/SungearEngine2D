@@ -114,6 +114,24 @@ public class SceneManager
 
     public void saveScene(Scene2D scene, String path)
     {
+        scene.saveScriptsTempValues();
+
+        String serialized = Utils.gson.toJson(scene);
+
+        File f = new File(path);
+        String s = f.getParentFile().getPath() + "/" + FilenameUtils.getBaseName(f.getName()) + ".txt";
+        File f0 = FileUtils.createFile(s);
+        FileUtils.writeToFile(f0, serialized, false);
+
+        FileUtils.serializeObject(path, serialized);
+    }
+
+    public void saveScene(Scene2D scene, String path, boolean saveTempValues)
+    {
+        if(saveTempValues) {
+            scene.saveScriptsTempValues();
+        }
+
         String serialized = Utils.gson.toJson(scene);
 
         File f = new File(path);
@@ -225,21 +243,30 @@ public class SceneManager
         if (scene2D != null) {
             scene2D.setSceneLoaded(false);
         }
+        if(currentScene2D != null) {
+            currentScene2D.saveScriptsTempValues();
+        }
+
         currentScene2D = scene2D;
+        if(currentScene2D != null) {
+            currentScene2D.setSceneLoaded(false);
+        }
 
         if(currentScene2D != null) {
             applyObject2DDependencies(currentScene2D);
         }
 
-        if(currentScene2D != null) {
-            currentScene2D.load();
-        }
-
         Keyboard.handleKeyboardInput();
         Mouse.handleMouseInput();
 
-        if(currentScene2D.getSceneMainCamera2D() != null) {
-            currentScene2D.getSceneMainCamera2D().getTransform().set(currentScene2D.getSceneMainCamera2D().getTransform());
+        if(currentScene2D != null) {
+            if (currentScene2D.getSceneMainCamera2D() != null) {
+                currentScene2D.getSceneMainCamera2D().getTransform().set(currentScene2D.getSceneMainCamera2D().getTransform());
+            }
+        }
+
+        if(currentScene2D != null) {
+            currentScene2D.load();
         }
     }
     public void setCurrentScene2D(String name)

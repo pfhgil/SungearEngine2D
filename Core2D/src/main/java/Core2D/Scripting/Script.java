@@ -1,11 +1,14 @@
 package Core2D.Scripting;
 
+import Core2D.Camera2D.Camera2D;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.Drawable.Object2D;
 import Core2D.Log.Log;
+import Core2D.Scene2D.SceneObjectType;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.WrappedObject;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -33,7 +36,9 @@ public class Script
     private transient Class<?> scriptClass;
     private transient Object scriptClassInstance;
 
-    private transient long lastModified = -1;
+    private long lastModified = -1;
+
+    private List<ScriptTempValue> scriptTempValues = new ArrayList<>();
 
     public void set(Script script)
     {
@@ -49,6 +54,9 @@ public class Script
         collider2DExitMethod = null;
 
         loadClass(new File(script.path).getParent(), FilenameUtils.getBaseName(script.getName()));
+
+        destroyTempValues();
+        scriptTempValues.addAll(script.getScriptTempValues());
     }
 
     public void loadClass(String dirPath, String baseName) {
@@ -177,6 +185,41 @@ public class Script
         }
     }
 
+    public void applyTempValues()
+    {
+        int len = scriptTempValues.size();
+        if(len != 0) {
+            for (int i = 0; i < len; i++) {
+                scriptTempValues.get(i).applyToScript(this);
+            }
+        }
+    }
+
+    public void saveTempValues()
+    {
+        destroyTempValues();
+
+        if(scriptClass != null) {
+            for (Field field : scriptClass.getFields()) {
+                ScriptTempValue scriptTempValue = new ScriptTempValue();
+
+                Object value = getFieldValue(field);
+                if (value instanceof Object2D) {
+                    Object2D object2D = (Object2D) value;
+                    scriptTempValue.setValue(new WrappedObject(new ScriptSceneObject(object2D.getID(), object2D.getName(), SceneObjectType.TYPE_OBJECT2D)));
+                } else if (value instanceof Camera2D) {
+                    Camera2D camera2D = (Camera2D) value;
+                    scriptTempValue.setValue(new WrappedObject(new ScriptSceneObject(camera2D.getID(), camera2D.name, SceneObjectType.TYPE_CAMERA2D)));
+                } else {
+                    scriptTempValue.setValue(new WrappedObject(value));
+                }
+                scriptTempValue.setFieldName(field.getName());
+
+                scriptTempValues.add(scriptTempValue);
+            }
+        }
+    }
+
     public void destroy()
     {
         path = null;
@@ -189,6 +232,17 @@ public class Script
 
         scriptClass = null;
         scriptClassInstance = null;
+    }
+
+    public void destroyTempValues()
+    {
+        int len = scriptTempValues.size();
+        if(len != 0) {
+            for (int i = 0; i < len; i++) {
+                scriptTempValues.get(i).destroy();
+            }
+        }
+        scriptTempValues.clear();
     }
 
     public boolean isActive() { return active; }
@@ -206,4 +260,6 @@ public class Script
 
     public long getLastModified() { return lastModified; }
     public void setLastModified(long lastModified) { this.lastModified = lastModified; }
+
+    public List<ScriptTempValue> getScriptTempValues() { return scriptTempValues; }
 }

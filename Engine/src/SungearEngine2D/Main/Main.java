@@ -14,6 +14,7 @@ import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
+import Core2D.Scene2D.SceneManager;
 import Core2D.Tasks.StoppableTask;
 import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.CameraController.CameraController;
@@ -98,12 +99,12 @@ public class Main
                                 try {
                                     List<String> compiledScripts = new ArrayList<>();
 
-                                    currentSceneManager.getCurrentScene2D().saveScriptsTempValues();
-
-                                    for (int p = 0; p < currentSceneManager.getCurrentScene2D().getLayering().getLayers().size(); p++) {
+                                    int layersNum = currentSceneManager.getCurrentScene2D().getLayering().getLayers().size();
+                                    for (int p = 0; p < layersNum; p++) {
                                         Layer layer = currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(p);
                                         if (layer != null && layer.getRenderingObjects() != null) {
-                                            for (int i = 0; i < layer.getRenderingObjects().size(); i++) {
+                                            int renderingObjectsNum = layer.getRenderingObjects().size();
+                                            for (int i = 0; i < renderingObjectsNum; i++) {
                                                 if (layer.getRenderingObjects().get(i).getObject() instanceof Object2D && !((Object2D) layer.getRenderingObjects().get(i).getObject()).isShouldDestroy()) {
                                                     List<ScriptComponent> scriptComponents = ((Object2D) layer.getRenderingObjects().get(i).getObject()).getAllComponents(ScriptComponent.class);
 
@@ -125,17 +126,19 @@ public class Main
                                                             ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
                                                                 public void run()
                                                                 {
-                                                                    currentSceneManager.getCurrentScene2D().saveScriptsTempValues();
+                                                                    if(currentSceneManager.getCurrentScene2D() != null) {
+                                                                        scriptComponents.get(finalK).getScript().saveTempValues();
 
-                                                                    String newScriptPath = scriptPath.replace(".java", "");
-                                                                    boolean compiled = Compiler.compileScript(newScriptPath + ".java");
-                                                                    if (compiled) {
-                                                                        scriptComponents.get(finalK).getScript().loadClass(new File(scriptPath).getParent(), FilenameUtils.getBaseName(new File(scriptPath).getName()));
-                                                                        scriptComponents.get(finalK).getScript().path = lastScriptPath;
+                                                                        String newScriptPath = scriptPath.replace(".java", "");
+                                                                        boolean compiled = Compiler.compileScript(newScriptPath + ".java");
+                                                                        if (compiled) {
+                                                                            scriptComponents.get(finalK).getScript().loadClass(new File(scriptPath).getParent(), FilenameUtils.getBaseName(new File(scriptPath).getName()));
+                                                                            scriptComponents.get(finalK).getScript().path = lastScriptPath;
+                                                                        }
+                                                                        compiledScripts.add(scriptComponents.get(finalK).getScript().getName());
+
+                                                                        scriptComponents.get(finalK).getScript().applyTempValues();
                                                                     }
-                                                                    compiledScripts.add(scriptComponents.get(finalK).getScript().getName());
-
-                                                                    currentSceneManager.getCurrentScene2D().applyScriptsTempValues();
                                                                 }
                                                             });
                                                         }
@@ -144,8 +147,6 @@ public class Main
                                             }
                                         }
                                     }
-
-                                    currentSceneManager.getCurrentScene2D().applyScriptsTempValues();
                                 } catch(Exception e) {
                                     Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                                 }

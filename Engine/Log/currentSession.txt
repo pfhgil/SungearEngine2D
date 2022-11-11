@@ -1,61 +1,125 @@
-[#FFFFFF] 2022/11/11 11:18:14 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/11/11 11:18:14 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2022/11/11 11:18:14 | [#008000] Core2D started!
-[#FFFFFF] 2022/11/11 11:18:14 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
-[#FFFFFF] 2022/11/11 11:18:20 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/11/11 11:18:20 | [#FFFFFF] Initializing compiler...  
-[#FFFFFF] 2022/11/11 11:18:26 | [#FFFFFF] source does not exists
-[#FFFFFF] 2022/11/11 11:18:26 | [#FFFFFF] source id: 2
-[#FFFFFF] 2022/11/11 11:18:27 | [#FFFFFF] source exist
-[#FFFFFF] 2022/11/11 11:18:27 | [#FFFFFF] source id: 2
-[#FFFFFF] 2022/11/11 11:18:39 | [#FFFFFF] Compiling script SceneController.java... 
-[#FFFFFF] 2022/11/11 11:18:41 | [#008000] Script SceneController.java was successfully built!
-[#FFFFFF] 2022/11/11 11:18:41 | [#FFFFFF] Compiling script SceneController.java... 
-[#FFFFFF] 2022/11/11 11:18:43 | [#008000] Script SceneController.java was successfully built!
-[#FFFFFF] 2022/11/11 11:18:59 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl1.txt' already exists
-[#FFFFFF] 2022/11/11 11:19:00 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:00 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:00 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:00 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:00 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:00 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:00 | [#FFFFFF] source exist
-[#FFFFFF] 2022/11/11 11:19:00 | [#FFFFFF] source id: 2
-[#FFFFFF] 2022/11/11 11:19:01 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl1.txt' already exists
-[#FFFFFF] 2022/11/11 11:19:01 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:01 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:01 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:01 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:01 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:01 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:03 | [#FFFFFF] source exist
-[#FFFFFF] 2022/11/11 11:19:03 | [#FFFFFF] source id: 2
-[#FFFFFF] 2022/11/11 11:19:08 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl1.txt' already exists
-[#FFFFFF] 2022/11/11 11:19:09 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:09 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:09 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:09 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:09 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:09 | [#FFFFFF] id: 2
-[#FFFFFF] 2022/11/11 11:19:10 | [#FFFFFF] source exist
-[#FFFFFF] 2022/11/11 11:19:10 | [#FFFFFF] source id: 2
-[#FFFFFF] 2022/11/11 11:19:29 | [#FFFF00] Attention! Builder uses a separate thread to build the game, so all OpenGL commands won't work.
-[#FFFFFF] 2022/11/11 11:19:29 | [#FFFFFF] Creating the necessary files...
-[#FFFFFF] 2022/11/11 11:19:29 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
-[#FFFFFF] 2022/11/11 11:19:29 | [#FFFFFF] source exist
-[#FFFFFF] 2022/11/11 11:19:29 | [#FFFFFF] source id: 2
-[#FFFFFF] 2022/11/11 11:19:29 | [#FFFFFF] source exist
-[#FFFFFF] 2022/11/11 11:19:29 | [#FFFFFF] source id: 2
-[#FFFFFF] 2022/11/11 11:19:31 | [#008000] Script ApplicationStarter.java was successfully built!
-[#FFFFFF] 2022/11/11 11:19:31 | [#FFFFFF] 
-[#FFFFFF] 2022/11/11 11:20:16 | [#FF0000] РќРµ СѓРґР°РµС‚СЃСЏ РЅР°Р№С‚Рё СѓРєР°Р·Р°РЅРЅС‹Р№ С„Р°Р№Р».
-СЌСЋВ СЃ. 11, 2022 11:20:07 AM java.util.jar.Attributes read
+[#FFFFFF] 2022/11/11 23:35:23 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/11/11 23:35:23 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2022/11/11 23:35:24 | [#008000] Core2D started!
+[#FFFFFF] 2022/11/11 23:35:24 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2022/11/11 23:35:29 | [#FF0000] OpenGL error: 1280
+[#FFFFFF] 2022/11/11 23:35:29 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2022/11/11 23:35:38 | [#FFFFFF] source does not exists
+[#FFFFFF] 2022/11/11 23:35:38 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:35:38 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:35:38 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:35:42 | [#FFFF00] Attention! Builder uses a separate thread to build the game, so all OpenGL commands won't work.
+[#FFFFFF] 2022/11/11 23:35:42 | [#FFFFFF] Creating the necessary files...
+[#FFFFFF] 2022/11/11 23:35:42 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2022/11/11 23:35:42 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:35:42 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:35:42 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:35:42 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:35:45 | [#008000] Script ApplicationStarter.java was successfully built!
+[#FFFFFF] 2022/11/11 23:35:45 | [#FFFFFF] 
+[#FFFFFF] 2022/11/11 23:36:09 | [#FF0000] Не удается найти указанный файл.
+эю с. 11, 2022 11:36:05 PM java.util.jar.Attributes read
 WARNING: Duplicate name in Manifest: Manifest-Version.
 Ensure that the manifest does not have duplicate entries, and
 that blank lines separate individual sections in both your
 manifest and in the META-INF/MANIFEST.MF entry in the jar file.
 
-[#FFFFFF] 2022/11/11 11:20:16 | [#FFFFFF] 
-[#FFFFFF] 2022/11/11 11:20:23 | [#FF0000] Р¤Р°Р№Р» РЅРµ РЅР°Р№РґРµРЅ
+[#FFFFFF] 2022/11/11 23:36:09 | [#FFFFFF] 
+[#FFFFFF] 2022/11/11 23:36:16 | [#FF0000] Файл не найден
 
-[#FFFFFF] 2022/11/11 11:21:53 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2022/11/11 23:37:36 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/11 23:37:39 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/11 23:37:42 | [#FFFFFF] Log cleared! See log directory in the engine directory.
+[#FFFFFF] 2022/11/11 23:37:44 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl1.txt' already exists
+[#FFFFFF] 2022/11/11 23:37:49 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:37:49 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:38:04 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/11 23:38:07 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/11 23:38:08 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl1.txt' already exists
+[#FFFFFF] 2022/11/11 23:38:23 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/11 23:38:23 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:38:23 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:38:30 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:38:30 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:38:59 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/11 23:38:59 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/11 23:39:03 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/11 23:39:03 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/11 23:39:04 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl2.txt' already exists
+[#FFFFFF] 2022/11/11 23:39:13 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:39:13 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:39:22 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/11 23:39:24 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/11 23:39:26 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl2.txt' already exists
+[#FFFFFF] 2022/11/11 23:39:46 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/11 23:39:47 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:39:47 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:39:56 | [#FFFFFF] new 36501941
+[#FFFFFF] 2022/11/11 23:40:04 | [#FFFFFF] new 78894474
+[#FFFFFF] 2022/11/11 23:40:21 | [#FFFFFF] new 29872701
+[#FFFFFF] 2022/11/11 23:40:21 | [#FFFFFF] new 86453578
+[#FFFFFF] 2022/11/11 23:40:36 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:40:36 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:40:40 | [#FFFF00] Attention! Builder uses a separate thread to build the game, so all OpenGL commands won't work.
+[#FFFFFF] 2022/11/11 23:40:40 | [#FFFFFF] Creating the necessary files...
+[#FFFFFF] 2022/11/11 23:40:40 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2022/11/11 23:40:40 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:40:40 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:40:40 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:40:40 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:40:42 | [#008000] Script ApplicationStarter.java was successfully built!
+[#FFFFFF] 2022/11/11 23:40:42 | [#FFFFFF] 
+[#FFFFFF] 2022/11/11 23:41:12 | [#FF0000] Не удается найти указанный файл.
+эю с. 11, 2022 11:41:07 PM java.util.jar.Attributes read
+WARNING: Duplicate name in Manifest: Manifest-Version.
+Ensure that the manifest does not have duplicate entries, and
+that blank lines separate individual sections in both your
+manifest and in the META-INF/MANIFEST.MF entry in the jar file.
+
+[#FFFFFF] 2022/11/11 23:41:12 | [#FFFFFF] 
+[#FFFFFF] 2022/11/11 23:41:20 | [#FF0000] Файл не найден
+
+[#FFFFFF] 2022/11/11 23:42:14 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/11 23:42:17 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/11 23:42:17 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl1.txt' already exists
+[#FFFFFF] 2022/11/11 23:42:36 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/11 23:42:36 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:42:36 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:42:39 | [#FFFFFF] level name: lvl1
+[#FFFFFF] 2022/11/11 23:42:39 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:42:39 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:42:47 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:42:47 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:43:10 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/11 23:43:13 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/11 23:43:20 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl1.txt' already exists
+[#FFFFFF] 2022/11/11 23:43:26 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:43:26 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:43:34 | [#FFFFFF] Compiling script SceneController... 
+[#FFFFFF] 2022/11/11 23:43:37 | [#008000] Script SceneController.java was successfully built!
+[#FFFFFF] 2022/11/11 23:43:37 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\lvl1.txt' already exists
+[#FFFFFF] 2022/11/11 23:43:39 | [#FFFFFF] level name: lvl2
+[#FFFFFF] 2022/11/11 23:43:39 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:43:39 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:43:57 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:43:57 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:44:01 | [#FFFF00] Attention! Builder uses a separate thread to build the game, so all OpenGL commands won't work.
+[#FFFFFF] 2022/11/11 23:44:01 | [#FFFFFF] Creating the necessary files...
+[#FFFFFF] 2022/11/11 23:44:01 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2022/11/11 23:44:01 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:44:01 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:44:01 | [#FFFFFF] source exist
+[#FFFFFF] 2022/11/11 23:44:01 | [#FFFFFF] source id: 2
+[#FFFFFF] 2022/11/11 23:44:03 | [#008000] Script ApplicationStarter.java was successfully built!
+[#FFFFFF] 2022/11/11 23:44:03 | [#FFFFFF] 
+[#FFFFFF] 2022/11/11 23:44:32 | [#FF0000] Не удается найти указанный файл.
+эю с. 11, 2022 11:44:24 PM java.util.jar.Attributes read
+WARNING: Duplicate name in Manifest: Manifest-Version.
+Ensure that the manifest does not have duplicate entries, and
+that blank lines separate individual sections in both your
+manifest and in the META-INF/MANIFEST.MF entry in the jar file.
+
+[#FFFFFF] 2022/11/11 23:44:32 | [#FFFFFF] 
+[#FFFFFF] 2022/11/11 23:44:42 | [#FF0000] Файл не найден
+
+[#FFFFFF] 2022/11/11 23:45:56 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists

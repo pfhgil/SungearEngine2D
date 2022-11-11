@@ -243,6 +243,7 @@ public class Builder {
         for (Scene2DStoredValues storedValues : sceneManager.getScene2DStoredValues()) {
             Scene2D scene2D = sceneManager.loadScene(storedValues.path);
             if (scene2D != null) {
+                //scene2D.applyScriptsTempValues();
                 scenes2DToSaveInBuild.add(scene2D);
             }
         }
@@ -303,7 +304,7 @@ public class Builder {
             newScene2DFile.getParentFile().mkdirs();
             String newScene2DPath = "/" + scene2DRelativePath.replace("\\", "/");
             // сохраняю сцену
-            sceneManager.saveScene(scene2D, newScene2DFile.getPath());
+            sceneManager.saveScene(scene2D, newScene2DFile.getPath(), false);
             // копирую сцену в эти папки
             //FileUtils.copyFile(scene2D.getScenePath(), newScene2DFile.getPath(), false);
             // нахожу нужные сохраняемые данные и изменяю путь до сцены
