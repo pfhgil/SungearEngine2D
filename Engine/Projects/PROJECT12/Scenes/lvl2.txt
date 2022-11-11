@@ -82,20 +82,6 @@
                   }
                 },
                 {
-                  "type": "Core2D.Component.Components.Rigidbody2DComponent",
-                  "properties": {
-                    "rigidbody2D": {
-                      "bodyType": "DYNAMIC",
-                      "density": 1.0,
-                      "restitution": 0.0,
-                      "friction": 0.1,
-                      "isSensor": false,
-                      "isFixedRotation": false
-                    },
-                    "active": true
-                  }
-                },
-                {
                   "type": "Core2D.Component.Components.AudioComponent",
                   "properties": {
                     "audio": {
@@ -105,15 +91,6 @@
                         "buffer": 2,
                         "audioPath": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\audio\\audio_1.wav",
                         "audioName": "audio_1",
-                        "audioFormat": {
-                          "sampleRate": 44100.0,
-                          "sampleSizeInBits": 16,
-                          "channels": 2,
-                          "frameSize": 4,
-                          "frameRate": 44100.0,
-                          "bigEndian": false,
-                          "properties": {}
-                        },
                         "frameLength": 52992,
                         "audioLength": 1201
                       },
@@ -133,7 +110,25 @@
                           "y": 0.0
                         }
                       },
-                      "audioType": "WORLDSPACE"
+                      "audioType": "WORLDSPACE",
+                      "maxDistance": 100.0,
+                      "referenceDistance": 25.0,
+                      "rolloffFactor": 0.1,
+                      "volumePercent": 100.0
+                    },
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.Rigidbody2DComponent",
+                  "properties": {
+                    "rigidbody2D": {
+                      "bodyType": "DYNAMIC",
+                      "density": 1.0,
+                      "restitution": 0.0,
+                      "friction": 0.1,
+                      "isSensor": false,
+                      "isFixedRotation": false
                     },
                     "active": true
                   }

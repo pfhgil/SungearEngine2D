@@ -479,9 +479,14 @@ public class InspectorView extends View
                 ImGui.pushID(componentName + i);
                 boolean opened = false;
                 if(!componentName.equals("ScriptComponent")) {
-                    opened = ImGui.collapsingHeader(componentName);
+                    opened = ImGui.collapsingHeader(componentName + ". ID: " + inspectingObject2D.getComponents().get(i).componentID);
                 } else {
-                    opened = ImGui.collapsingHeader(((ScriptComponent) inspectingObject2D.getComponents().get(i)).getScript().getName() + " (" + componentName + ")");
+                    opened = ImGui.collapsingHeader(((ScriptComponent) inspectingObject2D.getComponents().get(i)).getScript().getName() + " (" + componentName + ")" + ". ID: " + inspectingObject2D.getComponents().get(i).componentID);
+                }
+                if(ImGui.beginDragDropSource()) {
+                    ImGui.setDragDropPayload("Component", inspectingObject2D.getComponents().get(i));
+                    ImGui.text(componentName);
+                    ImGui.endDragDropSource();
                 }
                 ImGui.popID();
                 ImGui.sameLine();
@@ -705,13 +710,19 @@ public class InspectorView extends View
 
                                         scriptComponent.getScript().setFieldValue(field, string.get());
                                     } else if (cs.isAssignableFrom(Object2D.class)) {
-                                        ImString string = new ImString("null");
+                                        ImString string = new ImString(cs.getSimpleName());
                                         if (scriptComponent.getScript().getFieldValue(field) != null) {
                                             string.set(((Object2D) scriptComponent.getScript().getFieldValue(field)).getName(), true);
                                         }
 
                                         ImGui.pushID(field.getName() + "_" + i);
-                                        ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
+                                        if(scriptComponent.getScript().getFieldValue(field) != null) {
+                                            ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
+                                        } else {
+                                            ImGui.pushStyleColor(ImGuiCol.Text, 0.65f, 0.65f, 0.65f, 1.0f);
+                                            ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
+                                            ImGui.popStyleColor(1);
+                                        }
                                         ImGui.popID();
 
                                         if (ImGui.beginDragDropTarget()) {
@@ -724,13 +735,19 @@ public class InspectorView extends View
                                             ImGui.endDragDropTarget();
                                         }
                                     } else if (cs.isAssignableFrom(Camera2D.class)) {
-                                        ImString string = new ImString("null");
+                                        ImString string = new ImString(cs.getSimpleName());
                                         if (scriptComponent.getScript().getFieldValue(field) != null) {
                                             string.set(((Camera2D) scriptComponent.getScript().getFieldValue(field)).name, true);
                                         }
 
                                         ImGui.pushID(field.getName() + "_" + i);
-                                        ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
+                                        if(scriptComponent.getScript().getFieldValue(field) != null) {
+                                            ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
+                                        } else {
+                                            ImGui.pushStyleColor(ImGuiCol.Text, 0.65f, 0.65f, 0.65f, 1.0f);
+                                            ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
+                                            ImGui.popStyleColor(1);
+                                        }
                                         ImGui.popID();
 
                                         if (ImGui.beginDragDropTarget()) {
@@ -742,6 +759,30 @@ public class InspectorView extends View
                                             }
                                             ImGui.endDragDropTarget();
                                         }
+                                    } else if(cs.getSuperclass().isAssignableFrom(Component.class)) {
+                                        ImString string = new ImString(cs.getSimpleName());
+                                        if (scriptComponent.getScript().getFieldValue(field) != null) {
+                                            string.set(((Component) scriptComponent.getScript().getFieldValue(field)).getClass().getSimpleName(), true);
+                                        }
+
+                                        ImGui.pushID(field.getName() + "_" + i);
+                                        if(scriptComponent.getScript().getFieldValue(field) != null) {
+                                            ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
+                                        } else {
+                                            ImGui.pushStyleColor(ImGuiCol.Text, 0.65f, 0.65f, 0.65f, 1.0f);
+                                            ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
+                                            ImGui.popStyleColor(1);
+                                        }
+                                        ImGui.popID();
+
+                                        if (ImGui.beginDragDropTarget()) {
+                                            Object droppedObject = ImGui.acceptDragDropPayload("Component");
+                                            if (droppedObject instanceof Component && droppedObject.getClass().isAssignableFrom(cs)) {
+                                                scriptComponent.getScript().setFieldValue(field, droppedObject);
+                                            }
+                                            ImGui.endDragDropTarget();
+                                        }
+                                        //if(cs.getClass().equals())
                                     }
                                 }
                             }
@@ -749,7 +790,9 @@ public class InspectorView extends View
                         case "AudioComponent" -> {
                             AudioComponent audioComponent = (AudioComponent) inspectingObject2D.getComponents().get(i);
 
-                            ImString audioName = new ImString(new File(audioComponent.getAudio().path).getName());
+                            ImString audioName = new ImString(new File(audioComponent.audio.path).getName());
+
+                            ImGui.text("Source ID: " + audioComponent.audio.source);
 
                             ImGui.pushID("AudioPath_" + i);
                             ImGui.inputText("Path", audioName, ImGuiInputTextFlags.ReadOnly);
@@ -763,8 +806,8 @@ public class InspectorView extends View
                                         String relativePath = FileUtils.getRelativePath(
                                                 new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
                                                 new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                                        audioComponent.getAudio().loadAndSetup(ViewsManager.getResourcesView().getCurrentMovingFile().getPath());
-                                        audioComponent.getAudio().path = relativePath;
+                                        audioComponent.audio.loadAndSetup(ViewsManager.getResourcesView().getCurrentMovingFile().getPath());
+                                        audioComponent.audio.path = relativePath;
                                         ViewsManager.getResourcesView().setCurrentMovingFile(null);
                                     }
 
@@ -773,16 +816,16 @@ public class InspectorView extends View
                             }
 
                             ImGui.pushID("AudioType_" + i);
-                            if (ImGui.beginCombo("Type", audioComponent.getAudio().audioType.toString())) {
+                            if (ImGui.beginCombo("Type", audioComponent.audio.audioType.toString())) {
                                 ImGui.pushID("AudioTypeSelectable0_" + i);
                                 if (ImGui.selectable("Background")) {
-                                    audioComponent.getAudio().audioType = Audio.AudioType.BACKGROUND;
+                                    audioComponent.audio.audioType = Audio.AudioType.BACKGROUND;
                                 }
                                 ImGui.popID();
 
                                 ImGui.pushID("AudioTypeSelectable1_" + i);
                                 if (ImGui.selectable("Worldspace")) {
-                                    audioComponent.getAudio().audioType = Audio.AudioType.WORLDSPACE;
+                                    audioComponent.audio.audioType = Audio.AudioType.WORLDSPACE;
                                 }
                                 ImGui.popID();
 
@@ -792,14 +835,15 @@ public class InspectorView extends View
                             }
                             ImGui.popID();
 
-                            float[] maxDistance = new float[] { audioComponent.getAudio().getMaxDistance() };
+                            float[] maxDistance = new float[] { audioComponent.audio.getMaxDistance() };
                             ImGui.pushID("AudioMaxDistanceDragFloat_" + i);
                             if(ImGui.dragFloat("Max distance", maxDistance)) {
                                 float res = Math.max(0, maxDistance[0]);
-                                audioComponent.getAudio().setMaxDistance(res);
+                                audioComponent.audio.setMaxDistance(res);
                             }
                             ImGui.popID();
 
+                            /*
                             float[] referenceDistance = new float[] { audioComponent.getAudio().getReferenceDistance() };
                             ImGui.pushID("AudioReferenceDistanceDragFloat_" + i);
                             if(ImGui.dragFloat("Reference distance", referenceDistance)) {
@@ -816,17 +860,19 @@ public class InspectorView extends View
                             }
                             ImGui.popID();
 
-                            float[] volumePercent = new float[] { audioComponent.getAudio().volumePercent };
+                             */
+
+                            float[] volumePercent = new float[] { audioComponent.audio.volumePercent };
                             ImGui.pushID("AudioVolumePercentDragFloat_" + i);
                             if(ImGui.dragFloat("Volume percent", volumePercent)) {
                                 float res = Math.max(0, Math.min(volumePercent[0], 100.0f));
-                                audioComponent.getAudio().volumePercent = res;
+                                audioComponent.audio.volumePercent = res;
                             }
                             ImGui.popID();
 
                             ImGui.pushID("AudioStartButton_" + i);
                             if(ImGui.button("Start")) {
-                                audioComponent.getAudio().start();
+                                audioComponent.audio.start();
                             }
                             ImGui.popID();
                         }
@@ -862,13 +908,13 @@ public class InspectorView extends View
                         Object droppedFile = ImGui.acceptDragDropPayload("File");
                         if(droppedFile instanceof File audioFile) {
                             AudioComponent audioComponent = new AudioComponent();
-                            audioComponent.getAudio().loadAndSetup(audioFile.getPath());
+                            audioComponent.audio.loadAndSetup(audioFile.getPath());
 
                             String relativePath = FileUtils.getRelativePath(
                                     new File(audioFile.getPath()),
                                     new File(ProjectsManager.getCurrentProject().getProjectPath())
                             );
-                            audioComponent.getAudio().path = relativePath;
+                            audioComponent.audio.path = relativePath;
 
                             inspectingObject2D.addComponent(audioComponent);
                         }

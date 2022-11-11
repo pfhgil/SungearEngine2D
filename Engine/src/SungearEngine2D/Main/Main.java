@@ -96,11 +96,9 @@ public class Main
 
                             if(currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().isSceneLoaded()) {
                                 try {
-                                    if (!EngineSettings.Playmode.active) {
-                                        currentSceneManager.getCurrentScene2D().saveScriptsTempValues();
-                                    }
-
                                     List<String> compiledScripts = new ArrayList<>();
+
+                                    currentSceneManager.getCurrentScene2D().saveScriptsTempValues();
 
                                     for (int p = 0; p < currentSceneManager.getCurrentScene2D().getLayering().getLayers().size(); p++) {
                                         Layer layer = currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(p);
@@ -115,17 +113,20 @@ public class Main
                                                         if (alreadyCompiled) {
                                                             continue;
                                                         }
-                                                        long lastModified = new File(scriptComponents.get(k).getScript().path + ".java").lastModified();
+
+                                                        String scriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponents.get(k).getScript().path;
+                                                        long lastModified = new File(scriptPath + ".java").lastModified();
                                                         if (lastModified != scriptComponents.get(k).getScript().getLastModified()) {
                                                             EngineSettings.Playmode.canEnterPlaymode = false;
                                                             scriptComponents.get(k).getScript().setLastModified(lastModified);
 
                                                             int finalK = k;
-                                                            String scriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponents.get(finalK).getScript().path;
                                                             String lastScriptPath = scriptComponents.get(finalK).getScript().path;
                                                             ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
                                                                 public void run()
                                                                 {
+                                                                    currentSceneManager.getCurrentScene2D().saveScriptsTempValues();
+
                                                                     String newScriptPath = scriptPath.replace(".java", "");
                                                                     boolean compiled = Compiler.compileScript(newScriptPath + ".java");
                                                                     if (compiled) {
@@ -133,6 +134,8 @@ public class Main
                                                                         scriptComponents.get(finalK).getScript().path = lastScriptPath;
                                                                     }
                                                                     compiledScripts.add(scriptComponents.get(finalK).getScript().getName());
+
+                                                                    currentSceneManager.getCurrentScene2D().applyScriptsTempValues();
                                                                 }
                                                             });
                                                         }
@@ -142,9 +145,7 @@ public class Main
                                         }
                                     }
 
-                                    if (!EngineSettings.Playmode.active) {
-                                        currentSceneManager.getCurrentScene2D().applyScriptsTempValues();
-                                    }
+                                    currentSceneManager.getCurrentScene2D().applyScriptsTempValues();
                                 } catch(Exception e) {
                                     Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                                 }

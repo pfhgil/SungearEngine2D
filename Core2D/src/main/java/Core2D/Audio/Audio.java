@@ -28,13 +28,13 @@ public class Audio
 
     public AudioInfo audioInfo;
 
-    protected int source;
+    public int source;
 
     private Transform transform = new Transform();
 
     public AudioType audioType = AudioType.BACKGROUND;
 
-    private float maxDistance = 100.0f;
+    private float maxDistance = 750.0f;
     private float referenceDistance = 25.0f;
     private float rolloffFactor = 0.1f;
     public float volumePercent = 100.0f;
@@ -87,13 +87,13 @@ public class Audio
 
             //distance = Math.max(distance, referenceDistance);
             //distance = Math.min(distance, maxDistance);
-            float gain = Math.max(0.0f, 1.0f - distance / maxDistance);
+            float gain = Math.max(0.0f, 1.0f - distance / maxDistance) * (volumePercent / 100.0f);
             //float gain = (float) Math.pow((distance / referenceDistance), -rolloffFactor) * (volumePercent / 100.0f);
 
             if(Float.isNaN(gain)) {
                 gain = 0.0f;
             }
-            System.out.println("gain^ " + gain);
+            //System.out.println("gain^ " + gain);
 
             AL10.alSourcef(source, AL10.AL_GAIN, gain);
         } else if(audioType == AudioType.BACKGROUND) {
@@ -106,6 +106,25 @@ public class Audio
     {
         AL10.alDeleteBuffers(audioInfo.getBuffer());
         AL10.alDeleteSources(source);
+    }
+
+    public void set(Audio audio)
+    {
+        this.path = audio.path;
+        this.name = audio.name;
+
+        this.audioInfo.set(audio.audioInfo);
+
+        this.transform.set(audio.getTransform());
+
+        this.audioType = audio.audioType;
+
+        setMaxDistance(audio.getMaxDistance());
+        setReferenceDistance(audio.getReferenceDistance());
+        setRolloffFactor(audio.getRolloffFactor());
+        volumePercent = audio.volumePercent;
+
+        setup();
     }
 
     public void updateBuffer()
@@ -127,8 +146,6 @@ public class Audio
     {
         AL10.alSourcePause(source);
     }
-
-    public int getSource() { return source; }
 
     public Transform getTransform() { return transform; }
 

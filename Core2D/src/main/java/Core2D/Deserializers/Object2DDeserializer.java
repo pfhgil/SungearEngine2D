@@ -7,12 +7,15 @@ import Core2D.Component.Components.*;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.Drawable.Object2D;
+import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Tag;
 import com.google.gson.*;
 import org.joml.Vector4f;
+import org.lwjgl.openal.AL10;
+import org.lwjgl.openal.AL11;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -62,6 +65,8 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
         Rigidbody2DComponent rigidbody2DComponent = null;
         for(JsonElement element : components) {
             Component component = context.deserialize(element, Component.class);
+
+            int lastComponentID = component.componentID;
             if(component instanceof TransformComponent) {
                 object2D.getComponent(TransformComponent.class).set(component);
             } else if(component instanceof TextureComponent) {
@@ -149,42 +154,55 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                 }
             } else if(component instanceof AudioComponent) {
                 AudioComponent audioComponent = (AudioComponent) component;
-                Audio audio = new Audio();
-                // если режим работы ядра в движке
-                if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                    String audioFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + audioComponent.getAudio().path;
-                    String audioLastPath = audioComponent.getAudio().path;
+                //Audio audio = new Audio();
+                if(!AL11.alIsSource(audioComponent.audio.source)) {
+                    Log.CurrentSession.println("source does not exists", Log.MessageType.INFO);
+                    // если режим работы ядра в движке
+                    if (Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+                        String audioFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + audioComponent.audio.path;
+                        String audioLastPath = audioComponent.audio.path;
 
-                    if(new File(audioFullPath).exists()) {
-                        audio.loadAndSetup(audioFullPath);
-                        audio.path = audioLastPath;
-                    } else { // для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
-                        // чтобы это исправить загружаем по этому пути текстуру, находим относительный путь и присваиваем его source для того,
-                        // чтобы в следующий раз выполнился блок кода выше
-                        if(new File(audioComponent.getAudio().path).exists()) {
-                            String relativePath = FileUtils.getRelativePath(
-                                    new File(audioComponent.getAudio().path),
-                                    new File(ProjectsManager.getCurrentProject().getProjectPath())
-                            );
+                        if (new File(audioFullPath).exists()) {
+                            audioComponent.audio.loadAndSetup(audioFullPath);
+                            audioComponent.audio.path = audioLastPath;
+                        } else { // для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
+                            // чтобы это исправить загружаем по этому пути текстуру, находим относительный путь и присваиваем его source для того,
+                            // чтобы в следующий раз выполнился блок кода выше
+                            if (new File(audioComponent.audio.path).exists()) {
+                                String relativePath = FileUtils.getRelativePath(
+                                        new File(audioComponent.audio.path),
+                                        new File(ProjectsManager.getCurrentProject().getProjectPath())
+                                );
 
-                            audio.loadAndSetup(audioComponent.getAudio().path);
-                            audio.path = relativePath;
+                                audioComponent.audio.loadAndSetup(audioComponent.audio.path);
+                                audioComponent.audio.path = relativePath;
+                            }
                         }
+                        // если режим работы в билде
+                    } else {
+                        audioComponent.audio.loadAndSetup(Core2D.class.getResourceAsStream(audioComponent.audio.path));
                     }
-                    // если режим работы в билде
                 } else {
-                    audio.loadAndSetup(Core2D.class.getResourceAsStream(audioComponent.getAudio().path));
+                    Log.CurrentSession.println("source exist", Log.MessageType.INFO);
                 }
+
+                Log.CurrentSession.println("source id: " + audioComponent.audio.source, Log.MessageType.INFO);
 
                 object2D.addComponent(audioComponent);
             } else {
                 object2D.addComponent(component);
             }
+
+            component.componentID = lastComponentID;
+            //object2D.getComponents().get(object2D.getComponents().size() - 1).componentID = lastComponentID;
         }
 
         // в самом конце добавляю rigidbody2d, чтобы не было путаницы с порядком десериализации колладейров и rigidbody2d
         if(rigidbody2DComponent != null) {
+            int lastComponentID = rigidbody2DComponent.componentID;
             object2D.addComponent(rigidbody2DComponent);
+            rigidbody2DComponent.componentID = lastComponentID;
+            //object2D.getComponents().get(object2D.getComponents().size() - 1).componentID = lastComponentID;
             rigidbody2DComponent.set(rigidbody2DComponent);
         }
 

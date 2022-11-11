@@ -93,7 +93,7 @@ public class Styles
         style.setTabRounding(0.0f);
 
         colors[ImGuiCol.Text] = new float[] { 0.90f, 0.90f, 0.90f, 1.00f };
-        colors[ImGuiCol.TextDisabled] = new float[] { 1.00f, 1.00f, 1.00f, 1.00f };
+        colors[ImGuiCol.TextDisabled] = new float[] { 0.5f, 0.5f, 0.5f, 1.00f };
         colors[ImGuiCol.WindowBg] = new float[] { 34.0f / 255.0f, 34.0f / 255.0f, 34.0f / 255.0f, 1.00f };
         colors[ImGuiCol.ChildBg] = new float[] { 34.0f / 255.0f, 34.0f / 255.0f, 34.0f / 255.0f, 1.00f };
         colors[ImGuiCol.PopupBg] = new float[] { 0.00f, 0.00f, 0.00f, 1.00f };

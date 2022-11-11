@@ -23,6 +23,7 @@ import org.joml.Vector4f;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
 
@@ -267,6 +268,9 @@ public class Object2D extends Drawable implements Serializable
             }
         }
 
+        if(components.size() > 0) {
+            component.componentID = components.stream().max(Comparator.comparingInt(c0 -> c0.componentID)).get().componentID + 1;
+        }
         components.add(component);
         component.object2D = this;
         component.init();

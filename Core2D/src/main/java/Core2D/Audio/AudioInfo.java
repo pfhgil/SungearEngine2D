@@ -11,6 +11,7 @@ import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -20,15 +21,19 @@ public class AudioInfo
 {
     private int buffer = -1;
 
-    public String audioPath = "";
-
-    public String audioName = "";
-
     private transient AudioFormat audioFormat;
 
     private long frameLength;
 
     public long audioLength;
+
+    public void set(AudioInfo audioInfo)
+    {
+        this.buffer = audioInfo.getBuffer();
+
+        this.frameLength = audioInfo.getFrameLength();
+        this.audioLength = audioInfo.getAudioLength();
+    }
 
     public static AudioInfo loadAudio(String path)
     {
@@ -40,21 +45,14 @@ public class AudioInfo
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
-        AudioInfo audioInfo = createAudioInfo(stream);
-
-        if(stream != null) {
-            audioInfo.audioPath = audioFile.getPath();
-            audioInfo.audioName = FilenameUtils.getBaseName(audioFile.getName());
-        }
-
-        return audioInfo;
+        return createAudioInfo(stream);
     }
 
     public static AudioInfo loadAudio(InputStream inputStream)
     {
         AudioInputStream stream = null;
         try {
-            stream = AudioSystem.getAudioInputStream(inputStream);
+            stream = AudioSystem.getAudioInputStream(new BufferedInputStream(inputStream));
         } catch (UnsupportedAudioFileException | IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }

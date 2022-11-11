@@ -5,7 +5,7 @@ import Core2D.Component.Component;
 
 public class AudioComponent extends Component
 {
-    private Audio audio = new Audio();
+    public Audio audio = new Audio();
 
     @Override
     public void init()
@@ -22,10 +22,20 @@ public class AudioComponent extends Component
     }
 
     @Override
-    public void update() { audio.update(); }
+    public void update()
+    {
+        audio.update();
+        super.update();
+    }
 
     @Override
     public void deltaUpdate(float deltaTime) { audio.deltaUpdate(deltaTime); }
 
-    public Audio getAudio() { return audio; }
+    @Override
+    public void set(Component component)
+    {
+        if(component instanceof AudioComponent) {
+            audio.set(((AudioComponent) component).audio);
+        }
+    }
 }

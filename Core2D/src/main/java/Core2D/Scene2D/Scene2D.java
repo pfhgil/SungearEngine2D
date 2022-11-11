@@ -10,6 +10,7 @@ import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
 import Core2D.Log.Log;
 import Core2D.Physics.PhysicsWorld;
+import Core2D.Project.ProjectsManager;
 import Core2D.Scripting.ScriptSceneObject;
 import Core2D.Scripting.ScriptTempValue;
 import Core2D.Scripting.ScriptTempValues;
@@ -299,9 +300,11 @@ public class Scene2D
 
                     if (scriptComponents.size() != 0) {
                         for (ScriptComponent scriptComponent : scriptComponents) {
-                            long lastModified = new File(scriptComponent.getScript().path + ".java").lastModified();
-                            // установка времени  последней  модификации на скрипт
-                            scriptComponent.getScript().setLastModified(lastModified);
+                            if(ProjectsManager.getCurrentProject() != null) {
+                                long lastModified = new File(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponent.getScript().path + ".java").lastModified();
+                                // установка времени  последней  модификации на скрипт
+                                scriptComponent.getScript().setLastModified(lastModified);
+                            }
                         }
                     }
                 }

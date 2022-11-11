@@ -228,11 +228,11 @@ public class SceneManager
         currentScene2D = scene2D;
 
         if(currentScene2D != null) {
-            currentScene2D.load();
+            applyObject2DDependencies(currentScene2D);
         }
 
         if(currentScene2D != null) {
-            applyObject2DDependencies(currentScene2D);
+            currentScene2D.load();
         }
 
         Keyboard.handleKeyboardInput();

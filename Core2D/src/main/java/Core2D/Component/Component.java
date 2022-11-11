@@ -12,6 +12,10 @@ public abstract class Component
      */
     public transient Object2D object2D;
 
+    private int object2DID = -1;
+
+    public int componentID = 0;
+
     protected boolean active = true;
 
     /**
@@ -38,7 +42,9 @@ public abstract class Component
      */
     public void update()
     {
-
+        if(object2D != null) {
+            object2DID = object2D.getID();
+        }
     }
 
     /**
@@ -66,4 +72,6 @@ public abstract class Component
      * @param active
      */
     public void setActive(boolean active) { this.active = active; }
+
+    public int getObject2DID() { return object2DID; }
 }

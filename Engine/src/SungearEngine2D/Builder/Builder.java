@@ -1,5 +1,7 @@
 package SungearEngine2D.Builder;
 
+import Core2D.Audio.AudioInfo;
+import Core2D.Component.Components.AudioComponent;
 import Core2D.Component.Components.ScriptComponent;
 import Core2D.Component.Components.TextureComponent;
 import Core2D.Core2D.Core2D;
@@ -250,28 +252,44 @@ public class Builder {
                 for (WrappedObject wrappedObject : layer.getRenderingObjects()) {
                     if (wrappedObject.getObject() instanceof Object2D) {
                         Object2D object2D = (Object2D) wrappedObject.getObject();
+
                         TextureComponent textureComponent = object2D.getComponent(TextureComponent.class);
-                        // новый путь до текстуры
-                        File newTextureFile = new File(toDir + "\\" + textureComponent.getTexture2D().path);
-                        // создаю все папки, которых нет
-                        newTextureFile.getParentFile().mkdirs();
-                        // копирую файл в эти папки
-                        FileUtils.copyFile(ProjectsManager.getCurrentProject().getProjectPath() +
-                                        File.separator +
-                                        textureComponent.getTexture2D().path,
-                                newTextureFile.getPath(), false);
-                        // устанавливаю для текстурного компонента путь в билде (относительный)
-                        textureComponent.getTexture2D().path = "/" + textureComponent.getTexture2D().path.replace("\\", "/");
+                        if(textureComponent != null) {
+                            // новый путь до текстуры
+                            File newFile = new File(toDir + "\\" + textureComponent.getTexture2D().path);
+                            // создаю все папки, которых нет
+                            newFile.getParentFile().mkdirs();
+                            // копирую файл в эти папки
+                            FileUtils.copyFile(ProjectsManager.getCurrentProject().getProjectPath() +
+                                            File.separator +
+                                            textureComponent.getTexture2D().path,
+                                    newFile.getPath(), false);
+                            // устанавливаю для текстурного компонента путь в билде (относительный)
+                            textureComponent.getTexture2D().path = "/" + textureComponent.getTexture2D().path.replace("\\", "/");
+                        }
+
                         // то же самое для скриптов
-                        ScriptComponent scriptComponent = object2D.getComponent(ScriptComponent.class);
-                        if (scriptComponent != null) {
-                            File newScriptFile = new File(toDir + "\\" + scriptComponent.getScript().path);
-                            newScriptFile.getParentFile().mkdirs();
+                        List<ScriptComponent> scriptComponents = object2D.getAllComponents(ScriptComponent.class);
+                        for(ScriptComponent scriptComponent : scriptComponents) {
+                            File newFile = new File(toDir + "\\" + scriptComponent.getScript().path);
+                            newFile.getParentFile().mkdirs();
                             FileUtils.copyFile(ProjectsManager.getCurrentProject().getProjectPath() +
                                             File.separator +
                                             scriptComponent.getScript().path + ".class",
-                                    newScriptFile.getPath() + ".class", false);
+                                    newFile.getPath() + ".class", false);
                             scriptComponent.getScript().path = "/" + scriptComponent.getScript().path.replace("\\", "/");
+                        }
+
+                        // то же самое для аудио
+                        List<AudioComponent> audioComponents = object2D.getAllComponents(AudioComponent.class);
+                        for(AudioComponent audioComponent : audioComponents) {
+                            File newFile = new File(toDir + "\\" + audioComponent.audio.path);
+                            newFile.getParentFile().mkdirs();
+                            FileUtils.copyFile(ProjectsManager.getCurrentProject().getProjectPath() +
+                                            File.separator +
+                                            audioComponent.audio.path,
+                                    newFile.getPath(), false);
+                            audioComponent.audio.path = "/" + audioComponent.audio.path.replace("\\", "/");
                         }
                     }
                 }

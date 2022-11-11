@@ -1,6 +1,8 @@
 package Core2D.Scripting;
 
 import Core2D.Camera2D.Camera2D;
+import Core2D.Component.Component;
+import Core2D.Component.Components.ScriptComponent;
 import Core2D.Drawable.Object2D;
 import Core2D.Log.Log;
 import Core2D.Scene2D.SceneManager;
@@ -32,6 +34,8 @@ public class ScriptTempValue
                     wrappedObject = (WrappedObject) value;
                 }
 
+                //System.out.println(wrappedObject.getObject());
+
                 if(wrappedObject.getObject() instanceof Double && field.getType().isAssignableFrom(float.class)) {
                     field.setFloat(script.getScriptClassInstance(), ((Double) value).floatValue());
                 } else if(wrappedObject.getObject() instanceof ScriptSceneObject) {
@@ -45,6 +49,17 @@ public class ScriptTempValue
                             Camera2D foundCamera2D = SceneManager.currentSceneManager.getCurrentScene2D().findCamera2DByID(object.ID);
                             field.set(script.getScriptClassInstance(), foundCamera2D);
                             break;
+                    }
+                } else if(wrappedObject.getObject() instanceof Component) {
+                    Component component = (Component) wrappedObject.getObject();
+                    Object2D foundObject2D = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(component.getObject2DID());
+                    if(foundObject2D != null) {
+                        for(Component objComponent : foundObject2D.getComponents()) {
+                            if(objComponent.componentID == component.componentID &&
+                            objComponent.getClass().isAssignableFrom(component.getClass())) {
+                                field.set(script.getScriptClassInstance(), objComponent);
+                            }
+                        }
                     }
                 } else {
                     if(wrappedObject.getObject() != null) {

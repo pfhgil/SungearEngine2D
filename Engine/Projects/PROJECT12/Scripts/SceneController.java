@@ -20,11 +20,20 @@ public class SceneController
     public Object2D movableObject2D;
 
     @InspectorView
+    public Camera2D camera2D; //dfdfddfdsfdfdffgfsdfsdfdfdfdfddf
+
+    @InspectorView
+    public AudioComponent fuckYouSound;
+
+    @InspectorView
+    public TransformComponent someComponent;
+
+    @InspectorView
     public float speed = 200.0f;
 
     public void update()
     {
-        //dfdfjjjdff
+        //d
         if(Keyboard.keyPressed(GLFW.GLFW_KEY_C)) {
             Log.CurrentSession.println("level name: " + levelName, Log.MessageType.INFO);
             SceneManager.currentSceneManager.setCurrentScene2D(SceneManager.currentSceneManager.getScene2D(levelName));
@@ -34,7 +43,16 @@ public class SceneController
             if(movableObject2D != null && !movableObject2D.isShouldDestroy()) {
                 Rigidbody2D rigidbody2D = movableObject2D.getComponent(Rigidbody2DComponent.class).getRigidbody2D();
 
-                Log.CurrentSession.println("rigidbody2d: " + rigidbody2D + ", body: " + rigidbody2D.getBody() + ", " + rigidbody2D.getBody().getType(), Log.MessageType.INFO);
+                //Log.CurrentSession.println("rigidbody2d: " + rigidbody2D + ", body: " + rigidbody2D.getBody() + ", " + rigidbody2D.getBody().getType(), Log.MessageType.INFO);
+            }
+
+            if(fuckYouSound != null) {
+                fuckYouSound.audio.start();
+                Log.CurrentSession.println("id: " + fuckYouSound.audio.source, Log.MessageType.INFO);
+            }
+
+            if(someComponent != null) {
+                someComponent.getTransform().rotate(1.0f);
             }
         }
     }

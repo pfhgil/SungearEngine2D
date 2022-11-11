@@ -14,10 +14,10 @@
                   "properties": {
                     "transform": {
                       "position": {
-                        "x": 0.0,
-                        "y": 0.0
+                        "x": 384.89743,
+                        "y": -6.271757
                       },
-                      "rotation": 0.0,
+                      "rotation": 8.006019,
                       "scale": {
                         "x": 1.0,
                         "y": 1.7650651
@@ -27,6 +27,8 @@
                         "y": 0.0
                       }
                     },
+                    "object2DID": 5,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -51,33 +53,8 @@
                       1.0,
                       0.0
                     ],
-                    "active": true
-                  }
-                },
-                {
-                  "type": "Core2D.Component.Components.BoxCollider2DComponent",
-                  "properties": {
-                    "boxCollider2D": {
-                      "scale": {
-                        "x": 0.94,
-                        "y": 1.545
-                      },
-                      "offset": {
-                        "x": 0.0,
-                        "y": 0.0
-                      }
-                    },
-                    "active": true
-                  }
-                },
-                {
-                  "type": "Core2D.Component.Components.ScriptComponent",
-                  "properties": {
-                    "script": {
-                      "path": "Scripts\\SceneController",
-                      "name": "SceneController",
-                      "active": true
-                    },
+                    "object2DID": 5,
+                    "componentID": 1,
                     "active": true
                   }
                 },
@@ -88,9 +65,7 @@
                       "path": "audio\\audio_1.wav",
                       "name": "",
                       "audioInfo": {
-                        "buffer": 4,
-                        "audioPath": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\audio\\audio_1.wav",
-                        "audioName": "audio_1",
+                        "buffer": 2,
                         "frameLength": 52992,
                         "audioLength": 1201
                       },
@@ -111,11 +86,26 @@
                         }
                       },
                       "audioType": "WORLDSPACE",
-                      "maxDistance": 100.0,
-                      "referenceDistance": 66.0,
+                      "maxDistance": 750.0,
+                      "referenceDistance": 25.0,
                       "rolloffFactor": 0.1,
                       "volumePercent": 100.0
                     },
+                    "object2DID": 5,
+                    "componentID": 6,
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.ScriptComponent",
+                  "properties": {
+                    "script": {
+                      "path": "Scripts\\SceneController",
+                      "name": "SceneController",
+                      "active": true
+                    },
+                    "object2DID": 5,
+                    "componentID": 7,
                     "active": true
                   }
                 },
@@ -130,6 +120,8 @@
                       "isSensor": false,
                       "isFixedRotation": false
                     },
+                    "object2DID": 5,
+                    "componentID": 5,
                     "active": true
                   }
                 }
@@ -176,6 +168,8 @@
                         "y": 0.0
                       }
                     },
+                    "object2DID": 24,
+                    "componentID": 0,
                     "active": true
                   }
                 },
@@ -200,6 +194,8 @@
                       1.0,
                       0.0
                     ],
+                    "object2DID": 24,
+                    "componentID": 1,
                     "active": true
                   }
                 },
@@ -216,6 +212,8 @@
                         "y": -682.0
                       }
                     },
+                    "object2DID": 24,
+                    "componentID": 2,
                     "active": true
                   }
                 },
@@ -232,6 +230,8 @@
                         "y": 0.0
                       }
                     },
+                    "object2DID": 24,
+                    "componentID": 3,
                     "active": true
                   }
                 },
@@ -248,6 +248,8 @@
                         "y": 0.0
                       }
                     },
+                    "object2DID": 24,
+                    "componentID": 4,
                     "active": true
                   }
                 },
@@ -264,6 +266,8 @@
                         "y": -510.0
                       }
                     },
+                    "object2DID": 24,
+                    "componentID": 5,
                     "active": true
                   }
                 },
@@ -280,6 +284,8 @@
                         "y": -385.0
                       }
                     },
+                    "object2DID": 24,
+                    "componentID": 6,
                     "active": true
                   }
                 },
@@ -296,6 +302,8 @@
                         "y": -155.0
                       }
                     },
+                    "object2DID": 24,
+                    "componentID": 7,
                     "active": true
                   }
                 },
@@ -312,6 +320,8 @@
                         "y": -212.0
                       }
                     },
+                    "object2DID": 24,
+                    "componentID": 8,
                     "active": true
                   }
                 },
@@ -328,6 +338,8 @@
                         "y": 77.0
                       }
                     },
+                    "object2DID": 24,
+                    "componentID": 9,
                     "active": true
                   }
                 },
@@ -344,6 +356,8 @@
                         "y": 202.0
                       }
                     },
+                    "object2DID": 24,
+                    "componentID": 10,
                     "active": true
                   }
                 },
@@ -360,6 +374,8 @@
                         "y": 356.0
                       }
                     },
+                    "object2DID": 24,
+                    "componentID": 11,
                     "active": true
                   }
                 },
@@ -376,6 +392,8 @@
                         "y": 534.0
                       }
                     },
+                    "object2DID": 24,
+                    "componentID": 12,
                     "active": true
                   }
                 },
@@ -392,6 +410,8 @@
                         "y": 653.0
                       }
                     },
+                    "object2DID": 24,
+                    "componentID": 30,
                     "active": true
                   }
                 },
@@ -406,6 +426,8 @@
                       "isSensor": false,
                       "isFixedRotation": false
                     },
+                    "object2DID": 24,
+                    "componentID": 30,
                     "active": true
                   }
                 }
@@ -541,7 +563,7 @@
             "fieldName": "levelName",
             "value": {
               "type": "java.lang.String",
-              "properties": "lvl2"
+              "properties": ""
             }
           },
           {
@@ -556,6 +578,84 @@
             }
           },
           {
+            "fieldName": "camera2D",
+            "value": {
+              "type": "Core2D.Scripting.ScriptSceneObject",
+              "properties": {
+                "ID": 10,
+                "name": "default",
+                "objectType": "TYPE_CAMERA2D"
+              }
+            }
+          },
+          {
+            "fieldName": "fuckYouSound",
+            "value": {
+              "type": "Core2D.Component.Components.AudioComponent",
+              "properties": {
+                "audio": {
+                  "path": "audio\\audio_1.wav",
+                  "name": "",
+                  "audioInfo": {
+                    "buffer": 2,
+                    "frameLength": 52992,
+                    "audioLength": 1201
+                  },
+                  "source": 2,
+                  "transform": {
+                    "position": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "audioType": "WORLDSPACE",
+                  "maxDistance": 750.0,
+                  "referenceDistance": 25.0,
+                  "rolloffFactor": 0.1,
+                  "volumePercent": 100.0
+                },
+                "object2DID": 5,
+                "componentID": 6,
+                "active": true
+              }
+            }
+          },
+          {
+            "fieldName": "someComponent",
+            "value": {
+              "type": "Core2D.Component.Components.TransformComponent",
+              "properties": {
+                "transform": {
+                  "position": {
+                    "x": 384.89743,
+                    "y": -6.271757
+                  },
+                  "rotation": 8.006019,
+                  "scale": {
+                    "x": 1.0,
+                    "y": 1.7650651
+                  },
+                  "centre": {
+                    "x": 0.0,
+                    "y": 0.0
+                  }
+                },
+                "object2DID": 5,
+                "componentID": 0,
+                "active": true
+              }
+            }
+          },
+          {
             "fieldName": "speed",
             "value": {
               "type": "java.lang.Float",
@@ -566,7 +666,7 @@
       }
     ]
   },
-  "maxObjectID": 163,
+  "maxObjectID": 390,
   "inBuild": false,
   "isMainScene2D": false
 }

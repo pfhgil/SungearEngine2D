@@ -39,6 +39,7 @@ public class ScriptComponent extends Component
         if(SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
             script.update();
         }
+        super.update();
     }
 
     /**
