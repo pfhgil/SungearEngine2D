@@ -56,31 +56,23 @@ public class Camera2D implements Serializable
      * //@param transform Someone`s transform.
      */
 
-
-    /*
-    public void follow(Transform transform)
+    public void update()
     {
-        Vector2f pos = MatrixUtils.getPosition(transform.getResultModelMatrix());
-
-        Vector2f objectResPos = new Vector2f(pos).mul(this.transform.getScale());
-        Vector2f cameraResultPos = new Vector2f(objectResPos.negate());
-        // ставлю объект посередине вида камеры
-        this.transform.setPosition(cameraResultPos);
+        updateViewMatrix();
     }
 
-    public void lerpFollow(Transform transform, Vector2f coeff)
+    public void updateViewMatrix()
     {
-        Vector2f pos = MatrixUtils.getPosition(transform.getResultModelMatrix());
-        Vector2f cameraPos = MatrixUtils.getPosition(this.transform.getResultModelMatrix());
+        Vector2f position = MatrixUtils.getPosition(transform.getResultModelMatrix());
+        float rotation = MatrixUtils.getRotation(transform.getResultModelMatrix());
+        Vector2f scale = MatrixUtils.getScale(transform.getResultModelMatrix());
 
-        Vector2f cameraResultPos = new Vector2f(new Vector2f(cameraPos).negate().add(new Vector2f(Mouse.getViewportSize().x / 2.0f, Mouse.getViewportSize().y / 2.0f)));
-        Vector2f objectResPos = new Vector2f(pos).add(transform.getCentre()).mul(this.transform.getScale());
+        viewMatrix.identity();
 
-        Vector2f difference = new Vector2f(cameraResultPos.x - objectResPos.x, cameraResultPos.y - objectResPos.y).mul(coeff);
-        this.transform.translate(difference);
+        viewMatrix.scale(new Vector3f(scale.x, scale.y, 1f));
+        viewMatrix.rotate((float) Math.toRadians(rotation), 0f, 0f, 1f);
+        viewMatrix.translate(new Vector3f(position.x, position.y, 1f));
     }
-
-     */
 
     public Transform getTransform() { return transform; }
 
@@ -94,20 +86,7 @@ public class Camera2D implements Serializable
 
     public Matrix4f getProjectionMatrix() { return projectionMatrix; }
 
-    public Matrix4f getViewMatrix()
-    {
-        Vector2f position = MatrixUtils.getPosition(transform.getResultModelMatrix());
-        float rotation = MatrixUtils.getRotation(transform.getResultModelMatrix());
-        Vector2f scale = MatrixUtils.getScale(transform.getResultModelMatrix());
-
-        viewMatrix.identity();
-
-        viewMatrix.scale(new Vector3f(scale.x, scale.y, 1.0f));
-        viewMatrix.rotate((float) Math.toRadians(rotation), 0.0f, 0.0f, 1.0f);
-        viewMatrix.translate(new Vector3f(position.x, position.y, 1.0f));
-
-        return viewMatrix;
-    }
+    public Matrix4f getViewMatrix() { return viewMatrix; }
 
     public int getID() { return ID; }
 }

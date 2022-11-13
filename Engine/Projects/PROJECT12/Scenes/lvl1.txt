@@ -66,6 +66,14 @@
                       "name": "",
                       "audioInfo": {
                         "buffer": 2,
+                        "audioFormat": {
+                          "sampleRate": 44100.0,
+                          "sampleSizeInBits": 16,
+                          "channels": 2,
+                          "frameSize": 4,
+                          "frameRate": 44100.0,
+                          "bigEndian": false
+                        },
                         "frameLength": 52992,
                         "audioLength": 1201
                       },
@@ -89,7 +97,11 @@
                       "maxDistance": 750.0,
                       "referenceDistance": 25.0,
                       "rolloffFactor": 0.1,
-                      "volumePercent": 100.0
+                      "volumePercent": 100.0,
+                      "playing": false,
+                      "paused": false,
+                      "state": 4116,
+                      "secOffset": 0.0
                     },
                     "object2DID": 5,
                     "componentID": 6,
@@ -103,7 +115,7 @@
                       "path": "Scripts\\SceneController",
                       "name": "SceneController",
                       "active": true,
-                      "lastModified": 1668199414076,
+                      "lastModified": 1668362935939,
                       "scriptTempValues": [
                         {
                           "fieldName": "levelName",
@@ -144,6 +156,14 @@
                                 "name": "",
                                 "audioInfo": {
                                   "buffer": 2,
+                                  "audioFormat": {
+                                    "sampleRate": 44100.0,
+                                    "sampleSizeInBits": 16,
+                                    "channels": 2,
+                                    "frameSize": 4,
+                                    "frameRate": 44100.0,
+                                    "bigEndian": false
+                                  },
                                   "frameLength": 52992,
                                   "audioLength": 1201
                                 },
@@ -167,7 +187,11 @@
                                 "maxDistance": 750.0,
                                 "referenceDistance": 25.0,
                                 "rolloffFactor": 0.1,
-                                "volumePercent": 100.0
+                                "volumePercent": 100.0,
+                                "playing": false,
+                                "paused": false,
+                                "state": 4116,
+                                "secOffset": 0.0
                               },
                               "object2DID": 5,
                               "componentID": 6,
@@ -687,7 +711,7 @@
     }
   ],
   "scriptSystem": {},
-  "maxObjectID": 541,
+  "maxObjectID": 585,
   "inBuild": false,
   "isMainScene2D": false
 }

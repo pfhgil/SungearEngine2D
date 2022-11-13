@@ -1,5 +1,6 @@
 package Core2D.Graphics;
 
+import Core2D.Audio.AudioListener;
 import Core2D.Camera2D.CamerasManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
@@ -78,6 +79,16 @@ public abstract class Graphics
                 //System.out.println("delay: " + delay + ", delta: " + Core2D.getDeltaTimer().getDeltaTime());
 
                 Core2D.getDeltaTimer().startFrame();
+
+                AudioListener.update();
+                if(CamerasManager.getMainCamera2D() != null) {
+                    CamerasManager.getMainCamera2D().update();
+                }
+                if(SceneManager.currentSceneManager != null &&
+                        SceneManager.currentSceneManager.getCurrentScene2D() != null &&
+                SceneManager.currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
+                    SceneManager.currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().update();
+                }
 
                 Vector2i windowSize = Core2D.getWindow().getSize();
                 if (CamerasManager.getMainCamera2D() != null) {

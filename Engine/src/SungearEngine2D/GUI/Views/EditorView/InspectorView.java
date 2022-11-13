@@ -17,6 +17,7 @@ import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Tag;
 import Core2D.Utils.WrappedObject;
+import SungearEngine2D.GUI.ImGuiUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindow;
@@ -26,9 +27,12 @@ import SungearEngine2D.Main.EngineSettings;
 import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Utils.ResourcesUtils;
 import imgui.ImGui;
+import imgui.ImGuiStyle;
 import imgui.ImVec2;
 import imgui.ImVec4;
 import imgui.flag.*;
+import imgui.internal.ImGuiContext;
+import imgui.internal.ImRect;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
 import org.jbox2d.dynamics.BodyType;
@@ -870,11 +874,66 @@ public class InspectorView extends View
                             }
                             ImGui.popID();
 
-                            ImGui.pushID("AudioStartButton_" + i);
-                            if(ImGui.button("Start")) {
-                                audioComponent.audio.start();
+                            ImGui.newLine();
+
+                            //ImGui.progressBar((float) audioComponent.audio.getCurrentSecond() / (audioComponent.audio.audioInfo.getAudioLength() / 1000f), 120.0f, 5.0f, "");
+                            float[] second = { audioComponent.audio.getCurrentSecond() };
+                            //System.out.println("cur: " + second[0]+ ", len: " + audioComponent.audio.audioInfo.getAudioLength() / 1000f);
+
+                            if(ImGuiUtils.sliderFloat("",
+                                    second,
+                                    0f,
+                                    audioComponent.audio.audioInfo.getAudioLengthInSeconds(),
+                                    "",
+                                    "AudioCurrentSecondSliderFloat_" + i)) {
+                                audioComponent.audio.setOffsetInSeconds(second[0]);
                             }
-                            ImGui.popID();
+
+                            Vector4f playButtonColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
+                            boolean playing = audioComponent.audio.isPlaying();
+                            if(playing) {
+                                ImGui.pushStyleColor(ImGuiCol.Button, 0, 0, 0, 0);
+                                ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0, 0, 0, 0);
+                                ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0, 0, 0, 0);
+                                playButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
+                            }
+                            if(ImGui.imageButton(Resources.Textures.Icons.playButtonIcon.getTextureHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, playButtonColor.x, playButtonColor.y, playButtonColor.z, playButtonColor.w)) {
+                                if(playing) {
+                                    audioComponent.audio.stop();
+                                } else {
+                                    audioComponent.audio.play();
+                                }
+                            }
+                            if(playing) {
+                                ImGui.popStyleColor(3);
+                            }
+
+                            Vector4f pauseButtonColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
+                            boolean paused = audioComponent.audio.isPaused();
+                            if(paused) {
+                                ImGui.pushStyleColor(ImGuiCol.Button, 0, 0, 0, 0);
+                                ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0, 0, 0, 0);
+                                ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0, 0, 0, 0);
+                                pauseButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
+                            }
+                            ImGui.sameLine();
+                            if(ImGui.imageButton(Resources.Textures.Icons.pauseButtonIcon.getTextureHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, pauseButtonColor.x, pauseButtonColor.y, pauseButtonColor.z, pauseButtonColor.w)) {
+                                if(playing) {
+                                    if (paused) {
+                                        audioComponent.audio.play();
+                                    } else {
+                                        audioComponent.audio.pause();
+                                    }
+                                }
+                            }
+                            if(paused) {
+                                ImGui.popStyleColor(3);
+                            }
+
+                            ImGui.sameLine();
+                            if(ImGui.imageButton(Resources.Textures.Icons.stopButtonIcon.getTextureHandler(), 8, 10)) {
+                                audioComponent.audio.stop();
+                            }
                         }
                     }
                 }

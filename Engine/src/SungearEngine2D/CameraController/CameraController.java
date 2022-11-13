@@ -46,7 +46,7 @@ public class CameraController
 
     public static void control()
     {
-        if(Main.getMainCamera2D().getID() == CamerasManager.getMainCamera2D().getID() && allowMove) {
+        if(CamerasManager.getMainCamera2D() != null && Main.getMainCamera2D().getID() == CamerasManager.getMainCamera2D().getID() && allowMove) {
             if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
                 lastCursorPosition = new Vector2f(Mouse.getMousePosition());
             }
@@ -75,7 +75,7 @@ public class CameraController
                     Main.getMainCamera2D().getTransform().setRotation(0.0f);
                 }
                 if(Keyboard.keyReleased(GLFW.GLFW_KEY_F)) {
-                    Main.fuckYouAudio.start();
+                    Main.fuckYouAudio.play();
                 }
                 if(Keyboard.keyReleased(GLFW.GLFW_KEY_P)) {
                     Main.fuckYouAudio.pause();

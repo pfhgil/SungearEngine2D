@@ -1,10 +1,14 @@
 package Core2D.Audio;
 
+import Core2D.Log.Log;
+import Core2D.Utils.ExceptionsUtils;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.*;
 
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
+import java.util.function.Consumer;
+import java.util.function.Function;
 
 public class OpenAL
 {
@@ -35,8 +39,39 @@ public class OpenAL
         AL.createCapabilities(deviceCapabilities);
 
         // настройки listener
-        AL10.alListener3f(AL10.AL_VELOCITY, 0f, 0f, 0f);
-        AL10.alListener3f(AL10.AL_ORIENTATION, 0f, 0f, -1f);
+        OpenAL.alCall((params) -> AL10.alListener3f(AL10.AL_VELOCITY, 0f, 0f, 0f));
+        OpenAL.alCall((params) -> AL10.alListener3f(AL10.AL_POSITION, 0f, 0f, -1f));
+        OpenAL.alCall((params) -> AL10.alDistanceModel(AL11.AL_INVERSE_DISTANCE_CLAMPED));
         AL11.alDistanceModel(AL11.AL_INVERSE_DISTANCE_CLAMPED);
+    }
+
+    public static void alCall(Consumer<Object[]> func, Object... params)
+    {
+        func.accept(params);
+        checkForALErrors();
+    }
+
+    public static <T> T alGet(Function<Object[], ?> func, Class<T> toClass, Object... params)
+    {
+        Object obj = func.apply(params);
+        checkForALErrors();
+        return toClass.cast(obj);
+    }
+
+    public static void checkForALErrors()
+    {
+        int errCode = AL10.alGetError();
+        if(errCode != AL10.AL_NO_ERROR) {
+            String stringErr = switch(errCode) {
+                case AL10.AL_INVALID_NAME -> "AL_INVALID_NAME: a bad ID was passed.";
+                case AL10.AL_INVALID_ENUM -> "AL_INVALID_ENUM: an invalid enum value was passed.";
+                case AL10.AL_INVALID_VALUE -> "AL_INVALID_VALUE: an invalid value was passed.";
+                case AL10.AL_INVALID_OPERATION -> "AL_INVALID_OPERATION: the requested operation is not valid.";
+                case AL10.AL_OUT_OF_MEMORY -> "AL_OUT_OF_MEMORY: the requested operation resulted in OpenAL running out of memory.";
+                default -> "Unknown error.";
+            };
+
+            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("OpenAL error " + stringErr + " (code: " + errCode + "). ")), Log.MessageType.ERROR);
+        }
     }
 }

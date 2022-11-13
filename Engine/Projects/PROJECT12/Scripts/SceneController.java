@@ -50,7 +50,7 @@ public class SceneController
             }
 
             if(fuckYouSound != null) {
-                fuckYouSound.audio.start();
+                fuckYouSound.audio.play();
             }
         }
     }

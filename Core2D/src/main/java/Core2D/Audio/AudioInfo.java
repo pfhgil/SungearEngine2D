@@ -2,7 +2,6 @@ package Core2D.Audio;
 
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.AL10;
@@ -21,7 +20,7 @@ public class AudioInfo
 {
     private int buffer = -1;
 
-    private transient AudioFormat audioFormat;
+    private Core2D.Audio.AudioFormat audioFormat = new Core2D.Audio.AudioFormat();
 
     private long frameLength;
 
@@ -33,6 +32,7 @@ public class AudioInfo
 
         this.frameLength = audioInfo.getFrameLength();
         this.audioLength = audioInfo.getAudioLength();
+        this.audioFormat.set(audioInfo.getAudioFormat());
     }
 
     public static AudioInfo loadAudio(String path)
@@ -77,19 +77,19 @@ public class AudioInfo
             }
 
             //load stream into byte buffer
-            int openALFormat = -1;
+            int[] openALFormat = { -1 };
             switch (format.getChannels()) {
                 case MONO:
                     switch (format.getSampleSizeInBits()) {
-                        case 8 -> openALFormat = AL10.AL_FORMAT_MONO8;
-                        case 16 -> openALFormat = AL10.AL_FORMAT_MONO16;
+                        case 8 -> openALFormat[0] = AL10.AL_FORMAT_MONO8;
+                        case 16 -> openALFormat[0] = AL10.AL_FORMAT_MONO16;
                     }
                     break;
                 case STEREO:
-                    openALFormat = switch (format.getSampleSizeInBits()) {
+                    openALFormat[0] = switch (format.getSampleSizeInBits()) {
                         case 8 -> AL10.AL_FORMAT_STEREO8;
                         case 16 -> AL10.AL_FORMAT_STEREO16;
-                        default -> openALFormat;
+                        default -> openALFormat[0];
                     };
                     break;
             }
@@ -108,10 +108,10 @@ public class AudioInfo
             data.flip();
 
             //load audio data into appropriate system space....
-            AL10.alBufferData(buf, openALFormat, data, (int) format.getSampleRate());
+            OpenAL.alCall((params) -> AL10.alBufferData(buf, openALFormat[0], data, (int) format.getSampleRate()));
 
             audioInfo.buffer = buf;
-            audioInfo.audioFormat = format;
+            audioInfo.audioFormat.set(format);
             audioInfo.frameLength = stream.getFrameLength();
             //and return the rough notion of length for the audio stream!
             audioInfo.audioLength = (long) (1000f * stream.getFrameLength() / format.getFrameRate());
@@ -119,11 +119,29 @@ public class AudioInfo
         return audioInfo;
     }
 
+    /*
+    public float getDurationInSeconds()
+    {
+        int sizeInBytes = OpenAL.alGet((params) -> AL10.alGetBufferi(buffer, AL10.AL_SIZE), Integer.class);
+        int channels = OpenAL.alGet((params) -> AL10.alGetBufferi(buffer, AL10.AL_CHANNELS), Integer.class);
+        int bits = OpenAL.alGet((params) -> AL10.alGetBufferi(buffer, AL10.AL_BITS), Integer.class);
+
+        float lengthInSamples = sizeInBytes * 8.0f / (channels * bits);
+
+        int frequency = OpenAL.alGet((params) -> AL10.alGetBufferi(buffer, AL10.AL_FREQUENCY), Integer.class);
+
+        return lengthInSamples / frequency;
+    }
+
+     */
+
     public int getBuffer() { return buffer; }
 
-    public AudioFormat getAudioFormat() { return audioFormat; }
+    public Core2D.Audio.AudioFormat getAudioFormat() { return audioFormat; }
 
     public long getFrameLength() { return frameLength; }
 
     public long getAudioLength() { return audioLength; }
+
+    public float getAudioLengthInSeconds() { return audioLength / 1000.0f; }
 }
