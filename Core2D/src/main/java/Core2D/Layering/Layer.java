@@ -20,6 +20,8 @@ public class Layer
     private int ID;
     private String name;
 
+    private transient boolean shouldDestroy;
+
     public Layer(int ID, String name)
     {
         this.ID = ID;
@@ -109,6 +111,8 @@ public class Layer
 
     public void destroy()
     {
+        shouldDestroy = true;
+
         Iterator<WrappedObject> layerObjectIterator = renderingObjects.iterator();
         while(layerObjectIterator.hasNext()) {
             WrappedObject wrappedObject = layerObjectIterator.next();
@@ -128,4 +132,6 @@ public class Layer
 
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
+
+    public boolean isShouldDestroy() { return shouldDestroy; }
 }

@@ -154,39 +154,31 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                 }
             } else if(component instanceof AudioComponent) {
                 AudioComponent audioComponent = (AudioComponent) component;
-                //Audio audio = new Audio();
-                if(!AL11.alIsSource(audioComponent.audio.source)) {
-                    Log.CurrentSession.println("source does not exists", Log.MessageType.INFO);
-                    // если режим работы ядра в движке
-                    if (Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                        String audioFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + audioComponent.audio.path;
-                        String audioLastPath = audioComponent.audio.path;
+                // если режим работы ядра в движке
+                if (Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+                    String audioFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + audioComponent.audio.path;
+                    String audioLastPath = audioComponent.audio.path;
 
-                        if (new File(audioFullPath).exists()) {
-                            audioComponent.audio.loadAndSetup(audioFullPath);
-                            audioComponent.audio.path = audioLastPath;
-                        } else { // для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
-                            // чтобы это исправить загружаем по этому пути текстуру, находим относительный путь и присваиваем его source для того,
-                            // чтобы в следующий раз выполнился блок кода выше
-                            if (new File(audioComponent.audio.path).exists()) {
-                                String relativePath = FileUtils.getRelativePath(
-                                        new File(audioComponent.audio.path),
-                                        new File(ProjectsManager.getCurrentProject().getProjectPath())
-                                );
+                    if (new File(audioFullPath).exists()) {
+                        audioComponent.audio.loadAndSetup(audioFullPath);
+                        audioComponent.audio.path = audioLastPath;
+                    } else { // для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
+                        // чтобы это исправить загружаем по этому пути текстуру, находим относительный путь и присваиваем его source для того,
+                        // чтобы в следующий раз выполнился блок кода выше
+                        if (new File(audioComponent.audio.path).exists()) {
+                            String relativePath = FileUtils.getRelativePath(
+                                    new File(audioComponent.audio.path),
+                                    new File(ProjectsManager.getCurrentProject().getProjectPath())
+                            );
 
-                                audioComponent.audio.loadAndSetup(audioComponent.audio.path);
-                                audioComponent.audio.path = relativePath;
-                            }
+                            audioComponent.audio.loadAndSetup(audioComponent.audio.path);
+                            audioComponent.audio.path = relativePath;
                         }
-                        // если режим работы в билде
-                    } else {
-                        audioComponent.audio.loadAndSetup(Core2D.class.getResourceAsStream(audioComponent.audio.path));
                     }
+                    // если режим работы в билде
                 } else {
-                    Log.CurrentSession.println("source exist", Log.MessageType.INFO);
+                    audioComponent.audio.loadAndSetup(Core2D.class.getResourceAsStream(audioComponent.audio.path));
                 }
-
-                Log.CurrentSession.println("source id: " + audioComponent.audio.source, Log.MessageType.INFO);
 
                 object2D.addComponent(audioComponent);
             } else {

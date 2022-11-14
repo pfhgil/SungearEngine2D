@@ -100,48 +100,48 @@ public class Main
                                     List<String> compiledScripts = new ArrayList<>();
 
                                     int layersNum = currentSceneManager.getCurrentScene2D().getLayering().getLayers().size();
-                                    for (int p = 0; p < layersNum; p++) {
+                                    layersCycle: for (int p = 0; p < layersNum; p++) {
                                         Layer layer = currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(p);
-                                        if (layer != null && layer.getRenderingObjects() != null) {
-                                            int renderingObjectsNum = layer.getRenderingObjects().size();
-                                            for (int i = 0; i < renderingObjectsNum; i++) {
-                                                if (layer.getRenderingObjects().get(i).getObject() instanceof Object2D && !((Object2D) layer.getRenderingObjects().get(i).getObject()).isShouldDestroy()) {
-                                                    List<ScriptComponent> scriptComponents = ((Object2D) layer.getRenderingObjects().get(i).getObject()).getAllComponents(ScriptComponent.class);
+                                        if (layer == null || layer.isShouldDestroy()) continue;
 
-                                                    for (int k = 0; k < scriptComponents.size(); k++) {
-                                                        // был ли уже скомпилирован скрипт
-                                                        boolean alreadyCompiled = compiledScripts.contains(scriptComponents.get(k).getScript().getName());
-                                                        if (alreadyCompiled) {
-                                                            continue;
-                                                        }
+                                        int renderingObjectsNum = layer.getRenderingObjects().size();
+                                        for (int i = 0; i < renderingObjectsNum; i++) {
+                                            if (layer.isShouldDestroy()) continue layersCycle;
+                                            if (layer.getRenderingObjects().get(i).getObject() instanceof Object2D && !((Object2D) layer.getRenderingObjects().get(i).getObject()).isShouldDestroy()) {
+                                                List<ScriptComponent> scriptComponents = ((Object2D) layer.getRenderingObjects().get(i).getObject()).getAllComponents(ScriptComponent.class);
 
-                                                        String scriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponents.get(k).getScript().path;
-                                                        long lastModified = new File(scriptPath + ".java").lastModified();
-                                                        if (lastModified != scriptComponents.get(k).getScript().getLastModified()) {
-                                                            EngineSettings.Playmode.canEnterPlaymode = false;
-                                                            scriptComponents.get(k).getScript().setLastModified(lastModified);
+                                                for (int k = 0; k < scriptComponents.size(); k++) {
+                                                    // был ли уже скомпилирован скрипт
+                                                    boolean alreadyCompiled = compiledScripts.contains(scriptComponents.get(k).getScript().getName());
+                                                    if (alreadyCompiled) {
+                                                        continue;
+                                                    }
 
-                                                            int finalK = k;
-                                                            String lastScriptPath = scriptComponents.get(finalK).getScript().path;
-                                                            ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
-                                                                public void run()
-                                                                {
-                                                                    if(currentSceneManager.getCurrentScene2D() != null) {
-                                                                        scriptComponents.get(finalK).getScript().saveTempValues();
+                                                    String scriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponents.get(k).getScript().path;
+                                                    long lastModified = new File(scriptPath + ".java").lastModified();
+                                                    if (lastModified != scriptComponents.get(k).getScript().getLastModified()) {
+                                                        EngineSettings.Playmode.canEnterPlaymode = false;
+                                                        scriptComponents.get(k).getScript().setLastModified(lastModified);
 
-                                                                        String newScriptPath = scriptPath.replace(".java", "");
-                                                                        boolean compiled = Compiler.compileScript(newScriptPath + ".java");
-                                                                        if (compiled) {
-                                                                            scriptComponents.get(finalK).getScript().loadClass(new File(scriptPath).getParent(), FilenameUtils.getBaseName(new File(scriptPath).getName()));
-                                                                            scriptComponents.get(finalK).getScript().path = lastScriptPath;
-                                                                        }
-                                                                        compiledScripts.add(scriptComponents.get(finalK).getScript().getName());
+                                                        int finalK = k;
+                                                        String lastScriptPath = scriptComponents.get(finalK).getScript().path;
+                                                        ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
+                                                            public void run() {
+                                                                if (currentSceneManager.getCurrentScene2D() != null) {
+                                                                    scriptComponents.get(finalK).getScript().saveTempValues();
 
-                                                                        scriptComponents.get(finalK).getScript().applyTempValues();
+                                                                    String newScriptPath = scriptPath.replace(".java", "");
+                                                                    boolean compiled = Compiler.compileScript(newScriptPath + ".java");
+                                                                    if (compiled) {
+                                                                        scriptComponents.get(finalK).getScript().loadClass(new File(scriptPath).getParent(), FilenameUtils.getBaseName(new File(scriptPath).getName()));
+                                                                        scriptComponents.get(finalK).getScript().path = lastScriptPath;
                                                                     }
+                                                                    compiledScripts.add(scriptComponents.get(finalK).getScript().getName());
+
+                                                                    scriptComponents.get(finalK).getScript().applyTempValues();
                                                                 }
-                                                            });
-                                                        }
+                                                            }
+                                                        });
                                                     }
                                                 }
                                             }

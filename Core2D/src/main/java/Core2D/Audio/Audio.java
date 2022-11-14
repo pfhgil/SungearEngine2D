@@ -45,7 +45,9 @@ public class Audio
 
     private int state = AL10.AL_STOPPED;
 
-    private float secOffset = 0.0f;
+    private float currentSecond = 0.0f;
+
+    private boolean cyclic = false;
 
     public void loadAndSetup(String path)
     {
@@ -61,20 +63,24 @@ public class Audio
 
     public void setup()
     {
-        source = OpenAL.alGet((params) -> AL10.alGenSources(), Integer.class);
+        Vector2f position = MatrixUtils.getPosition(transform.getResultModelMatrix());
+
+        source = OpenAL.alCall((params) -> AL10.alGenSources(), Integer.class);
         OpenAL.alCall((params) -> AL10.alSourcei(source, AL10.AL_BUFFER, audioInfo.getBuffer()));
-        OpenAL.alCall((params) -> AL10.alSource3f(source, AL10.AL_POSITION, 0f, 0f, 0f));
+        OpenAL.alCall((params) -> AL10.alSource3f(source, AL10.AL_POSITION, position.x, position.y, 0f));
         OpenAL.alCall((params) -> AL10.alSource3f(source, AL10.AL_VELOCITY, 0f, 0f, 0f));
 
         OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_PITCH, 1f));
         OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_GAIN, 1f));
-        OpenAL.alCall((params) -> AL10.alSourcei(source, AL10.AL_LOOPING, AL10.AL_FALSE));
 
         OpenAL.alCall((params) -> AL10.alSourcei(source, AL10.AL_SOURCE_RELATIVE, AL10.AL_TRUE));
 
         setMaxDistance(maxDistance);
         setReferenceDistance(referenceDistance);
         setRolloffFactor(rolloffFactor);
+        setCyclic(cyclic);
+
+        AudioManager.getAudioSources().add(source);
     }
 
     public void deltaUpdate(float deltaTime)
@@ -87,7 +93,7 @@ public class Audio
         if(audioType == AudioType.WORLDSPACE) {
             Vector2f position = MatrixUtils.getPosition(transform.getResultModelMatrix());
 
-            OpenAL.alCall((params) -> AL10.alSource3f(source, AL10.AL_POSITION, position.x, position.y, 0f));
+            OpenAL.alCall((params) -> AL10.alSource3f(source, AL10.AL_POSITION, position.x, position.y, 0f), source);
 
             float distance = position.distance(new Vector2f(AudioListener.getPosition().x, AudioListener.getPosition().y));
 
@@ -97,14 +103,14 @@ public class Audio
                 gain[0] = 0.0f;
             }
 
-            OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_GAIN, gain[0]));
+            OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_GAIN, gain[0]), source);
         } else if(audioType == AudioType.BACKGROUND) {
-            OpenAL.alCall((params) -> AL10.alSource3f(source, AL10.AL_POSITION, 0f, 0f, 0f));
-            OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_GAIN, volumePercent / 100.0f));
+            OpenAL.alCall((params) -> AL10.alSource3f(source, AL10.AL_POSITION, 0f, 0f, 0f), source);
+            OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_GAIN, volumePercent / 100.0f), source);
         }
 
         boolean lastPlaying = playing;
-        state = OpenAL.alGet((params) -> AL10.alGetSourcei(source, AL10.AL_SOURCE_STATE), Integer.class);
+        state = OpenAL.alCall((params) -> AL10.alGetSourcei(source, AL10.AL_SOURCE_STATE), Integer.class, source);
         if(state == AL10.AL_PLAYING) {
             playing = true;
             paused = false;
@@ -118,14 +124,15 @@ public class Audio
 
         // аудио перестало играть
         if(lastPlaying && !playing) {
-            secOffset = 0.0f;
+            currentSecond = 0.0f;
         }
     }
 
     public void destroy()
     {
-        OpenAL.alCall((params) -> AL10.alDeleteBuffers(audioInfo.getBuffer()));
-        OpenAL.alCall((params) -> AL10.alDeleteSources(source));
+        stop();
+        //OpenAL.alCall((params) -> AL10.alDeleteBuffers(audioInfo.getBuffer()));
+        OpenAL.alCall((params) -> AL10.alDeleteSources(source), source);
     }
 
     public void set(Audio audio)
@@ -149,36 +156,36 @@ public class Audio
 
     public void updateBuffer()
     {
-        OpenAL.alCall((params) -> AL10.alSourcei(source, AL10.AL_BUFFER, audioInfo.getBuffer()));
+        OpenAL.alCall((params) -> AL10.alSourcei(source, AL10.AL_BUFFER, audioInfo.getBuffer()), source);
     }
 
     public void play()
     {
-        OpenAL.alCall((params) -> AL10.alSourcePlay(source));
+        OpenAL.alCall((params) -> AL10.alSourcePlay(source), source);
     }
 
     public void stop()
     {
-        OpenAL.alCall((params) -> AL10.alSourceStop(source));
+        OpenAL.alCall((params) -> AL10.alSourceStop(source), source);
     }
 
     public void pause()
     {
-        OpenAL.alCall((params) -> AL10.alSourcePause(source));
+        OpenAL.alCall((params) -> AL10.alSourcePause(source), source);
     }
 
-    public void setOffsetInSeconds(float offset)
+    public void setCurrentSecond(float offset)
     {
-        secOffset = offset;
-        OpenAL.alCall((params) -> AL11.alSourcef(source, AL11.AL_SEC_OFFSET, offset));
+        currentSecond = offset;
+        OpenAL.alCall((params) -> AL11.alSourcef(source, AL11.AL_SEC_OFFSET, offset), source);
     }
 
     public float getCurrentSecond()
     {
         if(playing || paused) {
-            return OpenAL.alGet((params) -> AL11.alGetSourcef(source, AL11.AL_SEC_OFFSET), Float.class);
+            return OpenAL.alCall((params) -> AL11.alGetSourcef(source, AL11.AL_SEC_OFFSET), Float.class, source);
         } else {
-            return secOffset;
+            return currentSecond;
         }
     }
 
@@ -188,25 +195,32 @@ public class Audio
     public void setMaxDistance(float maxDistance)
     {
         this.maxDistance = maxDistance;
-        OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_MAX_DISTANCE, maxDistance));
+        OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_MAX_DISTANCE, maxDistance), source);
     }
 
     public float getReferenceDistance() { return referenceDistance; }
     public void setReferenceDistance(float referenceDistance)
     {
         this.referenceDistance = referenceDistance;
-        OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_REFERENCE_DISTANCE, referenceDistance));
+        OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_REFERENCE_DISTANCE, referenceDistance), source);
     }
 
     public float getRolloffFactor() { return rolloffFactor; }
     public void setRolloffFactor(float rolloffFactor)
     {
         this.rolloffFactor = rolloffFactor;
-        OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_ROLLOFF_FACTOR, rolloffFactor));
+        OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_ROLLOFF_FACTOR, rolloffFactor), source);
     }
 
     public boolean isPlaying() { return playing; }
     public boolean isPaused() { return paused; }
 
     public int getState() { return state; }
+
+    public boolean isCyclic() { return cyclic; }
+    public void setCyclic(boolean cyclic)
+    {
+        this.cyclic = cyclic;
+        OpenAL.alCall((params) -> AL10.alSourcei(source, AL10.AL_LOOPING, cyclic ? AL10.AL_TRUE : AL10.AL_FALSE), source);
+    }
 }

@@ -65,7 +65,7 @@
                       "path": "Scripts\\SceneController",
                       "name": "SceneController",
                       "active": true,
-                      "lastModified": 1668199162120,
+                      "lastModified": 1668435210094,
                       "scriptTempValues": [
                         {
                           "fieldName": "levelName",
@@ -105,11 +105,19 @@
                                 "path": "audio\\audio_1.wav",
                                 "name": "",
                                 "audioInfo": {
-                                  "buffer": 2,
+                                  "buffer": 15,
+                                  "audioFormat": {
+                                    "sampleRate": 44100.0,
+                                    "sampleSizeInBits": 16,
+                                    "channels": 2,
+                                    "frameSize": 4,
+                                    "frameRate": 44100.0,
+                                    "bigEndian": false
+                                  },
                                   "frameLength": 52992,
                                   "audioLength": 1201
                                 },
-                                "source": 2,
+                                "source": 3,
                                 "transform": {
                                   "position": {
                                     "x": 0.0,
@@ -129,13 +137,22 @@
                                 "maxDistance": 750.0,
                                 "referenceDistance": 25.0,
                                 "rolloffFactor": 0.1,
-                                "volumePercent": 100.0
+                                "volumePercent": 100.0,
+                                "playing": false,
+                                "paused": false,
+                                "state": 4113,
+                                "currentSecond": 0.0,
+                                "cyclic": false
                               },
                               "object2DID": 6,
                               "componentID": 2,
                               "active": true
                             }
                           }
+                        },
+                        {
+                          "fieldName": "fuckYouSound1",
+                          "value": {}
                         },
                         {
                           "fieldName": "someComponent",
@@ -169,6 +186,13 @@
                             "type": "java.lang.Float",
                             "properties": 200.0
                           }
+                        },
+                        {
+                          "fieldName": "impulse",
+                          "value": {
+                            "type": "java.lang.Float",
+                            "properties": 100.0
+                          }
                         }
                       ]
                     },
@@ -184,11 +208,19 @@
                       "path": "audio\\audio_1.wav",
                       "name": "",
                       "audioInfo": {
-                        "buffer": 2,
+                        "buffer": 15,
+                        "audioFormat": {
+                          "sampleRate": 44100.0,
+                          "sampleSizeInBits": 16,
+                          "channels": 2,
+                          "frameSize": 4,
+                          "frameRate": 44100.0,
+                          "bigEndian": false
+                        },
                         "frameLength": 52992,
                         "audioLength": 1201
                       },
-                      "source": 2,
+                      "source": 3,
                       "transform": {
                         "position": {
                           "x": 0.0,
@@ -208,7 +240,12 @@
                       "maxDistance": 750.0,
                       "referenceDistance": 25.0,
                       "rolloffFactor": 0.1,
-                      "volumePercent": 100.0
+                      "volumePercent": 100.0,
+                      "playing": false,
+                      "paused": false,
+                      "state": 4113,
+                      "currentSecond": 0.0,
+                      "cyclic": false
                     },
                     "object2DID": 6,
                     "componentID": 2,
@@ -706,8 +743,8 @@
       },
       "name": "default",
       "viewportSize": {
-        "x": 1600.0,
-        "y": 837.0
+        "x": 1080.0,
+        "y": 720.0
       },
       "ID": 97789409,
       "viewMatrix": {
@@ -749,8 +786,8 @@
     },
     "name": "default",
     "viewportSize": {
-      "x": 1600.0,
-      "y": 837.0
+      "x": 1080.0,
+      "y": 720.0
     },
     "ID": 97789409,
     "viewMatrix": {

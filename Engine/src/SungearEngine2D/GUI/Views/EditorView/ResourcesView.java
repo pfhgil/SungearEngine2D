@@ -272,7 +272,6 @@ public class ResourcesView extends View
         if(ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left) && ImGui.isItemHovered()) {
             if(FilenameUtils.getExtension(files[id].getName()).equals("sgs")) {
                 if(canOpenScene2D) {
-                    System.out.println("dfdfsdfsd");
                     Scene2D scene2D = currentSceneManager.loadSceneAsCurrent(files[id].getPath());
                     if(scene2D != null) {
                         canOpenScene2D = false;

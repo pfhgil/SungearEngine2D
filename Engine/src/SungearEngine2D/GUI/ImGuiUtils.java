@@ -1,32 +1,34 @@
 package SungearEngine2D.GUI;
 
 import imgui.ImGui;
-import imgui.ImGuiStyle;
 import imgui.ImVec2;
 import imgui.flag.ImGuiStyleVar;
 
 public class ImGuiUtils
 {
-    public static boolean sliderFloat(String name, float[] current, float min, float max, String text, String toPushName)
+    public static boolean sliderFloat(String name, float[] current, float min, float max, String toPushName, String textIn, String textNear)
     {
         boolean pressed = false;
 
+        float cursorPos = ImGui.getCursorPosY();
+        ImGui.setCursorPosY(ImGui.getCursorPosY() + 4.0f);
+        ImGui.text(name);
+        ImGui.sameLine();
+        ImGui.setCursorPosY(cursorPos);
+
         ImGui.pushStyleVar(ImGuiStyleVar.Alpha, 0.0f);
         ImGui.pushID(toPushName);
-        if(ImGui.sliderFloat(name, current, min, max, text)) {
+        if(ImGui.sliderFloat("", current, min, max, textIn)) {
             pressed = true;
         }
         ImGui.popID();
         ImGui.popStyleVar(1);
 
-        ImGuiStyle style = ImGui.getStyle();
-
         ImVec2 sliderSize = new ImVec2(ImGui.getItemRectSize().x, 5.0f);
         float sliderCentreY = ImGui.getItemRectMin().y + (ImGui.getItemRectMax().y - ImGui.getItemRectMin().y) / 2f;
         ImVec2 sliderMin = new ImVec2(ImGui.getItemRectMin().x, sliderCentreY - sliderSize.y / 2f);
         ImVec2 sliderMax = new ImVec2(sliderMin.x + sliderSize.x, sliderCentreY + sliderSize.y / 2f);
-        float coeff = current[0] / max;
-        ImVec2 sliderFirstPartMax = new ImVec2(sliderMin.x + sliderSize.x * coeff, sliderMin.y + sliderSize.y);
+        ImVec2 sliderFirstPartMax = new ImVec2(sliderMin.x + sliderSize.x * current[0] / max, sliderMin.y + sliderSize.y);
 
         ImGui.getWindowDrawList().addRectFilled(
                 sliderMin.x, sliderMin.y,
@@ -39,39 +41,26 @@ public class ImGuiUtils
                 ImGui.getColorU32(0.6f, 0.6f, 0.6f, 1.0f)
         );
         ImGui.getWindowDrawList().addCircleFilled(sliderFirstPartMax.x, sliderCentreY, 6f, ImGui.getColorU32(0.4f, 0.4f, 0.4f, 1.0f));
+
+        ImGui.sameLine();
+
+        ImGui.text(textNear);
 
         return pressed;
     }
 
-    public static boolean sliderFloat(String name, float[] current, float min, float max, String text)
+    public static boolean sliderFloat(String name, float[] current, float min, float max)
     {
-        boolean pressed = false;
+        return sliderFloat(name, current, min, max, name, "", "");
+    }
 
-        ImGui.pushStyleVar(ImGuiStyleVar.Alpha, 0.0f);
-        if(ImGui.sliderFloat(name, current, min, max, text)) {
-            pressed = true;
-        }
-        ImGui.popStyleVar(1);
+    public static boolean sliderFloat(String name, float[] current, float min, float max, String toPushName)
+    {
+        return sliderFloat(name, current, min, max, toPushName, "", "");
+    }
 
-        ImVec2 sliderSize = new ImVec2(ImGui.getItemRectSize().x, 5.0f);
-        float sliderCentreY = ImGui.getItemRectMin().y + (ImGui.getItemRectMax().y - ImGui.getItemRectMin().y) / 2f;
-        ImVec2 sliderMin = new ImVec2(ImGui.getItemRectMin().x, sliderCentreY - sliderSize.y / 2f);
-        ImVec2 sliderMax = new ImVec2(sliderMin.x + sliderSize.x, sliderCentreY + sliderSize.y / 2f);
-        float coeff = current[0] / max;
-        ImVec2 sliderFirstPartMax = new ImVec2(sliderMin.x + sliderSize.x * coeff, sliderMin.y + sliderSize.y);
-
-        ImGui.getWindowDrawList().addRectFilled(
-                sliderMin.x, sliderMin.y,
-                sliderFirstPartMax.x, sliderFirstPartMax.y,
-                ImGui.getColorU32(0.9f, 0.9f, 0.9f, 1.0f)
-        );
-        ImGui.getWindowDrawList().addRectFilled(
-                sliderFirstPartMax.x, sliderMin.y,
-                sliderMax.x, sliderMax.y,
-                ImGui.getColorU32(0.6f, 0.6f, 0.6f, 1.0f)
-        );
-        ImGui.getWindowDrawList().addCircleFilled(sliderFirstPartMax.x, sliderCentreY, 6f, ImGui.getColorU32(0.4f, 0.4f, 0.4f, 1.0f));
-
-        return pressed;
+    public static boolean sliderFloat(String name, float[] current, float min, float max, String toPushName, String textIn)
+    {
+        return sliderFloat(name, current, min, max, toPushName, textIn, "");
     }
 }

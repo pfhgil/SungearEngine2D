@@ -1,5 +1,6 @@
 package Core2D.Scene2D;
 
+import Core2D.Audio.AudioManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
 import Core2D.Drawable.Object2D;
@@ -144,12 +145,6 @@ public class SceneManager
 
     public Scene2D loadSceneAsCurrent(String path)
     {
-        if(currentScene2D != null) {
-            currentScene2D.destroy();
-            currentScene2D = null;
-        }
-        System.gc();
-
         Scene2D deserializedScene2D = loadScene(path);
         deserializedScene2D.setPhysicsWorld(tmpPhysicsWorld);
         setCurrentScene2D(deserializedScene2D);
@@ -243,9 +238,19 @@ public class SceneManager
         if (scene2D != null) {
             scene2D.setSceneLoaded(false);
         }
+
+        AudioManager.destroyCurrentScene2DAllSources();
+
         if(currentScene2D != null) {
             currentScene2D.saveScriptsTempValues();
         }
+
+        if(currentScene2D != null) {
+            currentScene2D.destroy();
+            currentScene2D = null;
+        }
+
+        System.gc();
 
         currentScene2D = scene2D;
         if(currentScene2D != null) {

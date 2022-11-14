@@ -33,6 +33,7 @@ import imgui.ImVec4;
 import imgui.flag.*;
 import imgui.internal.ImGuiContext;
 import imgui.internal.ImRect;
+import imgui.type.ImBoolean;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
 import org.jbox2d.dynamics.BodyType;
@@ -874,19 +875,26 @@ public class InspectorView extends View
                             }
                             ImGui.popID();
 
+                            ImGui.pushID("AudioIsCyclicCheckbox_" + i);
+                            if(ImGui.checkbox("Cyclic", audioComponent.audio.isCyclic())) {
+                                audioComponent.audio.setCyclic(!audioComponent.audio.isCyclic());
+                            }
+                            ImGui.popID();
+
                             ImGui.newLine();
 
                             //ImGui.progressBar((float) audioComponent.audio.getCurrentSecond() / (audioComponent.audio.audioInfo.getAudioLength() / 1000f), 120.0f, 5.0f, "");
                             float[] second = { audioComponent.audio.getCurrentSecond() };
                             //System.out.println("cur: " + second[0]+ ", len: " + audioComponent.audio.audioInfo.getAudioLength() / 1000f);
 
-                            if(ImGuiUtils.sliderFloat("",
+                            if(ImGuiUtils.sliderFloat(String.format("%.1f", audioComponent.audio.getCurrentSecond()),
                                     second,
                                     0f,
                                     audioComponent.audio.audioInfo.getAudioLengthInSeconds(),
+                                    "AudioCurrentSecondSliderFloat_" + i,
                                     "",
-                                    "AudioCurrentSecondSliderFloat_" + i)) {
-                                audioComponent.audio.setOffsetInSeconds(second[0]);
+                                    String.format("%.1f", audioComponent.audio.audioInfo.getAudioLengthInSeconds()))) {
+                                audioComponent.audio.setCurrentSecond(second[0]);
                             }
 
                             Vector4f playButtonColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
@@ -897,6 +905,7 @@ public class InspectorView extends View
                                 ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0, 0, 0, 0);
                                 playButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
                             }
+                            ImGui.pushID("AudioPlayButton_" + i);
                             if(ImGui.imageButton(Resources.Textures.Icons.playButtonIcon.getTextureHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, playButtonColor.x, playButtonColor.y, playButtonColor.z, playButtonColor.w)) {
                                 if(playing) {
                                     audioComponent.audio.stop();
@@ -904,6 +913,7 @@ public class InspectorView extends View
                                     audioComponent.audio.play();
                                 }
                             }
+                            ImGui.popID();
                             if(playing) {
                                 ImGui.popStyleColor(3);
                             }
@@ -917,6 +927,7 @@ public class InspectorView extends View
                                 pauseButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
                             }
                             ImGui.sameLine();
+                            ImGui.pushID("AudioPauseButton_" + i);
                             if(ImGui.imageButton(Resources.Textures.Icons.pauseButtonIcon.getTextureHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, pauseButtonColor.x, pauseButtonColor.y, pauseButtonColor.z, pauseButtonColor.w)) {
                                 if(playing) {
                                     if (paused) {
@@ -926,14 +937,18 @@ public class InspectorView extends View
                                     }
                                 }
                             }
+                            ImGui.popID();
                             if(paused) {
                                 ImGui.popStyleColor(3);
                             }
 
                             ImGui.sameLine();
+
+                            ImGui.pushID("AudioStopButton_" + i);
                             if(ImGui.imageButton(Resources.Textures.Icons.stopButtonIcon.getTextureHandler(), 8, 10)) {
                                 audioComponent.audio.stop();
                             }
+                            ImGui.popID();
                         }
                     }
                 }

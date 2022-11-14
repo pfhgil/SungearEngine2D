@@ -37,7 +37,9 @@ public class Renderer
             }
 
             TextureComponent textureComponent = object2D.getComponent(TextureComponent.class);
-            if(textureComponent != null) {
+            // двойная проверка, потому что произошло обновление компонентов (в скрипт компоненте объект может удалиться
+            // или сцены могут смениться => флаг isShouldDestroy становится true
+            if(textureComponent != null && object2D.isActive() && !object2D.isShouldDestroy()) {
                 // использую VAO
                 object2D.getVertexArrayObject().bind();
 
@@ -256,15 +258,21 @@ public class Renderer
 
     public void render(Layering layering)
     {
-
-        for(Layer layer : layering.getLayers()) {
-            render(layer);
+        if(layering.isShouldDestroy()) return;
+        int layersNum = layering.getLayers().size();
+        for(int i = 0; i < layersNum; i++) {
+            if(layering.isShouldDestroy()) break;
+            render(layering.getLayers().get(i));
         }
     }
 
     public void render(Layer layer)
     {
-        for(int i = 0; i < layer.getRenderingObjects().size(); i++) {
+        if(layer.isShouldDestroy()) return;
+
+        int renderingObjectsNum = layer.getRenderingObjects().size();
+        for(int i = 0; i < renderingObjectsNum; i++) {
+            if(layer.isShouldDestroy()) break;
             render(layer.getRenderingObjects().get(i));
         }
     }
@@ -279,7 +287,7 @@ public class Renderer
 
     public void renderWithoutTexture(Object2D object2D)
     {
-        if(object2D.isActive()) {
+        if(object2D.isActive() && !object2D.isShouldDestroy()) {
             // использую VAO
             object2D.getVertexArrayObject().bind();
 

@@ -13,6 +13,8 @@ import java.util.List;
 public class Layering {
     private List<Layer> layers = new ArrayList<>();
 
+    private transient boolean shouldDestroy = false;
+
     // рисует все объекты разными цветами при выборке объектов
     public void drawPicking()
     {
@@ -104,6 +106,8 @@ public class Layering {
 
     public void destroy()
     {
+        shouldDestroy = true;
+
         Iterator<Layer> layerIterator = layers.iterator();
         while(layerIterator.hasNext()) {
             Layer layer = layerIterator.next();
@@ -113,4 +117,6 @@ public class Layering {
     }
 
     public List<Layer> getLayers() { return layers; }
+
+    public boolean isShouldDestroy() { return shouldDestroy; }
 }

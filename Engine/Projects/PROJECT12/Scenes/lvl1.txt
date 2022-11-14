@@ -65,7 +65,7 @@
                       "path": "audio\\audio_1.wav",
                       "name": "",
                       "audioInfo": {
-                        "buffer": 2,
+                        "buffer": 6,
                         "audioFormat": {
                           "sampleRate": 44100.0,
                           "sampleSizeInBits": 16,
@@ -77,7 +77,7 @@
                         "frameLength": 52992,
                         "audioLength": 1201
                       },
-                      "source": 2,
+                      "source": 6,
                       "transform": {
                         "position": {
                           "x": 0.0,
@@ -100,8 +100,9 @@
                       "volumePercent": 100.0,
                       "playing": false,
                       "paused": false,
-                      "state": 4116,
-                      "secOffset": 0.0
+                      "state": 4113,
+                      "currentSecond": 0.0,
+                      "cyclic": true
                     },
                     "object2DID": 5,
                     "componentID": 6,
@@ -115,7 +116,7 @@
                       "path": "Scripts\\SceneController",
                       "name": "SceneController",
                       "active": true,
-                      "lastModified": 1668362935939,
+                      "lastModified": 1668435210094,
                       "scriptTempValues": [
                         {
                           "fieldName": "levelName",
@@ -155,7 +156,7 @@
                                 "path": "audio\\audio_1.wav",
                                 "name": "",
                                 "audioInfo": {
-                                  "buffer": 2,
+                                  "buffer": 6,
                                   "audioFormat": {
                                     "sampleRate": 44100.0,
                                     "sampleSizeInBits": 16,
@@ -167,7 +168,7 @@
                                   "frameLength": 52992,
                                   "audioLength": 1201
                                 },
-                                "source": 2,
+                                "source": 6,
                                 "transform": {
                                   "position": {
                                     "x": 0.0,
@@ -190,8 +191,9 @@
                                 "volumePercent": 100.0,
                                 "playing": false,
                                 "paused": false,
-                                "state": 4116,
-                                "secOffset": 0.0
+                                "state": 4113,
+                                "currentSecond": 0.0,
+                                "cyclic": true
                               },
                               "object2DID": 5,
                               "componentID": 6,
@@ -200,30 +202,62 @@
                           }
                         },
                         {
-                          "fieldName": "someComponent",
+                          "fieldName": "fuckYouSound1",
                           "value": {
-                            "type": "Core2D.Component.Components.TransformComponent",
+                            "type": "Core2D.Component.Components.AudioComponent",
                             "properties": {
-                              "transform": {
-                                "position": {
-                                  "x": 128.56747,
-                                  "y": 122.97012
+                              "audio": {
+                                "path": "audio\\audio_2.wav",
+                                "name": "",
+                                "audioInfo": {
+                                  "buffer": 7,
+                                  "audioFormat": {
+                                    "sampleRate": 44100.0,
+                                    "sampleSizeInBits": 16,
+                                    "channels": 2,
+                                    "frameSize": 4,
+                                    "frameRate": 44100.0,
+                                    "bigEndian": false
+                                  },
+                                  "frameLength": 58752,
+                                  "audioLength": 1332
                                 },
-                                "rotation": 0.0,
-                                "scale": {
-                                  "x": 1.0,
-                                  "y": 1.7650651
+                                "source": 7,
+                                "transform": {
+                                  "position": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                  },
+                                  "rotation": 0.0,
+                                  "scale": {
+                                    "x": 1.0,
+                                    "y": 1.0
+                                  },
+                                  "centre": {
+                                    "x": 0.0,
+                                    "y": 0.0
+                                  }
                                 },
-                                "centre": {
-                                  "x": 0.0,
-                                  "y": 0.0
-                                }
+                                "audioType": "WORLDSPACE",
+                                "maxDistance": 750.0,
+                                "referenceDistance": 25.0,
+                                "rolloffFactor": 0.1,
+                                "volumePercent": 100.0,
+                                "playing": false,
+                                "paused": false,
+                                "state": 4113,
+                                "currentSecond": 0.0,
+                                "cyclic": true
                               },
                               "object2DID": 5,
-                              "componentID": 0,
+                              "componentID": 9,
                               "active": true
                             }
                           }
+                        },
+                        {
+                          "fieldName": "someComponent",
+                          "value": {}
                         },
                         {
                           "fieldName": "speed",
@@ -261,6 +295,57 @@
                     },
                     "object2DID": 5,
                     "componentID": 8,
+                    "active": true
+                  }
+                },
+                {
+                  "type": "Core2D.Component.Components.AudioComponent",
+                  "properties": {
+                    "audio": {
+                      "path": "audio\\audio_2.wav",
+                      "name": "",
+                      "audioInfo": {
+                        "buffer": 7,
+                        "audioFormat": {
+                          "sampleRate": 44100.0,
+                          "sampleSizeInBits": 16,
+                          "channels": 2,
+                          "frameSize": 4,
+                          "frameRate": 44100.0,
+                          "bigEndian": false
+                        },
+                        "frameLength": 58752,
+                        "audioLength": 1332
+                      },
+                      "source": 7,
+                      "transform": {
+                        "position": {
+                          "x": 0.0,
+                          "y": 0.0
+                        },
+                        "rotation": 0.0,
+                        "scale": {
+                          "x": 1.0,
+                          "y": 1.0
+                        },
+                        "centre": {
+                          "x": 0.0,
+                          "y": 0.0
+                        }
+                      },
+                      "audioType": "WORLDSPACE",
+                      "maxDistance": 750.0,
+                      "referenceDistance": 25.0,
+                      "rolloffFactor": 0.1,
+                      "volumePercent": 100.0,
+                      "playing": false,
+                      "paused": false,
+                      "state": 4113,
+                      "currentSecond": 0.0,
+                      "cyclic": true
+                    },
+                    "object2DID": 5,
+                    "componentID": 9,
                     "active": true
                   }
                 },
@@ -632,8 +717,8 @@
       },
       "name": "default",
       "viewportSize": {
-        "x": 1600.0,
-        "y": 837.0
+        "x": 1080.0,
+        "y": 720.0
       },
       "ID": 10,
       "viewMatrix": {
@@ -675,8 +760,8 @@
     },
     "name": "default",
     "viewportSize": {
-      "x": 1600.0,
-      "y": 837.0
+      "x": 1080.0,
+      "y": 720.0
     },
     "ID": 10,
     "viewMatrix": {
@@ -711,7 +796,7 @@
     }
   ],
   "scriptSystem": {},
-  "maxObjectID": 585,
+  "maxObjectID": 711,
   "inBuild": false,
   "isMainScene2D": false
 }

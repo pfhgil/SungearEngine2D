@@ -54,6 +54,8 @@ public class Scene2D
 
     public boolean isMainScene2D = false;
 
+    private transient boolean shouldDestroy = false;
+
     public Scene2D()
     {
         layering.addLayer(new Layer(0, "default"));
@@ -87,17 +89,21 @@ public class Scene2D
 
     public void draw()
     {
-        Graphics.getMainRenderer().render(layering);
+        if(!shouldDestroy) {
+            Graphics.getMainRenderer().render(layering);
 
-        if(scene2DCallback != null) {
-            scene2DCallback.onDraw();
+            if (scene2DCallback != null) {
+                scene2DCallback.onDraw();
+            }
         }
     }
 
     // рисует все объекты разными цветами при выборке объектов
     public void drawPicking()
     {
-        layering.drawPicking();
+        if(!shouldDestroy) {
+            layering.drawPicking();
+        }
     }
 
     public Object2D getPickedObject2D(Vector4f pixelColor)
@@ -239,6 +245,8 @@ public class Scene2D
 
     public void destroy()
     {
+        shouldDestroy = true;
+
         layering.destroy();
         layering = null;
         physicsWorld = null;
@@ -315,4 +323,6 @@ public class Scene2D
             SceneManager.currentSceneManager.mainScene2DPath = scenePath;
         }
     }
+
+    public boolean isShouldDestroy() { return shouldDestroy; }
 }

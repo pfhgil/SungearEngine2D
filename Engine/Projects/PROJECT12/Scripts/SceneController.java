@@ -21,10 +21,13 @@ public class SceneController
     public Object2D movableObject2D;
 
     @InspectorView
-    public Camera2D camera2D; //dfdfddfdsfdfdffgfsdfsdfdfdfdfddf
+    public Camera2D camera2D;
 
     @InspectorView
     public AudioComponent fuckYouSound;
+
+    @InspectorView
+    public AudioComponent fuckYouSound1;
 
     @InspectorView
     public TransformComponent someComponent;
@@ -51,6 +54,12 @@ public class SceneController
 
             if(fuckYouSound != null) {
                 fuckYouSound.audio.play();
+            }
+        }
+
+        if(Keyboard.keyPressed(GLFW.GLFW_KEY_I)) {
+            if(fuckYouSound1 != null) {
+                fuckYouSound1.audio.play();
             }
         }
     }
