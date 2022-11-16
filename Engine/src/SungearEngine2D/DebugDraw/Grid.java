@@ -1,17 +1,11 @@
 package SungearEngine2D.DebugDraw;
 
-import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Components.MeshRendererComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Drawable.Object2D;
-import Core2D.Graphics.Graphics;
-import Core2D.ShaderUtils.ShaderUtils;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;
 import org.joml.Vector2f;
-import org.joml.Vector4f;
-
-import static org.lwjgl.opengl.GL11C.GL_REPEAT;
 
 public class Grid
 {
@@ -35,7 +29,7 @@ public class Grid
         //grid.getComponent(TextureComponent.class).getTexture2D().param = GL_REPEAT;
         //grid.setColor(new Vector4f(0.3f, 0.3f, 0.3f, 1.0f));
         //grid.setShaderProgram(null);
-        c.shaderProgram = Resources.Shaders.Grid.gridShaderProgram;
+        c.getComponent(MeshRendererComponent.class).shader = Resources.Shaders.Grid.gridShader;
         //grid.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Icons.object2DFileIcon);
     }
 

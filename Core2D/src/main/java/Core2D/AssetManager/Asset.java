@@ -10,15 +10,15 @@ public class Asset
      */
     public Object assetObject;
     /**
-     * Asset name
+     * Asset path (relative)
      */
-    public String name;
+    public String path;
 
     public Asset() { }
 
-    public Asset(Object assetObject, String name)
+    public Asset(Object assetObject, String path)
     {
         this.assetObject = assetObject;
-        this.name = name;
+        this.path = path;
     }
 }

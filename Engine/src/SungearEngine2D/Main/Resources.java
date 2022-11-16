@@ -2,11 +2,8 @@ package SungearEngine2D.Main;
 
 import Core2D.Core2D.Core2D;
 import Core2D.Shader.Shader;
-import Core2D.Shader.ShaderProgram;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.FileUtils;
-import org.lwjgl.opengl.GL11;
-import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL46C;
 
 // TODO: в дальнейшем все это перенести в AssetManager
@@ -105,13 +102,11 @@ public class Resources
     {
         public static class Grid
         {
-            public static ShaderProgram gridShaderProgram;
+            public static Shader gridShader;
 
             public static void load()
             {
-                Shader fragmentShader = new Shader(FileUtils.readAllFile(Core2D.class.getResourceAsStream("/data/shaders/grid/fragmentShader.glsl")), GL46C.GL_FRAGMENT_SHADER);
-                Shader vertexShader = new Shader(FileUtils.readAllFile(Core2D.class.getResourceAsStream("/data/shaders/grid/vertexShader.glsl")), GL46C.GL_VERTEX_SHADER);
-                gridShaderProgram = new ShaderProgram(fragmentShader, vertexShader);
+                gridShader = Shader.loadShader(Core2D.class.getResourceAsStream("/data/shaders/grid/shader.glsl"));
             }
         }
     }

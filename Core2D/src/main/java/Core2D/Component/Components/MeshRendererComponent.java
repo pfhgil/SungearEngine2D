@@ -3,7 +3,7 @@ package Core2D.Component.Components;
 import Core2D.AssetManager.AssetManager;
 import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Component;
-import Core2D.Shader.ShaderProgram;
+import Core2D.Shader.Shader;
 import Core2D.ShaderUtils.*;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Texture2D.TextureDrawModes;
@@ -17,10 +17,10 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class MeshRendererComponent extends Component {
 
-    public Texture2D texture;
+    public transient Texture2D texture = new Texture2D();
     private Matrix4f mvpMatrix = new Matrix4f();
     public boolean isUIElement = false;
-    public transient ShaderProgram shaderProgram;
+    public transient Shader shader;
 
     // VAO четырехугольника (VAO - Vertex Array Object. Хранит в себе указатели на VBO, IBO и т.д.)
     public transient VertexArrayObject vertexArrayObject;
@@ -47,59 +47,60 @@ public class MeshRendererComponent extends Component {
 
     @Override
     public void init() {
-        shaderProgram = AssetManager.getShaderProgram("object2DProgram");
-    }
-
-    @Override
-    public void deltaUpdate(float time) {
-        shaderProgram = AssetManager.getShaderProgram("object2DProgram");
+        shader = AssetManager.getInstance().getShaderProgram("/data/shaders/object2D/shader.glsl");
 
         object2D.setColor(new Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
 
         loadVAO();
     }
 
+    @Override
+    public void deltaUpdate(float time) {
+    }
+
     void render(){
         if(!object2D.isShouldDestroy()) {
+            for (Component component : object2D.getComponents()) {
+                component.update();
+            }
+            // двойная проверка, т.к. после апдейта компонентов shouldDestroy может стать true
+            if(!object2D.isShouldDestroy()) {
+
+                // использую VAO, текстуру и шейдер
+                vertexArrayObject.bind();
+                texture.bind();
+                shader.bind();
+
+                ShaderUtils.setUniform(
+                        shader.getProgramHandler(),
+                        "mvpMatrix",
+                        object2D.getMvpMatrix()
+                );
+                ShaderUtils.setUniform(
+                        shader.getProgramHandler(),
+                        "color",
+                        object2D.getColor()
+                );
+                ShaderUtils.setUniform(
+                        shader.getProgramHandler(),
+                        "drawMode",
+                        textureDrawMode
+                );
+                ShaderUtils.setUniform(
+                        shader.getProgramHandler(),
+                        "sampler",
+                        texture.getFormattedTextureBlock()
+                ); //FIXME: сделать нормальный метод для того что бы задовать сразу несколько юниформ
+
+                // нарисовать два треугольника
+                glDrawElements(GL11C.GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+
+                // прекращаю использование шейдера, текстуры и VAO
+                shader.unBind();
+                texture.unBind();
+                vertexArrayObject.unBind();
+            }
         }
-        for(Component component : object2D.getComponents()) {
-            component.update();
-        }
-
-        // использую VAO, текстуру и шейдер
-        vertexArrayObject.bind();
-        texture.bind();
-        shaderProgram.bind();
-
-        int shaderProgramObject = shaderProgram.getHandler();
-        ShaderUtils.setUniform(
-                shaderProgramObject,
-                "mvpMatrix",
-                object2D.getMvpMatrix()
-        );
-        ShaderUtils.setUniform(
-                shaderProgramObject,
-                "color",
-                object2D.getColor()
-        );
-        ShaderUtils.setUniform(
-                shaderProgramObject,
-                "drawMode",
-                textureDrawMode
-        );
-        ShaderUtils.setUniform(
-                shaderProgramObject,
-                "sampler",
-                texture.getFormattedTextureBlock()
-        ); //FIXME: сделать нормальный метод для того что бы задовать сразу несколько юниформ
-
-        // нарисовать два треугольника
-        glDrawElements(GL11C.GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-
-        // прекращаю использование шейдера, текстуры и VAO
-        shaderProgram.unBind();
-        texture.unBind();
-        vertexArrayObject.unBind();
     }
 
     @Override
@@ -141,7 +142,6 @@ public class MeshRendererComponent extends Component {
         Matrix4f modelMatrix = new Matrix4f().set(object2D.getComponent(TransformComponent.class).getTransform().getResultModelMatrix());
 
         if(CamerasManager.getMainCamera2D() != null && !isUIElement) {
-
             mvpMatrix = new Matrix4f(CamerasManager.getMainCamera2D().getProjectionMatrix()).mul(CamerasManager.getMainCamera2D().getViewMatrix())
                     .mul(modelMatrix);
         } else {
@@ -180,4 +180,7 @@ public class MeshRendererComponent extends Component {
         setUV(resP0, resP1, resP2, resP3);
     }
 
+    public float[] getData() { return data; }
+
+    public VertexArrayObject getVertexArrayObject() { return vertexArrayObject; }
 }

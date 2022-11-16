@@ -130,7 +130,7 @@ public class Core2D extends Graphics
 
             /** инициализация **/
 
-            AssetManager.init();
+            AssetManager.getInstance().init();
 
             deltaTimer.getTimerCallbacks().add(new TimerCallback() {
                 @Override

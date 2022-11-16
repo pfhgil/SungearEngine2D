@@ -464,7 +464,7 @@ public class InspectorView extends View
             boolean someItemHovered = false;
 
             for (int i = 0; i < inspectingObject2D.getComponents().size(); i++) {
-                String componentName = inspectingObject2D.getComponents().get(i).getClass().getTypeName();
+                String componentName = inspectingObject2D.getComponents().get(i).getClass().getSimpleName();
 
                 ImGui.pushID(componentName + i);
                 boolean opened = false;

@@ -1,5 +1,6 @@
 package Core2D.Drawable;
 
+import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.FileUtils;
@@ -46,24 +47,28 @@ public class Font
 
     public Font() { }
 
-    public Font(String descriptionPath, String fontImagePath)
+    public Font(String fontPathWithoutExtension)
     {
-        load(descriptionPath, fontImagePath);
+        load(fontPathWithoutExtension);
     }
 
-    public Font(InputStream descriptionInputStream, InputStream fontImageInputStream)
+    public Font(String fontPathWithoutExtension, boolean loadFromResources)
     {
-        load(descriptionInputStream, fontImageInputStream);
+        if(loadFromResources) {
+            load(Core2D.class.getResourceAsStream(fontPathWithoutExtension + ".fnt"), Core2D.class.getResourceAsStream(fontPathWithoutExtension + ".png"));
+        } else {
+            load(fontPathWithoutExtension);
+        }
     }
 
-    public void load(String descriptionPath, String fontImagePath)
+    public void load(String fontPathWithoutExtension)
     {
         Settings.QualityType lastQuality = Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality;
         Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality = Settings.QualityType.HIGH;
-        fontImage = new Texture2D(fontImagePath);
+        fontImage = new Texture2D(fontPathWithoutExtension + ".png");
         Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality = lastQuality;
 
-        String fileText = FileUtils.readAllFile(new File(descriptionPath));
+        String fileText = FileUtils.readAllFile(new File(fontPathWithoutExtension + ".fnt"));
 
         read(fileText);
     }

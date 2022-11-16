@@ -1,6 +1,18 @@
-[#FFFFFF] 2022/11/15 18:31:55 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/11/15 18:31:55 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2022/11/15 18:31:57 | [#008000] Core2D started!
-[#FFFFFF] 2022/11/15 18:31:57 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
-[#FFFFFF] 2022/11/15 18:32:02 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/11/15 18:32:02 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2022/11/16 22:33:05 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/11/16 22:33:05 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2022/11/16 22:33:05 | [#008000] Core2D started!
+[#FFFFFF] 2022/11/16 22:33:05 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2022/11/16 22:33:08 | [#FF0000] OpenGL error: 1280
+[#FFFFFF] 2022/11/16 22:33:08 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2022/11/16 22:34:00 | [#FF0000] java.lang.NullPointerException: Cannot invoke "Core2D.Audio.AudioInfo.getAudioLengthInSeconds()" because "audioComponent.audio.audioInfo" is null
+	at SungearEngine2D.GUI.Views.EditorView.InspectorView.inspectObject2D(InspectorView.java:878)
+	at SungearEngine2D.GUI.Views.EditorView.InspectorView.draw(InspectorView.java:116)
+	at SungearEngine2D.GUI.Views.ViewsManager.draw(ViewsManager.java:92)
+	at SungearEngine2D.GUI.GUI.draw(GUI.java:55)
+	at SungearEngine2D.Main.Main$1.onDrawFrame(Main.java:186)
+	at Core2D.Graphics.Graphics.draw(Graphics.java:110)
+	at Core2D.Core2D.Core2D.run(Core2D.java:118)
+	at Core2D.Core2D.Core2D.create(Core2D.java:105)
+	at Core2D.Core2D.Core2D.start(Core2D.java:56)
+	at SungearEngine2D.Main.Main.main(Main.java:201)
+

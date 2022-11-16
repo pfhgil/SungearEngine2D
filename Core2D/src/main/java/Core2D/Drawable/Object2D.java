@@ -48,7 +48,8 @@ public class Object2D extends Drawable implements Serializable
     public Object2D()
     {
         addComponent(new TransformComponent());
-        addComponent(new MeshRendererComponent()).texture.set(AssetManager.getTexture2D("whiteTexture"));
+        System.out.println(AssetManager.getInstance().getTexture2D("/data/textures/white_texture.png"));
+        addComponent(new MeshRendererComponent()).texture.set(AssetManager.getInstance().getTexture2D("/data/textures/white_texture.png"));
 
         if(Settings.Other.Picking.currentPickingColor.x < 255.0f) {
             Settings.Other.Picking.currentPickingColor.x++;

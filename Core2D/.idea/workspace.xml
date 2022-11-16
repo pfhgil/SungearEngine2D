@@ -9,77 +9,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f5f8ac80-ad56-4c77-9869-c4208084a0d7" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/MeshRendererComponent.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/Font.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Animation/SpriteAnimation/SpriteAnimation.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Animation/SpriteAnimation/SpriteAnimation.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/AssetManager/AssetManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/AssetManager/AssetManager.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Component/Component.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Component/Component.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Component/Components/TextureComponent.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Deserializers/Object2DDeserializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Deserializers/Object2DDeserializer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/AtlasDrawing.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/AtlasDrawing.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/Instancing/LinesInstancing.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/Instancing/ObjectsInstancing.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/Object2D.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/Object2D.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/Primitives/Box2D.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/Primitives/Circle2D.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/Primitives/Line2D.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/UI/Button/Button.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/UI/InputField/InputField$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/UI/InputField/InputField$Cursor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/UI/InputField/InputField.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/UI/ProgressBar/ProgressBar.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/UI/Text/Font$Glyph.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/UI/Text/Font.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/UI/Text/Text.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Drawable/UI/UIElementCallback.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Graphics/Renderer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Graphics/Renderer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Layering/Layer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Layering/Layer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/libs/Core2D.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/Core2D.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Animation/SpriteAnimation/SpriteAnimation.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Animation/SpriteAnimation/SpriteAnimation.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/AssetManager/AssetManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/AssetManager/AssetManager.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Component/Component.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Component/Component.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/TextureComponent.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Deserializers/Object2DDeserializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Deserializers/Object2DDeserializer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/AtlasDrawing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/AtlasDrawing.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/Instancing/LinesInstancing.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/Instancing/ObjectsInstancing.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/Object2D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/Object2D.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/Primitives/Box2D.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/Primitives/Circle2D.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/Primitives/Line2D.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/UI/Button/Button.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/UI/InputField/InputField.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/UI/ProgressBar/ProgressBar.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/UI/Text/Font.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/UI/Text/Text.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Drawable/UI/UIElementCallback.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Graphics/Renderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Graphics/Renderer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Layering/Layer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Layering/Layer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/Log/currentSession.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/Log/currentSession.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/compiler/Core2D.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/compiler/Core2D.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/libs/Core2D.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/libs/Core2D.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/resources/data/other/Core2D.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/resources/data/other/Core2D.jar" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/Builder/Builder.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/Builder/Builder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/Debug/DebugDraw.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/Debug/DebugDraw.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/DebugDraw/CamerasDebugLines.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/DebugDraw/CamerasDebugLines.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/DebugDraw/Gizmo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/DebugDraw/Gizmo.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/DebugDraw/Grid.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/DebugDraw/Grid.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/DebugDraw/ObjectsDebugLines.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/DebugDraw/ObjectsDebugLines.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/GUI/Views/EditorView/InspectorView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/GUI/Views/EditorView/InspectorView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/GUI/Views/EditorView/SceneView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/GUI/Views/EditorView/SceneView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/Main/GraphicsRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/Main/GraphicsRenderer.java" afterDir="false" />
-    </list>
+    <list default="true" id="f5f8ac80-ad56-4c77-9869-c4208084a0d7" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -142,22 +72,22 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JavaClassFindUsagesOptions.isDerivedClasses": "true",
-    "JavaClassFindUsagesOptions.isFieldsUsages": "true",
-    "JavaClassFindUsagesOptions.isMethodsUsages": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/java/2dengine/SungearEngine2D/Engine",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Project",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaClassFindUsagesOptions.isDerivedClasses&quot;: &quot;true&quot;,
+    &quot;JavaClassFindUsagesOptions.isFieldsUsages&quot;: &quot;true&quot;,
+    &quot;JavaClassFindUsagesOptions.isMethodsUsages&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/java/2dengine/SungearEngine2D/Engine&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Shell Script.build">
     <configuration name="Core2D [build]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
@@ -241,7 +171,8 @@
       <workItem from="1668417441778" duration="1576000" />
       <workItem from="1668446275578" duration="13038000" />
       <workItem from="1668533225394" duration="2813000" />
-      <workItem from="1668597059747" duration="40000" />
+      <workItem from="1668597059747" duration="3842000" />
+      <workItem from="1668616787455" duration="11130000" />
     </task>
     <servers />
   </component>
