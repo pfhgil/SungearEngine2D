@@ -2,7 +2,7 @@ package Core2D.AssetManager;
 
 import Core2D.Audio.AudioInfo;
 import Core2D.Core2D.Core2D;
-import Core2D.Drawable.UI.Text.Font;
+import Core2D.Drawable.Font;
 import Core2D.Log.Log;
 import Core2D.Shader.Shader;
 import Core2D.Shader.ShaderProgram;

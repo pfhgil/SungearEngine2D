@@ -1,6 +1,8 @@
 package Core2D.Component;
 
+import Core2D.Camera2D.Camera2D;
 import Core2D.Drawable.Object2D;
+import Core2D.Scripting.InspectorView;
 
 /**
  * An abstract class that other components inherit.
@@ -74,4 +76,20 @@ public abstract class Component
     public void setActive(boolean active) { this.active = active; }
 
     public int getObject2DID() { return object2DID; }
+
+    public void inspectorGUIDraw() {
+
+    }
+    public void editorWindowDraw(){}
+
+    public <T extends Component> T getComponent(Class<T> componentClass)
+    {
+        for(Component component : object2D.getComponents()) {
+            if(component.getClass().isAssignableFrom(componentClass)) {
+                return componentClass.cast(component);
+            }
+        }
+
+        return null;
+    }
 }

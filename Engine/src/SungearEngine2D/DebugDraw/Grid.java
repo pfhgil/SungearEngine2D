@@ -1,7 +1,7 @@
 package SungearEngine2D.DebugDraw;
 
 import Core2D.Camera2D.CamerasManager;
-import Core2D.Component.Components.TextureComponent;
+import Core2D.Component.Components.MeshRendererComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Drawable.Object2D;
 import Core2D.Graphics.Graphics;
@@ -24,17 +24,18 @@ public class Grid
         grid = new Object2D();
 
         grid.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(1f, 1f));
-        grid.getComponent(TextureComponent.class).setUV(new float[] {
+        MeshRendererComponent c = grid.getComponent(MeshRendererComponent.class);
+        c.setUV(new float[] {
                 0.0f, 0.0f,
                 0.0f, 261,
                 261, 261,
                 261, 0.0f
         });
-        grid.setUIElement(true);
+        c.isUIElement = true;
         //grid.getComponent(TextureComponent.class).getTexture2D().param = GL_REPEAT;
         //grid.setColor(new Vector4f(0.3f, 0.3f, 0.3f, 1.0f));
         //grid.setShaderProgram(null);
-        grid.setShaderProgram(Resources.Shaders.Grid.gridShaderProgram);
+        c.shaderProgram = Resources.Shaders.Grid.gridShaderProgram;
         //grid.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Icons.object2DFileIcon);
     }
 
@@ -47,7 +48,7 @@ public class Grid
         //System.out.println("lvl: " + level + ", " + newLevel);
 
         Vector2f cameraScale = Main.getMainCamera2D().getTransform().getScale();
-        grid.getComponent(TextureComponent.class).setUV(new float[] {
+        grid.getComponent(MeshRendererComponent.class).setUV(new float[] {
                 0.0f, 0.0f,
                 0.0f, 1.0f / cameraScale.y,
                 1.0f / cameraScale.x, 1.0f / cameraScale.y,

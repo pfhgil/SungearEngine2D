@@ -14,7 +14,7 @@ public class AtlasDrawing extends Drawable
     private List<Object2D> drawableObjects2D;
     private Texture2D atlasTexture2D;
 
-    private final Consumer<AtlasDrawing> render = Core2D.getMainRenderer()::render;
+    //private final Consumer<AtlasDrawing> render = Core2D.getMainRenderer()::render;
 
     public AtlasDrawing(Texture2D atlasTexture2D)
     {
@@ -50,7 +50,7 @@ public class AtlasDrawing extends Drawable
     @Override
     public void render()
     {
-        render.accept(this);
+        //render.accept(this);
     }
 
     public Texture2D getAtlasTexture2D() { return atlasTexture2D; }

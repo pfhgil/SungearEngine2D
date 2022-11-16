@@ -2,8 +2,8 @@ package SungearEngine2D.Builder;
 
 import Core2D.Audio.AudioInfo;
 import Core2D.Component.Components.AudioComponent;
+import Core2D.Component.Components.MeshRendererComponent;
 import Core2D.Component.Components.ScriptComponent;
-import Core2D.Component.Components.TextureComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Drawable.Object2D;
 import Core2D.Layering.Layer;
@@ -254,19 +254,19 @@ public class Builder {
                     if (wrappedObject.getObject() instanceof Object2D) {
                         Object2D object2D = (Object2D) wrappedObject.getObject();
 
-                        TextureComponent textureComponent = object2D.getComponent(TextureComponent.class);
+                        MeshRendererComponent textureComponent = object2D.getComponent(MeshRendererComponent.class);
                         if(textureComponent != null) {
                             // новый путь до текстуры
-                            File newFile = new File(toDir + "\\" + textureComponent.getTexture2D().path);
+                            File newFile = new File(toDir + "\\" + textureComponent.texture.path);
                             // создаю все папки, которых нет
                             newFile.getParentFile().mkdirs();
                             // копирую файл в эти папки
                             FileUtils.copyFile(ProjectsManager.getCurrentProject().getProjectPath() +
                                             File.separator +
-                                            textureComponent.getTexture2D().path,
+                                            textureComponent.texture.path,
                                     newFile.getPath(), false);
                             // устанавливаю для текстурного компонента путь в билде (относительный)
-                            textureComponent.getTexture2D().path = "/" + textureComponent.getTexture2D().path.replace("\\", "/");
+                            textureComponent.texture.path = "/" + textureComponent.texture.path.replace("\\", "/");
                         }
 
                         // то же самое для скриптов

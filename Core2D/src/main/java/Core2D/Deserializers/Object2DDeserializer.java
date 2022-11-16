@@ -50,14 +50,12 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
             }
         }
 
-        object2D.removeComponent(object2D.getComponent(TextureComponent.class));
+        object2D.removeComponent(object2D.getComponent(MeshRendererComponent.class));
 
         object2D.setName(name);
         object2D.setTag(tag.getName());
         tag.destroy();
         object2D.setColor(color);
-        object2D.setDrawingMode(drawingMode);
-        object2D.setUIElement(isUIElement);
         object2D.setActive(active);
         object2D.setID(ID);
         object2D.setLayerName(layerName);
@@ -69,33 +67,33 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
             int lastComponentID = component.componentID;
             if(component instanceof TransformComponent) {
                 object2D.getComponent(TransformComponent.class).set(component);
-            } else if(component instanceof TextureComponent) {
-                TextureComponent textureComponent = (TextureComponent) component;
+            } else if(component instanceof MeshRendererComponent) {
+                MeshRendererComponent textureComponent = (MeshRendererComponent) component;
                 Texture2D texture2D = null;
                 // если режим работы ядра в движке
                 if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                    String textureFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + textureComponent.getTexture2D().path;
-                    String textureLastPath = textureComponent.getTexture2D().path;
+                    String textureFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + textureComponent.texture.path;
+                    String textureLastPath = textureComponent.texture.path;
 
                     if(new File(textureFullPath).exists()) {
                         texture2D = new Texture2D(
                                 textureFullPath,
-                                textureComponent.getTexture2D().param,
-                                textureComponent.getTexture2D().getGLTextureBlock()
+                                textureComponent.texture.param,
+                                textureComponent.texture.getGLTextureBlock()
                         );
                         texture2D.path = textureLastPath;
                     } else { // для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
                         // чтобы это исправить загружаем по этому пути текстуру, находим относительный путь и присваиваем его source для того,
                         // чтобы в следующий раз выполнился блок кода выше
-                        if(new File(textureComponent.getTexture2D().path).exists()) {
+                        if(new File(textureComponent.texture.path).exists()) {
                             String relativePath = FileUtils.getRelativePath(
-                                    new File(textureComponent.getTexture2D().path),
+                                    new File(textureComponent.texture.path),
                                     new File(ProjectsManager.getCurrentProject().getProjectPath())
                             );
                             texture2D = new Texture2D(
-                                    textureComponent.getTexture2D().path,
-                                    textureComponent.getTexture2D().param,
-                                    textureComponent.getTexture2D().getGLTextureBlock()
+                                    textureComponent.texture.path,
+                                    textureComponent.texture.param,
+                                    textureComponent.texture.getGLTextureBlock()
                             );
                             texture2D.path = relativePath;
                         }
@@ -103,18 +101,18 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                 // если режим работы в билде
                 } else {
                     texture2D = new Texture2D(
-                            Core2D.class.getResourceAsStream(textureComponent.getTexture2D().path),
-                            textureComponent.getTexture2D().param,
-                            textureComponent.getTexture2D().getGLTextureBlock()
+                            Core2D.class.getResourceAsStream(textureComponent.texture.path),
+                            textureComponent.texture.param,
+                            textureComponent.texture.getGLTextureBlock()
                     );
                 }
 
-                texture2D.blendSourceFactor = textureComponent.getTexture2D().blendSourceFactor;
-                texture2D.blendDestinationFactor = textureComponent.getTexture2D().blendDestinationFactor;
+                texture2D.blendSourceFactor = textureComponent.texture.blendSourceFactor;
+                texture2D.blendDestinationFactor = textureComponent.texture.blendDestinationFactor;
 
                 object2D.addComponent(component);
-                object2D.getComponent(TextureComponent.class).set(component);
-                object2D.getComponent(TextureComponent.class).setTexture2D(texture2D);
+                object2D.getComponent(MeshRendererComponent.class).set(component);
+                object2D.getComponent(MeshRendererComponent.class).texture.set(texture2D);
             } else if(component instanceof Rigidbody2DComponent) {
                 rigidbody2DComponent = (Rigidbody2DComponent) component;
             } else if(component instanceof ScriptComponent) {
