@@ -1,7 +1,7 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.Camera2D.CamerasManager;
-import Core2D.Component.Components.TextureComponent;
+import Core2D.Component.Components.MeshRendererComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Drawable.Object2D;
@@ -307,15 +307,15 @@ public class SceneView extends View
             String relativePath = FileUtils.getRelativePath(
                     new File(file.getPath()),
                     new File(ProjectsManager.getCurrentProject().getProjectPath()));
-            TextureComponent textureComponent = newSceneObject2D.getComponent(TextureComponent.class);
+            MeshRendererComponent textureComponent = newSceneObject2D.getComponent(MeshRendererComponent.class);
             Texture2D texture2D = new Texture2D(file.getPath());
-            textureComponent.setTexture2D(texture2D);
-            textureComponent.getTexture2D().path = relativePath;
+            textureComponent.texture.set(texture2D);
+            textureComponent.texture.path = relativePath;
 
             Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
             newSceneObject2D.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);
 
-            Vector2f newObject2DScale = new Vector2f(textureComponent.getTexture2D().getWidth() / 100.0f, textureComponent.getTexture2D().getHeight() / 100.0f);
+            Vector2f newObject2DScale = new Vector2f(textureComponent.texture.getWidth() / 100.0f, textureComponent.texture.getHeight() / 100.0f);
             newSceneObject2D.getComponent(TransformComponent.class).getTransform().setScale(newObject2DScale);
 
             // дефолтный layer

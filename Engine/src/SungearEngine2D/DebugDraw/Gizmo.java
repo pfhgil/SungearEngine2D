@@ -1,10 +1,10 @@
 package SungearEngine2D.DebugDraw;
 
-import Core2D.Component.Components.TextureComponent;
+//import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Drawable.Object2D;
-import Core2D.Drawable.Primitives.Circle2D;
-import Core2D.Drawable.Primitives.Line2D;
+/*import Core2D.Drawable.Primitives.Circle2D;
+import Core2D.Drawable.Primitives.Line2D;*/
 import Core2D.Graphics.Graphics;
 import Core2D.Input.PC.Mouse;
 import Core2D.ShaderUtils.FrameBufferObject;
@@ -47,13 +47,13 @@ public class Gizmo
 
     public static final Object2D centrePointToEditCentre = new Object2D();
 
-    public static final Circle2D rotationCircle = new Circle2D(300.0f, 1, new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
+    //#FIXME public static final Circle2D rotationCircle = new Circle2D(300.0f, 1, new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
     public static final Object2D rotationHandler = new Object2D();
 
     public static final Object2D yScaleHandler = new Object2D();
-    public static final Line2D yScaleLine = new Line2D();
+    //#FIXME public static final Line2D yScaleLine = new Line2D();
     public static final Object2D xScaleHandler = new Object2D();
-    public static final Line2D xScaleLine = new Line2D();
+    //#FIXME public static final Line2D xScaleLine = new Line2D();
 
     private static Object2D selectedGizmoTool;
 
@@ -76,16 +76,16 @@ public class Gizmo
         yScaleHandler.setName("gizmo.yScaleHandler");
         xScaleHandler.setName("gizmo.xScaleHandler");
 
-        yArrow.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoArrow);
+        /*yArrow.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoArrow);
         xArrow.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoArrow);
         centrePoint.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoPoint);
         centrePointToEditCentre.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoPoint);
         //rotationCircle.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoCircle);
         rotationHandler.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoPoint);
         yScaleHandler.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoPoint);
-        xScaleHandler.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoPoint);
+        xScaleHandler.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoPoint);*///#FIXME
 
-        yArrow.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 0.65f));
+        /*yArrow.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 0.65f));
         xArrow.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
         centrePoint.setColor(new Vector4f(0.5f, 0.5f, 0.5f, 1));
         centrePointToEditCentre.setColor(new Vector4f(0.25f, 0.9f, 0.5f, 1.0f));
@@ -111,16 +111,17 @@ public class Gizmo
         xScaleHandler.getComponent(TransformComponent.class).getTransform().setScale(pointScale);
 
         yScaleLine.setLineWidth(6.0f);
-        xScaleLine.setLineWidth(6.0f);
+        xScaleLine.setLineWidth(6.0f);*///#FIXME
         //Transform rotationCircleTransform = rotationCircle.getComponent(TransformComponent.class).getTransform();
         //rotationHandler.getComponent(TransformComponent.class).getTransform().setPosition(new Vector2f(rotationCircleTransform.getPosition()).add(new Vector2f(0.0f, rotationCircleTransform.getScale().x * 100.0f / 2.0f)));
     }
 
     public static void draw()
     {
-        if(ViewsManager.getInspectorView().getCurrentInspectingObject() instanceof Object2D && active) {
+        /*if(ViewsManager.getInspectorView().getCurrentInspectingObject() instanceof Object2D && active) {
             Object2D object2D = (Object2D) ViewsManager.getInspectorView().getCurrentInspectingObject();
             if(!object2D.isShouldDestroy()) {
+                // Draw custom GIZMO
                 Transform object2DTransform = object2D.getComponent(TransformComponent.class).getTransform();
                 Vector2f object2DPosition = new Vector2f(MatrixUtils.getPosition(object2DTransform.getResultModelMatrix()));
                 float object2DRotation = MatrixUtils.getRotation(object2DTransform.getResultModelMatrix());
@@ -365,6 +366,6 @@ public class Gizmo
                     }
                 }
             }
-        }
+        }*///#FIXME
     }
 }

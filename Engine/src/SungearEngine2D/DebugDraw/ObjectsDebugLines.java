@@ -4,9 +4,6 @@ import Core2D.Component.Components.BoxCollider2DComponent;
 import Core2D.Component.Components.CircleCollider2DComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Drawable.Object2D;
-import Core2D.Drawable.Primitives.Box2D;
-import Core2D.Drawable.Primitives.Circle2D;
-import Core2D.Drawable.Primitives.Line2D;
 import Core2D.Graphics.Graphics;
 import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.Physics.Collider2D.CircleCollider2D;
@@ -22,7 +19,7 @@ import java.util.List;
 
 public class ObjectsDebugLines
 {
-    private static Line2D[] currentPickedObject2DDebugLines = new Line2D[4];
+    /*private static Line2D[] currentPickedObject2DDebugLines = new Line2D[4];
 
     private static Box2D[] currentPickedObject2DCollidersBoxes2D = new Box2D[100];
     private static Circle2D[] currentPickedObject2DCollidersCircles2D = new Circle2D[100];
@@ -126,5 +123,5 @@ public class ObjectsDebugLines
                 }
             }
         }
-    }
+    }*/
 }

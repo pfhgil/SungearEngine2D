@@ -3,8 +3,8 @@ package Core2D.Drawable;
 import Core2D.AssetManager.AssetManager;
 import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Component;
+import Core2D.Component.Components.MeshRendererComponent;
 import Core2D.Component.Components.Rigidbody2DComponent;
-import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Component.NonDuplicated;
 import Core2D.Component.NonRemovable;
@@ -12,8 +12,6 @@ import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
 import Core2D.Log.Log;
 import Core2D.Scene2D.SceneManager;
-import Core2D.Shader.ShaderProgram;
-import Core2D.ShaderUtils.*;
 import Core2D.Transform.Transform;
 import Core2D.Utils.MatrixUtils;
 import org.joml.Matrix4f;
@@ -33,48 +31,10 @@ public class Object2D extends Drawable implements Serializable
 {
     // лист компонентов
     private List<Component> components = new ArrayList<>();
-
-    // model view projection matrix
-    private transient Matrix4f mvpMatrix;
+    public transient Matrix4f mvpMatrix;
 
     // цвет
     private Vector4f color = new Vector4f();
-
-    // размер объекта (дефолт - 100x100)
-    private transient Vector2f size = new Vector2f(100.0f, 100.0f);
-
-    // индексы (первый и второй треугольник)
-    // использую тип short для меньшей нагрузки на память видеокарты и ram (2 (short), 4 байт (int))
-    private transient short[] indices = new short[] { 0, 1, 2, 0, 2, 3 };
-
-    // массив данных о вершинах
-    // первые строки - позиции вершин, вторые строки - текстурные координаты
-    private transient float[] data = new float[] {
-            -size.x / 2.0f, -size.y / 2.0f,
-            0, 0,
-
-            -size.x / 2.0f, size.y / 2.0f,
-            0, 0,
-
-            size.x / 2.0f, size.y / 2.0f,
-            0, 0,
-
-            size.x / 2.0f, -size.y / 2.0f,
-            0, 0,
-    };
-
-    // шейдерная программа объекта
-    private transient ShaderProgram shaderProgram;
-
-    // VAO четырехугольника (VAO - Vertex Array Object. Хранит в себе указатели на VBO, IBO и т.д.)
-    private transient VertexArrayObject vertexArrayObject;
-
-    private int drawingMode = GL_TRIANGLES;
-
-    // является ли ui элементом
-    private boolean isUIElement = false;
-
-    // цвета для picking`а мышкой
     private transient Vector3f pickColor = new Vector3f();
 
     public transient Object2D parentObject2D;
@@ -87,16 +47,8 @@ public class Object2D extends Drawable implements Serializable
 
     public Object2D()
     {
-        shaderProgram = AssetManager.getShaderProgram("object2DProgram");
-
-        setColor(new Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
-
-        loadVAO();
-
         addComponent(new TransformComponent());
-        addComponent(new TextureComponent());
-        getComponent(TextureComponent.class).setTexture2D(AssetManager.getTexture2D("whiteTexture"));
-        getComponent(TextureComponent.class).updateUV();
+        addComponent(new MeshRendererComponent()).texture.set(AssetManager.getTexture2D("whiteTexture"));
 
         if(Settings.Other.Picking.currentPickingColor.x < 255.0f) {
             Settings.Other.Picking.currentPickingColor.x++;
@@ -121,20 +73,12 @@ public class Object2D extends Drawable implements Serializable
     {
         destroy();
 
-        shaderProgram = AssetManager.getShaderProgram("object2DProgram");
-
         setColor(new Vector4f(object2D.getColor().x, object2D.getColor().y, object2D.getColor().z, object2D.getColor().w));
-
-        data = object2D.getData();
-
-        loadVAO();
 
         Transform objectTransform = object2D.getComponent(TransformComponent.class).getTransform();
         addComponent(new TransformComponent(objectTransform));
 
-        TextureComponent objectTextureComponent = object2D.getComponent(TextureComponent.class);
-        objectTextureComponent.setTexture2D(objectTextureComponent.getTexture2D());
-        addComponent(objectTextureComponent);
+
 
         if(object2D.getComponent(Rigidbody2DComponent.class) != null) {
             Rigidbody2DComponent rigidbody2DComponent = new Rigidbody2DComponent();
@@ -144,11 +88,7 @@ public class Object2D extends Drawable implements Serializable
 
         active = object2D.isActive();
 
-        drawingMode = object2D.getDrawingMode();
-
         tag = object2D.getTag();
-
-        isUIElement = object2D.isUIElement;
 
         if(Settings.Other.Picking.currentPickingColor.x < 255.0f) {
             Settings.Other.Picking.currentPickingColor.x++;
@@ -181,38 +121,10 @@ public class Object2D extends Drawable implements Serializable
         return null;
     }
 
-    private void loadVAO()
-    {
-        if(Thread.currentThread().getName().equals("main")) {
-            vertexArrayObject = new VertexArrayObject();
-            // VBO вершин (VBO - Vertex Buffer Object. Может хранить в себе цвета, позиции вершин и т.д.)
-            VertexBufferObject vertexBufferObject = new VertexBufferObject(data);
-            // IBO вершин (IBO - Index Buffer Object. IBO хранит в себе индексы вершин, по которым будут соединяться вершины)
-            IndexBufferObject indexBufferObject = new IndexBufferObject(indices);
-
-            // создаю описание аттрибутов в шейдерной программе
-            BufferLayout attributesLayout = new BufferLayout(
-                    new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2),
-                    new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2)
-            );
-
-            vertexBufferObject.setLayout(attributesLayout);
-            vertexArrayObject.putVBO(vertexBufferObject, false);
-            vertexArrayObject.putIBO(indexBufferObject);
-
-            indices = null;
-
-            // отвязываю vao
-            vertexArrayObject.unBind();
-
-
-        }
-    }
-
     @Override
     public void update()
     {
-        updateMVPMatrix();
+
     }
 
     @Override
@@ -231,27 +143,15 @@ public class Object2D extends Drawable implements Serializable
         render.accept(this);
     }
 
-    private void updateMVPMatrix()
-    {
-        Matrix4f modelMatrix = new Matrix4f().set(getComponent(TransformComponent.class).getTransform().getResultModelMatrix());
 
-        if(CamerasManager.getMainCamera2D() != null && !isUIElement) {
-
-            mvpMatrix = new Matrix4f(CamerasManager.getMainCamera2D().getProjectionMatrix()).mul(CamerasManager.getMainCamera2D().getViewMatrix())
-                    .mul(modelMatrix);
-        } else {
-            mvpMatrix = new Matrix4f().mul(modelMatrix);
-        }
-    }
 
     @Override
     public void destroy()
     {
         shouldDestroy = true;
 
-        if(vertexArrayObject != null) {
-            vertexArrayObject.destroy();
-            vertexArrayObject = null;
+        for (var i : components) {
+            i.destroy();
         }
 
         System.out.println("Object2D " + name + " destroyed");
@@ -259,7 +159,7 @@ public class Object2D extends Drawable implements Serializable
         //destroyParams();
     }
 
-    public void addComponent(Component component)
+    public <T extends Component> T addComponent (T component)
     {
         for(Component currentComponent : components) {
             if(currentComponent.getClass().equals(component.getClass()) && currentComponent instanceof NonDuplicated) {
@@ -274,7 +174,9 @@ public class Object2D extends Drawable implements Serializable
         components.add(component);
         component.object2D = this;
         component.init();
+        return component;
     }
+
 
     public <T extends Component> List<T> getAllComponents(Class<T> componentClass)
     {
@@ -313,26 +215,10 @@ public class Object2D extends Drawable implements Serializable
 
     public List<Component> getComponents() { return components; }
 
-    public VertexArrayObject getVertexArrayObject() { return vertexArrayObject; }
-
     public Vector4f getColor() { return color; }
     public void setColor(Vector4f color) { this.color = new Vector4f(color); }
 
-    public ShaderProgram getShaderProgram() { return shaderProgram; }
-    public void setShaderProgram(ShaderProgram shaderProgram)
-    {
-        this.shaderProgram = shaderProgram;
-    }
-
     public Matrix4f getMvpMatrix() { return mvpMatrix; }
-
-    public float[] getData() { return data; }
-
-    public int getDrawingMode() { return drawingMode; }
-    public void setDrawingMode(int drawingMode) { this.drawingMode = drawingMode; }
-
-    public boolean isUIElement() { return isUIElement; }
-    public void setUIElement(boolean UIElement) { isUIElement = UIElement; }
 
     public Vector3f getPickColor() { return pickColor; }
 

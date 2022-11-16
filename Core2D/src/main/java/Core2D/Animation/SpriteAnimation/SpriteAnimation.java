@@ -1,6 +1,6 @@
 package Core2D.Animation.SpriteAnimation;
 
-import Core2D.Component.Components.TextureComponent;
+import Core2D.Component.Components.MeshRendererComponent;
 import Core2D.Drawable.Object2D;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.PositionsQuad;
@@ -122,15 +122,15 @@ public class SpriteAnimation
                 this.currentSprite = 0;
             }
 
-            attachedObject2D.getComponent(TextureComponent.class).setUV(atlasTexturesPositions.get(this.currentSprite));
+            attachedObject2D.getComponent(MeshRendererComponent.class).setUV(atlasTexturesPositions.get(this.currentSprite));
         } else {
             if (this.currentSprite > atlasTexturesPositions.size() - 1) {
                 this.currentSprite = 0;
             }
 
-            TextureComponent textureComponent = attachedObject2D.getComponent(TextureComponent.class);
+            MeshRendererComponent textureComponent = attachedObject2D.getComponent(MeshRendererComponent.class);
             if(textureComponent != null) {
-                textureComponent.setTexture2D(sprites.get(this.currentSprite));
+                textureComponent.texture.set(sprites.get(this.currentSprite));
             }
         }
     }

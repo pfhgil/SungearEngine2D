@@ -30,7 +30,7 @@ public class GraphicsRenderer
     {
         Grid.init(new Vector2f(10000, 10000));
         CamerasDebugLines.init();
-        ObjectsDebugLines.init();
+        //ObjectsDebugLines.init();
         Gizmo.init();
 
         Vector2i targetSize = Graphics.getScreenSize();
@@ -49,7 +49,7 @@ public class GraphicsRenderer
 
         CamerasDebugLines.draw();
 
-        ObjectsDebugLines.draw();
+        //ObjectsDebugLines.draw();
 
         Gizmo.draw();
 

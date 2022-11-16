@@ -1,11 +1,10 @@
 package SungearEngine2D.DebugDraw;
 
+import Core2D.Component.Components.MeshRendererComponent;
 import Core2D.Camera2D.Camera2D;
-import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Drawable.Object2D;
-import Core2D.Drawable.Primitives.Line2D;
 import Core2D.Graphics.Graphics;
 import Core2D.Transform.Transform;
 import Core2D.Utils.MathUtils;
@@ -19,15 +18,15 @@ import static Core2D.Scene2D.SceneManager.currentSceneManager;
 
 public class CamerasDebugLines
 {
-    private static Line2D[] inspectorCamera2DLines = new Line2D[4];
-    private static Line2D[] mainCamera2DLines = new Line2D[4];
+    //#FIXME private static Line2D[] inspectorCamera2DLines = new Line2D[4];
+    //#FIXME private static Line2D[] mainCamera2DLines = new Line2D[4];
 
     private static Object2D inspectorCamera2DIconObject2D = new Object2D();
     private static Object2D mainCamera2DIconObject2D = new Object2D();
 
     public static void init()
     {
-        for(int i = 0; i < inspectorCamera2DLines.length; i++) {
+        /*for(int i = 0; i < inspectorCamera2DLines.length; i++) {
             inspectorCamera2DLines[i] = new Line2D();
             inspectorCamera2DLines[i].setColor(new Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
             inspectorCamera2DLines[i].setLineWidth(4.0f);
@@ -35,13 +34,13 @@ public class CamerasDebugLines
             mainCamera2DLines[i] = new Line2D();
             mainCamera2DLines[i].setColor(new Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
             mainCamera2DLines[i].setLineWidth(4.0f);
-        }
+        }*///#FIXME
 
-        inspectorCamera2DIconObject2D.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Icons.cameraIcon);
+        inspectorCamera2DIconObject2D.getComponent(MeshRendererComponent.class).texture.set(Resources.Textures.Icons.cameraIcon);
         Vector2f cameraSize = new Vector2f(Resources.Textures.Icons.cameraIcon.getWidth(), Resources.Textures.Icons.cameraIcon.getHeight());
         inspectorCamera2DIconObject2D.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(cameraSize.x / 100.0f, cameraSize.y / 100.0f));
 
-        mainCamera2DIconObject2D.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Icons.cameraIcon);
+        mainCamera2DIconObject2D.getComponent(MeshRendererComponent.class).texture.set(Resources.Textures.Icons.cameraIcon);
         mainCamera2DIconObject2D.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(cameraSize.x / 100.0f, cameraSize.y / 100.0f));
     }
 
@@ -76,7 +75,7 @@ public class CamerasDebugLines
                 }
             }
 
-            inspectorCamera2DLines[0].setStart(vertices[0]);
+            /*inspectorCamera2DLines[0].setStart(vertices[0]);
             inspectorCamera2DLines[0].setEnd(vertices[1]);
 
             inspectorCamera2DLines[1].setStart(vertices[1]);
@@ -86,17 +85,17 @@ public class CamerasDebugLines
             inspectorCamera2DLines[2].setEnd(vertices[3]);
 
             inspectorCamera2DLines[3].setStart(vertices[3]);
-            inspectorCamera2DLines[3].setEnd(vertices[0]);
+            inspectorCamera2DLines[3].setEnd(vertices[0]);*///#FIXME
 
             Transform cameraIconObject2DTransform = inspectorCamera2DIconObject2D.getComponent(TransformComponent.class).getTransform();
             cameraIconObject2DTransform.setPosition(
                     new Vector2f(vertices[0]).add(new Vector2f(vertices[2]).add(new Vector2f(vertices[0]).negate()).mul(0.5f)).add(new Vector2f(cameraIconObject2DTransform.getCentre()).negate())
             );
 
-            Graphics.getMainRenderer().render(inspectorCamera2DLines[0]);
+            /*Graphics.getMainRenderer().render(inspectorCamera2DLines[0]);
             Graphics.getMainRenderer().render(inspectorCamera2DLines[1]);
             Graphics.getMainRenderer().render(inspectorCamera2DLines[2]);
-            Graphics.getMainRenderer().render(inspectorCamera2DLines[3]);
+            Graphics.getMainRenderer().render(inspectorCamera2DLines[3]);*///#FIXME
 
             Graphics.getMainRenderer().render(inspectorCamera2DIconObject2D);
         }
@@ -128,7 +127,7 @@ public class CamerasDebugLines
                 }
             }
 
-            mainCamera2DLines[0].setStart(vertices[0]);
+            /*mainCamera2DLines[0].setStart(vertices[0]);
             mainCamera2DLines[0].setEnd(vertices[1]);
 
             mainCamera2DLines[1].setStart(vertices[1]);
@@ -138,17 +137,17 @@ public class CamerasDebugLines
             mainCamera2DLines[2].setEnd(vertices[3]);
 
             mainCamera2DLines[3].setStart(vertices[3]);
-            mainCamera2DLines[3].setEnd(vertices[0]);
+            mainCamera2DLines[3].setEnd(vertices[0]);*///#FIXME
 
             Transform cameraIconObject2DTransform = mainCamera2DIconObject2D.getComponent(TransformComponent.class).getTransform();
             cameraIconObject2DTransform.setPosition(
                     new Vector2f(vertices[0]).add(new Vector2f(vertices[2]).add(new Vector2f(vertices[0]).negate()).mul(0.5f)).add(new Vector2f(cameraIconObject2DTransform.getCentre()).negate())
             );
 
-            Graphics.getMainRenderer().render(mainCamera2DLines[0]);
+            /*Graphics.getMainRenderer().render(mainCamera2DLines[0]);
             Graphics.getMainRenderer().render(mainCamera2DLines[1]);
             Graphics.getMainRenderer().render(mainCamera2DLines[2]);
-            Graphics.getMainRenderer().render(mainCamera2DLines[3]);
+            Graphics.getMainRenderer().render(mainCamera2DLines[3]);*/ //#FIXME
 
             Graphics.getMainRenderer().render(mainCamera2DIconObject2D);
         }

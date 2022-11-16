@@ -464,22 +464,7 @@ public class InspectorView extends View
             boolean someItemHovered = false;
 
             for (int i = 0; i < inspectingObject2D.getComponents().size(); i++) {
-                String componentName = "";
-                if (inspectingObject2D.getComponents().get(i) instanceof TransformComponent) {
-                    componentName = "Transform";
-                } else if (inspectingObject2D.getComponents().get(i) instanceof TextureComponent) {
-                    componentName = "Texture";
-                } else if (inspectingObject2D.getComponents().get(i) instanceof Rigidbody2DComponent) {
-                    componentName = "Rigidbody2D";
-                } else if (inspectingObject2D.getComponents().get(i) instanceof BoxCollider2DComponent) {
-                    componentName = "BoxCollider2D";
-                } else if (inspectingObject2D.getComponents().get(i) instanceof CircleCollider2DComponent) {
-                    componentName = "CircleCollider2D";
-                } else if (inspectingObject2D.getComponents().get(i) instanceof ScriptComponent) {
-                    componentName = "ScriptComponent";
-                } else if (inspectingObject2D.getComponents().get(i) instanceof AudioComponent) {
-                    componentName = "AudioComponent";
-                }
+                String componentName = inspectingObject2D.getComponents().get(i).getClass().getTypeName();
 
                 ImGui.pushID(componentName + i);
                 boolean opened = false;
@@ -528,7 +513,7 @@ public class InspectorView extends View
 
                 if (opened) {
                     switch (componentName) {
-                        case "Transform" -> {
+                        case "TransformComponent" -> {
                             TransformComponent transformComponent = ((TransformComponent) inspectingObject2D.getComponents().get(i));
                             float[] pos = new float[]{
                                     transformComponent.getTransform().getPosition().x,
@@ -563,9 +548,9 @@ public class InspectorView extends View
                                 isEditing = true;
                             }
                         }
-                        case "Texture" -> {
-                            TextureComponent textureComponent = (TextureComponent) inspectingObject2D.getComponents().get(i);
-                            ImString textureName = new ImString(new File(textureComponent.getTexture2D().path).getName());
+                        case "MeshRendererComponent" -> {
+                            MeshRendererComponent textureComponent = (MeshRendererComponent) inspectingObject2D.getComponents().get(i);
+                            ImString textureName = new ImString(new File(textureComponent.texture.path).getName());
                             ImGui.inputText("Path", textureName, ImGuiInputTextFlags.ReadOnly);
                             if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
                                 if (ImGui.beginDragDropTarget()) {
@@ -575,8 +560,8 @@ public class InspectorView extends View
                                         String relativePath = FileUtils.getRelativePath(
                                                 new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
                                                 new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                                        textureComponent.setTexture2D(new Texture2D(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()));
-                                        textureComponent.getTexture2D().path = relativePath;
+                                        textureComponent.texture.set(new Texture2D(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()));
+                                        textureComponent.texture.path = relativePath;
                                         ViewsManager.getResourcesView().setCurrentMovingFile(null);
                                     }
 
@@ -584,25 +569,25 @@ public class InspectorView extends View
                                 }
                             }
 
-                            if (ImGui.beginCombo("Blend source factor", Texture2D.blendFactorToString(textureComponent.getTexture2D().blendSourceFactor))) {
+                            if (ImGui.beginCombo("Blend source factor", Texture2D.blendFactorToString(textureComponent.texture.blendSourceFactor))) {
                                 for(int factor : Texture2D.getAllBlendFactors()) {
                                     if (ImGui.selectable(Texture2D.blendFactorToString(factor))) {
-                                        textureComponent.getTexture2D().blendSourceFactor = factor;
+                                        textureComponent.texture.blendSourceFactor = factor;
                                     }
                                 }
                                 ImGui.endCombo();
                             }
 
-                            if (ImGui.beginCombo("Blend destination factor", Texture2D.blendFactorToString(textureComponent.getTexture2D().blendDestinationFactor))) {
+                            if (ImGui.beginCombo("Blend destination factor", Texture2D.blendFactorToString(textureComponent.texture.blendDestinationFactor))) {
                                 for(int factor : Texture2D.getAllBlendFactors()) {
                                     if (ImGui.selectable(Texture2D.blendFactorToString(factor))) {
-                                        textureComponent.getTexture2D().blendDestinationFactor = factor;
+                                        textureComponent.texture.blendDestinationFactor = factor;
                                     }
                                 }
                                 ImGui.endCombo();
                             }
                         }
-                        case "Rigidbody2D" -> {
+                        case "Rigidbody2DComponent" -> {
                             Rigidbody2DComponent rigidbody2DComponent = ((Rigidbody2DComponent) inspectingObject2D.getComponents().get(i));
 
                             ImGui.pushID("Rigidbody2DType");
@@ -647,7 +632,7 @@ public class InspectorView extends View
                             }
                             ImGui.separator();
                         }
-                        case "BoxCollider2D" -> {
+                        case "BoxCollider2DComponent" -> {
                             BoxCollider2DComponent boxCollider2DComponent = ((BoxCollider2DComponent) inspectingObject2D.getComponents().get(i));
 
                             float[] offset = new float[]{boxCollider2DComponent.getBoxCollider2D().getOffset().x, boxCollider2DComponent.getBoxCollider2D().getOffset().y};
@@ -668,7 +653,7 @@ public class InspectorView extends View
                             }
                             ImGui.popID();
                         }
-                        case "CircleCollider2D" -> {
+                        case "CircleCollider2DComponent" -> {
                             CircleCollider2DComponent circleCollider2DComponent = ((CircleCollider2DComponent) inspectingObject2D.getComponents().get(i));
 
                             float[] offset = new float[]{circleCollider2DComponent.getCircleCollider2D().getOffset().x, circleCollider2DComponent.getCircleCollider2D().getOffset().y};
@@ -1102,7 +1087,7 @@ public class InspectorView extends View
 
                     try {
                         if (ImGui.selectable("Texture")) {
-                            ((Object2D) currentInspectingObject).addComponent(new TextureComponent());
+                            ((Object2D) currentInspectingObject).addComponent(new MeshRendererComponent());
                             action = "";
                         }
                         if (ImGui.selectable("Rigidbody2D")) {

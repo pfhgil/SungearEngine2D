@@ -1,10 +1,11 @@
 package Core2D.Layering;
 
 import Core2D.Component.Component;
-import Core2D.Component.Components.TextureComponent;
+import Core2D.Component.Components.MeshRendererComponent;
 import Core2D.Drawable.Drawable;
 import Core2D.Drawable.Object2D;
 import Core2D.Graphics.Graphics;
+import Core2D.Texture2D.Texture2D;
 import Core2D.Texture2D.TextureDrawModes;
 import Core2D.Utils.WrappedObject;
 import org.joml.Vector4f;
@@ -41,15 +42,11 @@ public class Layer
                 Vector4f lastColor = new Vector4f(object2D.getColor());
 
                 object2D.setColor(new Vector4f(object2D.getPickColor().x / 255.0f, object2D.getPickColor().y / 255.0f, object2D.getPickColor().z / 255.0f,  1.0f));
-                TextureComponent textureComponent = object2D.getComponent(TextureComponent.class);
-                if(textureComponent != null) {
-                    textureComponent.setTextureDrawMode(TextureDrawModes.ONLY_ALPHA);
-                }
+                MeshRendererComponent mesh = object2D.getComponent(MeshRendererComponent.class);
+                mesh.textureDrawMode = TextureDrawModes.ONLY_ALPHA;
                 Graphics.getMainRenderer().render(object2D);
                 object2D.setColor(lastColor);
-                if(textureComponent != null) {
-                    textureComponent.setTextureDrawMode(TextureDrawModes.DEFAULT);
-                }
+                mesh.textureDrawMode = TextureDrawModes.DEFAULT;
             }
         }
     }
