@@ -27,9 +27,6 @@ public class Renderer
         object2D.update();
     }
 
-
-
-
     public void render(Layering layering)
     {
         if(layering.isShouldDestroy()) return;
@@ -58,6 +55,4 @@ public class Renderer
             ((Drawable) object).update();
         }
     }
-
-
 }

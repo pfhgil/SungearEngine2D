@@ -1,5 +1,6 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Components.MeshRendererComponent;
 import Core2D.Component.Components.TransformComponent;
@@ -308,7 +309,7 @@ public class SceneView extends View
                     new File(file.getPath()),
                     new File(ProjectsManager.getCurrentProject().getProjectPath()));
             MeshRendererComponent textureComponent = newSceneObject2D.getComponent(MeshRendererComponent.class);
-            Texture2D texture2D = new Texture2D(file.getPath());
+            Texture2D texture2D = new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath));
             textureComponent.texture.set(texture2D);
             textureComponent.texture.path = relativePath;
 
@@ -323,6 +324,9 @@ public class SceneView extends View
             newSceneObject2D.setName(FilenameUtils.getBaseName(file.getName()));
 
             ViewsManager.getResourcesView().setCurrentMovingFile(null);
+
+            System.gc();
+            System.out.println("added obj!");
 
             return newSceneObject2D;
         } else if(extension.equals("sgopref")) {

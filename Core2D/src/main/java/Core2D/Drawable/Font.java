@@ -2,6 +2,7 @@ package Core2D.Drawable;
 
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
+import Core2D.DataClasses.FontData;
 import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.FileUtils;
 import org.joml.Vector2f;
@@ -10,6 +11,7 @@ import java.io.File;
 import java.io.InputStream;
 import java.util.*;
 
+@Deprecated
 public class Font
 {
     public static class Glyph
@@ -47,42 +49,10 @@ public class Font
 
     public Font() { }
 
-    public Font(String fontPathWithoutExtension)
+    public Font(FontData fontData)
     {
-        load(fontPathWithoutExtension);
-    }
-
-    public Font(String fontPathWithoutExtension, boolean loadFromResources)
-    {
-        if(loadFromResources) {
-            load(Core2D.class.getResourceAsStream(fontPathWithoutExtension + ".fnt"), Core2D.class.getResourceAsStream(fontPathWithoutExtension + ".png"));
-        } else {
-            load(fontPathWithoutExtension);
-        }
-    }
-
-    public void load(String fontPathWithoutExtension)
-    {
-        Settings.QualityType lastQuality = Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality;
-        Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality = Settings.QualityType.HIGH;
-        fontImage = new Texture2D(fontPathWithoutExtension + ".png");
-        Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality = lastQuality;
-
-        String fileText = FileUtils.readAllFile(new File(fontPathWithoutExtension + ".fnt"));
-
-        read(fileText);
-    }
-
-    public void load(InputStream descriptionInputStream, InputStream fontImageInputStream)
-    {
-        Settings.QualityType lastQuality = Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality;
-        Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality = Settings.QualityType.HIGH;
-        fontImage = new Texture2D(fontImageInputStream);
-        Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality = lastQuality;
-
-        String fileText = FileUtils.readAllFile(descriptionInputStream);
-
-        read(fileText);
+        fontImage = new Texture2D(fontData.getFontTextureData());
+        read(fontData.getFontDescription());
     }
 
     private void read(String fontTextFile)

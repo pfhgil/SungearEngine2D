@@ -1,9 +1,8 @@
 package Core2D.Shader;
 
+import Core2D.DataClasses.ShaderData;
 import Core2D.Log.Log;
-import Core2D.Utils.FileUtils;
 
-import java.io.InputStream;
 import java.io.Serializable;
 import java.util.HashMap;
 
@@ -12,32 +11,40 @@ import static org.lwjgl.opengl.GL20C.*;
 public class Shader implements Serializable
 {
     private transient int programHandler;
-    private transient HashMap<Integer, Integer> shadersHandlers = new HashMap<>();
+    private transient HashMap<Integer, Integer> shaderPartsHandlers = new HashMap<>();
 
-    public static Shader loadShader(String path) { return createShader(FileUtils.readAllFile(path)); }
+    public String path = "";
 
-    public static Shader loadShader(InputStream inputStream)  { return createShader(FileUtils.readAllFile(inputStream)); }
+    public Shader() { }
 
-    public static Shader createShader(String sourceCode)
+    public Shader(ShaderData shaderData)
     {
-        if(Thread.currentThread().getName().equals("main")) {
-            Shader shader = new Shader();
+        set(create(shaderData.getSourceCode()));
+    }
 
+    public static Shader create(ShaderData shaderData)
+    {
+        return create(shaderData.getSourceCode());
+    }
+
+    public static Shader create(String sourceCode)
+    {
+        Shader shader = new Shader();
+
+        if(Thread.currentThread().getName().equals("main")) {
             shader.createShaderPart(GL_VERTEX_SHADER, sourceCode);
             shader.createShaderPart(GL_FRAGMENT_SHADER, sourceCode);
 
             shader.createProgram();
-
-            return shader;
         }
 
-        return null;
+        return shader;
     }
 
     public void createShaderPart(int shaderType, String shaderSourceCode)
     {
         int shaderPartHandler = glCreateShader(shaderType);
-        shadersHandlers.put(shaderType, shaderPartHandler);
+        shaderPartsHandlers.put(shaderType, shaderPartHandler);
 
         String shaderDefine = shaderType == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT";
         glShaderSource(shaderPartHandler, "#define " + shaderDefine + "\n" + shaderSourceCode);
@@ -60,12 +67,11 @@ public class Shader implements Serializable
         }
     }
 
-    public void createProgram()
-    {
-        if(Thread.currentThread().getName().equals("main")) {
+    public void createProgram() {
+        if (Thread.currentThread().getName().equals("main")) {
             programHandler = glCreateProgram();
 
-            for(int shaderHandler : shadersHandlers.values()) {
+            for (int shaderHandler : shaderPartsHandlers.values()) {
                 glAttachShader(programHandler, shaderHandler);
             }
 
@@ -92,14 +98,12 @@ public class Shader implements Serializable
         }
     }
 
-    public Shader() { }
-
     public void destroyShaderPart(int shaderPartType)
     {
         if(Thread.currentThread().getName().equals("main")) {
             // удаление шейдера
-            glDeleteShader(shadersHandlers.get(shaderPartType));
-            shadersHandlers.remove(shaderPartType);
+            glDeleteShader(shaderPartsHandlers.get(shaderPartType));
+            shaderPartsHandlers.remove(shaderPartType);
         }
     }
 
@@ -109,7 +113,7 @@ public class Shader implements Serializable
             // удаление шейдера
             glDeleteProgram(programHandler);
 
-            for(int shaderPartType : shadersHandlers.keySet()) {
+            for(int shaderPartType : shaderPartsHandlers.keySet()) {
                 destroyShaderPart(shaderPartType);
             }
         }
@@ -122,6 +126,11 @@ public class Shader implements Serializable
 
     public void set(Shader shader)
     {
+        destroy();
+
+        programHandler = shader.getProgramHandler();
+        shaderPartsHandlers.putAll(shader.shaderPartsHandlers);
+        path = shader.path;
     }
 
     public void bind()
@@ -137,9 +146,9 @@ public class Shader implements Serializable
         }
     }
 
-    public int getShaderPartHandler(int shaderTypePart) { return shadersHandlers.get(shaderTypePart); }
+    public int getShaderPartHandler(int shaderTypePart) { return shaderPartsHandlers.get(shaderTypePart); }
 
     public int getProgramHandler() { return programHandler; }
 
-    public HashMap<Integer, Integer> getShadersHandlers() { return shadersHandlers; }
+    public HashMap<Integer, Integer> getShaderPartsHandlers() { return shaderPartsHandlers; }
 }

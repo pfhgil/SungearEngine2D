@@ -47,7 +47,7 @@ public class MeshRendererComponent extends Component {
 
     @Override
     public void init() {
-        shader = AssetManager.getInstance().getShaderProgram("/data/shaders/object2D/shader.glsl");
+        shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/object2D/shader.glsl"));
 
         object2D.setColor(new Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
 
@@ -58,49 +58,44 @@ public class MeshRendererComponent extends Component {
     public void deltaUpdate(float time) {
     }
 
-    void render(){
-        if(!object2D.isShouldDestroy()) {
-            for (Component component : object2D.getComponents()) {
-                component.update();
-            }
-            // двойная проверка, т.к. после апдейта компонентов shouldDestroy может стать true
-            if(!object2D.isShouldDestroy()) {
+    @Override
+    public void update()
+    {
+        if(object2D.isShouldDestroy()) return;
+        updateMVPMatrix();
+        // использую VAO, текстуру и шейдер
+        vertexArrayObject.bind();
+        texture.bind();
+        shader.bind();
 
-                // использую VAO, текстуру и шейдер
-                vertexArrayObject.bind();
-                texture.bind();
-                shader.bind();
+        ShaderUtils.setUniform(
+                shader.getProgramHandler(),
+                "mvpMatrix",
+                mvpMatrix
+        );
+        ShaderUtils.setUniform(
+                shader.getProgramHandler(),
+                "color",
+                object2D.getColor()
+        );
+        ShaderUtils.setUniform(
+                shader.getProgramHandler(),
+                "drawMode",
+                textureDrawMode
+        );
+        ShaderUtils.setUniform(
+                shader.getProgramHandler(),
+                "sampler",
+                texture.getFormattedTextureBlock()
+        ); //FIXME: сделать нормальный метод для того что бы задовать сразу несколько юниформ
 
-                ShaderUtils.setUniform(
-                        shader.getProgramHandler(),
-                        "mvpMatrix",
-                        object2D.getMvpMatrix()
-                );
-                ShaderUtils.setUniform(
-                        shader.getProgramHandler(),
-                        "color",
-                        object2D.getColor()
-                );
-                ShaderUtils.setUniform(
-                        shader.getProgramHandler(),
-                        "drawMode",
-                        textureDrawMode
-                );
-                ShaderUtils.setUniform(
-                        shader.getProgramHandler(),
-                        "sampler",
-                        texture.getFormattedTextureBlock()
-                ); //FIXME: сделать нормальный метод для того что бы задовать сразу несколько юниформ
+        // нарисовать два треугольника
+        glDrawElements(GL11C.GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
 
-                // нарисовать два треугольника
-                glDrawElements(GL11C.GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-
-                // прекращаю использование шейдера, текстуры и VAO
-                shader.unBind();
-                texture.unBind();
-                vertexArrayObject.unBind();
-            }
-        }
+        // прекращаю использование шейдера, текстуры и VAO
+        shader.unBind();
+        texture.unBind();
+        vertexArrayObject.unBind();
     }
 
     @Override
@@ -137,6 +132,7 @@ public class MeshRendererComponent extends Component {
 
         }
     }
+
     private void updateMVPMatrix()
     {
         Matrix4f modelMatrix = new Matrix4f().set(object2D.getComponent(TransformComponent.class).getTransform().getResultModelMatrix());

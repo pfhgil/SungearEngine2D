@@ -1,6 +1,7 @@
 package Core2D.Texture2D;
 
 import Core2D.Core2D.Settings;
+import Core2D.DataClasses.Texture2DData;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 import com.google.gson.annotations.SerializedName;
@@ -31,8 +32,6 @@ public class Texture2D
     private transient int height;
     // сколько у текстуры каналов
     private transient int channels;
-    // информация о пикселях текстуры
-    private transient ByteBuffer pixelsData;
 
     @SerializedName("source")
     // путь до текстуры
@@ -52,111 +51,25 @@ public class Texture2D
 
     public Texture2D() { }
 
-    // конструктор
-    public Texture2D(InputStream inputStream)
-    {
-        loadTexture(inputStream);
-    }
-
-    // конструктор
-    public Texture2D(String path)
-    {
-        loadTexture(path);
-    }
-
-    // конструктор
-    public Texture2D(InputStream inputStream, int param)
-    {
-        this.param = param;
-
-        loadTexture(inputStream);
-    }
-
-    // конструктор
-    public Texture2D(InputStream inputStream, int param, int textureBlock)
+    public Texture2D(Texture2DData texture2DData, int param, int textureBlock)
     {
         this.param = param;
         this.textureBlock = textureBlock;
 
-        loadTexture(inputStream);
+        createTexture(texture2DData);
     }
 
-    // конструктор
-    public Texture2D(String path, int param)
+    public Texture2D(Texture2DData texture2DData)
     {
-        this.param = param;
-
-        loadTexture(path);
+        createTexture(texture2DData);
     }
 
-    // конструктор
-    public Texture2D(String path, int param, int textureBlock)
+    public void createTexture(Texture2DData texture2DData)
     {
-        this.param = param;
-        this.textureBlock = textureBlock;
+        width = texture2DData.getWidth();
+        height = texture2DData.getHeight();
+        channels = texture2DData.getChannels();
 
-        loadTexture(path);
-    }
-
-    public void loadTexture(String source)
-    {
-        destroy();
-
-        this.path = source;
-
-        // буфер для ширины текстуры
-        IntBuffer widthBuffer = BufferUtils.createIntBuffer(1);
-        // буфер для высоты текстуры
-        IntBuffer heightBuffer = BufferUtils.createIntBuffer(1);
-        // буфер для каналов текстуры
-        IntBuffer channelsBuffer = BufferUtils.createIntBuffer(1);
-
-        try {
-            pixelsData = stbi_load_from_memory(Core2D.Utils.Utils.resourceToByteBuffer(source), widthBuffer, heightBuffer, channelsBuffer, 0);
-
-            // получаю из буферов размер и каналы загруженной текстуры
-            width = widthBuffer.get(0);
-            height = heightBuffer.get(0);
-            channels = channelsBuffer.get(0);
-        } catch (IOException e) {
-            String exception = "Error while loading texture by source: " + source +". Error is: " + ExceptionsUtils.toString(e);
-            Log.CurrentSession.println(exception, Log.MessageType.ERROR);
-        }
-
-        createTexture();
-    }
-
-    public void loadTexture(InputStream inputStream)
-    {
-        destroy();
-
-        // буфер для ширины текстуры
-        IntBuffer widthBuffer = BufferUtils.createIntBuffer(1);
-        // буфер для высоты текстуры
-        IntBuffer heightBuffer = BufferUtils.createIntBuffer(1);
-        // буфер для каналов текстуры
-        IntBuffer channelsBuffer = BufferUtils.createIntBuffer(1);
-
-        try {
-            pixelsData = stbi_load_from_memory(Core2D.Utils.Utils.resourceToByteBuffer(inputStream), widthBuffer, heightBuffer, channelsBuffer, 0);
-
-            inputStream.close();
-
-            // получаю из буферов размер и каналы загруженной текстуры
-            width = widthBuffer.get(0);
-            height = heightBuffer.get(0);
-            channels = channelsBuffer.get(0);
-
-        } catch (IOException e) {
-            String exception = "Error while loading texture by source: " + path +". Error is: " + ExceptionsUtils.toString(e);
-            Log.CurrentSession.println(exception, Log.MessageType.ERROR);
-        }
-
-        createTexture();
-    }
-
-    private void createTexture()
-    {
         if(Thread.currentThread().getName().equals("main")) {
             // если текстура поддерживает 4 канал (RGBA (Red Green Blue Alpha))
             if (channels == 4) {
@@ -231,16 +144,9 @@ public class Texture2D
                 glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
             }
 
-            glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, pixelsData);
+            glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, width, height, 0, format, GL_UNSIGNED_BYTE, texture2DData.getPixelsData());
 
             unBind();
-
-            // очищаю буфер с данными текстуры
-            if (pixelsData != null) {
-                stbi_image_free(pixelsData);
-                pixelsData.clear();
-                pixelsData = null;
-            }
         }
     }
 
@@ -248,8 +154,6 @@ public class Texture2D
     public void destroy()
     {
         if(Thread.currentThread().getName().equals("main")) {
-            if (pixelsData != null) pixelsData.clear();
-
             glDeleteTextures(textureHandler);
         }
     }

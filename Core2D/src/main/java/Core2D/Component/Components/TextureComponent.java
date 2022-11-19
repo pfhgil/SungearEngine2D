@@ -78,7 +78,7 @@ public class TextureComponent extends Component implements NonDuplicated
     public void init()
     {
         setUV(getUV());
-        setTexture2D(AssetManager.getInstance().getTexture2D("/data/textures/white_texture.png"));
+        setTexture2D(new Texture2D(AssetManager.getInstance().getTexture2DData("/data/textures/white_texture.png")));
     }
 
     public Texture2D getTexture2D() { return texture2D; }

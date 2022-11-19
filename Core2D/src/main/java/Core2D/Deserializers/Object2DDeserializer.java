@@ -1,5 +1,6 @@
 package Core2D.Deserializers;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.Audio;
 import Core2D.Audio.AudioInfo;
 import Core2D.Component.Component;
@@ -69,19 +70,18 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                 object2D.getComponent(TransformComponent.class).set(component);
             } else if(component instanceof MeshRendererComponent) {
                 MeshRendererComponent textureComponent = (MeshRendererComponent) component;
-                Texture2D texture2D = null;
+                Texture2D texture2D = new Texture2D();
                 // если режим работы ядра в движке
                 if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
                     String textureFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + textureComponent.texture.path;
-                    String textureLastPath = textureComponent.texture.path;
 
                     if(new File(textureFullPath).exists()) {
                         texture2D = new Texture2D(
-                                textureFullPath,
+                                AssetManager.getInstance().getTexture2DData(textureComponent.texture.path),
                                 textureComponent.texture.param,
                                 textureComponent.texture.getGLTextureBlock()
                         );
-                        texture2D.path = textureLastPath;
+                        texture2D.path = textureComponent.texture.path;
                     } else { // для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
                         // чтобы это исправить загружаем по этому пути текстуру, находим относительный путь и присваиваем его source для того,
                         // чтобы в следующий раз выполнился блок кода выше
@@ -91,7 +91,7 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                                     new File(ProjectsManager.getCurrentProject().getProjectPath())
                             );
                             texture2D = new Texture2D(
-                                    textureComponent.texture.path,
+                                    AssetManager.getInstance().getTexture2DData(relativePath),
                                     textureComponent.texture.param,
                                     textureComponent.texture.getGLTextureBlock()
                             );
@@ -101,7 +101,7 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                 // если режим работы в билде
                 } else {
                     texture2D = new Texture2D(
-                            Core2D.class.getResourceAsStream(textureComponent.texture.path),
+                            AssetManager.getInstance().getTexture2DData(textureComponent.texture.path),
                             textureComponent.texture.param,
                             textureComponent.texture.getGLTextureBlock()
                     );

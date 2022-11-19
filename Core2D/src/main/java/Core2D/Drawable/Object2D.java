@@ -1,7 +1,6 @@
 package Core2D.Drawable;
 
 import Core2D.AssetManager.AssetManager;
-import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Component;
 import Core2D.Component.Components.MeshRendererComponent;
 import Core2D.Component.Components.Rigidbody2DComponent;
@@ -12,6 +11,7 @@ import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
 import Core2D.Log.Log;
 import Core2D.Scene2D.SceneManager;
+import Core2D.Texture2D.Texture2D;
 import Core2D.Transform.Transform;
 import Core2D.Utils.MatrixUtils;
 import org.joml.Matrix4f;
@@ -24,8 +24,6 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.function.Consumer;
-
-import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
 public class Object2D extends Drawable implements Serializable
 {
@@ -43,13 +41,11 @@ public class Object2D extends Drawable implements Serializable
     private transient List<Object2D> childrenObjects = new ArrayList<>();
     private List<Integer> childrenObjectsID = new ArrayList<>();
 
-    private final Consumer<Object2D> render = Core2D.getMainRenderer()::render;
-
     public Object2D()
     {
         addComponent(new TransformComponent());
-        System.out.println(AssetManager.getInstance().getTexture2D("/data/textures/white_texture.png"));
-        addComponent(new MeshRendererComponent()).texture.set(AssetManager.getInstance().getTexture2D("/data/textures/white_texture.png"));
+        addComponent(new MeshRendererComponent());
+        //addComponent(new MeshRendererComponent()).texture = new Texture2D(AssetManager.getInstance().getTexture2DData("/data/textures/white_texture.png"));
 
         if(Settings.Other.Picking.currentPickingColor.x < 255.0f) {
             Settings.Other.Picking.currentPickingColor.x++;
@@ -125,23 +121,21 @@ public class Object2D extends Drawable implements Serializable
     @Override
     public void update()
     {
-
-    }
-
-    @Override
-    public void deltaUpdate(float deltaTime)
-    {
-        if(active) {
+        if(active && !shouldDestroy) {
             for(Component component : components) {
-                component.deltaUpdate(deltaTime);
+                component.update();
             }
         }
     }
 
     @Override
-    public void render()
+    public void deltaUpdate(float deltaTime)
     {
-        render.accept(this);
+        if(active && !shouldDestroy) {
+            for(Component component : components) {
+                component.deltaUpdate(deltaTime);
+            }
+        }
     }
 
 

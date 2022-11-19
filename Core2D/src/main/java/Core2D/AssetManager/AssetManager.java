@@ -2,14 +2,21 @@ package Core2D.AssetManager;
 
 import Core2D.Audio.AudioInfo;
 import Core2D.Core2D.Core2D;
-import Core2D.Drawable.Font;
+import Core2D.Core2D.Core2DMode;
+import Core2D.DataClasses.Data;
+import Core2D.DataClasses.ShaderData;
+import Core2D.DataClasses.Texture2DData;
 import Core2D.Log.Log;
+import Core2D.Project.ProjectsManager;
 import Core2D.Shader.Shader;
-import Core2D.Texture2D.Texture2D;
+import Core2D.Utils.ExceptionsUtils;
 
+import java.io.Console;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 /**
  * It is needed for storing all assets and for their proper use.
@@ -40,27 +47,21 @@ public class AssetManager
         String whiteTexturePath = "/data/textures/white_texture.png";
         String defaultProgressBarTexturePath = "/data/textures/ui/progressBar/progress_bar.png";
 
-        String comicSansSMFontPath = "/data/fonts/ComicSansSM/cssm";
+        ShaderData object2DShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(object2DShaderPath));
+        ShaderData objects2DInstancingShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(objects2DInstancingShaderPath));
+        ShaderData line2DShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(line2DShaderPath));
+        ShaderData lines2DInstancingShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(lines2DInstancingShaderPath));
 
-        Shader object2DShader = Shader.loadShader(Core2D.class.getResourceAsStream(object2DShaderPath));
-        Shader objects2DInstancingShader = Shader.loadShader(Core2D.class.getResourceAsStream(objects2DInstancingShaderPath));
-        Shader line2DShader = Shader.loadShader(Core2D.class.getResourceAsStream(line2DShaderPath));
-        Shader lines2DInstancingShader = Shader.loadShader(Core2D.class.getResourceAsStream(lines2DInstancingShaderPath));
+        Texture2DData whiteTextureData = new Texture2DData().load(Core2D.class.getResourceAsStream(whiteTexturePath));
+        Texture2DData defaultProgressBarTextureData = new Texture2DData().load(Core2D.class.getResourceAsStream(defaultProgressBarTexturePath));
 
-        Texture2D whiteTexture = new Texture2D(Core2D.class.getResourceAsStream(whiteTexturePath));
-        Texture2D defaultProgressBarTexture = new Texture2D(Core2D.class.getResourceAsStream(defaultProgressBarTexturePath));
+        addAsset(new Asset(object2DShaderData, object2DShaderPath));
+        addAsset(new Asset(objects2DInstancingShaderData, objects2DInstancingShaderPath));
+        addAsset(new Asset(line2DShaderData, line2DShaderPath));
+        addAsset(new Asset(lines2DInstancingShaderData, lines2DInstancingShaderPath));
 
-        Font comicSansSM = new Font(comicSansSMFontPath, true);
-
-        addAsset(new Asset(object2DShader, object2DShaderPath));
-        addAsset(new Asset(objects2DInstancingShader, objects2DInstancingShaderPath));
-        addAsset(new Asset(line2DShader, line2DShaderPath));
-        addAsset(new Asset(lines2DInstancingShader, lines2DInstancingShaderPath));
-
-        addAsset(new Asset(whiteTexture, whiteTexturePath));
-        addAsset(new Asset(defaultProgressBarTexture, defaultProgressBarTexturePath));
-
-        addAsset(new Asset(comicSansSM, comicSansSMFontPath));
+        addAsset(new Asset(whiteTextureData, whiteTexturePath));
+        addAsset(new Asset(defaultProgressBarTextureData, defaultProgressBarTexturePath));
     }
 
     /**
@@ -84,56 +85,23 @@ public class AssetManager
      * @param path Relative path of asset.
      * @return Null if the asset is not found and shader program if the asset is found.
      */
-    public Shader getShaderProgram(String path)
+    public ShaderData getShaderData(String path)
     {
-        for(Asset asset : assets) {
-            if(asset.path.equals(path) && asset.assetObject instanceof Shader) {
-                return (Shader) asset.assetObject;
-            }
-        }
-
-        return null;
+        return getAssetObject(path, ShaderData.class);
     }
 
     /**
      * @param path Name of asset.
      * @return Null if the asset is not found and texture if the asset is found.
      */
-    public Texture2D getTexture2D(String path)
+    public Texture2DData getTexture2DData(String path)
     {
-        for(Asset asset : assets) {
-            if(asset.path.equals(path) && asset.assetObject instanceof Texture2D) {
-                return (Texture2D) asset.assetObject;
-            }
-        }
-
-        return null;
-    }
-
-    /**
-     * @param path Name of asset.
-     * @return Null if the asset is not found and font if the asset is found.
-     */
-    public Font getFont(String path)
-    {
-        for(Asset asset : assets) {
-            if(asset.path.equals(path) && asset.assetObject instanceof Font) {
-                return (Font) asset.assetObject;
-            }
-        }
-
-        return null;
+        return getAssetObject(path, Texture2DData.class);
     }
 
     public AudioInfo getAudioInfo(String path)
     {
-        for(Asset asset : assets) {
-            if(asset.path.equals(path) && asset.assetObject instanceof AudioInfo) {
-                return (AudioInfo) asset.assetObject;
-            }
-        }
-
-        return null;
+        return getAssetObject(path, AudioInfo.class);
     }
 
     /**
@@ -149,6 +117,51 @@ public class AssetManager
         }
 
         return null;
+    }
+
+    public <T> T getAssetObject(String path, Class<T> assetObjectClass)
+    {
+        T assetObj = null;
+        for(Asset asset : assets) {
+            if(asset.path.equals(path) && asset.assetObject.getClass().isAssignableFrom(assetObjectClass)) {
+                assetObj = assetObjectClass.cast(asset.assetObject);
+            }
+        }
+
+        if(assetObj == null) {
+            if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+                if(ProjectsManager.getCurrentProject() != null) {
+                    String fullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + path;
+                    Object objToCast = null;
+                    if (assetObjectClass.getSuperclass().isAssignableFrom(Data.class)) {
+                        try {
+                            objToCast = ((Data) assetObjectClass.newInstance()).load(fullPath);
+                        } catch (InstantiationException | IllegalAccessException e) {
+                            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                        }
+                    }
+
+                    if(objToCast != null) {
+                        assetObj = assetObjectClass.cast(objToCast);
+                    }
+                }
+            } else {
+                Object objToCast = null;
+                if (assetObjectClass.getSuperclass().isAssignableFrom(Data.class)) {
+                            objToCast = ((Data) assetObjectClass.cast(new Data())).load(Core2D.class.getResourceAsStream(path));
+                }
+
+                if(objToCast != null) {
+                    assetObj = assetObjectClass.cast(objToCast);
+                }
+            }
+
+            assets.add(new Asset(assetObj, path));
+            System.out.println("added new asset! data type: " + assetObj.getClass().getSimpleName() + ", path: " + path);
+        }
+        System.out.println("found asset! data type: " + assetObj.getClass().getSimpleName() + ", path: " + path);
+
+        return assetObj;
     }
 
     public static AssetManager getInstance()

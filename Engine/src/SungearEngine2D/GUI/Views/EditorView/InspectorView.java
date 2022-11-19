@@ -1,5 +1,6 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.Audio;
 import Core2D.Camera2D.Camera2D;
 import Core2D.Camera2D.CamerasManager;
@@ -560,7 +561,9 @@ public class InspectorView extends View
                                         String relativePath = FileUtils.getRelativePath(
                                                 new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
                                                 new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                                        textureComponent.texture.set(new Texture2D(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()));
+                                        textureComponent.texture.set(
+                                                new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath))
+                                        );
                                         textureComponent.texture.path = relativePath;
                                         ViewsManager.getResourcesView().setCurrentMovingFile(null);
                                     }
