@@ -1,6 +1,6 @@
 package SungearEngine2D.Main;
 
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
@@ -58,7 +58,7 @@ public class GraphicsRenderer
         if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && !ViewsManager.isSomeViewFocusedExceptSceneView && !ViewsManager.getInspectorView().isEditing()) {
             Vector2f mousePosition = Mouse.getMousePosition();
 
-            Object2D pickedObject2D = Graphics.getPickedObject2D(mousePosition);
+            GameObject pickedObject2D = Graphics.getPickedObject2D(mousePosition);
 
             if(pickedObject2D != null) {
                 ViewsManager.getInspectorView().setCurrentInspectingObject(pickedObject2D);

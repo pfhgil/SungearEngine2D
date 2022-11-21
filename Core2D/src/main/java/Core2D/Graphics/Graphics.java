@@ -1,10 +1,11 @@
 package Core2D.Graphics;
 
 import Core2D.Audio.AudioListener;
-import Core2D.Camera2D.CamerasManager;
+import Core2D.CamerasManager.CamerasManager;
+import Core2D.Component.Components.Camera2DComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
 import Core2D.Log.Log;
@@ -81,22 +82,25 @@ public abstract class Graphics
                 Core2D.getDeltaTimer().startFrame();
 
                 AudioListener.update();
-                if(CamerasManager.getMainCamera2D() != null) {
-                    CamerasManager.getMainCamera2D().update();
-                }
-                if(SceneManager.currentSceneManager != null &&
-                        SceneManager.currentSceneManager.getCurrentScene2D() != null &&
-                SceneManager.currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
-                    SceneManager.currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().update();
-                }
 
                 Vector2i windowSize = Core2D.getWindow().getSize();
-                if (CamerasManager.getMainCamera2D() != null) {
-                    CamerasManager.getMainCamera2D().setViewportSize(new Vector2f(windowSize.x, windowSize.y));
+                if (CamerasManager.mainCamera2D != null) {
+                    Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
+                    if(camera2DComponent != null) {
+                        camera2DComponent.setViewportSize(new Vector2f(windowSize.x, windowSize.y));
+                    }
                 }
 
-                if (SceneManager.currentSceneManager.getCurrentScene2D() != null && SceneManager.currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
-                    SceneManager.currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().setViewportSize(new Vector2f(windowSize.x, windowSize.y));
+                if (SceneManager.currentSceneManager != null &&
+                        SceneManager.currentSceneManager.getCurrentScene2D() != null &&
+                        SceneManager.currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
+                    Camera2DComponent camera2DComponent = SceneManager
+                            .currentSceneManager.getCurrentScene2D()
+                            .getSceneMainCamera2D()
+                            .getComponent(Camera2DComponent.class);
+                    if(camera2DComponent == null) {
+                        camera2DComponent.setViewportSize(new Vector2f(windowSize.x, windowSize.y));
+                    }
                 }
 
                 if (!screenCleared) {
@@ -163,7 +167,7 @@ public abstract class Graphics
     }
 
     // полуячить выбранный мышкой объект
-    public static Object2D getPickedObject2D(Vector2f oglPosition)
+    public static GameObject getPickedObject2D(Vector2f oglPosition)
     {
         pickingRenderTarget.bind();
         glClear(GL_COLOR_BUFFER_BIT);
@@ -191,15 +195,15 @@ public abstract class Graphics
     public static void setViewMode(ViewMode newViewMode)
     {
         viewMode = newViewMode;
-        if(viewMode == ViewMode.VIEW_MODE_2D) {
-            if(CamerasManager.getMainCamera2D() != null) {
-                CamerasManager.getMainCamera2D().setViewportSize(new Vector2f(Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y));
-            }
-            //projectionMatrix = new Matrix4f().ortho2D(0, Core2D.getWindow().getSize().x, 0, Core2D.getWindow().getSize().y);
-        } else if(viewMode == ViewMode.VIEW_MODE_3D) {
-            if(CamerasManager.getMainCamera2D() != null) {
+        if(CamerasManager.mainCamera2D != null) {
+            Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
+            if(camera2DComponent == null) return;
+            if (viewMode == ViewMode.VIEW_MODE_2D) {
+                camera2DComponent.setViewportSize(new Vector2f(Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y));
+                //projectionMatrix = new Matrix4f().ortho2D(0, Core2D.getWindow().getSize().x, 0, Core2D.getWindow().getSize().y);
+            } else if (viewMode == ViewMode.VIEW_MODE_3D) {
                 // сделать настройки более гибкими
-                CamerasManager.getMainCamera2D().getProjectionMatrix().perspective(
+                camera2DComponent.getProjectionMatrix().perspective(
                         (float) Math.toRadians(90.0f),
                         (float) Core2D.getWindow().getSize().x / Core2D.getWindow().getSize().y,
                         0.1f,

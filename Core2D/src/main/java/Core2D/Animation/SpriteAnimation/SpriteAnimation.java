@@ -1,8 +1,8 @@
 package Core2D.Animation.SpriteAnimation;
 
 import Core2D.Component.Components.MeshRendererComponent;
-import Core2D.Drawable.Object2D;
-import Core2D.Texture2D.Texture2D;
+import Core2D.GameObject.GameObject;
+import Core2D.GameObject.RenderParts.Texture2D;
 import Core2D.Utils.PositionsQuad;
 
 import java.util.ArrayList;
@@ -24,13 +24,13 @@ public class SpriteAnimation
 
     private int currentSprite = 0;
 
-    private transient Object2D attachedObject2D;
+    private transient GameObject attachedGameObject;
 
     private boolean active = true;
 
-    public SpriteAnimation(Object2D attachedObject2D, float changeSpriteTime, PositionsQuad... positionsQuads)
+    public SpriteAnimation(GameObject attachedGameObject, float changeSpriteTime, PositionsQuad... positionsQuads)
     {
-        this.attachedObject2D = attachedObject2D;
+        this.attachedGameObject = attachedGameObject;
         this.changeSpriteTime = changeSpriteTime;
 
         useAtlas = true;
@@ -38,9 +38,9 @@ public class SpriteAnimation
         atlasTexturesPositions.addAll(Arrays.asList(positionsQuads));
     }
 
-    public SpriteAnimation(Object2D attachedObject2D, float changeSpriteTime, List<Texture2D> sprites)
+    public SpriteAnimation(GameObject attachedGameObject, float changeSpriteTime, List<Texture2D> sprites)
     {
-        this.attachedObject2D = attachedObject2D;
+        this.attachedGameObject = attachedGameObject;
         this.changeSpriteTime = changeSpriteTime;
 
         useAtlas = false;
@@ -50,7 +50,7 @@ public class SpriteAnimation
 
     public SpriteAnimation(SpriteAnimation spriteAnimation)
     {
-        this.attachedObject2D = spriteAnimation.getAttachedObject2D();
+        this.attachedGameObject = spriteAnimation.getAttachedObject2D();
         this.changeSpriteTime = spriteAnimation.getChangeSpriteTime();
 
         for(PositionsQuad positionsQuad : spriteAnimation.getAtlasTexturesPositions()) {
@@ -96,11 +96,11 @@ public class SpriteAnimation
         }
         sprites = null;
 
-        attachedObject2D = null;
+        attachedGameObject = null;
     }
 
 
-    public Object2D getAttachedObject2D() { return attachedObject2D; }
+    public GameObject getAttachedObject2D() { return attachedGameObject; }
 
     public float getChangeSpriteTime() { return changeSpriteTime; }
     public void setChangeSpriteTime(float changeSpriteTime) { this.changeSpriteTime = changeSpriteTime; }
@@ -122,13 +122,13 @@ public class SpriteAnimation
                 this.currentSprite = 0;
             }
 
-            attachedObject2D.getComponent(MeshRendererComponent.class).setUV(atlasTexturesPositions.get(this.currentSprite));
+            attachedGameObject.getComponent(MeshRendererComponent.class).setUV(atlasTexturesPositions.get(this.currentSprite));
         } else {
             if (this.currentSprite > atlasTexturesPositions.size() - 1) {
                 this.currentSprite = 0;
             }
 
-            MeshRendererComponent textureComponent = attachedObject2D.getComponent(MeshRendererComponent.class);
+            MeshRendererComponent textureComponent = attachedGameObject.getComponent(MeshRendererComponent.class);
             if(textureComponent != null) {
                 textureComponent.texture.set(sprites.get(this.currentSprite));
             }

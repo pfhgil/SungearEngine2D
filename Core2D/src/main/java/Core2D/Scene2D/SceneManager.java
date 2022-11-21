@@ -1,22 +1,23 @@
 package Core2D.Scene2D;
 
 import Core2D.Audio.AudioManager;
+import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
+import Core2D.Core2D.Core2DMode;
 import Core2D.Core2D.Settings;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
 import Core2D.Log.Log;
 import Core2D.Physics.PhysicsWorld;
+import Core2D.Project.ProjectsManager;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Utils;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector4f;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class SceneManager
         if(currentScene2D != null) currentScene2D.drawPicking();
     }
 
-    public Object2D getPickedObject2D(Vector4f pixelColor)
+    public GameObject getPickedObject2D(Vector4f pixelColor)
     {
         if(currentScene2D != null) {
             return currentScene2D.getPickedObject2D(pixelColor);
@@ -60,6 +61,13 @@ public class SceneManager
     {
         if(currentScene2D != null) {
             currentScene2D.deltaUpdate(deltaTime);
+        }
+    }
+
+    public static void saveSceneManager()
+    {
+        if(ProjectsManager.getCurrentProject() != null && Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+            saveSceneManager(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + "SceneManager.sm");
         }
     }
 
@@ -81,16 +89,11 @@ public class SceneManager
         FileUtils.serializeObject(path, serialized);
     }
 
-    public static SceneManager loadSceneManager(String path)
+    public static void loadSceneManagerAsCurrent()
     {
-        File sceneManagerFile = new File(path);
-
-        if(sceneManagerFile.exists()) {
-            String deserialized = (String) FileUtils.deSerializeObject(path);
-            return Utils.gson.fromJson(deserialized, SceneManager.class);
+        if(ProjectsManager.getCurrentProject() != null && Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+            loadSceneManagerAsCurrent(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + "SceneManager.sm");
         }
-
-        return new SceneManager();
     }
 
     public static void loadSceneManagerAsCurrent(String path)
@@ -103,6 +106,17 @@ public class SceneManager
         currentSceneManager = loadSceneManager(inputStream);
     }
 
+    public static SceneManager loadSceneManager(String path)
+    {
+        try {
+            return loadSceneManager(new BufferedInputStream(new FileInputStream(path)));
+        } catch (FileNotFoundException e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        }
+
+        return new SceneManager();
+    }
+
     public static SceneManager loadSceneManager(InputStream inputStream)
     {
         String deserialized = (String) FileUtils.deSerializeObject(inputStream);
@@ -110,6 +124,7 @@ public class SceneManager
             Log.CurrentSession.println("scene manager code: " + deserialized, Log.MessageType.INFO);
             return Utils.gson.fromJson(deserialized, SceneManager.class);
         }
+
         return new SceneManager();
     }
 
@@ -206,12 +221,9 @@ public class SceneManager
     private void applyObject2DDependencies(Scene2D scene2D)
     {
         for(int i = 0; i < scene2D.getLayering().getLayers().size(); i++) {
-            for (int k = 0; k < scene2D.getLayering().getLayers().get(i).getRenderingObjects().size(); k++) {
-                if (scene2D.getLayering().getLayers().get(i).getRenderingObjects().get(k).getObject() instanceof Object2D) {
-                    Object2D object2D = (Object2D) scene2D.getLayering().getLayers().get(i).getRenderingObjects().get(k).getObject();
-
-                    object2D.applyChildrenObjectsID();
-                }
+            for (int k = 0; k < scene2D.getLayering().getLayers().get(i).getGameObjects().size(); k++) {
+                GameObject gameObject = scene2D.getLayering().getLayers().get(i).getGameObjects().get(k);
+                gameObject.applyChildrenObjectsID();
             }
         }
     }
@@ -266,7 +278,10 @@ public class SceneManager
 
         if(currentScene2D != null) {
             if (currentScene2D.getSceneMainCamera2D() != null) {
-                currentScene2D.getSceneMainCamera2D().getTransform().set(currentScene2D.getSceneMainCamera2D().getTransform());
+                TransformComponent transformComponent = currentScene2D.getSceneMainCamera2D().getComponent(TransformComponent.class);
+                if(transformComponent != null) {
+                    transformComponent.init();
+                }
             }
         }
 

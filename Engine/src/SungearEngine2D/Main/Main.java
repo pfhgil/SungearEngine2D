@@ -8,7 +8,7 @@ import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DUserCallback;
 import Core2D.Core2D.Settings;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
@@ -48,7 +48,7 @@ public class Main
 {
     private static Core2DUserCallback core2DUserCallback;
 
-    private static Object2D cameraAnchor;
+    private static GameObject cameraAnchor;
     private static Camera2D mainCamera2D;
 
     public static Thread helpThread;
@@ -68,7 +68,7 @@ public class Main
                 Resources.load();
 
                 mainCamera2D = new Camera2D();
-                cameraAnchor = new Object2D();
+                cameraAnchor = GameObject.create2D();
                 cameraAnchor.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
                 cameraAnchor.getComponent(TransformComponent.class).getTransform().setPosition(new Vector2f(0.0f, 0.0f));
 
@@ -104,11 +104,11 @@ public class Main
                                         Layer layer = currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(p);
                                         if (layer == null || layer.isShouldDestroy()) continue;
 
-                                        int renderingObjectsNum = layer.getRenderingObjects().size();
+                                        int renderingObjectsNum = layer.getGameObjects().size();
                                         for (int i = 0; i < renderingObjectsNum; i++) {
                                             if (layer.isShouldDestroy()) continue layersCycle;
-                                            if (layer.getRenderingObjects().get(i).getObject() instanceof Object2D && !((Object2D) layer.getRenderingObjects().get(i).getObject()).isShouldDestroy()) {
-                                                List<ScriptComponent> scriptComponents = ((Object2D) layer.getRenderingObjects().get(i).getObject()).getAllComponents(ScriptComponent.class);
+                                            if (!layer.getGameObjects().get(i).isShouldDestroy()) {
+                                                List<ScriptComponent> scriptComponents = layer.getGameObjects().get(i).getAllComponents(ScriptComponent.class);
 
                                                 for (int k = 0; k < scriptComponents.size(); k++) {
                                                     // был ли уже скомпилирован скрипт
@@ -171,7 +171,7 @@ public class Main
             @Override
             public void onExit() {
                 if(ProjectsManager.getCurrentProject() != null) {
-                    ProjectsManager.getCurrentProject().saveProject();
+                    ProjectsManager.getCurrentProject().save();
                 }
             }
 
@@ -202,7 +202,7 @@ public class Main
         //Core2D.start("Sungear Engine 2D", new int[] { GLFW.GLFW_SAMPLES }, new int[] { 8 });
     }
 
-    public static Object2D getCameraAnchor() { return cameraAnchor; }
+    public static GameObject getCameraAnchor() { return cameraAnchor; }
 
     public static Camera2D getMainCamera2D() { return mainCamera2D; }
 }

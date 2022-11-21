@@ -3,7 +3,7 @@ package SungearEngine2D.CameraController;
 import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
 import Core2D.Input.Core2DUserInputCallback;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
@@ -14,7 +14,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class CameraController
 {
-    public static Object2D controlledCamera2DAnchor;
+    public static GameObject controlledCamera2DAnchor;
 
     private static Vector2f lastCursorPosition = new Vector2f();
 

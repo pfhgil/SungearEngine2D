@@ -4,7 +4,7 @@ import Core2D.Component.Components.MeshRendererComponent;
 import Core2D.Camera2D.Camera2D;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
 import Core2D.Graphics.Graphics;
 import Core2D.Transform.Transform;
 import Core2D.Utils.MathUtils;
@@ -21,8 +21,8 @@ public class CamerasDebugLines
     //#FIXME private static Line2D[] inspectorCamera2DLines = new Line2D[4];
     //#FIXME private static Line2D[] mainCamera2DLines = new Line2D[4];
 
-    private static Object2D inspectorCamera2DIconObject2D = new Object2D();
-    private static Object2D mainCamera2DIconObject2D = new Object2D();
+    private static GameObject inspectorCamera2DIconObject2D = GameObject.create2D();
+    private static GameObject mainCamera2DIconObject2D = GameObject.create2D();
 
     public static void init()
     {
@@ -37,7 +37,8 @@ public class CamerasDebugLines
         }*///#FIXME
 
         inspectorCamera2DIconObject2D.getComponent(MeshRendererComponent.class).texture.set(Resources.Textures.Icons.cameraIcon);
-        Vector2f cameraSize = new Vector2f(Resources.Textures.Icons.cameraIcon.getWidth(), Resources.Textures.Icons.cameraIcon.getHeight());
+        Vector2f cameraSize = new Vector2f(Resources.Textures.Icons.cameraIcon.getTexture2DData().getWidth(),
+                Resources.Textures.Icons.cameraIcon.getTexture2DData().getHeight());
         inspectorCamera2DIconObject2D.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(cameraSize.x / 100.0f, cameraSize.y / 100.0f));
 
         mainCamera2DIconObject2D.getComponent(MeshRendererComponent.class).texture.set(Resources.Textures.Icons.cameraIcon);

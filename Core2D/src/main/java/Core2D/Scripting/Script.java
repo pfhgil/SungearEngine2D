@@ -1,14 +1,12 @@
 package Core2D.Scripting;
 
-import Core2D.Camera2D.Camera2D;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
 import Core2D.Log.Log;
 import Core2D.Scene2D.SceneObjectType;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
-import Core2D.Utils.WrappedObject;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -87,8 +85,8 @@ public class Script
 
             deltaUpdateMethod = getMethod("deltaUpdate", float.class);
             updateMethod = getMethod("update");
-            collider2DEnterMethod = getMethod("collider2DEnter", Object2D.class);
-            collider2DExitMethod = getMethod("collider2DExit", Object2D.class);
+            collider2DEnterMethod = getMethod("collider2DEnter", GameObject.class);
+            collider2DExitMethod = getMethod("collider2DExit", GameObject.class);
         } catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -171,14 +169,14 @@ public class Script
         }
     }
 
-    public void collider2DEnter(Object2D otherObj)
+    public void collider2DEnter(GameObject otherObj)
     {
         if(active && collider2DEnterMethod != null) {
             invokeMethod(collider2DEnterMethod, otherObj);
         }
     }
 
-    public void collider2DExit(Object2D otherObj)
+    public void collider2DExit(GameObject otherObj)
     {
         if(active && collider2DExitMethod != null) {
             invokeMethod(collider2DExitMethod, otherObj);
@@ -204,14 +202,12 @@ public class Script
                 ScriptTempValue scriptTempValue = new ScriptTempValue();
 
                 Object value = getFieldValue(field);
-                if (value instanceof Object2D) {
-                    Object2D object2D = (Object2D) value;
-                    scriptTempValue.setValue(new WrappedObject(new ScriptSceneObject(object2D.getID(), object2D.getName(), SceneObjectType.TYPE_OBJECT2D)));
-                } else if (value instanceof Camera2D) {
-                    Camera2D camera2D = (Camera2D) value;
-                    scriptTempValue.setValue(new WrappedObject(new ScriptSceneObject(camera2D.getID(), camera2D.name, SceneObjectType.TYPE_CAMERA2D)));
+                if (value instanceof GameObject gameObject) {
+                    scriptTempValue.setValue(new ScriptSceneObject(gameObject.ID, gameObject.name, SceneObjectType.TYPE_OBJECT2D));
+                } else if (value instanceof Camera2D camera2D) {
+                    scriptTempValue.setValue(new ScriptSceneObject(camera2D.getID(), camera2D.name, SceneObjectType.TYPE_CAMERA2D));
                 } else {
-                    scriptTempValue.setValue(new WrappedObject(value));
+                    scriptTempValue.setValue(value);
                 }
                 scriptTempValue.setFieldName(field.getName());
 

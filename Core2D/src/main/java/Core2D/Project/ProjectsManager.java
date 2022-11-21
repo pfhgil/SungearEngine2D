@@ -21,7 +21,7 @@ public class ProjectsManager
         FileUtils.serializeObject(projectPath + File.separator + projectName + File.separator + projectName + ".sgp", project);
 
         currentProject = project;
-        currentProject.saveProject();//а бл
+        currentProject.save(); //а бл
         //ResourcesView.currentDirectoryPath = currentProject.getProjectPath();
     }
 
@@ -29,7 +29,7 @@ public class ProjectsManager
     {
         currentProject = (Project) FileUtils.deSerializeObject(projectFilePath);
         currentProject.setProjectPath(new File(projectFilePath).getParent());
-        currentProject.loadProject();
+        currentProject.load();
     }
 
     public static Project getCurrentProject() { return currentProject; }

@@ -2,12 +2,9 @@ package Core2D.Layering;
 
 import Core2D.Component.Component;
 import Core2D.Component.Components.MeshRendererComponent;
-import Core2D.Drawable.Drawable;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
+import Core2D.GameObject.RenderParts.Texture2D;
 import Core2D.Graphics.Graphics;
-import Core2D.Texture2D.Texture2D;
-import Core2D.Texture2D.TextureDrawModes;
-import Core2D.Utils.WrappedObject;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
@@ -16,7 +13,7 @@ import java.util.List;
 
 public class Layer
 {
-    private List<WrappedObject> renderingObjects = new ArrayList<>();
+    private List<GameObject> gameObjects = new ArrayList<>();
 
     private int ID;
     private String name;
@@ -34,35 +31,35 @@ public class Layer
     // TODO: сделать не только для объектов отрисовку
     public void drawPicking()
     {
-        for(int i = 0; i < renderingObjects.size(); i++) {
-            WrappedObject wrappedObject = renderingObjects.get(i);
-            if (wrappedObject.getObject() instanceof Object2D) {
-                Object2D object2D = ((Object2D) wrappedObject.getObject());
+        for(int i = 0; i < gameObjects.size(); i++) {
+            Core2D.GameObject.GameObject gameObject = gameObjects.get(i);
 
-                Vector4f lastColor = new Vector4f(object2D.getColor());
+            Vector4f lastColor = new Vector4f(gameObject.getColor());
 
-                object2D.setColor(new Vector4f(object2D.getPickColor().x / 255.0f, object2D.getPickColor().y / 255.0f, object2D.getPickColor().z / 255.0f,  1.0f));
-                MeshRendererComponent mesh = object2D.getComponent(MeshRendererComponent.class);
-                mesh.textureDrawMode = TextureDrawModes.ONLY_ALPHA;
-                Graphics.getMainRenderer().render(object2D);
-                object2D.setColor(lastColor);
-                mesh.textureDrawMode = TextureDrawModes.DEFAULT;
+            gameObject.setColor(new Vector4f(gameObject.getPickColor().x / 255.0f,
+                    gameObject.getPickColor().y / 255.0f,
+                    gameObject.getPickColor().z / 255.0f,
+                    1.0f));
+
+            MeshRendererComponent meshRendererComponent = gameObject.getComponent(MeshRendererComponent.class);
+            if(meshRendererComponent != null) {
+                meshRendererComponent.textureDrawMode = Texture2D.TextureDrawModes.ONLY_ALPHA;
+                Graphics.getMainRenderer().render(gameObject);
+                gameObject.setColor(lastColor);
+                meshRendererComponent.textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
             }
         }
     }
 
-    public Object2D getPickedObject2D(Vector4f pixelColor)
+    public Core2D.GameObject.GameObject getPickedObject2D(Vector4f pixelColor)
     {
-        for(int i = 0; i < renderingObjects.size(); i++) {
-            WrappedObject wrappedObject = renderingObjects.get(i);
-            if(wrappedObject.getObject() instanceof Object2D) {
-                Object2D object2D = ((Object2D) wrappedObject.getObject());
-                if(object2D.getPickColor().x == pixelColor.x &&
-                        object2D.getPickColor().y == pixelColor.y &&
-                        object2D.getPickColor().z == pixelColor.z &&
-                        pixelColor.w != 0.0f) {
-                    return object2D;
-                }
+        for(int i = 0; i < gameObjects.size(); i++) {
+            Core2D.GameObject.GameObject gameObject = gameObjects.get(i);
+            if (gameObject.getPickColor().x == pixelColor.x &&
+                    gameObject.getPickColor().y == pixelColor.y &&
+                    gameObject.getPickColor().z == pixelColor.z &&
+                    pixelColor.w != 0.0f) {
+                return gameObject;
             }
         }
 
@@ -71,37 +68,32 @@ public class Layer
 
     public void deltaUpdate(float deltaTime)
     {
-        Iterator<WrappedObject> layerObjectIterator = renderingObjects.iterator();
+        Iterator<Core2D.GameObject.GameObject> layerObjectIterator = gameObjects.iterator();
         while(layerObjectIterator.hasNext()) {
-            WrappedObject wrappedObject = layerObjectIterator.next();
-            Drawable objParams = (Drawable) wrappedObject.getObject();
-            if(objParams.isShouldDestroy()) {
-                if(wrappedObject.getObject() instanceof Object2D) {
-                    Object2D object2D = (Object2D) wrappedObject.getObject();
-                    if (object2D.getParentObject2D() != null) {
-                        object2D.getParentObject2D().removeChild(object2D);
-                        object2D.parentObject2D = null;
-                    }
-
-                    Iterator<Component> componentsIterator = object2D.getComponents().iterator();
-                    while(componentsIterator.hasNext()) {
-                        Component component = componentsIterator.next();
-                        component.destroy();
-                        componentsIterator.remove();
-                    }
-
-                    Iterator<Object2D> childrenIterator = object2D.getChildrenObjects().iterator();
-                    while(childrenIterator.hasNext()) {
-                        Object2D child = childrenIterator.next();
-                        child.destroy();
-                        childrenIterator.remove();
-                    }
+            Core2D.GameObject.GameObject gameObject = layerObjectIterator.next();
+            if(gameObject.isShouldDestroy()) {
+                if (gameObject.getParentObject2D() != null) {
+                    gameObject.getParentObject2D().removeChild(gameObject);
+                    gameObject.parentGameObject = null;
                 }
-                objParams.destroyParams();
-                wrappedObject.setObject(null);
+
+                Iterator<Component> componentsIterator = gameObject.getComponents().iterator();
+                while (componentsIterator.hasNext()) {
+                    Component component = componentsIterator.next();
+                    component.destroy();
+                    componentsIterator.remove();
+                }
+
+                Iterator<Core2D.GameObject.GameObject> childrenIterator = gameObject.getChildrenObjects().iterator();
+                while (childrenIterator.hasNext()) {
+                    Core2D.GameObject.GameObject child = childrenIterator.next();
+                    child.destroy();
+                    childrenIterator.remove();
+                }
+                gameObject.destroy();
                 layerObjectIterator.remove();
             } else {
-                objParams.deltaUpdate(deltaTime);
+                gameObject.deltaUpdate(deltaTime);
             }
         }
     }
@@ -110,19 +102,17 @@ public class Layer
     {
         shouldDestroy = true;
 
-        Iterator<WrappedObject> layerObjectIterator = renderingObjects.iterator();
+        Iterator<Core2D.GameObject.GameObject> layerObjectIterator = gameObjects.iterator();
         while(layerObjectIterator.hasNext()) {
-            WrappedObject wrappedObject = layerObjectIterator.next();
-            Drawable objParams = (Drawable) wrappedObject.getObject();
-            objParams.destroy();
-            wrappedObject.setObject(null);
+            Core2D.GameObject.GameObject gameObject = layerObjectIterator.next();
+            gameObject.destroy();
             layerObjectIterator.remove();
         }
 
-        renderingObjects = null;
+        gameObjects = null;
     }
 
-    public List<WrappedObject> getRenderingObjects() { return renderingObjects; }
+    public List<Core2D.GameObject.GameObject> getGameObjects() { return gameObjects; }
 
     public int getID() { return ID; }
     public void setID(int ID) { this.ID = ID; }

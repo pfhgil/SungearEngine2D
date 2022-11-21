@@ -3,9 +3,9 @@ package Core2D.Component.Components;
 import Core2D.AssetManager.AssetManager;
 import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
+import Core2D.GameObject.GameObject;
 import Core2D.ShaderUtils.VertexBufferObject;
-import Core2D.Texture2D.Texture2D;
-import Core2D.Texture2D.TextureDrawModes;
+import Core2D.GameObject.RenderParts.Texture2D;
 import Core2D.Utils.PositionsQuad;
 import org.joml.Vector2f;
 
@@ -14,11 +14,12 @@ import org.joml.Vector2f;
  * @see Texture2D
  * @see NonDuplicated
  */
+@Deprecated
 public class TextureComponent extends Component implements NonDuplicated
 {
     private Texture2D texture2D = new Texture2D();
 
-    private int textureDrawMode = TextureDrawModes.DEFAULT;
+    private int textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
 
     private float[] UV = new float[] {
             0.0f, 0.0f,
@@ -37,11 +38,11 @@ public class TextureComponent extends Component implements NonDuplicated
     @Override
     public void destroy()
     {
-        MeshRendererComponent meshRendererComponent = object2D.getComponent(MeshRendererComponent.class);
+        MeshRendererComponent meshRendererComponent = gameObject.getComponent(MeshRendererComponent.class);
         if(meshRendererComponent != null) {
             meshRendererComponent.shader.bind();
 
-            textureDrawMode = TextureDrawModes.NO_TEXTURE;
+            textureDrawMode = Texture2D.TextureDrawModes.NO_TEXTURE;
 
             meshRendererComponent.shader.unBind();
         }
@@ -92,7 +93,7 @@ public class TextureComponent extends Component implements NonDuplicated
         this.texture2D.set(texture2D);
 
         if(this.texture2D != null) {
-            textureDrawMode = TextureDrawModes.DEFAULT;
+            textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
         }
     }
 
@@ -114,9 +115,9 @@ public class TextureComponent extends Component implements NonDuplicated
         this.active = active;
 
         if(active) {
-            textureDrawMode = TextureDrawModes.DEFAULT;
+            textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
         } else {
-            textureDrawMode = TextureDrawModes.NO_TEXTURE;
+            textureDrawMode = Texture2D.TextureDrawModes.NO_TEXTURE;
         }
     }
 
@@ -195,12 +196,12 @@ public class TextureComponent extends Component implements NonDuplicated
 
     /**
      * Updates the UV of the bound object in the data array, and also updates the VBO of the bound object.
-     * @see Core2D.Drawable.Object2D
+     * @see GameObject
      */
     public void updateUV()
     {
-        if(object2D != null) {
-            MeshRendererComponent meshRendererComponent = object2D.getComponent(MeshRendererComponent.class);
+        if(gameObject != null) {
+            MeshRendererComponent meshRendererComponent = gameObject.getComponent(MeshRendererComponent.class);
             meshRendererComponent.getData()[2] = UV[0];
             meshRendererComponent.getData()[3] = UV[1];
 

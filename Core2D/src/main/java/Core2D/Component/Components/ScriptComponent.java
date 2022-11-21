@@ -1,7 +1,7 @@
 package Core2D.Component.Components;
 
 import Core2D.Component.Component;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Scripting.Script;
 
@@ -57,9 +57,9 @@ public class ScriptComponent extends Component
 
     /**
      * Calls the collider2DEnter method of the script if current scene is set.
-     * @see Script#collider2DEnter(Object2D)
+     * @see Script#collider2DEnter(GameObject)
      */
-    public void collider2DEnter(Object2D otherObj)
+    public void collider2DEnter(GameObject otherObj)
     {
         if(SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
             script.collider2DEnter(otherObj);
@@ -68,9 +68,9 @@ public class ScriptComponent extends Component
 
     /**
      * Calls the collider2DExit method of the script if current scene is set.
-     * @see Script#collider2DExit(Object2D)
+     * @see Script#collider2DExit(GameObject)
      */
-    public void collider2DExit(Object2D otherObj)
+    public void collider2DExit(GameObject otherObj)
     {
         if(SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
             script.collider2DExit(otherObj);

@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 public class ShaderData extends Data
 {
-    private String sourceCode = "";
+    private transient String sourceCode = "";
 
     @Override
     public ShaderData load(String path)

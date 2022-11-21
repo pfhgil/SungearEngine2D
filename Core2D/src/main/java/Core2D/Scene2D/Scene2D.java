@@ -1,23 +1,16 @@
 package Core2D.Scene2D;
 
-import Core2D.Camera2D.Camera2D;
-import Core2D.Camera2D.CamerasManager;
-import Core2D.Component.Components.ScriptComponent;
-import Core2D.Drawable.Drawable;
-import Core2D.Drawable.Object2D;
+import Core2D.CamerasManager.CamerasManager;
+import Core2D.GameObject.GameObject;
 import Core2D.Graphics.Graphics;
 import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
 import Core2D.Log.Log;
 import Core2D.Physics.PhysicsWorld;
-import Core2D.Project.ProjectsManager;
-import Core2D.Scripting.ScriptTempValue;
 import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.Tag;
-import Core2D.Utils.WrappedObject;
 import org.joml.Vector4f;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +21,7 @@ public class Scene2D
 
     private Layering layering = new Layering();
 
-    private List<Camera2D> cameras2D = new ArrayList<>();
-
-    private Camera2D sceneMainCamera2D;
+    private transient GameObject sceneMainCamera2D;
 
     private transient Scene2DCallback scene2DCallback;
 
@@ -106,7 +97,7 @@ public class Scene2D
         }
     }
 
-    public Object2D getPickedObject2D(Vector4f pixelColor)
+    public GameObject getPickedObject2D(Vector4f pixelColor)
     {
         return layering.getPickedObject2D(pixelColor);
     }
@@ -137,7 +128,7 @@ public class Scene2D
         applyScriptsTempValues();
 
         if(sceneMainCamera2D != null) {
-            CamerasManager.setMainCamera2D(sceneMainCamera2D);
+            CamerasManager.mainCamera2D = sceneMainCamera2D;
         }
 
         physicsWorld.simulatePhysics = true;
@@ -171,10 +162,10 @@ public class Scene2D
     public void deleteTag(Tag tag)
     {
         for(int i = 0; i < layering.getLayers().size(); i++) {
-            for(int k = 0; k < layering.getLayers().get(i).getRenderingObjects().size(); k++) {
-                Drawable objParams = (Drawable) layering.getLayers().get(k).getRenderingObjects().get(k).getObject();
-                if(tag.getName().equals(objParams.getTag().getName())) {
-                    objParams.setTag("default");
+            for(int k = 0; k < layering.getLayers().get(i).getGameObjects().size(); k++) {
+                GameObject gameObject = layering.getLayers().get(k).getGameObjects().get(k);
+                if(tag.getName().equals(gameObject.tag.getName())) {
+                    gameObject.tag.setName("default");
                 }
             }
         }
@@ -182,12 +173,12 @@ public class Scene2D
         tags.remove(tag);
     }
 
-    public Object2D findObject2DByName(String name)
+    public GameObject findObject2DByName(String name)
     {
         for(Layer layer : layering.getLayers()) {
-            for(WrappedObject o : layer.getRenderingObjects()) {
-                if(o.getObject() instanceof Object2D && ((Object2D) o.getObject()).getName().equals(name)) {
-                    return (Object2D) o.getObject();
+            for(GameObject go : layer.getGameObjects()) {
+                if(go.name.equals(name)) {
+                    return go;
                 }
             }
         }
@@ -195,12 +186,12 @@ public class Scene2D
         return null;
     }
 
-    public Object2D findObject2DByTag(String tag)
+    public GameObject findObject2DByTag(String tag)
     {
         for(Layer layer : layering.getLayers()) {
-            for(WrappedObject o : layer.getRenderingObjects()) {
-                if(o.getObject() instanceof Object2D && ((Object2D) o.getObject()).getTag().getName().equals(tag)) {
-                    return (Object2D) o.getObject();
+            for(GameObject go : layer.getGameObjects()) {
+                if(go.tag.getName().equals(tag)) {
+                    return go;
                 }
             }
         }
@@ -208,12 +199,12 @@ public class Scene2D
         return null;
     }
 
-    public Object2D findObject2DByID(int ID)
+    public GameObject findObject2DByID(int ID)
     {
         for(Layer layer : layering.getLayers()) {
-            for(WrappedObject o : layer.getRenderingObjects()) {
-                if(o.getObject() instanceof Object2D && ((Object2D) o.getObject()).getID() == ID) {
-                    return (Object2D) o.getObject();
+            for(GameObject go : layer.getGameObjects()) {
+                if(go.ID == ID) {
+                    return go;
                 }
             }
         }
@@ -275,8 +266,8 @@ public class Scene2D
 
     public List<Camera2D> getCameras2D() { return cameras2D; }
 
-    public Camera2D getSceneMainCamera2D() { return sceneMainCamera2D; }
-    public void setSceneMainCamera2D(Camera2D sceneMainCamera2D)
+    public GameObject getSceneMainCamera2D() { return sceneMainCamera2D; }
+    public void setSceneMainCamera2D(GameObject sceneMainCamera2D)
     {
         this.sceneMainCamera2D = sceneMainCamera2D;
     }

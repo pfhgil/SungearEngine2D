@@ -25,8 +25,8 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated
     public void destroy()
     {
         rigidbody2D.destroy();
-        if(object2D.getComponent(TransformComponent.class) != null) {
-            object2D.getComponent(TransformComponent.class).getTransform().setRigidbody2D(null);
+        if(gameObject.getComponent(TransformComponent.class) != null) {
+            gameObject.getComponent(TransformComponent.class).getTransform().setRigidbody2D(null);
         }
     }
 
@@ -53,8 +53,8 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated
     @Override
     public void init()
     {
-        SceneManager.currentSceneManager.getTmpPhysicsWorld().addRigidbody2D(object2D);
-        object2D.getComponent(TransformComponent.class).getTransform().setRigidbody2D(this.getRigidbody2D());
+        SceneManager.currentSceneManager.getTmpPhysicsWorld().addRigidbody2D(gameObject);
+        gameObject.getComponent(TransformComponent.class).getTransform().setRigidbody2D(this.getRigidbody2D());
     }
 
     public Rigidbody2D getRigidbody2D() { return rigidbody2D; }

@@ -1,6 +1,7 @@
 package Core2D.Input.PC;
 
-import Core2D.Camera2D.CamerasManager;
+import Core2D.CamerasManager.CamerasManager;
+import Core2D.Component.Components.Camera2DComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Graphics.Graphics;
 import org.joml.Matrix4f;
@@ -141,7 +142,7 @@ public class Mouse
      */
     public static Vector2f getMouseOGLPosition(Vector2f mousePosition)
     {
-        if(CamerasManager.getMainCamera2D() != null) {
+        if(CamerasManager.mainCamera2D != null) {
             float currentX = mousePosition.x / Graphics.getScreenSize().x * 2.0f - 1.0f;
             Vector4f tmp = new Vector4f(currentX, 0, 0, 1);
 
@@ -149,8 +150,11 @@ public class Mouse
             Matrix4f inverseView = new Matrix4f();
             Matrix4f inverseProjection = new Matrix4f();
 
-            CamerasManager.getMainCamera2D().getViewMatrix().invert(inverseView);
-            CamerasManager.getMainCamera2D().getProjectionMatrix().invert(inverseProjection);
+            Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
+            if(camera2DComponent != null) {
+                camera2DComponent.getViewMatrix().invert(inverseView);
+                camera2DComponent.getProjectionMatrix().invert(inverseProjection);
+            }
 
             inverseView.mul(inverseProjection, viewProjection);
             tmp.mul(viewProjection);

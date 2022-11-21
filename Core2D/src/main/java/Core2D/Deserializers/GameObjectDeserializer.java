@@ -1,41 +1,35 @@
 package Core2D.Deserializers;
 
 import Core2D.AssetManager.AssetManager;
-import Core2D.Audio.Audio;
-import Core2D.Audio.AudioInfo;
 import Core2D.Component.Component;
 import Core2D.Component.Components.*;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
-import Core2D.Drawable.Object2D;
-import Core2D.Log.Log;
+import Core2D.GameObject.GameObject;
 import Core2D.Project.ProjectsManager;
-import Core2D.Texture2D.Texture2D;
+import Core2D.GameObject.RenderParts.Texture2D;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Tag;
 import com.google.gson.*;
 import org.joml.Vector4f;
-import org.lwjgl.openal.AL10;
-import org.lwjgl.openal.AL11;
 
 import java.io.File;
 import java.lang.reflect.Type;
 
-// TODO: исправить загрузку ресурсов по пути
-public class Object2DDeserializer implements JsonDeserializer<Object2D>
+public class GameObjectDeserializer implements JsonDeserializer<GameObject>
 {
     @Override
-    public Object2D deserialize(JsonElement jsonElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
+    public GameObject deserialize(JsonElement jsonElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
     {
-        Object2D object2D = new Object2D();
+        GameObject gameObject = new GameObject();
 
         JsonObject jsonObject = jsonElement.getAsJsonObject();
 
         String name = jsonObject.get("name").getAsString();
         Tag tag = context.deserialize(jsonObject.get("tag"), Tag.class);
         Vector4f color = context.deserialize(jsonObject.get("color"), Vector4f.class);
-        int drawingMode = jsonObject.get("drawingMode").getAsInt();
-        boolean isUIElement = context.deserialize(jsonObject.get("isUIElement"), boolean.class);
+        //int drawingMode = jsonObject.get("drawingMode").getAsInt();
+        //boolean isUIElement = context.deserialize(jsonObject.get("isUIElement"), boolean.class);
         boolean active = context.deserialize(jsonObject.get("active"), boolean.class);
         JsonArray components = jsonObject.getAsJsonArray("components");
         int ID = jsonObject.get("ID").getAsInt();
@@ -47,19 +41,19 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
         JsonArray childrenObjectsIDJArray = jsonObject.getAsJsonArray("childrenObjectsID");
         if(childrenObjectsIDJArray != null) {
             for(JsonElement element : childrenObjectsIDJArray) {
-                object2D.getChildrenObjectsID().add(element.getAsInt());
+                gameObject.getChildrenObjectsID().add(element.getAsInt());
             }
         }
 
-        object2D.removeComponent(object2D.getComponent(MeshRendererComponent.class));
-
-        object2D.setName(name);
-        object2D.setTag(tag.getName());
+        gameObject.name = name;
+        gameObject.tag.set(tag);
         tag.destroy();
-        object2D.setColor(color);
-        object2D.setActive(active);
-        object2D.setID(ID);
-        object2D.setLayerName(layerName);
+        gameObject.setColor(color);
+        gameObject.active = active;
+        gameObject.ID = ID;
+        gameObject.layerName = layerName;
+
+        System.out.println("\u001B[32m size of game object " + gameObject.name + " list of components: " + gameObject.getComponents().size() + " \u001B[32m");
 
         Rigidbody2DComponent rigidbody2DComponent = null;
         for(JsonElement element : components) {
@@ -67,7 +61,7 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
 
             int lastComponentID = component.componentID;
             if(component instanceof TransformComponent) {
-                object2D.getComponent(TransformComponent.class).set(component);
+                gameObject.addComponent(component);
             } else if(component instanceof MeshRendererComponent) {
                 MeshRendererComponent textureComponent = (MeshRendererComponent) component;
                 Texture2D texture2D = new Texture2D();
@@ -78,7 +72,6 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                     if(new File(textureFullPath).exists()) {
                         texture2D = new Texture2D(
                                 AssetManager.getInstance().getTexture2DData(textureComponent.texture.path),
-                                textureComponent.texture.param,
                                 textureComponent.texture.getGLTextureBlock()
                         );
                         texture2D.path = textureComponent.texture.path;
@@ -92,7 +85,6 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                             );
                             texture2D = new Texture2D(
                                     AssetManager.getInstance().getTexture2DData(relativePath),
-                                    textureComponent.texture.param,
                                     textureComponent.texture.getGLTextureBlock()
                             );
                             texture2D.path = relativePath;
@@ -102,17 +94,16 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                 } else {
                     texture2D = new Texture2D(
                             AssetManager.getInstance().getTexture2DData(textureComponent.texture.path),
-                            textureComponent.texture.param,
                             textureComponent.texture.getGLTextureBlock()
                     );
                 }
 
-                texture2D.blendSourceFactor = textureComponent.texture.blendSourceFactor;
-                texture2D.blendDestinationFactor = textureComponent.texture.blendDestinationFactor;
+                //texture2D.blendSourceFactor = textureComponent.texture.blendSourceFactor;
+                //texture2D.blendDestinationFactor = textureComponent.texture.blendDestinationFactor;
 
-                object2D.addComponent(component);
-                object2D.getComponent(MeshRendererComponent.class).set(component);
-                object2D.getComponent(MeshRendererComponent.class).texture.set(texture2D);
+                gameObject.addComponent(component);
+                gameObject.getComponent(MeshRendererComponent.class).set(component);
+                gameObject.getComponent(MeshRendererComponent.class).texture.set(texture2D);
             } else if(component instanceof Rigidbody2DComponent) {
                 rigidbody2DComponent = (Rigidbody2DComponent) component;
             } else if(component instanceof ScriptComponent) {
@@ -126,7 +117,7 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                     if(new File(fullScriptPath).exists()) {
                         ScriptComponent sc = new ScriptComponent();
                         scriptComponent.getScript().path = fullScriptPath;
-                        object2D.addComponent(sc);
+                        gameObject.addComponent(sc);
                         sc.set(scriptComponent);
                         sc.getScript().path = lastScriptPath;
                     } else {// для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
@@ -138,7 +129,7 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                                     new File(ProjectsManager.getCurrentProject().getProjectPath())
                             );
                             ScriptComponent sc = new ScriptComponent();
-                            object2D.addComponent(sc);
+                            gameObject.addComponent(sc);
                             scriptComponent.getScript().path += ".java";
                             sc.set(scriptComponent);
                             relativePath = relativePath.replace(".java", "");
@@ -147,7 +138,7 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                     }
                 } else {
                     ScriptComponent sc = new ScriptComponent();
-                    object2D.addComponent(sc);
+                    gameObject.addComponent(sc);
                     sc.set(scriptComponent);
                 }
             } else if(component instanceof AudioComponent) {
@@ -178,9 +169,9 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
                     audioComponent.audio.loadAndSetup(Core2D.class.getResourceAsStream(audioComponent.audio.path));
                 }
 
-                object2D.addComponent(audioComponent);
+                gameObject.addComponent(audioComponent);
             } else {
-                object2D.addComponent(component);
+                gameObject.addComponent(component);
             }
 
             component.componentID = lastComponentID;
@@ -190,12 +181,12 @@ public class Object2DDeserializer implements JsonDeserializer<Object2D>
         // в самом конце добавляю rigidbody2d, чтобы не было путаницы с порядком десериализации колладейров и rigidbody2d
         if(rigidbody2DComponent != null) {
             int lastComponentID = rigidbody2DComponent.componentID;
-            object2D.addComponent(rigidbody2DComponent);
+            gameObject.addComponent(rigidbody2DComponent);
             rigidbody2DComponent.componentID = lastComponentID;
             //object2D.getComponents().get(object2D.getComponents().size() - 1).componentID = lastComponentID;
             rigidbody2DComponent.set(rigidbody2DComponent);
         }
 
-        return object2D;
+        return gameObject;
     }
 }

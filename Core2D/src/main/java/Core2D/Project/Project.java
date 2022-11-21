@@ -1,5 +1,6 @@
 package Core2D.Project;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.Scene2D.SceneManager;
 
 import java.io.File;
@@ -34,15 +35,17 @@ public class Project implements Serializable
         projectSettings = new ProjectSettings();
     }
 
-    public void saveProject()
+    public void save()
     {
-        SceneManager.saveSceneManager(projectPath + File.separator + "SceneManager.sm");
+        SceneManager.saveSceneManager();
+        AssetManager.getInstance().save();
         getProjectSettings().saveSettings(projectSettingsPath);
     }
 
-    public void loadProject()
+    public void load()
     {
-        SceneManager.loadSceneManagerAsCurrent(projectPath + File.separator + "SceneManager.sm");
+        SceneManager.loadSceneManagerAsCurrent();
+        AssetManager.getInstance().load();
         getProjectSettings().loadSettings(projectSettingsPath);
     }
 

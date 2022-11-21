@@ -1,4 +1,4 @@
-package Core2D.Shader;
+package Core2D.GameObject.RenderParts;
 
 import Core2D.DataClasses.ShaderData;
 import Core2D.Log.Log;
@@ -15,6 +15,8 @@ public class Shader implements Serializable
 
     public String path = "";
 
+    private ShaderData shaderData;
+
     public Shader() { }
 
     public Shader(ShaderData shaderData)
@@ -24,7 +26,9 @@ public class Shader implements Serializable
 
     public static Shader create(ShaderData shaderData)
     {
-        return create(shaderData.getSourceCode());
+        Shader shader = create(shaderData.getSourceCode());
+        shader.shaderData = shaderData;
+        return shader;
     }
 
     public static Shader create(String sourceCode)
@@ -128,9 +132,10 @@ public class Shader implements Serializable
     {
         destroy();
 
-        programHandler = shader.getProgramHandler();
+        programHandler = shader.programHandler;
         shaderPartsHandlers.putAll(shader.shaderPartsHandlers);
         path = shader.path;
+        shaderData = shader.shaderData;
     }
 
     public void bind()
@@ -151,4 +156,6 @@ public class Shader implements Serializable
     public int getProgramHandler() { return programHandler; }
 
     public HashMap<Integer, Integer> getShaderPartsHandlers() { return shaderPartsHandlers; }
+
+    public ShaderData getShaderData() { return shaderData; }
 }

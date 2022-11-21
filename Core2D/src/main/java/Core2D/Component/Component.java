@@ -1,8 +1,6 @@
 package Core2D.Component;
 
-import Core2D.Camera2D.Camera2D;
-import Core2D.Drawable.Object2D;
-import Core2D.Scripting.InspectorView;
+import Core2D.GameObject.GameObject;
 
 /**
  * An abstract class that other components inherit.
@@ -12,7 +10,7 @@ public abstract class Component
     /**
      * The object to which this component is bound.
      */
-    public transient Object2D object2D;
+    public transient GameObject gameObject;
 
     private int object2DID = -1;
 
@@ -31,7 +29,7 @@ public abstract class Component
 
     /**
      * Deletes a component. In order to completely remove a component from an object, use object.removeComponent(...).
-     * @see Object2D#removeComponent(Component)
+     * @see GameObject#removeComponent(Class)
      */
     public void destroy()
     {
@@ -44,8 +42,8 @@ public abstract class Component
      */
     public void update()
     {
-        if(object2D != null) {
-            object2DID = object2D.getID();
+        if(gameObject != null) {
+            object2DID = gameObject.ID;
         }
     }
 
@@ -77,14 +75,12 @@ public abstract class Component
 
     public int getObject2DID() { return object2DID; }
 
-    public void inspectorGUIDraw() {
-
-    }
-    public void editorWindowDraw(){}
+    public void inspectorGUIDraw() { }
+    public void editorWindowDraw() { }
 
     public <T extends Component> T getComponent(Class<T> componentClass)
     {
-        for(Component component : object2D.getComponents()) {
+        for(Component component : gameObject.getComponents()) {
             if(component.getClass().isAssignableFrom(componentClass)) {
                 return componentClass.cast(component);
             }

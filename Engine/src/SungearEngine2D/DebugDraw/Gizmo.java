@@ -2,13 +2,12 @@ package SungearEngine2D.DebugDraw;
 
 //import Core2D.Component.Components.TextureComponent;
 import Core2D.Component.Components.TransformComponent;
-import Core2D.Drawable.Object2D;
 /*import Core2D.Drawable.Primitives.Circle2D;
 import Core2D.Drawable.Primitives.Line2D;*/
+import Core2D.GameObject.GameObject;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.PC.Mouse;
 import Core2D.ShaderUtils.FrameBufferObject;
-import Core2D.Texture2D.TextureDrawModes;
 import Core2D.Transform.Transform;
 import Core2D.Utils.MathUtils;
 import Core2D.Utils.MatrixUtils;
@@ -40,22 +39,22 @@ public class Gizmo
 
     public static Vector2f scaleSensitivity = new Vector2f(0.1f, 0.1f);
 
-    public static final Object2D yArrow = new Object2D();
-    public static final Object2D xArrow = new Object2D();
+    public static final GameObject yArrow = GameObject.create2D();
+    public static final GameObject xArrow = GameObject.create2D();
 
-    public static final Object2D centrePoint = new Object2D();
+    public static final GameObject centrePoint = GameObject.create2D();
 
-    public static final Object2D centrePointToEditCentre = new Object2D();
+    public static final GameObject centrePointToEditCentre = GameObject.create2D();
 
     //#FIXME public static final Circle2D rotationCircle = new Circle2D(300.0f, 1, new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
-    public static final Object2D rotationHandler = new Object2D();
+    public static final GameObject rotationHandler = GameObject.create2D();
 
-    public static final Object2D yScaleHandler = new Object2D();
+    public static final GameObject yScaleHandler = GameObject.create2D();
     //#FIXME public static final Line2D yScaleLine = new Line2D();
-    public static final Object2D xScaleHandler = new Object2D();
+    public static final GameObject xScaleHandler = GameObject.create2D();
     //#FIXME public static final Line2D xScaleLine = new Line2D();
 
-    private static Object2D selectedGizmoTool;
+    private static GameObject selectedGizmoTool;
 
     public static boolean active = true;
 
@@ -68,13 +67,13 @@ public class Gizmo
         Vector2i size = Graphics.getScreenSize();
         gizmoPickingTarget = new FrameBufferObject(size.x, size.y, FrameBufferObject.BuffersTypes.COLOR_BUFFER, GL13.GL_TEXTURE0);
 
-        yArrow.setName("gizmo.yArrow");
-        xArrow.setName("gizmo.xArrow");
-        centrePoint.setName("gizmo.centrePoint");
-        centrePointToEditCentre.setName("gizmo.centrePointToEditCentre");
-        rotationHandler.setName("gizmo.rotationHandler");
-        yScaleHandler.setName("gizmo.yScaleHandler");
-        xScaleHandler.setName("gizmo.xScaleHandler");
+        yArrow.name = "gizmo.yArrow";
+        xArrow.name = "gizmo.xArrow";
+        centrePoint.name = "gizmo.centrePoint";
+        centrePointToEditCentre.name = "gizmo.centrePointToEditCentre";
+        rotationHandler.name = "gizmo.rotationHandler";
+        yScaleHandler.name = "gizmo.yScaleHandler";
+        xScaleHandler.name = "gizmo.xScaleHandler";
 
         /*yArrow.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoArrow);
         xArrow.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoArrow);

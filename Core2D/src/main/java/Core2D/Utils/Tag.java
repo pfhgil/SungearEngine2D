@@ -11,6 +11,11 @@ public class Tag
 
     public Tag() {}
 
+    public void set(Tag tag)
+    {
+        name = tag.name;
+    }
+
     public void destroy()
     {
         name = null;

@@ -1,16 +1,11 @@
 package Core2D.Scripting;
 
-import Core2D.Camera2D.Camera2D;
 import Core2D.Component.Component;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.ExceptionsUtils;
-import Core2D.Utils.Utils;
-import Core2D.Utils.WrappedObject;
-import com.google.gson.JsonObject;
-import com.google.gson.internal.LinkedTreeMap;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -21,57 +16,54 @@ public class ScriptTempValue
     private String fieldName;
     private Object value;
 
-    public WrappedObject getScriptFieldValue(Script script)
+    /*
+    public Object getScriptFieldValue(Script script)
     {
-        WrappedObject wrappedObject = new WrappedObject(null);
+        Object val = null;
         if(script != null && fieldName != null && value != null) {
-            try {
-                Field field = script.getScriptClass().getField(fieldName);
-                wrappedObject = new WrappedObject(null);
-                if (value instanceof LinkedTreeMap) {
-                    JsonObject jsonObject = Utils.gson.toJsonTree(value).getAsJsonObject();
-                    wrappedObject = Utils.gson.fromJson(jsonObject.toString(), WrappedObject.class);
-                } else if (value instanceof WrappedObject) {
-                    wrappedObject = (WrappedObject) value;
-                }
-            } catch (NoSuchFieldException e) {
-                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+            if (value instanceof LinkedTreeMap) {
+                JsonObject jsonObject = Utils.gson.toJsonTree(value).getAsJsonObject();
+                val = Utils.gson.fromJson(jsonObject.toString(), GameObject.class);
+            } else {
+                System.out.println(value.getClass().getName());
             }
         }
 
-        return wrappedObject;
+        return val;
     }
+
+     */
 
     public void applyToScript(Script script)
     {
         if(script != null && fieldName != null && value != null) {
             try {
                 Field field = script.getScriptClass().getField(fieldName);
-                WrappedObject wrappedObject = getScriptFieldValue(script);
+                //Object fieldValue = getScriptFieldValue(script);
 
                 //System.out.println("fieldName: " + fieldName + ", wrappedObject.getObject(): " + wrappedObject.getObject() + ", script name: " + script.getName() + ", script class: " + script.getScriptClass());
 
                 //System.out.println(wrappedObject.getObject());
 
-                if(wrappedObject.getObject() instanceof Double && field.getType().isAssignableFrom(float.class)) {
+                if(value instanceof Double && field.getType().isAssignableFrom(float.class)) {
                     field.setFloat(script.getScriptClassInstance(), ((Double) value).floatValue());
-                } else if(wrappedObject.getObject() instanceof ScriptSceneObject) {
-                    ScriptSceneObject object = (ScriptSceneObject) wrappedObject.getObject();
+                } else if(value instanceof ScriptSceneObject) {
+                    ScriptSceneObject object = (ScriptSceneObject) value;
                     switch(object.objectType) {
                         case TYPE_OBJECT2D:
-                            Object2D foundObject2D = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(object.ID);
-                            field.set(script.getScriptClassInstance(), foundObject2D);
+                            GameObject foundGameObject = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(object.ID);
+                            field.set(script.getScriptClassInstance(), foundGameObject);
                             break;
                         case TYPE_CAMERA2D:
                             Camera2D foundCamera2D = SceneManager.currentSceneManager.getCurrentScene2D().findCamera2DByID(object.ID);
                             field.set(script.getScriptClassInstance(), foundCamera2D);
                             break;
                     }
-                } else if(wrappedObject.getObject() instanceof Component) {
-                    Component component = (Component) wrappedObject.getObject();
-                    Object2D foundObject2D = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(component.getObject2DID());
-                    if(foundObject2D != null) {
-                        for(Component objComponent : foundObject2D.getComponents()) {
+                } else if(value instanceof Component) {
+                    Component component = (Component) value;
+                    Core2D.GameObject.GameObject foundGameObject = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(component.getObject2DID());
+                    if(foundGameObject != null) {
+                        for(Component objComponent : foundGameObject.getComponents()) {
                             if(objComponent.componentID == component.componentID &&
                             objComponent.getClass().isAssignableFrom(component.getClass())) {
                                 field.set(script.getScriptClassInstance(), objComponent);
@@ -79,8 +71,8 @@ public class ScriptTempValue
                         }
                     }
                 } else {
-                    if(wrappedObject.getObject() != null) {
-                        field.set(script.getScriptClassInstance(), wrappedObject.getObject());
+                    if(value != null) {
+                        field.set(script.getScriptClassInstance(), value);
                     }
                 }
             } catch (NoSuchFieldException | IllegalAccessException e) {

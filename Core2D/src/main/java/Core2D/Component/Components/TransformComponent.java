@@ -1,9 +1,11 @@
 package Core2D.Component.Components;
 
+import Core2D.CamerasManager.CamerasManager;
 import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
 import Core2D.Component.NonRemovable;
 import Core2D.Transform.Transform;
+import org.joml.Matrix4f;
 
 /**
  * The TextureComponent. This component is NonDuplicated and NonDuplicated.
@@ -11,9 +13,11 @@ import Core2D.Transform.Transform;
  * @see NonDuplicated
  * @see NonRemovable
  */
-public class TransformComponent extends Component implements NonRemovable, NonDuplicated
+public class TransformComponent extends Component implements NonDuplicated
 {
     private Transform transform = new Transform();
+
+    private transient Matrix4f mvpMatrix = new Matrix4f();
 
     public TransformComponent() { }
 
@@ -24,6 +28,12 @@ public class TransformComponent extends Component implements NonRemovable, NonDu
     public TransformComponent(Transform transform)
     {
         this.transform = new Transform(transform);
+    }
+
+    @Override
+    public void init()
+    {
+        transform.init();
     }
 
     /**
@@ -51,5 +61,21 @@ public class TransformComponent extends Component implements NonRemovable, NonDu
         transform.update(deltaTime);
     }
 
+    @Override
+    public void update()
+    {
+        Matrix4f modelMatrix = new Matrix4f().set(gameObject.getComponent(TransformComponent.class).getTransform().getResultModelMatrix());
+
+        if(CamerasManager.mainCamera2D != null && !gameObject.isUIElement) {
+            Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
+            mvpMatrix = new Matrix4f(camera2DComponent.getProjectionMatrix()).mul(camera2DComponent.getViewMatrix())
+                    .mul(modelMatrix);
+        } else {
+            mvpMatrix = new Matrix4f().mul(modelMatrix);
+        }
+    }
+
     public Transform getTransform() { return transform; }
+
+    public Matrix4f getMvpMatrix() { return mvpMatrix; }
 }

@@ -1,7 +1,7 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.Camera2D.CamerasManager;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
 import Core2D.Log.Log;
 import Core2D.Prefab.Prefab;
 import Core2D.Project.ProjectsManager;
@@ -12,7 +12,6 @@ import Core2D.Timer.Timer;
 import Core2D.Timer.TimerCallback;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
-import Core2D.Utils.WrappedObject;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.Main.Main;
@@ -109,11 +108,10 @@ public class ResourcesView extends View
             ImGui.setItemAllowOverlap();
 
             if(ImGui.beginDragDropTarget()) {
-                Object object = ImGui.acceptDragDropPayload("SceneWrappedObject");
-                if(object instanceof WrappedObject && ((WrappedObject) object).getObject() instanceof Object2D) {
-                    Object2D object2D = (Object2D) ((WrappedObject) object).getObject();
-                    Prefab prefab = new Prefab(object2D);
-                    prefab.save(currentDirectoryPath + "\\" + object2D.getName() + ".sgopref");
+                Object object = ImGui.acceptDragDropPayload("SceneGameObject");
+                if(object instanceof GameObject gameObject) {
+                    Prefab prefab = new Prefab(gameObject);
+                    prefab.save(currentDirectoryPath + "\\" + gameObject.name + ".sgopref");
 
                     /*
                     Gson gson = new GsonBuilder()
@@ -347,7 +345,7 @@ public class ResourcesView extends View
                                     SceneManager.currentSceneManager.setCurrentScene2D((Scene2D) null);
                                 }
                                 currentSceneManager.getScene2DStoredValues().removeIf(p -> p.path.equals(files[id].getPath()));
-                                ProjectsManager.getCurrentProject().saveProject();
+                                ProjectsManager.getCurrentProject().save();
                             }
                             org.apache.commons.io.FileUtils.delete(files[id]);
                         } else {

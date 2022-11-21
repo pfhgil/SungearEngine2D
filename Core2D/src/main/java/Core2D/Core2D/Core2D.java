@@ -2,7 +2,8 @@ package Core2D.Core2D;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.OpenAL;
-import Core2D.Camera2D.CamerasManager;
+import Core2D.CamerasManager.CamerasManager;
+import Core2D.Component.Components.TransformComponent;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.Core2DInputCallbacks;
 import Core2D.Input.Core2DUserInputCallback;
@@ -141,8 +142,11 @@ public class Core2D extends Graphics
                             core2DUserCallback.onDeltaUpdate(deltaTime);
                         }
 
-                        if(CamerasManager.getMainCamera2D() != null) {
-                            CamerasManager.getMainCamera2D().getTransform().update(deltaTime);
+                        if(CamerasManager.mainCamera2D != null) {
+                            TransformComponent transformComponent = CamerasManager.mainCamera2D.getComponent(TransformComponent.class);
+                            if(transformComponent != null) {
+                                transformComponent.getTransform().update(deltaTime);
+                            }
                         }
                         SceneManager.currentSceneManager.updateCurrentScene2D(deltaTime);
                     }

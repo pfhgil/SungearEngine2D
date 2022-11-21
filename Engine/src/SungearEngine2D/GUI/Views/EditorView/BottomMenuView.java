@@ -81,7 +81,8 @@ public class BottomMenuView
             ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0, 0, 0, 0);
 
             ImGui.sameLine();
-            Vector2f collapseIconSize = new Vector2f(Resources.Textures.Icons.collapseIcon.getWidth(), Resources.Textures.Icons.collapseIcon.getHeight());
+            Vector2f collapseIconSize = new Vector2f(Resources.Textures.Icons.collapseIcon.getTexture2DData().getWidth(),
+                    Resources.Textures.Icons.collapseIcon.getTexture2DData().getHeight());
             ImGui.setCursorPos(ImGui.getWindowSizeX() - maxProgressBarWidth - collapseIconSize.x * 2.5f, ImGui.getCursorPosY() + 5.0f);
             boolean collapsed = ImGui.imageButton(Resources.Textures.Icons.collapseIcon.getTextureHandler(), collapseIconSize.x, collapseIconSize.y, 0, 0, 1, 1, -1, 1, 1, 1, 0, 1, 1, 1, 1);
 
@@ -112,7 +113,8 @@ public class BottomMenuView
         ImVec2 windowSize = ImGui.getWindowSize();
         Vector2f progressBarPos = new Vector2f(windowSize.x - 150.0f, ImGui.getCursorPosY());
 
-        Vector2f xIconSize = new Vector2f(Resources.Textures.Icons.xIcon.getWidth() - 1, Resources.Textures.Icons.xIcon.getHeight() - 1);
+        Vector2f xIconSize = new Vector2f(Resources.Textures.Icons.xIcon.getTexture2DData().getWidth() - 1,
+                Resources.Textures.Icons.xIcon.getTexture2DData().getHeight() - 1);
 
         if(task instanceof StoppableTask) {
             progressBarPos.x -= xIconSize.x * 2;
@@ -155,7 +157,8 @@ public class BottomMenuView
         ImVec2 windowSize = ImGui.getWindowSize();
         Vector2f progressBarPos = new Vector2f(windowSize.x - 150.0f + customOffset.x, ImGui.getCursorPosY() + customOffset.y);
 
-        Vector2f xIconSize = new Vector2f(Resources.Textures.Icons.xIcon.getWidth() - 1, Resources.Textures.Icons.xIcon.getHeight() - 1);
+        Vector2f xIconSize = new Vector2f(Resources.Textures.Icons.xIcon.getTexture2DData().getWidth() - 1,
+                Resources.Textures.Icons.xIcon.getTexture2DData().getHeight() - 1);
 
         if(task instanceof StoppableTask) {
             progressBarPos.x -= xIconSize.x * 2;

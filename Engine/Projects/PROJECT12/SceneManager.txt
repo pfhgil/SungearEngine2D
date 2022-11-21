@@ -16,7 +16,7 @@
       "isMainScene2D": false
     },
     {
-      "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl4.sgs",
+      "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\new_lvl4.sgs",
       "inBuild": false,
       "isMainScene2D": false
     }

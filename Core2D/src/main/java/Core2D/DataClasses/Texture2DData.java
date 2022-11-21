@@ -8,18 +8,29 @@ import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
+import static org.lwjgl.opengl.GL41.*;
 import static org.lwjgl.stb.STBImage.stbi_load_from_memory;
 
 public class Texture2DData extends Data
 {
+    // информация о пикселях текстуры
+    private transient ByteBuffer pixelsData;
+
     // ширина текстуры
     private transient int width;
     // высота текстуры
     private transient int height;
     // сколько у текстуры каналов
     private transient int channels;
-    // информация о пикселях текстуры
-    private transient ByteBuffer pixelsData;
+
+    // формат текстуры. сколько каналов и какие каналы будет поддерживать текстура
+    private transient int format;
+    // сколько бит будет занимать каждый из каналов
+    private transient int internalFormat;
+
+    private int filterParam = GL_NEAREST;
+
+    private int wrapParam = GL_CLAMP_TO_EDGE;
 
     @Override
     public Texture2DData load(String path)
@@ -53,6 +64,18 @@ public class Texture2DData extends Data
             height = heightBuffer.get(0);
             channels = channelsBuffer.get(0);
 
+            // если текстура поддерживает 4 канал (RGBA (Red Green Blue Alpha))
+            if (channels == 4) {
+                // на каждый из каналов будет выделять 8 бит (поэтому GL_RGBA8)
+                internalFormat = GL_RGBA8;
+                // текстура будет поддерживать GL_RGBA
+                format = GL_RGBA;
+            } else if (channels == 3) { // если альфа канал не поддерживается (RGB)
+                // на каждый из каналов будет выделять 8 бит (поэтому GL_RGB8)
+                internalFormat = GL_RGB8;
+                // текстура будет поддерживать GL_RGB
+                format = GL_RGB;
+            }
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -60,13 +83,29 @@ public class Texture2DData extends Data
         return this;
     }
 
-    public void set(Texture2DData texture2DData)
+    @Override
+    public void set(Data data)
     {
-        pixelsData = ByteBuffer.wrap(texture2DData.pixelsData.array());
-        width = texture2DData.width;
-        height = texture2DData.height;
-        channels = texture2DData.channels;
+        if(data instanceof Texture2DData texture2DData) {
+            pixelsData = ByteBuffer.wrap(texture2DData.pixelsData.array());
+            width = texture2DData.width;
+            height = texture2DData.height;
+            channels = texture2DData.channels;
+            wrapParam = texture2DData.getWrapParam();
+            filterParam = texture2DData.getFilterParam();
+        }
     }
+
+    @Override
+    public void setNotTransientFields(Data data)
+    {
+        if(data instanceof Texture2DData texture2DData) {
+            wrapParam = texture2DData.getWrapParam();
+            filterParam = texture2DData.getFilterParam();
+        }
+    }
+
+    public ByteBuffer getPixelsData() { return pixelsData; }
 
     public int getWidth() { return width; }
 
@@ -74,5 +113,11 @@ public class Texture2DData extends Data
 
     public int getChannels() { return channels; }
 
-    public ByteBuffer getPixelsData() { return pixelsData; }
+    public int getFormat() { return format; }
+
+    public int getInternalFormat() { return internalFormat; }
+
+    public int getFilterParam() { return filterParam; }
+
+    public int getWrapParam() { return wrapParam; }
 }

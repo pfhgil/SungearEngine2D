@@ -7,17 +7,16 @@ import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Component;
 import Core2D.Component.Components.*;
 import Core2D.Component.NonRemovable;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
+import Core2D.GameObject.RenderParts.Texture2D;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Tasks.StoppableTask;
-import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Tag;
-import Core2D.Utils.WrappedObject;
 import SungearEngine2D.GUI.ImGuiUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.View;
@@ -112,9 +111,9 @@ public class InspectorView extends View
         ImGui.begin("Inspector", ImGuiWindowFlags.NoMove);
         {
             if(currentInspectingObject != null) {
-                if(currentInspectingObject instanceof Object2D) {
-                    Object2D inspectingObject2D = (Object2D) currentInspectingObject;
-                    inspectObject2D(inspectingObject2D);
+                if(currentInspectingObject instanceof GameObject) {
+                    GameObject inspectingGameObject = (GameObject) currentInspectingObject;
+                    inspectObject2D(inspectingGameObject);
                 } else if(currentInspectingObject instanceof Camera2D) {
                     Camera2D inspectingCamera2D = (Camera2D) currentInspectingObject;
                     inspectCamera2D(inspectingCamera2D);
@@ -126,7 +125,7 @@ public class InspectorView extends View
         ImGui.end();
     }
 
-    private void inspectObject2D(Object2D inspectingObject2D)
+    private void inspectObject2D(GameObject inspectingObject2D)
     {
         setCurrentInspectingObject(inspectingObject2D);
         if(inspectingObject2D != null && !inspectingObject2D.isShouldDestroy()) {
@@ -138,7 +137,7 @@ public class InspectorView extends View
                         someButtonInPopupWindowHovered = ImGui.isItemHovered();
                         if (deleteClicked) {
                             try {
-                                inspectingObject2D.removeComponent(currentEditingComponent);
+                                inspectingObject2D.removeComponent(currentEditingComponent.getClass());
                             } catch (Exception e) {
                                 ImGui.endPopup();
                             }
@@ -155,9 +154,9 @@ public class InspectorView extends View
             ImGui.sameLine();
             ImGui.pushID("Object2DName");
             {
-                ImString name = new ImString(inspectingObject2D.getName(), 256);
+                ImString name = new ImString(inspectingObject2D.name, 256);
                 if (ImGui.inputText("", name)) {
-                    inspectingObject2D.setName(name.get());
+                    inspectingObject2D.name = name.get();
                     isEditing = true;
                 }
             }
@@ -167,7 +166,7 @@ public class InspectorView extends View
             ImGui.sameLine();
             ImGui.pushID("LayersCombo");
             {
-                if (ImGui.beginCombo("", inspectingObject2D.getLayer().getName())) {
+                if (ImGui.beginCombo("", inspectingObject2D.layerName)) {
                     List<Layer> layers = currentSceneManager.getCurrentScene2D().getLayering().getLayers();
                     for (int i = 0; i < layers.size(); i++) {
                         boolean selected = ImGui.selectable(layers.get(i).getID() + ".  " + layers.get(i).getName());
@@ -322,11 +321,11 @@ public class InspectorView extends View
             ImGui.sameLine();
             ImGui.pushID("TagsCombo");
             {
-                if (ImGui.beginCombo("", inspectingObject2D.getTag().getName())) {
+                if (ImGui.beginCombo("", inspectingObject2D.tag.getName())) {
                     List<Tag> tags = currentSceneManager.getCurrentScene2D().getTags();
                     for (int i = 0; i < tags.size(); i++) {
                         if (ImGui.selectable(tags.get(i).getName())) {
-                            inspectingObject2D.setTag(tags.get(i).getName());
+                            inspectingObject2D.tag.set(tags.get(i));
                         }
                     }
 
@@ -572,6 +571,7 @@ public class InspectorView extends View
                                 }
                             }
 
+                            /*
                             if (ImGui.beginCombo("Blend source factor", Texture2D.blendFactorToString(textureComponent.texture.blendSourceFactor))) {
                                 for(int factor : Texture2D.getAllBlendFactors()) {
                                     if (ImGui.selectable(Texture2D.blendFactorToString(factor))) {
@@ -589,6 +589,8 @@ public class InspectorView extends View
                                 }
                                 ImGui.endCombo();
                             }
+
+                             */
                         }
                         case "Rigidbody2DComponent" -> {
                             Rigidbody2DComponent rigidbody2DComponent = ((Rigidbody2DComponent) inspectingObject2D.getComponents().get(i));
@@ -702,10 +704,10 @@ public class InspectorView extends View
                                         ImGui.popID();
 
                                         scriptComponent.getScript().setFieldValue(field, string.get());
-                                    } else if (cs.isAssignableFrom(Object2D.class)) {
+                                    } else if (cs.isAssignableFrom(GameObject.class)) {
                                         ImString string = new ImString(cs.getSimpleName());
                                         if (scriptComponent.getScript().getFieldValue(field) != null) {
-                                            string.set(((Object2D) scriptComponent.getScript().getFieldValue(field)).getName(), true);
+                                            string.set(((GameObject) scriptComponent.getScript().getFieldValue(field)).name, true);
                                         }
 
                                         ImGui.pushID(field.getName() + "_" + i);
@@ -719,11 +721,9 @@ public class InspectorView extends View
                                         ImGui.popID();
 
                                         if (ImGui.beginDragDropTarget()) {
-                                            Object droppedObject = ImGui.acceptDragDropPayload("SceneWrappedObject");
-                                            if (droppedObject instanceof WrappedObject && ((WrappedObject) droppedObject).getObject() instanceof Object2D) {
-                                                Object2D object2D = (Object2D) ((WrappedObject) droppedObject).getObject();
-
-                                                scriptComponent.getScript().setFieldValue(field, object2D);
+                                            Object droppedObject = ImGui.acceptDragDropPayload("SceneGameObject");
+                                            if (droppedObject instanceof GameObject gameObject) {
+                                                scriptComponent.getScript().setFieldValue(field, gameObject);
                                             }
                                             ImGui.endDragDropTarget();
                                         }
@@ -989,7 +989,7 @@ public class InspectorView extends View
         }
     }
 
-    private void compileAndAddScriptComponent(File javaFile, Object2D inspectingObject2D)
+    private void compileAndAddScriptComponent(File javaFile, GameObject inspectingObject2D)
     {
         ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + javaFile.getName() + "... ", 1.0f, 0.0f) {
             @Override
@@ -1090,25 +1090,25 @@ public class InspectorView extends View
 
                     try {
                         if (ImGui.selectable("Texture")) {
-                            ((Object2D) currentInspectingObject).addComponent(new MeshRendererComponent());
+                            ((GameObject) currentInspectingObject).addComponent(new MeshRendererComponent());
                             action = "";
                         }
                         if (ImGui.selectable("Rigidbody2D")) {
                             Rigidbody2DComponent rigidbody2DComponent = new Rigidbody2DComponent();
-                            ((Object2D) currentInspectingObject).addComponent(rigidbody2DComponent);
+                            ((GameObject) currentInspectingObject).addComponent(rigidbody2DComponent);
                             rigidbody2DComponent.getRigidbody2D().setType(BodyType.STATIC);
                             action = "";
                         }
                         if (ImGui.selectable("BoxCollider2D")) {
-                            ((Object2D) currentInspectingObject).addComponent(new BoxCollider2DComponent());
+                            ((GameObject) currentInspectingObject).addComponent(new BoxCollider2DComponent());
                             action = "";
                         }
                         if (ImGui.selectable("CircleCollider2D")) {
-                            ((Object2D) currentInspectingObject).addComponent(new CircleCollider2DComponent());
+                            ((GameObject) currentInspectingObject).addComponent(new CircleCollider2DComponent());
                             action = "";
                         }
                         if(ImGui.selectable("Audio")) {
-                            ((Object2D) currentInspectingObject).addComponent(new AudioComponent());
+                            ((GameObject) currentInspectingObject).addComponent(new AudioComponent());
                             action = "";
                         }
                     } catch (Exception e) {

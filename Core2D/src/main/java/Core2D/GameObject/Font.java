@@ -1,14 +1,9 @@
-package Core2D.Drawable;
+package Core2D.GameObject;
 
-import Core2D.Core2D.Core2D;
-import Core2D.Core2D.Settings;
 import Core2D.DataClasses.FontData;
-import Core2D.Texture2D.Texture2D;
-import Core2D.Utils.FileUtils;
+import Core2D.GameObject.RenderParts.Texture2D;
 import org.joml.Vector2f;
 
-import java.io.File;
-import java.io.InputStream;
 import java.util.*;
 
 @Deprecated

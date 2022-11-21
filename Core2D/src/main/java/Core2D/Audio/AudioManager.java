@@ -2,10 +2,9 @@ package Core2D.Audio;
 
 import Core2D.Component.Component;
 import Core2D.Component.Components.AudioComponent;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
 import Core2D.Layering.Layer;
 import Core2D.Scene2D.SceneManager;
-import Core2D.Utils.WrappedObject;
 import org.lwjgl.openal.AL10;
 
 import java.util.ArrayList;
@@ -41,17 +40,15 @@ public class AudioManager
     {
         if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
             for(Layer layer : SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
-                int renderingObjectsNum = layer.getRenderingObjects().size();
+                int renderingObjectsNum = layer.getGameObjects().size();
                 for(int i = 0; i < renderingObjectsNum; i++) {
-                    WrappedObject wrappedObject = layer.getRenderingObjects().get(i);
-                    if(wrappedObject.getObject() instanceof Object2D object2D) {
-                        int componentsNum = object2D.getComponents().size();
-                        for(int k = 0; k < componentsNum; k++) {
-                            Component component = object2D.getComponents().get(k);
-                            if(component instanceof AudioComponent audioComponent) {
-                                System.out.println("destroyed source: " + audioComponent.audio.source);
-                                audioComponent.audio.destroy();
-                            }
+                    GameObject gameObject = layer.getGameObjects().get(i);
+                    int componentsNum = gameObject.getComponents().size();
+                    for (int k = 0; k < componentsNum; k++) {
+                        Component component = gameObject.getComponents().get(k);
+                        if (component instanceof AudioComponent audioComponent) {
+                            System.out.println("destroyed source: " + audioComponent.audio.source);
+                            audioComponent.audio.destroy();
                         }
                     }
                 }

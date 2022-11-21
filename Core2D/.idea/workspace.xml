@@ -54,6 +54,7 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -65,7 +66,7 @@
     <option name="stateVersion" value="1" />
   </component>
   <component name="ProblemsViewState">
-    <option name="selectedTabId" value="ProjectErrors" />
+    <option name="selectedTabId" value="CurrentFile" />
   </component>
   <component name="ProjectId" id="2GgLNFdpdqZyeiocsqu3dl7M5HP" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -174,7 +175,10 @@
       <workItem from="1668597059747" duration="3842000" />
       <workItem from="1668616787455" duration="11729000" />
       <workItem from="1668706288998" duration="1226000" />
-      <workItem from="1668876457308" duration="16710000" />
+      <workItem from="1668876457308" duration="17083000" />
+      <workItem from="1668943766395" duration="16930000" />
+      <workItem from="1669018855096" duration="8825000" />
+      <workItem from="1669027833750" duration="21634000" />
     </task>
     <servers />
   </component>

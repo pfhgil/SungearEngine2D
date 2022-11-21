@@ -1,14 +1,12 @@
 package Core2D.Component.Components;
 
 import Core2D.AssetManager.AssetManager;
-import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Component;
-import Core2D.Shader.Shader;
+import Core2D.GameObject.RenderParts.Material2D;
+import Core2D.GameObject.RenderParts.Shader;
 import Core2D.ShaderUtils.*;
-import Core2D.Texture2D.Texture2D;
-import Core2D.Texture2D.TextureDrawModes;
+import Core2D.GameObject.RenderParts.Texture2D;
 import Core2D.Utils.PositionsQuad;
-import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL11C;
@@ -17,10 +15,11 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class MeshRendererComponent extends Component {
 
-    public transient Texture2D texture = new Texture2D();
-    private Matrix4f mvpMatrix = new Matrix4f();
-    public boolean isUIElement = false;
-    public transient Shader shader;
+    public Texture2D texture = new Texture2D();
+
+    public Shader shader;
+
+    public Material2D material2D;
 
     // VAO четырехугольника (VAO - Vertex Array Object. Хранит в себе указатели на VBO, IBO и т.д.)
     public transient VertexArrayObject vertexArrayObject;
@@ -43,13 +42,13 @@ public class MeshRendererComponent extends Component {
             size.x / 2.0f, -size.y / 2.0f,
             1, 0,
     };
-    public int textureDrawMode = TextureDrawModes.DEFAULT;
+    public int textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
 
     @Override
     public void init() {
         shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/object2D/shader.glsl"));
 
-        object2D.setColor(new Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
+        gameObject.color.set(new Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
 
         loadVAO();
     }
@@ -61,22 +60,26 @@ public class MeshRendererComponent extends Component {
     @Override
     public void update()
     {
-        if(object2D.isShouldDestroy()) return;
-        updateMVPMatrix();
+        TransformComponent transformComponent = gameObject.getComponent(TransformComponent.class);
+        if(transformComponent == null) return;
+        if(gameObject.isShouldDestroy()) return;
         // использую VAO, текстуру и шейдер
         vertexArrayObject.bind();
         texture.bind();
+        if(material2D != null && material2D.material2DData != null) {
+            glBlendFunc(material2D.material2DData.blendSourceFactor, material2D.material2DData.blendDestinationFactor);
+        }
         shader.bind();
 
         ShaderUtils.setUniform(
                 shader.getProgramHandler(),
                 "mvpMatrix",
-                mvpMatrix
+                transformComponent.getMvpMatrix()
         );
         ShaderUtils.setUniform(
                 shader.getProgramHandler(),
                 "color",
-                object2D.getColor()
+                gameObject.getColor()
         );
         ShaderUtils.setUniform(
                 shader.getProgramHandler(),
@@ -132,20 +135,8 @@ public class MeshRendererComponent extends Component {
 
         }
     }
-
-    private void updateMVPMatrix()
-    {
-        Matrix4f modelMatrix = new Matrix4f().set(object2D.getComponent(TransformComponent.class).getTransform().getResultModelMatrix());
-
-        if(CamerasManager.getMainCamera2D() != null && !isUIElement) {
-            mvpMatrix = new Matrix4f(CamerasManager.getMainCamera2D().getProjectionMatrix()).mul(CamerasManager.getMainCamera2D().getViewMatrix())
-                    .mul(modelMatrix);
-        } else {
-            mvpMatrix = new Matrix4f().mul(modelMatrix);
-        }
-    }
     public void setUV(float[] UV) {
-        if (object2D != null) {
+        if (gameObject != null) {
             data[2] = UV[0];
             data[3] = UV[1];
 

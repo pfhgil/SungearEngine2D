@@ -2,20 +2,20 @@ package SungearEngine2D.DebugDraw;
 
 import Core2D.Component.Components.MeshRendererComponent;
 import Core2D.Component.Components.TransformComponent;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;
 import org.joml.Vector2f;
 
 public class Grid
 {
-    private static Object2D grid;
+    private static GameObject grid;
 
     private static int level = 1;
 
     public static void init(Vector2f scale)
     {
-        grid = new Object2D();
+        grid = GameObject.create2D();
 
         grid.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(1f, 1f));
         MeshRendererComponent c = grid.getComponent(MeshRendererComponent.class);
@@ -25,7 +25,7 @@ public class Grid
                 261, 261,
                 261, 0.0f
         });
-        c.isUIElement = true;
+        grid.isUIElement = true;
         //grid.getComponent(TextureComponent.class).getTexture2D().param = GL_REPEAT;
         //grid.setColor(new Vector4f(0.3f, 0.3f, 0.3f, 1.0f));
         //grid.setShaderProgram(null);

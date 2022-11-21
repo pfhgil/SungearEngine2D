@@ -10,8 +10,8 @@ public class AudioComponent extends Component
     @Override
     public void init()
     {
-        if(object2D != null && !object2D.isShouldDestroy()) {
-            audio.getTransform().setParentTransform(object2D.getComponent(TransformComponent.class).getTransform());
+        if(gameObject != null && !gameObject.isShouldDestroy()) {
+            audio.getTransform().setParentTransform(gameObject.getComponent(TransformComponent.class).getTransform());
         }
     }
 

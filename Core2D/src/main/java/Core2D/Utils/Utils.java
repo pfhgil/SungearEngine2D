@@ -2,8 +2,11 @@ package Core2D.Utils;
 
 import Core2D.Component.Component;
 import Core2D.Component.Components.TransformComponent;
+import Core2D.DataClasses.Data;
 import Core2D.Deserializers.*;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
+import Core2D.Layering.Layer;
+import Core2D.Layering.Layering;
 import Core2D.Log.Log;
 import Core2D.Prefab.Prefab;
 import Core2D.Scene2D.Scene2D;
@@ -15,7 +18,6 @@ import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.system.MemoryUtil;
 
-import javax.sound.sampled.AudioFormat;
 import java.io.*;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
@@ -27,15 +29,18 @@ public class Utils
 {
     private static Random random = new Random();
 
+    private static final CommonDeserializer<Data> dataDeserializer = new CommonDeserializer<>();
+    private static final CommonDeserializer<Component> componentDeserializer = new CommonDeserializer<>();
+
     public static Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .registerTypeAdapter(Prefab.class, new PrefabDeserializer())
-            .registerTypeAdapter(Component.class, new ComponentDeserializer())
-            .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
-            .registerTypeAdapter(WrappedObject.class, new WrappedObjectDeserializer())
-            .registerTypeAdapter(Component.class, new ComponentDeserializer())
-            .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
+            .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
             .registerTypeAdapter(Scene2D.class, new Scene2DDeserializer())
+            .registerTypeAdapter(Data.class, dataDeserializer)
+            .registerTypeAdapter(Component.class, componentDeserializer)
+            .registerTypeAdapter(Layer.class, new LayerDeserializer())
+            .registerTypeAdapter(Layering.class, new LayeringDeserializer())
             .create();
 
     // создает FloatBuffer, помещает туда data и возвращает получившийся буфер
@@ -178,9 +183,9 @@ public class Utils
         return min + Math.random() * (max - min);
     }
 
-    public static boolean isPointInNoRotatedObject(Vector2f mousePosition, Object2D object2D)
+    public static boolean isPointInNoRotatedObject(Vector2f mousePosition, Core2D.GameObject.GameObject gameObject)
     {
-        Transform objectTransform = object2D.getComponent(TransformComponent.class).getTransform();
+        Transform objectTransform = gameObject.getComponent(TransformComponent.class).getTransform();
 
         return mousePosition.x >= objectTransform.getPosition().x &&
                 mousePosition.x <= objectTransform.getPosition().x + 100.0f * objectTransform.getScale().x &&

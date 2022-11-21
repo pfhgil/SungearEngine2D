@@ -1,8 +1,8 @@
 Core2D.Animation.SpriteAnimation
 Core2D.AssetManager
 Core2D.AtlasDrawing
-Core2D.Camera2D
-Core2D.Drawable
+Core2D.CamerasManager
+Core2D.GameObject
 Core2D.Component
 Core2D.Component.Components
 Core2D.Input.PC
@@ -10,8 +10,8 @@ Core2D.Core2D
 Core2D.Deserializers
 Core2D.Graphics
 Core2D.Input
-Core2D.Drawable.Instancing
-Core2D.Drawable.Instancing.Primitives
+Core2D.GameObject.Instancing
+Core2D.GameObject.Instancing.Primitives
 Core2D.Layering
 Core2D.Log
 Core2D.Transform
@@ -20,7 +20,7 @@ Core2D.Particles.ParticlesSettings
 Core2D.Physics
 Core2D.Physics.Collider2D
 Core2D.Prefab
-Core2D.Drawable.Primitives
+Core2D.GameObject.Primitives
 Core2D.Project
 Core2D.Scene2D
 Core2D.Scripting
@@ -29,10 +29,10 @@ Core2D.ShaderUtils
 Core2D.Systems
 Core2D.Texture2D
 Core2D.Timer
-Core2D.Drawable.UI
-Core2D.Drawable.UI.Button
-Core2D.Drawable.UI.InputField
-Core2D.Drawable.UI.ProgressBar
-Core2D.Drawable.UI.Text
+Core2D.GameObject.UI
+Core2D.GameObject.UI.Button
+Core2D.GameObject.UI.InputField
+Core2D.GameObject.UI.ProgressBar
+Core2D.GameObject.UI.Text
 Core2D.Utils
 Core2D.Window

@@ -1,6 +1,6 @@
 package Core2D.Deserializers;
 
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
 import Core2D.Log.Log;
 import Core2D.Prefab.Prefab;
 import Core2D.Utils.ExceptionsUtils;
@@ -8,7 +8,7 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-public class PrefabDeserializer implements JsonDeserializer<Prefab>, JsonSerializer<Prefab>
+public class    PrefabDeserializer implements JsonDeserializer<Prefab>, JsonSerializer<Prefab>
 {
 
     @Override
@@ -26,22 +26,20 @@ public class PrefabDeserializer implements JsonDeserializer<Prefab>, JsonSeriali
         }
 
         try {
-            Object obj =  context.deserialize(properties, Class.forName(type));
-            if(obj instanceof Object2D) {
-                Object2D object2D = (Object2D) obj;
-                object2D.getChildrenObjectsID().clear();
-                JsonArray childrenObjectsJArray = jsonObject.getAsJsonArray("childrenObjects");
-                if(childrenObjectsJArray != null) {
-                    for(JsonElement element : childrenObjectsJArray) {
-                        Prefab pref = context.deserialize(element, Prefab.class);
-                        if(pref.getPrefabObject() instanceof Object2D) {
-                            object2D.addChildObject((Object2D) pref.getPrefabObject());
-                        }
-                        addPrefabChildren(pref);
-                    }
+            GameObject gameObject = context.deserialize(properties, Class.forName(type));
+
+            gameObject.getChildrenObjectsID().clear();
+            JsonArray childrenObjectsJArray = jsonObject.getAsJsonArray("childrenObjects");
+            if (childrenObjectsJArray != null) {
+                for (JsonElement element : childrenObjectsJArray) {
+                    Prefab pref = context.deserialize(element, Prefab.class);
+
+                    gameObject.addChildObject(pref.getPrefabObject());
+
+                    addPrefabChildren(pref);
                 }
             }
-            return new Prefab(obj);
+            return new Prefab(gameObject);
         } catch(ClassNotFoundException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             return null;
@@ -62,10 +60,10 @@ public class PrefabDeserializer implements JsonDeserializer<Prefab>, JsonSeriali
 
     private void addPrefabChildren(Prefab prefab)
     {
-        if(prefab.getPrefabObject() instanceof Object2D) {
+        if(prefab.getPrefabObject() instanceof GameObject) {
             for (Prefab pref : prefab.getChildrenObjects()) {
-                if (pref.getPrefabObject() instanceof Object2D) {
-                    ((Object2D) prefab.getPrefabObject()).addChildObject((Object2D) pref.getPrefabObject());
+                if (pref.getPrefabObject() instanceof GameObject) {
+                    ((GameObject) prefab.getPrefabObject()).addChildObject((GameObject) pref.getPrefabObject());
                 }
             }
         }

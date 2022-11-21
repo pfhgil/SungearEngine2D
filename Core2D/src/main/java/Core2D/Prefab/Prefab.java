@@ -1,7 +1,6 @@
 package Core2D.Prefab;
 
-import Core2D.Drawable.Drawable;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
 import Core2D.Layering.Layer;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.FileUtils;
@@ -12,7 +11,7 @@ import java.util.List;
 
 public class Prefab
 {
-    private Object prefabObject;
+    private GameObject prefabObject;
     private List<Prefab> childrenObjects = new ArrayList<>();
 
     public Prefab()
@@ -20,17 +19,15 @@ public class Prefab
 
     }
 
-    public Prefab(Object prefabObject)
+    public Prefab(GameObject prefabObject)
     {
         setPrefabObject(prefabObject);
     }
 
     public void save(String path)
     {
-        if(prefabObject instanceof Object2D) {
-            String serialized = Utils.gson.toJson(this);
-            FileUtils.serializeObject(path, serialized);
-        }
+        String serialized = Utils.gson.toJson(this);
+        FileUtils.serializeObject(path, serialized);
     }
 
     public static Prefab load(String path)
@@ -42,62 +39,53 @@ public class Prefab
     public void applyObjectsToScene()
     {
         if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-            Drawable prefParams = (Drawable) prefabObject;
-            Object2D parentObject = (Object2D) prefabObject;
-            Layer layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer(prefParams.getLayerName());
+            Layer layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer(prefabObject.layerName);
             if(layer == null) {
                 layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default");
             }
             SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID++;
-            prefParams.setID(SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID);
-            prefParams.setLayer(layer);
-            parentObject.getChildrenObjectsID().clear();
+            prefabObject.ID = SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID;
+            prefabObject.setLayer(layer);
+            prefabObject.getChildrenObjectsID().clear();
             for (Prefab prefab : childrenObjects) {
-                if (prefab.getPrefabObject() instanceof Drawable) {
-                    Drawable params = (Drawable) prefab.getPrefabObject();
-                    layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer(params.getLayerName());
-                    if(layer == null) {
-                        layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default");
-                    }
-                    SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID++;
-                    params.setID(SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID);
-                    params.setLayer(layer);
-                    parentObject.getChildrenObjectsID().add(params.getID());
-                    applyChildPrefabToScene(prefab);
-                }
-            }
-        }
-    }
-
-    private void applyChildPrefabToScene(Prefab pref)
-    {
-        for (Prefab prefab : pref.getChildrenObjects()) {
-            Object2D parentObj = (Object2D) pref.getPrefabObject();
-            if (prefab.getPrefabObject() instanceof Object2D) {
-                Drawable params = (Drawable) prefab.getPrefabObject();
-                Layer layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer(params.getLayerName());
-                if(layer == null) {
+                layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer(prefab.getPrefabObject().layerName);
+                if (layer == null) {
                     layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default");
                 }
                 SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID++;
-                params.setID(SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID);
-                params.setLayer(layer);
-                parentObj.getChildrenObjectsID().add(params.getID());
+
+                prefab.getPrefabObject().ID = SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID;
+                prefab.getPrefabObject().setLayer(layer);
+                prefabObject.getChildrenObjectsID().add(prefab.getPrefabObject().ID);
                 applyChildPrefabToScene(prefab);
             }
         }
     }
 
-    public Object getPrefabObject() { return prefabObject; }
-    public void setPrefabObject(Object prefabObject)
+    private void applyChildPrefabToScene(Prefab parentPrefab)
+    {
+        for (Prefab childPrefab : parentPrefab.getChildrenObjects()) {
+            Layer layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer(childPrefab.getPrefabObject().layerName);
+            if (layer == null) {
+                layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default");
+            }
+            SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID++;
+
+            childPrefab.getPrefabObject().ID = SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID;
+            childPrefab.getPrefabObject().setLayer(layer);
+            parentPrefab.getPrefabObject().getChildrenObjectsID().add(childPrefab.getPrefabObject().ID);
+            applyChildPrefabToScene(childPrefab);
+        }
+    }
+
+    public GameObject getPrefabObject() { return prefabObject; }
+    public void setPrefabObject(GameObject prefabObject)
     {
         this.prefabObject = prefabObject;
 
         childrenObjects.clear();
-        if(prefabObject instanceof Object2D) {
-            for(Object2D childObject : ((Object2D) prefabObject).getChildrenObjects()) {
-                childrenObjects.add(new Prefab(childObject));
-            }
+        for (GameObject childObject : prefabObject.getChildrenObjects()) {
+            childrenObjects.add(new Prefab(childObject));
         }
     }
 

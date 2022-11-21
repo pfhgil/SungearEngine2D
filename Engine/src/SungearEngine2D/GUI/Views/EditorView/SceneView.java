@@ -5,12 +5,12 @@ import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Components.MeshRendererComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
-import Core2D.Drawable.Object2D;
+import Core2D.GameObject.GameObject;
+import Core2D.GameObject.RenderParts.Texture2D;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.PC.Mouse;
 import Core2D.Prefab.Prefab;
 import Core2D.Project.ProjectsManager;
-import Core2D.Texture2D.Texture2D;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.MathUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
@@ -48,7 +48,7 @@ public class SceneView extends View
     private Vector2f ratioCameraScale = new Vector2f();
 
     // превью нового объекта на сцене
-    private Object2D newObject2DPreview;
+    private GameObject newObject2DPreview;
 
     public SceneView()
     {
@@ -172,7 +172,7 @@ public class SceneView extends View
                     // если мышка отжата, то есть droppedFile != null, то создаю объект на сцене по координатам мышки, а превью удаляю
                     if(droppedObject instanceof File) {
                         File file = (File) droppedObject;
-                        Object2D newSceneObject2D = createSceneObject2D(file);
+                        GameObject newSceneObject2D = createSceneObject2D(file);
                         if(newSceneObject2D != null) {
                             newSceneObject2D.getComponent(TransformComponent.class).getTransform().setPosition(
                                     newObject2DPreview.getComponent(TransformComponent.class).getTransform().getPosition()
@@ -299,11 +299,11 @@ public class SceneView extends View
     }
 
     // создает объект на сцене
-    private Object2D createSceneObject2D(File file)
+    private GameObject createSceneObject2D(File file)
     {
         String extension = FilenameUtils.getExtension(file.getName());
         if(extension.equals("png") || extension.equals("jpg")) {
-            Object2D newSceneObject2D = new Object2D();
+            GameObject newSceneObject2D = GameObject.create2D();
 
             String relativePath = FileUtils.getRelativePath(
                     new File(file.getPath()),
@@ -316,12 +316,13 @@ public class SceneView extends View
             Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
             newSceneObject2D.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);
 
-            Vector2f newObject2DScale = new Vector2f(textureComponent.texture.getWidth() / 100.0f, textureComponent.texture.getHeight() / 100.0f);
+            Vector2f newObject2DScale = new Vector2f(textureComponent.texture.getTexture2DData().getWidth() / 100.0f,
+                    textureComponent.texture.getTexture2DData().getHeight() / 100.0f);
             newSceneObject2D.getComponent(TransformComponent.class).getTransform().setScale(newObject2DScale);
 
             // дефолтный layer
             newSceneObject2D.setLayer(currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
-            newSceneObject2D.setName(FilenameUtils.getBaseName(file.getName()));
+            newSceneObject2D.name = FilenameUtils.getBaseName(file.getName());
 
             ViewsManager.getResourcesView().setCurrentMovingFile(null);
 
@@ -336,7 +337,7 @@ public class SceneView extends View
 
             prefab.applyObjectsToScene();
 
-            return (Object2D) prefab.getPrefabObject();
+            return prefab.getPrefabObject();
         }
 
         return null;
