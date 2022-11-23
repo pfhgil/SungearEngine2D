@@ -68,8 +68,10 @@ public class TransformComponent extends Component implements NonDuplicated
 
         if(CamerasManager.mainCamera2D != null && !gameObject.isUIElement) {
             Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
-            mvpMatrix = new Matrix4f(camera2DComponent.getProjectionMatrix()).mul(camera2DComponent.getViewMatrix())
-                    .mul(modelMatrix);
+            if(camera2DComponent != null) {
+                mvpMatrix = new Matrix4f(camera2DComponent.getProjectionMatrix()).mul(camera2DComponent.getViewMatrix())
+                        .mul(modelMatrix);
+            }
         } else {
             mvpMatrix = new Matrix4f().mul(modelMatrix);
         }

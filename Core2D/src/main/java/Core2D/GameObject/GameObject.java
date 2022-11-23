@@ -1,6 +1,7 @@
 package Core2D.GameObject;
 
 import Core2D.Component.Component;
+import Core2D.Component.Components.Camera2DComponent;
 import Core2D.Component.Components.MeshRendererComponent;
 import Core2D.Component.Components.Rigidbody2DComponent;
 import Core2D.Component.Components.TransformComponent;
@@ -88,15 +89,20 @@ public class GameObject implements Serializable
         createNewID();
     }
 
-    public static GameObject create2D()
+    public static GameObject createObject2D()
     {
         GameObject gameObject = new GameObject();
         gameObject.addComponent(new TransformComponent());
         gameObject.addComponent(new MeshRendererComponent());
 
-        gameObject.pickColor.set(gameObject.createPickColor());
+        return gameObject;
+    }
 
-        gameObject.createNewID();
+    public static GameObject createCamera2D()
+    {
+        GameObject gameObject = new GameObject();
+        gameObject.addComponent(new TransformComponent());
+        gameObject.addComponent(new Camera2DComponent());
 
         return gameObject;
     }
@@ -285,7 +291,7 @@ public class GameObject implements Serializable
         this.parentObject2DID = parentObject2DID;
 
         if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-            setParentObject2D(SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(parentObject2DID));
+            setParentObject2D(SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(parentObject2DID));
         }
     }
 
@@ -307,7 +313,7 @@ public class GameObject implements Serializable
     public void addChildObjectByID(int object2DID)
     {
         if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-            GameObject gameObject = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(object2DID);
+            GameObject gameObject = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(object2DID);
             if(gameObject != null) {
                 childrenObjects.add(gameObject);
                 childrenObjectsID.add(gameObject.ID);
@@ -319,7 +325,7 @@ public class GameObject implements Serializable
     {
         if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
             for (int i = 0; i < objects2DID.size(); i++) {
-                GameObject gameObject = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(objects2DID.get(i));
+                GameObject gameObject = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(objects2DID.get(i));
                 if(gameObject != null) {
                     childrenObjects.add(gameObject);
                     childrenObjectsID.add(gameObject.ID);
@@ -340,7 +346,7 @@ public class GameObject implements Serializable
     {
         if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
             for (int i = 0; i < childrenObjectsID.size(); i++) {
-                GameObject gameObject = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(childrenObjectsID.get(i));
+                GameObject gameObject = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(childrenObjectsID.get(i));
                 if(gameObject != null) {
                     childrenObjects.add(gameObject);
                     gameObject.setParentObject2D(this);

@@ -1,8 +1,7 @@
 package SungearEngine2D.Main;
 
 import Core2D.Audio.Audio;
-import Core2D.Camera2D.Camera2D;
-import Core2D.Camera2D.CamerasManager;
+import Core2D.CamerasManager.CamerasManager;
 import Core2D.Component.Components.ScriptComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
@@ -14,31 +13,21 @@ import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
-import Core2D.Scene2D.SceneManager;
 import Core2D.Tasks.StoppableTask;
+import Core2D.Transform.Transform;
 import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.CameraController.CameraController;
 import SungearEngine2D.GUI.GUI;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Utils.AppData.AppDataManager;
-import SungearEngine2D.Utils.Debugger;
 import org.apache.commons.io.FilenameUtils;
-import org.apache.commons.io.IOUtils;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
-import org.lwjgl.openal.*;
+import org.newdawn.slick.Game;
 
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.UnsupportedAudioFileException;
 import java.io.File;
-import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.IntBuffer;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,8 +37,7 @@ public class Main
 {
     private static Core2DUserCallback core2DUserCallback;
 
-    private static GameObject cameraAnchor;
-    private static Camera2D mainCamera2D;
+    private static GameObject mainCamera2D;
 
     public static Thread helpThread;
 
@@ -67,15 +55,9 @@ public class Main
                 //Debugger.init();
                 Resources.load();
 
-                mainCamera2D = new Camera2D();
-                cameraAnchor = GameObject.create2D();
-                cameraAnchor.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-                cameraAnchor.getComponent(TransformComponent.class).getTransform().setPosition(new Vector2f(0.0f, 0.0f));
-
-                //mainCamera2D.getTransform().setParentTransform(cameraAnchor.getComponent(TransformComponent.class).getTransform());
-                CamerasManager.setMainCamera2D(mainCamera2D);
-
-                CameraController.controlledCamera2DAnchor = cameraAnchor;
+                mainCamera2D = GameObject.createCamera2D();
+                CamerasManager.mainCamera2D = mainCamera2D;
+                CameraController.controlledCamera2D = mainCamera2D;
 
                 CameraController.init();
 
@@ -179,7 +161,10 @@ public class Main
             public void onDrawFrame() {
                 Core2D.getWindow().setName("Sungear Engine 2D. FPS: " + Core2D.getDeltaTimer().getFPS());
 
-                mainCamera2D.getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
+                TransformComponent cameraTransformComponent = mainCamera2D.getComponent(TransformComponent.class);
+                if(cameraTransformComponent != null) {
+                    cameraTransformComponent.getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
+                }
                 //cameraAnchor.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
                 CameraController.control();
 
@@ -187,12 +172,14 @@ public class Main
 
                 GraphicsRenderer.draw();
 
+                mainCamera2D.update();
+
                 //Core2D.getWindow().setName("Sungear Engine 2D. FPS: " + Core2D.getDeltaTimer().getFPS());
             }
 
             @Override
             public void onDeltaUpdate(float deltaTime) {
-                cameraAnchor.getComponent(TransformComponent.class).getTransform().update(deltaTime);
+                mainCamera2D.deltaUpdate(deltaTime);
                 currentSceneManager.updateCurrentScene2D(deltaTime);
             }
         };
@@ -202,7 +189,5 @@ public class Main
         //Core2D.start("Sungear Engine 2D", new int[] { GLFW.GLFW_SAMPLES }, new int[] { 8 });
     }
 
-    public static GameObject getCameraAnchor() { return cameraAnchor; }
-
-    public static Camera2D getMainCamera2D() { return mainCamera2D; }
+    public static GameObject getMainCamera2D() { return mainCamera2D; }
 }

@@ -39,19 +39,19 @@ public class Gizmo
 
     public static Vector2f scaleSensitivity = new Vector2f(0.1f, 0.1f);
 
-    public static final GameObject yArrow = GameObject.create2D();
-    public static final GameObject xArrow = GameObject.create2D();
+    public static final GameObject yArrow = GameObject.createObject2D();
+    public static final GameObject xArrow = GameObject.createObject2D();
 
-    public static final GameObject centrePoint = GameObject.create2D();
+    public static final GameObject centrePoint = GameObject.createObject2D();
 
-    public static final GameObject centrePointToEditCentre = GameObject.create2D();
+    public static final GameObject centrePointToEditCentre = GameObject.createObject2D();
 
     //#FIXME public static final Circle2D rotationCircle = new Circle2D(300.0f, 1, new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
-    public static final GameObject rotationHandler = GameObject.create2D();
+    public static final GameObject rotationHandler = GameObject.createObject2D();
 
-    public static final GameObject yScaleHandler = GameObject.create2D();
+    public static final GameObject yScaleHandler = GameObject.createObject2D();
     //#FIXME public static final Line2D yScaleLine = new Line2D();
-    public static final GameObject xScaleHandler = GameObject.create2D();
+    public static final GameObject xScaleHandler = GameObject.createObject2D();
     //#FIXME public static final Line2D xScaleLine = new Line2D();
 
     private static GameObject selectedGizmoTool;

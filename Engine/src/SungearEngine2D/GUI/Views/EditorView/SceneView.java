@@ -1,7 +1,8 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.AssetManager.AssetManager;
-import Core2D.Camera2D.CamerasManager;
+import Core2D.CamerasManager.CamerasManager;
+import Core2D.Component.Components.Camera2DComponent;
 import Core2D.Component.Components.MeshRendererComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
@@ -69,7 +70,7 @@ public class SceneView extends View
         ImGui.pushStyleVar(ImGuiStyleVar.WindowPadding, 0.0f, 0.0f);
         boolean windowOpened = ImGui.begin("Scene2D view", ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.MenuBar);
         if(windowOpened) {
-            CamerasManager.setMainCamera2D(Main.getMainCamera2D());
+            CamerasManager.mainCamera2D = Main.getMainCamera2D();
 
             ImGui.popStyleVar(1);
             ImGui.popStyleColor(1);
@@ -214,7 +215,7 @@ public class SceneView extends View
                 EngineSettings.Playmode.active = true;
                 EngineSettings.Playmode.paused = false;
                 currentSceneManager.saveScene(currentSceneManager.getCurrentScene2D(), currentSceneManager.getCurrentScene2D().getScenePath());
-                CamerasManager.setMainCamera2D(currentSceneManager.getCurrentScene2D().getSceneMainCamera2D());
+                CamerasManager.mainCamera2D = currentSceneManager.getCurrentScene2D().getSceneMainCamera2D();
                 currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = true;
                 currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts = true;
             }
@@ -303,7 +304,7 @@ public class SceneView extends View
     {
         String extension = FilenameUtils.getExtension(file.getName());
         if(extension.equals("png") || extension.equals("jpg")) {
-            GameObject newSceneObject2D = GameObject.create2D();
+            GameObject newSceneObject2D = GameObject.createObject2D();
 
             String relativePath = FileUtils.getRelativePath(
                     new File(file.getPath()),
@@ -353,8 +354,11 @@ public class SceneView extends View
         Matrix4f inverseView = new Matrix4f();
         Matrix4f inverseProjection = new Matrix4f();
 
-        CamerasManager.getMainCamera2D().getViewMatrix().invert(inverseView);
-        CamerasManager.getMainCamera2D().getProjectionMatrix().invert(inverseProjection);
+        Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
+        if(camera2DComponent != null) {
+            camera2DComponent.getViewMatrix().invert(inverseView);
+            camera2DComponent.getProjectionMatrix().invert(inverseProjection);
+        }
 
         inverseView.mul(inverseProjection, viewProjection);
         tmp.mul(viewProjection);

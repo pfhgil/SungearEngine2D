@@ -1,7 +1,6 @@
 package SungearEngine2D.DebugDraw;
 
 import Core2D.Component.Components.MeshRendererComponent;
-import Core2D.Camera2D.Camera2D;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.GameObject.GameObject;
@@ -21,8 +20,8 @@ public class CamerasDebugLines
     //#FIXME private static Line2D[] inspectorCamera2DLines = new Line2D[4];
     //#FIXME private static Line2D[] mainCamera2DLines = new Line2D[4];
 
-    private static GameObject inspectorCamera2DIconObject2D = GameObject.create2D();
-    private static GameObject mainCamera2DIconObject2D = GameObject.create2D();
+    private static GameObject inspectorCamera2DIconObject2D = GameObject.createObject2D();
+    private static GameObject mainCamera2DIconObject2D = GameObject.createObject2D();
 
     public static void init()
     {
@@ -47,34 +46,40 @@ public class CamerasDebugLines
 
     public static void draw() {
         Vector2i windowSize = Core2D.getWindow().getSize();
-        if (ViewsManager.getInspectorView().getCurrentInspectingObject() instanceof Camera2D
-                && currentSceneManager.getCurrentScene2D() != null
+        if (currentSceneManager.getCurrentScene2D() != null
                 && currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null
-                && ((Camera2D) ViewsManager.getInspectorView().getCurrentInspectingObject()).getID() != currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().getID()) {
-            Camera2D camera2D = (Camera2D) ViewsManager.getInspectorView().getCurrentInspectingObject();
+                && ((GameObject) ViewsManager.getInspectorView().getCurrentInspectingObject()).ID != currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().ID) {
+            GameObject camera2D = (GameObject) ViewsManager.getInspectorView().getCurrentInspectingObject();
 
-            Vector2f pointOne = new Vector2f(-camera2D.getTransform().getPosition().x - windowSize.x / 2.0f, -camera2D.getTransform().getPosition().y - windowSize.y / 2.0f);
-            Vector2f pointThree = new Vector2f((-camera2D.getTransform().getPosition().x + windowSize.x / 2.0f), (-camera2D.getTransform().getPosition().y + windowSize.y / 2.0f));
-            Vector2f localCentre = new Vector2f((pointThree.x - pointOne.x) / 2.0f, (pointThree.y - pointOne.y) / 2.0f);
-            Vector2f globalCenter = new Vector2f(
-                    new Vector2f(camera2D.getTransform().getPosition()).add(new Vector2f(windowSize).div(2)))
-                    .negate()
-                    .add(localCentre);
-            Vector2f halfSize = new Vector2f(windowSize.x, windowSize.y);
+            TransformComponent cameraTransformComponent = camera2D.getComponent(TransformComponent.class);
+            if(cameraTransformComponent != null) {
+                Transform cameraTransform = cameraTransformComponent.getTransform();
+                Vector2f pointOne = new Vector2f(-cameraTransform.getPosition().x - windowSize.x / 2.0f,
+                        -cameraTransform.getPosition().y - windowSize.y / 2.0f);
+                Vector2f pointThree = new Vector2f((-cameraTransform.getPosition().x + windowSize.x / 2.0f),
+                        (-cameraTransform.getPosition().y + windowSize.y / 2.0f));
+                Vector2f localCentre = new Vector2f((pointThree.x - pointOne.x) / 2.0f, (pointThree.y - pointOne.y) / 2.0f);
+                Vector2f globalCenter = new Vector2f(
+                        new Vector2f(cameraTransform.getPosition()).add(new Vector2f(windowSize).div(2)))
+                        .negate()
+                        .add(localCentre);
+                Vector2f halfSize = new Vector2f(windowSize.x, windowSize.y);
 
-            Vector2f min = new Vector2f(globalCenter).sub(new Vector2f(halfSize).mul(0.5f));
-            Vector2f max = new Vector2f(globalCenter).add(new Vector2f(halfSize).mul(0.5f));
+                Vector2f min = new Vector2f(globalCenter).sub(new Vector2f(halfSize).mul(0.5f));
+                Vector2f max = new Vector2f(globalCenter).add(new Vector2f(halfSize).mul(0.5f));
 
-            Vector2f[] vertices = {
-                    new Vector2f(min.x / camera2D.getTransform().getScale().x, min.y / camera2D.getTransform().getScale().y), new Vector2f(min.x / camera2D.getTransform().getScale().x, max.y / camera2D.getTransform().getScale().y),
-                    new Vector2f(max.x / camera2D.getTransform().getScale().x, max.y / camera2D.getTransform().getScale().y), new Vector2f(max.x / camera2D.getTransform().getScale().x, min.y / camera2D.getTransform().getScale().y)
-            };
+                Vector2f[] vertices = {
+                        new Vector2f(min.x / cameraTransform.getScale().x, min.y / cameraTransform.getScale().y),
+                        new Vector2f(min.x / cameraTransform.getScale().x, max.y / cameraTransform.getScale().y),
+                        new Vector2f(max.x / cameraTransform.getScale().x, max.y / cameraTransform.getScale().y),
+                        new Vector2f(max.x / cameraTransform.getScale().x, min.y / cameraTransform.getScale().y)
+                };
 
-            if (camera2D.getTransform().getRotation() != 0.0f) {
-                for (Vector2f vert : vertices) {
-                    MathUtils.rotate(vert, -camera2D.getTransform().getRotation(), globalCenter);
+                if (cameraTransform.getRotation() != 0.0f) {
+                    for (Vector2f vert : vertices) {
+                        MathUtils.rotate(vert, -cameraTransform.getRotation(), globalCenter);
+                    }
                 }
-            }
 
             /*inspectorCamera2DLines[0].setStart(vertices[0]);
             inspectorCamera2DLines[0].setEnd(vertices[1]);
@@ -88,45 +93,52 @@ public class CamerasDebugLines
             inspectorCamera2DLines[3].setStart(vertices[3]);
             inspectorCamera2DLines[3].setEnd(vertices[0]);*///#FIXME
 
-            Transform cameraIconObject2DTransform = inspectorCamera2DIconObject2D.getComponent(TransformComponent.class).getTransform();
-            cameraIconObject2DTransform.setPosition(
-                    new Vector2f(vertices[0]).add(new Vector2f(vertices[2]).add(new Vector2f(vertices[0]).negate()).mul(0.5f)).add(new Vector2f(cameraIconObject2DTransform.getCentre()).negate())
-            );
+                Transform cameraIconObject2DTransform = inspectorCamera2DIconObject2D.getComponent(TransformComponent.class).getTransform();
+                cameraIconObject2DTransform.setPosition(
+                        new Vector2f(cameraTransform.getPosition())
+                );
 
             /*Graphics.getMainRenderer().render(inspectorCamera2DLines[0]);
             Graphics.getMainRenderer().render(inspectorCamera2DLines[1]);
             Graphics.getMainRenderer().render(inspectorCamera2DLines[2]);
             Graphics.getMainRenderer().render(inspectorCamera2DLines[3]);*///#FIXME
 
-            Graphics.getMainRenderer().render(inspectorCamera2DIconObject2D);
+                Graphics.getMainRenderer().render(inspectorCamera2DIconObject2D);
+            }
         }
         if (currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
-            Camera2D camera2D = currentSceneManager.getCurrentScene2D().getSceneMainCamera2D();
+            GameObject camera2D = currentSceneManager.getCurrentScene2D().getSceneMainCamera2D();
 
-            Vector2f pointOne = new Vector2f(-camera2D.getTransform().getPosition().x - windowSize.x / 2.0f, -camera2D.getTransform().getPosition().y - windowSize.y / 2.0f);
-            Vector2f pointThree = new Vector2f((-camera2D.getTransform().getPosition().x + windowSize.x / 2.0f), (-camera2D.getTransform().getPosition().y + windowSize.y / 2.0f));
-            Vector2f localCentre = new Vector2f((pointThree.x - pointOne.x) / 2.0f, (pointThree.y - pointOne.y) / 2.0f);
-            Vector2f globalCenter = new Vector2f(
-                    new Vector2f(camera2D.getTransform().getPosition()).add(new Vector2f(windowSize).div(2)))
-                    .negate()
-                    .add(localCentre);
-            Vector2f halfSize = new Vector2f(windowSize.x, windowSize.y);
+            TransformComponent cameraTransformComponent = camera2D.getComponent(TransformComponent.class);
+            if(cameraTransformComponent != null) {
+                Transform cameraTransform = cameraTransformComponent.getTransform();
 
-            Vector2f min = new Vector2f(globalCenter).sub(new Vector2f(halfSize).mul(0.5f));
-            Vector2f max = new Vector2f(globalCenter).add(new Vector2f(halfSize).mul(0.5f));
+                Vector2f pointOne = new Vector2f(-cameraTransform.getPosition().x - windowSize.x / 2.0f,
+                        -cameraTransform.getPosition().y - windowSize.y / 2.0f);
+                Vector2f pointThree = new Vector2f((-cameraTransform.getPosition().x + windowSize.x / 2.0f),
+                        (-cameraTransform.getPosition().y + windowSize.y / 2.0f));
+                Vector2f localCentre = new Vector2f((pointThree.x - pointOne.x) / 2.0f, (pointThree.y - pointOne.y) / 2.0f);
+                Vector2f globalCenter = new Vector2f(
+                        new Vector2f(cameraTransform.getPosition()).add(new Vector2f(windowSize).div(2)))
+                        .negate()
+                        .add(localCentre);
+                Vector2f halfSize = new Vector2f(windowSize.x, windowSize.y);
 
-            Vector2f[] vertices = {
-                    new Vector2f(min.x / camera2D.getTransform().getScale().x, min.y / camera2D.getTransform().getScale().y),
-                    new Vector2f(min.x / camera2D.getTransform().getScale().x, max.y / camera2D.getTransform().getScale().y),
-                    new Vector2f(max.x / camera2D.getTransform().getScale().x, max.y / camera2D.getTransform().getScale().y),
-                    new Vector2f(max.x / camera2D.getTransform().getScale().x, min.y / camera2D.getTransform().getScale().y)
-            };
+                Vector2f min = new Vector2f(globalCenter).sub(new Vector2f(halfSize).mul(0.5f));
+                Vector2f max = new Vector2f(globalCenter).add(new Vector2f(halfSize).mul(0.5f));
 
-            if (camera2D.getTransform().getRotation() != 0.0f) {
-                for (Vector2f vert : vertices) {
-                    MathUtils.rotate(vert, -camera2D.getTransform().getRotation(), globalCenter);
+                Vector2f[] vertices = {
+                        new Vector2f(min.x / cameraTransform.getScale().x, min.y / cameraTransform.getScale().y),
+                        new Vector2f(min.x / cameraTransform.getScale().x, max.y / cameraTransform.getScale().y),
+                        new Vector2f(max.x / cameraTransform.getScale().x, max.y / cameraTransform.getScale().y),
+                        new Vector2f(max.x / cameraTransform.getScale().x, min.y / cameraTransform.getScale().y)
+                };
+
+                if (cameraTransform.getRotation() != 0.0f) {
+                    for (Vector2f vert : vertices) {
+                        MathUtils.rotate(vert, -cameraTransform.getRotation(), globalCenter);
+                    }
                 }
-            }
 
             /*mainCamera2DLines[0].setStart(vertices[0]);
             mainCamera2DLines[0].setEnd(vertices[1]);
@@ -140,17 +152,18 @@ public class CamerasDebugLines
             mainCamera2DLines[3].setStart(vertices[3]);
             mainCamera2DLines[3].setEnd(vertices[0]);*///#FIXME
 
-            Transform cameraIconObject2DTransform = mainCamera2DIconObject2D.getComponent(TransformComponent.class).getTransform();
-            cameraIconObject2DTransform.setPosition(
-                    new Vector2f(vertices[0]).add(new Vector2f(vertices[2]).add(new Vector2f(vertices[0]).negate()).mul(0.5f)).add(new Vector2f(cameraIconObject2DTransform.getCentre()).negate())
-            );
+                Transform cameraIconObject2DTransform = mainCamera2DIconObject2D.getComponent(TransformComponent.class).getTransform();
+                cameraIconObject2DTransform.setPosition(
+                        new Vector2f(cameraTransform.getPosition())
+                );
 
             /*Graphics.getMainRenderer().render(mainCamera2DLines[0]);
             Graphics.getMainRenderer().render(mainCamera2DLines[1]);
             Graphics.getMainRenderer().render(mainCamera2DLines[2]);
             Graphics.getMainRenderer().render(mainCamera2DLines[3]);*/ //#FIXME
 
-            Graphics.getMainRenderer().render(mainCamera2DIconObject2D);
+                Graphics.getMainRenderer().render(mainCamera2DIconObject2D);
+            }
         }
 
         inspectorCamera2DIconObject2D.getComponent(TransformComponent.class).getTransform().update(0.0f);

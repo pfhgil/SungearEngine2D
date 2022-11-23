@@ -1,6 +1,6 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
-import Core2D.Camera2D.Camera2D;
+import Core2D.GameObject.GameObject;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
@@ -24,6 +24,7 @@ import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
+import org.newdawn.slick.Game;
 
 import java.io.File;
 import java.io.IOException;
@@ -371,8 +372,8 @@ public class TopToolbarView
 
                     if(ImGui.menuItem("Camera2D")) {
                         if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-                            Camera2D camera2D = new Camera2D();
-                            SceneManager.currentSceneManager.getCurrentScene2D().getCameras2D().add(camera2D);
+                            GameObject camera2D = GameObject.createCamera2D();
+                            camera2D.setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
                         }
                     }
 
@@ -523,8 +524,8 @@ public class TopToolbarView
 
                         String scenePath = ResourcesView.currentDirectoryPath + "\\" + scene2D.getName() + ".sgs";
 
-                        Camera2D camera2D = new Camera2D();
-                        scene2D.getCameras2D().add(camera2D);
+                        GameObject camera2D = GameObject.createCamera2D();
+                        camera2D.setLayer(scene2D.getLayering().getLayer("default"));
                         scene2D.setSceneMainCamera2D(camera2D);
 
                         scene2D.getPhysicsWorld().simulatePhysics = false;

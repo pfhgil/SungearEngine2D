@@ -1,6 +1,6 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
-import Core2D.Camera2D.CamerasManager;
+import Core2D.CamerasManager.CamerasManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Input.PC.Mouse;
 import SungearEngine2D.GUI.Views.ViewsManager;
@@ -30,7 +30,7 @@ public class GameView extends View
         boolean windowOpened = ImGui.begin("Game view", ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.MenuBar);
         if(windowOpened) {
             if(currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
-                CamerasManager.setMainCamera2D(currentSceneManager.getCurrentScene2D().getSceneMainCamera2D());
+                CamerasManager.mainCamera2D = currentSceneManager.getCurrentScene2D().getSceneMainCamera2D();
             }
 
             ImGui.beginMenuBar();

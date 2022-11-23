@@ -111,10 +111,6 @@ public class Scene2D
         if(scene2DCallback != null) {
             scene2DCallback.onUpdate(deltaTime);
         }
-
-        for(Camera2D camera2D : cameras2D) {
-            camera2D.getTransform().update(deltaTime);
-        }
     }
 
     public void load()
@@ -199,24 +195,13 @@ public class Scene2D
         return null;
     }
 
-    public GameObject findObject2DByID(int ID)
+    public GameObject findGameObjectByID(int ID)
     {
         for(Layer layer : layering.getLayers()) {
             for(GameObject go : layer.getGameObjects()) {
                 if(go.ID == ID) {
                     return go;
                 }
-            }
-        }
-
-        return null;
-    }
-
-    public Camera2D findCamera2DByID(int ID)
-    {
-        for(Camera2D camera2D : cameras2D) {
-            if(camera2D.getID() == ID) {
-                return camera2D;
             }
         }
 
@@ -242,10 +227,8 @@ public class Scene2D
         layering = null;
         physicsWorld = null;
 
-        cameras2D.clear();
         tags.clear();
 
-        cameras2D = null;
         tags = null;
 
         sceneMainCamera2D = null;
@@ -263,8 +246,6 @@ public class Scene2D
 
     public Layering getLayering() { return layering; }
     public void setLayering(Layering layering) { this.layering = layering; }
-
-    public List<Camera2D> getCameras2D() { return cameras2D; }
 
     public GameObject getSceneMainCamera2D() { return sceneMainCamera2D; }
     public void setSceneMainCamera2D(GameObject sceneMainCamera2D)

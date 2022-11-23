@@ -2,8 +2,6 @@ package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.Audio;
-import Core2D.Camera2D.Camera2D;
-import Core2D.Camera2D.CamerasManager;
 import Core2D.Component.Component;
 import Core2D.Component.Components.*;
 import Core2D.Component.NonRemovable;
@@ -13,6 +11,7 @@ import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
+import Core2D.Scene2D.SceneManager;
 import Core2D.Tasks.StoppableTask;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
@@ -114,9 +113,6 @@ public class InspectorView extends View
                 if(currentInspectingObject instanceof GameObject) {
                     GameObject inspectingGameObject = (GameObject) currentInspectingObject;
                     inspectObject2D(inspectingGameObject);
-                } else if(currentInspectingObject instanceof Camera2D) {
-                    Camera2D inspectingCamera2D = (Camera2D) currentInspectingObject;
-                    inspectCamera2D(inspectingCamera2D);
                 }
             }
 
@@ -464,17 +460,18 @@ public class InspectorView extends View
             boolean someItemHovered = false;
 
             for (int i = 0; i < inspectingObject2D.getComponents().size(); i++) {
-                String componentName = inspectingObject2D.getComponents().get(i).getClass().getSimpleName();
+                Component currentComponent = inspectingObject2D.getComponents().get(i);
+                String componentName = currentComponent.getClass().getSimpleName();
 
                 ImGui.pushID(componentName + i);
                 boolean opened = false;
                 if(!componentName.equals("ScriptComponent")) {
-                    opened = ImGui.collapsingHeader(componentName + ". ID: " + inspectingObject2D.getComponents().get(i).componentID);
+                    opened = ImGui.collapsingHeader(componentName + ". ID: " + currentComponent.componentID);
                 } else {
-                    opened = ImGui.collapsingHeader(((ScriptComponent) inspectingObject2D.getComponents().get(i)).getScript().getName() + " (" + componentName + ")" + ". ID: " + inspectingObject2D.getComponents().get(i).componentID);
+                    opened = ImGui.collapsingHeader(((ScriptComponent) currentComponent).getScript().getName() + " (" + componentName + ")" + ". ID: " + inspectingObject2D.getComponents().get(i).componentID);
                 }
                 if(ImGui.beginDragDropSource()) {
-                    ImGui.setDragDropPayload("Component", inspectingObject2D.getComponents().get(i));
+                    ImGui.setDragDropPayload("Component", currentComponent);
                     ImGui.text(componentName);
                     ImGui.endDragDropSource();
                 }
@@ -501,7 +498,7 @@ public class InspectorView extends View
                 if (ImGui.isMouseHoveringRect(minRect.x, minRect.y, maxRect.x, maxRect.y) &&
                         ImGui.isMouseClicked(ImGuiMouseButton.Left)) {
                     showPopupWindow = true;
-                    currentEditingComponent = inspectingObject2D.getComponents().get(i);
+                    currentEditingComponent = currentComponent;
                     currentEditingComponentID = i;
                 } else if (!ImGui.isMouseHoveringRect(minRect.x, minRect.y, maxRect.x, maxRect.y) &&
                         (ImGui.isMouseClicked(ImGuiMouseButton.Left) || ImGui.isMouseClicked(ImGuiMouseButton.Right)) &&
@@ -514,7 +511,7 @@ public class InspectorView extends View
                 if (opened) {
                     switch (componentName) {
                         case "TransformComponent" -> {
-                            TransformComponent transformComponent = ((TransformComponent) inspectingObject2D.getComponents().get(i));
+                            TransformComponent transformComponent = ((TransformComponent) currentComponent);
                             float[] pos = new float[]{
                                     transformComponent.getTransform().getPosition().x,
                                     transformComponent.getTransform().getPosition().y
@@ -549,8 +546,8 @@ public class InspectorView extends View
                             }
                         }
                         case "MeshRendererComponent" -> {
-                            MeshRendererComponent textureComponent = (MeshRendererComponent) inspectingObject2D.getComponents().get(i);
-                            ImString textureName = new ImString(new File(textureComponent.texture.path).getName());
+                            MeshRendererComponent meshRendererComponent = (MeshRendererComponent) currentComponent;
+                            ImString textureName = new ImString(new File(meshRendererComponent.texture.path).getName());
                             ImGui.inputText("Path", textureName, ImGuiInputTextFlags.ReadOnly);
                             if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
                                 if (ImGui.beginDragDropTarget()) {
@@ -560,10 +557,10 @@ public class InspectorView extends View
                                         String relativePath = FileUtils.getRelativePath(
                                                 new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
                                                 new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                                        textureComponent.texture.set(
+                                        meshRendererComponent.texture.set(
                                                 new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath))
                                         );
-                                        textureComponent.texture.path = relativePath;
+                                        meshRendererComponent.texture.path = relativePath;
                                         ViewsManager.getResourcesView().setCurrentMovingFile(null);
                                     }
 
@@ -593,7 +590,7 @@ public class InspectorView extends View
                              */
                         }
                         case "Rigidbody2DComponent" -> {
-                            Rigidbody2DComponent rigidbody2DComponent = ((Rigidbody2DComponent) inspectingObject2D.getComponents().get(i));
+                            Rigidbody2DComponent rigidbody2DComponent = (Rigidbody2DComponent) currentComponent;
 
                             ImGui.pushID("Rigidbody2DType");
                             if (ImGui.beginCombo("Type", rigidbody2DComponent.getRigidbody2D().typeToString())) {
@@ -638,7 +635,7 @@ public class InspectorView extends View
                             ImGui.separator();
                         }
                         case "BoxCollider2DComponent" -> {
-                            BoxCollider2DComponent boxCollider2DComponent = ((BoxCollider2DComponent) inspectingObject2D.getComponents().get(i));
+                            BoxCollider2DComponent boxCollider2DComponent = (BoxCollider2DComponent) currentComponent;
 
                             float[] offset = new float[]{boxCollider2DComponent.getBoxCollider2D().getOffset().x, boxCollider2DComponent.getBoxCollider2D().getOffset().y};
                             ImGui.pushID("BoxCollider2DOffsetDragFloat_" + i);
@@ -659,7 +656,7 @@ public class InspectorView extends View
                             ImGui.popID();
                         }
                         case "CircleCollider2DComponent" -> {
-                            CircleCollider2DComponent circleCollider2DComponent = ((CircleCollider2DComponent) inspectingObject2D.getComponents().get(i));
+                            CircleCollider2DComponent circleCollider2DComponent = (CircleCollider2DComponent) currentComponent;
 
                             float[] offset = new float[]{circleCollider2DComponent.getCircleCollider2D().getOffset().x, circleCollider2DComponent.getCircleCollider2D().getOffset().y};
                             ImGui.pushID("CircleCollider2DOffsetDragFloat_" + i);
@@ -680,7 +677,7 @@ public class InspectorView extends View
                             ImGui.popID();
                         }
                         case "ScriptComponent" -> {
-                            ScriptComponent scriptComponent = (ScriptComponent) inspectingObject2D.getComponents().get(i);
+                            ScriptComponent scriptComponent = (ScriptComponent) currentComponent;
 
                             // System.out.println(scriptComponent.getScript().getScriptClass());
 
@@ -727,31 +724,6 @@ public class InspectorView extends View
                                             }
                                             ImGui.endDragDropTarget();
                                         }
-                                    } else if (cs.isAssignableFrom(Camera2D.class)) {
-                                        ImString string = new ImString(cs.getSimpleName());
-                                        if (scriptComponent.getScript().getFieldValue(field) != null) {
-                                            string.set(((Camera2D) scriptComponent.getScript().getFieldValue(field)).name, true);
-                                        }
-
-                                        ImGui.pushID(field.getName() + "_" + i);
-                                        if(scriptComponent.getScript().getFieldValue(field) != null) {
-                                            ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
-                                        } else {
-                                            ImGui.pushStyleColor(ImGuiCol.Text, 0.65f, 0.65f, 0.65f, 1.0f);
-                                            ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
-                                            ImGui.popStyleColor(1);
-                                        }
-                                        ImGui.popID();
-
-                                        if (ImGui.beginDragDropTarget()) {
-                                            Object droppedObject = ImGui.acceptDragDropPayload("SceneWrappedObject");
-                                            if (droppedObject instanceof Camera2D) {
-                                                Camera2D camera2D = (Camera2D) droppedObject;
-
-                                                scriptComponent.getScript().setFieldValue(field, camera2D);
-                                            }
-                                            ImGui.endDragDropTarget();
-                                        }
                                     } else if(cs.getSuperclass().isAssignableFrom(Component.class)) {
                                         ImString string = new ImString(cs.getSimpleName());
                                         if (scriptComponent.getScript().getFieldValue(field) != null) {
@@ -781,7 +753,7 @@ public class InspectorView extends View
                             }
                         }
                         case "AudioComponent" -> {
-                            AudioComponent audioComponent = (AudioComponent) inspectingObject2D.getComponents().get(i);
+                            AudioComponent audioComponent = (AudioComponent) currentComponent;
 
                             ImString audioName = new ImString(new File(audioComponent.audio.path).getName());
 
@@ -938,6 +910,20 @@ public class InspectorView extends View
                             }
                             ImGui.popID();
                         }
+                        case "Camera2DComponent" -> {
+                            //Camera2DComponent camera2DComponent = (Camera2DComponent) currentComponent;
+                            boolean condition = currentSceneManager != null &&
+                                    currentSceneManager.getCurrentScene2D() != null &&
+                                    currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null &&
+                                    currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().ID == inspectingObject2D.ID;
+                            if(ImGui.checkbox("Scene2D main Camera2D", condition)) {
+                                if(!condition) {
+                                    currentSceneManager.getCurrentScene2D().setSceneMainCamera2D(inspectingObject2D);
+                                } else {
+                                    currentSceneManager.getCurrentScene2D().setSceneMainCamera2D(null);
+                                }
+                            }
+                        }
                     }
                 }
 
@@ -1012,69 +998,6 @@ public class InspectorView extends View
         });
     }
 
-    private void inspectCamera2D(Camera2D camera2D)
-    {
-        setCurrentInspectingObject(camera2D);
-        if(camera2D != null) {
-            ImGui.pushID("Camera2DName");
-            {
-                ImString name = new ImString(camera2D.name, 256);
-                if (ImGui.inputText("", name)) {
-                    camera2D.name = name.get();
-                    isEditing = true;
-                }
-            }
-            ImGui.popID();
-
-            ImGui.separator();
-
-            float[] pos = new float[] {
-                    camera2D.getTransform().getPosition().x,
-                    camera2D.getTransform().getPosition().y
-            };
-            float[] rotation = new float[] {
-                    camera2D.getTransform().getRotation()
-            };
-            float[] scale = new float[] {
-                    camera2D.getTransform().getScale().x,
-                    camera2D.getTransform().getScale().y
-            };
-
-            if (ImGui.dragFloat2("Position", pos)) {
-                camera2D.getTransform().setPosition(new Vector2f(pos));
-                isEditing = true;
-            }
-            if (ImGui.dragFloat("Rotation", rotation)) {
-                camera2D.getTransform().setRotation(rotation[0]);
-                isEditing = true;
-            }
-            if (ImGui.dragFloat2("Scale", scale, 0.01f)) {
-                camera2D.getTransform().setScale(new Vector2f(scale));
-                isEditing = true;
-            }
-
-            ImGui.separator();
-
-            boolean asMainCamera2D = false;
-            if (currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
-                asMainCamera2D = currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().getID() == camera2D.getID();
-            }
-            if (ImGui.checkbox("As main Camera2D", asMainCamera2D)) {
-                if (asMainCamera2D) {
-                    currentSceneManager.getCurrentScene2D().setSceneMainCamera2D(null);
-                    if(EngineSettings.Playmode.active) {
-                        CamerasManager.setMainCamera2D(null);
-                    }
-                } else {
-                    currentSceneManager.getCurrentScene2D().setSceneMainCamera2D(camera2D);
-                    if(EngineSettings.Playmode.active) {
-                        CamerasManager.setMainCamera2D(camera2D);
-                    }
-                }
-            }
-        }
-    }
-
     private void drawAction()
     {
         if(action.equals("addObject2DComponent")) {
@@ -1089,28 +1012,37 @@ public class InspectorView extends View
                 if(ImGui.beginListBox("")) {
 
                     try {
-                        if (ImGui.selectable("Texture")) {
+                        if(ImGui.selectable("TransformComponent")) {
+                            ((GameObject) currentInspectingObject).addComponent(new TransformComponent());
+                            action = "";
+                        }
+                        if (ImGui.selectable("MeshRendererComponent")) {
                             ((GameObject) currentInspectingObject).addComponent(new MeshRendererComponent());
                             action = "";
                         }
-                        if (ImGui.selectable("Rigidbody2D")) {
+                        if (ImGui.selectable("Rigidbody2DComponent")) {
                             Rigidbody2DComponent rigidbody2DComponent = new Rigidbody2DComponent();
                             ((GameObject) currentInspectingObject).addComponent(rigidbody2DComponent);
                             rigidbody2DComponent.getRigidbody2D().setType(BodyType.STATIC);
                             action = "";
                         }
-                        if (ImGui.selectable("BoxCollider2D")) {
+                        if (ImGui.selectable("BoxCollider2DComponent")) {
                             ((GameObject) currentInspectingObject).addComponent(new BoxCollider2DComponent());
                             action = "";
                         }
-                        if (ImGui.selectable("CircleCollider2D")) {
+                        if (ImGui.selectable("CircleCollider2DComponent")) {
                             ((GameObject) currentInspectingObject).addComponent(new CircleCollider2DComponent());
                             action = "";
                         }
-                        if(ImGui.selectable("Audio")) {
+                        if(ImGui.selectable("AudioComponent")) {
                             ((GameObject) currentInspectingObject).addComponent(new AudioComponent());
                             action = "";
                         }
+                        if(ImGui.selectable("Camera2DComponent")) {
+                            ((GameObject) currentInspectingObject).addComponent(new Camera2DComponent());
+                            action = "";
+                        }
+
                     } catch (Exception e) {
                         Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
 

@@ -203,9 +203,7 @@ public class Script
 
                 Object value = getFieldValue(field);
                 if (value instanceof GameObject gameObject) {
-                    scriptTempValue.setValue(new ScriptSceneObject(gameObject.ID, gameObject.name, SceneObjectType.TYPE_OBJECT2D));
-                } else if (value instanceof Camera2D camera2D) {
-                    scriptTempValue.setValue(new ScriptSceneObject(camera2D.getID(), camera2D.name, SceneObjectType.TYPE_CAMERA2D));
+                    scriptTempValue.setValue(new ScriptSceneObject(gameObject.ID, gameObject.name, SceneObjectType.TYPE_GAME_OBJECT));
                 } else {
                     scriptTempValue.setValue(value);
                 }

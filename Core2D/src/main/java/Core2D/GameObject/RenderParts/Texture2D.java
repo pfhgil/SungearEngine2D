@@ -31,7 +31,7 @@ public class Texture2D
 
     @SerializedName("source")
     // путь до текстуры
-    public String path;
+    public String path = "";
 
     private int textureBlock = GL_TEXTURE0;
 

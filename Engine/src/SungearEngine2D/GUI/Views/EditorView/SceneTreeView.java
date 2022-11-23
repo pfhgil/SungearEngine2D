@@ -69,7 +69,7 @@ public class SceneTreeView extends View
 
             if(currentSceneManager.getCurrentScene2D() != null) {
                 if (ImGui.treeNode("Scene2D " + currentSceneManager.getCurrentScene2D().getName())) {
-                    if(ImGui.treeNode("Scene cameras")) {
+                    /*if(ImGui.treeNode("Scene cameras")) {
                         int s = 0;
                         if(currentSceneManager.getCurrentScene2D().getCameras2D() != null) {
                             for (int i = 0; i < currentSceneManager.getCurrentScene2D().getCameras2D().size(); i++) {
@@ -96,7 +96,7 @@ public class SceneTreeView extends View
                             }
                         }
                         ImGui.treePop();
-                    }
+                    }*/
                     if(ImGui.treeNode("Scene objects")) {
                         if (ImGui.beginDragDropTarget()) {
                             Object droppedObject = ImGui.acceptDragDropPayload("SceneGameObject");
@@ -127,7 +127,7 @@ public class SceneTreeView extends View
                                             ViewsManager.getInspectorView().setCurrentInspectingObject(gameObject);
                                         }
                                         if (ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left)) {
-                                            Main.getCameraAnchor().getComponent(TransformComponent.class).getTransform().lerpMoveTo(gameObject.getComponent(TransformComponent.class).getTransform().getPosition(), new Vector2f(10));
+                                            Main.getMainCamera2D().getComponent(TransformComponent.class).getTransform().lerpMoveTo(gameObject.getComponent(TransformComponent.class).getTransform().getPosition(), new Vector2f(10));
                                         }
                                     }
                                     if (ImGui.beginDragDropSource()) {
@@ -207,7 +207,7 @@ public class SceneTreeView extends View
                         ViewsManager.getInspectorView().setCurrentInspectingObject(gameObject);
                     }
                     if (ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left)) {
-                        Main.getCameraAnchor().getComponent(TransformComponent.class).getTransform().lerpMoveTo(
+                        Main.getMainCamera2D().getComponent(TransformComponent.class).getTransform().lerpMoveTo(
                                 MatrixUtils.getPosition(gameObject.getComponent(TransformComponent.class).getTransform().getResultModelMatrix()), new Vector2f(10));
                     }
                 }

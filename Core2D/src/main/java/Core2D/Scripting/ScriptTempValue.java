@@ -47,21 +47,16 @@ public class ScriptTempValue
 
                 if(value instanceof Double && field.getType().isAssignableFrom(float.class)) {
                     field.setFloat(script.getScriptClassInstance(), ((Double) value).floatValue());
-                } else if(value instanceof ScriptSceneObject) {
-                    ScriptSceneObject object = (ScriptSceneObject) value;
+                } else if(value instanceof ScriptSceneObject object) {
                     switch(object.objectType) {
-                        case TYPE_OBJECT2D:
-                            GameObject foundGameObject = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(object.ID);
+                        case TYPE_GAME_OBJECT:
+                            GameObject foundGameObject = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(object.ID);
                             field.set(script.getScriptClassInstance(), foundGameObject);
-                            break;
-                        case TYPE_CAMERA2D:
-                            Camera2D foundCamera2D = SceneManager.currentSceneManager.getCurrentScene2D().findCamera2DByID(object.ID);
-                            field.set(script.getScriptClassInstance(), foundCamera2D);
                             break;
                     }
                 } else if(value instanceof Component) {
                     Component component = (Component) value;
-                    Core2D.GameObject.GameObject foundGameObject = SceneManager.currentSceneManager.getCurrentScene2D().findObject2DByID(component.getObject2DID());
+                    Core2D.GameObject.GameObject foundGameObject = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(component.getObject2DID());
                     if(foundGameObject != null) {
                         for(Component objComponent : foundGameObject.getComponents()) {
                             if(objComponent.componentID == component.componentID &&

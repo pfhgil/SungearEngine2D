@@ -1,12 +1,14 @@
 package SungearEngine2D.CameraController;
 
-import Core2D.Camera2D.CamerasManager;
+import Core2D.CamerasManager.CamerasManager;
+import Core2D.Component.Components.Camera2DComponent;
 import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.GameObject.GameObject;
 import Core2D.Input.Core2DUserInputCallback;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
+import Core2D.Transform.Transform;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
 import org.joml.Vector2f;
@@ -14,7 +16,7 @@ import org.lwjgl.glfw.GLFW;
 
 public class CameraController
 {
-    public static GameObject controlledCamera2DAnchor;
+    public static GameObject controlledCamera2D;
 
     private static Vector2f lastCursorPosition = new Vector2f();
 
@@ -33,7 +35,7 @@ public class CameraController
 
             @Override
             public void onScroll(double xoffset, double yoffset) {
-                if(controlledCamera2DAnchor != null && !ViewsManager.isSomeViewFocusedExceptSceneView && Main.getMainCamera2D().getID() == CamerasManager.getMainCamera2D().getID()) {
+                if(controlledCamera2D != null && !ViewsManager.isSomeViewFocusedExceptSceneView && controlledCamera2D.ID == CamerasManager.mainCamera2D.ID) {
                     Vector2f scale = new Vector2f((float) yoffset / 5.0f * mouseCameraScale.x, (float) yoffset / 5.0f * mouseCameraScale.y);
                     mouseCameraScale.x += scale.x;
                     mouseCameraScale.y += scale.y;
@@ -46,42 +48,48 @@ public class CameraController
 
     public static void control()
     {
-        if(CamerasManager.getMainCamera2D() != null && Main.getMainCamera2D().getID() == CamerasManager.getMainCamera2D().getID() && allowMove) {
+        if(CamerasManager.mainCamera2D != null && controlledCamera2D.ID == CamerasManager.mainCamera2D.ID && allowMove) {
             if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
                 lastCursorPosition = new Vector2f(Mouse.getMousePosition());
             }
             if (Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
                 lastCursorPosition = new Vector2f(Mouse.getMousePosition());
             }
-            if (controlledCamera2DAnchor != null && !ViewsManager.isSomeViewFocusedExceptSceneView) {
-                if (Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
-                    controlledCamera2DAnchor.getComponent(TransformComponent.class).getTransform().setNeedToMoveToDestination(false);
-                    Vector2f currentPosition = new Vector2f(Mouse.getMousePosition());
-                    Vector2f difference = new Vector2f(currentPosition.x - lastCursorPosition.x, currentPosition.y - lastCursorPosition.y);
-                    Main.getMainCamera2D().getTransform().translate(new Vector2f(difference.x * (1.0f / mouseCameraScale.x), difference.y * (1.0f / mouseCameraScale.y)));
-                    lastCursorPosition = currentPosition;
-                }
+            if (controlledCamera2D != null && !ViewsManager.isSomeViewFocusedExceptSceneView) {
+                TransformComponent cameraTransformComponent = controlledCamera2D.getComponent(TransformComponent.class);
 
-                if (Keyboard.keyDown(GLFW.GLFW_KEY_K)) {
-                    Main.getMainCamera2D().getTransform().rotate(1.0f);
-                }
-                if (Keyboard.keyDown(GLFW.GLFW_KEY_J)) {
-                    Main.getMainCamera2D().getTransform().rotate(-1.0f);
-                }
-                if (Keyboard.keyReleased(GLFW.GLFW_KEY_R)) {
-                    Main.getMainCamera2D().getTransform().setPosition(new Vector2f(0.0f, 0.0f));
-                }
-                if (Keyboard.keyReleased(GLFW.GLFW_KEY_L)) {
-                    Main.getMainCamera2D().getTransform().setRotation(0.0f);
-                }
-                if(Keyboard.keyReleased(GLFW.GLFW_KEY_F)) {
-                    Main.fuckYouAudio.play();
-                }
-                if(Keyboard.keyReleased(GLFW.GLFW_KEY_P)) {
-                    Main.fuckYouAudio.pause();
-                }
-                if(Keyboard.keyReleased(GLFW.GLFW_KEY_T)) {
-                    Main.fuckYouAudio.stop();
+                if(cameraTransformComponent != null) {
+                    if (Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
+                        controlledCamera2D.getComponent(TransformComponent.class).getTransform().setNeedToMoveToDestination(false);
+                        Vector2f currentPosition = new Vector2f(Mouse.getMousePosition());
+                        Vector2f difference = new Vector2f(currentPosition.x - lastCursorPosition.x, currentPosition.y - lastCursorPosition.y);
+                        cameraTransformComponent.getTransform().translate(
+                                new Vector2f(difference.x * (1.0f / mouseCameraScale.x), difference.y * (1.0f / mouseCameraScale.y))
+                        );
+                        lastCursorPosition = currentPosition;
+                    }
+
+                    if (Keyboard.keyDown(GLFW.GLFW_KEY_K)) {
+                        cameraTransformComponent.getTransform().rotate(1.0f);
+                    }
+                    if (Keyboard.keyDown(GLFW.GLFW_KEY_J)) {
+                        cameraTransformComponent.getTransform().rotate(-1.0f);
+                    }
+                    if (Keyboard.keyReleased(GLFW.GLFW_KEY_R)) {
+                        cameraTransformComponent.getTransform().setPosition(new Vector2f(0.0f, 0.0f));
+                    }
+                    if (Keyboard.keyReleased(GLFW.GLFW_KEY_L)) {
+                        cameraTransformComponent.getTransform().setRotation(0.0f);
+                    }
+                    if (Keyboard.keyReleased(GLFW.GLFW_KEY_F)) {
+                        Main.fuckYouAudio.play();
+                    }
+                    if (Keyboard.keyReleased(GLFW.GLFW_KEY_P)) {
+                        Main.fuckYouAudio.pause();
+                    }
+                    if (Keyboard.keyReleased(GLFW.GLFW_KEY_T)) {
+                        Main.fuckYouAudio.stop();
+                    }
                 }
             }
         }

@@ -15,7 +15,7 @@ public class Grid
 
     public static void init(Vector2f scale)
     {
-        grid = GameObject.create2D();
+        grid = GameObject.createObject2D();
 
         grid.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(1f, 1f));
         MeshRendererComponent c = grid.getComponent(MeshRendererComponent.class);
@@ -35,6 +35,7 @@ public class Grid
 
     public static void draw()
     {
+        /*
         int newLevel = (int) ((1.0 / Main.getMainCamera2D().getTransform().getScale().x) / 100.0f);
         if(newLevel < 1) newLevel = 1;
         level = newLevel;
@@ -48,6 +49,8 @@ public class Grid
                 1.0f / cameraScale.x, 1.0f / cameraScale.y,
                 1.0f / cameraScale.x, 0.0f
         });
+
+         */
 
         /*
         grid.getShaderProgram().bind();

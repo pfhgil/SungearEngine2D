@@ -3,6 +3,7 @@ package Core2D.Component.Components;
 import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
 import Core2D.Core2D.Core2D;
+import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.MatrixUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;

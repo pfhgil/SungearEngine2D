@@ -1,6 +1,6 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
-import Core2D.Camera2D.CamerasManager;
+import Core2D.CamerasManager.CamerasManager;
 import Core2D.GameObject.GameObject;
 import Core2D.Log.Log;
 import Core2D.Prefab.Prefab;
@@ -275,7 +275,7 @@ public class ResourcesView extends View
                         canOpenScene2D = false;
                         EngineSettings.Playmode.active = false;
                         EngineSettings.Playmode.paused = false;
-                        CamerasManager.setMainCamera2D(Main.getMainCamera2D());
+                        CamerasManager.mainCamera2D = Main.getMainCamera2D();
                         ViewsManager.getInspectorView().setCurrentInspectingObject(null);
                         if (currentSceneManager != null && currentSceneManager.getCurrentScene2D() != null) {
                             currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;
@@ -312,7 +312,7 @@ public class ResourcesView extends View
                         scene2D.getPhysicsWorld().simulatePhysics = false;
                         scene2D.getScriptSystem().runScripts = false;
 
-                        CamerasManager.setMainCamera2D((Main.getMainCamera2D()));
+                        CamerasManager.mainCamera2D = Main.getMainCamera2D();
                     }
                 }
             }
