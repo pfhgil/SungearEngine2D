@@ -1,14 +1,20 @@
 package Core2D.Scene2D;
 
 import Core2D.CamerasManager.CamerasManager;
+import Core2D.Component.Components.BoxCollider2DComponent;
+import Core2D.Component.Components.CircleCollider2DComponent;
+import Core2D.Component.Components.TransformComponent;
 import Core2D.GameObject.GameObject;
 import Core2D.Graphics.Graphics;
 import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
 import Core2D.Log.Log;
 import Core2D.Physics.PhysicsWorld;
+import Core2D.Physics.Rigidbody2D;
 import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.Tag;
+import org.jbox2d.common.Vec2;
+import org.joml.Vector2f;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
@@ -76,6 +82,24 @@ public class Scene2D
 
         this.name = name;
         this.scene2DCallback = scene2DCallback;
+    }
+
+
+    public void initPhysicsWorld()
+    {
+        for(Layer layer : layering.getLayers()) {
+            for(GameObject gameObject : layer.getGameObjects()) {
+                Rigidbody2D rigidbody2D = physicsWorld.addRigidbody2D(gameObject, this);
+                TransformComponent transformComponent = gameObject.getComponent(TransformComponent.class);
+                if(transformComponent != null && rigidbody2D != null) {
+                    Vector2f position = transformComponent.getTransform().getPosition();
+                    rigidbody2D.getBody().setTransform(
+                            new Vec2(position.x / PhysicsWorld.RATIO, position.y / PhysicsWorld.RATIO),
+                            (float) Math.toRadians(transformComponent.getTransform().getRotation())
+                    );
+                }
+            }
+        }
     }
 
     public void draw()

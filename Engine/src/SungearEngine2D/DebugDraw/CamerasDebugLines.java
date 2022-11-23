@@ -48,6 +48,7 @@ public class CamerasDebugLines
         Vector2i windowSize = Core2D.getWindow().getSize();
         if (currentSceneManager.getCurrentScene2D() != null
                 && currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null
+                && ViewsManager.getInspectorView().getCurrentInspectingObject() != null
                 && ((GameObject) ViewsManager.getInspectorView().getCurrentInspectingObject()).ID != currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().ID) {
             GameObject camera2D = (GameObject) ViewsManager.getInspectorView().getCurrentInspectingObject();
 

@@ -367,7 +367,7 @@ public class TopToolbarView
             if(ImGui.beginMenu("Objects")) {
                 if(ImGui.beginMenu("New...")) {
                     if(ImGui.menuItem("Object2D")) {
-                        // сделать
+                        new GameObject().setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
                     }
 
                     if(ImGui.menuItem("Camera2D")) {

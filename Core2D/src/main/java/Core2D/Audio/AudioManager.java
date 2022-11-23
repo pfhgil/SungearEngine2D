@@ -40,8 +40,8 @@ public class AudioManager
     {
         if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
             for(Layer layer : SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
-                int renderingObjectsNum = layer.getGameObjects().size();
-                for(int i = 0; i < renderingObjectsNum; i++) {
+                int gameObjectsNum = layer.getGameObjects().size();
+                for(int i = 0; i < gameObjectsNum; i++) {
                     GameObject gameObject = layer.getGameObjects().get(i);
                     int componentsNum = gameObject.getComponents().size();
                     for (int k = 0; k < componentsNum; k++) {

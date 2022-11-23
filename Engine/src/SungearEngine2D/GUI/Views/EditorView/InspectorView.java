@@ -446,7 +446,7 @@ public class InspectorView extends View
                     inspectingObject2D.getColor().x,
                             inspectingObject2D.getColor().y,
                             inspectingObject2D.getColor().z,
-                            inspectingObject2D.getColor().w };
+                            inspectingObject2D.getColor().w  };
             if (ImGui.colorEdit4("Color", col)) {
                 inspectingObject2D.setColor(new Vector4f(col));
                 isEditing = true;

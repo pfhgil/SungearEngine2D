@@ -18,6 +18,11 @@ public abstract class Component
 
     protected boolean active = true;
 
+    protected void create()
+    {
+
+    }
+
     /**
      * Sets the parameters of the transmitted component for this component.
      * @param component Component.

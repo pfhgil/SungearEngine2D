@@ -33,7 +33,6 @@ public class Rigidbody2D
 
     public void destroy()
     {
-        SceneManager.currentSceneManager.getTmpPhysicsWorld().destroyBody(body);
         if(SceneManager.currentSceneManager.getCurrentScene2D() != null && SceneManager.currentSceneManager.getCurrentScene2D().getPhysicsWorld() != null) {
             SceneManager.currentSceneManager.getCurrentScene2D().getPhysicsWorld().destroyBody(body);
         }

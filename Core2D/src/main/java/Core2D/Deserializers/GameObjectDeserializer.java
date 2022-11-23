@@ -53,17 +53,15 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>
         gameObject.ID = ID;
         gameObject.layerName = layerName;
 
-        System.out.println("\u001B[32m size of game object " + gameObject.name + " list of components: " + gameObject.getComponents().size() + " \u001B[32m");
+        //System.out.println("\u001B[32m size of game object " + gameObject.name + " list of components: " + gameObject.getComponents().size() + " \u001B[32m");
 
-        Rigidbody2DComponent rigidbody2DComponent = null;
         for(JsonElement element : components) {
             Component component = context.deserialize(element, Component.class);
 
             int lastComponentID = component.componentID;
             if(component instanceof TransformComponent) {
                 gameObject.addComponent(component);
-            } else if(component instanceof MeshRendererComponent) {
-                MeshRendererComponent textureComponent = (MeshRendererComponent) component;
+            } else if(component instanceof MeshRendererComponent textureComponent) {
                 Texture2D texture2D = new Texture2D();
                 // если режим работы ядра в движке
                 if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
@@ -104,10 +102,10 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>
                 gameObject.addComponent(component);
                 gameObject.getComponent(MeshRendererComponent.class).set(component);
                 gameObject.getComponent(MeshRendererComponent.class).texture.set(texture2D);
-            } else if(component instanceof Rigidbody2DComponent) {
-                rigidbody2DComponent = (Rigidbody2DComponent) component;
-            } else if(component instanceof ScriptComponent) {
-                ScriptComponent scriptComponent = (ScriptComponent) component;
+            } else if(component instanceof Rigidbody2DComponent rigidbody2DComponent) {
+                rigidbody2DComponent.set(component);
+                gameObject.addComponent(rigidbody2DComponent);
+            } else if(component instanceof ScriptComponent scriptComponent) {
                 if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
                     scriptComponent.getScript().path = scriptComponent.getScript().path.replaceAll(".java", "");
 
@@ -176,15 +174,6 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>
 
             component.componentID = lastComponentID;
             //object2D.getComponents().get(object2D.getComponents().size() - 1).componentID = lastComponentID;
-        }
-
-        // в самом конце добавляю rigidbody2d, чтобы не было путаницы с порядком десериализации колладейров и rigidbody2d
-        if(rigidbody2DComponent != null) {
-            int lastComponentID = rigidbody2DComponent.componentID;
-            gameObject.addComponent(rigidbody2DComponent);
-            rigidbody2DComponent.componentID = lastComponentID;
-            //object2D.getComponents().get(object2D.getComponents().size() - 1).componentID = lastComponentID;
-            rigidbody2DComponent.set(rigidbody2DComponent);
         }
 
         return gameObject;

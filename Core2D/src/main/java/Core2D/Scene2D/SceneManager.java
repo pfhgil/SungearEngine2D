@@ -35,8 +35,6 @@ public class SceneManager
 
     public static SceneManager currentSceneManager = new SceneManager();
 
-    public transient PhysicsWorld tmpPhysicsWorld = new PhysicsWorld();
-
     public void drawCurrentScene2D()
     {
         if(currentScene2D != null) currentScene2D.draw();
@@ -161,7 +159,7 @@ public class SceneManager
     public Scene2D loadSceneAsCurrent(String path)
     {
         Scene2D deserializedScene2D = loadScene(path);
-        deserializedScene2D.setPhysicsWorld(tmpPhysicsWorld);
+        //deserializedScene2D.setPhysicsWorld(tmpPhysicsWorld);
         setCurrentScene2D(deserializedScene2D);
 
         deserializedScene2D.setScenePath(path);
@@ -178,10 +176,9 @@ public class SceneManager
             Settings.Other.Picking.currentPickingColor.y = 0.0f;
             Settings.Other.Picking.currentPickingColor.z = 0.0f;
 
-            tmpPhysicsWorld = new PhysicsWorld();
-
             Scene2D deserializedScene2D = Utils.gson.fromJson(deserializedScene2DString, Scene2D.class);
-            deserializedScene2D.setPhysicsWorld(tmpPhysicsWorld);
+            deserializedScene2D.initPhysicsWorld();
+            //deserializedScene2D.setPhysicsWorld(tmpPhysicsWorld);
 
             deserializedScene2D.setScenePath(scene2DPath);
 
@@ -298,6 +295,4 @@ public class SceneManager
     public Scene2D getCurrentScene2D() { return currentScene2D; }
 
     public List<Scene2DStoredValues> getScene2DStoredValues() { return scene2DStoredValues; }
-
-    public PhysicsWorld getTmpPhysicsWorld() { return tmpPhysicsWorld; }
 }

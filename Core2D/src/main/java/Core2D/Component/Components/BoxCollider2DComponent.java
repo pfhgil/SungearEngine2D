@@ -1,6 +1,7 @@
 package Core2D.Component.Components;
 
 import Core2D.Component.Component;
+import Core2D.Log.Log;
 import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.Scene2D.SceneManager;
 
@@ -49,8 +50,9 @@ public class BoxCollider2DComponent extends Component
     public void init()
     {
         Rigidbody2DComponent rigidbody2DComponent = gameObject.getComponent(Rigidbody2DComponent.class);
-        if(rigidbody2DComponent != null) {
-            SceneManager.currentSceneManager.getTmpPhysicsWorld().addBoxCollider2D(rigidbody2DComponent.getRigidbody2D(), boxCollider2D);
+        if(rigidbody2DComponent != null && rigidbody2DComponent.getRigidbody2D().getScene2D() != null) {
+            rigidbody2DComponent.getRigidbody2D().getScene2D().getPhysicsWorld().addBoxCollider2D(rigidbody2DComponent.getRigidbody2D(), boxCollider2D);
+            Log.CurrentSession.println("Box collider 2d added!", Log.MessageType.ERROR);
         }
     }
 

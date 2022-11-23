@@ -24,6 +24,8 @@ import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
+import org.jbox2d.dynamics.Island;
+import org.jbox2d.dynamics.World;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -341,7 +343,7 @@ public class ResourcesView extends View
                         if(!isDirectory) {
                             if(fileExtension.equals("sgs")) {
                                 if(currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().getScenePath().equals(files[id].getPath())) {
-                                    currentSceneManager.getCurrentScene2D().destroy();
+                                    //currentSceneManager.getCurrentScene2D().destroy();
                                     SceneManager.currentSceneManager.setCurrentScene2D((Scene2D) null);
                                 }
                                 currentSceneManager.getScene2DStoredValues().removeIf(p -> p.path.equals(files[id].getPath()));

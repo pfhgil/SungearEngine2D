@@ -8,6 +8,7 @@ import Core2D.GameObject.GameObject;
 import Core2D.Log.Log;
 import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.Physics.Collider2D.CircleCollider2D;
+import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
@@ -39,6 +40,7 @@ public class PhysicsWorld extends World
     public PhysicsWorld()
     {
         super(new Vec2(0.0f, -20.0f), false);
+        //this.setAutoClearForces(true);
 
         Settings.velocityThreshold = 0.0f;
 
@@ -97,8 +99,8 @@ public class PhysicsWorld extends World
         if(simulatePhysics) {
             super.step(deltaTime, velocityIterations, positionIterations);
 
-            if(shouldCollider2DEnter) {
-                if(!gameObject2DAEnter.isShouldDestroy()) {
+            if (shouldCollider2DEnter) {
+                if (!gameObject2DAEnter.isShouldDestroy()) {
                     List<ScriptComponent> scriptComponentsA = gameObject2DAEnter.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponentsA) {
@@ -106,7 +108,7 @@ public class PhysicsWorld extends World
                     }
                 }
 
-                if(!gameObject2DBEnter.isShouldDestroy()) {
+                if (!gameObject2DBEnter.isShouldDestroy()) {
                     List<ScriptComponent> scriptComponentsB = gameObject2DBEnter.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponentsB) {
@@ -120,8 +122,8 @@ public class PhysicsWorld extends World
                 shouldCollider2DEnter = false;
             }
 
-            if(shouldCollider2DExit) {
-                if(!gameObject2DAExit.isShouldDestroy()) {
+            if (shouldCollider2DExit) {
+                if (!gameObject2DAExit.isShouldDestroy()) {
                     List<ScriptComponent> scriptComponentsA = gameObject2DAExit.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponentsA) {
@@ -129,7 +131,7 @@ public class PhysicsWorld extends World
                     }
                 }
 
-                if(!gameObject2DBExit.isShouldDestroy()) {
+                if (!gameObject2DBExit.isShouldDestroy()) {
                     List<ScriptComponent> scriptComponentsB = gameObject2DBExit.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponentsB) {
@@ -145,16 +147,18 @@ public class PhysicsWorld extends World
         }
     }
 
-    public void addRigidbody2D(GameObject gameObject)
+    public Rigidbody2D addRigidbody2D(GameObject gameObject, Scene2D scene2D)
     {
         Rigidbody2DComponent rigidbody2DComponent = gameObject.getComponent(Rigidbody2DComponent.class);
         if(rigidbody2DComponent != null) {
             Rigidbody2D rigidbody2D = rigidbody2DComponent.getRigidbody2D();
 
+            System.out.println("rigidbody is not null!!");
+
             BodyDef bodyDef = new BodyDef();
 
-            if (SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-                rigidbody2D.setScene2D(SceneManager.currentSceneManager.getCurrentScene2D());
+            if (scene2D != null) {
+                rigidbody2D.setScene2D(scene2D);
             }
             rigidbody2D.setBody(createBody(bodyDef));
             rigidbody2D.set(rigidbody2D);
@@ -169,7 +173,16 @@ public class PhysicsWorld extends World
             for (CircleCollider2DComponent circleCollider2DComponent : circleCollider2DComponents) {
                 addCircleCollider2D(rigidbody2D, circleCollider2DComponent.getCircleCollider2D());
             }
+
+            return rigidbody2D;
         }
+
+        return null;
+    }
+
+    public Rigidbody2D addRigidbody2D(GameObject gameObject)
+    {
+        return addRigidbody2D(gameObject, SceneManager.currentSceneManager.getCurrentScene2D());
     }
 
     public void addBoxCollider2D(Rigidbody2D rigidbody2D, BoxCollider2D boxCollider2D)

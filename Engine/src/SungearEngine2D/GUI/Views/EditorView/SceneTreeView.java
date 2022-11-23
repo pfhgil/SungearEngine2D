@@ -127,7 +127,10 @@ public class SceneTreeView extends View
                                             ViewsManager.getInspectorView().setCurrentInspectingObject(gameObject);
                                         }
                                         if (ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left)) {
-                                            Main.getMainCamera2D().getComponent(TransformComponent.class).getTransform().lerpMoveTo(gameObject.getComponent(TransformComponent.class).getTransform().getPosition(), new Vector2f(10));
+                                            Main.getMainCamera2D().getComponent(TransformComponent.class).getTransform().lerpMoveTo(
+                                                    MatrixUtils.getPosition(gameObject.getComponent(TransformComponent.class).getTransform().getResultModelMatrix()).negate(),
+                                                    new Vector2f(10)
+                                            );
                                         }
                                     }
                                     if (ImGui.beginDragDropSource()) {
@@ -201,14 +204,15 @@ public class SceneTreeView extends View
                     objectToActionIterator = iterator;
                 }
 
-                ImGui.pushID("Scene2DWrappedObject_" + gameObject.ID);
+                ImGui.pushID("Scene2DGameObject_" + gameObject.ID);
                 if (ImGui.isItemHovered()) {
                     if (ImGui.isMouseClicked(ImGuiMouseButton.Right)) {
                         ViewsManager.getInspectorView().setCurrentInspectingObject(gameObject);
                     }
                     if (ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left)) {
                         Main.getMainCamera2D().getComponent(TransformComponent.class).getTransform().lerpMoveTo(
-                                MatrixUtils.getPosition(gameObject.getComponent(TransformComponent.class).getTransform().getResultModelMatrix()), new Vector2f(10));
+                                MatrixUtils.getPosition(gameObject.getComponent(TransformComponent.class).getTransform().getResultModelMatrix()).negate(),
+                                new Vector2f(10));
                     }
                 }
                 if (ImGui.beginDragDropSource()) {
