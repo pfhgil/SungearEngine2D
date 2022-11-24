@@ -15,7 +15,7 @@ public class Camera2DComponent extends Component implements NonDuplicated
 
     private transient Matrix4f projectionMatrix = new Matrix4f().ortho2D(-viewportSize.x / 2.0f, viewportSize.x / 2.0f, -viewportSize.y / 2.0f, viewportSize.y / 2.0f);
 
-    private Matrix4f viewMatrix = new Matrix4f();
+    private transient Matrix4f viewMatrix = new Matrix4f();
 
     @Override
     public void update()

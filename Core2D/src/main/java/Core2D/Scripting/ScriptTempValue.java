@@ -6,6 +6,11 @@ import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.Utils;
+import com.google.gson.JsonObject;
+import com.google.gson.internal.LinkedTreeMap;
+import com.google.gson.internal.Primitives;
+import org.newdawn.slick.util.pathfinding.navmesh.Link;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -45,17 +50,23 @@ public class ScriptTempValue
 
                 //System.out.println(wrappedObject.getObject());
 
-                if(value instanceof Double && field.getType().isAssignableFrom(float.class)) {
-                    field.setFloat(script.getScriptClassInstance(), ((Double) value).floatValue());
-                } else if(value instanceof ScriptSceneObject object) {
+                Object resValue = value;
+                if(value instanceof LinkedTreeMap) {
+                    JsonObject jsonObject = Utils.gson.toJsonTree(value).getAsJsonObject();
+                    resValue = Utils.gson.fromJson(jsonObject.toString(), Object.class);
+                }
+
+                if(resValue instanceof Double && field.getType().isAssignableFrom(float.class)) {
+                    field.setFloat(script.getScriptClassInstance(), ((Double) resValue).floatValue());
+                } else if(resValue instanceof ScriptValue object) {
                     switch(object.objectType) {
                         case TYPE_GAME_OBJECT:
                             GameObject foundGameObject = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(object.ID);
                             field.set(script.getScriptClassInstance(), foundGameObject);
                             break;
                     }
-                } else if(value instanceof Component) {
-                    Component component = (Component) value;
+                } else if(resValue instanceof Component) {
+                    Component component = (Component) resValue;
                     Core2D.GameObject.GameObject foundGameObject = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(component.getObject2DID());
                     if(foundGameObject != null) {
                         for(Component objComponent : foundGameObject.getComponents()) {
@@ -66,8 +77,8 @@ public class ScriptTempValue
                         }
                     }
                 } else {
-                    if(value != null) {
-                        field.set(script.getScriptClassInstance(), value);
+                    if(resValue != null) {
+                        field.set(script.getScriptClassInstance(), resValue);
                     }
                 }
             } catch (NoSuchFieldException | IllegalAccessException e) {

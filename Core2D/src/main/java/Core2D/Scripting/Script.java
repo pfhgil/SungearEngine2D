@@ -4,7 +4,6 @@ import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.GameObject.GameObject;
 import Core2D.Log.Log;
-import Core2D.Scene2D.SceneObjectType;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
 import org.apache.commons.io.FilenameUtils;
@@ -203,7 +202,7 @@ public class Script
 
                 Object value = getFieldValue(field);
                 if (value instanceof GameObject gameObject) {
-                    scriptTempValue.setValue(new ScriptSceneObject(gameObject.ID, gameObject.name, SceneObjectType.TYPE_GAME_OBJECT));
+                    scriptTempValue.setValue(new ScriptValue(gameObject.ID, gameObject.name, ScriptValueType.TYPE_GAME_OBJECT));
                 } else {
                     scriptTempValue.setValue(value);
                 }

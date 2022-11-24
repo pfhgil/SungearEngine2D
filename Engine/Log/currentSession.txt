@@ -1,20 +1,98 @@
-[#FFFFFF] 2022/11/24 02:19:15 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/11/24 02:19:15 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2022/11/24 02:19:15 | [#008000] Core2D started!
-[#FFFFFF] 2022/11/24 02:19:15 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
-[#FFFFFF] 2022/11/24 02:19:16 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/11/24 02:19:16 | [#FFFFFF] Initializing compiler...  
-[#FFFFFF] 2022/11/24 02:19:19 | [#FFFFFF] scene manager code: {
+[#FFFFFF] 2022/11/24 22:26:35 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/11/24 22:26:35 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2022/11/24 22:26:36 | [#008000] Core2D started!
+[#FFFFFF] 2022/11/24 22:26:36 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2022/11/24 22:26:41 | [#FF0000] OpenGL error: 1280
+[#FFFFFF] 2022/11/24 22:26:41 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2022/11/24 22:26:46 | [#FFFFFF] scene manager code: {
   "scene2DStoredValues": [
     {
-      "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\new_lvl7.sgs",
+      "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\kek.sgs",
       "inBuild": false,
       "isMainScene2D": false
     }
   ],
   "mainScene2DPath": ""
 }
-[#FFFFFF] 2022/11/24 02:19:26 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
-[#FFFFFF] 2022/11/24 02:22:54 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\gg.txt' already exists
-[#FFFFFF] 2022/11/24 02:22:58 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\gg.txt' already exists
-[#FFFFFF] 2022/11/24 02:23:01 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2022/11/24 22:27:24 | [#FFFFFF] Compiling script PerfomanceTestScript.java... 
+[#FFFFFF] 2022/11/24 22:27:26 | [#008000] Script PerfomanceTestScript.java was successfully built!
+[#FFFFFF] 2022/11/24 22:27:26 | [#FFFFFF] Compiling script PerfomanceTestScript.java... 
+[#FFFFFF] 2022/11/24 22:27:28 | [#008000] Script PerfomanceTestScript.java was successfully built!
+[#FFFFFF] 2022/11/24 22:32:09 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\лул2.txt' already exists
+[#FFFFFF] 2022/11/24 22:34:12 | [#FFFFFF] Compiling script PerfomanceTestScript... 
+[#FFFFFF] 2022/11/24 22:34:16 | [#FF0000] D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scripts\PerfomanceTestScript.java:21: error: method addComponent in class GameObject cannot be applied to given types;
+                newObj.addComponent(TransformComponent.class);
+                      ^
+  required: T
+  found:    Class<TransformComponent>
+  reason: inference variable T has incompatible bounds
+    lower bounds: Component
+    lower bounds: Class<TransformComponent>
+  where T is a type-variable:
+    T extends Component declared in method <T>addComponent(T)
+1 error
+
+[#FFFFFF] 2022/11/24 22:38:33 | [#FFFFFF] Compiling script PerfomanceTestScript... 
+[#FFFFFF] 2022/11/24 22:38:36 | [#FF0000] D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scripts\PerfomanceTestScript.java:21: error: method addComponent in class GameObject cannot be applied to given types;
+                newObj.addComponent(TransformComponent.class);
+                      ^
+  required: T
+  found:    Class<TransformComponent>
+  reason: inference variable T has incompatible bounds
+    lower bounds: Component
+    lower bounds: Class<TransformComponent>
+  where T is a type-variable:
+    T extends Component declared in method <T>addComponent(T)
+1 error
+
+[#FFFFFF] 2022/11/24 22:39:43 | [#FFFFFF] Compiling script PerfomanceTestScript... 
+[#FFFFFF] 2022/11/24 22:39:48 | [#008000] Script PerfomanceTestScript.java was successfully built!
+[#FFFFFF] 2022/11/24 22:39:54 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\лул2.txt' already exists
+[#FFFFFF] 2022/11/24 22:42:03 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\лул2.txt' already exists
+[#FFFFFF] 2022/11/24 22:44:07 | [#FFFFFF] Compiling script PerfomanceTestScript... 
+[#FFFFFF] 2022/11/24 22:44:11 | [#008000] Script PerfomanceTestScript.java was successfully built!
+[#FFFFFF] 2022/11/24 22:47:34 | [#FFFFFF] new 32564884
+[#FFFFFF] 2022/11/24 22:47:35 | [#FFFFFF] new 38117294
+[#FFFFFF] 2022/11/24 22:47:35 | [#FFFFFF] new 50134871
+[#FFFFFF] 2022/11/24 22:47:44 | [#FFFFFF] new 96045602
+[#FFFFFF] 2022/11/24 22:47:45 | [#FFFFFF] new 7921854
+[#FFFFFF] 2022/11/24 22:47:45 | [#FFFFFF] new 48212093
+[#FFFFFF] 2022/11/24 22:51:12 | [#FFFFFF] Compiling script PerfomanceTestScript.java... 
+[#FFFFFF] 2022/11/24 22:51:15 | [#008000] Script PerfomanceTestScript.java was successfully built!
+[#FFFFFF] 2022/11/24 22:51:15 | [#FFFFFF] Compiling script PerfomanceTestScript.java... 
+[#FFFFFF] 2022/11/24 22:51:15 | [#FF0000] java.util.ConcurrentModificationException
+	at java.base/java.util.ArrayList$Itr.checkForComodification(ArrayList.java:1013)
+	at java.base/java.util.ArrayList$Itr.next(ArrayList.java:967)
+	at Core2D.GameObject.GameObject.update(GameObject.java:143)
+	at Core2D.Graphics.Renderer.render(Renderer.java:11)
+	at Core2D.Graphics.Renderer.render(Renderer.java:31)
+	at Core2D.Graphics.Renderer.render(Renderer.java:20)
+	at Core2D.Scene2D.Scene2D.draw(Scene2D.java:108)
+	at Core2D.Scene2D.SceneManager.drawCurrentScene2D(SceneManager.java:40)
+	at SungearEngine2D.Main.GraphicsRenderer.draw(GraphicsRenderer.java:76)
+	at SungearEngine2D.Main.Main$1.onDrawFrame(Main.java:173)
+	at Core2D.Graphics.Graphics.draw(Graphics.java:114)
+	at Core2D.Core2D.Core2D.run(Core2D.java:119)
+	at Core2D.Core2D.Core2D.create(Core2D.java:106)
+	at Core2D.Core2D.Core2D.start(Core2D.java:57)
+	at SungearEngine2D.Main.Main.main(Main.java:188)
+
+[#FFFFFF] 2022/11/24 22:51:19 | [#008000] Script PerfomanceTestScript.java was successfully built!
+[#FFFFFF] 2022/11/24 22:51:45 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\test3.txt' already exists
+[#FFFFFF] 2022/11/24 22:52:06 | [#FFFFFF] Compiling script PerfomanceTestScript... 
+[#FFFFFF] 2022/11/24 22:52:11 | [#008000] Script PerfomanceTestScript.java was successfully built!
+[#FFFFFF] 2022/11/24 22:52:16 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\test3.txt' already exists
+[#FFFFFF] 2022/11/24 22:53:11 | [#FFFFFF] Compiling script PerfomanceTestScript... 
+[#FFFFFF] 2022/11/24 22:53:18 | [#008000] Script PerfomanceTestScript.java was successfully built!
+[#FFFFFF] 2022/11/24 22:53:25 | [#FFFFFF] Compiling script PerfomanceTestScript... 
+[#FFFFFF] 2022/11/24 22:53:30 | [#008000] Script PerfomanceTestScript.java was successfully built!
+[#FFFFFF] 2022/11/24 22:53:33 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\test3.txt' already exists
+[#FFFFFF] 2022/11/24 22:55:22 | [#FFFFFF] Compiling script PerfomanceTestScript... 
+[#FFFFFF] 2022/11/24 22:55:25 | [#008000] Script PerfomanceTestScript.java was successfully built!
+[#FFFFFF] 2022/11/24 22:57:13 | [#FFFFFF] Compiling script PerfomanceTestScript... 
+[#FFFFFF] 2022/11/24 22:57:19 | [#008000] Script PerfomanceTestScript.java was successfully built!
+[#FFFFFF] 2022/11/24 22:57:22 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\test3.txt' already exists
+[#FFFFFF] 2022/11/24 22:58:59 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\test3.txt' already exists
+[#FFFFFF] 2022/11/24 23:03:39 | [#FFFFFF] Compiling script PerfomanceTestScript... 
+[#FFFFFF] 2022/11/24 23:03:43 | [#008000] Script PerfomanceTestScript.java was successfully built!
+[#FFFFFF] 2022/11/24 23:09:53 | [#FF0000] File by path 'D:\Pixelfield\Java Projects\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
