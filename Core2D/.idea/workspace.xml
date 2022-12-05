@@ -9,7 +9,64 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f5f8ac80-ad56-4c77-9869-c4208084a0d7" name="Changes" comment="" />
+    <list default="true" id="f5f8ac80-ad56-4c77-9869-c4208084a0d7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Deserializers/Scene2DDeserializer.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Deserializers/Scene2DDeserializer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Graphics/Graphics.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Graphics/Graphics.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Scripting/ScriptTempValue$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Scripting/ScriptTempValue$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Scripting/ScriptTempValue.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Scripting/ScriptTempValue.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/ShaderUtils/FrameBufferObject$BuffersTypes.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/ShaderUtils/FrameBufferObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/ShaderUtils/IndexBufferObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/ShaderUtils/VertexArrayObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/ShaderUtils/VertexBufferObject.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/Core2D.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/Core2D.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/FrameBufferObject.BuffersTypes.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/FrameBufferObject.BuffersTypes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/FrameBufferObject.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/FrameBufferObject.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/IndexBufferObject.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/IndexBufferObject.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/VertexArrayObject.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/VertexArrayObject.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/VertexBufferObject.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/VertexBufferObject.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/class-use/FrameBufferObject.BuffersTypes.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/class-use/FrameBufferObject.BuffersTypes.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/class-use/FrameBufferObject.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/class-use/FrameBufferObject.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/class-use/IndexBufferObject.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/class-use/IndexBufferObject.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/class-use/VertexArrayObject.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/class-use/VertexArrayObject.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/class-use/VertexBufferObject.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/Core2D/ShaderUtils/class-use/VertexBufferObject.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/constant-values.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/constant-values.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-15.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index-files/index-15.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/index-files/index-20.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/index-files/index-20.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/docs/serialized-form.html" beforeDir="false" afterPath="$PROJECT_DIR$/docs/serialized-form.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/Camera2DComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/Camera2DComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/MeshRendererComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/MeshRendererComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/TextureComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/TextureComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Deserializers/Scene2DDeserializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Deserializers/Scene2DDeserializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/GameObject/GameObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/GameObject/GameObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Graphics/Graphics.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Graphics/Graphics.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Scripting/ScriptTempValue.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Scripting/ScriptTempValue.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/ShaderUtils/FrameBufferObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/ShaderUtils/FrameBuffer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/ShaderUtils/IndexBufferObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/ShaderUtils/IndexBuffer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/ShaderUtils/VertexArrayObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/ShaderUtils/VertexArray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/ShaderUtils/VertexBufferObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/ShaderUtils/VertexBuffer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Utils/WrappedObject.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/Log/currentSession.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/Log/currentSession.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/Projects/PROJECT12/SceneManager.sm" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/Projects/PROJECT12/SceneManager.sm" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/Projects/PROJECT12/SceneManager.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/Projects/PROJECT12/SceneManager.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/compiler/Core2D.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/compiler/Core2D.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/imgui.ini" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/imgui.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/libs/Core2D.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/libs/Core2D.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/resources/data/other/Core2D.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/resources/data/other/Core2D.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/DebugDraw/Gizmo.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/DebugDraw/Gizmo.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/GUI/Views/EditorView/InspectorView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/GUI/Views/EditorView/InspectorView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/GUI/Views/EditorView/ResourcesView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/GUI/Views/EditorView/ResourcesView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/Main/GraphicsRenderer.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/Main/GraphicsRenderer.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -183,7 +240,10 @@
       <workItem from="1669208973753" duration="4470000" />
       <workItem from="1669213572159" duration="12006000" />
       <workItem from="1669312647533" duration="2552000" />
-      <workItem from="1669316383809" duration="2502000" />
+      <workItem from="1669316383809" duration="2637000" />
+      <workItem from="1669462718628" duration="2984000" />
+      <workItem from="1669479175481" duration="3756000" />
+      <workItem from="1670005388443" duration="8797000" />
     </task>
     <servers />
   </component>

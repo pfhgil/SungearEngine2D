@@ -22,7 +22,7 @@ public class MeshRendererComponent extends Component {
     public Material2D material2D;
 
     // VAO четырехугольника (VAO - Vertex Array Object. Хранит в себе указатели на VBO, IBO и т.д.)
-    public transient VertexArrayObject vertexArrayObject;
+    public transient VertexArray vertexArray;
     private int drawingMode = GL_TRIANGLES;
     private transient short[] indices = new short[] { 0, 1, 2, 0, 2, 3 };
 
@@ -64,7 +64,7 @@ public class MeshRendererComponent extends Component {
         if(transformComponent == null) return;
         if(gameObject.isShouldDestroy()) return;
         // использую VAO, текстуру и шейдер
-        vertexArrayObject.bind();
+        vertexArray.bind();
         texture.bind();
         if(material2D != null && material2D.material2DData != null) {
             glBlendFunc(material2D.material2DData.blendSourceFactor, material2D.material2DData.blendDestinationFactor);
@@ -98,24 +98,24 @@ public class MeshRendererComponent extends Component {
         // прекращаю использование шейдера, текстуры и VAO
         shader.unBind();
         texture.unBind();
-        vertexArrayObject.unBind();
+        vertexArray.unBind();
     }
 
     @Override
     public void destroy() {
-        if(vertexArrayObject != null) {
-            vertexArrayObject.destroy();
-            vertexArrayObject = null;
+        if(vertexArray != null) {
+            vertexArray.destroy();
+            vertexArray = null;
         }
     }
 
     private void loadVAO() {
         if (Thread.currentThread().getName().equals("main")) {
-            vertexArrayObject = new VertexArrayObject();
+            vertexArray = new VertexArray();
             // VBO вершин (VBO - Vertex Buffer Object. Может хранить в себе цвета, позиции вершин и т.д.)
-            VertexBufferObject vertexBufferObject = new VertexBufferObject(data);
+            VertexBuffer vertexBuffer = new VertexBuffer(data);
             // IBO вершин (IBO - Index Buffer Object. IBO хранит в себе индексы вершин, по которым будут соединяться вершины)
-            IndexBufferObject indexBufferObject = new IndexBufferObject(indices);
+            IndexBuffer indexBuffer = new IndexBuffer(indices);
 
             // создаю описание аттрибутов в шейдерной программе
             BufferLayout attributesLayout = new BufferLayout(
@@ -123,14 +123,14 @@ public class MeshRendererComponent extends Component {
                     new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2)
             );
 
-            vertexBufferObject.setLayout(attributesLayout);
-            vertexArrayObject.putVBO(vertexBufferObject, false);
-            vertexArrayObject.putIBO(indexBufferObject);
+            vertexBuffer.setLayout(attributesLayout);
+            vertexArray.putVBO(vertexBuffer, false);
+            vertexArray.putIBO(indexBuffer);
 
             indices = null;
 
             // отвязываю vao
-            vertexArrayObject.unBind();
+            vertexArray.unBind();
 
 
         }
@@ -149,9 +149,9 @@ public class MeshRendererComponent extends Component {
             data[14] = UV[6];
             data[15] = UV[7];
 
-            if (vertexArrayObject != null) {
-                VertexBufferObject vbo = vertexArrayObject.getVBOs().get(0);
-                vertexArrayObject.updateVBO(vbo, data);
+            if (vertexArray != null) {
+                VertexBuffer vbo = vertexArray.getVBOs().get(0);
+                vertexArray.updateVBO(vbo, data);
             }
         }
     }
@@ -169,5 +169,5 @@ public class MeshRendererComponent extends Component {
 
     public float[] getData() { return data; }
 
-    public VertexArrayObject getVertexArrayObject() { return vertexArrayObject; }
+    public VertexArray getVertexArrayObject() { return vertexArray; }
 }

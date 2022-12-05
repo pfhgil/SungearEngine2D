@@ -10,7 +10,7 @@ import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
 import Core2D.Log.Log;
 import Core2D.Scene2D.SceneManager;
-import Core2D.ShaderUtils.FrameBufferObject;
+import Core2D.ShaderUtils.FrameBuffer;
 import Core2D.Utils.ExceptionsUtils;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
@@ -38,7 +38,7 @@ public abstract class Graphics
 
     private static ViewMode viewMode = ViewMode.VIEW_MODE_2D;
 
-    private static FrameBufferObject pickingRenderTarget;
+    private static FrameBuffer pickingRenderTarget;
 
     // экран очищено
     public static boolean screenCleared = false;
@@ -57,7 +57,7 @@ public abstract class Graphics
 
         Vector2i pickingRenderTargetSize = getScreenSize();
 
-        pickingRenderTarget = new FrameBufferObject(pickingRenderTargetSize.x, pickingRenderTargetSize.y, FrameBufferObject.BuffersTypes.COLOR_BUFFER, GL_TEXTURE0);
+        pickingRenderTarget = new FrameBuffer(pickingRenderTargetSize.x, pickingRenderTargetSize.y, FrameBuffer.BuffersTypes.COLOR_BUFFER, GL_TEXTURE0);
 
         mainRenderer = new Renderer();
     }
@@ -213,7 +213,7 @@ public abstract class Graphics
         }
     }
 
-    public static FrameBufferObject getPickingRenderTarget() { return pickingRenderTarget; }
+    public static FrameBuffer getPickingRenderTarget() { return pickingRenderTarget; }
 
     public static Vector4f getScreenClearColor() { return screenClearColor; }
     public static void setScreenClearColor(Vector4f screenClearColor)

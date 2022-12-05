@@ -1,16 +1,26 @@
-[#FFFFFF] 2022/10/08 23:38:21 | [#008000] Log directory was founded!
-[#FFFFFF] 2022/10/08 23:38:21 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/10/08 23:38:23 | [#FFFFFF] scene manager code: {
+[#FFFFFF] 2022/12/03 14:16:56 | [#008000] Log directory was founded!
+[#FFFFFF] 2022/12/03 14:16:56 | [#008000] Current session log file was created!
+[#FFFFFF] 2022/12/03 14:16:57 | [#FFFFFF] scene manager code: {
   "scene2DStoredValues": [
     {
-      "path": "/Scenes/lvl0.sgs",
+      "path": "/Scenes/lvl1.sgs",
       "inBuild": true,
       "isMainScene2D": true
+    },
+    {
+      "path": "/Scenes/lvl2.sgs",
+      "inBuild": true,
+      "isMainScene2D": false
     }
   ],
   "mainScene2DPath": ""
 }
-[#FFFFFF] 2022/10/08 23:38:23 | [#FF0000] goo!!!!1
-[#FFFFFF] 2022/10/08 23:38:23 | [#FF0000] goo!!!!12222
-[#FFFFFF] 2022/10/08 23:38:23 | [#FF0000] goo!!!234324
-[#FFFFFF] 2022/10/08 23:38:23 | [#FFFFFF] Texture source: /out/resources/Resources/textures/ferapont.png
+[#FFFFFF] 2022/12/03 14:16:57 | [#FF0000] goo!!!!1
+[#FFFFFF] 2022/12/03 14:16:57 | [#FF0000] goo!!!!12222
+[#FFFFFF] 2022/12/03 14:16:57 | [#FF0000] goo!!!234324
+[#FFFFFF] 2022/12/03 14:16:57 | [#FFFFFF] Texture source: /Resources/Resources/textures/ferapont.png
+[#FFFFFF] 2022/12/03 14:16:57 | [#FFFFFF] Texture source: /Resources/Resources/textures/bg2.png
+[#FFFFFF] 2022/12/03 14:16:57 | [#FFFFFF] Script dirPath: /Resources/Scripts, baseName: PlayerController
+[#FFFFFF] 2022/12/03 14:16:57 | [#FFFFFF] second
+[#FFFFFF] 2022/12/03 14:16:57 | [#FF0000] buffer length: 1891
+[#FFFFFF] 2022/12/03 14:16:57 | [#FF0000] bytes length: 1891

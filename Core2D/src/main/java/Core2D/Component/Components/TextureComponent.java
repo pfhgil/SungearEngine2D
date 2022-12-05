@@ -4,7 +4,7 @@ import Core2D.AssetManager.AssetManager;
 import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
 import Core2D.GameObject.GameObject;
-import Core2D.ShaderUtils.VertexBufferObject;
+import Core2D.ShaderUtils.VertexBuffer;
 import Core2D.GameObject.RenderParts.Texture2D;
 import Core2D.Utils.PositionsQuad;
 import org.joml.Vector2f;
@@ -215,7 +215,7 @@ public class TextureComponent extends Component implements NonDuplicated
             meshRendererComponent.getData()[15] = UV[7];
 
             if(meshRendererComponent.getVertexArrayObject() != null) {
-                VertexBufferObject vbo = meshRendererComponent.getVertexArrayObject().getVBOs().get(0);
+                VertexBuffer vbo = meshRendererComponent.getVertexArrayObject().getVBOs().get(0);
                 meshRendererComponent.getVertexArrayObject().updateVBO(vbo, meshRendererComponent.getData());
             }
         }

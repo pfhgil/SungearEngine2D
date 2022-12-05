@@ -44,16 +44,11 @@ public class ScriptTempValue
         if(script != null && fieldName != null && value != null) {
             try {
                 Field field = script.getScriptClass().getField(fieldName);
-                //Object fieldValue = getScriptFieldValue(script);
-
-                //System.out.println("fieldName: " + fieldName + ", wrappedObject.getObject(): " + wrappedObject.getObject() + ", script name: " + script.getName() + ", script class: " + script.getScriptClass());
-
-                //System.out.println(wrappedObject.getObject());
 
                 Object resValue = value;
                 if(value instanceof LinkedTreeMap) {
                     JsonObject jsonObject = Utils.gson.toJsonTree(value).getAsJsonObject();
-                    resValue = Utils.gson.fromJson(jsonObject.toString(), Object.class);
+                    resValue = Utils.gson.fromJson(jsonObject.toString(), ScriptValue.class);
                 }
 
                 if(resValue instanceof Double && field.getType().isAssignableFrom(float.class)) {

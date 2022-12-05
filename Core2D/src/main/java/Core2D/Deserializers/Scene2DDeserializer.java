@@ -53,7 +53,7 @@ public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
                 Camera2DComponent camera2DComponent = gameObject.getComponent(Camera2DComponent.class);
 
                 if(camera2DComponent != null) {
-                    // сделать проверку является ли камера главной. добавить boolean isMain в Camera2DComponent
+                    camera2DComponent.setScene2DMainCamera2D(camera2DComponent.isScene2DMainCamera2D(), scene2D);
                 }
             }
         }

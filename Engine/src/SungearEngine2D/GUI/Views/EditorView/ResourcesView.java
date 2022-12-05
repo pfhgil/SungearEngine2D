@@ -403,7 +403,7 @@ public class ResourcesView extends View
             // если тип файл - java, то создаю этот файл с заранее подготовленным кодом
             if(newFile.exists() && fileType.equals("Java")) {
                 String javaFileCode =
-                        "import Core2D.Object2D.*;\n" +
+                        "import Core2D.GameObject.*;\n" +
                         "\n" +
                         "public class " + name + "\n" +
                         "{\n" +
@@ -417,12 +417,12 @@ public class ResourcesView extends View
                         "        \n" +
                         "    }\n" +
                         "    \n" +
-                        "    public void collider2DEnter(Object2D otherObj)\n" +
+                        "    public void collider2DEnter(GameObject otherObj)\n" +
                         "    {\n" +
                         "        \n" +
                         "    }\n" +
                         "    \n" +
-                        "    public void collider2DExit(Object2D otherObj)\n" +
+                        "    public void collider2DExit(GameObject otherObj)\n" +
                         "    {\n" +
                         "        \n" +
                         "    }\n" +

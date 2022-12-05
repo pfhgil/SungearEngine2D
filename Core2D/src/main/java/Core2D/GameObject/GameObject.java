@@ -10,6 +10,7 @@ import Core2D.Component.NonRemovable;
 import Core2D.Core2D.Settings;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
+import Core2D.Pooling.PoolObject;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Transform.Transform;
 import Core2D.Utils.MatrixUtils;
@@ -25,7 +26,7 @@ import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
-public class GameObject implements Serializable
+public class GameObject implements Serializable, PoolObject
 {
     public String name = "default";
 
@@ -166,6 +167,12 @@ public class GameObject implements Serializable
         layer = null;
 
         System.out.println("Object2D " + name + " destroyed");
+    }
+
+    @Override
+    public void destroyFromScene2D()
+    {
+
     }
 
     public <T extends Component> T addComponent (T component)

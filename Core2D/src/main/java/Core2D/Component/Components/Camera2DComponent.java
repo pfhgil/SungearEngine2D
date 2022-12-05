@@ -1,8 +1,10 @@
 package Core2D.Component.Components;
 
+import Core2D.CamerasManager.CamerasManager;
 import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
 import Core2D.Core2D.Core2D;
+import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.MatrixUtils;
 import org.joml.Matrix4f;
@@ -17,10 +19,24 @@ public class Camera2DComponent extends Component implements NonDuplicated
 
     private transient Matrix4f viewMatrix = new Matrix4f();
 
+    private boolean isScene2DMainCamera2D = false;
+
+    @Override
+    public void init()
+    {
+        setScene2DMainCamera2D(isScene2DMainCamera2D);
+    }
+
     @Override
     public void update()
     {
         updateViewMatrix();
+    }
+
+    @Override
+    public void destroy()
+    {
+        setScene2DMainCamera2D(false);
     }
 
     public void updateViewMatrix()
@@ -50,4 +66,27 @@ public class Camera2DComponent extends Component implements NonDuplicated
     public Matrix4f getProjectionMatrix() { return projectionMatrix; }
 
     public Matrix4f getViewMatrix() { return viewMatrix; }
+
+    public boolean isScene2DMainCamera2D() { return isScene2DMainCamera2D; }
+
+    public void setScene2DMainCamera2D(boolean scene2DMainCamera2D, Scene2D scene2D)
+    {
+        if(scene2D != null &&
+                scene2DMainCamera2D && scene2D.getSceneMainCamera2D() != null) {
+            Camera2DComponent camera2DComponent = scene2D.getSceneMainCamera2D().getComponent(Camera2DComponent.class);
+            camera2DComponent.isScene2DMainCamera2D = false;
+            scene2D.setSceneMainCamera2D(null);
+        }
+        isScene2DMainCamera2D = scene2DMainCamera2D;
+        if(scene2D != null) {
+            scene2D.setSceneMainCamera2D(isScene2DMainCamera2D ? gameObject : scene2D.getSceneMainCamera2D());
+        }
+    }
+
+    public void setScene2DMainCamera2D(boolean scene2DMainCamera2D)
+    {
+        if(SceneManager.currentSceneManager != null) {
+            setScene2DMainCamera2D(scene2DMainCamera2D, SceneManager.currentSceneManager.getCurrentScene2D());
+        }
+    }
 }

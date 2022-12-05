@@ -7,7 +7,7 @@ import Core2D.Drawable.Primitives.Line2D;*/
 import Core2D.GameObject.GameObject;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.PC.Mouse;
-import Core2D.ShaderUtils.FrameBufferObject;
+import Core2D.ShaderUtils.FrameBuffer;
 import Core2D.Transform.Transform;
 import Core2D.Utils.MathUtils;
 import Core2D.Utils.MatrixUtils;
@@ -60,12 +60,12 @@ public class Gizmo
 
     private static Vector2f lastMousePosition = new Vector2f();
 
-    private static FrameBufferObject gizmoPickingTarget;
+    private static FrameBuffer gizmoPickingTarget;
 
     public static void init()
     {
         Vector2i size = Graphics.getScreenSize();
-        gizmoPickingTarget = new FrameBufferObject(size.x, size.y, FrameBufferObject.BuffersTypes.COLOR_BUFFER, GL13.GL_TEXTURE0);
+        gizmoPickingTarget = new FrameBuffer(size.x, size.y, FrameBuffer.BuffersTypes.COLOR_BUFFER, GL13.GL_TEXTURE0);
 
         yArrow.name = "gizmo.yArrow";
         xArrow.name = "gizmo.xArrow";

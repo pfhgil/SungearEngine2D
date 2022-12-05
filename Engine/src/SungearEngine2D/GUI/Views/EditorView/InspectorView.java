@@ -911,17 +911,9 @@ public class InspectorView extends View
                             ImGui.popID();
                         }
                         case "Camera2DComponent" -> {
-                            //Camera2DComponent camera2DComponent = (Camera2DComponent) currentComponent;
-                            boolean condition = currentSceneManager != null &&
-                                    currentSceneManager.getCurrentScene2D() != null &&
-                                    currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null &&
-                                    currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().ID == inspectingObject2D.ID;
-                            if(ImGui.checkbox("Scene2D main Camera2D", condition)) {
-                                if(!condition) {
-                                    currentSceneManager.getCurrentScene2D().setSceneMainCamera2D(inspectingObject2D);
-                                } else {
-                                    currentSceneManager.getCurrentScene2D().setSceneMainCamera2D(null);
-                                }
+                            Camera2DComponent camera2DComponent = (Camera2DComponent) currentComponent;
+                            if(ImGui.checkbox("Scene2D main Camera2D", camera2DComponent.isScene2DMainCamera2D())) {
+                                camera2DComponent.setScene2DMainCamera2D(!camera2DComponent.isScene2DMainCamera2D());
                             }
                         }
                     }

@@ -4,7 +4,7 @@ import Core2D.GameObject.GameObject;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
-import Core2D.ShaderUtils.FrameBufferObject;
+import Core2D.ShaderUtils.FrameBuffer;
 import SungearEngine2D.DebugDraw.CamerasDebugLines;
 import SungearEngine2D.DebugDraw.Gizmo;
 import SungearEngine2D.DebugDraw.Grid;
@@ -23,8 +23,8 @@ public class GraphicsRenderer
 {
     private static int cellsNum = 501;
 
-    private static FrameBufferObject sceneRenderTarget;
-    private static FrameBufferObject gameRenderTarget;
+    private static FrameBuffer sceneRenderTarget;
+    private static FrameBuffer gameRenderTarget;
 
     public static void init()
     {
@@ -34,8 +34,8 @@ public class GraphicsRenderer
         Gizmo.init();
 
         Vector2i targetSize = Graphics.getScreenSize();
-        sceneRenderTarget = new FrameBufferObject(targetSize.x, targetSize.y, FrameBufferObject.BuffersTypes.COLOR_BUFFER, GL_TEXTURE0);
-        gameRenderTarget = new FrameBufferObject(targetSize.x, targetSize.y, FrameBufferObject.BuffersTypes.COLOR_BUFFER, GL_TEXTURE0);
+        sceneRenderTarget = new FrameBuffer(targetSize.x, targetSize.y, FrameBuffer.BuffersTypes.COLOR_BUFFER, GL_TEXTURE0);
+        gameRenderTarget = new FrameBuffer(targetSize.x, targetSize.y, FrameBuffer.BuffersTypes.COLOR_BUFFER, GL_TEXTURE0);
     }
 
     public static void draw()
@@ -78,6 +78,6 @@ public class GraphicsRenderer
         gameRenderTarget.unBind();
     }
 
-    public static FrameBufferObject getSceneRenderTarget() { return sceneRenderTarget; }
-    public static FrameBufferObject getGameRenderTarget() { return gameRenderTarget; }
+    public static FrameBuffer getSceneRenderTarget() { return sceneRenderTarget; }
+    public static FrameBuffer getGameRenderTarget() { return gameRenderTarget; }
 }
