@@ -49,11 +49,13 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated
      * @param component Rigidbody2DComponent.
      */
     @Override
-    public void set(Component component)
+    public Rigidbody2DComponent set(Component component)
     {
         if(component instanceof Rigidbody2DComponent) {
             rigidbody2D.set(((Rigidbody2DComponent) component).getRigidbody2D());
         }
+
+        return this;
     }
 
     /**

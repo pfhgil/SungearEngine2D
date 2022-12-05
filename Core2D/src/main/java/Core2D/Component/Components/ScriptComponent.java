@@ -21,11 +21,13 @@ public class ScriptComponent extends Component
      * @param component ScriptComponent.
      */
     @Override
-    public void set(Component component)
+    public ScriptComponent set(Component component)
     {
         if(component instanceof ScriptComponent) {
             script.set(((ScriptComponent) component).getScript());
         }
+
+        return this;
     }
 
     /**

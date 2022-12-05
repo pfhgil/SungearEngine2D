@@ -51,7 +51,8 @@ public class Shader implements Serializable
         shaderPartsHandlers.put(shaderType, shaderPartHandler);
 
         String shaderDefine = shaderType == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT";
-        glShaderSource(shaderPartHandler, "#define " + shaderDefine + "\n" + shaderSourceCode);
+        // сделать легкое изменения версии шейдера
+        glShaderSource(shaderPartHandler, "#version 330 core\n" + "#define " + shaderDefine + "\n" + shaderSourceCode);
 
         glCompileShader(shaderPartHandler);
 
@@ -68,6 +69,7 @@ public class Shader implements Serializable
             this.destroyShaderPart(shaderType);
 
             Log.CurrentSession.println("Error while creating and compiling shader. Shader type is: " + shaderPartTypeToString(shaderType) + ". Error is: " + errorString, Log.MessageType.ERROR);
+            Log.CurrentSession.println(shaderSourceCode, Log.MessageType.ERROR);
         }
     }
 

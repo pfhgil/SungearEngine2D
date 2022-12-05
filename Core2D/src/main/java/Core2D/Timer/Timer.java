@@ -24,13 +24,13 @@ public class Timer
 
     private long FPS = 0;
 
-    private float destTime = 0;
+    public float destTime = 0;
 
-    private boolean active = false;
+    private boolean active = true;
 
     private float maxDelta;
 
-    private boolean cyclic = false;
+    public boolean cyclic = false;
 
     private List<TimerCallback> timerCallbacks = new ArrayList<>();
 
@@ -147,9 +147,6 @@ public class Timer
     public float getAverageDeltaTime() { return averageDeltaTime; }
 
     public long getFPS() { return FPS; }
-
-    public boolean isCyclic() { return cyclic; }
-    public void setCyclic(boolean cyclic) { this.cyclic = cyclic; }
 
     public List<TimerCallback> getTimerCallbacks() { return timerCallbacks; }
 }

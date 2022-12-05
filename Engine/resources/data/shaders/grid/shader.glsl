@@ -1,6 +1,4 @@
 #ifdef VERTEX
-    #version 330 core
-
     // id аттрибута = 0. позиции вершин. входной параметр
     layout (location = 0) in vec2 positionAttribute;
     // id аттрибута = 2. текстурная координата вершины. входной параметр
@@ -22,8 +20,6 @@
 #endif
 
 #ifdef FRAGMENT
-    #version 330 core
-
     precision highp float;
 
     out highp vec4 fragColor;

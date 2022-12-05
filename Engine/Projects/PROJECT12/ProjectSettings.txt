@@ -1,4 +1,4 @@
 {
   "jdkPath": "C:\\Users\\stuka\\.jdks\\corretto-17.0.5",
-  "currentPath": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\ProjectSettings.txt"
+  "currentPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\ProjectSettings.txt"
 }

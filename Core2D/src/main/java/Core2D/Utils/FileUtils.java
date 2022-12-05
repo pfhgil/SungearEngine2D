@@ -1,6 +1,8 @@
 package Core2D.Utils;
 
 import Core2D.Log.Log;
+import org.apache.commons.io.ByteOrderMark;
+import org.apache.commons.io.input.BOMInputStream;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -119,7 +121,7 @@ public class FileUtils
     public static String readAllFile(String path) { return readAllFile(new File(path)); }
     public static String readAllFile(File file)
     {
-        StringBuilder stringBuilder = null; // для операций со строками
+        StringBuilder stringBuilder = new StringBuilder(); // для операций со строками
 
         try {
             Scanner scanner = new Scanner(file).useDelimiter("\\A"); // использую разделитель \n
@@ -139,12 +141,15 @@ public class FileUtils
 
     public static String readAllFile(InputStream inputStream)
     {
-        StringBuilder stringBuilder = null; // для операций со строками
+        StringBuilder stringBuilder = new StringBuilder(); // для операций со строками
 
         try {
             stringBuilder = new StringBuilder();
 
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new BOMInputStream(inputStream, false,
+                    ByteOrderMark.UTF_8,
+                    ByteOrderMark.UTF_16BE, ByteOrderMark.UTF_16LE,
+                    ByteOrderMark.UTF_32BE, ByteOrderMark.UTF_32LE)));
 
             String curLine = "";
 
@@ -159,7 +164,7 @@ public class FileUtils
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
-        return stringBuilder.toString();
+        return stringBuilder.toString().replace("\uFEFF", "");
     }
 
     // записывает данные в файл

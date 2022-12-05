@@ -27,9 +27,9 @@ public abstract class Component
      * Sets the parameters of the transmitted component for this component.
      * @param component Component.
      */
-    public void set(Component component)
+    public Component set(Component component)
     {
-
+        return this;
     }
 
     /**

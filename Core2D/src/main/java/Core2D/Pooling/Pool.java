@@ -9,7 +9,7 @@ public class Pool
 
     public PoolObject addPoolObject(PoolObject poolObject)
     {
-        PoolObject freePoolObject = getFreePoolObject();
+        PoolObject freePoolObject = get();
         if(freePoolObject != null) {
             return freePoolObject;
         } else {
@@ -35,8 +35,8 @@ public class Pool
 
     //public void
 
-    public PoolObject getFreePoolObject()
+    public PoolObject get()
     {
-        return freePoolObjects.peek();
+        return freePoolObjects.poll();
     }
 }

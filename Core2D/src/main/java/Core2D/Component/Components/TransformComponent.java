@@ -42,13 +42,15 @@ public class TransformComponent extends Component implements NonDuplicated
      * @param component TransformComponent.
      */
     @Override
-    public void set(Component component)
+    public TransformComponent set(Component component)
     {
         if(component instanceof TransformComponent) {
             TransformComponent transformComponent = (TransformComponent) component;
 
             this.transform.set(transformComponent.getTransform());
         }
+
+        return this;
     }
 
     /**

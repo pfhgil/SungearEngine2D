@@ -32,11 +32,13 @@ public class CircleCollider2DComponent extends Component
      * @param component CircleCollider2DComponent.
      */
     @Override
-    public void set(Component component)
+    public CircleCollider2DComponent set(Component component)
     {
         if(component instanceof CircleCollider2DComponent) {
             circleCollider2D.set(((CircleCollider2DComponent) component).getCircleCollider2D());
         }
+
+        return this;
     }
 
     /**

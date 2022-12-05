@@ -33,11 +33,13 @@ public class BoxCollider2DComponent extends Component
      * @param component BoxCollider2DComponent.
      */
     @Override
-    public void set(Component component)
+    public BoxCollider2DComponent set(Component component)
     {
         if(component instanceof BoxCollider2DComponent) {
             boxCollider2D.set(((BoxCollider2DComponent) component).getBoxCollider2D());
         }
+
+        return this;
     }
 
     /**
