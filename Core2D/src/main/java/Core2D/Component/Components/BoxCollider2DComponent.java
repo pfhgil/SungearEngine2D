@@ -17,6 +17,13 @@ public class BoxCollider2DComponent extends Component
 {
     private BoxCollider2D boxCollider2D = new BoxCollider2D();
 
+    public BoxCollider2DComponent() { }
+
+    public BoxCollider2DComponent(BoxCollider2DComponent component)
+    {
+        set(component);
+    }
+
     /**
      * Removes BoxCollider2D from the physical world.
      * @see Component#destroy()
@@ -33,13 +40,11 @@ public class BoxCollider2DComponent extends Component
      * @param component BoxCollider2DComponent.
      */
     @Override
-    public BoxCollider2DComponent set(Component component)
+    public void set(Component component)
     {
         if(component instanceof BoxCollider2DComponent) {
             boxCollider2D.set(((BoxCollider2DComponent) component).getBoxCollider2D());
         }
-
-        return this;
     }
 
     /**

@@ -17,7 +17,7 @@ public class MeshRendererComponent extends Component {
 
     public Texture2D texture = new Texture2D();
 
-    public Shader shader;
+    public transient Shader shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/object2D/shader.glsl"));
 
     public Material2D material2D;
 
@@ -44,11 +44,34 @@ public class MeshRendererComponent extends Component {
     };
     public int textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
 
+    public MeshRendererComponent() { }
+
+    public MeshRendererComponent(MeshRendererComponent component)
+    {
+        set(component);
+    }
+
+    @Override
+    public void set(Component component)
+    {
+        if(component instanceof MeshRendererComponent meshRendererComponent) {
+            shader.set(meshRendererComponent.shader);
+            texture.set(meshRendererComponent.texture);
+            if(meshRendererComponent.indices != null) {
+                indices = meshRendererComponent.indices;
+            }
+            if(meshRendererComponent.data != null) {
+                data = meshRendererComponent.data;
+            }
+            textureDrawMode = meshRendererComponent.textureDrawMode;
+
+            loadVAO();
+        }
+    }
+
     @Override
     public void init() {
-        shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/object2D/shader.glsl"));
-
-        gameObject.color.set(new Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
+        //gameObject.color.set(new Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
 
         loadVAO();
     }
@@ -111,6 +134,10 @@ public class MeshRendererComponent extends Component {
 
     private void loadVAO() {
         if (Thread.currentThread().getName().equals("main")) {
+            if(vertexArray != null) {
+                vertexArray.destroy();
+            }
+
             vertexArray = new VertexArray();
             // VBO вершин (VBO - Vertex Buffer Object. Может хранить в себе цвета, позиции вершин и т.д.)
             VertexBuffer vertexBuffer = new VertexBuffer(data);

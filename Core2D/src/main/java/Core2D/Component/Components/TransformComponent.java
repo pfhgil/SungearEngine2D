@@ -21,6 +21,11 @@ public class TransformComponent extends Component implements NonDuplicated
 
     public TransformComponent() { }
 
+    public TransformComponent(TransformComponent component)
+    {
+        set(component);
+    }
+
     /**
      * Applies the passed transform parameters to the current transform.
      * @param transform Transform.
@@ -42,15 +47,13 @@ public class TransformComponent extends Component implements NonDuplicated
      * @param component TransformComponent.
      */
     @Override
-    public TransformComponent set(Component component)
+    public void set(Component component)
     {
         if(component instanceof TransformComponent) {
             TransformComponent transformComponent = (TransformComponent) component;
 
             this.transform.set(transformComponent.getTransform());
         }
-
-        return this;
     }
 
     /**

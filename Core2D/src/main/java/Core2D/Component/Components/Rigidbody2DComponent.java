@@ -22,6 +22,12 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated
         create();
     }
 
+    public Rigidbody2DComponent(Rigidbody2DComponent component)
+    {
+        create();
+        set(component);
+    }
+
     @Override
     protected void create()
     {
@@ -49,13 +55,11 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated
      * @param component Rigidbody2DComponent.
      */
     @Override
-    public Rigidbody2DComponent set(Component component)
+    public void set(Component component)
     {
         if(component instanceof Rigidbody2DComponent) {
             rigidbody2D.set(((Rigidbody2DComponent) component).getRigidbody2D());
         }
-
-        return this;
     }
 
     /**

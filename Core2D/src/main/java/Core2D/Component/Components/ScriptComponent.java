@@ -15,19 +15,23 @@ public class ScriptComponent extends Component
 
     public ScriptComponent() { this.script = new Script(); }
 
+    public ScriptComponent(ScriptComponent component)
+    {
+        this.script = new Script();
+        set(component);
+    }
+
     /**
      * Applies component parameters to this component.
      * @see Component#set(Component)
      * @param component ScriptComponent.
      */
     @Override
-    public ScriptComponent set(Component component)
+    public void set(Component component)
     {
         if(component instanceof ScriptComponent) {
             script.set(((ScriptComponent) component).getScript());
         }
-
-        return this;
     }
 
     /**

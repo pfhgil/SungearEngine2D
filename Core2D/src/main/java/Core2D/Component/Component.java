@@ -5,7 +5,7 @@ import Core2D.GameObject.GameObject;
 /**
  * An abstract class that other components inherit.
  */
-public abstract class Component
+public class Component
 {
     /**
      * The object to which this component is bound.
@@ -18,6 +18,8 @@ public abstract class Component
 
     protected boolean active = true;
 
+    public Component() {}
+
     protected void create()
     {
 
@@ -27,9 +29,9 @@ public abstract class Component
      * Sets the parameters of the transmitted component for this component.
      * @param component Component.
      */
-    public Component set(Component component)
+    public void set(Component component)
     {
-        return this;
+
     }
 
     /**

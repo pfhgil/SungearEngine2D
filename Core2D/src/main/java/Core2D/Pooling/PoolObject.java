@@ -4,4 +4,5 @@ public interface PoolObject
 {
     void destroy();
     void destroyFromScene2D();
+    void restore();
 }

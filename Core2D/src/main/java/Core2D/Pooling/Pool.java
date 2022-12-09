@@ -7,22 +7,21 @@ public class Pool
     private Queue<PoolObject> freePoolObjects = new LinkedList<>();
     private List<PoolObject> usedPoolObjects = new ArrayList<>();
 
-    public PoolObject addPoolObject(PoolObject poolObject)
+    public void addPoolObject(PoolObject poolObject)
     {
-        PoolObject freePoolObject = get();
-        if(freePoolObject != null) {
-            return freePoolObject;
-        } else {
-            freePoolObjects.add(poolObject);
-            return poolObject;
-        }
+        freePoolObjects.add(poolObject);
     }
 
     public void releaseUsedPoolObject(PoolObject poolObject)
     {
-        if(usedPoolObjects.removeIf(poolObject0 -> poolObject0 == poolObject)) {
-            freePoolObjects.add(poolObject);
-            poolObject.destroyFromScene2D();
+        Iterator<PoolObject> iterator = usedPoolObjects.listIterator();
+        while(iterator.hasNext()) {
+            PoolObject poolObject0 = iterator.next();
+            if(poolObject0 == poolObject) {
+                freePoolObjects.add(poolObject);
+                poolObject.destroyFromScene2D();
+                iterator.remove();
+            }
         }
     }
 
@@ -37,6 +36,16 @@ public class Pool
 
     public PoolObject get()
     {
-        return freePoolObjects.poll();
+        PoolObject freePoolObject = freePoolObjects.poll();
+        if(freePoolObject != null) {
+            freePoolObject.restore();
+            usedPoolObjects.add(freePoolObject);
+        }
+        return freePoolObject;
+    }
+
+    public boolean hasFree()
+    {
+        return freePoolObjects.size() != 0;
     }
 }

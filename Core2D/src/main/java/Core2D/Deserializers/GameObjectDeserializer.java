@@ -99,7 +99,8 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>
                 //texture2D.blendSourceFactor = textureComponent.texture.blendSourceFactor;
                 //texture2D.blendDestinationFactor = textureComponent.texture.blendDestinationFactor;
 
-                gameObject.addComponent(component);
+                MeshRendererComponent meshRendererComponent = new MeshRendererComponent();
+                gameObject.addComponent(meshRendererComponent);
                 gameObject.getComponent(MeshRendererComponent.class).set(component);
                 gameObject.getComponent(MeshRendererComponent.class).texture.set(texture2D);
             } else if(component instanceof Rigidbody2DComponent rigidbody2DComponent) {

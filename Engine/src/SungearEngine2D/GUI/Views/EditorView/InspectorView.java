@@ -676,7 +676,7 @@ public class InspectorView extends View
                             }
                             ImGui.popID();
                         }
-                        case "ScriptComponent" -> {
+                        case "ScriptComponent", "ParticlesSystemComponent" -> {
                             ScriptComponent scriptComponent = (ScriptComponent) currentComponent;
 
                             // System.out.println(scriptComponent.getScript().getScriptClass());
@@ -1032,6 +1032,10 @@ public class InspectorView extends View
                         }
                         if(ImGui.selectable("Camera2DComponent")) {
                             ((GameObject) currentInspectingObject).addComponent(new Camera2DComponent());
+                            action = "";
+                        }
+                        if(ImGui.selectable("ParticlesSystemComponent")) {
+                            ((GameObject) currentInspectingObject).addComponent(new ParticlesSystemComponent());
                             action = "";
                         }
 

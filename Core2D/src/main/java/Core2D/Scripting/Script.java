@@ -20,8 +20,8 @@ import java.util.List;
 
 public class Script
 {
-    public String path;
-    private String name;
+    public String path = "";
+    private String name = "";
 
     private transient Method updateMethod;
     private transient Method deltaUpdateMethod;
@@ -54,6 +54,18 @@ public class Script
 
         destroyTempValues();
         scriptTempValues.addAll(script.getScriptTempValues());
+    }
+
+    public void loadClass(Class<?> cls, Object scriptClassInstance)
+    {
+        scriptClass = cls;
+
+        this.scriptClassInstance = scriptClassInstance;
+
+        deltaUpdateMethod = getMethod("deltaUpdate", float.class);
+        updateMethod = getMethod("update");
+        collider2DEnterMethod = getMethod("collider2DEnter", GameObject.class);
+        collider2DExitMethod = getMethod("collider2DExit", GameObject.class);
     }
 
     public void loadClass(String dirPath, String baseName) {
@@ -147,10 +159,12 @@ public class Script
 
     public void invokeMethod(Method method, Object... args)
     {
-        try {
-            method.invoke(scriptClassInstance, args);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        if(method != null) {
+            try {
+                method.invoke(scriptClassInstance, args);
+            } catch (IllegalAccessException | InvocationTargetException e) {
+                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+            }
         }
     }
 
@@ -255,4 +269,12 @@ public class Script
     public void setLastModified(long lastModified) { this.lastModified = lastModified; }
 
     public List<ScriptTempValue> getScriptTempValues() { return scriptTempValues; }
+
+    public Method getUpdateMethod() { return updateMethod; }
+
+    public Method getDeltaUpdateMethod() { return deltaUpdateMethod; }
+
+    public Method getCollider2DEnterMethod() { return collider2DEnterMethod; }
+
+    public Method getCollider2DExitMethod() { return collider2DExitMethod; }
 }

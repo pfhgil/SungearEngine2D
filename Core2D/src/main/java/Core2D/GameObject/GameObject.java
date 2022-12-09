@@ -13,6 +13,7 @@ import Core2D.Log.Log;
 import Core2D.Pooling.PoolObject;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Transform.Transform;
+import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.MatrixUtils;
 import Core2D.Utils.Tag;
 import Core2D.Utils.Utils;
@@ -21,6 +22,7 @@ import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
@@ -88,6 +90,37 @@ public class GameObject implements Serializable, PoolObject
         pickColor.set(createPickColor());
 
         createNewID();
+    }
+
+    public void set(GameObject gameObject)
+    {
+        for(var component : gameObject.getComponents()) {
+            Component existingComponent = getComponent(component.getClass());
+            if(existingComponent != null) {
+                existingComponent.set(component);
+            } else {
+                Component newComponent = null;
+                try {
+                    newComponent = component.getClass().getConstructor().newInstance();
+                } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                         NoSuchMethodException e) {
+                    Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                }
+                addComponent(newComponent);
+                newComponent.set(component);
+
+                System.out.println("component: " + newComponent);
+            }
+        }
+
+        name = gameObject.name;
+        //setLayer(gameObject.getLayer());
+        tag.set(gameObject.tag);
+
+        isUIElement = gameObject.isUIElement;
+        setColor(gameObject.getColor());
+        setParentObject2D(gameObject.getParentObject2D());
+        addChildrenObjects(gameObject.getChildrenObjects());
     }
 
     public static GameObject createObject2D()
@@ -160,10 +193,24 @@ public class GameObject implements Serializable, PoolObject
     {
         shouldDestroy = true;
 
-        for (var i : components) {
-            i.destroy();
+        if (parentGameObject != null) {
+            parentGameObject.removeChild(this);
+            parentGameObject = null;
         }
 
+        Iterator<Component> componentsIterator = components.iterator();
+        while (componentsIterator.hasNext()) {
+            Component component = componentsIterator.next();
+            component.destroy();
+            componentsIterator.remove();
+        }
+
+        Iterator<Core2D.GameObject.GameObject> childrenIterator = childrenObjects.iterator();
+        while (childrenIterator.hasNext()) {
+            Core2D.GameObject.GameObject child = childrenIterator.next();
+            child.destroy();
+            childrenIterator.remove();
+        }
         layer = null;
 
         System.out.println("Object2D " + name + " destroyed");
@@ -172,12 +219,26 @@ public class GameObject implements Serializable, PoolObject
     @Override
     public void destroyFromScene2D()
     {
+        shouldDestroy = true;
 
+        for (var component : components) {
+            component.setActive(false);
+        }
+    }
+
+    @Override
+    public void restore()
+    {
+        shouldDestroy = false;
+
+        for (var component : components) {
+            component.setActive(true);
+        }
     }
 
     public <T extends Component> T addComponent (T component)
     {
-        for(Component currentComponent : components) {
+        for(var currentComponent : components) {
             if(currentComponent.getClass().equals(component.getClass()) && currentComponent instanceof NonDuplicated) {
                 Log.showErrorDialog("Component " + component.getClass().getName() + " already exists");
                 throw new RuntimeException("Component " + component.getClass().getName() + " already exists");
@@ -196,7 +257,7 @@ public class GameObject implements Serializable, PoolObject
 
     public <T extends Component> T getComponent(Class<T> componentClass)
     {
-        for(Component component : components) {
+        for(var component : components) {
             if(component.getClass().isAssignableFrom(componentClass)) {
                 return componentClass.cast(component);
             }
@@ -208,7 +269,7 @@ public class GameObject implements Serializable, PoolObject
     public <T extends Component> List<T> getAllComponents(Class<T> componentClass)
     {
         List<T> componentsFound = new ArrayList<>();
-        for(Component component : components) {
+        for(var component : components) {
             if(component.getClass().isAssignableFrom(componentClass)) {
                 componentsFound.add(componentClass.cast(component));
             }

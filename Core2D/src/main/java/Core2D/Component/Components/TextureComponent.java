@@ -59,7 +59,7 @@ public class TextureComponent extends Component implements NonDuplicated
      * @param component TextureComponent.
      */
     @Override
-    public TextureComponent set(Component component)
+    public void set(Component component)
     {
         if(component instanceof TextureComponent textureComponent) {
             this.texture2D = new Texture2D();
@@ -68,8 +68,6 @@ public class TextureComponent extends Component implements NonDuplicated
             setActive(textureComponent.isActive());
             setUV(textureComponent.getUV());
         }
-
-        return this;
     }
 
     /**

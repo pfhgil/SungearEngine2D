@@ -216,8 +216,7 @@ public class SceneView extends View
                 EngineSettings.Playmode.paused = false;
                 currentSceneManager.saveScene(currentSceneManager.getCurrentScene2D(), currentSceneManager.getCurrentScene2D().getScenePath());
                 CamerasManager.mainCamera2D = currentSceneManager.getCurrentScene2D().getSceneMainCamera2D();
-                currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = true;
-                currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts = true;
+                currentSceneManager.getCurrentScene2D().setRunning(true);
             }
         }
     }
@@ -229,8 +228,7 @@ public class SceneView extends View
             EngineSettings.Playmode.paused = false;
             currentSceneManager.loadSceneAsCurrent(currentSceneManager.getCurrentScene2D().getScenePath());
             ViewsManager.getInspectorView().setCurrentInspectingObject(null);
-            currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;
-            currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts = false;
+            currentSceneManager.getCurrentScene2D().setRunning(false);
         }
     }
 
@@ -238,6 +236,7 @@ public class SceneView extends View
     {
         if(currentSceneManager.getCurrentScene2D() != null && EngineSettings.Playmode.active) {
             EngineSettings.Playmode.paused = !EngineSettings.Playmode.paused;
+            currentSceneManager.getCurrentScene2D().setRunning(currentSceneManager.getCurrentScene2D().isRunning());
             currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = !currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics;
             currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts = !currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts;
         }

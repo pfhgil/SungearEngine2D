@@ -4,62 +4,73 @@ import Core2D.Component.Component;
 import Core2D.GameObject.GameObject;
 import Core2D.Pooling.Pool;
 import Core2D.Scene2D.SceneManager;
+import Core2D.Scripting.InspectorView;
 import Core2D.Timer.Timer;
 import Core2D.Timer.TimerCallback;
-import Core2D.Transform.Transform;
-import org.joml.Vector2f;
 
-public class ParticlesSystemComponent extends Component
+public class ParticlesSystemComponent extends ScriptComponent
 {
-    private Pool particlesPool = new Pool();
-
-    // in seconds
-    private float spawnInterval = 0.5f;
-
-    private Timer particlesSpawnTimer = new Timer(new TimerCallback() {
+    @InspectorView
+    public GameObject exampleGameObject;
+    private transient Pool particlesPool = new Pool();
+    private transient Timer spawnTimer = new Timer(new TimerCallback() {
         @Override
-        public void deltaUpdate(float deltaTime)
-        {
+        public void deltaUpdate(float deltaTime) {
 
         }
 
         @Override
-        public void update()
-        {
-            if(active && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-                GameObject newParticle = (GameObject) particlesPool.addPoolObject(new GameObject());
+        public void update() {
+            if(active && SceneManager.currentSceneManager.getCurrentScene2D().isRunning()) {
+                if (!particlesPool.hasFree()) {
+                    GameObject[] particle = new GameObject[] { new GameObject() };
 
-                TransformComponent transformComponent = gameObject.getComponent(TransformComponent.class);
-                if (transformComponent != null) {
-                    Transform transform = transformComponent.getTransform();
+                    TimerComponent destroyTimer = new TimerComponent();
+                    destroyTimer.getTimer().destTime = 0.5f;
+                    destroyTimer.getTimer().getTimerCallbacks().add(new TimerCallback() {
+                        @Override
+                        public void deltaUpdate(float deltaTime) {
 
-                    TransformComponent particleTransformComponent = new TransformComponent();
-                    newParticle.addComponent(particleTransformComponent);
-                    newParticle.addComponent(new MeshRendererComponent());
-                    newParticle.addComponent(new BoxCollider2DComponent());
-                    newParticle.addComponent(new Rigidbody2DComponent());
+                        }
 
-                    newParticle.setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
+                        @Override
+                        public void update() {
+                            particlesPool.releaseUsedPoolObject(particle[0]);
+                        }
+                    });
+                    particle[0].addComponent(destroyTimer);
 
-                    particleTransformComponent.getTransform().setPosition(transform.getPosition());
-                    particleTransformComponent.getTransform().applyLinearImpulse(new Vector2f(100.0f, 100.0f), new Vector2f());
+                    particlesPool.addPoolObject(particle[0]);
                 }
+                GameObject freeParticle = (GameObject) particlesPool.get();
+                TimerComponent destroyTimer = freeParticle.getComponent(TimerComponent.class);
+                destroyTimer.getTimer().start();
+
+                TransformComponent particleTransform = freeParticle.getComponent(TransformComponent.class);
+                TransformComponent systemTransform = gameObject.getComponent(TransformComponent.class);
+                if(particleTransform != null && systemTransform != null) {
+                    particleTransform.getTransform().setPosition(systemTransform.getTransform().getPosition());
+                }
+
+                //System.out.println(exampleGameObject);
+                if(exampleGameObject != null) {
+                    freeParticle.set(exampleGameObject);
+                }
+
+                freeParticle.setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
             }
         }
-    }, spawnInterval, true);
+    }, 0.25f, true);
+
+    @Override
+    public void init()
+    {
+        getScript().loadClass(this.getClass(), this);
+    }
 
     @Override
     public void update()
     {
-        particlesSpawnTimer.startFrame();
-    }
-
-    public Pool getParticlesPool() { return particlesPool; }
-
-    public float getSpawnInterval() { return spawnInterval; }
-    public void setSpawnInterval(float spawnInterval)
-    {
-        this.spawnInterval = spawnInterval;
-        particlesSpawnTimer.destTime = spawnInterval;
+        spawnTimer.startFrame();
     }
 }

@@ -106,10 +106,12 @@ public class SceneManager
 
     public static SceneManager loadSceneManager(String path)
     {
-        try {
-            return loadSceneManager(new BufferedInputStream(new FileInputStream(path)));
-        } catch (FileNotFoundException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        if(new File(path).exists()) {
+            try {
+                return loadSceneManager(new BufferedInputStream(new FileInputStream(path)));
+            } catch (FileNotFoundException e) {
+                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+            }
         }
 
         return new SceneManager();

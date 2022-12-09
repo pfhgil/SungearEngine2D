@@ -53,6 +53,8 @@ public class Scene2D
 
     private transient boolean shouldDestroy = false;
 
+    private transient boolean running = false;
+
     public Scene2D()
     {
         layering.addLayer(new Layer(0, "default"));
@@ -321,4 +323,14 @@ public class Scene2D
     }
 
     public boolean isShouldDestroy() { return shouldDestroy; }
+
+    public boolean isRunning() { return running; }
+
+    public void setRunning(boolean running)
+    {
+        this.running = running;
+
+        physicsWorld.simulatePhysics = running;
+        scriptSystem.runScripts = running;
+    }
 }

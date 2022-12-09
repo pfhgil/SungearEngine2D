@@ -5,6 +5,7 @@ import Core2D.Log.Log;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Iterator;
 
 import static org.lwjgl.opengl.GL20C.*;
 
@@ -113,15 +114,23 @@ public class Shader implements Serializable
         }
     }
 
+    public void destroyAllShaderParts()
+    {
+        if(Thread.currentThread().getName().equals("main")) {
+            for(int shaderPartType : shaderPartsHandlers.keySet()) {
+                glDeleteShader(shaderPartsHandlers.get(shaderPartType));
+            }
+            shaderPartsHandlers.clear();
+        }
+    }
+
     public void destroy()
     {
         if(Thread.currentThread().getName().equals("main")) {
             // удаление шейдера
             glDeleteProgram(programHandler);
 
-            for(int shaderPartType : shaderPartsHandlers.keySet()) {
-                destroyShaderPart(shaderPartType);
-            }
+            destroyAllShaderParts();
         }
     }
 

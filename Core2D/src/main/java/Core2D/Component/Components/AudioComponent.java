@@ -7,6 +7,13 @@ public class AudioComponent extends Component
 {
     public Audio audio = new Audio();
 
+    public AudioComponent() { }
+
+    public AudioComponent(AudioComponent component)
+    {
+        set(component);
+    }
+
     @Override
     public void init()
     {
@@ -32,12 +39,10 @@ public class AudioComponent extends Component
     public void deltaUpdate(float deltaTime) { audio.deltaUpdate(deltaTime); }
 
     @Override
-    public AudioComponent set(Component component)
+    public void set(Component component)
     {
         if(component instanceof AudioComponent) {
             audio.set(((AudioComponent) component).audio);
         }
-
-        return this;
     }
 }

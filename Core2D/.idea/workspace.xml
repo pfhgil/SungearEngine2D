@@ -9,7 +9,53 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f5f8ac80-ad56-4c77-9869-c4208084a0d7" name="Changes" comment="" />
+    <list default="true" id="f5f8ac80-ad56-4c77-9869-c4208084a0d7" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/resourceHashesCache.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Component/Component.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Component/Component.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Component/Components/BoxCollider2DComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Component/Components/BoxCollider2DComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Component/Components/CircleCollider2DComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Component/Components/CircleCollider2DComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Component/Components/Rigidbody2DComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Component/Components/Rigidbody2DComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Component/Components/ScriptComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Component/Components/ScriptComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Component/Components/TransformComponent.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Component/Components/TransformComponent.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Scene2D/Scene2D.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Scene2D/Scene2D.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Scene2D/SceneManager.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Scene2D/SceneManager.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Scripting/Script.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Scripting/Script.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/Core2D/Utils/FileUtils.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/Core2D/Utils/FileUtils.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/libs/Core2D.jar" beforeDir="false" afterPath="$PROJECT_DIR$/build/libs/Core2D.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" beforeDir="false" afterPath="$PROJECT_DIR$/build/tmp/compileJava/previous-compilation-data.bin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Component/Component.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Component/Component.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/AudioComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/AudioComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/BoxCollider2DComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/BoxCollider2DComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/CircleCollider2DComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/CircleCollider2DComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/MeshRendererComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/MeshRendererComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/ParticlesSystemComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/ParticlesSystemComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/Rigidbody2DComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/Rigidbody2DComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/ScriptComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/ScriptComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/TextureComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/TextureComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/TransformComponent.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Component/Components/TransformComponent.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Deserializers/GameObjectDeserializer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Deserializers/GameObjectDeserializer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/GameObject/GameObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/GameObject/GameObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/GameObject/RenderParts/Shader.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/GameObject/RenderParts/Shader.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Pooling/Pool.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Pooling/Pool.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Pooling/PoolObject.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Pooling/PoolObject.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Scene2D/Scene2D.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Scene2D/Scene2D.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Scene2D/SceneManager.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Scene2D/SceneManager.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/Core2D/Scripting/Script.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Core2D/Scripting/Script.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/Log/currentSession.txt" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/Log/currentSession.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/Projects/PROJECT12/SceneManager.sm" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/compiler/Core2D.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/compiler/Core2D.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/libs/Core2D.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/libs/Core2D.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/resources/data/other/Core2D.jar" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/resources/data/other/Core2D.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/GUI/Views/EditorView/InspectorView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/GUI/Views/EditorView/InspectorView.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/GUI/Views/EditorView/SceneView.java" beforeDir="false" afterPath="$PROJECT_DIR$/../Engine/src/SungearEngine2D/GUI/Views/EditorView/SceneView.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -73,28 +119,28 @@
   <component name="ProjectViewState">
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "JavaClassFindUsagesOptions.isDerivedClasses": "true",
-    "JavaClassFindUsagesOptions.isFieldsUsages": "true",
-    "JavaClassFindUsagesOptions.isMethodsUsages": "true",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "D:/Pixelfield/SungearEngine2D/Engine",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "run.code.analysis.last.selected.profile": "pProject Default",
-    "settings.editor.selected.configurable": "File.Encoding",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;JavaClassFindUsagesOptions.isDerivedClasses&quot;: &quot;true&quot;,
+    &quot;JavaClassFindUsagesOptions.isFieldsUsages&quot;: &quot;true&quot;,
+    &quot;JavaClassFindUsagesOptions.isMethodsUsages&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Pixelfield/SungearEngine2D/Engine&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager" selected="Shell Script.build">
     <configuration name="Core2D [build]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
