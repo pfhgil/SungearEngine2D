@@ -3,7 +3,10 @@ package Core2D.Component.Components;
 import Core2D.AssetManager.AssetManager;
 import Core2D.Component.Component;
 import Core2D.GameObject.RenderParts.Material2D;
+import Core2D.GameObject.RenderParts.RenderMethod;
 import Core2D.GameObject.RenderParts.Shader;
+import Core2D.Graphics.Graphics;
+import Core2D.Graphics.Renderer;
 import Core2D.ShaderUtils.*;
 import Core2D.GameObject.RenderParts.Texture2D;
 import Core2D.Utils.PositionsQuad;
@@ -83,45 +86,56 @@ public class MeshRendererComponent extends Component {
     @Override
     public void update()
     {
-        TransformComponent transformComponent = gameObject.getComponent(TransformComponent.class);
-        if(transformComponent == null) return;
+
+    }
+
+    @RenderMethod
+    public void render()
+    {
         if(gameObject.isShouldDestroy()) return;
-        // использую VAO, текстуру и шейдер
-        vertexArray.bind();
-        texture.bind();
-        if(material2D != null && material2D.material2DData != null) {
-            glBlendFunc(material2D.material2DData.blendSourceFactor, material2D.material2DData.blendDestinationFactor);
+
+        TransformComponent transformComponent = gameObject.getComponent(TransformComponent.class);
+        MeshRendererComponent meshRendererComponent = gameObject.getComponent(MeshRendererComponent.class);
+
+        if (meshRendererComponent != null) {
+            if (transformComponent == null) return;
+            // использую VAO, текстуру и шейдер
+            meshRendererComponent.vertexArray.bind();
+            meshRendererComponent.texture.bind();
+            if (meshRendererComponent.material2D != null && meshRendererComponent.material2D.material2DData != null) {
+                glBlendFunc(meshRendererComponent.material2D.material2DData.blendSourceFactor, meshRendererComponent.material2D.material2DData.blendDestinationFactor);
+            }
+            meshRendererComponent.shader.bind();
+
+            ShaderUtils.setUniform(
+                    meshRendererComponent.shader.getProgramHandler(),
+                    "mvpMatrix",
+                    transformComponent.getMvpMatrix()
+            );
+            ShaderUtils.setUniform(
+                    meshRendererComponent.shader.getProgramHandler(),
+                    "color",
+                    gameObject.getColor()
+            );
+            ShaderUtils.setUniform(
+                    meshRendererComponent.shader.getProgramHandler(),
+                    "drawMode",
+                    meshRendererComponent.textureDrawMode
+            );
+            ShaderUtils.setUniform(
+                    meshRendererComponent.shader.getProgramHandler(),
+                    "sampler",
+                    meshRendererComponent.texture.getFormattedTextureBlock()
+            ); //FIXME: сделать нормальный метод для того что бы задовать сразу несколько юниформ
+
+            // нарисовать два треугольника
+            glDrawElements(GL11C.GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
+
+            // прекращаю использование шейдера, текстуры и VAO
+            meshRendererComponent.shader.unBind();
+            meshRendererComponent.texture.unBind();
+            meshRendererComponent.vertexArray.unBind();
         }
-        shader.bind();
-
-        ShaderUtils.setUniform(
-                shader.getProgramHandler(),
-                "mvpMatrix",
-                transformComponent.getMvpMatrix()
-        );
-        ShaderUtils.setUniform(
-                shader.getProgramHandler(),
-                "color",
-                gameObject.getColor()
-        );
-        ShaderUtils.setUniform(
-                shader.getProgramHandler(),
-                "drawMode",
-                textureDrawMode
-        );
-        ShaderUtils.setUniform(
-                shader.getProgramHandler(),
-                "sampler",
-                texture.getFormattedTextureBlock()
-        ); //FIXME: сделать нормальный метод для того что бы задовать сразу несколько юниформ
-
-        // нарисовать два треугольника
-        glDrawElements(GL11C.GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0);
-
-        // прекращаю использование шейдера, текстуры и VAO
-        shader.unBind();
-        texture.unBind();
-        vertexArray.unBind();
     }
 
     @Override

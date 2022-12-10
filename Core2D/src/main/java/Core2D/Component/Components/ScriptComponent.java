@@ -5,13 +5,15 @@ import Core2D.GameObject.GameObject;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Scripting.Script;
 
+import java.util.function.Consumer;
+
 /**
  * The ScriptComponent.
  * @see Script
  */
 public class ScriptComponent extends Component
 {
-    private Script script;
+    public Script script;
 
     public ScriptComponent() { this.script = new Script(); }
 
@@ -30,7 +32,7 @@ public class ScriptComponent extends Component
     public void set(Component component)
     {
         if(component instanceof ScriptComponent) {
-            script.set(((ScriptComponent) component).getScript());
+            script.set(((ScriptComponent) component).script);
         }
     }
 
@@ -42,9 +44,6 @@ public class ScriptComponent extends Component
     @Override
     public void update()
     {
-        if(SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
-            script.update();
-        }
         super.update();
     }
 
@@ -56,9 +55,7 @@ public class ScriptComponent extends Component
     @Override
     public void deltaUpdate(float deltaTime)
     {
-        if(SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
-            script.deltaUpdate(deltaTime);
-        }
+
     }
 
     /**
@@ -67,9 +64,7 @@ public class ScriptComponent extends Component
      */
     public void collider2DEnter(GameObject otherObj)
     {
-        if(SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
-            script.collider2DEnter(otherObj);
-        }
+
     }
 
     /**
@@ -78,10 +73,15 @@ public class ScriptComponent extends Component
      */
     public void collider2DExit(GameObject otherObj)
     {
-        if(SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
-            script.collider2DExit(otherObj);
-        }
+
     }
 
-    public Script getScript() { return script; }
+    // сделано для избежания рекурсивных вызовов дефолтных методов (update, deltaUpdate, collider2DEnter, collider2DExit).
+    // они могут ссылаться сами на себя, если в ребенке, наследующем данный класс не реализованы какие-либо из этих четырек методов
+    public void callMethod(Consumer<Object[]> func)
+    {
+        if(SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
+            func.accept(null);
+        }
+    }
 }

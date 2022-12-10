@@ -1,8 +1,10 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.CamerasManager.CamerasManager;
+import Core2D.Component.Components.Camera2DComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Input.PC.Mouse;
+import Core2D.Scene2D.SceneManager;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.Main.GraphicsRenderer;
@@ -103,7 +105,9 @@ public class GameView extends View
             Mouse.setViewportPosition(sceneViewWindowScreenPosition);
             Mouse.setViewportSize(new Vector2f(sceneViewWindowSize.x, sceneViewWindowSize.y));
 
-            ImGui.image(GraphicsRenderer.getGameRenderTarget().getTextureHandler(), sceneViewWindowSize.x, sceneViewWindowSize.y, 0, 1, 1, 0);
+            if(currentSceneManager != null && currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
+                ImGui.image(currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().getComponent(Camera2DComponent.class).getFrameBuffer().getTextureHandler(), sceneViewWindowSize.x, sceneViewWindowSize.y, 0, 1, 1, 0);
+            }
 
             ImGui.popStyleColor(1);
         } else {

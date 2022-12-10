@@ -152,7 +152,7 @@ public class SceneView extends View
             Mouse.setViewportPosition(sceneViewWindowScreenPosition);
             Mouse.setViewportSize(new Vector2f(sceneViewWindowSize.x, sceneViewWindowSize.y));
 
-            ImGui.image(GraphicsRenderer.getSceneRenderTarget().getTextureHandler(), windowSize.x, windowSize.y, 0, 1, 1, 0);
+            ImGui.image(Main.getMainCamera2D().getComponent(Camera2DComponent.class).getFrameBuffer().getTextureHandler(), windowSize.x, windowSize.y, 0, 1, 1, 0);
 
             if(ImGui.beginDragDropTarget()) {
                 if(ViewsManager.getResourcesView().getCurrentMovingFile() != null &&

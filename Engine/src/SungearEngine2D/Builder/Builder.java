@@ -268,13 +268,13 @@ public class Builder {
                     // то же самое для скриптов
                     List<ScriptComponent> scriptComponents = gameObject.getAllComponents(ScriptComponent.class);
                     for (ScriptComponent scriptComponent : scriptComponents) {
-                        File newFile = new File(toDir + "\\" + scriptComponent.getScript().path);
+                        File newFile = new File(toDir + "\\" + scriptComponent.script.path);
                         newFile.getParentFile().mkdirs();
                         FileUtils.copyFile(ProjectsManager.getCurrentProject().getProjectPath() +
                                         File.separator +
-                                        scriptComponent.getScript().path + ".class",
+                                        scriptComponent.script.path + ".class",
                                 newFile.getPath() + ".class", false);
-                        scriptComponent.getScript().path = "/" + scriptComponent.getScript().path.replace("\\", "/");
+                        scriptComponent.script.path = "/" + scriptComponent.script.path.replace("\\", "/");
                     }
 
                     // то же самое для аудио

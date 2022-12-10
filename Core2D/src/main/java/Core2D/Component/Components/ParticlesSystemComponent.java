@@ -65,7 +65,7 @@ public class ParticlesSystemComponent extends ScriptComponent
     @Override
     public void init()
     {
-        getScript().loadClass(this.getClass(), this);
+        script.loadClass(this.getClass(), this);
     }
 
     @Override

@@ -39,6 +39,8 @@ public class Script
 
     public void set(Script script)
     {
+        System.out.println(script);
+
         scriptClass = null;
         scriptClassInstance = null;
 
@@ -212,17 +214,19 @@ public class Script
 
         if(scriptClass != null) {
             for (Field field : scriptClass.getFields()) {
-                ScriptTempValue scriptTempValue = new ScriptTempValue();
+                if (field.isAnnotationPresent(InspectorView.class)) {
+                    ScriptTempValue scriptTempValue = new ScriptTempValue();
 
-                Object value = getFieldValue(field);
-                if (value instanceof GameObject gameObject) {
-                    scriptTempValue.setValue(new ScriptValue(gameObject.ID, gameObject.name, ScriptValueType.TYPE_GAME_OBJECT));
-                } else {
-                    scriptTempValue.setValue(value);
+                    Object value = getFieldValue(field);
+                    if (value instanceof GameObject gameObject) {
+                        scriptTempValue.setValue(new ScriptValue(gameObject.ID, gameObject.name, ScriptValueType.TYPE_GAME_OBJECT));
+                    } else {
+                        scriptTempValue.setValue(value);
+                    }
+                    scriptTempValue.setFieldName(field.getName());
+
+                    scriptTempValues.add(scriptTempValue);
                 }
-                scriptTempValue.setFieldName(field.getName());
-
-                scriptTempValues.add(scriptTempValue);
             }
         }
     }

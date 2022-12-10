@@ -35,11 +35,6 @@ public class SceneManager
 
     public static SceneManager currentSceneManager = new SceneManager();
 
-    public void drawCurrentScene2D()
-    {
-        if(currentScene2D != null) currentScene2D.draw();
-    }
-
     // рисует все объекты разными цветами при выборке объектов
     public void drawCurrentScene2DPicking()
     {

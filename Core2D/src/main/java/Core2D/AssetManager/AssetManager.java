@@ -138,7 +138,7 @@ public class AssetManager implements Serializable
     }
 
     /**
-     * @param path Name of asset.
+     * @param path Relative path of asset.
      * @return Null if the asset is not found and texture if the asset is found.
      */
     public Texture2DData getTexture2DData(String path)
@@ -152,7 +152,7 @@ public class AssetManager implements Serializable
     }
 
     /**
-     * @param path Name of asset.
+     * @param path Relative path of asset.
      * @return Null if the asset is not found and asset if the asset is found.
      */
     public Asset getAsset(String path, Class<? extends Data> assetObjectClass)

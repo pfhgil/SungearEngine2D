@@ -4,12 +4,17 @@ import Core2D.CamerasManager.CamerasManager;
 import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
 import Core2D.Core2D.Core2D;
+import Core2D.Graphics.Graphics;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
+import Core2D.ShaderUtils.FrameBuffer;
 import Core2D.Utils.MatrixUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+
+import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
+import static org.lwjgl.opengl.GL11.glClear;
 
 public class Camera2DComponent extends Component implements NonDuplicated
 {
@@ -21,6 +26,8 @@ public class Camera2DComponent extends Component implements NonDuplicated
 
     private boolean isScene2DMainCamera2D = false;
 
+    private FrameBuffer frameBuffer = new FrameBuffer(Graphics.getScreenSize().x, Graphics.getScreenSize().y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, 1);
+
     @Override
     public void init()
     {
@@ -31,6 +38,16 @@ public class Camera2DComponent extends Component implements NonDuplicated
     public void update()
     {
         updateViewMatrix();
+
+        frameBuffer.bind();
+
+        glClear(GL_COLOR_BUFFER_BIT);
+
+        if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+            SceneManager.currentSceneManager.getCurrentScene2D().draw();
+        }
+
+        frameBuffer.unBind();
     }
 
     @Override
@@ -89,4 +106,6 @@ public class Camera2DComponent extends Component implements NonDuplicated
             setScene2DMainCamera2D(scene2DMainCamera2D, SceneManager.currentSceneManager.getCurrentScene2D());
         }
     }
+
+    public FrameBuffer getFrameBuffer() { return frameBuffer; }
 }

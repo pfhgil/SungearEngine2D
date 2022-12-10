@@ -32,7 +32,9 @@ public class Compiler
                 proc.waitFor();
 
                 String command = "\"" + ProjectsManager.getCurrentProject().getProjectSettings().getJdkPath() +
-                        "\\bin\\javac\" -cp " +
+                        "\\bin\\javac\" -sourcepath " +
+                        "\"" + scriptFile.getParent() + "\" \n" +
+                        "-classpath " +
                         "\"" + compilerPath.getCanonicalPath() + "\\Core2D.jar\" " +
                         "\"" + scriptFile.getCanonicalPath() + "\"";
 

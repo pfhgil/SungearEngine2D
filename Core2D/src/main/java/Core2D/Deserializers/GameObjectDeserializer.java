@@ -8,12 +8,14 @@ import Core2D.Core2D.Core2DMode;
 import Core2D.GameObject.GameObject;
 import Core2D.Project.ProjectsManager;
 import Core2D.GameObject.RenderParts.Texture2D;
+import Core2D.Scripting.Script;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Tag;
 import com.google.gson.*;
 import org.joml.Vector4f;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 
 public class GameObjectDeserializer implements JsonDeserializer<GameObject>
@@ -108,33 +110,52 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>
                 gameObject.addComponent(rigidbody2DComponent);
             } else if(component instanceof ScriptComponent scriptComponent) {
                 if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                    scriptComponent.getScript().path = scriptComponent.getScript().path.replaceAll(".java", "");
+                    scriptComponent.script.path = scriptComponent.script.path.replaceAll(".java", "");
 
-                    String fullScriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponent.getScript().path + ".java";
-                    String lastScriptPath = scriptComponent.getScript().path;
+                    String fullScriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponent.script.path + ".java";
+                    String lastScriptPath = scriptComponent.script.path;
+
+                    String scriptToLoadPath = "";
+                    String scriptToAddPath = "";
 
                     if(new File(fullScriptPath).exists()) {
-                        ScriptComponent sc = new ScriptComponent();
-                        scriptComponent.getScript().path = fullScriptPath;
-                        gameObject.addComponent(sc);
-                        sc.set(scriptComponent);
-                        sc.getScript().path = lastScriptPath;
+                        scriptToLoadPath = fullScriptPath;
+                        scriptToAddPath = lastScriptPath;
+                        //scriptComponent.script.path = fullScriptPath;
+                        //((ScriptComponent) sc).script.path = lastScriptPath;
                     } else {// для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
                         // чтобы это исправить загружаем по этому пути скрипт, находим относительный путь и присваиваем его path для того,
                         // чтобы в следующий раз выполнился блок кода вышe
-                        if(new File(scriptComponent.getScript().path + ".java").exists()) {
+                        if(new File(scriptComponent.script.path + ".java").exists()) {
                             String relativePath = FileUtils.getRelativePath(
-                                    new File(scriptComponent.getScript().path + ".java"),
+                                    new File(scriptComponent.script.path + ".java"),
                                     new File(ProjectsManager.getCurrentProject().getProjectPath())
                             );
-                            ScriptComponent sc = new ScriptComponent();
-                            gameObject.addComponent(sc);
-                            scriptComponent.getScript().path += ".java";
-                            sc.set(scriptComponent);
-                            relativePath = relativePath.replace(".java", "");
-                            sc.getScript().path = relativePath;
+                            scriptToLoadPath = scriptComponent.script.path + ".java";
+                            scriptToAddPath = relativePath.replace(".java", "");
+                            //scriptComponent.script.path += ".java";
+                            //relativePath = relativePath.replace(".java", "");
+                            //((ScriptComponent) sc).script.path = relativePath;
                         }
                     }
+
+                    scriptComponent.script.path = scriptToLoadPath;
+                    // load the script component class
+                    scriptComponent.set(scriptComponent);
+                    System.out.println(scriptComponent.script.getScriptClass());
+
+                    Component sc = null;
+                    try {
+                        sc = (Component) scriptComponent.script.getScriptClass().getConstructor().newInstance();
+                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                             NoSuchMethodException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                    ((ScriptComponent) sc).script.path = scriptToAddPath;
+
+                    gameObject.addComponent(sc);
+                    sc.set(scriptComponent);
                 } else {
                     ScriptComponent sc = new ScriptComponent();
                     gameObject.addComponent(sc);

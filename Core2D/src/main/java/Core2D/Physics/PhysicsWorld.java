@@ -27,15 +27,15 @@ public class PhysicsWorld extends World
 {
     public static final float RATIO = 30.0f;
 
-    public boolean simulatePhysics = true;
+    public boolean simulatePhysics = false;
 
     private boolean shouldCollider2DEnter = false;
-    private GameObject gameObject2DAEnter;
-    private GameObject gameObject2DBEnter;
+    private GameObject gameObjectAEnter;
+    private GameObject gameObjectBEnter;
 
     private boolean shouldCollider2DExit = false;
-    private GameObject gameObject2DAExit;
-    private GameObject gameObject2DBExit;
+    private GameObject gameObjectAExit;
+    private GameObject gameObjectBExit;
 
     public PhysicsWorld()
     {
@@ -57,8 +57,8 @@ public class PhysicsWorld extends World
 
                     if(userDataA instanceof GameObject && userDataB instanceof GameObject) {
                         shouldCollider2DEnter = true;
-                        gameObject2DAEnter = (GameObject) userDataA;
-                        gameObject2DBEnter = (GameObject) userDataB;
+                        gameObjectAEnter = (GameObject) userDataA;
+                        gameObjectBEnter = (GameObject) userDataB;
                     }
                 }
             }
@@ -75,8 +75,8 @@ public class PhysicsWorld extends World
 
                     if(userDataA instanceof GameObject && userDataB instanceof GameObject) {
                         shouldCollider2DExit = true;
-                        gameObject2DAExit = (GameObject) userDataA;
-                        gameObject2DBExit = (GameObject) userDataB;
+                        gameObjectAExit = (GameObject) userDataA;
+                        gameObjectBExit = (GameObject) userDataB;
                     }
                 }
             }
@@ -100,47 +100,51 @@ public class PhysicsWorld extends World
             super.step(deltaTime, velocityIterations, positionIterations);
 
             if (shouldCollider2DEnter) {
-                if (!gameObject2DAEnter.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsA = gameObject2DAEnter.getAllComponents(ScriptComponent.class);
+                if (!gameObjectAEnter.isShouldDestroy()) {
+                    List<ScriptComponent> scriptComponentsA = gameObjectAEnter.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponentsA) {
-                        scriptComponent.collider2DEnter(gameObject2DBEnter);
+                        //scriptComponent.collider2DEnter(gameObjectBEnter);
+                        scriptComponent.callMethod((params) -> scriptComponent.collider2DEnter(gameObjectBEnter));
                     }
                 }
 
-                if (!gameObject2DBEnter.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsB = gameObject2DBEnter.getAllComponents(ScriptComponent.class);
+                if (!gameObjectBEnter.isShouldDestroy()) {
+                    List<ScriptComponent> scriptComponentsB = gameObjectBEnter.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponentsB) {
-                        scriptComponent.collider2DEnter(gameObject2DAEnter);
+                        //scriptComponent.collider2DEnter(gameObjectAEnter);
+                        scriptComponent.callMethod((params) -> scriptComponent.collider2DEnter(gameObjectAEnter));
                     }
                 }
 
-                gameObject2DAEnter = null;
-                gameObject2DBEnter = null;
+                gameObjectAEnter = null;
+                gameObjectBEnter = null;
 
                 shouldCollider2DEnter = false;
             }
 
             if (shouldCollider2DExit) {
-                if (!gameObject2DAExit.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsA = gameObject2DAExit.getAllComponents(ScriptComponent.class);
+                if (!gameObjectAExit.isShouldDestroy()) {
+                    List<ScriptComponent> scriptComponentsA = gameObjectAExit.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponentsA) {
-                        scriptComponent.collider2DExit(gameObject2DBExit);
+                        //scriptComponent.collider2DExit(gameObject2DBExit);
+                        scriptComponent.callMethod((params) -> scriptComponent.collider2DExit(gameObjectBExit));
                     }
                 }
 
-                if (!gameObject2DBExit.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsB = gameObject2DBExit.getAllComponents(ScriptComponent.class);
+                if (!gameObjectBExit.isShouldDestroy()) {
+                    List<ScriptComponent> scriptComponentsB = gameObjectBExit.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponentsB) {
-                        scriptComponent.collider2DExit(gameObject2DAExit);
+                        //scriptComponent.collider2DExit(gameObject2DAExit);
+                        scriptComponent.callMethod((params) -> scriptComponent.collider2DExit(gameObjectAExit));
                     }
                 }
 
-                gameObject2DAExit = null;
-                gameObject2DBExit = null;
+                gameObjectAExit = null;
+                gameObjectBExit = null;
 
                 shouldCollider2DExit = false;
             }

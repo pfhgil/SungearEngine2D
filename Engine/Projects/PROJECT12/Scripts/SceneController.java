@@ -1,3 +1,5 @@
+package Scripts;
+
 import Core2D.GameObject.*;
 import Core2D.Input.PC.*;
 import org.lwjgl.glfw.GLFW;

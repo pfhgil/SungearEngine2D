@@ -12,6 +12,7 @@ import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.SceneManager;
+import Core2D.Scripting.Script;
 import Core2D.Tasks.StoppableTask;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
@@ -43,6 +44,7 @@ import org.lwjgl.opengl.GL11;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
@@ -468,7 +470,7 @@ public class InspectorView extends View
                 if(!componentName.equals("ScriptComponent")) {
                     opened = ImGui.collapsingHeader(componentName + ". ID: " + currentComponent.componentID);
                 } else {
-                    opened = ImGui.collapsingHeader(((ScriptComponent) currentComponent).getScript().getName() + " (" + componentName + ")" + ". ID: " + inspectingObject2D.getComponents().get(i).componentID);
+                    opened = ImGui.collapsingHeader(((ScriptComponent) currentComponent).script.getName() + " (" + componentName + ")" + ". ID: " + inspectingObject2D.getComponents().get(i).componentID);
                 }
                 if(ImGui.beginDragDropSource()) {
                     ImGui.setDragDropPayload("Component", currentComponent);
@@ -676,39 +678,39 @@ public class InspectorView extends View
                             }
                             ImGui.popID();
                         }
-                        case "ScriptComponent", "ParticlesSystemComponent" -> {
+                        default -> {
                             ScriptComponent scriptComponent = (ScriptComponent) currentComponent;
 
                             // System.out.println(scriptComponent.getScript().getScriptClass());
 
-                            List<Field> inspectorViewFields = scriptComponent.getScript().getInspectorViewFields();
+                            List<Field> inspectorViewFields = scriptComponent.script.getInspectorViewFields();
                             if (inspectorViewFields.size() != 0) {
                                 for (Field field : inspectorViewFields) {
                                     Class<?> cs = field.getType();
 
                                     if (cs.isAssignableFrom(float.class)) {
-                                        float[] floats = new float[]{(float) scriptComponent.getScript().getFieldValue(field)};
+                                        float[] floats = new float[]{(float) scriptComponent.script.getFieldValue(field)};
                                         ImGui.pushID(field.getName() + "_" + i);
                                         if (ImGui.dragFloat(field.getName(), floats)) {
-                                            scriptComponent.getScript().setFieldValue(field, floats[0]);
+                                            scriptComponent.script.setFieldValue(field, floats[0]);
                                         }
                                         ImGui.popID();
                                     } else if (cs.isAssignableFrom(String.class)) {
-                                        ImString string = new ImString((String) scriptComponent.getScript().getFieldValue(field), 128);
+                                        ImString string = new ImString((String) scriptComponent.script.getFieldValue(field), 128);
 
                                         ImGui.pushID(field.getName() + "_" + i);
                                         ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.CallbackAlways);
                                         ImGui.popID();
 
-                                        scriptComponent.getScript().setFieldValue(field, string.get());
+                                        scriptComponent.script.setFieldValue(field, string.get());
                                     } else if (cs.isAssignableFrom(GameObject.class)) {
                                         ImString string = new ImString(cs.getSimpleName());
-                                        if (scriptComponent.getScript().getFieldValue(field) != null) {
-                                            string.set(((GameObject) scriptComponent.getScript().getFieldValue(field)).name, true);
+                                        if (scriptComponent.script.getFieldValue(field) != null) {
+                                            string.set(((GameObject) scriptComponent.script.getFieldValue(field)).name, true);
                                         }
 
                                         ImGui.pushID(field.getName() + "_" + i);
-                                        if(scriptComponent.getScript().getFieldValue(field) != null) {
+                                        if(scriptComponent.script.getFieldValue(field) != null) {
                                             ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
                                         } else {
                                             ImGui.pushStyleColor(ImGuiCol.Text, 0.65f, 0.65f, 0.65f, 1.0f);
@@ -720,18 +722,18 @@ public class InspectorView extends View
                                         if (ImGui.beginDragDropTarget()) {
                                             Object droppedObject = ImGui.acceptDragDropPayload("SceneGameObject");
                                             if (droppedObject instanceof GameObject gameObject) {
-                                                scriptComponent.getScript().setFieldValue(field, gameObject);
+                                                scriptComponent.script.setFieldValue(field, gameObject);
                                             }
                                             ImGui.endDragDropTarget();
                                         }
                                     } else if(cs.getSuperclass().isAssignableFrom(Component.class)) {
                                         ImString string = new ImString(cs.getSimpleName());
-                                        if (scriptComponent.getScript().getFieldValue(field) != null) {
-                                            string.set(((Component) scriptComponent.getScript().getFieldValue(field)).getClass().getSimpleName(), true);
+                                        if (scriptComponent.script.getFieldValue(field) != null) {
+                                            string.set(((Component) scriptComponent.script.getFieldValue(field)).getClass().getSimpleName(), true);
                                         }
 
                                         ImGui.pushID(field.getName() + "_" + i);
-                                        if(scriptComponent.getScript().getFieldValue(field) != null) {
+                                        if(scriptComponent.script.getFieldValue(field) != null) {
                                             ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
                                         } else {
                                             ImGui.pushStyleColor(ImGuiCol.Text, 0.65f, 0.65f, 0.65f, 1.0f);
@@ -743,7 +745,7 @@ public class InspectorView extends View
                                         if (ImGui.beginDragDropTarget()) {
                                             Object droppedObject = ImGui.acceptDragDropPayload("Component");
                                             if (droppedObject instanceof Component && droppedObject.getClass().isAssignableFrom(cs)) {
-                                                scriptComponent.getScript().setFieldValue(field, droppedObject);
+                                                scriptComponent.script.setFieldValue(field, droppedObject);
                                             }
                                             ImGui.endDragDropTarget();
                                         }
@@ -980,11 +982,21 @@ public class InspectorView extends View
                             new File(javaFile.getPath()),
                             new File(ProjectsManager.getCurrentProject().getProjectPath())
                     );
-                    ScriptComponent scriptComponent = new ScriptComponent();
-                    scriptComponent.getScript().loadClass(javaFile.getParent(), FilenameUtils.getBaseName(javaFile.getName()));
-                    scriptComponent.getScript().path = relativePath;
+                    Script script = new Script();
+                    script.loadClass(javaFile.getParent(), FilenameUtils.getBaseName(javaFile.getName()));
+                    Component newComponent = null;
+                    try {
+                        newComponent = (Component) script.getScriptClass().getConstructor().newInstance();
+                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                             NoSuchMethodException e) {
+                        Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                    }
 
-                    inspectingObject2D.addComponent(scriptComponent);
+                    ScriptComponent sc = (ScriptComponent) newComponent;
+                    sc.script = script;
+                    sc.script.path = relativePath;
+
+                    inspectingObject2D.addComponent(newComponent);
                 }
             }
         });

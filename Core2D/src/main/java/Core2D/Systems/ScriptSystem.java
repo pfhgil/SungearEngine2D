@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ScriptSystem
 {
-    public transient boolean runScripts = true;
+    public transient boolean runScripts = false;
 
     public static void applyScriptsTempValues(Scene2D scene2D)
     {
@@ -20,7 +20,7 @@ public class ScriptSystem
                     List<ScriptComponent> scriptComponents = gameObject.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponents) {
-                        scriptComponent.getScript().applyTempValues();
+                        scriptComponent.script.applyTempValues();
                     }
                 }
             }
@@ -36,7 +36,7 @@ public class ScriptSystem
                     List<ScriptComponent> scriptComponents = gameObject.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponents) {
-                        scriptComponent.getScript().destroyTempValues();
+                        scriptComponent.script.destroyTempValues();
                     }
                 }
             }
@@ -52,7 +52,7 @@ public class ScriptSystem
                     List<ScriptComponent> scriptComponents = gameObject.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponents) {
-                        scriptComponent.getScript().saveTempValues();
+                        scriptComponent.script.saveTempValues();
                     }
                 }
             }

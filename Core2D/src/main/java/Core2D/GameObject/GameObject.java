@@ -1,10 +1,7 @@
 package Core2D.GameObject;
 
 import Core2D.Component.Component;
-import Core2D.Component.Components.Camera2DComponent;
-import Core2D.Component.Components.MeshRendererComponent;
-import Core2D.Component.Components.Rigidbody2DComponent;
-import Core2D.Component.Components.TransformComponent;
+import Core2D.Component.Components.*;
 import Core2D.Component.NonDuplicated;
 import Core2D.Component.NonRemovable;
 import Core2D.Core2D.Settings;
@@ -175,7 +172,12 @@ public class GameObject implements Serializable, PoolObject
     {
         if(active && !shouldDestroy) {
             for(Component component : components) {
-                component.update();
+                if(component.getClass().isAssignableFrom(ScriptComponent.class) || component instanceof ScriptComponent) {
+                     ScriptComponent sc = (ScriptComponent) component;
+                     sc.callMethod((params) -> sc.update());
+                } else {
+                    component.update();
+                }
             }
         }
     }
@@ -184,7 +186,12 @@ public class GameObject implements Serializable, PoolObject
     {
         if(active && !shouldDestroy) {
             for(Component component : components) {
-                component.deltaUpdate(deltaTime);
+                if(component.getClass().isAssignableFrom(ScriptComponent.class) || component instanceof ScriptComponent) {
+                    ScriptComponent sc = (ScriptComponent) component;
+                    sc.callMethod((params) -> sc.deltaUpdate(deltaTime));
+                } else {
+                    component.deltaUpdate(deltaTime);
+                }
             }
         }
     }

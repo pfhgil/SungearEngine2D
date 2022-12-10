@@ -4,6 +4,21 @@
       "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\kek0.sgs",
       "inBuild": false,
       "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl0.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl1.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl2.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
     }
   ],
   "mainScene2DPath": ""

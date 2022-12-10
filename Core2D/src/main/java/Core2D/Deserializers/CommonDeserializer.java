@@ -1,5 +1,8 @@
 package Core2D.Deserializers;
 
+import Core2D.Component.Components.ScriptComponent;
+import Core2D.Log.Log;
+import Core2D.Utils.ExceptionsUtils;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
@@ -17,7 +20,8 @@ public class CommonDeserializer<T> implements JsonDeserializer<T>, JsonSerialize
         try {
             return context.deserialize(properties, Class.forName(type));
         } catch(ClassNotFoundException e) {
-            throw new JsonParseException("Unknown element type: " + type, e);
+            Log.CurrentSession.println(ExceptionsUtils.toString(new JsonParseException("Unknown element type: " + type, e)), Log.MessageType.ERROR);
+            return null;
         }
     }
 
@@ -25,7 +29,13 @@ public class CommonDeserializer<T> implements JsonDeserializer<T>, JsonSerialize
     public JsonElement serialize(T t, Type type, JsonSerializationContext context)
     {
         JsonObject result = new JsonObject();
-        result.add("type", new JsonPrimitive(t.getClass().getCanonicalName()));
+
+        if (t instanceof ScriptComponent) {
+            System.out.println("instance");
+            result.add("type", new JsonPrimitive(ScriptComponent.class.getCanonicalName()));
+        } else {
+            result.add("type", new JsonPrimitive(t.getClass().getCanonicalName()));
+        }
         result.add("properties", context.serialize(t, t.getClass()));
         return result;
     }

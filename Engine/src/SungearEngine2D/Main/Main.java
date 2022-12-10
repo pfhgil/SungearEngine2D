@@ -94,33 +94,33 @@ public class Main
 
                                                 for (int k = 0; k < scriptComponents.size(); k++) {
                                                     // был ли уже скомпилирован скрипт
-                                                    boolean alreadyCompiled = compiledScripts.contains(scriptComponents.get(k).getScript().getName());
+                                                    boolean alreadyCompiled = compiledScripts.contains(scriptComponents.get(k).script.getName());
                                                     if (alreadyCompiled) {
                                                         continue;
                                                     }
 
-                                                    String scriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponents.get(k).getScript().path;
+                                                    String scriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponents.get(k).script.path;
                                                     long lastModified = new File(scriptPath + ".java").lastModified();
-                                                    if (lastModified != scriptComponents.get(k).getScript().getLastModified()) {
+                                                    if (lastModified != scriptComponents.get(k).script.getLastModified()) {
                                                         EngineSettings.Playmode.canEnterPlaymode = false;
-                                                        scriptComponents.get(k).getScript().setLastModified(lastModified);
+                                                        scriptComponents.get(k).script.setLastModified(lastModified);
 
                                                         int finalK = k;
-                                                        String lastScriptPath = scriptComponents.get(finalK).getScript().path;
+                                                        String lastScriptPath = scriptComponents.get(finalK).script.path;
                                                         ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
                                                             public void run() {
                                                                 if (currentSceneManager.getCurrentScene2D() != null) {
-                                                                    scriptComponents.get(finalK).getScript().saveTempValues();
+                                                                    scriptComponents.get(finalK).script.saveTempValues();
 
                                                                     String newScriptPath = scriptPath.replace(".java", "");
                                                                     boolean compiled = Compiler.compileScript(newScriptPath + ".java");
                                                                     if (compiled) {
-                                                                        scriptComponents.get(finalK).getScript().loadClass(new File(scriptPath).getParent(), FilenameUtils.getBaseName(new File(scriptPath).getName()));
-                                                                        scriptComponents.get(finalK).getScript().path = lastScriptPath;
+                                                                        scriptComponents.get(finalK).script.loadClass(new File(scriptPath).getParent(), FilenameUtils.getBaseName(new File(scriptPath).getName()));
+                                                                        scriptComponents.get(finalK).script.path = lastScriptPath;
                                                                     }
-                                                                    compiledScripts.add(scriptComponents.get(finalK).getScript().getName());
+                                                                    compiledScripts.add(scriptComponents.get(finalK).script.getName());
 
-                                                                    scriptComponents.get(finalK).getScript().applyTempValues();
+                                                                    scriptComponents.get(finalK).script.applyTempValues();
                                                                 }
                                                             }
                                                         });
