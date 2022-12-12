@@ -157,8 +157,6 @@ public class PhysicsWorld extends World
         if(rigidbody2DComponent != null) {
             Rigidbody2D rigidbody2D = rigidbody2DComponent.getRigidbody2D();
 
-            System.out.println("rigidbody is not null!!");
-
             BodyDef bodyDef = new BodyDef();
 
             if (scene2D != null) {

@@ -55,8 +55,8 @@
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="Interface" />
-        <option value="Class" />
         <option value="AnnotationType" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -197,7 +197,11 @@
       <workItem from="1670255456380" duration="24000" />
       <workItem from="1670255497382" duration="11592000" />
       <workItem from="1670692247200" duration="7448000" />
-      <workItem from="1670701807953" duration="8312000" />
+      <workItem from="1670701807953" duration="8688000" />
+      <workItem from="1670758009454" duration="11417000" />
+      <workItem from="1670855957606" duration="647000" />
+      <workItem from="1670858579157" duration="1598000" />
+      <workItem from="1670860185364" duration="17554000" />
     </task>
     <servers />
   </component>

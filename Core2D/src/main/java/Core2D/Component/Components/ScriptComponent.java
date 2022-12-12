@@ -13,13 +13,12 @@ import java.util.function.Consumer;
  */
 public class ScriptComponent extends Component
 {
-    public Script script;
+    public Script script = new Script();
 
-    public ScriptComponent() { this.script = new Script(); }
+    public ScriptComponent() { }
 
     public ScriptComponent(ScriptComponent component)
     {
-        this.script = new Script();
         set(component);
     }
 

@@ -115,7 +115,7 @@ public class Main
                                                                     String newScriptPath = scriptPath.replace(".java", "");
                                                                     boolean compiled = Compiler.compileScript(newScriptPath + ".java");
                                                                     if (compiled) {
-                                                                        scriptComponents.get(finalK).script.loadClass(new File(scriptPath).getParent(), FilenameUtils.getBaseName(new File(scriptPath).getName()));
+                                                                        scriptComponents.get(finalK).script.loadClass(new File(scriptPath).getParent(), scriptPath, FilenameUtils.getBaseName(new File(scriptPath).getName()).replace("\\\\/", "."));
                                                                         scriptComponents.get(finalK).script.path = lastScriptPath;
                                                                     }
                                                                     compiledScripts.add(scriptComponents.get(finalK).script.getName());

@@ -71,12 +71,14 @@ public class Compiler
                 EngineSettings.Playmode.canEnterPlaymode = notCompiledScripts.size() == 0;
             } catch (InterruptedException | IOException e) {
                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-
             }
 
-
+            Utils.reloadAllCore2DClassLoaderClasses();
+            System.out.println(Thread.currentThread().getContextClassLoader());
             return result;
         } else {
+            Utils.reloadAllCore2DClassLoaderClasses();
+            System.out.println(Thread.currentThread().getContextClassLoader());
             Log.CurrentSession.println("Error compiling script. File \"" + path + "\" does not exist", Log.MessageType.ERROR);
             return false;
         }

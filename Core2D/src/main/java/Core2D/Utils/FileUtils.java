@@ -20,6 +20,11 @@ public class FileUtils
         return null;
     }
 
+    public static String getRelativePath(String filePath, String folderPath)
+    {
+        return getRelativePath(new File(filePath), new File(folderPath));
+    }
+
     public static String getRelativePath(File file, File folder)
     {
         String filePath = file.getAbsolutePath();

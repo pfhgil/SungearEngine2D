@@ -36,7 +36,7 @@ public class Log
 
 
         // записывает в файл лога информацию (новая строка)
-        public static void println(String string, MessageType messageType) {
+        public static void println(Object string, MessageType messageType) {
             if(new File(directoryPath + File.separator + currentSessionFileName).exists()) {
                 FileWriter fileWriter = null;
                 try {

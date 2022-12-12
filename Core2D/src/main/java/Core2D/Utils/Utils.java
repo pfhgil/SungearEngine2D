@@ -1,7 +1,9 @@
 package Core2D.Utils;
 
 import Core2D.Component.Component;
+import Core2D.Component.Components.ScriptComponent;
 import Core2D.Component.Components.TransformComponent;
+import Core2D.Core2D.Core2DClassLoader;
 import Core2D.DataClasses.Data;
 import Core2D.Deserializers.*;
 import Core2D.GameObject.GameObject;
@@ -9,20 +11,27 @@ import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
 import Core2D.Log.Log;
 import Core2D.Prefab.Prefab;
+import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.Scene2D;
+import Core2D.Scene2D.SceneManager;
 import Core2D.Transform.Transform;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.system.MemoryUtil;
 
 import java.io.*;
+import java.net.URL;
+import java.net.URLClassLoader;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 import java.nio.channels.FileChannel;
+import java.nio.file.Path;
+import java.util.List;
 import java.util.Random;
 
 public class Utils
@@ -42,6 +51,8 @@ public class Utils
             .registerTypeAdapter(Layer.class, new LayerDeserializer())
             .registerTypeAdapter(Layering.class, new LayeringDeserializer())
             .create();
+
+    public static Core2DClassLoader core2DClassLoader = new Core2DClassLoader(new URL[] { });
 
     // создает FloatBuffer, помещает туда data и возвращает получившийся буфер
     public static FloatBuffer createFloatBuffer(float[] data)
@@ -92,6 +103,23 @@ public class Utils
         buffer.flip();
 
         return buffer;
+    }
+
+    public static byte[] serializeObject(Object obj)
+    {
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ObjectOutputStream oos = null;
+        try {
+            oos = new ObjectOutputStream(bos);
+            oos.writeObject(obj);
+            oos.close();
+            bos.close();
+            return bos.toByteArray();
+        } catch (IOException e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        }
+
+        return new byte[] { 0 };
     }
 
     public static String inputStreamToString(InputStream inputStream)
@@ -183,13 +211,43 @@ public class Utils
         return min + Math.random() * (max - min);
     }
 
-    public static boolean isPointInNoRotatedObject(Vector2f mousePosition, Core2D.GameObject.GameObject gameObject)
-    {
+    public static boolean isPointInNoRotatedObject(Vector2f mousePosition, Core2D.GameObject.GameObject gameObject) {
         Transform objectTransform = gameObject.getComponent(TransformComponent.class).getTransform();
 
         return mousePosition.x >= objectTransform.getPosition().x &&
                 mousePosition.x <= objectTransform.getPosition().x + 100.0f * objectTransform.getScale().x &&
                 mousePosition.y >= objectTransform.getPosition().y &&
                 mousePosition.y <= objectTransform.getPosition().y + 100.0f * objectTransform.getScale().y;
+    }
+
+    public static void reloadAllCore2DClassLoaderClasses()
+    {
+        core2DClassLoader = new Core2DClassLoader(new URL[] { });
+        /*
+        for(Thread thread : Thread.getAllStackTraces().keySet()) {
+            if(thread.isDaemon())
+
+            thread.setContextClassLoader(core2DClassLoader);
+        }
+
+         */
+        Thread.currentThread().setContextClassLoader(core2DClassLoader);
+        Thread mainThread = Thread.getAllStackTraces().keySet().stream().filter((thread) -> thread.getName().equals("main")).findFirst().get();
+        mainThread.setContextClassLoader(core2DClassLoader);
+
+        if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+            for(Layer layer : SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
+                for(GameObject gameObject : layer.getGameObjects()) {
+                    List<ScriptComponent> scriptComponentList = gameObject.getAllComponents(ScriptComponent.class);
+
+                    for(ScriptComponent scriptComponent : scriptComponentList) {
+                        String lastScriptPath = scriptComponent.script.path;
+                        //Log.CurrentSession.println("script reloaded: " + FilenameUtils.getBaseName(new File(scriptComponent.script.path).getName()), Log.MessageType.WARNING);
+                        scriptComponent.script.loadClass(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptComponent.script.path).getParent(), scriptComponent.script.path, FilenameUtils.getBaseName(new File(scriptComponent.script.path).getName()));
+                        scriptComponent.script.path = lastScriptPath;
+                    }
+                }
+            }
+        }
     }
 }

@@ -152,10 +152,11 @@ public class GameObjectDeserializer implements JsonDeserializer<GameObject>
                         throw new RuntimeException(e);
                     }
 
-                    ((ScriptComponent) sc).script.path = scriptToAddPath;
-
                     gameObject.addComponent(sc);
                     sc.set(scriptComponent);
+
+                    ((ScriptComponent) sc).script.path = scriptToAddPath;
+                    System.out.println("to add: " + scriptToAddPath);
                 } else {
                     ScriptComponent sc = new ScriptComponent();
                     gameObject.addComponent(sc);

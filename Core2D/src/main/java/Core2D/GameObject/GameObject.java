@@ -105,8 +105,6 @@ public class GameObject implements Serializable, PoolObject
                 }
                 addComponent(newComponent);
                 newComponent.set(component);
-
-                System.out.println("component: " + newComponent);
             }
         }
 
@@ -219,8 +217,6 @@ public class GameObject implements Serializable, PoolObject
             childrenIterator.remove();
         }
         layer = null;
-
-        System.out.println("Object2D " + name + " destroyed");
     }
 
     @Override
@@ -265,7 +261,7 @@ public class GameObject implements Serializable, PoolObject
     public <T extends Component> T getComponent(Class<T> componentClass)
     {
         for(var component : components) {
-            if(component.getClass().isAssignableFrom(componentClass)) {
+            if(component.getClass().isAssignableFrom(componentClass) || component.getClass().getSuperclass() == componentClass) {
                 return componentClass.cast(component);
             }
         }
@@ -277,7 +273,7 @@ public class GameObject implements Serializable, PoolObject
     {
         List<T> componentsFound = new ArrayList<>();
         for(var component : components) {
-            if(component.getClass().isAssignableFrom(componentClass)) {
+            if(component.getClass().isAssignableFrom(componentClass) || component.getClass().getSuperclass() == componentClass){
                 componentsFound.add(componentClass.cast(component));
             }
         }

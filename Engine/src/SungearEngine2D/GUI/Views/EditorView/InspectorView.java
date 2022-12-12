@@ -45,6 +45,7 @@ import org.lwjgl.opengl.GL11;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URLClassLoader;
 import java.util.List;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
@@ -681,7 +682,7 @@ public class InspectorView extends View
                         default -> {
                             ScriptComponent scriptComponent = (ScriptComponent) currentComponent;
 
-                            // System.out.println(scriptComponent.getScript().getScriptClass());
+                            //System.out.println(scriptComponent.getClass().getClassLoader());
 
                             List<Field> inspectorViewFields = scriptComponent.script.getInspectorViewFields();
                             if (inspectorViewFields.size() != 0) {
@@ -983,7 +984,7 @@ public class InspectorView extends View
                             new File(ProjectsManager.getCurrentProject().getProjectPath())
                     );
                     Script script = new Script();
-                    script.loadClass(javaFile.getParent(), FilenameUtils.getBaseName(javaFile.getName()));
+                    script.loadClass(javaFile.getParent(), javaFile.getPath(), FilenameUtils.getBaseName(javaFile.getName()));
                     Component newComponent = null;
                     try {
                         newComponent = (Component) script.getScriptClass().getConstructor().newInstance();
@@ -993,10 +994,10 @@ public class InspectorView extends View
                     }
 
                     ScriptComponent sc = (ScriptComponent) newComponent;
-                    sc.script = script;
-                    sc.script.path = relativePath;
 
                     inspectingObject2D.addComponent(newComponent);
+                    sc.script.set(script);
+                    sc.script.path = relativePath;
                 }
             }
         });

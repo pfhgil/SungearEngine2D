@@ -31,7 +31,6 @@ public class CommonDeserializer<T> implements JsonDeserializer<T>, JsonSerialize
         JsonObject result = new JsonObject();
 
         if (t instanceof ScriptComponent) {
-            System.out.println("instance");
             result.add("type", new JsonPrimitive(ScriptComponent.class.getCanonicalName()));
         } else {
             result.add("type", new JsonPrimitive(t.getClass().getCanonicalName()));

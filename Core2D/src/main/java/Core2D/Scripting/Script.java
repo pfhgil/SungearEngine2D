@@ -1,11 +1,14 @@
 package Core2D.Scripting;
 
 import Core2D.Core2D.Core2D;
+import Core2D.Core2D.Core2DClassLoader;
 import Core2D.Core2D.Core2DMode;
 import Core2D.GameObject.GameObject;
 import Core2D.Log.Log;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.FileUtils;
+import Core2D.Utils.Utils;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -39,7 +42,7 @@ public class Script
 
     public void set(Script script)
     {
-        System.out.println(script);
+        File scriptFile = new File(script.path);
 
         scriptClass = null;
         scriptClassInstance = null;
@@ -52,7 +55,9 @@ public class Script
         collider2DEnterMethod = null;
         collider2DExitMethod = null;
 
-        loadClass(new File(script.path).getParent(), FilenameUtils.getBaseName(script.getName()));
+        String name = FilenameUtils.getBaseName(scriptFile.getName()).replace("\\\\/", ".");
+        System.out.println("name: " + name);
+        loadClass(scriptFile.getParent(), scriptFile.getPath(), name);
 
         destroyTempValues();
         scriptTempValues.addAll(script.getScriptTempValues());
@@ -70,20 +75,48 @@ public class Script
         collider2DExitMethod = getMethod("collider2DExit", GameObject.class);
     }
 
-    public void loadClass(String dirPath, String baseName) {
+    public void loadClass(String dirPath, String scriptPath, String baseName) {
         dirPath = dirPath.replace("\\", "/");
-
-        URLClassLoader urlClassLoader = null;
         try {
             // если режим работы - в движке
             if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
                 File file = new File(dirPath);
 
-                urlClassLoader = URLClassLoader.newInstance(new URL[]{
-                        file.toURI().toURL()
-                });
+                URL scriptDirURL = file.toURI().toURL();
 
-                scriptClass = urlClassLoader.loadClass(baseName);
+                Utils.core2DClassLoader.addURL(scriptDirURL);
+                /*
+                if(!Utils.getCore2DClassLoader().isURLExists(scriptDirURL)) {
+                    Utils.getCore2DClassLoader().addURL(scriptDirURL);
+                } else {
+                    Utils.getCore2DClassLoader().updateURL(scriptDirURL);
+                }
+
+                 */
+
+                //System.out.println(Utils.getCore2DClassLoader().getURLs()[0]);
+
+                //String scriptPackage = FileUtils.getRelativePath(scriptPath, dirPath).replaceAll("[\\\\/]", ".").replaceAll(".java", "");
+
+                //System.out.println(baseName);
+
+                //urlClassLoader.
+                //URLClassLoader urlClassLoader = new URLClassLoader(new URL[] { scriptDirURL });
+                /*
+                Class<?> foundClass = Utils.getCore2DClassLoader().getResources(baseName);
+                if (foundClass != null) {
+                    URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{scriptDirURL}, foundClass.getClassLoader());
+                    scriptClass = urlClassLoader.loadClass(baseName);
+                } else {
+                    Utils.getCore2DClassLoader().addURL(scriptDirURL);
+                    scriptClass = Utils.getCore2DClassLoader().loadClass(baseName);
+                }
+
+                 */
+                //Core2DClassLoader core2DClassLoader = new Core2DClassLoader(new URL[] { scriptDirURL }, Core2DClassLoader.class.getClassLoader());
+
+                Log.CurrentSession.println("dir path: " + dirPath, Log.MessageType.WARNING);
+                scriptClass = Utils.core2DClassLoader.loadClass(baseName);
             // если в in-build
             } else {
                 ByteClassLoader byteClassLoader = new ByteClassLoader();
