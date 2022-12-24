@@ -19,6 +19,11 @@
       "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl2.sgs",
       "inBuild": false,
       "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl3.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
     }
   ],
   "mainScene2DPath": ""

@@ -1,6 +1,7 @@
 package Core2D.Scripting;
 
 import Core2D.Core2D.Core2D;
+import Core2D.Core2D.Core2DClassLoader;
 import Core2D.Core2D.Core2DMode;
 import Core2D.GameObject.GameObject;
 import Core2D.Log.Log;
@@ -11,6 +12,7 @@ import Core2D.Utils.Utils;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -80,6 +82,7 @@ public class Script
 
     public void loadClass(String dirPath, String scriptPath, String baseName)
     {
+        scriptPath = scriptPath.replace(".java", "");
         dirPath = dirPath.replace("\\", "/");
         try {
             // если режим работы - в движке
@@ -89,9 +92,9 @@ public class Script
                 URL scriptDirURL = file.toURI().toURL();
 
                 //Utils.core2DClassLoader = new Core2DClassLoader(new URL[] { }, Utils.core2DClassLoader);
-
-                Utils.core2DClassLoader.addURL(scriptDirURL);
-                scriptClass = Utils.core2DClassLoader.loadClass(baseName);
+                Core2DClassLoader core2DClassLoader = new Core2DClassLoader();
+                System.out.println("script path: " + scriptPath);
+                scriptClass = core2DClassLoader.loadNewClass(scriptPath + ".class");
                 // если в in-build
             } else {
                 ByteClassLoader byteClassLoader = new ByteClassLoader();
@@ -112,7 +115,7 @@ public class Script
             //System.out.println("script path: " + scriptPath);
             lastModified = new File(scriptPath + ".java").lastModified();
             System.out.println("last modified: " + lastModified + ", path: " + scriptPath + ".java");
-        } catch (MalformedURLException | InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException | IOException | ClassNotFoundException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }

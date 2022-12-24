@@ -1,20 +1,13 @@
 package Core2D.Core2D;
 
-import Core2D.Log.Log;
-import Core2D.Timer.Timer;
-import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.Utils;
 
 import java.io.*;
-import java.lang.reflect.Field;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLClassLoader;
-import java.net.URLConnection;
+import java.lang.reflect.Array;
+import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.*;
 
-public class Core2DClassLoader extends URLClassLoader
+public class Core2DClassLoader extends ClassLoader
 {
     /*
     public Class loadClass(URL url, String name) throws ClassNotFoundException {
@@ -126,15 +119,6 @@ public class Core2DClassLoader extends URLClassLoader
 
      */
 
-    public Core2DClassLoader(URL[] urls, ClassLoader parent) {
-        super(urls, parent);
-    }
-
-    public Core2DClassLoader(URL[] urls)
-    {
-        super(urls);
-    }
-
     /*
     public Class loadClass(URL url, String name) throws ClassNotFoundException {
         try {
@@ -161,62 +145,48 @@ public class Core2DClassLoader extends URLClassLoader
      */
 
 
-    @Override
-    public Class<?> loadClass(String name)
+    private byte[] fetchClassFromFS(String path) throws FileNotFoundException, IOException {
+        InputStream is = new FileInputStream(new File(path));
+
+        // Get the size of the file
+        long length = new File(path).length();
+
+        if (length > Integer.MAX_VALUE) {
+            // File is too large
+        }
+
+        // Create the byte array to hold the data
+        byte[] bytes = new byte[(int)length];
+
+        // Read in the bytes
+        int offset = 0;
+        int numRead = 0;
+        while (offset < bytes.length
+                && (numRead=is.read(bytes, offset, bytes.length-offset)) >= 0) {
+            offset += numRead;
+        }
+
+        // Ensure all the bytes have been read in
+        if (offset < bytes.length) {
+            throw new IOException("Could not completely read file "+path);
+        }
+
+        // Close the input stream and return bytes
+        is.close();
+        return bytes;
+
+    }
+
+    public <T> Class<T> loadNewClass(String path) throws IOException, ClassNotFoundException
     {
-        List<Class<?>> classes = new ArrayList<>();
-        Field classesField = null;
-        try {
-            System.out.println("superclass: " + this.getClass().getSuperclass().getSuperclass().getSuperclass());
-            classesField = this.getClass().getSuperclass().getSuperclass().getSuperclass().getDeclaredField("classes");
-            classesField.setAccessible(true);
-            classes = (ArrayList<Class<?>>) classesField.get(this);
-        } catch (NoSuchFieldException | IllegalAccessException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-        }
-
-        for(int i = 0; i < classes.size(); i++) {
-            if(classes.get(i).getName().equals(name)) {
-                classes.set(i, null);
-            }
-        }
-
-        try {
-            return super.loadClass(name);
-        } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        byte[] classBytes = Files.readAllBytes(Path.of(path));
+        Class<?> cls = this.defineClass(null, classBytes, 0, classBytes.length);
+        return (Class<T>) this.loadClass(cls.getName());
     }
 
     public void addClass(Class<?> cls)
     {
         byte[] classBytes = Utils.serializeObject(cls);
         defineClass(cls.getName(), classBytes, 0, classBytes.length);
-    }
-
-    @Override
-    public void addURL(URL url)
-    {
-        super.addURL(url);
-    }
-
-    public boolean isURLExists(URL url)
-    {
-        for(URL url1 : getURLs()) {
-            if(url.equals(url1)) {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    public void updateURL(URL url)
-    {
-        for(int i = 0; i < getURLs().length; i++) {
-            if(url.equals(getURLs()[i])) {
-                getURLs()[i] = url;
-            }
-        }
     }
 }

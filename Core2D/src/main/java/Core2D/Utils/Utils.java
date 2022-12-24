@@ -51,7 +51,7 @@ public class Utils
             .registerTypeAdapter(Layering.class, new LayeringDeserializer())
             .create();
 
-    public static Core2DClassLoader core2DClassLoader = new Core2DClassLoader(new URL[] { });
+    public static Core2DClassLoader core2DClassLoader = new Core2DClassLoader();
 
     // создает FloatBuffer, помещает туда data и возвращает получившийся буфер
     public static FloatBuffer createFloatBuffer(float[] data)
