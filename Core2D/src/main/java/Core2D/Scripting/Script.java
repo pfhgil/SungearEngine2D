@@ -1,13 +1,12 @@
 package Core2D.Scripting;
 
 import Core2D.Core2D.Core2D;
-import Core2D.Core2D.Core2DClassLoader;
 import Core2D.Core2D.Core2DMode;
 import Core2D.GameObject.GameObject;
 import Core2D.Log.Log;
+import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
-import Core2D.Utils.FileUtils;
 import Core2D.Utils.Utils;
 import org.apache.commons.io.FilenameUtils;
 
@@ -17,7 +16,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,20 +42,23 @@ public class Script
     {
         File scriptFile = new File(script.path);
 
-        scriptClass = null;
-        scriptClassInstance = null;
-
-        path = null;
-        name = null;
-
-        deltaUpdateMethod = null;
-        updateMethod = null;
-        collider2DEnterMethod = null;
-        collider2DExitMethod = null;
-
         String name = FilenameUtils.getBaseName(scriptFile.getName()).replace("\\\\/", ".");
         System.out.println("name: " + name);
-        loadClass(scriptFile.getParent(), scriptFile.getPath(), name);
+        Script loadedScript = new Script();
+        loadedScript.loadClass(scriptFile.getParent(), scriptFile.getPath(), name);
+
+        scriptClass = loadedScript.scriptClass;
+        scriptClassInstance = loadedScript.scriptClassInstance;
+
+        path = loadedScript.path;
+        this.name = loadedScript.name;
+
+        deltaUpdateMethod = loadedScript.deltaUpdateMethod;
+        updateMethod = loadedScript.updateMethod;
+        collider2DEnterMethod = loadedScript.collider2DEnterMethod;
+        collider2DExitMethod = loadedScript.collider2DExitMethod;
+
+        lastModified = loadedScript.lastModified;
 
         destroyTempValues();
         scriptTempValues.addAll(script.getScriptTempValues());
@@ -65,6 +66,8 @@ public class Script
 
     public void loadClass(Class<?> cls, Object scriptClassInstance)
     {
+        //Thread.currentThread().setContextClassLoader(Utils.core2DClassLoader);
+
         scriptClass = cls;
 
         this.scriptClassInstance = scriptClassInstance;
@@ -75,49 +78,21 @@ public class Script
         collider2DExitMethod = getMethod("collider2DExit", GameObject.class);
     }
 
-    public void loadClass(String dirPath, String scriptPath, String baseName) {
+    public void loadClass(String dirPath, String scriptPath, String baseName)
+    {
         dirPath = dirPath.replace("\\", "/");
         try {
             // если режим работы - в движке
-            if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+            if (Core2D.core2DMode == Core2DMode.IN_ENGINE) {
                 File file = new File(dirPath);
 
                 URL scriptDirURL = file.toURI().toURL();
 
+                //Utils.core2DClassLoader = new Core2DClassLoader(new URL[] { }, Utils.core2DClassLoader);
+
                 Utils.core2DClassLoader.addURL(scriptDirURL);
-                /*
-                if(!Utils.getCore2DClassLoader().isURLExists(scriptDirURL)) {
-                    Utils.getCore2DClassLoader().addURL(scriptDirURL);
-                } else {
-                    Utils.getCore2DClassLoader().updateURL(scriptDirURL);
-                }
-
-                 */
-
-                //System.out.println(Utils.getCore2DClassLoader().getURLs()[0]);
-
-                //String scriptPackage = FileUtils.getRelativePath(scriptPath, dirPath).replaceAll("[\\\\/]", ".").replaceAll(".java", "");
-
-                //System.out.println(baseName);
-
-                //urlClassLoader.
-                //URLClassLoader urlClassLoader = new URLClassLoader(new URL[] { scriptDirURL });
-                /*
-                Class<?> foundClass = Utils.getCore2DClassLoader().getResources(baseName);
-                if (foundClass != null) {
-                    URLClassLoader urlClassLoader = new URLClassLoader(new URL[]{scriptDirURL}, foundClass.getClassLoader());
-                    scriptClass = urlClassLoader.loadClass(baseName);
-                } else {
-                    Utils.getCore2DClassLoader().addURL(scriptDirURL);
-                    scriptClass = Utils.getCore2DClassLoader().loadClass(baseName);
-                }
-
-                 */
-                //Core2DClassLoader core2DClassLoader = new Core2DClassLoader(new URL[] { scriptDirURL }, Core2DClassLoader.class.getClassLoader());
-
-                Log.CurrentSession.println("dir path: " + dirPath, Log.MessageType.WARNING);
                 scriptClass = Utils.core2DClassLoader.loadClass(baseName);
-            // если в in-build
+                // если в in-build
             } else {
                 ByteClassLoader byteClassLoader = new ByteClassLoader();
                 scriptClass = byteClassLoader.loadClass(Core2D.class.getResourceAsStream(dirPath + "/" + baseName + ".class"),
@@ -129,11 +104,15 @@ public class Script
             path = dirPath + "\\" + baseName;
             name = baseName;
 
-            deltaUpdateMethod = getMethod("deltaUpdate", float.class);
-            updateMethod = getMethod("update");
-            collider2DEnterMethod = getMethod("collider2DEnter", GameObject.class);
-            collider2DExitMethod = getMethod("collider2DExit", GameObject.class);
-        } catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            deltaUpdateMethod = Script.getMethod(scriptClass, "deltaUpdate", float.class);
+            updateMethod = Script.getMethod(scriptClass, "update");
+            collider2DEnterMethod = Script.getMethod(scriptClass, "collider2DEnter", GameObject.class);
+            collider2DExitMethod = Script.getMethod(scriptClass, "collider2DExit", GameObject.class);
+
+            //System.out.println("script path: " + scriptPath);
+            lastModified = new File(scriptPath + ".java").lastModified();
+            System.out.println("last modified: " + lastModified + ", path: " + scriptPath + ".java");
+        } catch (MalformedURLException | InstantiationException | IllegalAccessException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
@@ -149,12 +128,18 @@ public class Script
         return null;
     }
 
+
     public List<Field> getInspectorViewFields()
+    {
+        return getInspectorViewFields(scriptClass);
+    }
+
+    public static List<Field> getInspectorViewFields(Class<?> cls)
     {
         List<Field> fields = new ArrayList<>();
 
-        for(Field field : scriptClass.getFields()) {
-            if(field.isAnnotationPresent(InspectorView.class)) {
+        for (Field field : cls.getFields()) {
+            if (field.isAnnotationPresent(InspectorView.class)) {
                 fields.add(field);
             }
         }
@@ -163,8 +148,13 @@ public class Script
 
     public Object getFieldValue(Field field)
     {
+        return getFieldValue(scriptClassInstance, field);
+    }
+
+    public static Object getFieldValue(Object clsInstance, Field field)
+    {
         try {
-            return field.get(scriptClassInstance);
+            return field.get(clsInstance);
         } catch (IllegalAccessException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -174,8 +164,13 @@ public class Script
 
     public void setFieldValue(Field field, Object obj)
     {
+        setFieldValue(scriptClassInstance, field, obj);
+    }
+
+    public static void setFieldValue(Object clsInstance, Field field, Object obj)
+    {
         try {
-            field.set(scriptClassInstance, obj);
+            field.set(clsInstance, obj);
         } catch (IllegalAccessException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -183,8 +178,13 @@ public class Script
 
     public Method getMethod(String name, Class<?>... parameterTypes)
     {
+        return getMethod(scriptClass, name, parameterTypes);
+    }
+
+    public static Method getMethod(Class<?> cls, String name, Class<?>... parameterTypes)
+    {
         try {
-            return scriptClass.getMethod(name, parameterTypes);
+            return cls.getMethod(name, parameterTypes);
         } catch (NoSuchMethodException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -262,20 +262,6 @@ public class Script
                 }
             }
         }
-    }
-
-    public void destroy()
-    {
-        path = null;
-        name = null;
-
-        updateMethod = null;
-        deltaUpdateMethod = null;
-        collider2DEnterMethod = null;
-        collider2DExitMethod = null;
-
-        scriptClass = null;
-        scriptClassInstance = null;
     }
 
     public void destroyTempValues()

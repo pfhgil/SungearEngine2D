@@ -3,8 +3,13 @@ package Core2D.Systems;
 import Core2D.Component.Components.ScriptComponent;
 import Core2D.GameObject.GameObject;
 import Core2D.Layering.Layer;
+import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.Scene2D;
+import Core2D.Scene2D.SceneManager;
+import Core2D.Utils.Utils;
+import org.apache.commons.io.FilenameUtils;
 
+import java.io.File;
 import java.util.List;
 
 public class ScriptSystem

@@ -14,6 +14,7 @@ import Core2D.Prefab.Prefab;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
+import Core2D.Scripting.Script;
 import Core2D.Transform.Transform;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -25,12 +26,10 @@ import org.lwjgl.system.MemoryUtil;
 
 import java.io.*;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 import java.nio.channels.FileChannel;
-import java.nio.file.Path;
 import java.util.List;
 import java.util.Random;
 
@@ -218,36 +217,5 @@ public class Utils
                 mousePosition.x <= objectTransform.getPosition().x + 100.0f * objectTransform.getScale().x &&
                 mousePosition.y >= objectTransform.getPosition().y &&
                 mousePosition.y <= objectTransform.getPosition().y + 100.0f * objectTransform.getScale().y;
-    }
-
-    public static void reloadAllCore2DClassLoaderClasses()
-    {
-        core2DClassLoader = new Core2DClassLoader(new URL[] { });
-        /*
-        for(Thread thread : Thread.getAllStackTraces().keySet()) {
-            if(thread.isDaemon())
-
-            thread.setContextClassLoader(core2DClassLoader);
-        }
-
-         */
-        Thread.currentThread().setContextClassLoader(core2DClassLoader);
-        Thread mainThread = Thread.getAllStackTraces().keySet().stream().filter((thread) -> thread.getName().equals("main")).findFirst().get();
-        mainThread.setContextClassLoader(core2DClassLoader);
-
-        if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-            for(Layer layer : SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
-                for(GameObject gameObject : layer.getGameObjects()) {
-                    List<ScriptComponent> scriptComponentList = gameObject.getAllComponents(ScriptComponent.class);
-
-                    for(ScriptComponent scriptComponent : scriptComponentList) {
-                        String lastScriptPath = scriptComponent.script.path;
-                        //Log.CurrentSession.println("script reloaded: " + FilenameUtils.getBaseName(new File(scriptComponent.script.path).getName()), Log.MessageType.WARNING);
-                        scriptComponent.script.loadClass(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptComponent.script.path).getParent(), scriptComponent.script.path, FilenameUtils.getBaseName(new File(scriptComponent.script.path).getName()));
-                        scriptComponent.script.path = lastScriptPath;
-                    }
-                }
-            }
-        }
     }
 }

@@ -13,6 +13,8 @@ import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
+import Core2D.Scripting.Script;
+import Core2D.Systems.ScriptSystem;
 import Core2D.Tasks.StoppableTask;
 import Core2D.Transform.Transform;
 import Core2D.Utils.ExceptionsUtils;
@@ -73,6 +75,9 @@ public class Main
                         while(true) {
                             try {
                                 Thread.sleep(100);
+                                if(Settings.Core2D.sleepCore2D) {
+                                    Thread.sleep(1000);
+                                }
                             } catch (InterruptedException e) {
                                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                             }
@@ -94,6 +99,7 @@ public class Main
 
                                                 for (int k = 0; k < scriptComponents.size(); k++) {
                                                     // был ли уже скомпилирован скрипт
+
                                                     boolean alreadyCompiled = compiledScripts.contains(scriptComponents.get(k).script.getName());
                                                     if (alreadyCompiled) {
                                                         continue;
@@ -101,9 +107,10 @@ public class Main
 
                                                     String scriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponents.get(k).script.path;
                                                     long lastModified = new File(scriptPath + ".java").lastModified();
+                                                    //System.out.println("lm: " + lastModified + ", p: " + scriptPath + ".java, slm: " + scriptComponents.get(k).script.getLastModified());
                                                     if (lastModified != scriptComponents.get(k).script.getLastModified()) {
                                                         EngineSettings.Playmode.canEnterPlaymode = false;
-                                                        scriptComponents.get(k).script.setLastModified(lastModified);
+                                                        //scriptComponents.get(k).script.setLastModified(lastModified);
 
                                                         int finalK = k;
                                                         String lastScriptPath = scriptComponents.get(finalK).script.path;
