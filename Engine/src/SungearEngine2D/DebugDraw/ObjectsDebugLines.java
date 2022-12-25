@@ -1,8 +1,5 @@
 package SungearEngine2D.DebugDraw;
 
-import Core2D.Component.Components.BoxCollider2DComponent;
-import Core2D.Component.Components.CircleCollider2DComponent;
-import Core2D.Component.Components.TransformComponent;
 import Core2D.Graphics.Graphics;
 import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.Physics.Collider2D.CircleCollider2D;

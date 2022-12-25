@@ -2,12 +2,12 @@ package SungearEngine2D.Main;
 
 import Core2D.Audio.Audio;
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.ScriptComponent;
-import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DUserCallback;
 import Core2D.Core2D.Settings;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Components.ScriptComponent;
+import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
@@ -39,7 +39,7 @@ public class Main
 {
     private static Core2DUserCallback core2DUserCallback;
 
-    private static GameObject mainCamera2D;
+    private static Entity mainCamera2D;
 
     public static Thread helpThread;
 
@@ -57,7 +57,7 @@ public class Main
                 //Debugger.init();
                 Resources.load();
 
-                mainCamera2D = GameObject.createCamera2D();
+                mainCamera2D = Entity.createCamera2D();
                 CamerasManager.mainCamera2D = mainCamera2D;
                 CameraController.controlledCamera2D = mainCamera2D;
 
@@ -91,11 +91,11 @@ public class Main
                                         Layer layer = currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(p);
                                         if (layer == null || layer.isShouldDestroy()) continue;
 
-                                        int renderingObjectsNum = layer.getGameObjects().size();
+                                        int renderingObjectsNum = layer.getEntities().size();
                                         for (int i = 0; i < renderingObjectsNum; i++) {
                                             if (layer.isShouldDestroy()) continue layersCycle;
-                                            if (!layer.getGameObjects().get(i).isShouldDestroy()) {
-                                                List<ScriptComponent> scriptComponents = layer.getGameObjects().get(i).getAllComponents(ScriptComponent.class);
+                                            if (!layer.getEntities().get(i).isShouldDestroy()) {
+                                                List<ScriptComponent> scriptComponents = layer.getEntities().get(i).getAllComponents(ScriptComponent.class);
 
                                                 for (int k = 0; k < scriptComponents.size(); k++) {
                                                     // был ли уже скомпилирован скрипт
@@ -196,5 +196,5 @@ public class Main
         //Core2D.start("Sungear Engine 2D", new int[] { GLFW.GLFW_SAMPLES }, new int[] { 8 });
     }
 
-    public static GameObject getMainCamera2D() { return mainCamera2D; }
+    public static Entity getMainCamera2D() { return mainCamera2D; }
 }

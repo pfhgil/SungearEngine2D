@@ -1,6 +1,6 @@
 package Core2D.Deserializers;
 
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Entity;
 import Core2D.Log.Log;
 import Core2D.Prefab.Prefab;
 import Core2D.Utils.ExceptionsUtils;
@@ -26,20 +26,20 @@ public class    PrefabDeserializer implements JsonDeserializer<Prefab>, JsonSeri
         }
 
         try {
-            GameObject gameObject = context.deserialize(properties, Class.forName(type));
+            Entity entity = context.deserialize(properties, Class.forName(type));
 
-            gameObject.getChildrenObjectsID().clear();
+            entity.getChildrenObjectsID().clear();
             JsonArray childrenObjectsJArray = jsonObject.getAsJsonArray("childrenObjects");
             if (childrenObjectsJArray != null) {
                 for (JsonElement element : childrenObjectsJArray) {
                     Prefab pref = context.deserialize(element, Prefab.class);
 
-                    gameObject.addChildObject(pref.getPrefabObject());
+                    entity.addChildObject(pref.getPrefabObject());
 
                     addPrefabChildren(pref);
                 }
             }
-            return new Prefab(gameObject);
+            return new Prefab(entity);
         } catch(ClassNotFoundException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             return null;
@@ -60,10 +60,10 @@ public class    PrefabDeserializer implements JsonDeserializer<Prefab>, JsonSeri
 
     private void addPrefabChildren(Prefab prefab)
     {
-        if(prefab.getPrefabObject() instanceof GameObject) {
+        if(prefab.getPrefabObject() instanceof Entity) {
             for (Prefab pref : prefab.getChildrenObjects()) {
-                if (pref.getPrefabObject() instanceof GameObject) {
-                    ((GameObject) prefab.getPrefabObject()).addChildObject((GameObject) pref.getPrefabObject());
+                if (pref.getPrefabObject() instanceof Entity) {
+                    ((Entity) prefab.getPrefabObject()).addChildObject((Entity) pref.getPrefabObject());
                 }
             }
         }

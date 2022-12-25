@@ -1,6 +1,6 @@
 package Core2D.Deserializers;
 
-import Core2D.Component.Components.ScriptComponent;
+import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 import com.google.gson.*;

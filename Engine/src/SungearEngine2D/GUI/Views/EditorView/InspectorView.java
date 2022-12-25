@@ -2,11 +2,11 @@ package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.Audio;
-import Core2D.Component.Component;
-import Core2D.Component.Components.*;
-import Core2D.Component.NonRemovable;
-import Core2D.GameObject.GameObject;
-import Core2D.GameObject.RenderParts.Texture2D;
+import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.*;
+import Core2D.ECS.Entity;
+import Core2D.ECS.NonRemovable;
+import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
@@ -49,17 +49,6 @@ import java.net.URLClassLoader;
 import java.util.List;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
-import static org.lwjgl.opengl.GL11.GL_DST_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_DST_COLOR;
-import static org.lwjgl.opengl.GL11.GL_ONE;
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_DST_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_DST_COLOR;
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_ONE_MINUS_SRC_COLOR;
-import static org.lwjgl.opengl.GL11.GL_SRC_ALPHA;
-import static org.lwjgl.opengl.GL11.GL_SRC_COLOR;
-import static org.lwjgl.opengl.GL11C.*;
-import static org.lwjgl.opengl.GL14.*;
 
 public class InspectorView extends View
 {
@@ -113,8 +102,8 @@ public class InspectorView extends View
         ImGui.begin("Inspector", ImGuiWindowFlags.NoMove);
         {
             if(currentInspectingObject != null) {
-                if(currentInspectingObject instanceof GameObject) {
-                    GameObject inspectingGameObject = (GameObject) currentInspectingObject;
+                if(currentInspectingObject instanceof Entity) {
+                    Entity inspectingGameObject = (Entity) currentInspectingObject;
                     inspectObject2D(inspectingGameObject);
                 }
             }
@@ -124,7 +113,7 @@ public class InspectorView extends View
         ImGui.end();
     }
 
-    private void inspectObject2D(GameObject inspectingObject2D)
+    private void inspectObject2D(Entity inspectingObject2D)
     {
         setCurrentInspectingObject(inspectingObject2D);
         if(inspectingObject2D != null && !inspectingObject2D.isShouldDestroy()) {
@@ -548,8 +537,8 @@ public class InspectorView extends View
                                 isEditing = true;
                             }
                         }
-                        case "MeshRendererComponent" -> {
-                            MeshRendererComponent meshRendererComponent = (MeshRendererComponent) currentComponent;
+                        case "MeshComponent" -> {
+                            MeshComponent meshRendererComponent = (MeshComponent) currentComponent;
                             ImString textureName = new ImString(new File(meshRendererComponent.texture.path).getName());
                             ImGui.inputText("Path", textureName, ImGuiInputTextFlags.ReadOnly);
                             if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
@@ -704,10 +693,10 @@ public class InspectorView extends View
                                         ImGui.popID();
 
                                         Script.setFieldValue(scriptComponent, field, string.get());
-                                    } else if (cs.isAssignableFrom(GameObject.class)) {
+                                    } else if (cs.isAssignableFrom(Entity.class)) {
                                         ImString string = new ImString(cs.getSimpleName());
                                         if (Script.getFieldValue(scriptComponent, field) != null) {
-                                            string.set(((GameObject) Script.getFieldValue(scriptComponent, field)).name, true);
+                                            string.set(((Entity) Script.getFieldValue(scriptComponent, field)).name, true);
                                         }
 
                                         ImGui.pushID(field.getName() + "_" + i);
@@ -722,8 +711,8 @@ public class InspectorView extends View
 
                                         if (ImGui.beginDragDropTarget()) {
                                             Object droppedObject = ImGui.acceptDragDropPayload("SceneGameObject");
-                                            if (droppedObject instanceof GameObject gameObject) {
-                                                Script.setFieldValue(scriptComponent, field, gameObject);
+                                            if (droppedObject instanceof Entity entity) {
+                                                Script.setFieldValue(scriptComponent, field, entity);
                                             }
                                             ImGui.endDragDropTarget();
                                         }
@@ -969,7 +958,7 @@ public class InspectorView extends View
         }
     }
 
-    private void compileAndAddScriptComponent(File javaFile, GameObject inspectingObject2D)
+    private void compileAndAddScriptComponent(File javaFile, Entity inspectingObject2D)
     {
         ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + javaFile.getName() + "... ", 1.0f, 0.0f) {
             @Override
@@ -1019,37 +1008,37 @@ public class InspectorView extends View
 
                     try {
                         if(ImGui.selectable("TransformComponent")) {
-                            ((GameObject) currentInspectingObject).addComponent(new TransformComponent());
+                            ((Entity) currentInspectingObject).addComponent(new TransformComponent());
                             action = "";
                         }
-                        if (ImGui.selectable("MeshRendererComponent")) {
-                            ((GameObject) currentInspectingObject).addComponent(new MeshRendererComponent());
+                        if (ImGui.selectable("MeshComponent")) {
+                            ((Entity) currentInspectingObject).addComponent(new MeshComponent());
                             action = "";
                         }
                         if (ImGui.selectable("Rigidbody2DComponent")) {
                             Rigidbody2DComponent rigidbody2DComponent = new Rigidbody2DComponent();
-                            ((GameObject) currentInspectingObject).addComponent(rigidbody2DComponent);
+                            ((Entity) currentInspectingObject).addComponent(rigidbody2DComponent);
                             rigidbody2DComponent.getRigidbody2D().setType(BodyType.STATIC);
                             action = "";
                         }
                         if (ImGui.selectable("BoxCollider2DComponent")) {
-                            ((GameObject) currentInspectingObject).addComponent(new BoxCollider2DComponent());
+                            ((Entity) currentInspectingObject).addComponent(new BoxCollider2DComponent());
                             action = "";
                         }
                         if (ImGui.selectable("CircleCollider2DComponent")) {
-                            ((GameObject) currentInspectingObject).addComponent(new CircleCollider2DComponent());
+                            ((Entity) currentInspectingObject).addComponent(new CircleCollider2DComponent());
                             action = "";
                         }
                         if(ImGui.selectable("AudioComponent")) {
-                            ((GameObject) currentInspectingObject).addComponent(new AudioComponent());
+                            ((Entity) currentInspectingObject).addComponent(new AudioComponent());
                             action = "";
                         }
                         if(ImGui.selectable("Camera2DComponent")) {
-                            ((GameObject) currentInspectingObject).addComponent(new Camera2DComponent());
+                            ((Entity) currentInspectingObject).addComponent(new Camera2DComponent());
                             action = "";
                         }
                         if(ImGui.selectable("ParticlesSystemComponent")) {
-                            ((GameObject) currentInspectingObject).addComponent(new ParticlesSystemComponent());
+                            ((Entity) currentInspectingObject).addComponent(new ParticlesSystemComponent());
                             action = "";
                         }
 

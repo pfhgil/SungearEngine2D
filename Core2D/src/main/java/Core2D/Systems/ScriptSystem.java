@@ -1,15 +1,10 @@
 package Core2D.Systems;
 
-import Core2D.Component.Components.ScriptComponent;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Components.ScriptComponent;
+import Core2D.ECS.Entity;
 import Core2D.Layering.Layer;
-import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.Scene2D;
-import Core2D.Scene2D.SceneManager;
-import Core2D.Utils.Utils;
-import org.apache.commons.io.FilenameUtils;
 
-import java.io.File;
 import java.util.List;
 
 public class ScriptSystem
@@ -19,10 +14,10 @@ public class ScriptSystem
     public static void applyScriptsTempValues(Scene2D scene2D)
     {
         for (Layer layer : scene2D.getLayering().getLayers()) {
-            for(int i = 0; i < layer.getGameObjects().size(); i++) {
-                GameObject gameObject = layer.getGameObjects().get(i);
-                if (!gameObject.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponents = gameObject.getAllComponents(ScriptComponent.class);
+            for(int i = 0; i < layer.getEntities().size(); i++) {
+                Entity entity = layer.getEntities().get(i);
+                if (!entity.isShouldDestroy()) {
+                    List<ScriptComponent> scriptComponents = entity.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponents) {
                         scriptComponent.script.applyTempValues();
@@ -35,10 +30,10 @@ public class ScriptSystem
     public static void destroyScriptsTempValues(Scene2D scene2D)
     {
         for (Layer layer : scene2D.getLayering().getLayers()) {
-            for(int i = 0; i < layer.getGameObjects().size(); i++) {
-                GameObject gameObject = layer.getGameObjects().get(i);
-                if (!gameObject.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponents = gameObject.getAllComponents(ScriptComponent.class);
+            for(int i = 0; i < layer.getEntities().size(); i++) {
+                Entity entity = layer.getEntities().get(i);
+                if (!entity.isShouldDestroy()) {
+                    List<ScriptComponent> scriptComponents = entity.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponents) {
                         scriptComponent.script.destroyTempValues();
@@ -51,10 +46,10 @@ public class ScriptSystem
     public static void saveScriptsTempValues(Scene2D scene2D)
     {
         for (Layer layer : scene2D.getLayering().getLayers()) {
-            for(int i = 0; i < layer.getGameObjects().size(); i++) {
-                GameObject gameObject = layer.getGameObjects().get(i);
-                if (!gameObject.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponents = gameObject.getAllComponents(ScriptComponent.class);
+            for(int i = 0; i < layer.getEntities().size(); i++) {
+                Entity entity = layer.getEntities().get(i);
+                if (!entity.isShouldDestroy()) {
+                    List<ScriptComponent> scriptComponents = entity.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponents) {
                         scriptComponent.script.saveTempValues();

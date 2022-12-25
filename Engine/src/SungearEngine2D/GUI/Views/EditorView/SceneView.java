@@ -2,21 +2,19 @@ package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.Camera2DComponent;
-import Core2D.Component.Components.MeshRendererComponent;
-import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
-import Core2D.GameObject.GameObject;
-import Core2D.GameObject.RenderParts.Texture2D;
+import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.MeshComponent;
+import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
+import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Input.PC.Mouse;
 import Core2D.Prefab.Prefab;
 import Core2D.Project.ProjectsManager;
 import Core2D.Utils.FileUtils;
-import Core2D.Utils.MathUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.View;
-import SungearEngine2D.Main.GraphicsRenderer;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;
 import SungearEngine2D.Main.EngineSettings;
@@ -49,7 +47,7 @@ public class SceneView extends View
     private Vector2f ratioCameraScale = new Vector2f();
 
     // превью нового объекта на сцене
-    private GameObject newObject2DPreview;
+    private Entity newObject2DPreview;
 
     public SceneView()
     {
@@ -161,7 +159,7 @@ public class SceneView extends View
                         currentSceneManager.getCurrentScene2D() != null) {
                     // если превью не существует, то создаю его
                     if(newObject2DPreview == null) {
-                        newObject2DPreview = createSceneObject2D(ViewsManager.getResourcesView().getCurrentMovingFile());
+                        newObject2DPreview = createSceneEntity(ViewsManager.getResourcesView().getCurrentMovingFile());
                     }
                     // нахожу позицию для превью относительно мыши, чтобы он за ней следовал
                     Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
@@ -173,9 +171,9 @@ public class SceneView extends View
                     // если мышка отжата, то есть droppedFile != null, то создаю объект на сцене по координатам мышки, а превью удаляю
                     if(droppedObject instanceof File) {
                         File file = (File) droppedObject;
-                        GameObject newSceneObject2D = createSceneObject2D(file);
-                        if(newSceneObject2D != null) {
-                            newSceneObject2D.getComponent(TransformComponent.class).getTransform().setPosition(
+                        Entity entity = createSceneEntity(file);
+                        if(entity != null) {
+                            entity.getComponent(TransformComponent.class).getTransform().setPosition(
                                     newObject2DPreview.getComponent(TransformComponent.class).getTransform().getPosition()
                             );
                         }
@@ -299,37 +297,37 @@ public class SceneView extends View
     }
 
     // создает объект на сцене
-    private GameObject createSceneObject2D(File file)
+    private Entity createSceneEntity(File file)
     {
         String extension = FilenameUtils.getExtension(file.getName());
         if(extension.equals("png") || extension.equals("jpg")) {
-            GameObject newSceneObject2D = GameObject.createObject2D();
+            Entity newSceneEntity = Entity.createObject2D();
 
             String relativePath = FileUtils.getRelativePath(
                     new File(file.getPath()),
                     new File(ProjectsManager.getCurrentProject().getProjectPath()));
-            MeshRendererComponent textureComponent = newSceneObject2D.getComponent(MeshRendererComponent.class);
+            MeshComponent meshComponent = newSceneEntity.getComponent(MeshComponent.class);
             Texture2D texture2D = new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath));
-            textureComponent.texture.set(texture2D);
-            textureComponent.texture.path = relativePath;
+            meshComponent.texture.set(texture2D);
+            meshComponent.texture.path = relativePath;
 
             Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
-            newSceneObject2D.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);
+            newSceneEntity.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);
 
-            Vector2f newObject2DScale = new Vector2f(textureComponent.texture.getTexture2DData().getWidth() / 100.0f,
-                    textureComponent.texture.getTexture2DData().getHeight() / 100.0f);
-            newSceneObject2D.getComponent(TransformComponent.class).getTransform().setScale(newObject2DScale);
+            Vector2f newObject2DScale = new Vector2f(meshComponent.texture.getTexture2DData().getWidth() / 100.0f,
+                    meshComponent.texture.getTexture2DData().getHeight() / 100.0f);
+            newSceneEntity.getComponent(TransformComponent.class).getTransform().setScale(newObject2DScale);
 
             // дефолтный layer
-            newSceneObject2D.setLayer(currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
-            newSceneObject2D.name = FilenameUtils.getBaseName(file.getName());
+            newSceneEntity.setLayer(currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
+            newSceneEntity.name = FilenameUtils.getBaseName(file.getName());
 
             ViewsManager.getResourcesView().setCurrentMovingFile(null);
 
             System.gc();
             System.out.println("added obj!");
 
-            return newSceneObject2D;
+            return newSceneEntity;
         } else if(extension.equals("sgopref")) {
             Prefab prefab = Prefab.load(file.getPath());
 

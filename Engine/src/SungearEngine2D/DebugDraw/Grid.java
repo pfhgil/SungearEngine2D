@@ -1,24 +1,24 @@
 package SungearEngine2D.DebugDraw;
 
-import Core2D.Component.Components.MeshRendererComponent;
-import Core2D.Component.Components.TransformComponent;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Components.MeshComponent;
+import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Entity;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;
 import org.joml.Vector2f;
 
 public class Grid
 {
-    private static GameObject grid;
+    private static Entity grid;
 
     private static int level = 1;
 
     public static void init(Vector2f scale)
     {
-        grid = GameObject.createObject2D();
+        grid = Entity.createObject2D();
 
         grid.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(1f, 1f));
-        MeshRendererComponent c = grid.getComponent(MeshRendererComponent.class);
+        MeshComponent c = grid.getComponent(MeshComponent.class);
         c.setUV(new float[] {
                 0.0f, 0.0f,
                 0.0f, 261,
@@ -29,7 +29,7 @@ public class Grid
         //grid.getComponent(TextureComponent.class).getTexture2D().param = GL_REPEAT;
         //grid.setColor(new Vector4f(0.3f, 0.3f, 0.3f, 1.0f));
         //grid.setShaderProgram(null);
-        c.getComponent(MeshRendererComponent.class).shader = Resources.Shaders.Grid.gridShader;
+        c.getComponent(MeshComponent.class).shader = Resources.Shaders.Grid.gridShader;
         //grid.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Icons.object2DFileIcon);
     }
 

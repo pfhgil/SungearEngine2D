@@ -3,12 +3,10 @@ package Core2D.Scripting;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DClassLoader;
 import Core2D.Core2D.Core2DMode;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Entity;
 import Core2D.Log.Log;
-import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
-import Core2D.Utils.Utils;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -16,7 +14,6 @@ import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,8 +73,8 @@ public class Script
 
         deltaUpdateMethod = getMethod("deltaUpdate", float.class);
         updateMethod = getMethod("update");
-        collider2DEnterMethod = getMethod("collider2DEnter", GameObject.class);
-        collider2DExitMethod = getMethod("collider2DExit", GameObject.class);
+        collider2DEnterMethod = getMethod("collider2DEnter", Entity.class);
+        collider2DExitMethod = getMethod("collider2DExit", Entity.class);
     }
 
     public void loadClass(String dirPath, String scriptPath, String baseName)
@@ -109,8 +106,8 @@ public class Script
 
             deltaUpdateMethod = Script.getMethod(scriptClass, "deltaUpdate", float.class);
             updateMethod = Script.getMethod(scriptClass, "update");
-            collider2DEnterMethod = Script.getMethod(scriptClass, "collider2DEnter", GameObject.class);
-            collider2DExitMethod = Script.getMethod(scriptClass, "collider2DExit", GameObject.class);
+            collider2DEnterMethod = Script.getMethod(scriptClass, "collider2DEnter", Entity.class);
+            collider2DExitMethod = Script.getMethod(scriptClass, "collider2DExit", Entity.class);
 
             //System.out.println("script path: " + scriptPath);
             lastModified = new File(scriptPath + ".java").lastModified();
@@ -220,14 +217,14 @@ public class Script
         }
     }
 
-    public void collider2DEnter(GameObject otherObj)
+    public void collider2DEnter(Entity otherObj)
     {
         if(active && collider2DEnterMethod != null) {
             invokeMethod(collider2DEnterMethod, otherObj);
         }
     }
 
-    public void collider2DExit(GameObject otherObj)
+    public void collider2DExit(Entity otherObj)
     {
         if(active && collider2DExitMethod != null) {
             invokeMethod(collider2DExitMethod, otherObj);
@@ -254,8 +251,8 @@ public class Script
                     ScriptTempValue scriptTempValue = new ScriptTempValue();
 
                     Object value = getFieldValue(field);
-                    if (value instanceof GameObject gameObject) {
-                        scriptTempValue.setValue(new ScriptValue(gameObject.ID, gameObject.name, ScriptValueType.TYPE_GAME_OBJECT));
+                    if (value instanceof Entity entity) {
+                        scriptTempValue.setValue(new ScriptValue(entity.ID, entity.name, ScriptValueType.TYPE_GAME_OBJECT));
                     } else {
                         scriptTempValue.setValue(value);
                     }

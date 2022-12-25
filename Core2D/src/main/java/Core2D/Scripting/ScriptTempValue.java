@@ -1,7 +1,7 @@
 package Core2D.Scripting;
 
-import Core2D.Component.Component;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Component;
+import Core2D.ECS.Entity;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.SceneManager;
@@ -9,8 +9,6 @@ import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.Utils;
 import com.google.gson.JsonObject;
 import com.google.gson.internal.LinkedTreeMap;
-import com.google.gson.internal.Primitives;
-import org.newdawn.slick.util.pathfinding.navmesh.Link;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -56,15 +54,15 @@ public class ScriptTempValue
                 } else if(resValue instanceof ScriptValue object) {
                     switch(object.objectType) {
                         case TYPE_GAME_OBJECT:
-                            GameObject foundGameObject = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(object.ID);
-                            field.set(script.getScriptClassInstance(), foundGameObject);
+                            Entity foundEntity = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(object.ID);
+                            field.set(script.getScriptClassInstance(), foundEntity);
                             break;
                     }
                 } else if(resValue instanceof Component) {
                     Component component = (Component) resValue;
-                    Core2D.GameObject.GameObject foundGameObject = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(component.getObject2DID());
-                    if(foundGameObject != null) {
-                        for(Component objComponent : foundGameObject.getComponents()) {
+                    Entity foundEntity = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(component.getObject2DID());
+                    if(foundEntity != null) {
+                        for(Component objComponent : foundEntity.getComponents()) {
                             if(objComponent.componentID == component.componentID &&
                             objComponent.getClass().isAssignableFrom(component.getClass())) {
                                 field.set(script.getScriptClassInstance(), objComponent);

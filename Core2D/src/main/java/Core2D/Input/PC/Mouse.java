@@ -1,7 +1,7 @@
 package Core2D.Input.PC;
 
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Graphics.Graphics;
 import org.joml.Matrix4f;

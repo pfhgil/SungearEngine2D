@@ -1,6 +1,6 @@
 package Core2D.Layering;
 
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Entity;
 import Core2D.Log.Log;
 import org.joml.Vector4f;
 
@@ -22,13 +22,13 @@ public class Layering {
         }
     }
 
-    public GameObject getPickedObject2D(Vector4f pixelColor)
+    public Entity getPickedObject2D(Vector4f pixelColor)
     {
-        GameObject pickedGameObject = null;
+        Entity pickedEntity = null;
         for(Layer layer : layers) {
-            pickedGameObject = layer.getPickedObject2D(pixelColor);
-            if(pickedGameObject != null) {
-                return pickedGameObject;
+            pickedEntity = layer.getPickedObject2D(pixelColor);
+            if(pickedEntity != null) {
+                return pickedEntity;
             }
         }
 
@@ -93,8 +93,8 @@ public class Layering {
 
     public void deleteLayer(Layer layer)
     {
-        for(int i = 0; i < layer.getGameObjects().size(); i++) {
-            layer.getGameObjects().get(i).setLayer(getLayer("default"));
+        for(int i = 0; i < layer.getEntities().size(); i++) {
+            layer.getEntities().get(i).setLayer(getLayer("default"));
         }
 
         layers.remove(layer);

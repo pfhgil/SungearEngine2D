@@ -1,6 +1,6 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Entity;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
@@ -367,12 +367,12 @@ public class TopToolbarView
             if(ImGui.beginMenu("Objects")) {
                 if(ImGui.beginMenu("New...")) {
                     if(ImGui.menuItem("Object2D")) {
-                        new GameObject().setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
+                        new Entity().setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
                     }
 
                     if(ImGui.menuItem("Camera2D")) {
                         if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-                            GameObject camera2D = GameObject.createCamera2D();
+                            Entity camera2D = Entity.createCamera2D();
                             camera2D.setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
                         }
                     }
@@ -524,7 +524,7 @@ public class TopToolbarView
 
                         String scenePath = ResourcesView.currentDirectoryPath + "\\" + scene2D.getName() + ".sgs";
 
-                        GameObject camera2D = GameObject.createCamera2D();
+                        Entity camera2D = Entity.createCamera2D();
                         camera2D.setLayer(scene2D.getLayering().getLayer("default"));
                         scene2D.setSceneMainCamera2D(camera2D);
 

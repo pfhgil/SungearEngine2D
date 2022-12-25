@@ -1,36 +1,30 @@
 package Core2D.Utils;
 
-import Core2D.Component.Component;
-import Core2D.Component.Components.ScriptComponent;
-import Core2D.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2DClassLoader;
 import Core2D.DataClasses.Data;
 import Core2D.Deserializers.*;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Entity;
+import Core2D.ECS.System.System;
 import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
 import Core2D.Log.Log;
 import Core2D.Prefab.Prefab;
-import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.Scene2D;
-import Core2D.Scene2D.SceneManager;
-import Core2D.Scripting.Script;
 import Core2D.Transform.Transform;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.joml.Vector2f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.system.MemoryUtil;
 
 import java.io.*;
-import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.FloatBuffer;
 import java.nio.ShortBuffer;
 import java.nio.channels.FileChannel;
-import java.util.List;
 import java.util.Random;
 
 public class Utils
@@ -39,14 +33,16 @@ public class Utils
 
     private static final CommonDeserializer<Data> dataDeserializer = new CommonDeserializer<>();
     private static final CommonDeserializer<Component> componentDeserializer = new CommonDeserializer<>();
+    private static final CommonDeserializer<System> systemDeserializer = new CommonDeserializer<>();
 
     public static Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .registerTypeAdapter(Prefab.class, new PrefabDeserializer())
-            .registerTypeAdapter(GameObject.class, new GameObjectDeserializer())
+            .registerTypeAdapter(Entity.class, new EntityDeserializer())
             .registerTypeAdapter(Scene2D.class, new Scene2DDeserializer())
             .registerTypeAdapter(Data.class, dataDeserializer)
             .registerTypeAdapter(Component.class, componentDeserializer)
+            .registerTypeAdapter(System.class, systemDeserializer)
             .registerTypeAdapter(Layer.class, new LayerDeserializer())
             .registerTypeAdapter(Layering.class, new LayeringDeserializer())
             .create();
@@ -210,8 +206,8 @@ public class Utils
         return min + Math.random() * (max - min);
     }
 
-    public static boolean isPointInNoRotatedObject(Vector2f mousePosition, Core2D.GameObject.GameObject gameObject) {
-        Transform objectTransform = gameObject.getComponent(TransformComponent.class).getTransform();
+    public static boolean isPointInNoRotatedObject(Vector2f mousePosition, Entity entity) {
+        Transform objectTransform = entity.getComponent(TransformComponent.class).getTransform();
 
         return mousePosition.x >= objectTransform.getPosition().x &&
                 mousePosition.x <= objectTransform.getPosition().x + 100.0f * objectTransform.getScale().x &&
