@@ -247,7 +247,7 @@ public class Entity implements Serializable, PoolObject
         for(var currentComponent : components) {
             if(currentComponent.getClass().equals(component.getClass()) && currentComponent instanceof NonDuplicated) {
                 Log.showErrorDialog("Component " + component.getClass().getName() + " already exists");
-                throw new RuntimeException("Component " + component.getClass().getName() + " already exists");
+                Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Component " + component.getClass().getName() + " already exists")), Log.MessageType.ERROR);
             }
         }
 
@@ -291,14 +291,28 @@ public class Entity implements Serializable, PoolObject
         return componentsFound;
     }
 
-    public void removeComponent(Class<? extends Component> componentClass)
+    public void removeComponent(Component component)
+    {
+        if(component instanceof NonRemovable) {
+            Log.showErrorDialog("Component " + component.getClass().getName() + " is non-removable");
+            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Component " + component.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
+        } else {
+            boolean removed = components.remove(component);
+            if (removed) {
+                component.destroy();
+                components.remove(component);
+            }
+        }
+    }
+
+    public void removeFirstComponent(Class<? extends Component> componentClass)
     {
         Component component = getComponent(componentClass);
 
         if(component instanceof NonRemovable) {
             Log.showErrorDialog("Component " + component.getClass().getName() + " is non-removable");
 
-            throw new RuntimeException("Component " + component.getClass().getName() + " is non-removable");
+            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Component " + component.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
         } else {
             if(component != null) {
                 component.destroy();
@@ -316,7 +330,7 @@ public class Entity implements Serializable, PoolObject
             if(component.getClass().isAssignableFrom(componentClass) && component instanceof NonRemovable) {
                 Log.showErrorDialog("Component " + component.getClass().getName() + " is non-removable");
 
-                throw new RuntimeException("Component " + component.getClass().getName() + " is non-removable");
+                Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Component " + component.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
             } else {
                 component.destroy();
                 componentsIterator.remove();
@@ -330,7 +344,7 @@ public class Entity implements Serializable, PoolObject
         for(var currentSystem : systems) {
             if(currentSystem.getClass().equals(system.getClass()) && currentSystem instanceof NonDuplicated) {
                 Log.showErrorDialog("System " + system.getClass().getName() + " already exists");
-                throw new RuntimeException("System " + system.getClass().getName() + " already exists");
+                Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("System " + system.getClass().getName() + " already exists")), Log.MessageType.ERROR);
             }
         }
 

@@ -31,7 +31,7 @@ public class Component
 
     /**
      * Deletes a component. In order to completely remove a component from an object, use object.removeComponent(...).
-     * @see Entity#removeComponent(Class)
+     * @see Entity#removeFirstComponent(Class)
      */
     public void destroy()
     {

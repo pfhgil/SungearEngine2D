@@ -44,7 +44,7 @@ public class GraphicsRenderer
 
         //Gizmo.draw();
 
-        if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && !ViewsManager.isSomeViewFocusedExceptSceneView && !ViewsManager.getInspectorView().isEditing()) {
+        if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && !ViewsManager.isSomeViewFocusedExceptSceneView) {
             Vector2f mousePosition = Mouse.getMousePosition();
 
             Entity pickedObject2D = Graphics.getPickedObject2D(mousePosition);
@@ -52,10 +52,6 @@ public class GraphicsRenderer
             if(pickedObject2D != null) {
                 ViewsManager.getInspectorView().setCurrentInspectingObject(pickedObject2D);
             }
-        }
-
-        if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && ViewsManager.getInspectorView().isEditing()) {
-            ViewsManager.getInspectorView().setEditing(false);
         }
     }
 }

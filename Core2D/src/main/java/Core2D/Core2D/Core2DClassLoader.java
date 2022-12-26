@@ -4,11 +4,22 @@ import Core2D.Utils.Utils;
 
 import java.io.*;
 import java.lang.reflect.Array;
+import java.net.URL;
+import java.net.URLClassLoader;
+import java.net.URLConnection;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Arrays;
 
-public class Core2DClassLoader extends ClassLoader
+public class Core2DClassLoader extends URLClassLoader
 {
+    public Core2DClassLoader(URL[] urls, ClassLoader parent) {
+        super(urls, parent);
+    }
+
+    public Core2DClassLoader(URL[] urls) {
+        super(urls);
+    }
     /*
     public Class loadClass(URL url, String name) throws ClassNotFoundException {
         try {
@@ -43,7 +54,6 @@ public class Core2DClassLoader extends ClassLoader
 
     //private List<String> loadedClasses = new ArrayList<>();
 
-    /*
     public byte[] loadClassData(URL dirURL, String name) throws ClassNotFoundException, IOException {
         String url = dirURL.toString() + File.separator + name.replace(".", File.separator) + ".class";
         URL myUrl = new URL(url);
@@ -61,29 +71,6 @@ public class Core2DClassLoader extends ClassLoader
 
         return buffer.toByteArray();
     }
-
-    public Class<?> findClass(URL dirURL, String s) {
-        System.out.println("s: " + s);
-        if (!loadedClasses.contains(s)) {
-            byte[] bytes = new byte[0];
-            try {
-                bytes = loadClassData(dirURL, s);
-            } catch (ClassNotFoundException | IOException e) {
-                throw new RuntimeException(e);
-            }
-            loadedClasses.add(s);
-            System.out.println("s0: " + s);
-            return defineClass(s, bytes, 0, bytes.length);
-        } else {
-            try {
-                System.out.println("s1: " + s);
-                return super.findClass(s);
-            } catch (ClassNotFoundException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
-
     public void addClass(Class<?> cls)
     {
         byte[] classBytes = Utils.serializeObject(cls);
@@ -94,7 +81,6 @@ public class Core2DClassLoader extends ClassLoader
     {
         super.addURL(url);
     }
-    */
 
     /*
     public boolean isURLExists(URL url)
@@ -144,49 +130,12 @@ public class Core2DClassLoader extends ClassLoader
     }
      */
 
-
-    private byte[] fetchClassFromFS(String path) throws FileNotFoundException, IOException {
-        InputStream is = new FileInputStream(new File(path));
-
-        // Get the size of the file
-        long length = new File(path).length();
-
-        if (length > Integer.MAX_VALUE) {
-            // File is too large
-        }
-
-        // Create the byte array to hold the data
-        byte[] bytes = new byte[(int)length];
-
-        // Read in the bytes
-        int offset = 0;
-        int numRead = 0;
-        while (offset < bytes.length
-                && (numRead=is.read(bytes, offset, bytes.length-offset)) >= 0) {
-            offset += numRead;
-        }
-
-        // Ensure all the bytes have been read in
-        if (offset < bytes.length) {
-            throw new IOException("Could not completely read file "+path);
-        }
-
-        // Close the input stream and return bytes
-        is.close();
-        return bytes;
-
-    }
-
     public <T> Class<T> loadNewClass(String path) throws IOException, ClassNotFoundException
     {
+        System.out.println("class to load path: " + path);
         byte[] classBytes = Files.readAllBytes(Path.of(path));
+        System.out.println("class bytes0: " + Arrays.toString(classBytes));
         Class<?> cls = this.defineClass(null, classBytes, 0, classBytes.length);
         return (Class<T>) this.loadClass(cls.getName());
-    }
-
-    public void addClass(Class<?> cls)
-    {
-        byte[] classBytes = Utils.serializeObject(cls);
-        defineClass(cls.getName(), classBytes, 0, classBytes.length);
     }
 }

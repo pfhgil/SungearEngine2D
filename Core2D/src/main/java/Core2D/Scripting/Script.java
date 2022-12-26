@@ -7,6 +7,8 @@ import Core2D.ECS.Entity;
 import Core2D.Log.Log;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.SingleClassLoader;
+import Core2D.Utils.Utils;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -15,6 +17,7 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -88,10 +91,12 @@ public class Script
 
                 URL scriptDirURL = file.toURI().toURL();
 
-                //Utils.core2DClassLoader = new Core2DClassLoader(new URL[] { }, Utils.core2DClassLoader);
-                Core2DClassLoader core2DClassLoader = new Core2DClassLoader();
+                URLClassLoader urlClassLoader = new URLClassLoader(new URL[] { scriptDirURL });
+
                 System.out.println("script path: " + scriptPath);
-                scriptClass = core2DClassLoader.loadNewClass(scriptPath + ".class");
+                // just load first
+                scriptClass = urlClassLoader.loadClass(baseName);
+                //scriptClass = Utils.addClassAndResolveLoaders(scriptPath + ".class");
                 // если в in-build
             } else {
                 ByteClassLoader byteClassLoader = new ByteClassLoader();
@@ -110,11 +115,14 @@ public class Script
             collider2DExitMethod = Script.getMethod(scriptClass, "collider2DExit", Entity.class);
 
             //System.out.println("script path: " + scriptPath);
-            lastModified = new File(scriptPath + ".java").lastModified();
+            //lastModified = new File(scriptPath + ".java").lastModified();
             System.out.println("last modified: " + lastModified + ", path: " + scriptPath + ".java");
         } catch (InstantiationException | IllegalAccessException | IOException | ClassNotFoundException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
+
+        // then add in global class loader and reload it
+        //Utils.reloadCore2DClassLoader();
     }
 
     public Field getField(String name)

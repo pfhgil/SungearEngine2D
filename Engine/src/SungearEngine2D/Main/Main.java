@@ -5,6 +5,7 @@ import Core2D.CamerasManager.CamerasManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DUserCallback;
 import Core2D.Core2D.Settings;
+import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
@@ -30,6 +31,7 @@ import org.lwjgl.glfw.GLFW;
 import org.newdawn.slick.Game;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,13 +109,14 @@ public class Main
 
                                                     String scriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponents.get(k).script.path;
                                                     long lastModified = new File(scriptPath + ".java").lastModified();
-                                                    //System.out.println("lm: " + lastModified + ", p: " + scriptPath + ".java, slm: " + scriptComponents.get(k).script.getLastModified());
+                                                    //System.out.println("lm: " + lastModified + ", p: " + scriptPath + ", slm: " + scriptComponents.get(k).script.getLastModified());
                                                     if (lastModified != scriptComponents.get(k).script.getLastModified()) {
                                                         EngineSettings.Playmode.canEnterPlaymode = false;
-                                                        //scriptComponents.get(k).script.setLastModified(lastModified);
+                                                        scriptComponents.get(k).script.setLastModified(lastModified);
 
                                                         int finalK = k;
                                                         String lastScriptPath = scriptComponents.get(finalK).script.path;
+                                                        int finalI = i;
                                                         ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
                                                             public void run() {
                                                                 if (currentSceneManager.getCurrentScene2D() != null) {
@@ -123,7 +126,23 @@ public class Main
                                                                     boolean compiled = Compiler.compileScript(newScriptPath + ".java");
                                                                     if (compiled) {
                                                                         scriptComponents.get(finalK).script.loadClass(new File(scriptPath).getParent(), scriptPath, FilenameUtils.getBaseName(new File(scriptPath).getName()).replace("\\\\/", "."));
+                                                                        Component newComponent = null;
+                                                                        try {
+                                                                            newComponent = (Component) scriptComponents.get(finalK).script.getScriptClass().getConstructor().newInstance();
+                                                                        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                                                                                 NoSuchMethodException e) {
+                                                                            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                                                                        }
+
+                                                                        ScriptComponent sc = (ScriptComponent) newComponent;
+
+                                                                        sc.script.set(scriptComponents.get(finalK).script);
                                                                         scriptComponents.get(finalK).script.path = lastScriptPath;
+                                                                        sc.script.path = scriptComponents.get(finalK).script.path;
+
+                                                                        layer.getEntities().get(finalI).removeComponent(scriptComponents.get(finalK));
+                                                                        sc.script.setLastModified(lastModified);
+                                                                        layer.getEntities().get(finalI).addComponent(sc);
                                                                     }
                                                                     compiledScripts.add(scriptComponents.get(finalK).script.getName());
 

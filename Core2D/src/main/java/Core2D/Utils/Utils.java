@@ -1,8 +1,8 @@
 package Core2D.Utils;
 
+import Core2D.Core2D.Core2DClassLoader;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.TransformComponent;
-import Core2D.Core2D.Core2DClassLoader;
 import Core2D.DataClasses.Data;
 import Core2D.Deserializers.*;
 import Core2D.ECS.Entity;
@@ -46,8 +46,6 @@ public class Utils
             .registerTypeAdapter(Layer.class, new LayerDeserializer())
             .registerTypeAdapter(Layering.class, new LayeringDeserializer())
             .create();
-
-    public static Core2DClassLoader core2DClassLoader = new Core2DClassLoader();
 
     // создает FloatBuffer, помещает туда data и возвращает получившийся буфер
     public static FloatBuffer createFloatBuffer(float[] data)
@@ -107,9 +105,11 @@ public class Utils
         try {
             oos = new ObjectOutputStream(bos);
             oos.writeObject(obj);
+            oos.flush();
+            byte[] objBytes = bos.toByteArray();
             oos.close();
             bos.close();
-            return bos.toByteArray();
+            return objBytes;
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
