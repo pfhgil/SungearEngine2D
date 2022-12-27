@@ -52,22 +52,19 @@ public class ScriptTempValue
                 if(resValue instanceof Double && field.getType().isAssignableFrom(float.class)) {
                     field.setFloat(script.getScriptClassInstance(), ((Double) resValue).floatValue());
                 } else if(resValue instanceof ScriptValue object) {
+                    Entity foundEntity = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(object.entityID);
                     switch(object.objectType) {
-                        case TYPE_GAME_OBJECT:
-                            Entity foundEntity = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(object.ID);
-                            field.set(script.getScriptClassInstance(), foundEntity);
-                            break;
-                    }
-                } else if(resValue instanceof Component) {
-                    Component component = (Component) resValue;
-                    Entity foundEntity = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(component.getObject2DID());
-                    if(foundEntity != null) {
-                        for(Component objComponent : foundEntity.getComponents()) {
-                            if(objComponent.componentID == component.componentID &&
-                            objComponent.getClass().isAssignableFrom(component.getClass())) {
-                                field.set(script.getScriptClassInstance(), objComponent);
+                        case TYPE_ENTITY:
+                            if(foundEntity != null) {
+                                field.set(script.getScriptClassInstance(), foundEntity);
                             }
-                        }
+                            break;
+
+                        case TYPE_COMPONENT:
+                            if(foundEntity != null) {
+                                field.set(script.getScriptClassInstance(), foundEntity.findComponentByID(object.componentID));
+                            }
+                            break;
                     }
                 } else {
                     if(resValue != null) {

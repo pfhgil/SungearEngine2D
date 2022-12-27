@@ -5,6 +5,7 @@ import Core2D.ECS.Component.Components.*;
 import Core2D.Core2D.Settings;
 import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.MeshRendererSystem;
+import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Pooling.PoolObject;
@@ -271,8 +272,10 @@ public class Entity implements Serializable, PoolObject
     public <T extends Component> T getComponent(Class<T> componentClass)
     {
         for(var component : components) {
-            if(component.getClass().isAssignableFrom(componentClass) || component.getClass().getSuperclass() == componentClass) {
+            if(component.getClass().isAssignableFrom(componentClass)) {
                 return componentClass.cast(component);
+            } else if(component.getClass().isAssignableFrom(ScriptComponent.class) && ((ScriptComponent) component).script.getScriptClass().isAssignableFrom(componentClass)) {
+                return componentClass.cast(((ScriptComponent) component).script.getScriptClassInstance());
             }
         }
 
@@ -283,8 +286,10 @@ public class Entity implements Serializable, PoolObject
     {
         List<T> componentsFound = new ArrayList<>();
         for(var component : components) {
-            if(component.getClass().isAssignableFrom(componentClass) || component.getClass().getSuperclass() == componentClass){
+            if(component.getClass().isAssignableFrom(componentClass)){
                 componentsFound.add(componentClass.cast(component));
+            } else if(component.getClass().isAssignableFrom(ScriptComponent.class) && ((ScriptComponent) component).script.getScriptClass().isAssignableFrom(componentClass)) {
+                componentsFound.add(componentClass.cast(((ScriptComponent) component).script.getScriptClassInstance()));
             }
         }
 
@@ -300,7 +305,20 @@ public class Entity implements Serializable, PoolObject
             boolean removed = components.remove(component);
             if (removed) {
                 component.destroy();
-                components.remove(component);
+            } else { // попытка получить все скрипт компоненты и попробовать на основе скриптов удалить компонент из списка
+                List<ScriptComponent> scriptComponents = getAllComponents(ScriptComponent.class);
+                for(var scriptComponent : scriptComponents) {
+                    if(component == scriptComponent.script.getScriptClassInstance()) {
+                        removed = components.remove(scriptComponent);
+                        if(removed) {
+                            component.destroy();
+                        } else {
+                            Log.CurrentSession.println("Component " + component + " was not found for deletion!", Log.MessageType.ERROR);
+                        }
+
+                        return;
+                    }
+                }
             }
         }
     }
@@ -315,10 +333,36 @@ public class Entity implements Serializable, PoolObject
             Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Component " + component.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
         } else {
             if(component != null) {
-                component.destroy();
-                components.remove(component);
+                boolean removed = components.remove(component);
+                if (removed) {
+                    component.destroy();
+                } else {
+                    List<ScriptComponent> scriptComponents = getAllComponents(ScriptComponent.class);
+                    for(var scriptComponent : scriptComponents) {
+                        if(scriptComponent.script.getScriptClass().isAssignableFrom(componentClass)) {
+                            removed = components.remove(scriptComponent);
+                            if(removed) {
+                                component.destroy();
+                            } else {
+                                Log.CurrentSession.println("Component " + component + " was not found for deletion!", Log.MessageType.ERROR);
+                            }
+                            return;
+                        }
+                     }
+                }
             }
         }
+    }
+
+    public Component findComponentByID(int ID)
+    {
+        for(Component component : components) {
+            if(component.componentID == ID) {
+                return component;
+            }
+        }
+
+        return null;
     }
 
     public void removeAllComponents(Class<? extends Component> componentClass)
@@ -327,11 +371,14 @@ public class Entity implements Serializable, PoolObject
 
         while(componentsIterator.hasNext()) {
             Component component = componentsIterator.next();
-            if(component.getClass().isAssignableFrom(componentClass) && component instanceof NonRemovable) {
+
+            boolean assignable = component.getClass().isAssignableFrom(componentClass) ||
+                    (component.getClass().isAssignableFrom(ScriptComponent.class) && ((ScriptComponent) component).script.getScriptClass().isAssignableFrom(componentClass));
+            if(assignable && component instanceof NonRemovable) {
                 Log.showErrorDialog("Component " + component.getClass().getName() + " is non-removable");
 
                 Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Component " + component.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
-            } else {
+            } else if(assignable) {
                 component.destroy();
                 componentsIterator.remove();
             }
@@ -371,8 +418,10 @@ public class Entity implements Serializable, PoolObject
     public <T extends System> T getSystem(Class<T> systemClass)
     {
         for(var system : systems) {
-            if(system.getClass().isAssignableFrom(systemClass) || system.getClass().getSuperclass() == systemClass) {
+            if(system.getClass().isAssignableFrom(systemClass)) {
                 return systemClass.cast(system);
+            } else if(system.getClass().isAssignableFrom(ScriptableSystem.class) && ((ScriptableSystem) system).script.getScriptClass().isAssignableFrom(systemClass)) {
+                return systemClass.cast(((ScriptableSystem) system).script.getScriptClassInstance());
             }
         }
 
@@ -381,28 +430,73 @@ public class Entity implements Serializable, PoolObject
 
     public <T extends System> List<T> getAllSystems(Class<T> systemClass)
     {
-        List<T> componentsFound = new ArrayList<>();
+        List<T> systemsFound = new ArrayList<>();
         for(var system : systems) {
-            if(system.getClass().isAssignableFrom(systemClass) || system.getClass().getSuperclass() == systemClass){
-                componentsFound.add(systemClass.cast(system));
+            if(system.getClass().isAssignableFrom(systemClass)){
+                systemsFound.add(systemClass.cast(system));
+            } else if(system.getClass().isAssignableFrom(ScriptableSystem.class) && ((ScriptableSystem) system).script.getScriptClass().isAssignableFrom(systemClass)) {
+                systemsFound.add(systemClass.cast(((ScriptableSystem) system).script.getScriptClassInstance()));
             }
         }
 
-        return componentsFound;
+        return systemsFound;
     }
 
-    public void removeSystem(Class<? extends System> systemClass)
+    public void removeSystem(System system)
+    {
+        if(system instanceof NonRemovable) {
+            Log.showErrorDialog("System " + system.getClass().getName() + " is non-removable");
+
+            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("System " + system.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
+        } else {
+            boolean removed = systems.remove(system);
+            if (removed) {
+                system.destroy();
+            } else { // попытка получить все скриптабельные системы и попробовать на основе скриптов удалить систему из списка
+                List<ScriptableSystem> scriptableSystems = getAllSystems(ScriptableSystem.class);
+                for(var scriptableSystem : scriptableSystems) {
+                    if(system == scriptableSystem.script.getScriptClassInstance()) {
+                        removed = systems.remove(scriptableSystem);
+                        if(removed) {
+                            system.destroy();
+                        } else {
+                            Log.CurrentSession.println("System " + system + " was not found for deletion!", Log.MessageType.ERROR);
+                        }
+
+                        return;
+                    }
+                }
+            }
+        }
+    }
+
+    public void removeFirstSystem(Class<? extends System> systemClass)
     {
         System system = getSystem(systemClass);
 
         if(system instanceof NonRemovable) {
             Log.showErrorDialog("System " + system.getClass().getName() + " is non-removable");
 
-            throw new RuntimeException("System " + system.getClass().getName() + " is non-removable");
+            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("System " + system.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
         } else {
             if(system != null) {
-                system.destroy();
-                systems.remove(system);
+                boolean removed = systems.remove(system);
+                if (removed) {
+                    system.destroy();
+                } else {
+                    List<ScriptableSystem> scriptableSystems = getAllSystems(ScriptableSystem.class);
+                    for (var scriptableSystem : scriptableSystems) {
+                        if (scriptableSystem.script.getScriptClass().isAssignableFrom(systemClass)) {
+                            removed = systems.remove(scriptableSystem);
+                            if (removed) {
+                                scriptableSystem.destroy();
+                            } else {
+                                Log.CurrentSession.println("System " + systemClass + " was not found for deletion!", Log.MessageType.ERROR);
+                            }
+                            return;
+                        }
+                    }
+                }
             }
         }
     }
@@ -413,11 +507,14 @@ public class Entity implements Serializable, PoolObject
 
         while(systemsIterator.hasNext()) {
             System system = systemsIterator.next();
-            if(system.getClass().isAssignableFrom(systemClass) && system instanceof NonRemovable) {
+
+            boolean assignable = system.getClass().isAssignableFrom(systemClass) ||
+                    (system.getClass().isAssignableFrom(ScriptableSystem.class) && ((ScriptableSystem) system).script.getScriptClass().isAssignableFrom(systemClass));
+            if(assignable && system instanceof NonRemovable) {
                 Log.showErrorDialog("System " + system.getClass().getName() + " is non-removable");
 
-                throw new RuntimeException("System " + system.getClass().getName() + " is non-removable");
-            } else {
+                Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("System " + system.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
+            } else if(assignable) {
                 system.destroy();
                 systemsIterator.remove();
             }

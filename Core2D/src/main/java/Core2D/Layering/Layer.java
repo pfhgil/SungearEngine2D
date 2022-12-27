@@ -111,7 +111,6 @@ public class Layer
             entity.destroy();
             layerObjectIterator.remove();
         }
-        // че
         entities = null;
     }
 
