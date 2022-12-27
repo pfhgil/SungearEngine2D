@@ -2,10 +2,10 @@ package Core2D.Graphics;
 
 import Core2D.Audio.AudioListener;
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Entity;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
 import Core2D.Log.Log;
@@ -167,7 +167,7 @@ public abstract class Graphics
     }
 
     // полуячить выбранный мышкой объект
-    public static GameObject getPickedObject2D(Vector2f oglPosition)
+    public static Entity getPickedObject2D(Vector2f oglPosition)
     {
         pickingRenderTarget.bind();
         glClear(GL_COLOR_BUFFER_BIT);

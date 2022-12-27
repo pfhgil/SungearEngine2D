@@ -1,11 +1,11 @@
 package SungearEngine2D.Builder;
 
 import Core2D.Audio.AudioInfo;
-import Core2D.Component.Components.AudioComponent;
-import Core2D.Component.Components.MeshRendererComponent;
-import Core2D.Component.Components.ScriptComponent;
 import Core2D.Core2D.Core2D;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Components.AudioComponent;
+import Core2D.ECS.Component.Components.MeshComponent;
+import Core2D.ECS.Component.Components.ScriptComponent;
+import Core2D.ECS.Entity;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
@@ -249,8 +249,8 @@ public class Builder {
         // далее пробегаюсь по всем сценам и изменяю путь ресурсов у кажого объекта на относительный
         for (Scene2D scene2D : scenes2DToSaveInBuild) {
             for (Layer layer : scene2D.getLayering().getLayers()) {
-                for (GameObject gameObject : layer.getGameObjects()) {
-                    MeshRendererComponent textureComponent = gameObject.getComponent(MeshRendererComponent.class);
+                for (Entity entity : layer.getEntities()) {
+                    MeshComponent textureComponent = entity.getComponent(MeshComponent.class);
                     if (textureComponent != null) {
                         // новый путь до текстуры
                         File newFile = new File(toDir + "\\" + textureComponent.texture.path);
@@ -266,7 +266,7 @@ public class Builder {
                     }
 
                     // то же самое для скриптов
-                    List<ScriptComponent> scriptComponents = gameObject.getAllComponents(ScriptComponent.class);
+                    List<ScriptComponent> scriptComponents = entity.getAllComponents(ScriptComponent.class);
                     for (ScriptComponent scriptComponent : scriptComponents) {
                         File newFile = new File(toDir + "\\" + scriptComponent.script.path);
                         newFile.getParentFile().mkdirs();
@@ -278,7 +278,7 @@ public class Builder {
                     }
 
                     // то же самое для аудио
-                    List<AudioComponent> audioComponents = gameObject.getAllComponents(AudioComponent.class);
+                    List<AudioComponent> audioComponents = entity.getAllComponents(AudioComponent.class);
                     for (AudioComponent audioComponent : audioComponents) {
                         File newFile = new File(toDir + "\\" + audioComponent.audio.path);
                         newFile.getParentFile().mkdirs();

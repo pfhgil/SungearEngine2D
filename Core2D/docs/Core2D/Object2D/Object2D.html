@@ -79,7 +79,7 @@ loadScripts(document, 'script');</script>
 </div>
 <div class="inheritance" title="Inheritance Tree">java.lang.Object
 <div class="inheritance"><a href="../CommonParameters/CommonDrawableObjectsParameters.html" title="class in Core2D.GameObject">Core2D.GameObject.Instancing.Drawable</a>
-<div class="inheritance">Core2D.GameObject.GameObject</div>
+<div class="inheritance">Core2D.ECS.Entity</div>
 </div>
 </div>
 <section class="description">
@@ -115,7 +115,7 @@ implements java.io.Serializable</pre>
 <tbody>
 <tr class="alt-color">
 <td class="col-first"><code><a href="Object2D.html" title="class in Core2D.Transform">Object2D</a></code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#parentGameObject">parentGameObject</a></span></code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#parentEntity">parentEntity</a></span></code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 </tbody>
@@ -123,7 +123,7 @@ implements java.io.Serializable</pre>
 </div>
 <div class="inherited-list">
 <h3 id="fields.inherited.from.class.Core2D.CommonParameters.CommonDrawableObjectsParameters">Fields inherited from class&nbsp;Core2D.GameObject.<a href="../CommonParameters/CommonDrawableObjectsParameters.html" title="class in Core2D.GameObject">CommonDrawableObjectsParameters</a></h3>
-<code><a href="../CommonParameters/CommonDrawableObjectsParameters.html#active">active</a>, <a href="../CommonParameters/CommonDrawableObjectsParameters.html#ID">ID</a>, <a href="../CommonParameters/CommonDrawableObjectsParameters.html#layer">layer</a>, <a href="../CommonParameters/CommonDrawableObjectsParameters.html#layerName">layerName</a>, <a href="../CommonParameters/CommonDrawableObjectsParameters.html#name">name</a>, <a href="../CommonParameters/CommonDrawableObjectsParameters.html#shouldDestroy">shouldDestroy</a>, <a href="../CommonParameters/CommonDrawableObjectsParameters.html#tag">tag</a>, <a href="../CommonParameters/CommonDrawableObjectsParameters.html#gameObject">gameObject</a></code></div>
+<code><a href="../CommonParameters/CommonDrawableObjectsParameters.html#active">active</a>, <a href="../CommonParameters/CommonDrawableObjectsParameters.html#ID">ID</a>, <a href="../CommonParameters/CommonDrawableObjectsParameters.html#layer">layer</a>, <a href="../CommonParameters/CommonDrawableObjectsParameters.html#layerName">layerName</a>, <a href="../CommonParameters/CommonDrawableObjectsParameters.html#name">name</a>, <a href="../CommonParameters/CommonDrawableObjectsParameters.html#shouldDestroy">shouldDestroy</a>, <a href="../CommonParameters/CommonDrawableObjectsParameters.html#tag">tag</a>, <a href="../CommonParameters/CommonDrawableObjectsParameters.html#entity">entity</a></code></div>
 </section>
 </li>
 <!-- ======== CONSTRUCTOR SUMMARY ======== -->
@@ -145,7 +145,7 @@ implements java.io.Serializable</pre>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color">
-<th class="col-constructor-name" scope="row"><code><span class="member-name-link"><a href="#%3Cinit%3E(Core2D.Object2D.Object2D)">Object2D</a></span>&#8203;(<a href="Object2D.html" title="class in Core2D.Transform">Object2D</a>&nbsp;gameObject)</code></th>
+<th class="col-constructor-name" scope="row"><code><span class="member-name-link"><a href="#%3Cinit%3E(Core2D.Object2D.Object2D)">Object2D</a></span>&#8203;(<a href="Object2D.html" title="class in Core2D.Transform">Object2D</a>&nbsp;entity)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 </tbody>
@@ -171,7 +171,7 @@ implements java.io.Serializable</pre>
 <tbody>
 <tr class="alt-color" id="i0">
 <td class="col-first"><code>void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#addChildObject(Core2D.Object2D.Object2D)">addChildObject</a></span>&#8203;(<a href="Object2D.html" title="class in Core2D.Transform">Object2D</a>&nbsp;gameObject)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#addChildObject(Core2D.Object2D.Object2D)">addChildObject</a></span>&#8203;(<a href="Object2D.html" title="class in Core2D.Transform">Object2D</a>&nbsp;entity)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color" id="i1">
@@ -191,7 +191,7 @@ implements java.io.Serializable</pre>
 </tr>
 <tr class="alt-color" id="i4">
 <td class="col-first"><code>void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#addComponent(Core2D.Component.Component)">addComponent</a></span>&#8203;(<a href="../Component/Component.html" title="class in Core2D.Component">Component</a>&nbsp;component)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#addComponent(Core2D.ECS.Component.Component)">addComponent</a></span>&#8203;(<a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&nbsp;component)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color" id="i5">
@@ -215,7 +215,7 @@ implements java.io.Serializable</pre>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color" id="i9">
-<td class="col-first"><code>&lt;T extends <a href="../Component/Component.html" title="class in Core2D.Component">Component</a>&gt;<br>java.util.List&lt;T&gt;</code></td>
+<td class="col-first"><code>&lt;T extends <a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&gt;<br>java.util.List&lt;T&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getAllComponents(java.lang.Class)">getAllComponents</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;componentClass)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -235,12 +235,12 @@ implements java.io.Serializable</pre>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color" id="i13">
-<td class="col-first"><code>&lt;T extends <a href="../Component/Component.html" title="class in Core2D.Component">Component</a>&gt;<br>T</code></td>
+<td class="col-first"><code>&lt;T extends <a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&gt;<br>T</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getComponent(java.lang.Class)">getComponent</a></span>&#8203;(java.lang.Class&lt;T&gt;&nbsp;componentClass)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="alt-color" id="i14">
-<td class="col-first"><code>java.util.List&lt;<a href="../Component/Component.html" title="class in Core2D.Component">Component</a>&gt;</code></td>
+<td class="col-first"><code>java.util.List&lt;<a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&gt;</code></td>
 <th class="col-second" scope="row"><code><span class="member-name-link"><a href="#getComponents()">getComponents</a></span>()</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
@@ -301,7 +301,7 @@ implements java.io.Serializable</pre>
 </tr>
 <tr class="alt-color" id="i26">
 <td class="col-first"><code>void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#removeComponent(Core2D.Component.Component)">removeComponent</a></span>&#8203;(<a href="../Component/Component.html" title="class in Core2D.Component">Component</a>&nbsp;component)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#removeComponent(Core2D.ECS.Component.Component)">removeComponent</a></span>&#8203;(<a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&nbsp;component)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="row-color" id="i27">
@@ -316,7 +316,7 @@ implements java.io.Serializable</pre>
 </tr>
 <tr class="row-color" id="i29">
 <td class="col-first"><code>void</code></td>
-<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setParentObject2D(Core2D.Object2D.Object2D)">setParentObject2D</a></span>&#8203;(<a href="Object2D.html" title="class in Core2D.Transform">Object2D</a>&nbsp;parentGameObject)</code></th>
+<th class="col-second" scope="row"><code><span class="member-name-link"><a href="#setParentObject2D(Core2D.Object2D.Object2D)">setParentObject2D</a></span>&#8203;(<a href="Object2D.html" title="class in Core2D.Transform">Object2D</a>&nbsp;parentEntity)</code></th>
 <td class="col-last">&nbsp;</td>
 </tr>
 <tr class="alt-color" id="i30">
@@ -361,9 +361,9 @@ implements java.io.Serializable</pre>
 <h2>Field Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="parentGameObject">
-<h3>parentGameObject</h3>
-<div class="member-signature"><span class="modifiers">public transient</span>&nbsp;<span class="return-type"><a href="Object2D.html" title="class in Core2D.Transform">Object2D</a></span>&nbsp;<span class="member-name">parentGameObject</span></div>
+<section class="detail" id="parentEntity">
+<h3>parentEntity</h3>
+<div class="member-signature"><span class="modifiers">public transient</span>&nbsp;<span class="return-type"><a href="Object2D.html" title="class in Core2D.Transform">Object2D</a></span>&nbsp;<span class="member-name">parentEntity</span></div>
 </section>
 </li>
 </ul>
@@ -383,7 +383,7 @@ implements java.io.Serializable</pre>
 <li>
 <section class="detail" id="&lt;init&gt;(Core2D.Object2D.Object2D)">
 <h3>Object2D</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="member-name">Object2D</span>&#8203;(<span class="parameters"><a href="Object2D.html" title="class in Core2D.Transform">Object2D</a>&nbsp;gameObject)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="member-name">Object2D</span>&#8203;(<span class="parameters"><a href="Object2D.html" title="class in Core2D.Transform">Object2D</a>&nbsp;entity)</span></div>
 </section>
 </li>
 </ul>
@@ -431,33 +431,33 @@ implements java.io.Serializable</pre>
 </section>
 </li>
 <li>
-<section class="detail" id="addComponent(Core2D.Component.Component)">
+<section class="detail" id="addComponent(Core2D.ECS.Component.Component)">
 <h3>addComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">addComponent</span>&#8203;(<span class="parameters"><a href="../Component/Component.html" title="class in Core2D.Component">Component</a>&nbsp;component)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">addComponent</span>&#8203;(<span class="parameters"><a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&nbsp;component)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getAllComponents(java.lang.Class)">
 <h3>getAllComponents</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T extends <a href="../Component/Component.html" title="class in Core2D.Component">Component</a>&gt;</span>&nbsp;<span class="return-type">java.util.List&lt;T&gt;</span>&nbsp;<span class="member-name">getAllComponents</span>&#8203;(<span class="parameters">java.lang.Class&lt;T&gt;&nbsp;componentClass)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T extends <a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&gt;</span>&nbsp;<span class="return-type">java.util.List&lt;T&gt;</span>&nbsp;<span class="member-name">getAllComponents</span>&#8203;(<span class="parameters">java.lang.Class&lt;T&gt;&nbsp;componentClass)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getComponent(java.lang.Class)">
 <h3>getComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T extends <a href="../Component/Component.html" title="class in Core2D.Component">Component</a>&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="member-name">getComponent</span>&#8203;(<span class="parameters">java.lang.Class&lt;T&gt;&nbsp;componentClass)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="type-parameters">&lt;T extends <a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&gt;</span>&nbsp;<span class="return-type">T</span>&nbsp;<span class="member-name">getComponent</span>&#8203;(<span class="parameters">java.lang.Class&lt;T&gt;&nbsp;componentClass)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="removeComponent(Core2D.Component.Component)">
+<section class="detail" id="removeComponent(Core2D.ECS.Component.Component)">
 <h3>removeComponent</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">removeComponent</span>&#8203;(<span class="parameters"><a href="../Component/Component.html" title="class in Core2D.Component">Component</a>&nbsp;component)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">removeComponent</span>&#8203;(<span class="parameters"><a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&nbsp;component)</span></div>
 </section>
 </li>
 <li>
 <section class="detail" id="getComponents()">
 <h3>getComponents</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../Component/Component.html" title="class in Core2D.Component">Component</a>&gt;</span>&nbsp;<span class="member-name">getComponents</span>()</div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">java.util.List&lt;<a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&gt;</span>&nbsp;<span class="member-name">getComponents</span>()</div>
 </section>
 </li>
 <li>
@@ -541,7 +541,7 @@ implements java.io.Serializable</pre>
 <li>
 <section class="detail" id="setParentObject2D(Core2D.Object2D.Object2D)">
 <h3>setParentObject2D</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">setParentObject2D</span>&#8203;(<span class="parameters"><a href="Object2D.html" title="class in Core2D.Transform">Object2D</a>&nbsp;parentGameObject)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">setParentObject2D</span>&#8203;(<span class="parameters"><a href="Object2D.html" title="class in Core2D.Transform">Object2D</a>&nbsp;parentEntity)</span></div>
 </section>
 </li>
 <li>
@@ -565,7 +565,7 @@ implements java.io.Serializable</pre>
 <li>
 <section class="detail" id="addChildObject(Core2D.Object2D.Object2D)">
 <h3>addChildObject</h3>
-<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">addChildObject</span>&#8203;(<span class="parameters"><a href="Object2D.html" title="class in Core2D.Transform">Object2D</a>&nbsp;gameObject)</span></div>
+<div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="member-name">addChildObject</span>&#8203;(<span class="parameters"><a href="Object2D.html" title="class in Core2D.Transform">Object2D</a>&nbsp;entity)</span></div>
 </section>
 </li>
 <li>

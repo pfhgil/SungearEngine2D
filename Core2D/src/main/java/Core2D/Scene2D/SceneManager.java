@@ -1,15 +1,14 @@
 package Core2D.Scene2D;
 
 import Core2D.Audio.AudioManager;
-import Core2D.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.Core2D.Settings;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Entity;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
 import Core2D.Log.Log;
-import Core2D.Physics.PhysicsWorld;
 import Core2D.Project.ProjectsManager;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
@@ -41,7 +40,7 @@ public class SceneManager
         if(currentScene2D != null) currentScene2D.drawPicking();
     }
 
-    public GameObject getPickedObject2D(Vector4f pixelColor)
+    public Entity getPickedObject2D(Vector4f pixelColor)
     {
         if(currentScene2D != null) {
             return currentScene2D.getPickedObject2D(pixelColor);
@@ -215,9 +214,9 @@ public class SceneManager
     private void applyObject2DDependencies(Scene2D scene2D)
     {
         for(int i = 0; i < scene2D.getLayering().getLayers().size(); i++) {
-            for (int k = 0; k < scene2D.getLayering().getLayers().get(i).getGameObjects().size(); k++) {
-                GameObject gameObject = scene2D.getLayering().getLayers().get(i).getGameObjects().get(k);
-                gameObject.applyChildrenObjectsID();
+            for (int k = 0; k < scene2D.getLayering().getLayers().get(i).getEntities().size(); k++) {
+                Entity entity = scene2D.getLayering().getLayers().get(i).getEntities().get(k);
+                entity.applyChildrenObjectsID();
             }
         }
     }

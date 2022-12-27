@@ -1,7 +1,7 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Entity;
 import Core2D.Log.Log;
 import Core2D.Prefab.Prefab;
 import Core2D.Project.ProjectsManager;
@@ -111,9 +111,9 @@ public class ResourcesView extends View
 
             if(ImGui.beginDragDropTarget()) {
                 Object object = ImGui.acceptDragDropPayload("SceneGameObject");
-                if(object instanceof GameObject gameObject) {
-                    Prefab prefab = new Prefab(gameObject);
-                    prefab.save(currentDirectoryPath + "\\" + gameObject.name + ".sgopref");
+                if(object instanceof Entity entity) {
+                    Prefab prefab = new Prefab(entity);
+                    prefab.save(currentDirectoryPath + "\\" + entity.name + ".sgopref");
 
                     /*
                     Gson gson = new GsonBuilder()
@@ -259,7 +259,6 @@ public class ResourcesView extends View
 
         if(ImGui.beginDragDropSource()) {
             ImGui.setDragDropPayload("File", files[id]);
-            ViewsManager.getInspectorView().droppingFile = files[id];
             currentMovingFile = files[id];
 
             ImGui.image(textureID, iconImageSize.x / 2.0f, iconImageSize.y / 2.0f, 0, 0, 1, 1, 1.0f, 1.0f, 1.0f, 0.5f);

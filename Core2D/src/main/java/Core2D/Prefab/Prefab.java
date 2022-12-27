@@ -1,6 +1,6 @@
 package Core2D.Prefab;
 
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Entity;
 import Core2D.Layering.Layer;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.FileUtils;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Prefab
 {
-    private GameObject prefabObject;
+    private Entity prefabObject;
     private List<Prefab> childrenObjects = new ArrayList<>();
 
     public Prefab()
@@ -19,7 +19,7 @@ public class Prefab
 
     }
 
-    public Prefab(GameObject prefabObject)
+    public Prefab(Entity prefabObject)
     {
         setPrefabObject(prefabObject);
     }
@@ -78,13 +78,13 @@ public class Prefab
         }
     }
 
-    public GameObject getPrefabObject() { return prefabObject; }
-    public void setPrefabObject(GameObject prefabObject)
+    public Entity getPrefabObject() { return prefabObject; }
+    public void setPrefabObject(Entity prefabObject)
     {
         this.prefabObject = prefabObject;
 
         childrenObjects.clear();
-        for (GameObject childObject : prefabObject.getChildrenObjects()) {
+        for (Entity childObject : prefabObject.getChildrenObjects()) {
             childrenObjects.add(new Prefab(childObject));
         }
     }

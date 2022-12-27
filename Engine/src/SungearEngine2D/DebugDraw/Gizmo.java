@@ -1,10 +1,9 @@
 package SungearEngine2D.DebugDraw;
 
 //import Core2D.Component.Components.TextureComponent;
-import Core2D.Component.Components.TransformComponent;
 /*import Core2D.Drawable.Primitives.Circle2D;
 import Core2D.Drawable.Primitives.Line2D;*/
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.PC.Mouse;
 import Core2D.ShaderUtils.FrameBuffer;
@@ -39,22 +38,22 @@ public class Gizmo
 
     public static Vector2f scaleSensitivity = new Vector2f(0.1f, 0.1f);
 
-    public static final GameObject yArrow = GameObject.createObject2D();
-    public static final GameObject xArrow = GameObject.createObject2D();
+    public static final Entity yArrow = Entity.createObject2D();
+    public static final Entity xArrow = Entity.createObject2D();
 
-    public static final GameObject centrePoint = GameObject.createObject2D();
+    public static final Entity centrePoint = Entity.createObject2D();
 
-    public static final GameObject centrePointToEditCentre = GameObject.createObject2D();
+    public static final Entity centrePointToEditCentre = Entity.createObject2D();
 
     //#FIXME public static final Circle2D rotationCircle = new Circle2D(300.0f, 1, new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
-    public static final GameObject rotationHandler = GameObject.createObject2D();
+    public static final Entity rotationHandler = Entity.createObject2D();
 
-    public static final GameObject yScaleHandler = GameObject.createObject2D();
+    public static final Entity yScaleHandler = Entity.createObject2D();
     //#FIXME public static final Line2D yScaleLine = new Line2D();
-    public static final GameObject xScaleHandler = GameObject.createObject2D();
+    public static final Entity xScaleHandler = Entity.createObject2D();
     //#FIXME public static final Line2D xScaleLine = new Line2D();
 
-    private static GameObject selectedGizmoTool;
+    private static Entity selectedGizmoTool;
 
     public static boolean active = true;
 

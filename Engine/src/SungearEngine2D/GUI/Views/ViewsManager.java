@@ -35,6 +35,8 @@ public class ViewsManager
     private static ProjectSettingsView projectSettingsView;
     private static EngineSettingsView engineSettingsView;
 
+    private static ComponentsView componentsView;
+
     private static DebuggerView debuggerView;
 
     public static void init()
@@ -42,6 +44,8 @@ public class ViewsManager
         mainDockspaceID = ImGui.getID("Main dockspace");
 
         inspectorView = new InspectorView();
+        componentsView = new ComponentsView();
+
         projectTreeView = new ProjectTreeView();
         resourcesView = new ResourcesView();
         sceneTreeView = new SceneTreeView();
@@ -73,7 +77,7 @@ public class ViewsManager
         ImGui.setNextWindowSize(Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
-        ImGui.pushStyleVar(ImGuiStyleVar.WindowPadding, 0.0f, 0.0F);
+        ImGui.pushStyleVar(ImGuiStyleVar.WindowPadding, 0.0f, 0.0f);
 
         ImGui.begin("Dockspace demo", new ImBoolean(true), windowFlags);
         {
@@ -90,6 +94,8 @@ public class ViewsManager
             resourcesView.draw();
 
             inspectorView.draw();
+
+            componentsView.draw();
 
             sceneView.draw();
 

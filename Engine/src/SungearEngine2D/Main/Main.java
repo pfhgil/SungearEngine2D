@@ -2,12 +2,13 @@ package SungearEngine2D.Main;
 
 import Core2D.Audio.Audio;
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.ScriptComponent;
-import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DUserCallback;
 import Core2D.Core2D.Settings;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.ScriptComponent;
+import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
@@ -30,6 +31,7 @@ import org.lwjgl.glfw.GLFW;
 import org.newdawn.slick.Game;
 
 import java.io.File;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,7 +41,7 @@ public class Main
 {
     private static Core2DUserCallback core2DUserCallback;
 
-    private static GameObject mainCamera2D;
+    private static Entity mainCamera2D;
 
     public static Thread helpThread;
 
@@ -57,7 +59,7 @@ public class Main
                 //Debugger.init();
                 Resources.load();
 
-                mainCamera2D = GameObject.createCamera2D();
+                mainCamera2D = Entity.createCamera2D();
                 CamerasManager.mainCamera2D = mainCamera2D;
                 CameraController.controlledCamera2D = mainCamera2D;
 
@@ -91,11 +93,11 @@ public class Main
                                         Layer layer = currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(p);
                                         if (layer == null || layer.isShouldDestroy()) continue;
 
-                                        int renderingObjectsNum = layer.getGameObjects().size();
+                                        int renderingObjectsNum = layer.getEntities().size();
                                         for (int i = 0; i < renderingObjectsNum; i++) {
                                             if (layer.isShouldDestroy()) continue layersCycle;
-                                            if (!layer.getGameObjects().get(i).isShouldDestroy()) {
-                                                List<ScriptComponent> scriptComponents = layer.getGameObjects().get(i).getAllComponents(ScriptComponent.class);
+                                            if (!layer.getEntities().get(i).isShouldDestroy()) {
+                                                List<ScriptComponent> scriptComponents = layer.getEntities().get(i).getAllComponents(ScriptComponent.class);
 
                                                 for (int k = 0; k < scriptComponents.size(); k++) {
                                                     // был ли уже скомпилирован скрипт
@@ -107,13 +109,14 @@ public class Main
 
                                                     String scriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponents.get(k).script.path;
                                                     long lastModified = new File(scriptPath + ".java").lastModified();
-                                                    //System.out.println("lm: " + lastModified + ", p: " + scriptPath + ".java, slm: " + scriptComponents.get(k).script.getLastModified());
+                                                    //System.out.println("lm: " + lastModified + ", p: " + scriptPath + ", slm: " + scriptComponents.get(k).script.getLastModified());
                                                     if (lastModified != scriptComponents.get(k).script.getLastModified()) {
                                                         EngineSettings.Playmode.canEnterPlaymode = false;
-                                                        //scriptComponents.get(k).script.setLastModified(lastModified);
+                                                        scriptComponents.get(k).script.setLastModified(lastModified);
 
                                                         int finalK = k;
                                                         String lastScriptPath = scriptComponents.get(finalK).script.path;
+                                                        int finalI = i;
                                                         ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
                                                             public void run() {
                                                                 if (currentSceneManager.getCurrentScene2D() != null) {
@@ -123,7 +126,23 @@ public class Main
                                                                     boolean compiled = Compiler.compileScript(newScriptPath + ".java");
                                                                     if (compiled) {
                                                                         scriptComponents.get(finalK).script.loadClass(new File(scriptPath).getParent(), scriptPath, FilenameUtils.getBaseName(new File(scriptPath).getName()).replace("\\\\/", "."));
+                                                                        Component newComponent = null;
+                                                                        try {
+                                                                            newComponent = (Component) scriptComponents.get(finalK).script.getScriptClass().getConstructor().newInstance();
+                                                                        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
+                                                                                 NoSuchMethodException e) {
+                                                                            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                                                                        }
+
+                                                                        ScriptComponent sc = (ScriptComponent) newComponent;
+
+                                                                        sc.script.set(scriptComponents.get(finalK).script);
                                                                         scriptComponents.get(finalK).script.path = lastScriptPath;
+                                                                        sc.script.path = scriptComponents.get(finalK).script.path;
+
+                                                                        layer.getEntities().get(finalI).removeComponent(scriptComponents.get(finalK));
+                                                                        sc.script.setLastModified(lastModified);
+                                                                        layer.getEntities().get(finalI).addComponent(sc);
                                                                     }
                                                                     compiledScripts.add(scriptComponents.get(finalK).script.getName());
 
@@ -196,5 +215,5 @@ public class Main
         //Core2D.start("Sungear Engine 2D", new int[] { GLFW.GLFW_SAMPLES }, new int[] { 8 });
     }
 
-    public static GameObject getMainCamera2D() { return mainCamera2D; }
+    public static Entity getMainCamera2D() { return mainCamera2D; }
 }

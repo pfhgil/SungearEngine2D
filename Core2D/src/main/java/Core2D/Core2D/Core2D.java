@@ -3,7 +3,7 @@ package Core2D.Core2D;
 import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.OpenAL;
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.Core2DInputCallbacks;
 import Core2D.Input.Core2DUserInputCallback;

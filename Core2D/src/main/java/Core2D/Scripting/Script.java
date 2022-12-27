@@ -1,21 +1,23 @@
 package Core2D.Scripting;
 
 import Core2D.Core2D.Core2D;
+import Core2D.Core2D.Core2DClassLoader;
 import Core2D.Core2D.Core2DMode;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Entity;
 import Core2D.Log.Log;
-import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.SingleClassLoader;
 import Core2D.Utils.Utils;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URL;
+import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,12 +76,13 @@ public class Script
 
         deltaUpdateMethod = getMethod("deltaUpdate", float.class);
         updateMethod = getMethod("update");
-        collider2DEnterMethod = getMethod("collider2DEnter", GameObject.class);
-        collider2DExitMethod = getMethod("collider2DExit", GameObject.class);
+        collider2DEnterMethod = getMethod("collider2DEnter", Entity.class);
+        collider2DExitMethod = getMethod("collider2DExit", Entity.class);
     }
 
     public void loadClass(String dirPath, String scriptPath, String baseName)
     {
+        scriptPath = scriptPath.replace(".java", "");
         dirPath = dirPath.replace("\\", "/");
         try {
             // если режим работы - в движке
@@ -88,10 +91,12 @@ public class Script
 
                 URL scriptDirURL = file.toURI().toURL();
 
-                //Utils.core2DClassLoader = new Core2DClassLoader(new URL[] { }, Utils.core2DClassLoader);
+                URLClassLoader urlClassLoader = new URLClassLoader(new URL[] { scriptDirURL });
 
-                Utils.core2DClassLoader.addURL(scriptDirURL);
-                scriptClass = Utils.core2DClassLoader.loadClass(baseName);
+                System.out.println("script path: " + scriptPath);
+                // just load first
+                scriptClass = urlClassLoader.loadClass(baseName);
+                //scriptClass = Utils.addClassAndResolveLoaders(scriptPath + ".class");
                 // если в in-build
             } else {
                 ByteClassLoader byteClassLoader = new ByteClassLoader();
@@ -106,15 +111,18 @@ public class Script
 
             deltaUpdateMethod = Script.getMethod(scriptClass, "deltaUpdate", float.class);
             updateMethod = Script.getMethod(scriptClass, "update");
-            collider2DEnterMethod = Script.getMethod(scriptClass, "collider2DEnter", GameObject.class);
-            collider2DExitMethod = Script.getMethod(scriptClass, "collider2DExit", GameObject.class);
+            collider2DEnterMethod = Script.getMethod(scriptClass, "collider2DEnter", Entity.class);
+            collider2DExitMethod = Script.getMethod(scriptClass, "collider2DExit", Entity.class);
 
             //System.out.println("script path: " + scriptPath);
-            lastModified = new File(scriptPath + ".java").lastModified();
+            //lastModified = new File(scriptPath + ".java").lastModified();
             System.out.println("last modified: " + lastModified + ", path: " + scriptPath + ".java");
-        } catch (MalformedURLException | InstantiationException | IllegalAccessException e) {
+        } catch (InstantiationException | IllegalAccessException | IOException | ClassNotFoundException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
+
+        // then add in global class loader and reload it
+        //Utils.reloadCore2DClassLoader();
     }
 
     public Field getField(String name)
@@ -217,14 +225,14 @@ public class Script
         }
     }
 
-    public void collider2DEnter(GameObject otherObj)
+    public void collider2DEnter(Entity otherObj)
     {
         if(active && collider2DEnterMethod != null) {
             invokeMethod(collider2DEnterMethod, otherObj);
         }
     }
 
-    public void collider2DExit(GameObject otherObj)
+    public void collider2DExit(Entity otherObj)
     {
         if(active && collider2DExitMethod != null) {
             invokeMethod(collider2DExitMethod, otherObj);
@@ -251,8 +259,8 @@ public class Script
                     ScriptTempValue scriptTempValue = new ScriptTempValue();
 
                     Object value = getFieldValue(field);
-                    if (value instanceof GameObject gameObject) {
-                        scriptTempValue.setValue(new ScriptValue(gameObject.ID, gameObject.name, ScriptValueType.TYPE_GAME_OBJECT));
+                    if (value instanceof Entity entity) {
+                        scriptTempValue.setValue(new ScriptValue(entity.ID, entity.name, ScriptValueType.TYPE_GAME_OBJECT));
                     } else {
                         scriptTempValue.setValue(value);
                     }

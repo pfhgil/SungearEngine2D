@@ -3,8 +3,8 @@ package SungearEngine2D.Main;
 import Core2D.Core2D.Core2D;
 import Core2D.DataClasses.ShaderData;
 import Core2D.DataClasses.Texture2DData;
-import Core2D.GameObject.RenderParts.Shader;
-import Core2D.GameObject.RenderParts.Texture2D;
+import Core2D.Graphics.RenderParts.Shader;
+import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Utils.FileUtils;
 import org.lwjgl.opengl.GL46C;
 

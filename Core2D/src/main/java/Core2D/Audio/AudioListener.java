@@ -1,7 +1,7 @@
 package Core2D.Audio;
 
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.Utils.MatrixUtils;
 import org.joml.Vector2f;
 import org.lwjgl.openal.AL10;

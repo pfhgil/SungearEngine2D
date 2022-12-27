@@ -1,8 +1,8 @@
 package Core2D.Audio;
 
-import Core2D.Component.Component;
-import Core2D.Component.Components.AudioComponent;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.AudioComponent;
+import Core2D.ECS.Entity;
 import Core2D.Layering.Layer;
 import Core2D.Scene2D.SceneManager;
 import org.lwjgl.openal.AL10;
@@ -40,12 +40,12 @@ public class AudioManager
     {
         if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
             for(Layer layer : SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
-                int gameObjectsNum = layer.getGameObjects().size();
+                int gameObjectsNum = layer.getEntities().size();
                 for(int i = 0; i < gameObjectsNum; i++) {
-                    GameObject gameObject = layer.getGameObjects().get(i);
-                    int componentsNum = gameObject.getComponents().size();
+                    Entity entity = layer.getEntities().get(i);
+                    int componentsNum = entity.getComponents().size();
                     for (int k = 0; k < componentsNum; k++) {
-                        Component component = gameObject.getComponents().get(k);
+                        Component component = entity.getComponents().get(k);
                         if (component instanceof AudioComponent audioComponent) {
                             System.out.println("destroyed source: " + audioComponent.audio.source);
                             audioComponent.audio.destroy();

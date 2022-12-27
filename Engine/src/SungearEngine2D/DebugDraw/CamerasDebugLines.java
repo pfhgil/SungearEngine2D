@@ -1,9 +1,9 @@
 package SungearEngine2D.DebugDraw;
 
-import Core2D.Component.Components.MeshRendererComponent;
-import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Components.MeshComponent;
+import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Transform.Transform;
 import Core2D.Utils.MathUtils;
@@ -20,8 +20,8 @@ public class CamerasDebugLines
     //#FIXME private static Line2D[] inspectorCamera2DLines = new Line2D[4];
     //#FIXME private static Line2D[] mainCamera2DLines = new Line2D[4];
 
-    private static GameObject inspectorCamera2DIconObject2D = GameObject.createObject2D();
-    private static GameObject mainCamera2DIconObject2D = GameObject.createObject2D();
+    private static Entity inspectorCamera2DIconObject2D = Entity.createObject2D();
+    private static Entity mainCamera2DIconObject2D = Entity.createObject2D();
 
     public static void init()
     {
@@ -35,12 +35,12 @@ public class CamerasDebugLines
             mainCamera2DLines[i].setLineWidth(4.0f);
         }*///#FIXME
 
-        inspectorCamera2DIconObject2D.getComponent(MeshRendererComponent.class).texture.set(Resources.Textures.Icons.cameraIcon);
+        inspectorCamera2DIconObject2D.getComponent(MeshComponent.class).texture.set(Resources.Textures.Icons.cameraIcon);
         Vector2f cameraSize = new Vector2f(Resources.Textures.Icons.cameraIcon.getTexture2DData().getWidth(),
                 Resources.Textures.Icons.cameraIcon.getTexture2DData().getHeight());
         inspectorCamera2DIconObject2D.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(cameraSize.x / 100.0f, cameraSize.y / 100.0f));
 
-        mainCamera2DIconObject2D.getComponent(MeshRendererComponent.class).texture.set(Resources.Textures.Icons.cameraIcon);
+        mainCamera2DIconObject2D.getComponent(MeshComponent.class).texture.set(Resources.Textures.Icons.cameraIcon);
         mainCamera2DIconObject2D.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(cameraSize.x / 100.0f, cameraSize.y / 100.0f));
     }
 
@@ -49,8 +49,8 @@ public class CamerasDebugLines
         if (currentSceneManager.getCurrentScene2D() != null
                 && currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null
                 && ViewsManager.getInspectorView().getCurrentInspectingObject() != null
-                && ((GameObject) ViewsManager.getInspectorView().getCurrentInspectingObject()).ID != currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().ID) {
-            GameObject camera2D = (GameObject) ViewsManager.getInspectorView().getCurrentInspectingObject();
+                && ((Entity) ViewsManager.getInspectorView().getCurrentInspectingObject()).ID != currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().ID) {
+            Entity camera2D = (Entity) ViewsManager.getInspectorView().getCurrentInspectingObject();
 
             TransformComponent cameraTransformComponent = camera2D.getComponent(TransformComponent.class);
             if(cameraTransformComponent != null) {
@@ -108,7 +108,7 @@ public class CamerasDebugLines
             }
         }
         if (currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
-            GameObject camera2D = currentSceneManager.getCurrentScene2D().getSceneMainCamera2D();
+            Entity camera2D = currentSceneManager.getCurrentScene2D().getSceneMainCamera2D();
 
             TransformComponent cameraTransformComponent = camera2D.getComponent(TransformComponent.class);
             if(cameraTransformComponent != null) {

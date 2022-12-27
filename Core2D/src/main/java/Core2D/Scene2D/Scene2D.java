@@ -1,10 +1,8 @@
 package Core2D.Scene2D;
 
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.BoxCollider2DComponent;
-import Core2D.Component.Components.CircleCollider2DComponent;
-import Core2D.Component.Components.TransformComponent;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
@@ -27,7 +25,7 @@ public class Scene2D
 
     private Layering layering = new Layering();
 
-    private transient GameObject sceneMainCamera2D;
+    private transient Entity sceneMainCamera2D;
 
     private transient Scene2DCallback scene2DCallback;
 
@@ -90,9 +88,9 @@ public class Scene2D
     public void initPhysicsWorld()
     {
         for(Layer layer : layering.getLayers()) {
-            for(GameObject gameObject : layer.getGameObjects()) {
-                Rigidbody2D rigidbody2D = physicsWorld.addRigidbody2D(gameObject, this);
-                TransformComponent transformComponent = gameObject.getComponent(TransformComponent.class);
+            for(Entity entity : layer.getEntities()) {
+                Rigidbody2D rigidbody2D = physicsWorld.addRigidbody2D(entity, this);
+                TransformComponent transformComponent = entity.getComponent(TransformComponent.class);
                 if(transformComponent != null && rigidbody2D != null) {
                     Vector2f position = transformComponent.getTransform().getPosition();
                     rigidbody2D.getBody().setTransform(
@@ -123,7 +121,7 @@ public class Scene2D
         }
     }
 
-    public GameObject getPickedObject2D(Vector4f pixelColor)
+    public Entity getPickedObject2D(Vector4f pixelColor)
     {
         return layering.getPickedObject2D(pixelColor);
     }
@@ -184,10 +182,10 @@ public class Scene2D
     public void deleteTag(Tag tag)
     {
         for(int i = 0; i < layering.getLayers().size(); i++) {
-            for(int k = 0; k < layering.getLayers().get(i).getGameObjects().size(); k++) {
-                GameObject gameObject = layering.getLayers().get(k).getGameObjects().get(k);
-                if(tag.getName().equals(gameObject.tag.getName())) {
-                    gameObject.tag.setName("default");
+            for(int k = 0; k < layering.getLayers().get(i).getEntities().size(); k++) {
+                Entity entity = layering.getLayers().get(k).getEntities().get(k);
+                if(tag.getName().equals(entity.tag.getName())) {
+                    entity.tag.setName("default");
                 }
             }
         }
@@ -195,10 +193,10 @@ public class Scene2D
         tags.remove(tag);
     }
 
-    public GameObject findObject2DByName(String name)
+    public Entity findObject2DByName(String name)
     {
         for(Layer layer : layering.getLayers()) {
-            for(GameObject go : layer.getGameObjects()) {
+            for(Entity go : layer.getEntities()) {
                 if(go.name.equals(name)) {
                     return go;
                 }
@@ -208,10 +206,10 @@ public class Scene2D
         return null;
     }
 
-    public GameObject findObject2DByTag(String tag)
+    public Entity findObject2DByTag(String tag)
     {
         for(Layer layer : layering.getLayers()) {
-            for(GameObject go : layer.getGameObjects()) {
+            for(Entity go : layer.getEntities()) {
                 if(go.tag.getName().equals(tag)) {
                     return go;
                 }
@@ -221,10 +219,10 @@ public class Scene2D
         return null;
     }
 
-    public GameObject findGameObjectByID(int ID)
+    public Entity findGameObjectByID(int ID)
     {
         for(Layer layer : layering.getLayers()) {
-            for(GameObject go : layer.getGameObjects()) {
+            for(Entity go : layer.getEntities()) {
                 if(go.ID == ID) {
                     return go;
                 }
@@ -273,8 +271,8 @@ public class Scene2D
     public Layering getLayering() { return layering; }
     public void setLayering(Layering layering) { this.layering = layering; }
 
-    public GameObject getSceneMainCamera2D() { return sceneMainCamera2D; }
-    public void setSceneMainCamera2D(GameObject sceneMainCamera2D)
+    public Entity getSceneMainCamera2D() { return sceneMainCamera2D; }
+    public void setSceneMainCamera2D(Entity sceneMainCamera2D)
     {
         this.sceneMainCamera2D = sceneMainCamera2D;
     }

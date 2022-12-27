@@ -1,8 +1,8 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.Camera2DComponent;
 import Core2D.Core2D.Core2D;
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.Input.PC.Mouse;
 import Core2D.Scene2D.SceneManager;
 import SungearEngine2D.GUI.Views.ViewsManager;
