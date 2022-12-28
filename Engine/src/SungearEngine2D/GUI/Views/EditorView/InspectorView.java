@@ -9,6 +9,7 @@ import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scripting.Script;
+import Core2D.Systems.ScriptSystem;
 import Core2D.Tasks.StoppableTask;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
@@ -255,7 +256,7 @@ public class InspectorView extends View
             }
             ImGui.popID();
 
-            ImGui.text("Tag");
+            ImGui.text("Tag ");
             ImGui.sameLine();
             ImGui.pushID("TagsCombo");
             {
@@ -422,22 +423,12 @@ public class InspectorView extends View
                             new File(ProjectsManager.getCurrentProject().getProjectPath())
                     );
                     String baseName = FilenameUtils.getBaseName(javaFile.getName());
-                    Script script = new Script();
-                    script.loadClass(javaFile.getParent(), javaFile.getPath(), baseName);
-                    Component newComponent = null;
-                    try {
-                        newComponent = (Component) script.getScriptClass().getConstructor().newInstance();
-                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                             NoSuchMethodException e) {
-                        Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-                    }
+                    ScriptComponent scriptComponent = new ScriptComponent();
 
-                    ScriptComponent sc = (ScriptComponent) newComponent;
+                    scriptComponent.script.loadClass(javaFile.getParent(), baseName);
+                    scriptComponent.script.path = relativePath;
 
-                    sc.script.set(script);
-                    sc.script.path = relativePath;
-
-                    inspectingObject2D.addComponent(sc);
+                    inspectingObject2D.addComponent(scriptComponent);
                 }
             }
         });

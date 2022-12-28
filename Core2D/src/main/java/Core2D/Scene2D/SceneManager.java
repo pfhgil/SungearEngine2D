@@ -1,6 +1,7 @@
 package Core2D.Scene2D;
 
 import Core2D.Audio.AudioManager;
+import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
@@ -8,8 +9,10 @@ import Core2D.Core2D.Settings;
 import Core2D.ECS.Entity;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
+import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
+import Core2D.Scripting.ScriptTempValue;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Utils;
@@ -125,6 +128,18 @@ public class SceneManager
     public void saveScene(Scene2D scene, String path)
     {
         scene.saveScriptsTempValues();
+
+        for(Layer layer : scene.getLayering().getLayers()) {
+            for(Entity entity : layer.getEntities()) {
+                List<ScriptComponent> scriptComponents = entity.getAllComponents(ScriptComponent.class);
+
+                for(ScriptComponent scriptComponent : scriptComponents) {
+                    for(ScriptTempValue scriptTempValue : scriptComponent.script.getScriptTempValues()) {
+                        System.out.println("entity: " + entity.name + ", scriptTempValue name: " + scriptTempValue.getFieldName() + ", value: " + scriptTempValue.getValue());
+                    }
+                }
+            }
+        }
 
         String serialized = Utils.gson.toJson(scene);
 

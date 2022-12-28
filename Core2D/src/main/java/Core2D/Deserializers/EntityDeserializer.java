@@ -147,21 +147,8 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                     scriptComponent.script.path = scriptToLoadPath;
                     // load the script component class
                     scriptComponent.set(scriptComponent);
-                    java.lang.System.out.println(scriptComponent.script.getScriptClass());
-
-                    Component sc = null;
-                    try {
-                        sc = (Component) scriptComponent.script.getScriptClass().getConstructor().newInstance();
-                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                             NoSuchMethodException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    entity.addComponent(sc);
-                    sc.set(scriptComponent);
-
-                    ((ScriptComponent) sc).script.path = scriptToAddPath;
-                    java.lang.System.out.println("to add: " + scriptToAddPath);
+                    scriptComponent.script.path = scriptToAddPath;
+                    entity.addComponent(scriptComponent);
                 } else {
                     ScriptComponent sc = new ScriptComponent();
                     entity.addComponent(sc);

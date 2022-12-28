@@ -44,6 +44,7 @@ public class ScriptComponent extends Component
     public void update()
     {
         super.update();
+        script.update();
     }
 
     /**
@@ -54,7 +55,7 @@ public class ScriptComponent extends Component
     @Override
     public void deltaUpdate(float deltaTime)
     {
-
+        script.deltaUpdate(deltaTime);
     }
 
     /**
@@ -63,7 +64,7 @@ public class ScriptComponent extends Component
      */
     public void collider2DEnter(Entity otherObj)
     {
-
+        script.collider2DEnter(otherObj);
     }
 
     /**
@@ -72,7 +73,7 @@ public class ScriptComponent extends Component
      */
     public void collider2DExit(Entity otherObj)
     {
-
+        script.collider2DExit(otherObj);
     }
 
     // сделано для избежания рекурсивных вызовов дефолтных методов (update, deltaUpdate, collider2DEnter, collider2DExit).

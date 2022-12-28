@@ -77,7 +77,7 @@ public class Compiler
             return result;
         } else {
             //Utils.reloadAllCore2DClassLoaderClasses();
-            Log.CurrentSession.println("Error compiling script. File \"" + path + "\" does not exist", Log.MessageType.ERROR);
+            Log.CurrentSession.println(new RuntimeException("Error compiling script. File \"" + path + "\" does not exist"), Log.MessageType.ERROR);
             return false;
         }
     }

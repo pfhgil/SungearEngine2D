@@ -39,6 +39,8 @@ public class ScriptTempValue
 
     public void applyToScript(Script script)
     {
+        System.out.println("script: +" + script + ", field name: " + fieldName + ", value: " + value);
+
         if(script != null && fieldName != null && value != null) {
             try {
                 Field field = script.getScriptClass().getField(fieldName);

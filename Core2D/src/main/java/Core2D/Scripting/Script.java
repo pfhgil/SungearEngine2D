@@ -7,6 +7,7 @@ import Core2D.ECS.Entity;
 import Core2D.Log.Log;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.FlexibleURLClassLoader;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -44,24 +45,12 @@ public class Script
 
         String name = FilenameUtils.getBaseName(scriptFile.getName()).replace("\\\\/", ".");
         System.out.println("name: " + name);
-        Script loadedScript = new Script();
-        loadedScript.loadClass(scriptFile.getParent(), scriptFile.getPath(), name);
+        this.loadClass(scriptFile.getParent(), name);
 
-        scriptClass = loadedScript.scriptClass;
-        scriptClassInstance = loadedScript.scriptClassInstance;
-
-        path = loadedScript.path;
-        this.name = loadedScript.name;
-
-        deltaUpdateMethod = loadedScript.deltaUpdateMethod;
-        updateMethod = loadedScript.updateMethod;
-        collider2DEnterMethod = loadedScript.collider2DEnterMethod;
-        collider2DExitMethod = loadedScript.collider2DExitMethod;
-
-        lastModified = loadedScript.lastModified;
-
-        destroyTempValues();
-        scriptTempValues.addAll(script.getScriptTempValues());
+        if(script != this) {
+            destroyTempValues();
+            scriptTempValues.addAll(script.getScriptTempValues());
+        }
     }
 
     public void loadClass(Class<?> cls, Object scriptClassInstance)
@@ -78,10 +67,17 @@ public class Script
         collider2DExitMethod = getMethod("collider2DExit", Entity.class);
     }
 
-    public void loadClass(String dirPath, String scriptPath, String baseName)
+    public void loadClass(String dirPath, String baseName)
     {
-        scriptPath = scriptPath.replace(".java", "");
+        loadClass(dirPath, baseName, new FlexibleURLClassLoader(new URL[] { }));
+    }
+
+    public void loadClass(String dirPath, String baseName, FlexibleURLClassLoader flexibleURLClassLoader)
+    {
         dirPath = dirPath.replace("\\", "/");
+        String fullPath = dirPath + "/" + baseName;
+
+        //System.out.println("loadClass in: " + dirPath + "\n\t" + fullPath + "\n\t" + baseName);
         try {
             // если режим работы - в движке
             if (Core2D.core2DMode == Core2DMode.IN_ENGINE) {
@@ -89,12 +85,10 @@ public class Script
 
                 URL scriptDirURL = file.toURI().toURL();
 
-                URLClassLoader urlClassLoader = new URLClassLoader(new URL[] { scriptDirURL });
+                flexibleURLClassLoader.addURL(scriptDirURL);
+                System.out.println(scriptDirURL);
 
-                System.out.println("script path: " + scriptPath);
-                // just load first
-                scriptClass = urlClassLoader.loadClass(baseName);
-                //scriptClass = Utils.addClassAndResolveLoaders(scriptPath + ".class");
+                scriptClass = flexibleURLClassLoader.loadClass(baseName);
                 // если в in-build
             } else {
                 ByteClassLoader byteClassLoader = new ByteClassLoader();
@@ -102,9 +96,9 @@ public class Script
                         baseName);
             }
 
-            scriptClassInstance = scriptClass.newInstance();
+            scriptClassInstance = scriptClass.getConstructor().newInstance();
 
-            path = dirPath + "\\" + baseName;
+            path = fullPath;
             name = baseName;
 
             deltaUpdateMethod = Script.getMethod(scriptClass, "deltaUpdate", float.class);
@@ -112,15 +106,10 @@ public class Script
             collider2DEnterMethod = Script.getMethod(scriptClass, "collider2DEnter", Entity.class);
             collider2DExitMethod = Script.getMethod(scriptClass, "collider2DExit", Entity.class);
 
-            //System.out.println("script path: " + scriptPath);
-            //lastModified = new File(scriptPath + ".java").lastModified();
-            System.out.println("last modified: " + lastModified + ", path: " + scriptPath + ".java");
-        } catch (InstantiationException | IllegalAccessException | IOException | ClassNotFoundException e) {
+            lastModified = new File(fullPath + ".java").lastModified();
+        } catch (InstantiationException | IllegalAccessException | IOException | ClassNotFoundException | InvocationTargetException | NoSuchMethodException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
-
-        // then add in global class loader and reload it
-        //Utils.reloadCore2DClassLoader();
     }
 
     public Field getField(String name)

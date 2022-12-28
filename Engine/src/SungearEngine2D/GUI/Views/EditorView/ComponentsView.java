@@ -269,39 +269,39 @@ public class ComponentsView extends View
                         }
                         ImGui.popID();
                     }
-                    default -> {
+                    case "ScriptComponent" -> {
                         ScriptComponent scriptComponent = (ScriptComponent) currentComponent;
 
-                        System.out.println("component: " + scriptComponent.getClass().getName() + ", " + scriptComponent.getClass().getClassLoader());
+                        List<Field> inspectorViewFields = Script.getInspectorViewFields(scriptComponent.script.getScriptClassInstance().getClass());
 
-                        List<Field> inspectorViewFields = Script.getInspectorViewFields(scriptComponent.getClass());
+                        Object scriptClsInstance = scriptComponent.script.getScriptClassInstance();
                         if (inspectorViewFields.size() != 0) {
                             for (Field field : inspectorViewFields) {
                                 Class<?> cs = field.getType();
 
                                 if (cs.isAssignableFrom(float.class)) {
-                                    float[] floats = new float[]{(float) Script.getFieldValue(scriptComponent, field)};
+                                    float[] floats = new float[]{(float) Script.getFieldValue(scriptClsInstance, field)};
                                     ImGui.pushID(field.getName() + "_" + i);
                                     if (ImGui.dragFloat(field.getName(), floats)) {
-                                        Script.setFieldValue(scriptComponent, field, floats[0]);
+                                        Script.setFieldValue(scriptClsInstance, field, floats[0]);
                                     }
                                     ImGui.popID();
                                 } else if (cs.isAssignableFrom(String.class)) {
-                                    ImString string = new ImString((String) Script.getFieldValue(scriptComponent, field), 128);
+                                    ImString string = new ImString((String) Script.getFieldValue(scriptClsInstance, field), 128);
 
                                     ImGui.pushID(field.getName() + "_" + i);
                                     ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.CallbackAlways);
                                     ImGui.popID();
 
-                                    Script.setFieldValue(scriptComponent, field, string.get());
+                                    Script.setFieldValue(scriptClsInstance, field, string.get());
                                 } else if (cs.isAssignableFrom(Entity.class)) {
                                     ImString string = new ImString(cs.getSimpleName());
-                                    if (Script.getFieldValue(scriptComponent, field) != null) {
-                                        string.set(((Entity) Script.getFieldValue(scriptComponent, field)).name, true);
+                                    if (Script.getFieldValue(scriptClsInstance, field) != null) {
+                                        string.set(((Entity) Script.getFieldValue(scriptClsInstance, field)).name, true);
                                     }
 
                                     ImGui.pushID(field.getName() + "_" + i);
-                                    if(Script.getFieldValue(scriptComponent, field) != null) {
+                                    if(Script.getFieldValue(scriptClsInstance, field) != null) {
                                         ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
                                     } else {
                                         ImGui.pushStyleColor(ImGuiCol.Text, 0.65f, 0.65f, 0.65f, 1.0f);
@@ -313,18 +313,18 @@ public class ComponentsView extends View
                                     if (ImGui.beginDragDropTarget()) {
                                         Object droppedObject = ImGui.acceptDragDropPayload("SceneGameObject");
                                         if (droppedObject instanceof Entity entity) {
-                                            Script.setFieldValue(scriptComponent, field, entity);
+                                            Script.setFieldValue(scriptClsInstance, field, entity);
                                         }
                                         ImGui.endDragDropTarget();
                                     }
                                 } else if(cs.getSuperclass().isAssignableFrom(Component.class)) {
                                     ImString string = new ImString(cs.getSimpleName());
-                                    if (Script.getFieldValue(scriptComponent, field) != null) {
-                                        string.set(((Component) Script.getFieldValue(scriptComponent, field)).getClass().getSimpleName(), true);
+                                    if (Script.getFieldValue(scriptClsInstance, field) != null) {
+                                        string.set(((Component) Script.getFieldValue(scriptClsInstance, field)).getClass().getSimpleName(), true);
                                     }
 
                                     ImGui.pushID(field.getName() + "_" + i);
-                                    if(Script.getFieldValue(scriptComponent, field) != null) {
+                                    if(Script.getFieldValue(scriptClsInstance, field) != null) {
                                         ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
                                     } else {
                                         ImGui.pushStyleColor(ImGuiCol.Text, 0.65f, 0.65f, 0.65f, 1.0f);
@@ -336,7 +336,7 @@ public class ComponentsView extends View
                                     if (ImGui.beginDragDropTarget()) {
                                         Object droppedObject = ImGui.acceptDragDropPayload("Component");
                                         if (droppedObject instanceof Component && droppedObject.getClass().isAssignableFrom(cs)) {
-                                            Script.setFieldValue(scriptComponent, field, droppedObject);
+                                            Script.setFieldValue(scriptClsInstance, field, droppedObject);
                                         }
                                         ImGui.endDragDropTarget();
                                     }

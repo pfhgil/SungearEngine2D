@@ -257,6 +257,9 @@ public class Entity implements Serializable, PoolObject
         }
         components.add(component);
         component.entity = this;
+        if(component instanceof ScriptComponent scriptComponent) {
+            scriptComponent.script.setFieldValue(scriptComponent.script.getField("entity"), this);
+        }
         component.init();
         return component;
     }
@@ -272,6 +275,7 @@ public class Entity implements Serializable, PoolObject
     public <T extends Component> T getComponent(Class<T> componentClass)
     {
         for(var component : components) {
+            //Log.CurrentSession.println("componentClass: " + componentClass + ", component: " + component, Log.MessageType.WARNING);
             if(component.getClass().isAssignableFrom(componentClass)) {
                 return componentClass.cast(component);
             } else if(component.getClass().isAssignableFrom(ScriptComponent.class) && ((ScriptComponent) component).script.getScriptClass().isAssignableFrom(componentClass)) {
@@ -286,7 +290,7 @@ public class Entity implements Serializable, PoolObject
     {
         List<T> componentsFound = new ArrayList<>();
         for(var component : components) {
-            if(component.getClass().isAssignableFrom(componentClass)){
+            if(component.getClass().isAssignableFrom(componentClass) && component.getClass().getName().equals(componentClass.getName())){
                 componentsFound.add(componentClass.cast(component));
             } else if(component.getClass().isAssignableFrom(ScriptComponent.class) && ((ScriptComponent) component).script.getScriptClass().isAssignableFrom(componentClass)) {
                 componentsFound.add(componentClass.cast(((ScriptComponent) component).script.getScriptClassInstance()));
@@ -403,6 +407,9 @@ public class Entity implements Serializable, PoolObject
          */
         systems.add(system);
         system.entity = this;
+        if(system instanceof ScriptableSystem scriptableSystem) {
+            scriptableSystem.script.setFieldValue(scriptableSystem.script.getField("entity"), this);
+        }
         system.init();
         return system;
     }
