@@ -87,7 +87,6 @@ public class ComponentsView extends View
 
         if ((ImGui.isMouseClicked(ImGuiMouseButton.Left) || ImGui.isMouseClicked(ImGuiMouseButton.Right)) &&
                 !someButtonInPopupWindowHovered) {
-            System.out.println("clicked!");
             showPopupWindow = false;
             currentEditingComponentID = -1;
         }

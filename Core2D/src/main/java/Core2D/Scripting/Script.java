@@ -1,14 +1,12 @@
 package Core2D.Scripting;
 
 import Core2D.Core2D.Core2D;
-import Core2D.Core2D.Core2DClassLoader;
 import Core2D.Core2D.Core2DMode;
+import Core2D.ECS.Component.Component;
 import Core2D.ECS.Entity;
 import Core2D.Log.Log;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
-import Core2D.Utils.SingleClassLoader;
-import Core2D.Utils.Utils;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
@@ -260,7 +258,9 @@ public class Script
 
                     Object value = getFieldValue(field);
                     if (value instanceof Entity entity) {
-                        scriptTempValue.setValue(new ScriptValue(entity.ID, entity.name, ScriptValueType.TYPE_GAME_OBJECT));
+                        scriptTempValue.setValue(new ScriptValue(entity.ID, entity.name, ScriptValueType.TYPE_ENTITY));
+                    } else if(value instanceof Component component) {
+                        scriptTempValue.setValue(new ScriptValue(component.entity.ID, component.componentID, component.entity.name, ScriptValueType.TYPE_COMPONENT));
                     } else {
                         scriptTempValue.setValue(value);
                     }
