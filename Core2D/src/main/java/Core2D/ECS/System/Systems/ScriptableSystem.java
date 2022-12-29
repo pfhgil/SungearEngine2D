@@ -15,6 +15,11 @@ public class ScriptableSystem extends System
 
     public ScriptableSystem() { }
 
+    public void set(ScriptableSystem scriptableSystem)
+    {
+        script.set(scriptableSystem.script);
+    }
+
     /**
      * Calls the update method of the script if current scene is set.
      * @see Component#update()

@@ -19,10 +19,7 @@ import SungearEngine2D.Main.Resources;
 import SungearEngine2D.Utils.ResourcesUtils;
 import imgui.ImGui;
 import imgui.ImVec2;
-import imgui.flag.ImGuiCol;
-import imgui.flag.ImGuiInputTextFlags;
-import imgui.flag.ImGuiMouseButton;
-import imgui.flag.ImGuiStyleVar;
+import imgui.flag.*;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
 import org.jbox2d.dynamics.BodyType;
@@ -39,29 +36,21 @@ public class ComponentsView extends View
 
     private boolean someButtonInPopupWindowHovered = false;
 
-    private int currentEditingComponentID = -1;
-
-    private int currentHoveredComponentID = -1;
-
     private Component currentEditingComponent;
 
     private String action = "";
 
     public void draw()
     {
+        Entity inspectingEntity = (Entity) ViewsManager.getInspectorView().getCurrentInspectingObject();
+        if(inspectingEntity == null) return;
+
         ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowPadding, 0.0f, 0.0f);
 
-        ImGui.begin("Components");
+        ImGui.begin("Components", ImGuiWindowFlags.NoMove);
         ImGui.popStyleVar(3);
-
-        Entity inspectingEntity = (Entity) ViewsManager.getInspectorView().getCurrentInspectingObject();
-
-        if(inspectingEntity == null) {
-            ImGui.end();
-            return;
-        }
 
         if (showPopupWindow) {
             ImGui.openPopup("Component actions");
@@ -83,12 +72,9 @@ public class ComponentsView extends View
             }
         }
 
-        currentHoveredComponentID = -1;
-
         if ((ImGui.isMouseClicked(ImGuiMouseButton.Left) || ImGui.isMouseClicked(ImGuiMouseButton.Right)) &&
                 !someButtonInPopupWindowHovered) {
             showPopupWindow = false;
-            currentEditingComponentID = -1;
         }
 
         for (int i = 0; i < inspectingEntity.getComponents().size(); i++) {
@@ -114,16 +100,10 @@ public class ComponentsView extends View
 
             ImGui.popID();
 
-
-            if (ImGui.isMouseHoveringRect(minRect.x, minRect.y, maxRect.x, maxRect.y)) {
-                currentHoveredComponentID = i;
-            }
-
             if (ImGui.isMouseHoveringRect(minRect.x, minRect.y, maxRect.x, maxRect.y) &&
                     ImGui.isMouseClicked(ImGuiMouseButton.Right)) {
                 showPopupWindow = true;
                 currentEditingComponent = currentComponent;
-                currentEditingComponentID = i;
             }
 
             if (opened) {
@@ -511,7 +491,7 @@ public class ComponentsView extends View
                 if (extension.equals("java")) {
                     Object droppedFile = ImGui.acceptDragDropPayload("File");
                     if (droppedFile instanceof File javaFile) {
-                        ViewsManager.getInspectorView().compileAndAddScriptComponent(javaFile, inspectingEntity);
+                        ViewsManager.getInspectorView().compileAndAddScript(javaFile, inspectingEntity);
                     }
                 } else if(extension.equals("wav")) {
                     Object droppedFile = ImGui.acceptDragDropPayload("File");

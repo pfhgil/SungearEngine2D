@@ -5,6 +5,8 @@ import Core2D.ECS.Component.Components.CircleCollider2DComponent;
 import Core2D.ECS.Component.Components.Rigidbody2DComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Entity;
+import Core2D.ECS.System.System;
+import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Log.Log;
 import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.Physics.Collider2D.CircleCollider2D;
@@ -102,19 +104,25 @@ public class PhysicsWorld extends World
             if (shouldCollider2DEnter) {
                 if (!entityAEnter.isShouldDestroy()) {
                     List<ScriptComponent> scriptComponentsA = entityAEnter.getAllComponents(ScriptComponent.class);
+                    List<ScriptableSystem> scriptableSystemsA = entityAEnter.getAllSystems(ScriptableSystem.class);
 
                     for (ScriptComponent scriptComponent : scriptComponentsA) {
-                        //scriptComponent.collider2DEnter(gameObjectBEnter);
                         scriptComponent.callMethod((params) -> scriptComponent.collider2DEnter(entityBEnter));
+                    }
+                    for (ScriptableSystem scriptableSystem : scriptableSystemsA) {
+                        scriptableSystem.callMethod((params) -> scriptableSystem.collider2DEnter(entityBEnter));
                     }
                 }
 
                 if (!entityBEnter.isShouldDestroy()) {
                     List<ScriptComponent> scriptComponentsB = entityBEnter.getAllComponents(ScriptComponent.class);
+                    List<ScriptableSystem> scriptableSystemsB = entityBEnter.getAllSystems(ScriptableSystem.class);
 
                     for (ScriptComponent scriptComponent : scriptComponentsB) {
-                        //scriptComponent.collider2DEnter(gameObjectAEnter);
                         scriptComponent.callMethod((params) -> scriptComponent.collider2DEnter(entityAEnter));
+                    }
+                    for (ScriptableSystem scriptableSystem : scriptableSystemsB) {
+                        scriptableSystem.callMethod((params) -> scriptableSystem.collider2DEnter(entityAEnter));
                     }
                 }
 

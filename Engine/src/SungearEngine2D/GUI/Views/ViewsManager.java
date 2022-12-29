@@ -22,6 +22,9 @@ public class ViewsManager
     private static int currentFocusedDialogWindow = -1;
 
     private static InspectorView inspectorView;
+    private static ComponentsView componentsView;
+    private static SystemsView systemsView;
+
     private static ProjectTreeView projectTreeView;
     private static ResourcesView resourcesView;
     private static SceneTreeView sceneTreeView;
@@ -35,8 +38,6 @@ public class ViewsManager
     private static ProjectSettingsView projectSettingsView;
     private static EngineSettingsView engineSettingsView;
 
-    private static ComponentsView componentsView;
-
     private static DebuggerView debuggerView;
 
     public static void init()
@@ -45,6 +46,7 @@ public class ViewsManager
 
         inspectorView = new InspectorView();
         componentsView = new ComponentsView();
+        systemsView = new SystemsView();
 
         projectTreeView = new ProjectTreeView();
         resourcesView = new ResourcesView();
@@ -94,8 +96,8 @@ public class ViewsManager
             resourcesView.draw();
 
             inspectorView.draw();
-
             componentsView.draw();
+            systemsView.draw();
 
             sceneView.draw();
 

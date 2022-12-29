@@ -9,6 +9,7 @@ import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
+import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
@@ -98,38 +99,41 @@ public class Main
                                             if (layer.isShouldDestroy()) continue layersCycle;
                                             if (!layer.getEntities().get(i).isShouldDestroy()) {
                                                 List<ScriptComponent> scriptComponents = layer.getEntities().get(i).getAllComponents(ScriptComponent.class);
+                                                List<ScriptableSystem> scriptableSystems = layer.getEntities().get(i).getAllSystems(ScriptableSystem.class);
+                                                List<Script> allScripts = new ArrayList<>();
+                                                scriptComponents.forEach(scriptComponent -> allScripts.add(scriptComponent.script));
+                                                scriptableSystems.forEach(scriptableSystem -> allScripts.add(scriptableSystem.script));
 
-                                                for (int k = 0; k < scriptComponents.size(); k++) {
+                                                for (int k = 0; k < allScripts.size(); k++) {
                                                     // был ли уже скомпилирован скрипт
 
-                                                    boolean alreadyCompiled = compiledScripts.contains(scriptComponents.get(k).script.getName());
+                                                    boolean alreadyCompiled = compiledScripts.contains(allScripts.get(k).getPath());
                                                     if (alreadyCompiled) {
                                                         continue;
                                                     }
 
-                                                    String scriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponents.get(k).script.path;
+                                                    String scriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + allScripts.get(k).path;
                                                     long lastModified = new File(scriptPath.replace(".java", "") + ".java").lastModified();
-                                                    //System.out.println("lm: " + lastModified + ", p: " + scriptPath + ", slm: " + scriptComponents.get(k).script.getLastModified());
-                                                    if (lastModified != scriptComponents.get(k).script.getLastModified()) {
+                                                    if (lastModified != allScripts.get(k).getLastModified()) {
                                                         EngineSettings.Playmode.canEnterPlaymode = false;
-                                                        scriptComponents.get(k).script.setLastModified(lastModified);
+                                                        allScripts.get(k).setLastModified(lastModified);
 
                                                         int finalK = k;
-                                                        String lastScriptPath = scriptComponents.get(finalK).script.path;
+                                                        String lastScriptPath = allScripts.get(finalK).path;
                                                         ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
                                                             public void run() {
                                                                 if (currentSceneManager.getCurrentScene2D() != null) {
-                                                                    scriptComponents.get(finalK).script.saveTempValues();
+                                                                    allScripts.get(finalK).saveTempValues();
 
                                                                     String newScriptPath = scriptPath.replace(".java", "");
                                                                     boolean compiled = Compiler.compileScript(newScriptPath + ".java");
                                                                     if (compiled) {
-                                                                        scriptComponents.get(finalK).script.loadClass(new File(scriptPath).getParent(), FilenameUtils.getBaseName(new File(scriptPath).getName()).replace("\\\\/", "."));
-                                                                        scriptComponents.get(finalK).script.path = lastScriptPath;
+                                                                        allScripts.get(finalK).loadClass(new File(scriptPath).getParent(), FilenameUtils.getBaseName(new File(scriptPath).getName()).replace("\\\\/", "."));
+                                                                        allScripts.get(finalK).path = lastScriptPath;
                                                                     }
-                                                                    compiledScripts.add(scriptComponents.get(finalK).script.getName());
+                                                                    compiledScripts.add(allScripts.get(finalK).getPath());
 
-                                                                    scriptComponents.get(finalK).script.applyTempValues();
+                                                                    allScripts.get(finalK).applyTempValues();
                                                                 }
                                                             }
                                                         });

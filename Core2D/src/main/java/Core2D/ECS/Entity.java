@@ -180,6 +180,15 @@ public class Entity implements Serializable, PoolObject
                     component.update();
                 }
             }
+
+            for(System system : systems) {
+                if(system.getClass().isAssignableFrom(ScriptableSystem.class) || system instanceof ScriptableSystem) {
+                    ScriptableSystem ss = (ScriptableSystem) system;
+                    ss.callMethod((params) -> ss.update());
+                } else {
+                    system.update();
+                }
+            }
         }
     }
 
@@ -192,6 +201,15 @@ public class Entity implements Serializable, PoolObject
                     sc.callMethod((params) -> sc.deltaUpdate(deltaTime));
                 } else {
                     component.deltaUpdate(deltaTime);
+                }
+            }
+
+            for(System system : systems) {
+                if(system.getClass().isAssignableFrom(ScriptableSystem.class) || system instanceof ScriptableSystem) {
+                    ScriptableSystem ss = (ScriptableSystem) system;
+                    ss.callMethod((params) -> ss.deltaUpdate(deltaTime));
+                } else {
+                    system.deltaUpdate(deltaTime);
                 }
             }
         }

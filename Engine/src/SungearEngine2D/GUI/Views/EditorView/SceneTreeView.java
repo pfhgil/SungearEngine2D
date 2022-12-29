@@ -113,8 +113,7 @@ public class SceneTreeView extends View
                                 Entity entity = currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(i).getEntities().get(k);
                                 if(!alreadyProcessedObjectsID.contains(entity.ID) && entity.getParentObject2D() == null) {
                                     ImGui.pushID("Scene2DWrappedObject_" + entity.ID);
-                                    boolean opened = false;
-                                    opened = ImGui.treeNode(entity.name);
+                                    boolean opened = ImGui.treeNode(entity.name);
                                     if (ImGui.isItemHovered()) {
                                         isAnyTreeNodeHovered = true;
                                     }
@@ -141,6 +140,7 @@ public class SceneTreeView extends View
 
                                     if(action.equals("DestroyObject2D") && objectToActionIterator == iterator) {
                                         entity.destroy();
+                                        ViewsManager.getInspectorView().setCurrentInspectingObject(null);
                                         action = "";
                                         objectToActionIterator = -1;
                                     }

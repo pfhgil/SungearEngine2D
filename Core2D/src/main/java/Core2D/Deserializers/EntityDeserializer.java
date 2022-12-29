@@ -7,6 +7,7 @@ import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
+import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Project.ProjectsManager;
 import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Utils.FileUtils;
@@ -58,7 +59,45 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
 
         for(JsonElement element : systems) {
             System system = context.deserialize(element, Component.class);
-            entity.addSystem(system);
+            if(system instanceof ScriptableSystem scriptableSystem) {
+                if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+                    scriptableSystem.script.path = scriptableSystem.script.path.replaceAll(".java", "");
+
+                    String fullScriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptableSystem.script.path + ".java";
+                    String lastScriptPath = scriptableSystem.script.path;
+
+                    String scriptToLoadPath = "";
+                    String scriptToAddPath = "";
+
+                    if(new File(fullScriptPath).exists()) {
+                        scriptToLoadPath = fullScriptPath;
+                        scriptToAddPath = lastScriptPath;
+                    } else {// для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
+                        // чтобы это исправить загружаем по этому пути скрипт, находим относительный путь и присваиваем его path для того,
+                        // чтобы в следующий раз выполнился блок кода вышe
+                        if(new File(scriptableSystem.script.path + ".java").exists()) {
+                            String relativePath = FileUtils.getRelativePath(
+                                    new File(scriptableSystem.script.path + ".java"),
+                                    new File(ProjectsManager.getCurrentProject().getProjectPath())
+                            );
+                            scriptToLoadPath = scriptableSystem.script.path + ".java";
+                            scriptToAddPath = relativePath.replace(".java", "");
+                        }
+                    }
+
+                    scriptableSystem.script.path = scriptToLoadPath;
+                    // load the script component class
+                    scriptableSystem.set(scriptableSystem);
+                    scriptableSystem.script.path = scriptToAddPath;
+                    entity.addSystem(scriptableSystem);
+                } else {
+                    ScriptableSystem sc = new ScriptableSystem();
+                    entity.addSystem(sc);
+                    sc.set(scriptableSystem);
+                }
+            } else {
+                entity.addSystem(system);
+            }
         }
         //System.out.println("\u001B[32m size of game object " + gameObject.name + " list of components: " + gameObject.getComponents().size() + " \u001B[32m");
 
@@ -126,8 +165,6 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                     if(new File(fullScriptPath).exists()) {
                         scriptToLoadPath = fullScriptPath;
                         scriptToAddPath = lastScriptPath;
-                        //scriptComponent.script.path = fullScriptPath;
-                        //((ScriptComponent) sc).script.path = lastScriptPath;
                     } else {// для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
                         // чтобы это исправить загружаем по этому пути скрипт, находим относительный путь и присваиваем его path для того,
                         // чтобы в следующий раз выполнился блок кода вышe
@@ -138,9 +175,6 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                             );
                             scriptToLoadPath = scriptComponent.script.path + ".java";
                             scriptToAddPath = relativePath.replace(".java", "");
-                            //scriptComponent.script.path += ".java";
-                            //relativePath = relativePath.replace(".java", "");
-                            //((ScriptComponent) sc).script.path = relativePath;
                         }
                     }
 

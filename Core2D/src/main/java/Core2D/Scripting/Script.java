@@ -4,6 +4,7 @@ import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Entity;
+import Core2D.Graphics.RenderParts.RenderMethod;
 import Core2D.Log.Log;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
@@ -114,6 +115,8 @@ public class Script
 
     public Field getField(String name)
     {
+        if(scriptClass == null) return null;
+
         try {
             return scriptClass.getField(name);
         } catch (NoSuchFieldException e) {
@@ -200,8 +203,18 @@ public class Script
 
     public void update()
     {
-        if(active && updateMethod != null) {
-            invokeMethod(updateMethod);
+        if(active) {
+            if (updateMethod != null) {
+                invokeMethod(updateMethod);
+            }
+
+            if(scriptClass != null) {
+                for (Method method : scriptClass.getMethods()) {
+                    if (method.isAnnotationPresent(RenderMethod.class)) {
+                        invokeMethod(method);
+                    }
+                }
+            }
         }
     }
 

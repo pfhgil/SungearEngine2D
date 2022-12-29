@@ -3,15 +3,13 @@ package SungearEngine2D.GUI.Views.EditorView;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
 import Core2D.ECS.Entity;
-import Core2D.ECS.NonRemovable;
+import Core2D.ECS.System.System;
+import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
-import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scripting.Script;
-import Core2D.Systems.ScriptSystem;
 import Core2D.Tasks.StoppableTask;
-import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Tag;
 import SungearEngine2D.GUI.Views.View;
@@ -25,12 +23,10 @@ import imgui.ImVec2;
 import imgui.flag.*;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
-import org.jbox2d.dynamics.BodyType;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
@@ -409,7 +405,7 @@ public class InspectorView extends View
         }
     }
 
-    public void compileAndAddScriptComponent(File javaFile, Entity inspectingObject2D)
+    public void compileAndAddScript(File javaFile, Entity inspectingObject2D)
     {
         ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + javaFile.getName() + "... ", 1.0f, 0.0f) {
             @Override
@@ -423,12 +419,20 @@ public class InspectorView extends View
                             new File(ProjectsManager.getCurrentProject().getProjectPath())
                     );
                     String baseName = FilenameUtils.getBaseName(javaFile.getName());
-                    ScriptComponent scriptComponent = new ScriptComponent();
 
-                    scriptComponent.script.loadClass(javaFile.getParent(), baseName);
-                    scriptComponent.script.path = relativePath;
+                    Script script = new Script();
+                    script.loadClass(javaFile.getParent(), baseName);
+                    script.path = relativePath;
 
-                    inspectingObject2D.addComponent(scriptComponent);
+                    if(script.getScriptClass().getSuperclass().isAssignableFrom(Component.class)) {
+                        ScriptComponent scriptComponent = new ScriptComponent();
+                        scriptComponent.script = script;
+                        inspectingObject2D.addComponent(scriptComponent);
+                    } else if(script.getScriptClass().getSuperclass().isAssignableFrom(System.class)) {
+                        ScriptableSystem scriptableSystem = new ScriptableSystem();
+                        scriptableSystem.script = script;
+                        inspectingObject2D.addSystem(scriptableSystem);
+                    }
                 }
             }
         });
