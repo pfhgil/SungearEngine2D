@@ -14,9 +14,9 @@ public class Project implements Serializable
     private String projectPath;
     private String projectName;
 
-    private String resourcesPath;
-    private String scriptsPath;
-    private String scenesPath;
+    private String resourcesPath = "";
+    private String scriptsPath = "";
+    private String scenesPath = "";
 
     private ProjectSettings projectSettings = new ProjectSettings();
     private String projectSettingsPath;

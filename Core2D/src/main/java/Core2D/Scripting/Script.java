@@ -6,6 +6,8 @@ import Core2D.ECS.Component.Component;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.RenderParts.RenderMethod;
 import Core2D.Log.Log;
+import Core2D.Project.ProjectsManager;
+import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FlexibleURLClassLoader;
@@ -46,7 +48,7 @@ public class Script
 
         String name = FilenameUtils.getBaseName(scriptFile.getName()).replace("\\\\/", ".");
         System.out.println("name: " + name);
-        this.loadClass(scriptFile.getParent(), name);
+        this.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(), scriptFile.getPath(), name);
 
         if(script != this) {
             destroyTempValues();
@@ -68,32 +70,32 @@ public class Script
         collider2DExitMethod = getMethod("collider2DExit", Entity.class);
     }
 
-    public void loadClass(String dirPath, String baseName)
+    public void loadClass(String scriptsDirPath, String fullPath, String baseName)
     {
-        loadClass(dirPath, baseName, new FlexibleURLClassLoader(new URL[] { }));
+        loadClass(scriptsDirPath, fullPath, baseName, new FlexibleURLClassLoader(new URL[] { }));
     }
 
-    public void loadClass(String dirPath, String baseName, FlexibleURLClassLoader flexibleURLClassLoader)
+    public void loadClass(String scriptsDirPath, String fullPath, String baseName, FlexibleURLClassLoader flexibleURLClassLoader)
     {
-        dirPath = dirPath.replace("\\", "/");
-        String fullPath = dirPath + "/" + baseName;
+        scriptsDirPath = scriptsDirPath.replace("\\", "/");
+        //String fullPath = scriptsDirPath + "/" + baseName;
 
-        //System.out.println("loadClass in: " + dirPath + "\n\t" + fullPath + "\n\t" + baseName);
+        //System.out.println("loadClass in: " + scriptsDirPath + "\n\t" + fullPath + "\n\t" + baseName);
         try {
             // если режим работы - в движке
             if (Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                File file = new File(dirPath);
+                File file = new File(scriptsDirPath);
 
                 URL scriptDirURL = file.toURI().toURL();
-
                 flexibleURLClassLoader.addURL(scriptDirURL);
+                ScriptSystem.loadAllChildURLs(flexibleURLClassLoader, scriptsDirPath);
                 System.out.println(scriptDirURL);
 
                 scriptClass = flexibleURLClassLoader.loadClass(baseName);
                 // если в in-build
             } else {
                 ByteClassLoader byteClassLoader = new ByteClassLoader();
-                scriptClass = byteClassLoader.loadClass(Core2D.class.getResourceAsStream(dirPath + "/" + baseName + ".class"),
+                scriptClass = byteClassLoader.loadClass(Core2D.class.getResourceAsStream(scriptsDirPath + "/" + baseName + ".class"),
                         baseName);
             }
 
@@ -107,7 +109,9 @@ public class Script
             collider2DEnterMethod = Script.getMethod(scriptClass, "collider2DEnter", Entity.class);
             collider2DExitMethod = Script.getMethod(scriptClass, "collider2DExit", Entity.class);
 
-            lastModified = new File(fullPath + ".java").lastModified();
+            fullPath = fullPath.replace(".java", "") + ".java";
+
+            lastModified = new File(fullPath).lastModified();
         } catch (InstantiationException | IllegalAccessException | IOException | ClassNotFoundException | InvocationTargetException | NoSuchMethodException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }

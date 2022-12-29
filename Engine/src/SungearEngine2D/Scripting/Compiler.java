@@ -33,7 +33,7 @@ public class Compiler
 
                 String command = "\"" + ProjectsManager.getCurrentProject().getProjectSettings().getJdkPath() +
                         "\\bin\\javac\" -sourcepath " +
-                        "\"" + scriptFile.getParent() + "\" \n" +
+                        "\"" + ProjectsManager.getCurrentProject().getScriptsPath() + "\" \n" +
                         "-classpath " +
                         "\"" + compilerPath.getCanonicalPath() + "\\Core2D.jar\" " +
                         "\"" + scriptFile.getCanonicalPath() + "\"";

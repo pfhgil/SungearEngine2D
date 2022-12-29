@@ -128,9 +128,16 @@ public class TopToolbarView
 
                     ImGui.separator();
 
-                    if(ImGui.menuItem("Java file")) {
-                        currentFileTypeNeedCreate = "Java";
-                        showFileCreateDialog();
+                    if(ImGui.beginMenu("Java file")) {
+                        if(ImGui.menuItem("Component")) {
+                            currentFileTypeNeedCreate = "Java.Component";
+                            showFileCreateDialog();
+                        }
+                        if(ImGui.menuItem("System")) {
+                            currentFileTypeNeedCreate = "Java.System";
+                            showFileCreateDialog();
+                        }
+                        ImGui.endMenu();
                     }
 
                     if(ImGui.menuItem("Text file")) {
@@ -143,8 +150,6 @@ public class TopToolbarView
 
                 if(ImGui.beginMenu("Open")) {
                     if(ImGui.menuItem("Project")) {
-
-
                         dialogWindow.setWindowName("Open project");
                         dialogWindow.setRightButtonText("Open");
                         dialogWindow.setActive(true);

@@ -4,13 +4,16 @@ import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Layering.Layer;
+import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
+import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FlexibleURLClassLoader;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 
@@ -80,7 +83,8 @@ public class ScriptSystem
 
                     for(ScriptComponent scriptComponent : scriptComponents) {
                         String lastScriptPath = scriptComponent.script.path;
-                        scriptComponent.script.loadClass(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptComponent.script.path).getParent(),
+                        scriptComponent.script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(),
+                                ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptComponent.script.path),
                                 FilenameUtils.getBaseName(new File(scriptComponent.script.path).getName()), globalFlexibleURLClassLoader);
                         scriptComponent.script.path = lastScriptPath;
 
@@ -89,7 +93,8 @@ public class ScriptSystem
 
                     for(ScriptableSystem scriptableSystem : scriptableSystems) {
                         String lastScriptPath = scriptableSystem.script.path;
-                        scriptableSystem.script.loadClass(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptableSystem.script.path).getParent(),
+                        scriptableSystem.script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(),
+                                ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptableSystem.script.path),
                                 FilenameUtils.getBaseName(new File(scriptableSystem.script.path).getName()), globalFlexibleURLClassLoader);
                         scriptableSystem.script.path = lastScriptPath;
 
@@ -110,7 +115,8 @@ public class ScriptSystem
 
                     for(ScriptComponent scriptComponent : scriptComponents) {
                         String lastScriptPath = scriptComponent.script.path;
-                        scriptComponent.script.loadClass(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptComponent.script.path).getParent(),
+                        scriptComponent.script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(),
+                                ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptComponent.script.path),
                                 FilenameUtils.getBaseName(new File(scriptComponent.script.path).getName()));
                         scriptComponent.script.path = lastScriptPath;
 
@@ -121,7 +127,8 @@ public class ScriptSystem
 
                     for(ScriptableSystem scriptableSystem : scriptableSystems) {
                         String lastScriptPath = scriptableSystem.script.path;
-                        scriptableSystem.script.loadClass(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptableSystem.script.path).getParent(),
+                        scriptableSystem.script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(),
+                                ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptableSystem.script.path),
                                 FilenameUtils.getBaseName(new File(scriptableSystem.script.path).getName()));
                         scriptableSystem.script.path = lastScriptPath;
 
@@ -131,6 +138,26 @@ public class ScriptSystem
             }
 
             applyScriptsTempValues(SceneManager.currentSceneManager.getCurrentScene2D());
+        }
+    }
+
+    public static void loadAllChildURLs(FlexibleURLClassLoader flexibleURLClassLoader, String parentPath)
+    {
+        File parent = new File(parentPath);
+
+        if(parent.exists()) {
+            File[] listFile = parent.listFiles();
+            if(listFile == null) return;
+            for(File child : listFile) {
+                if(child.isDirectory()) {
+                    try {
+                        flexibleURLClassLoader.addURL(child.toURI().toURL());
+                    } catch (MalformedURLException e) {
+                        Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                    }
+                    loadAllChildURLs(flexibleURLClassLoader, child.getPath());
+                }
+            }
         }
     }
 

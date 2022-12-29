@@ -28,6 +28,7 @@ public class ProjectsManager
     public static void loadProject(String projectFilePath)
     {
         currentProject = (Project) FileUtils.deSerializeObject(projectFilePath);
+        System.out.println("project scripts path: " + currentProject.getScriptsPath());
         currentProject.setProjectPath(new File(projectFilePath).getParent());
         currentProject.load();
     }

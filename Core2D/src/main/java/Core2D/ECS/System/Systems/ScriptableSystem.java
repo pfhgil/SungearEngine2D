@@ -29,6 +29,7 @@ public class ScriptableSystem extends System
     public void update()
     {
         super.update();
+        script.update();
     }
 
     /**
@@ -39,25 +40,25 @@ public class ScriptableSystem extends System
     @Override
     public void deltaUpdate(float deltaTime)
     {
-
+        script.deltaUpdate(deltaTime);
     }
 
     /**
      * Calls the collider2DEnter method of the script if current scene is set.
      * @see Script#collider2DEnter(Entity)
      */
-    public void collider2DEnter(Entity otherObj)
+    public void collider2DEnter(Entity otherEntity)
     {
-
+        script.collider2DEnter(otherEntity);
     }
 
     /**
      * Calls the collider2DExit method of the script if current scene is set.
      * @see Script#collider2DExit(Entity)
      */
-    public void collider2DExit(Entity otherObj)
+    public void collider2DExit(Entity otherEntity)
     {
-
+        script.collider2DExit(otherEntity);
     }
 
     // сделано для избежания рекурсивных вызовов дефолтных методов (update, deltaUpdate, collider2DEnter, collider2DExit).

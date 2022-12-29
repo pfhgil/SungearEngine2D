@@ -148,8 +148,14 @@ public class ResourcesView extends View
                             ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Directory");
                         }
                         ImGui.separator();
-                        if(ImGui.menuItem("Java file")) {
-                            ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Java");
+                        if(ImGui.beginMenu("Java file")) {
+                            if(ImGui.menuItem("Component")) {
+                                ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Java.Component");
+                            }
+                            if(ImGui.menuItem("System")) {
+                                ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Java.System");
+                            }
+                            ImGui.endMenu();
                         }
                         if(ImGui.menuItem("Text file")) {
                             ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Text");
@@ -393,49 +399,102 @@ public class ResourcesView extends View
     {
         if(ProjectsManager.getCurrentProject() != null) {
             File newFile = switch (fileType) {
-                case "Java" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".java");
+                case "Java.Component", "Java.System" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".java");
                 case "Text" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".txt");
                 case "Directory" -> FileUtils.createFolder(ResourcesView.currentDirectoryPath + "\\" + name);
                 default -> null;
             };
             if(newFile == null) return;
+            String fileString = "";
+
+            File scriptPackage = new File(FileUtils.getRelativePath(newFile.getPath(), ProjectsManager.getCurrentProject().getScriptsPath()));
+            String scriptPackagePath = scriptPackage.getParent() != null ? scriptPackage.getParent().replaceAll("\\\\/", ".") : "";
             // если тип файл - java, то создаю этот файл с заранее подготовленным кодом
-            if(newFile.exists() && fileType.equals("Java")) {
-                String javaFileCode =
-                        "import Core2D.GameObject.*;\n" +
+            if(fileType.equals("Java.Component")) {
+                fileString =
+                        (!scriptPackagePath.equals("") ?
+                        "package " + scriptPackagePath + ";\n" +
+                        "\n"
+                        : "") +
+                        "import Core2D.ECS.*;\n" +
+                        "import Core2D.ECS.Component.Component;\n" +
+                        "import Core2D.ECS.Component.Components.*;\n" +
+                        "import Core2D.Scripting.*;\n" +
+                        "import Core2D.Log.*;\n" +
                         "\n" +
-                        "public class " + name + "\n" +
+                        "// Attention! We do not recommend writing logic in components. Try to declare only fields in components.\n" +
+                        "public class " + name + " extends Component\n" +
                         "{\n" +
+                        "    @Override\n" +
                         "    public void update()\n" +
                         "    {\n" +
                         "        \n" +
                         "    }\n" +
                         "    \n" +
+                        "    @Override\n" +
                         "    public void deltaUpdate(float deltaTime)\n" +
                         "    {\n" +
                         "        \n" +
                         "    }\n" +
                         "    \n" +
-                        "    public void collider2DEnter(GameObject otherObj)\n" +
+                        "    public void collider2DEnter(Entity otherObj)\n" +
                         "    {\n" +
                         "        \n" +
                         "    }\n" +
                         "    \n" +
-                        "    public void collider2DExit(GameObject otherObj)\n" +
+                        "    public void collider2DExit(Entity otherObj)\n" +
                         "    {\n" +
                         "        \n" +
                         "    }\n" +
                         "}";
-                // создаю файл с уже заранее подготовленным кодом
-                FileUtils.writeToFile(
-                        newFile,
-                        javaFileCode,
-                        false
-                );
+            } else if(fileType.equals("Java.System")) {
+                fileString =
+                        (!scriptPackagePath.equals("") ?
+                        "package " + scriptPackagePath + ";\n" +
+                        "\n"
+                        : "") +
+                        "import Core2D.ECS.*;\n" +
+                        "import Core2D.ECS.Component.Component;\n" +
+                        "import Core2D.ECS.Component.Components.*;\n" +
+                        "import Core2D.ECS.System.System;\n" +
+                        "import Core2D.ECS.System.Systems.*;\n" +
+                        "import Core2D.Scripting.*;\n" +
+                        "import Core2D.Log.*;\n" +
+                        "\n" +
+                        "// Attention! Do not declare fields with the @InspectorView annotation in systems. They will not be processed and shown in the Inspector.\n" +
+                        "public class " + name + " extends System\n" +
+                        "{\n" +
+                        "    @Override\n" +
+                        "    public void update()\n" +
+                        "    {\n" +
+                        "        \n" +
+                        "    }\n" +
+                        "    \n" +
+                        "    @Override\n" +
+                        "    public void deltaUpdate(float deltaTime)\n" +
+                        "    {\n" +
+                        "        \n" +
+                        "    }\n" +
+                        "    \n" +
+                        "    public void collider2DEnter(Entity otherObj)\n" +
+                        "    {\n" +
+                        "        \n" +
+                        "    }\n" +
+                        "    \n" +
+                        "    public void collider2DExit(Entity otherObj)\n" +
+                        "    {\n" +
+                        "        \n" +
+                        "    }\n" +
+                        "}";
             } else if(fileType.equals("Text")) { // если тип файла - текст, то создаю файл с надписью hello! (по приколу)
+                fileString = "Hello world!";
+            }
+
+            if(newFile.exists()) {
+                System.out.println("path: " + newFile.getPath());
                 FileUtils.writeToFile(
                         newFile,
-                        "Hello!",
+                        fileString,
                         false
                 );
             }

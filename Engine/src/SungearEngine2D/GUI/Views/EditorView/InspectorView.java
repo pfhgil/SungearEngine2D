@@ -421,7 +421,7 @@ public class InspectorView extends View
                     String baseName = FilenameUtils.getBaseName(javaFile.getName());
 
                     Script script = new Script();
-                    script.loadClass(javaFile.getParent(), baseName);
+                    script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(), javaFile.getPath(), baseName);
                     script.path = relativePath;
 
                     if(script.getScriptClass().getSuperclass().isAssignableFrom(Component.class)) {
