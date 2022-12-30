@@ -252,7 +252,7 @@ public class InspectorView extends View
             }
             ImGui.popID();
 
-            ImGui.text("Tag ");
+            ImGui.text("Tag   ");
             ImGui.sameLine();
             ImGui.pushID("TagsCombo");
             {

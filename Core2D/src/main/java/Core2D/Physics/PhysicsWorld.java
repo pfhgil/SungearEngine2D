@@ -135,19 +135,25 @@ public class PhysicsWorld extends World
             if (shouldCollider2DExit) {
                 if (!entityAExit.isShouldDestroy()) {
                     List<ScriptComponent> scriptComponentsA = entityAExit.getAllComponents(ScriptComponent.class);
+                    List<ScriptableSystem> scriptableSystemsB = entityAEnter.getAllSystems(ScriptableSystem.class);
 
                     for (ScriptComponent scriptComponent : scriptComponentsA) {
-                        //scriptComponent.collider2DExit(gameObject2DBExit);
                         scriptComponent.callMethod((params) -> scriptComponent.collider2DExit(entityBExit));
+                    }
+                    for (ScriptableSystem scriptableSystem : scriptableSystemsB) {
+                        scriptableSystem.callMethod((params) -> scriptableSystem.collider2DEnter(entityBExit));
                     }
                 }
 
                 if (!entityBExit.isShouldDestroy()) {
                     List<ScriptComponent> scriptComponentsB = entityBExit.getAllComponents(ScriptComponent.class);
+                    List<ScriptableSystem> scriptableSystemsB = entityBEnter.getAllSystems(ScriptableSystem.class);
 
                     for (ScriptComponent scriptComponent : scriptComponentsB) {
-                        //scriptComponent.collider2DExit(gameObject2DAExit);
                         scriptComponent.callMethod((params) -> scriptComponent.collider2DExit(entityAExit));
+                    }
+                    for (ScriptableSystem scriptableSystem : scriptableSystemsB) {
+                        scriptableSystem.callMethod((params) -> scriptableSystem.collider2DEnter(entityAEnter));
                     }
                 }
 

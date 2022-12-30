@@ -10,6 +10,7 @@ import Core2D.Project.ProjectsManager;
 import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.FileUtils;
 import Core2D.Utils.FlexibleURLClassLoader;
 import org.apache.commons.io.FilenameUtils;
 
@@ -78,6 +79,7 @@ public class Script
     public void loadClass(String scriptsDirPath, String fullPath, String baseName, FlexibleURLClassLoader flexibleURLClassLoader)
     {
         scriptsDirPath = scriptsDirPath.replace("\\", "/");
+        fullPath = fullPath.replace(".java", "") + ".java";
         //String fullPath = scriptsDirPath + "/" + baseName;
 
         //System.out.println("loadClass in: " + scriptsDirPath + "\n\t" + fullPath + "\n\t" + baseName);
@@ -88,10 +90,11 @@ public class Script
 
                 URL scriptDirURL = file.toURI().toURL();
                 flexibleURLClassLoader.addURL(scriptDirURL);
-                ScriptSystem.loadAllChildURLs(flexibleURLClassLoader, scriptsDirPath);
+                // ЕСЛИ БУДУТ БАГИ, ТО РАЗКОММЕНТИРОВАТЬ
+                //ScriptSystem.loadAllChildURLs(flexibleURLClassLoader, scriptsDirPath);
                 System.out.println(scriptDirURL);
 
-                scriptClass = flexibleURLClassLoader.loadClass(baseName);
+                scriptClass = flexibleURLClassLoader.loadNewClass(fullPath.replace(".java", ".class"));
                 // если в in-build
             } else {
                 ByteClassLoader byteClassLoader = new ByteClassLoader();
@@ -109,10 +112,8 @@ public class Script
             collider2DEnterMethod = Script.getMethod(scriptClass, "collider2DEnter", Entity.class);
             collider2DExitMethod = Script.getMethod(scriptClass, "collider2DExit", Entity.class);
 
-            fullPath = fullPath.replace(".java", "") + ".java";
-
             lastModified = new File(fullPath).lastModified();
-        } catch (InstantiationException | IllegalAccessException | IOException | ClassNotFoundException | InvocationTargetException | NoSuchMethodException e) {
+        } catch (InstantiationException | IllegalAccessException | IOException | InvocationTargetException | NoSuchMethodException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
@@ -210,6 +211,7 @@ public class Script
         if(active) {
             if (updateMethod != null) {
                 invokeMethod(updateMethod);
+                System.out.println(updateMethod);
             }
 
             if(scriptClass != null) {
