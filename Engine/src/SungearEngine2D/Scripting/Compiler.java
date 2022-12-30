@@ -72,11 +72,8 @@ public class Compiler
             } catch (InterruptedException | IOException e) {
                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }
-
-            //Utils.reloadAllCore2DClassLoaderClasses();
             return result;
         } else {
-            //Utils.reloadAllCore2DClassLoaderClasses();
             Log.CurrentSession.println(new RuntimeException("Error compiling script. File \"" + path + "\" does not exist"), Log.MessageType.ERROR);
             return false;
         }

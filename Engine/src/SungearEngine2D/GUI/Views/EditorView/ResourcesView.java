@@ -407,15 +407,9 @@ public class ResourcesView extends View
             if(newFile == null) return;
             String fileString = "";
 
-            File scriptPackage = new File(FileUtils.getRelativePath(newFile.getPath(), ProjectsManager.getCurrentProject().getScriptsPath()));
-            String scriptPackagePath = scriptPackage.getParent() != null ? scriptPackage.getParent().replaceAll("\\\\/", ".") : "";
             // если тип файл - java, то создаю этот файл с заранее подготовленным кодом
             if(fileType.equals("Java.Component")) {
                 fileString =
-                        (!scriptPackagePath.equals("") ?
-                        "package " + scriptPackagePath + ";\n" +
-                        "\n"
-                        : "") +
                         "import Core2D.ECS.*;\n" +
                         "import Core2D.ECS.Component.Component;\n" +
                         "import Core2D.ECS.Component.Components.*;\n" +
@@ -449,10 +443,6 @@ public class ResourcesView extends View
                         "}";
             } else if(fileType.equals("Java.System")) {
                 fileString =
-                        (!scriptPackagePath.equals("") ?
-                        "package " + scriptPackagePath + ";\n" +
-                        "\n"
-                        : "") +
                         "import Core2D.ECS.*;\n" +
                         "import Core2D.ECS.Component.Component;\n" +
                         "import Core2D.ECS.Component.Components.*;\n" +
