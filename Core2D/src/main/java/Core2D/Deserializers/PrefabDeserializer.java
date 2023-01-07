@@ -8,7 +8,7 @@ import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
-public class    PrefabDeserializer implements JsonDeserializer<Prefab>, JsonSerializer<Prefab>
+public class PrefabDeserializer implements JsonDeserializer<Prefab>, JsonSerializer<Prefab>
 {
 
     @Override

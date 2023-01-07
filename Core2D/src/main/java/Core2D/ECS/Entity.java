@@ -293,7 +293,6 @@ public class Entity implements Serializable, PoolObject
     public <T extends Component> T getComponent(Class<T> componentClass)
     {
         for(var component : components) {
-            //Log.CurrentSession.println("componentClass: " + componentClass + ", component: " + component, Log.MessageType.WARNING);
             if(component.getClass().isAssignableFrom(componentClass)) {
                 return componentClass.cast(component);
             } else if(component.getClass().isAssignableFrom(ScriptComponent.class) && ((ScriptComponent) component).script.getScriptClass().isAssignableFrom(componentClass)) {

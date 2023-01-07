@@ -1,5 +1,6 @@
 package Core2D.ShaderUtils;
 
+import Core2D.Graphics.OpenGL;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 
@@ -27,14 +28,14 @@ public class IndexBuffer implements AutoCloseable
     // создание буфера
     public void create()
     {
-        handler = glGenBuffers();
+        handler = OpenGL.glCall((params) -> glGenBuffers(), Integer.class);
 
         bind();
     }
     // удаление буфера
     public void destroy()
     {
-        glDeleteBuffers(handler);
+        OpenGL.glCall((params) -> glDeleteBuffers(handler));
 
         data = null;
 
@@ -50,17 +51,17 @@ public class IndexBuffer implements AutoCloseable
     // положить данные
     public void putData()
     {
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER, data, usage);
+        OpenGL.glCall((params) -> glBufferData(GL_ELEMENT_ARRAY_BUFFER, data, usage));
     }
     // связка
     public void bind()
     {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, handler);
+        OpenGL.glCall((params) -> glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, handler));
     }
     // развязывание
     public void unBind()
     {
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+        OpenGL.glCall((params) -> glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
     }
 
     // геттеры и сеттеры

@@ -90,7 +90,7 @@ public class Script
 
                 URL scriptDirURL = file.toURI().toURL();
                 flexibleURLClassLoader.addURL(scriptDirURL);
-                // ЕСЛИ БУДУТ БАГИ, ТО РАЗКОММЕНТИРОВАТЬ
+                // ЕСЛИ БУДУТ БАГИ, ТО РАСКОММЕНТИРОВАТЬ
                 //ScriptSystem.loadAllChildURLs(flexibleURLClassLoader, scriptsDirPath);
                 System.out.println(scriptDirURL);
 

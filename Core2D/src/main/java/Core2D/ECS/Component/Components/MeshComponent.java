@@ -3,19 +3,17 @@ package Core2D.ECS.Component.Components;
 import Core2D.AssetManager.AssetManager;
 import Core2D.ECS.Component.Component;
 import Core2D.Graphics.RenderParts.Material2D;
-import Core2D.Graphics.RenderParts.RenderMethod;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.ShaderUtils.*;
 import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Utils.PositionsQuad;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.lwjgl.opengl.GL11C;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
-public class MeshComponent extends Component {
-
+public class MeshComponent extends Component
+{
     public Texture2D texture = new Texture2D();
 
     public transient Shader shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/object2D/shader.glsl"));
@@ -86,32 +84,30 @@ public class MeshComponent extends Component {
     }
 
     private void loadVAO() {
-        if (Thread.currentThread().getName().equals("main")) {
-            if(vertexArray != null) {
-                vertexArray.destroy();
-            }
-
-            vertexArray = new VertexArray();
-            // VBO вершин (VBO - Vertex Buffer Object. Может хранить в себе цвета, позиции вершин и т.д.)
-            VertexBuffer vertexBuffer = new VertexBuffer(data);
-            // IBO вершин (IBO - Index Buffer Object. IBO хранит в себе индексы вершин, по которым будут соединяться вершины)
-            IndexBuffer indexBuffer = new IndexBuffer(indices);
-
-            // создаю описание аттрибутов в шейдерной программе
-            BufferLayout attributesLayout = new BufferLayout(
-                    new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2),
-                    new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2)
-            );
-
-            vertexBuffer.setLayout(attributesLayout);
-            vertexArray.putVBO(vertexBuffer, false);
-            vertexArray.putIBO(indexBuffer);
-
-            indices = null;
-
-            // отвязываю vao
-            vertexArray.unBind();
+        if (vertexArray != null) {
+            vertexArray.destroy();
         }
+
+        vertexArray = new VertexArray();
+        // VBO вершин (VBO - Vertex Buffer Object. Может хранить в себе цвета, позиции вершин и т.д.)
+        VertexBuffer vertexBuffer = new VertexBuffer(data);
+        // IBO вершин (IBO - Index Buffer Object. IBO хранит в себе индексы вершин, по которым будут соединяться вершины)
+        IndexBuffer indexBuffer = new IndexBuffer(indices);
+
+        // создаю описание аттрибутов в шейдерной программе
+        BufferLayout attributesLayout = new BufferLayout(
+                new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2),
+                new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2)
+        );
+
+        vertexBuffer.setLayout(attributesLayout);
+        vertexArray.putVBO(vertexBuffer, false);
+        vertexArray.putIBO(indexBuffer);
+
+        indices = null;
+
+        // отвязываю vao
+        vertexArray.unBind();
     }
     public void setUV(float[] UV) {
         if (entity != null) {

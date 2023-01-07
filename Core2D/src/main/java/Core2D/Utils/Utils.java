@@ -1,6 +1,5 @@
 package Core2D.Utils;
 
-import Core2D.Core2D.Core2DClassLoader;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.DataClasses.Data;

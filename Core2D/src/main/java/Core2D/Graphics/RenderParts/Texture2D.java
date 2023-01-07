@@ -1,16 +1,10 @@
 package Core2D.Graphics.RenderParts;
 
 import Core2D.DataClasses.Texture2DData;
+import Core2D.Graphics.OpenGL;
 import com.google.gson.annotations.SerializedName;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
-import static org.lwjgl.opengl.GL13.glActiveTexture;
-import static org.lwjgl.opengl.GL14.*;
-import static org.lwjgl.opengl.GL30.glGenerateMipmap;
-import static org.lwjgl.opengl.GL42.glTexStorage2D;
-import static org.lwjgl.stb.STBImage.stbi_image_free;
-import static org.lwjgl.stb.STBImage.stbi_load_from_memory;
+import static org.lwjgl.opengl.GL46.*;
 
 public class Texture2D
 {
@@ -53,53 +47,46 @@ public class Texture2D
     {
         this.texture2DData = texture2DData;
 
-        if(Thread.currentThread().getName().equals("main")) {
-            // активирую нулевой текстурный блок
-            glActiveTexture(textureBlock);
+        // активирую нулевой текстурный блок
+        OpenGL.glCall((params) -> glActiveTexture(textureBlock));
 
-            // создание текстуры
-            textureHandler = glGenTextures();
-            bind();
+        // создание текстуры
+        textureHandler = OpenGL.glCall((params) -> glGenTextures(), Integer.class);
+        bind();
 
-            // сохраняю данные текстуры
-            glTexStorage2D(textureHandler, 1, texture2DData.getInternalFormat(), texture2DData.getWidth(), texture2DData.getHeight());
+        OpenGL.glCall((params) -> glTexImage2D(GL_TEXTURE_2D,
+                0,
+                texture2DData.getInternalFormat(),
+                texture2DData.getWidth(),
+                texture2DData.getHeight(),
+                0,
+                texture2DData.getFormat(),
+                GL_UNSIGNED_BYTE,
+                texture2DData.getPixelsData()));
 
-            // текстура будет растягиваться под фигуру
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texture2DData.getWrapParam());
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texture2DData.getWrapParam());
+        // текстура будет растягиваться под фигуру
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texture2DData.getWrapParam()));
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texture2DData.getWrapParam()));
 
-            // ставлю режим выравнивания данных текстуры по 1 байту (чтобы цвет текстуры был правильный)
-            glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
+        // ставлю режим выравнивания данных текстуры по 1 байту (чтобы цвет текстуры был правильный)
+        OpenGL.glCall((params) -> glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
 
-            // устанавливаю параметры текстуры
-            glGenerateMipmap(GL_TEXTURE_2D);
+        // устанавливаю параметры текстуры
+        OpenGL.glCall((params) -> glGenerateMipmap(GL_TEXTURE_2D));
 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texture2DData.getFilterParam());
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texture2DData.getFilterParam());
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, texture2DData.getFilterParam()));
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, texture2DData.getFilterParam()));
 
-            // использовать сгенерированный мипмап
-            glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+        // использовать сгенерированный мипмап
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE));
 
-            glTexImage2D(GL_TEXTURE_2D,
-                    0,
-                    texture2DData.getInternalFormat(),
-                    texture2DData.getWidth(),
-                    texture2DData.getHeight(),
-                    0,
-                    texture2DData.getFormat(),
-                    GL_UNSIGNED_BYTE,
-                    texture2DData.getPixelsData());
-
-            unBind();
-        }
+        unBind();
     }
 
     // удаление текстур
     public void destroy()
     {
-        if(Thread.currentThread().getName().equals("main")) {
-            glDeleteTextures(textureHandler);
-        }
+        OpenGL.glCall((params) -> glDeleteTextures(textureHandler));
     }
 
     public void set(Texture2D texture2D)
@@ -112,18 +99,14 @@ public class Texture2D
 
     public void bind()
     {
-        if(Thread.currentThread().getName().equals("main")) {
-            // активирую нулевой текстурный блок
-            glActiveTexture(textureBlock);
-            glBindTexture(GL_TEXTURE_2D, textureHandler);
-        }
+        // активирую нулевой текстурный блок
+        OpenGL.glCall((params) -> glActiveTexture(textureBlock));
+        OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, textureHandler));
     }
     public void unBind()
     {
-        if(Thread.currentThread().getName().equals("main")) {
-            glBindTexture(GL_TEXTURE_2D, 0);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        }
+        OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, 0));
+        OpenGL.glCall((params) -> glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
     }
 
     public static String blendFactorToString(int blendFactor)

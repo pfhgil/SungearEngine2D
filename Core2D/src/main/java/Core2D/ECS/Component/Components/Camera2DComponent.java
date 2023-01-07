@@ -4,6 +4,7 @@ import Core2D.ECS.Component.Component;
 import Core2D.ECS.NonDuplicated;
 import Core2D.Core2D.Core2D;
 import Core2D.Graphics.Graphics;
+import Core2D.Graphics.OpenGL;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.ShaderUtils.FrameBuffer;
@@ -14,6 +15,7 @@ import org.joml.Vector3f;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL13C.GL_TEXTURE1;
 
 public class Camera2DComponent extends Component implements NonDuplicated
 {
@@ -25,12 +27,13 @@ public class Camera2DComponent extends Component implements NonDuplicated
 
     private boolean isScene2DMainCamera2D = false;
 
-    private FrameBuffer frameBuffer = new FrameBuffer(Graphics.getScreenSize().x, Graphics.getScreenSize().y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, 1);
+    private FrameBuffer frameBuffer;
 
     @Override
     public void init()
     {
         setScene2DMainCamera2D(isScene2DMainCamera2D);
+        frameBuffer = new FrameBuffer(Graphics.getScreenSize().x, Graphics.getScreenSize().y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE1);
     }
 
     @Override
@@ -40,7 +43,7 @@ public class Camera2DComponent extends Component implements NonDuplicated
 
         frameBuffer.bind();
 
-        glClear(GL_COLOR_BUFFER_BIT);
+        OpenGL.glCall((params) -> glClear(GL_COLOR_BUFFER_BIT));
 
         if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
             SceneManager.currentSceneManager.getCurrentScene2D().draw();

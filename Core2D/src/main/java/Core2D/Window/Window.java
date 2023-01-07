@@ -2,18 +2,19 @@ package Core2D.Window;
 
 import Core2D.Core2D.Settings;
 import Core2D.Graphics.Graphics;
+import Core2D.Graphics.OpenGL;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.glfw.GLFWWindowIconifyCallbackI;
-import org.lwjgl.opengl.GL11C;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11C.glViewport;
 import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -150,7 +151,7 @@ public class Window
 
                 // сделать настройки более гибкими
                 Graphics.setViewMode(Graphics.getViewMode());
-                GL11C.glViewport(0, 0, size.x, size.y);
+                OpenGL.glCall((params) -> glViewport(0, 0, size.x, size.y));
             });
 
             Log.CurrentSession.println("Core2D started!", Log.MessageType.SUCCESS);

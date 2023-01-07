@@ -149,9 +149,6 @@ public class VertexAttribute
             case ShaderDataType.SHADER_DATA_TYPE_T_BOOLEAN: return 1;
         }
 
-        Texture2D texture2D = new Texture2D();
-        texture2D.getGLTextureBlock();
-
         Log.CurrentSession.println("Error: unknown attribute size!", Log.MessageType.ERROR);
         return 0;
     }

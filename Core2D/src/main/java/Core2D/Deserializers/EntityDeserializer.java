@@ -16,7 +16,6 @@ import com.google.gson.*;
 import org.joml.Vector4f;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 
 public class EntityDeserializer implements JsonDeserializer<Entity>

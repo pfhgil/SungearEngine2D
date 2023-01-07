@@ -1,6 +1,4 @@
 #ifdef VERTEX
-    #version 330 core
-
     // id аттрибута = 0. позиции вершин. входной параметр
     layout (location = 0) in vec2 positionAttribute;
 
@@ -13,8 +11,6 @@
 #endif
 
 #ifdef FRAGMENT
-    #version 330 core
-
     precision mediump float;
 
     out mediump vec4 fragColor;

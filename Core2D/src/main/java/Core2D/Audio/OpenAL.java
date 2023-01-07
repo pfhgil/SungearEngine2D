@@ -92,7 +92,7 @@ public class OpenAL
                 default -> "Unknown error.";
             };
 
-            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("OpenAL error " + stringErr + " (code: " + errCode + "). ")), Log.MessageType.ERROR);
+            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("OpenAL error: " + stringErr + " (code: " + errCode + "). ")), Log.MessageType.ERROR);
         }
     }
 }

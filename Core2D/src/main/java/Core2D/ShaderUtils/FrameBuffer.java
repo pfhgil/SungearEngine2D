@@ -2,15 +2,13 @@ package Core2D.ShaderUtils;
 
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
+import Core2D.Graphics.OpenGL;
 import Core2D.Log.Log;
 
 import java.io.Serializable;
 import java.nio.ByteBuffer;
 
-import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL13.GL_CLAMP_TO_BORDER;
-import static org.lwjgl.opengl.GL13.glActiveTexture;
-import static org.lwjgl.opengl.GL30.*;
+import static org.lwjgl.opengl.GL46.*;
 
 public class FrameBuffer implements Serializable
 {
@@ -63,7 +61,7 @@ public class FrameBuffer implements Serializable
 
         this.textureBlock = textureBlock;
 
-        handler = glGenFramebuffers();
+        handler = OpenGL.glCall((params) -> glGenFramebuffers(), Integer.class);
 
         bind();
 
@@ -76,15 +74,8 @@ public class FrameBuffer implements Serializable
             createTextureAttachment(width, height);
         }
 
-        if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
-            Log.CurrentSession.println("Error while creating FrameBuffer!", Log.MessageType.ERROR);
-        }
-
-        // получаю код ошибки opengl
-        int errorCode = glGetError();
-        // проверка на ошибки
-        if(errorCode != 0) {
-            Log.CurrentSession.println("OpenGL error: " + errorCode, Log.MessageType.ERROR);
+        if(OpenGL.glCall((params) -> glCheckFramebufferStatus(GL_FRAMEBUFFER), Integer.class) != GL_FRAMEBUFFER_COMPLETE) {
+            Log.CurrentSession.println(new RuntimeException("Error while creating Framebuffer!"), Log.MessageType.ERROR);
         }
 
         unBind();
@@ -93,34 +84,34 @@ public class FrameBuffer implements Serializable
     // активирует FBO
     public void bind()
     {
-        glBindFramebuffer(GL_FRAMEBUFFER, handler);
-        glViewport(0, 0, viewportWidth, viewportHeight);
+        OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, handler));
+        OpenGL.glCall((params) -> glViewport(0, 0, viewportWidth, viewportHeight));
     }
 
     // отключает FBO
     public void unBind()
     {
-        glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        glViewport(0, 0, Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y);
+        OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, 0));
+        OpenGL.glCall((params) -> glViewport(0, 0, Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y));
     }
 
     // активирует rbo
     public void bindRBO()
     {
-        glBindRenderbuffer(GL_RENDERBUFFER, RBOHandler);
+        OpenGL.glCall((params) -> glBindRenderbuffer(GL_RENDERBUFFER, RBOHandler));
     }
 
     // отключает rbo
     public void unBindRBO()
     {
-        glBindRenderbuffer(GL_RENDERBUFFER, 0);
+        OpenGL.glCall((params) -> glBindRenderbuffer(GL_RENDERBUFFER, 0));
     }
 
     // использовать текстуру
     public void bindTexture()
     {
-        glActiveTexture(textureBlock);
-        glBindTexture(GL_TEXTURE_2D, textureHandler);
+        OpenGL.glCall((params) -> glActiveTexture(textureBlock));
+        OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, textureHandler));
     }
 
     // пересоздает fbo
@@ -128,7 +119,7 @@ public class FrameBuffer implements Serializable
     {
         destroy();
 
-        handler = glGenFramebuffers();
+        handler = OpenGL.glCall((params) -> glGenFramebuffers(), Integer.class);
 
         bind();
 
@@ -139,13 +130,6 @@ public class FrameBuffer implements Serializable
         } else if(type == BuffersTypes.RENDERING_BUFFER) {
             createRBOAttachment(width, height);
             createTextureAttachment(width, height);
-        }
-
-        // получаю код ошибки opengl
-        int errorCode = glGetError();
-        // проверка на ошибки
-        if(errorCode != 0) {
-            Log.CurrentSession.println("OpenGL error: " + errorCode, Log.MessageType.ERROR);
         }
 
         unBind();
@@ -155,26 +139,19 @@ public class FrameBuffer implements Serializable
     public void unBindTexture()
     {
         //glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, 0);
+        OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, 0));
     }
 
     // создает rbo прикрепление к fbo
     public void createRBOAttachment(int width, int height)
     {
-        RBOHandler = glGenRenderbuffers();
+        RBOHandler = OpenGL.glCall((params) -> glGenRenderbuffers(), Integer.class);
 
         bindRBO();
 
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height);
+        OpenGL.glCall((params) -> glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height));
 
-        glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, RBOHandler);
-
-        // получаю код ошибки opengl
-        int errorCode = glGetError();
-        // проверка на ошибки
-        if(errorCode != 0) {
-            Log.CurrentSession.println("OpenGL error: " + errorCode, Log.MessageType.ERROR);
-        }
+        OpenGL.glCall((params) -> glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, RBOHandler));
 
         unBindRBO();
     }
@@ -182,100 +159,63 @@ public class FrameBuffer implements Serializable
     // создает текстурное прикрепление к fbo
     public void createTextureAttachment(int width, int height)
     {
-        textureHandler = glGenTextures();
+        textureHandler = OpenGL.glCall((params) -> glGenTextures(), Integer.class);
 
-        glActiveTexture(textureBlock);
-        glBindTexture(GL_TEXTURE_2D, textureHandler);
+        OpenGL.glCall((params) -> glActiveTexture(textureBlock));
+        OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, textureHandler));
 
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (ByteBuffer) null);
+        OpenGL.glCall((params) -> glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, (ByteBuffer) null));
 
         applyTextureParams();
 
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureHandler, 0);
+        OpenGL.glCall((params) -> glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureHandler, 0));
 
-        // получаю код ошибки opengl
-        int errorCode = glGetError();
-        // проверка на ошибки
-        if(errorCode != 0) {
-            Log.CurrentSession.println("OpenGL error: " + errorCode, Log.MessageType.ERROR);
-        }
-
-        glBindTexture(GL_TEXTURE_2D, 0);
+        OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, 0));
     }
 
     private void applyTextureParams()
     {
-        // если качество текстур в настройках == low
         if(Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality == Settings.QualityType.LOW) {
-            // фильтрация текстур, которая выбирает тексель, центр которого находится ближе всего к текстурной координате
-            // тексель = пикселю поскольку содержит цвет и альфа компонент
-            // текстура будет пискельная
-            // более быстрый метод, но текстура выглядит плохо
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-        } else if(Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality == Settings.QualityType.MEDIUM) { // если качество текстур в настройках == medium
-            // использует ближайший мипмап-уровень и отбирает его с помощью метода линейной интерполяции
-            // линейная интерполяция — это определение коэффициентов прямой линии, проходящей через две заданные точки. значения в точке определяются по формуле прямой линии
-            // мипмап - уровень детализации
-            // текстура будет с эффектом сглаживания
-            // средний по быстроте метод, но текстура выглядит уже лучше
+            OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
+            OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
+        } else if(Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality == Settings.QualityType.MEDIUM) {
+            OpenGL.glCall((params) -> glGenerateMipmap(GL_TEXTURE_2D));
 
-            // генерирую мипмап. без него не будет работать (черная текстура)
-            glGenerateMipmap(GL_TEXTURE_2D);
+            OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST));
+            OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST));
 
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST);
+            OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE));
+        } else if(Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality == Settings.QualityType.HIGH) {
+            OpenGL.glCall((params) -> glGenerateMipmap(GL_TEXTURE_2D));
 
-            // использовать сгенерированный мипмап
-            glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
-        } else if(Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality == Settings.QualityType.HIGH) { // если качество текстур в настройках == high
-            // линейная интерполяция между двумя мипмап-текстурами, которые наиболее точно соответствуют размеру пикселя, и затем выбор интерполированного уровня при помощи «метода ближайших соседей».
-            // метод ближайших соседей - метод, выбирающий тексель, центр которого находится ближе всего к текстурной координате
-            // линейная интерполяция — это определение коэффициентов прямой линии, проходящей через две заданные точки. значения в точке определяются по формуле прямой линии
-            // мипмап - уровень детализации
-            // текстура будет с лучшим эффектом сглаживания
-            // самый медленный метод, но текстура выглядит лучшим образом
+            OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR));
+            OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR));
 
-            // генерирую мипмап. без него не будет работать (черная текстура)
-            glGenerateMipmap(GL_TEXTURE_2D);
-
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-            glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-
-            // использовать сгенерированный мипмап
-            glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE);
+            OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE));
         }
 
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER);
-        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER);
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER));
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER));
     }
 
     // создает прикрепление глубины к fbo
     public void createDepthTextureAttachment(int width, int height)
     {
-        textureHandler = glGenTextures();
+        textureHandler = OpenGL.glCall((params) -> glGenTextures(), Integer.class);
 
-        glActiveTexture(textureBlock);
-        glBindTexture(GL_TEXTURE_2D, textureHandler);
+        OpenGL.glCall((params) -> glActiveTexture(textureBlock));
+        OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, textureHandler));
 
-
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, (ByteBuffer) null);
+        OpenGL.glCall((params) -> glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, width, height, 0, GL_DEPTH_COMPONENT, GL_FLOAT, (ByteBuffer) null));
 
         applyTextureParams();
 
         float borderColor[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-        glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor);
+        OpenGL.glCall((params) -> glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor));
 
-        glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, textureHandler, 0);
+        OpenGL.glCall((params) -> glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, textureHandler, 0));
 
-        // получаю код ошибки opengl
-        int errorCode = glGetError();
-        // проверка на ошибки
-        if(errorCode != 0) {
-            // вывести ошибку
-        }
-
-        glBindTexture(GL_TEXTURE_2D, 0);
+        OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, 0));
     }
 
     // удаляет FBO
@@ -283,12 +223,9 @@ public class FrameBuffer implements Serializable
     {
         unBind();
 
-        glDeleteTextures(textureHandler);
-        glDeleteFramebuffers(handler);
+        OpenGL.glCall((params) -> glDeleteTextures(textureHandler));
+        OpenGL.glCall((params) -> glDeleteFramebuffers(handler));
     }
-
-    // геттеры и сеттеры
-
 
     public int getHandler() { return handler; }
 

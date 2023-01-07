@@ -1,6 +1,7 @@
 package Core2D.Graphics.RenderParts;
 
 import Core2D.DataClasses.ShaderData;
+import Core2D.Graphics.OpenGL;
 import Core2D.Log.Log;
 
 import java.io.Serializable;
@@ -35,36 +36,33 @@ public class Shader implements Serializable
     {
         Shader shader = new Shader();
 
-        if(Thread.currentThread().getName().equals("main")) {
-            shader.createShaderPart(GL_VERTEX_SHADER, sourceCode);
-            shader.createShaderPart(GL_FRAGMENT_SHADER, sourceCode);
+        shader.createShaderPart(GL_VERTEX_SHADER, sourceCode);
+        shader.createShaderPart(GL_FRAGMENT_SHADER, sourceCode);
 
-            shader.createProgram();
-        }
+        shader.createProgram();
 
         return shader;
     }
 
     public void createShaderPart(int shaderType, String shaderSourceCode)
     {
-        int shaderPartHandler = glCreateShader(shaderType);
+        int shaderPartHandler = OpenGL.glCall((params) -> glCreateShader(shaderType), Integer.class);
         shaderPartsHandlers.put(shaderType, shaderPartHandler);
 
         String shaderDefine = shaderType == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT";
         // сделать легкое изменения версии шейдера
-        glShaderSource(shaderPartHandler, "#version 330 core\n" + "#define " + shaderDefine + "\n" + shaderSourceCode);
+        OpenGL.glCall((params) -> glShaderSource(shaderPartHandler, "#version 330 core\n" + "#define " + shaderDefine + "\n" + shaderSourceCode));
 
-        glCompileShader(shaderPartHandler);
+        OpenGL.glCall((params) -> glCompileShader(shaderPartHandler));
 
-        int compileStatus = glGetShaderi(shaderPartHandler, GL_COMPILE_STATUS);
+        int compileStatus = OpenGL.glCall((params) -> glGetShaderi(shaderPartHandler, GL_COMPILE_STATUS), Integer.class);
         if(compileStatus == 0) {
             // получение максимальной длины ошибки
-            int maxErrorStringLength = 0;
-            maxErrorStringLength = glGetShaderi(shaderPartHandler, GL_INFO_LOG_LENGTH);
+            final int maxErrorStringLength = OpenGL.glCall((params) -> glGetShaderi(shaderPartHandler, GL_INFO_LOG_LENGTH), Integer.class);
 
             // получение строки ошибки
             String errorString = "";
-            errorString = glGetShaderInfoLog(shaderPartHandler, maxErrorStringLength);
+            errorString = OpenGL.glCall((params) -> glGetShaderInfoLog(shaderPartHandler, maxErrorStringLength), String.class);
 
             this.destroyShaderPart(shaderType);
 
@@ -74,63 +72,54 @@ public class Shader implements Serializable
     }
 
     public void createProgram() {
-        if (Thread.currentThread().getName().equals("main")) {
-            programHandler = glCreateProgram();
+        programHandler = OpenGL.glCall((params) -> glCreateProgram(), Integer.class);
 
-            for (int shaderHandler : shaderPartsHandlers.values()) {
-                glAttachShader(programHandler, shaderHandler);
-            }
+        for (int shaderHandler : shaderPartsHandlers.values()) {
+            OpenGL.glCall((params) -> glAttachShader(programHandler, shaderHandler));
+        }
 
-            // соединяю шейдеры в одну программу
-            glLinkProgram(programHandler);
+        // соединяю шейдеры в одну программу
+        OpenGL.glCall((params) -> glLinkProgram(programHandler));
 
-            int linkStatus = glGetProgrami(programHandler, GL_LINK_STATUS);
+        int linkStatus = OpenGL.glCall((params) -> glGetProgrami(programHandler, GL_LINK_STATUS), Integer.class);
 
-            // если статус соединения шейдров = 0 (не соединены), то выводить ошибку и удалять программу и шейдеры из памяти
-            if (linkStatus == 0) {
-                // получение максимальной длины ошибки
-                int maxErrorStringLength = 0;
-                maxErrorStringLength = glGetProgrami(programHandler, GL_INFO_LOG_LENGTH);
+        // если статус соединения шейдров = 0 (не соединены), то выводить ошибку и удалять программу и шейдеры из памяти
+        if (linkStatus == 0) {
+            // получение максимальной длины ошибки
+            final int maxErrorStringLength = OpenGL.glCall((params) -> glGetProgrami(programHandler, GL_INFO_LOG_LENGTH), Integer.class);
 
-                // получение строки ошибки
-                String errorString = "";
-                errorString = glGetProgramInfoLog(programHandler, maxErrorStringLength);
+            // получение строки ошибки
+            String errorString = "";
+            errorString = OpenGL.glCall((params) -> glGetProgramInfoLog(programHandler, maxErrorStringLength), String.class);
 
-                // удаление программы
-                destroy();
+            // удаление программы
+            destroy();
 
-                Log.CurrentSession.println("Error while creating and linking program. Error is: " + errorString, Log.MessageType.ERROR);
-            }
+            Log.CurrentSession.println("Error while creating and linking program. Error is: " + errorString, Log.MessageType.ERROR);
         }
     }
 
     public void destroyShaderPart(int shaderPartType)
     {
-        if(Thread.currentThread().getName().equals("main")) {
-            // удаление шейдера
-            glDeleteShader(shaderPartsHandlers.get(shaderPartType));
-            shaderPartsHandlers.remove(shaderPartType);
-        }
+        // удаление шейдера
+        OpenGL.glCall((params) -> glDeleteShader(shaderPartsHandlers.get(shaderPartType)));
+        shaderPartsHandlers.remove(shaderPartType);
     }
 
     public void destroyAllShaderParts()
     {
-        if(Thread.currentThread().getName().equals("main")) {
-            for(int shaderPartType : shaderPartsHandlers.keySet()) {
-                glDeleteShader(shaderPartsHandlers.get(shaderPartType));
-            }
-            shaderPartsHandlers.clear();
+        for(int shaderPartType : shaderPartsHandlers.keySet()) {
+            OpenGL.glCall((params) -> glDeleteShader(shaderPartsHandlers.get(shaderPartType)));
         }
+        shaderPartsHandlers.clear();
     }
 
     public void destroy()
     {
-        if(Thread.currentThread().getName().equals("main")) {
-            // удаление шейдера
-            glDeleteProgram(programHandler);
+        // удаление шейдера
+        OpenGL.glCall((params) -> glDeleteProgram(programHandler));
 
-            destroyAllShaderParts();
-        }
+        destroyAllShaderParts();
     }
 
     public static String shaderPartTypeToString(int shaderType)
@@ -150,15 +139,11 @@ public class Shader implements Serializable
 
     public void bind()
     {
-        if(Thread.currentThread().getName().equals("main")) {
-            glUseProgram(programHandler);
-        }
+        OpenGL.glCall((params) -> glUseProgram(programHandler));
     }
     public void unBind()
     {
-        if(Thread.currentThread().getName().equals("main")) {
-            glUseProgram(0);
-        }
+        OpenGL.glCall((params) -> glUseProgram(0));
     }
 
     public int getShaderPartHandler(int shaderTypePart) { return shaderPartsHandlers.get(shaderTypePart); }

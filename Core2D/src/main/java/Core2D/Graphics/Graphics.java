@@ -18,8 +18,6 @@ import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GL11C;
 
 import java.nio.ByteBuffer;
 
@@ -50,10 +48,7 @@ public abstract class Graphics
     protected static void init()
     {
         // использовать возможности opengl
-        GL.createCapabilities();
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        OpenGL.init();
 
         Vector2i pickingRenderTargetSize = getScreenSize();
 
@@ -104,11 +99,11 @@ public abstract class Graphics
                 }
 
                 if (!screenCleared) {
-                    GL11C.glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, screenClearColor.w);
+                    OpenGL.glCall((params) -> glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, screenClearColor.w));
                     screenCleared = true;
                 }
 
-                GL11C.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                OpenGL.glCall((params) -> glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
                 if (Core2D.core2DUserCallback != null) {
                     Core2D.core2DUserCallback.onDrawFrame();
@@ -170,14 +165,14 @@ public abstract class Graphics
     public static Entity getPickedObject2D(Vector2f oglPosition)
     {
         pickingRenderTarget.bind();
-        glClear(GL_COLOR_BUFFER_BIT);
+        OpenGL.glCall((params) -> glClear(GL_COLOR_BUFFER_BIT));
 
         if(!screenCleared) {
-            GL11C.glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, screenClearColor.w);
+            OpenGL.glCall((params) -> glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, screenClearColor.w));
             screenCleared = true;
         }
 
-        glDisable(GL_BLEND);
+        OpenGL.glCall((params) -> glDisable(GL_BLEND));
 
         SceneManager.currentSceneManager.drawCurrentScene2DPicking();
 
@@ -185,7 +180,7 @@ public abstract class Graphics
 
         System.out.println("selectedPixelColor: " + selectedPixelColor.x + ", " + selectedPixelColor.y + ", " + selectedPixelColor.z + ", " + selectedPixelColor.w);
 
-        glEnable(GL_BLEND);
+        OpenGL.glCall((params) -> glEnable(GL_BLEND));
         pickingRenderTarget.unBind();
 
         return SceneManager.currentSceneManager.getPickedObject2D(selectedPixelColor);
