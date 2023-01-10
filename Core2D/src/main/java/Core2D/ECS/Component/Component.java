@@ -2,6 +2,8 @@ package Core2D.ECS.Component;
 
 import Core2D.ECS.Entity;
 
+import java.io.Serializable;
+
 /**
  * An abstract class that other components inherit.
  */
@@ -18,7 +20,7 @@ public class Component
 
     protected boolean active = true;
 
-    public Component() {}
+    public Component() { }
 
     /**
      * Sets the parameters of the transmitted component for this component.

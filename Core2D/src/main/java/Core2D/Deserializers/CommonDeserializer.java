@@ -29,12 +29,7 @@ public class CommonDeserializer<T> implements JsonDeserializer<T>, JsonSerialize
     public JsonElement serialize(T t, Type type, JsonSerializationContext context)
     {
         JsonObject result = new JsonObject();
-
-        if (t instanceof ScriptComponent) {
-            result.add("type", new JsonPrimitive(ScriptComponent.class.getCanonicalName()));
-        } else {
-            result.add("type", new JsonPrimitive(t.getClass().getCanonicalName()));
-        }
+        result.add("type", new JsonPrimitive(t.getClass().getCanonicalName()));
         result.add("properties", context.serialize(t, t.getClass()));
         return result;
     }

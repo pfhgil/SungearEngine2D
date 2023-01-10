@@ -51,7 +51,7 @@ public class Shader implements Serializable
 
         String shaderDefine = shaderType == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT";
         // сделать легкое изменения версии шейдера
-        OpenGL.glCall((params) -> glShaderSource(shaderPartHandler, "#version 330 core\n" + "#define " + shaderDefine + "\n" + shaderSourceCode));
+        OpenGL.glCall((params) -> glShaderSource(shaderPartHandler, "#version 400\n" + "#define " + shaderDefine + "\n" + shaderSourceCode));
 
         OpenGL.glCall((params) -> glCompileShader(shaderPartHandler));
 

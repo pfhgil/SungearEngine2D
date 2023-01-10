@@ -4,18 +4,25 @@
 
     uniform mat4 mvpMatrix;
 
+    uniform vec2 offset;
+
+    uniform vec2 verticesPositions[2];
+
+    flat out int vertexID;
+
     void main()
     {
-        gl_Position = mvpMatrix * vec4(positionAttribute, 0.0, 1.0);
+        vertexID = gl_VertexID;
+        gl_Position = mvpMatrix * vec4(offset + verticesPositions[vertexID], 0.0, 1.0);
     }
 #endif
 
 #ifdef FRAGMENT
-    precision mediump float;
+    out vec4 fragColor;
 
-    out mediump vec4 fragColor;
+    uniform vec4 color;
 
-    uniform mediump vec4 color;
+    flat in int vertexID;
 
     void main()
     {

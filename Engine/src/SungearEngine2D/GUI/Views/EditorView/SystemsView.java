@@ -4,6 +4,7 @@ import Core2D.ECS.Entity;
 import Core2D.ECS.NonRemovable;
 import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.MeshRendererSystem;
+import Core2D.ECS.System.Systems.PrimitivesRendererSystem;
 import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
@@ -136,6 +137,10 @@ public class SystemsView extends View
                     try {
                         if (ImGui.selectable("MeshRendererSystem")) {
                             inspectingEntity.addSystem(new MeshRendererSystem());
+                            action = "";
+                        }
+                        if (ImGui.selectable("PrimitivesRendererSystem")) {
+                            inspectingEntity.addSystem(new PrimitivesRendererSystem());
                             action = "";
                         }
                     } catch (Exception e) {

@@ -4,6 +4,8 @@ import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.Audio;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
+import Core2D.ECS.Component.Components.Primitives.BoxComponent;
+import Core2D.ECS.Component.Components.Primitives.LineComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.NonRemovable;
 import Core2D.Graphics.RenderParts.Texture2D;
@@ -210,7 +212,7 @@ public class ComponentsView extends View
                     case "BoxCollider2DComponent" -> {
                         BoxCollider2DComponent boxCollider2DComponent = (BoxCollider2DComponent) currentComponent;
 
-                        float[] offset = new float[]{boxCollider2DComponent.getBoxCollider2D().getOffset().x, boxCollider2DComponent.getBoxCollider2D().getOffset().y};
+                        float[] offset = new float[] { boxCollider2DComponent.getBoxCollider2D().getOffset().x, boxCollider2DComponent.getBoxCollider2D().getOffset().y };
                         ImGui.pushID("BoxCollider2DOffsetDragFloat_" + i);
                         {
                             if (ImGui.dragFloat2("Offset", offset)) {
@@ -219,7 +221,7 @@ public class ComponentsView extends View
                         }
                         ImGui.popID();
 
-                        float[] scale = new float[]{boxCollider2DComponent.getBoxCollider2D().getScale().x, boxCollider2DComponent.getBoxCollider2D().getScale().y};
+                        float[] scale = new float[] { boxCollider2DComponent.getBoxCollider2D().getScale().x, boxCollider2DComponent.getBoxCollider2D().getScale().y };
                         ImGui.pushID("BoxCollider2DScaleDragFloat_" + i);
                         {
                             if (ImGui.dragFloat2("Scale", scale, 0.01f)) {
@@ -231,7 +233,7 @@ public class ComponentsView extends View
                     case "CircleCollider2DComponent" -> {
                         CircleCollider2DComponent circleCollider2DComponent = (CircleCollider2DComponent) currentComponent;
 
-                        float[] offset = new float[]{circleCollider2DComponent.getCircleCollider2D().getOffset().x, circleCollider2DComponent.getCircleCollider2D().getOffset().y};
+                        float[] offset = new float[] { circleCollider2DComponent.getCircleCollider2D().getOffset().x, circleCollider2DComponent.getCircleCollider2D().getOffset().y };
                         ImGui.pushID("CircleCollider2DOffsetDragFloat_" + i);
                         {
                             if (ImGui.dragFloat2("Offset", offset)) {
@@ -240,11 +242,100 @@ public class ComponentsView extends View
                         }
                         ImGui.popID();
 
-                        float[] radius = new float[]{circleCollider2DComponent.getCircleCollider2D().getRadius()};
+                        float[] radius = new float[] { circleCollider2DComponent.getCircleCollider2D().getRadius() };
                         ImGui.pushID("CircleCollider2DRadiusDragFloat_" + i);
                         {
                             if (ImGui.dragFloat("Radius", radius, 0.01f)) {
                                 circleCollider2DComponent.getCircleCollider2D().setRadius(radius[0]);
+                            }
+                        }
+                        ImGui.popID();
+                    }
+                    case "LineComponent" -> {
+                        LineComponent lineComponent = (LineComponent) currentComponent;
+
+                        ImGui.pushID("LineOffsetDragFloat_" + i);
+                        {
+                            float[] offset = new float[] { lineComponent.getLinesData()[0].offset.x, lineComponent.getLinesData()[0].offset.y };
+                            if (ImGui.dragFloat2("Offset", offset)) {
+                                lineComponent.getLinesData()[0].offset.set(offset[0], offset[1]);
+                            }
+                        }
+                        ImGui.popID();
+
+                        ImGui.pushID("LineStartDragFloat_" + i);
+                        {
+                            float[] start = new float[] { lineComponent.getLinesData()[0].getVertices()[0].x, lineComponent.getLinesData()[0].getVertices()[0].y };
+                            if (ImGui.dragFloat2("Start", start)) {
+                                lineComponent.getLinesData()[0].getVertices()[0].set(start[0], start[1]);
+                            }
+                        }
+                        ImGui.popID();
+
+                        ImGui.pushID("LineEndDragFloat_" + i);
+                        {
+                            float[] end = new float[] { lineComponent.getLinesData()[0].getVertices()[1].x, lineComponent.getLinesData()[0].getVertices()[1].y };
+                            if (ImGui.dragFloat2("End", end)) {
+                                lineComponent.getLinesData()[0].getVertices()[1].set(end[0], end[1]);
+                            }
+                        }
+                        ImGui.popID();
+
+                        ImGui.pushID("LineColorDragFloat_" + i);
+                        {
+                            float[] color = new float[] { lineComponent.getLinesData()[0].color.x, lineComponent.getLinesData()[0].color.y,
+                                    lineComponent.getLinesData()[0].color.z, lineComponent.getLinesData()[0].color.w };
+                            if (ImGui.colorEdit4("Color", color)) {
+                                lineComponent.getLinesData()[0].color.set(color[0], color[1], color[2], color[3]);
+                            }
+                        }
+                        ImGui.popID();
+
+                        ImGui.pushID("LineWidthDragFloat_" + i);
+                        {
+                            float[] width = new float[] { lineComponent.getLinesData()[0].lineWidth };
+                            if (ImGui.dragFloat("Width", width, 0.1f, 1.0f, 20.0f)) {
+                                lineComponent.getLinesData()[0].lineWidth = width[0];
+                            }
+                        }
+                        ImGui.popID();
+                    }
+                    case "BoxComponent" -> {
+                        BoxComponent boxComponent = (BoxComponent) currentComponent;
+
+                        ImGui.pushID("BoxOffsetDragFloat_" + i);
+                        {
+                            float[] offset = new float[] { boxComponent.getOffset().x, boxComponent.getOffset().y };
+                            if (ImGui.dragFloat2("Offset", offset)) {
+                                boxComponent.setOffset(new Vector2f(offset[0], offset[1]));
+                            }
+                        }
+                        ImGui.popID();
+
+                        ImGui.pushID("BoxSizeDragFloat_" + i);
+                        {
+                            float[] size = new float[] { boxComponent.getSize().x, boxComponent.getSize().y };
+                            if (ImGui.dragFloat2("Size", size)) {
+                                boxComponent.setSize(new Vector2f(size[0], size[1]));
+                            }
+                        }
+                        ImGui.popID();
+
+                        ImGui.pushID("BoxLineWidthDragFloat_" + i);
+                        {
+                            float[] lineWidth = new float[] { boxComponent.getLinesWidth() };
+                            if (ImGui.dragFloat("Line width", lineWidth, 0.1f, 1.0f, 20.0f)) {
+                                boxComponent.setLinesWidth(lineWidth[0]);
+                            }
+                        }
+                        ImGui.popID();
+
+                        ImGui.pushID("BoxColorDragFloat_" + i);
+                        {
+                            float[] color = new float[] { boxComponent.getColor().x, boxComponent.getColor().y,
+                                    boxComponent.getColor().z, boxComponent.getColor().w };
+                            if (ImGui.colorEdit4("Color", color)) {
+                                boxComponent.setColor(new Vector4f(color[0], color[1], color[2], color[3]));
                             }
                         }
                         ImGui.popID();
@@ -562,6 +653,14 @@ public class ComponentsView extends View
                         }
                         if(ImGui.selectable("ParticlesSystemComponent")) {
                             inspectingEntity.addComponent(new ParticlesSystemComponent());
+                            action = "";
+                        }
+                        if(ImGui.selectable("LineComponent")) {
+                            inspectingEntity.addComponent(new LineComponent());
+                            action = "";
+                        }
+                        if(ImGui.selectable("BoxComponent")) {
+                            inspectingEntity.addComponent(new BoxComponent());
                             action = "";
                         }
 

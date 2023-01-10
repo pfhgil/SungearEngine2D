@@ -1,8 +1,10 @@
 package Core2D.ECS.Component.Components.Primitives;
 
-import Core2D.AssetManager.AssetManager;
-import Core2D.Graphics.RenderParts.Shader;
+import Core2D.DataClasses.LineData;
 import Core2D.ShaderUtils.*;
+import org.joml.Vector2f;
+
+import javax.sound.sampled.Line;
 
 public class LineComponent extends PrimitiveComponent
 {
@@ -14,16 +16,16 @@ public class LineComponent extends PrimitiveComponent
             0.0f, 0.0f
     };
 
-    private short[] indices = new short[] {
-            0, 1
-    };
-
-    public float lineWidth = 1.0f;
+    public LineComponent()
+    {
+        linesData = new LineData[] {
+                new LineData(new Vector2f(), new Vector2f(), new Vector2f(0.0f, 100.0f))
+        };
+    }
 
     @Override
     public void init() {
-        //entity.color.set(new Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
-        shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/primitives/line2D/shader.glsl"));
+        super.init();
 
         loadVAO();
     }
@@ -36,13 +38,10 @@ public class LineComponent extends PrimitiveComponent
         }
     }
 
-    private void loadVAO()
-    {
+
+    private void loadVAO() {
         vertexArray = new VertexArray();
-        // VBO вершин (VBO - Vertex Buffer Object. Может хранить в себе цвета, позиции вершин и т.д.)
         VertexBuffer vertexBuffer = new VertexBuffer(data);
-        // IBO вершин (IBO - Index Buffer Object. IBO хранит в себе индексы вершин, по которым будут соединяться вершины)
-        IndexBuffer indexBuffer = new IndexBuffer(indices);
 
         // создаю описание аттрибутов в шейдерной программе
         BufferLayout attributesLayout = new BufferLayout(
@@ -51,15 +50,10 @@ public class LineComponent extends PrimitiveComponent
 
         vertexBuffer.setLayout(attributesLayout);
         vertexArray.putVBO(vertexBuffer, false);
-        vertexArray.putIBO(indexBuffer);
-
-        indices = null;
 
         // отвязываю vao
         vertexArray.unBind();
     }
-
-    public float[] getData() { return data; }
 
     public VertexArray getVertexArrayObject() { return vertexArray; }
 }

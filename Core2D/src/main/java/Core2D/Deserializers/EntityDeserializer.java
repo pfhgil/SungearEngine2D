@@ -5,6 +5,7 @@ import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
+import Core2D.ECS.Component.Components.Primitives.LineComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.ScriptableSystem;
@@ -57,7 +58,7 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
         entity.layerName = layerName;
 
         for(JsonElement element : systems) {
-            System system = context.deserialize(element, Component.class);
+            System system = context.deserialize(element, System.class);
             if(system instanceof ScriptableSystem scriptableSystem) {
                 if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
                     scriptableSystem.script.path = scriptableSystem.script.path.replaceAll(".java", "");
