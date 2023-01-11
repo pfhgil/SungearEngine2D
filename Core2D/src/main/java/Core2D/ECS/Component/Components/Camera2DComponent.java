@@ -1,6 +1,7 @@
 package Core2D.ECS.Component.Components;
 
 import Core2D.ECS.Component.Component;
+import Core2D.ECS.Entity;
 import Core2D.ECS.NonDuplicated;
 import Core2D.Core2D.Core2D;
 import Core2D.Graphics.Graphics;
@@ -12,6 +13,9 @@ import Core2D.Utils.MatrixUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
@@ -28,6 +32,8 @@ public class Camera2DComponent extends Component implements NonDuplicated
     private boolean isScene2DMainCamera2D = false;
 
     private FrameBuffer frameBuffer;
+
+    private List<Entity> additionalEntitiesToRender = new ArrayList<>();
 
     @Override
     public void init()
@@ -47,6 +53,10 @@ public class Camera2DComponent extends Component implements NonDuplicated
 
         if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
             SceneManager.currentSceneManager.getCurrentScene2D().draw();
+
+            for(Entity renderingEntity : additionalEntitiesToRender) {
+                Graphics.getMainRenderer().render(renderingEntity);
+            }
         }
 
         frameBuffer.unBind();
@@ -110,4 +120,6 @@ public class Camera2DComponent extends Component implements NonDuplicated
     }
 
     public FrameBuffer getFrameBuffer() { return frameBuffer; }
+
+    public List<Entity> getAdditionalEntitiesToRender() { return additionalEntitiesToRender; }
 }

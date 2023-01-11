@@ -5,6 +5,7 @@ import Core2D.Audio.Audio;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
 import Core2D.ECS.Component.Components.Primitives.BoxComponent;
+import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.Primitives.LineComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.NonRemovable;
@@ -25,6 +26,7 @@ import imgui.flag.*;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
 import org.jbox2d.dynamics.BodyType;
+import org.joml.Math;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -295,7 +297,16 @@ public class ComponentsView extends View
                         {
                             float[] width = new float[] { lineComponent.getLinesData()[0].lineWidth };
                             if (ImGui.dragFloat("Width", width, 0.1f, 1.0f, 20.0f)) {
+                                width[0] = Math.clamp(1, 20, width[0]);
                                 lineComponent.getLinesData()[0].lineWidth = width[0];
+                            }
+                        }
+                        ImGui.popID();
+
+                        ImGui.pushID("LineScaleWithEntityCheckbox_" + i);
+                        {
+                            if (ImGui.checkbox("Scale with entity", lineComponent.scaleWithEntity)) {
+                                lineComponent.scaleWithEntity = !lineComponent.scaleWithEntity;
                             }
                         }
                         ImGui.popID();
@@ -321,10 +332,11 @@ public class ComponentsView extends View
                         }
                         ImGui.popID();
 
-                        ImGui.pushID("BoxLineWidthDragFloat_" + i);
+                        ImGui.pushID("BoxLinesWidthDragFloat_" + i);
                         {
                             float[] lineWidth = new float[] { boxComponent.getLinesWidth() };
-                            if (ImGui.dragFloat("Line width", lineWidth, 0.1f, 1.0f, 20.0f)) {
+                            if (ImGui.dragFloat("Lines width", lineWidth, 0.1f, 1.0f, 20.0f)) {
+                                lineWidth[0] = Math.clamp(1, 20, lineWidth[0]);
                                 boxComponent.setLinesWidth(lineWidth[0]);
                             }
                         }
@@ -336,6 +348,73 @@ public class ComponentsView extends View
                                     boxComponent.getColor().z, boxComponent.getColor().w };
                             if (ImGui.colorEdit4("Color", color)) {
                                 boxComponent.setColor(new Vector4f(color[0], color[1], color[2], color[3]));
+                            }
+                        }
+                        ImGui.popID();
+
+                        ImGui.pushID("BoxScaleWithEntityCheckbox_" + i);
+                        {
+                            if (ImGui.checkbox("Scale with entity", boxComponent.scaleWithEntity)) {
+                                boxComponent.scaleWithEntity = !boxComponent.scaleWithEntity;
+                            }
+                        }
+                        ImGui.popID();
+                    }
+                    case "CircleComponent" -> {
+                        CircleComponent circleComponent = (CircleComponent) currentComponent;
+
+                        ImGui.pushID("CircleOffsetDragFloat_" + i);
+                        {
+                            float[] offset = new float[] { circleComponent.getOffset().x, circleComponent.getOffset().y };
+                            if (ImGui.dragFloat2("Offset", offset)) {
+                                circleComponent.setOffset(new Vector2f(offset[0], offset[1]));
+                            }
+                        }
+                        ImGui.popID();
+
+                        ImGui.pushID("CircleRadiusDragFloat_" + i);
+                        {
+                            float[] radius = new float[] { circleComponent.getRadius() };
+                            if (ImGui.dragFloat("Radius", radius, 0.1f)) {
+                                circleComponent.setRadius(radius[0]);
+                            }
+                        }
+                        ImGui.popID();
+
+                        ImGui.pushID("CircleLinesWidthDragFloat_" + i);
+                        {
+                            float[] lineWidth = new float[] { circleComponent.getLinesWidth() };
+                            if (ImGui.dragFloat("Lines width", lineWidth, 0.1f, 1.0f, 20.0f)) {
+                                lineWidth[0] = Math.clamp(1.0f, 20.0f, lineWidth[0]);
+                                circleComponent.setLinesWidth(lineWidth[0]);
+                            }
+                        }
+                        ImGui.popID();
+
+                        ImGui.pushID("CircleColorDragFloat_" + i);
+                        {
+                            float[] color = new float[] { circleComponent.getColor().x, circleComponent.getColor().y,
+                                    circleComponent.getColor().z, circleComponent.getColor().w };
+                            if (ImGui.colorEdit4("Color", color)) {
+                                circleComponent.setColor(new Vector4f(color[0], color[1], color[2], color[3]));
+                            }
+                        }
+                        ImGui.popID();
+
+                        ImGui.pushID("CircleAngleIncrementDragInt_" + i);
+                        {
+                            int[] angleIncrement = new int[] { circleComponent.getAngleIncrement() };
+                            if (ImGui.dragInt("Angle increment", angleIncrement, 1, 1, 360)) {
+                                angleIncrement[0] = Math.clamp(1, 360, angleIncrement[0]);
+                                circleComponent.setAngleIncrement(angleIncrement[0]);
+                            }
+                        }
+                        ImGui.popID();
+
+                        ImGui.pushID("CircleScaleWithEntityCheckbox_" + i);
+                        {
+                            if (ImGui.checkbox("Scale with entity", circleComponent.scaleWithEntity)) {
+                                circleComponent.scaleWithEntity = !circleComponent.scaleWithEntity;
                             }
                         }
                         ImGui.popID();
@@ -663,7 +742,10 @@ public class ComponentsView extends View
                             inspectingEntity.addComponent(new BoxComponent());
                             action = "";
                         }
-
+                        if(ImGui.selectable("CircleComponent")) {
+                            inspectingEntity.addComponent(new CircleComponent());
+                            action = "";
+                        }
                     } catch (Exception e) {
                         Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
 

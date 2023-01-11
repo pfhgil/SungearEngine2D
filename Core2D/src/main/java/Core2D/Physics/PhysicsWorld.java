@@ -126,9 +126,6 @@ public class PhysicsWorld extends World
                     }
                 }
 
-                entityAEnter = null;
-                entityBEnter = null;
-
                 shouldCollider2DEnter = false;
             }
 
@@ -156,9 +153,6 @@ public class PhysicsWorld extends World
                         scriptableSystem.callMethod((params) -> scriptableSystem.collider2DEnter(entityAEnter));
                     }
                 }
-
-                entityAExit = null;
-                entityBExit = null;
 
                 shouldCollider2DExit = false;
             }

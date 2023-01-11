@@ -49,9 +49,7 @@ public class TransformComponent extends Component implements NonDuplicated
     @Override
     public void set(Component component)
     {
-        if(component instanceof TransformComponent) {
-            TransformComponent transformComponent = (TransformComponent) component;
-
+        if(component instanceof TransformComponent transformComponent) {
             this.transform.set(transformComponent.getTransform());
         }
     }

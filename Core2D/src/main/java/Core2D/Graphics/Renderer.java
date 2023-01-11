@@ -19,6 +19,8 @@ public class Renderer
 {
     public void render(Entity entity)
     {
+        if(!entity.active || entity.isShouldDestroy()) return;
+
         boolean runScripts = SceneManager.currentSceneManager != null &&
                 SceneManager.currentSceneManager.getCurrentScene2D() != null &&
                 SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts;

@@ -38,9 +38,6 @@ public class Transform implements Serializable
     // результативная матрица модели объекта
     private transient Matrix4f resultModelMatrix = new Matrix4f();
 
-    // кастомная матрица
-    private transient Matrix4f customMatrix = new Matrix4f();
-
     // позиция, куда нужно передвинуть плавно объект
     private transient Vector2f destinationPosition = new Vector2f();
     // множитель скорости, с которой будет передвигать объект в позицию moveToPosition
@@ -345,7 +342,7 @@ public class Transform implements Serializable
     // обновление матрицы модели
     private void updateModelMatrix()
     {
-        modelMatrix = new Matrix4f(customMatrix).mul(translationMatrix).mul(rotationMatrix).mul(scaleMatrix);
+        modelMatrix = new Matrix4f().mul(translationMatrix).mul(rotationMatrix).mul(scaleMatrix);
     }
 
     private void updateRigidbody2D()
@@ -368,8 +365,6 @@ public class Transform implements Serializable
         scaleMatrix = new Matrix4f(transform.getScaleMatrix());
 
         modelMatrix = new Matrix4f(transform.getModelMatrix());
-
-        customMatrix = new Matrix4f(transform.getCustomMatrix());
 
         destinationPosition = new Vector2f();
         moveToDestinationSpeedCoeff = new Vector2f();
@@ -477,8 +472,6 @@ public class Transform implements Serializable
     public Matrix4f getModelMatrix() { return modelMatrix; }
 
     public Matrix4f getResultModelMatrix() { return resultModelMatrix; }
-
-    public Matrix4f getCustomMatrix() { return customMatrix; }
 
     public Rigidbody2D getRigidbody2D()
     {

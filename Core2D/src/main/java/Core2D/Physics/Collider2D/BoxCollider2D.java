@@ -32,7 +32,8 @@ public class BoxCollider2D
     {
         if(fixture != null && rigidbody2D != null) {
             PolygonShape shape = (PolygonShape) fixture.getShape();
-            shape.setAsBox((100.0f / PhysicsWorld.RATIO / 2.0f) * scale.x, (100.0f / PhysicsWorld.RATIO / 2.0f) * scale.y, new Vec2(0.0f, 0.0f), rigidbody2D.getBody().getAngle());
+            shape.setAsBox((100.0f / PhysicsWorld.RATIO / 2.0f) * scale.x, (100.0f / PhysicsWorld.RATIO / 2.0f) * scale.y, new Vec2(offset.x / PhysicsWorld.RATIO, offset.y / PhysicsWorld.RATIO), rigidbody2D.getBody().getAngle());
+            //shape..set(offset.x, offset.y);
 
             Fixture newFixture = rigidbody2D.getBody().createFixture(shape, fixture.getDensity());
             newFixture.setFriction(rigidbody2D.getFriction());

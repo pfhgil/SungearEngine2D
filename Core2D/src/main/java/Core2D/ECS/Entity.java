@@ -245,9 +245,7 @@ public class Entity implements Serializable, PoolObject
     {
         shouldDestroy = true;
 
-        for (var component : components) {
-            component.setActive(false);
-        }
+        active = false;
     }
 
     @Override
@@ -255,9 +253,7 @@ public class Entity implements Serializable, PoolObject
     {
         shouldDestroy = false;
 
-        for (var component : components) {
-            component.setActive(true);
-        }
+        active = true;
     }
 
     // Components

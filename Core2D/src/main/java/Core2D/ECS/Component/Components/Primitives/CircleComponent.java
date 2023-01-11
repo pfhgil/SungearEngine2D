@@ -1,0 +1,86 @@
+package Core2D.ECS.Component.Components.Primitives;
+
+import Core2D.DataClasses.LineData;
+import Core2D.ECS.Component.Component;
+import org.joml.Vector2f;
+import Core2D.Utils.MathUtils;
+
+public class CircleComponent extends PrimitiveComponent
+{
+    private float radius = 10.0f;
+
+    private int linesNum;
+
+    private int angleIncrement = 10;
+
+    public CircleComponent()
+    {
+        setAngleIncrement(angleIncrement);
+    }
+
+    @Override
+    public void set(Component component)
+    {
+        super.set(component);
+
+        if(component instanceof CircleComponent circleComponent) {
+            setAngleIncrement(circleComponent.getAngleIncrement());
+        }
+    }
+
+    @Override
+    public void destroy()
+    {
+        if (vertexArray != null) {
+            vertexArray.destroy();
+            vertexArray = null;
+        }
+    }
+
+    public float getRadius() { return radius; }
+    public void setRadius(float radius)
+    {
+        this.radius = radius;
+
+        int currentAngle = 0;
+
+        Vector2f currentPoint = new Vector2f(0, radius);
+        MathUtils.rotate(currentPoint, -angleIncrement, new Vector2f());
+        Vector2f lastPoint = new Vector2f();
+
+        for(int i = 0; i < linesData.length; i++) {
+            Vector2f tmp = new Vector2f(0, radius);
+            MathUtils.rotate(tmp, currentAngle, new Vector2f());
+            lastPoint.set(currentPoint);
+            currentPoint.set(tmp);
+
+            linesData[i].getVertices()[0].set(lastPoint);
+            linesData[i].getVertices()[1].set(currentPoint);
+
+            currentAngle += angleIncrement;
+        }
+    }
+
+    public int getAngleIncrement() { return angleIncrement; }
+
+    public void setAngleIncrement(int angleIncrement)
+    {
+        this.angleIncrement = angleIncrement;
+
+        linesNum = 360 / angleIncrement;
+
+        data = new float[linesNum * 2];
+
+        loadVAO();
+
+        linesData = new LineData[linesNum];
+        for(int i = 0; i < linesData.length; i++) {
+            linesData[i] = new LineData();
+            linesData[i].color.set(color);
+            linesData[i].offset.set(offset);
+            linesData[i].lineWidth = linesWidth;
+        }
+
+        setRadius(radius);
+    }
+}

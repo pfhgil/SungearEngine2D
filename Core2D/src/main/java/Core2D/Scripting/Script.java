@@ -211,7 +211,7 @@ public class Script
         if(active) {
             if (updateMethod != null) {
                 invokeMethod(updateMethod);
-                System.out.println(updateMethod);
+                //System.out.println(updateMethod);
             }
 
             if(scriptClass != null) {

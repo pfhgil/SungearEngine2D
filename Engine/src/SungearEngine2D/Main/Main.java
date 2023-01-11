@@ -194,6 +194,8 @@ public class Main
             public void onDeltaUpdate(float deltaTime) {
                 mainCamera2D.deltaUpdate(deltaTime);
                 currentSceneManager.updateCurrentScene2D(deltaTime);
+
+                GraphicsRenderer.deltaUpdate(deltaTime);
             }
         };
 
