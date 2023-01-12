@@ -60,7 +60,7 @@ public class Main
                 //Debugger.init();
                 Resources.load();
 
-                mainCamera2D = Entity.createCamera2D();
+                mainCamera2D = Entity.createAsCamera2D();
                 CamerasManager.mainCamera2D = mainCamera2D;
                 CameraController.controlledCamera2D = mainCamera2D;
 

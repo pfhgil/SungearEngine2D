@@ -33,7 +33,7 @@ public class GraphicsRenderer
 
         EntitiesDebugDraw.draw();
 
-        //Gizmo.draw();
+        Gizmo.draw();
 
         if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && !ViewsManager.isSomeViewFocusedExceptSceneView) {
             Vector2f mousePosition = Mouse.getMousePosition();

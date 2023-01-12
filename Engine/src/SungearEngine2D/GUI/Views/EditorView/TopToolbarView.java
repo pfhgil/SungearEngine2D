@@ -377,7 +377,7 @@ public class TopToolbarView
 
                     if(ImGui.menuItem("Camera2D")) {
                         if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-                            Entity camera2D = Entity.createCamera2D();
+                            Entity camera2D = Entity.createAsCamera2D();
                             camera2D.setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
                         }
                     }
@@ -529,7 +529,7 @@ public class TopToolbarView
 
                         String scenePath = ResourcesView.currentDirectoryPath + "\\" + scene2D.getName() + ".sgs";
 
-                        Entity camera2D = Entity.createCamera2D();
+                        Entity camera2D = Entity.createAsObject2D();
                         camera2D.setLayer(scene2D.getLayering().getLayer("default"));
                         scene2D.setSceneMainCamera2D(camera2D);
 

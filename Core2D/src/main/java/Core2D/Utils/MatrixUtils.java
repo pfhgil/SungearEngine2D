@@ -49,6 +49,7 @@ public class MatrixUtils
     {
         Vector3f tmp = new Vector3f();
         matrix4f.getScale(tmp);
+        //matrix4f.g
         return new Vector2f(tmp.x, tmp.y);
     }
 
@@ -61,7 +62,6 @@ public class MatrixUtils
     public static Matrix4f getRotationMatrix(Matrix4f from)
     {
         float rotation = getRotation(from);
-
 
         Quaternionf rotationQ = new Quaternionf();
 

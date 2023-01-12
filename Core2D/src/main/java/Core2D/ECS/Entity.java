@@ -3,8 +3,12 @@ package Core2D.ECS;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
 import Core2D.Core2D.Settings;
+import Core2D.ECS.Component.Components.Primitives.BoxComponent;
+import Core2D.ECS.Component.Components.Primitives.CircleComponent;
+import Core2D.ECS.Component.Components.Primitives.LineComponent;
 import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.MeshRendererSystem;
+import Core2D.ECS.System.Systems.PrimitivesRendererSystem;
 import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
@@ -19,6 +23,7 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
+import javax.swing.*;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -120,7 +125,7 @@ public class Entity implements Serializable, PoolObject
         addChildrenObjects(entity.getChildrenObjects());
     }
 
-    public static Entity createObject2D()
+    public static Entity createAsObject2D()
     {
         Entity entity = new Entity();
         entity.addComponent(new TransformComponent());
@@ -130,11 +135,41 @@ public class Entity implements Serializable, PoolObject
         return entity;
     }
 
-    public static Entity createCamera2D()
+    public static Entity createAsCamera2D()
     {
         Entity entity = new Entity();
         entity.addComponent(new TransformComponent());
         entity.addComponent(new Camera2DComponent());
+
+        return entity;
+    }
+
+    public static Entity createAsLine()
+    {
+        Entity entity = new Entity();
+        entity.addComponent(new TransformComponent());
+        entity.addComponent(new LineComponent());
+        entity.addSystem(new PrimitivesRendererSystem());
+
+        return entity;
+    }
+
+    public static Entity createAsBox()
+    {
+        Entity entity = new Entity();
+        entity.addComponent(new TransformComponent());
+        entity.addComponent(new BoxComponent());
+        entity.addSystem(new PrimitivesRendererSystem());
+
+        return entity;
+    }
+
+    public static Entity createAsCircle()
+    {
+        Entity entity = new Entity();
+        entity.addComponent(new TransformComponent());
+        entity.addComponent(new CircleComponent());
+        entity.addSystem(new PrimitivesRendererSystem());
 
         return entity;
     }

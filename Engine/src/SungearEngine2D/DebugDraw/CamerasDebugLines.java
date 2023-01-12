@@ -20,8 +20,8 @@ public class CamerasDebugLines
     //#FIXME private static Line2D[] inspectorCamera2DLines = new Line2D[4];
     //#FIXME private static Line2D[] mainCamera2DLines = new Line2D[4];
 
-    private static Entity inspectorCamera2DIconObject2D = Entity.createObject2D();
-    private static Entity mainCamera2DIconObject2D = Entity.createObject2D();
+    private static Entity inspectorCamera2DIconObject2D = Entity.createAsObject2D();
+    private static Entity mainCamera2DIconObject2D = Entity.createAsObject2D();
 
     public static void init()
     {

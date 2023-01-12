@@ -15,7 +15,7 @@ public class Grid
 
     public static void init(Vector2f scale)
     {
-        grid = Entity.createObject2D();
+        grid = Entity.createAsObject2D();
 
         grid.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(1f, 1f));
         MeshComponent c = grid.getComponent(MeshComponent.class);
