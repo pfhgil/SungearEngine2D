@@ -81,18 +81,18 @@ public class InspectorView extends View
         ImGui.end();
     }
 
-    private void inspectObject2D(Entity inspectingObject2D)
+    private void inspectObject2D(Entity inspectingEntity)
     {
-        setCurrentInspectingObject(inspectingObject2D);
-        if(inspectingObject2D != null && !inspectingObject2D.isShouldDestroy()) {
+        setCurrentInspectingObject(inspectingEntity);
+        if(inspectingEntity != null && !inspectingEntity.isShouldDestroy()) {
             ImGui.image(Resources.Textures.Icons.object2DFileIcon.getTextureHandler(), 27.0f, 27.0f);
 
             ImGui.sameLine();
             ImGui.pushID("Object2DName");
             {
-                ImString name = new ImString(inspectingObject2D.name, 256);
+                ImString name = new ImString(inspectingEntity.name, 256);
                 if (ImGui.inputText("", name)) {
-                    inspectingObject2D.name = name.get();
+                    inspectingEntity.name = name.get();
                 }
             }
             ImGui.popID();
@@ -101,7 +101,7 @@ public class InspectorView extends View
             ImGui.sameLine();
             ImGui.pushID("LayersCombo");
             {
-                if (ImGui.beginCombo("", inspectingObject2D.layerName)) {
+                if (ImGui.beginCombo("", inspectingEntity.layerName)) {
                     List<Layer> layers = currentSceneManager.getCurrentScene2D().getLayering().getLayers();
                     for (int i = 0; i < layers.size(); i++) {
                         boolean selected = ImGui.selectable(layers.get(i).getID() + ".  " + layers.get(i).getName());
@@ -130,7 +130,7 @@ public class InspectorView extends View
                         }
 
                         if (selected) {
-                            inspectingObject2D.setLayer(currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(i));
+                            inspectingEntity.setLayer(currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(i));
                         }
                     }
                     layers = null;
@@ -256,11 +256,11 @@ public class InspectorView extends View
             ImGui.sameLine();
             ImGui.pushID("TagsCombo");
             {
-                if (ImGui.beginCombo("", inspectingObject2D.tag.getName())) {
+                if (ImGui.beginCombo("", inspectingEntity.tag.getName())) {
                     List<Tag> tags = currentSceneManager.getCurrentScene2D().getTags();
                     for (int i = 0; i < tags.size(); i++) {
                         if (ImGui.selectable(tags.get(i).getName())) {
-                            inspectingObject2D.tag.set(tags.get(i));
+                            inspectingEntity.tag.set(tags.get(i));
                         }
                     }
 
@@ -382,12 +382,20 @@ public class InspectorView extends View
             ImGui.separator();
 
             float[] col = new float[] {
-                    inspectingObject2D.getColor().x,
-                            inspectingObject2D.getColor().y,
-                            inspectingObject2D.getColor().z,
-                            inspectingObject2D.getColor().w  };
+                    inspectingEntity.getColor().x,
+                            inspectingEntity.getColor().y,
+                            inspectingEntity.getColor().z,
+                            inspectingEntity.getColor().w  };
             if (ImGui.colorEdit4("Color", col)) {
-                inspectingObject2D.setColor(new Vector4f(col));
+                inspectingEntity.setColor(new Vector4f(col));
+            }
+
+            ImGui.collapsingHeader("Matrices");
+            {
+                TransformComponent transformComponent = inspectingEntity.getComponent(TransformComponent.class);
+                if(transformComponent != null) {
+                    ImGui.text(transformComponent.getMvpMatrix().toString());
+                }
             }
 
             ImVec2 windowSize = ImGui.getWindowSize();

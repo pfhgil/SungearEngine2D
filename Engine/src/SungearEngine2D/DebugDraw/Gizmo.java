@@ -167,6 +167,40 @@ public class Gizmo
                 Vector2f entityPosition = new Vector2f(MatrixUtils.getPosition(entityTransform.getResultModelMatrix()));
                 float entityRotation = MatrixUtils.getRotation(entityTransform.getResultModelMatrix());
 
+                // --------------------------------------------------
+                Matrix4f mvp = entityTransform.getResultModelMatrix();
+                Matrix4f identityMatrix = new Matrix4f(mvp).identity();
+
+                Vector3f x0 = new Vector3f(identityMatrix.get(0, 0), identityMatrix.get(1, 0), identityMatrix.get(2, 0));
+                Vector3f y0 = new Vector3f(identityMatrix.get(0, 1), identityMatrix.get(1, 1), identityMatrix.get(2, 1));
+                Vector3f z0 = new Vector3f(identityMatrix.get(0, 2), identityMatrix.get(1, 2), identityMatrix.get(2, 2));
+
+                float sz0 = x0.cross(y0).dot(z0);
+                float sy0 = z0.cross(x0).dot(y0);
+                float sx0 = y0.cross(z0).dot(x0);
+
+                Vector3f x1 = new Vector3f(mvp.get(0, 0), mvp.get(1, 0), mvp.get(2, 0));
+                Vector3f y1 = new Vector3f(mvp.get(0, 1), mvp.get(1, 1), mvp.get(2, 1));
+                Vector3f z1 = new Vector3f(mvp.get(0, 2), mvp.get(1, 2), mvp.get(2, 2));
+
+                float sz1 = x1.cross(y1).dot(z1);
+                float sy1 = z1.cross(x1).dot(y1);
+                float sx1 = y1.cross(z1).dot(x1);
+
+                float rx = sx0 * sx1;
+                float ry = sy0 * sy1;
+                float rz = sz0 * sz1;
+
+                System.out.println("res: " + rx + ", " + ry + ", " + rz);
+                // ------------------------------------------------------------------
+
+                Vector3f entityScale = new Vector3f(
+                        new Vector3f(mvp.get(0, 0), mvp.get(1, 0), mvp.get(2, 0)).length(),
+                        new Vector3f(mvp.get(0, 1), mvp.get(1, 1), mvp.get(2, 1)).length(),
+                        new Vector3f(mvp.get(0, 2), mvp.get(1, 2), mvp.get(2, 2)).length()
+                        );
+
+                //System.out.println("entity scale: " + entityScale.x + ", " + entityScale.y + ", " + entityScale.z);
                 /*
                 Vector3f euler = new Vector3f();
                 Matrix4f mat = new Matrix4f(entityTransform.getResultModelMatrix());
