@@ -460,6 +460,36 @@ public class Transform implements Serializable
         updateModelMatrix();
     }
 
+    public Vector2f getRealPosition()
+    {
+        return MatrixUtils.getPosition(resultModelMatrix);
+    }
+
+    public Vector2f getRealScale()
+    {
+        Vector2f scale = MatrixUtils.getScale(resultModelMatrix);
+
+        if(this.scale.x < 0.0f) {
+            scale.x *= -1.0f;
+        }
+        if(this.scale.y < 0.0f) {
+            scale.y *= -1.0f;
+        }
+
+        return scale;
+    }
+
+    public float getRealRotation()
+    {
+        float rotation = MatrixUtils.getRotation(resultModelMatrix);
+
+        if(scale.x < 0.0f) {
+            rotation -= 180.0f;
+        }
+
+        return rotation;
+    }
+
     public Vector2f getCentre() { return centre; }
     public void setCentre(Vector2f centre) { this.centre.set(centre); }
 

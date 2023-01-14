@@ -29,7 +29,7 @@ public class GraphicsRenderer
 
         //currentSceneManager.drawCurrentScene2D();
 
-        //CamerasDebugLines.draw();
+        CamerasDebugLines.draw();
 
         EntitiesDebugDraw.draw();
 

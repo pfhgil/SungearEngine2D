@@ -394,7 +394,7 @@ public class InspectorView extends View
             {
                 TransformComponent transformComponent = inspectingEntity.getComponent(TransformComponent.class);
                 if(transformComponent != null) {
-                    ImGui.text(transformComponent.getMvpMatrix().toString());
+                    ImGui.text(transformComponent.getTransform().getResultModelMatrix().toString());
                 }
             }
 

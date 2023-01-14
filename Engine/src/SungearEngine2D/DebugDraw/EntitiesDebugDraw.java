@@ -46,7 +46,7 @@ public class EntitiesDebugDraw
 
                         BoxComponent boxComponent = new BoxComponent();
                         boxComponent.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-                        boxComponent.scaleWithEntity = true;
+                       // boxComponent.scaleWithEntity = true;
 
                         newBox.addComponent(new TransformComponent());
                         newBox.addComponent(boxComponent);
@@ -62,9 +62,13 @@ public class EntitiesDebugDraw
                     box.active = true;
 
                     Transform boxTransform = box.getComponent(TransformComponent.class).getTransform();
+                    BoxComponent boxComponent = box.getComponent(BoxComponent.class);
 
-                    boxTransform.setPosition(new Vector2f(entityTransform.getPosition()).add(boxCollider2DComponent.getBoxCollider2D().getOffset()));
-                    boxTransform.setScale(boxCollider2DComponent.getBoxCollider2D().getScale());
+                    boxComponent.setSize(new Vector2f(boxCollider2DComponent.getBoxCollider2D().getScale().x * 100.0f, boxCollider2DComponent.getBoxCollider2D().getScale().y * 100.0f));
+                    boxComponent.setOffset(boxCollider2DComponent.getBoxCollider2D().getOffset());
+
+                    boxTransform.setPosition(new Vector2f(entityTransform.getPosition()));
+                    //boxTransform.setScale(boxCollider2DComponent.getBoxCollider2D().getScale());
                     boxTransform.setRotation(entityTransform.getRotation());
 
                     box.update();
@@ -78,7 +82,7 @@ public class EntitiesDebugDraw
 
                         CircleComponent circleComponent = new CircleComponent();
                         circleComponent.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-                        circleComponent.scaleWithEntity = true;
+                        //circleComponent.scaleWithEntity = true;
 
                         newCircle.addComponent(new TransformComponent());
                         newCircle.addComponent(circleComponent);
@@ -95,8 +99,9 @@ public class EntitiesDebugDraw
 
                     Transform circleTransform = circle.getComponent(TransformComponent.class).getTransform();
 
-                    circleTransform.setPosition(new Vector2f(entityTransform.getPosition()).add(circleCollider2DComponent.getCircleCollider2D().getOffset()));
+                    circleTransform.setPosition(new Vector2f(entityTransform.getPosition()));
                     circle.getComponent(CircleComponent.class).setRadius(circleCollider2DComponent.getCircleCollider2D().getRadius());
+                    circle.getComponent(CircleComponent.class).setOffset(circleCollider2DComponent.getCircleCollider2D().getOffset());
                     circleTransform.setRotation(entityTransform.getRotation());
 
                     circle.update();

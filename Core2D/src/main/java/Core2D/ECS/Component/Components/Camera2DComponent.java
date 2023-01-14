@@ -12,10 +12,12 @@ import Core2D.ShaderUtils.FrameBuffer;
 import Core2D.Utils.MatrixUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
 import org.joml.Vector3f;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
@@ -45,6 +47,10 @@ public class Camera2DComponent extends Component implements NonDuplicated
     @Override
     public void update()
     {
+        Vector2i windowSize = Core2D.getWindow().getSize();
+        this.viewportSize.set(windowSize);
+        projectionMatrix = new Matrix4f().ortho2D(-viewportSize.x / 2.0f, viewportSize.x / 2.0f, -viewportSize.y / 2.0f, viewportSize.y / 2.0f);
+
         updateViewMatrix();
 
         frameBuffer.bind();
@@ -53,10 +59,10 @@ public class Camera2DComponent extends Component implements NonDuplicated
 
         if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
             SceneManager.currentSceneManager.getCurrentScene2D().draw();
+        }
 
-            for(Entity renderingEntity : additionalEntitiesToRender) {
-                Graphics.getMainRenderer().render(renderingEntity);
-            }
+        for(Entity renderingEntity : additionalEntitiesToRender) {
+            Graphics.getMainRenderer().render(renderingEntity);
         }
 
         frameBuffer.unBind();
@@ -79,12 +85,13 @@ public class Camera2DComponent extends Component implements NonDuplicated
             viewMatrix.identity();
 
             viewMatrix.scale(new Vector3f(scale.x, scale.y, 1f));
-            viewMatrix.rotate((float) Math.toRadians(rotation), 0f, 0f, 1f);
-            viewMatrix.translate(new Vector3f(position.x, position.y, 1f));
+            viewMatrix.rotate((float) Math.toRadians(-rotation), 0f, 0f, 1f);
+            viewMatrix.translate(new Vector3f(-position.x, -position.y, 1f));
         }
     }
 
     public Vector2f getViewportSize() { return viewportSize; }
+    @Deprecated
     public void setViewportSize(Vector2f viewportSize)
     {
         this.viewportSize = viewportSize;

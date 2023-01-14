@@ -176,16 +176,17 @@ public class Main
 
                 TransformComponent cameraTransformComponent = mainCamera2D.getComponent(TransformComponent.class);
                 if(cameraTransformComponent != null) {
+                    //System.out.println("ddd");
                     cameraTransformComponent.getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
                 }
                 //cameraAnchor.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
                 CameraController.control();
 
+                mainCamera2D.update();
+
                 if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) GUI.draw();
 
                 GraphicsRenderer.draw();
-
-                mainCamera2D.update();
 
                 //Core2D.getWindow().setName("Sungear Engine 2D. FPS: " + Core2D.getDeltaTimer().getFPS());
             }

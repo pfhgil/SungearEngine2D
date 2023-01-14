@@ -5,6 +5,7 @@ import Core2D.Physics.Rigidbody2D;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Fixture;
+import org.jbox2d.dynamics.FixtureDef;
 import org.joml.Vector2f;
 
 /**
@@ -31,17 +32,20 @@ public class BoxCollider2D
     private void updateShape()
     {
         if(fixture != null && rigidbody2D != null) {
-            PolygonShape shape = (PolygonShape) fixture.getShape();
+            rigidbody2D.getBody().destroyFixture(fixture);
+
+            PolygonShape shape = new PolygonShape();
             shape.setAsBox((100.0f / PhysicsWorld.RATIO / 2.0f) * scale.x, (100.0f / PhysicsWorld.RATIO / 2.0f) * scale.y, new Vec2(offset.x / PhysicsWorld.RATIO, offset.y / PhysicsWorld.RATIO), rigidbody2D.getBody().getAngle());
             //shape..set(offset.x, offset.y);
 
-            Fixture newFixture = rigidbody2D.getBody().createFixture(shape, fixture.getDensity());
-            newFixture.setFriction(rigidbody2D.getFriction());
-            newFixture.setRestitution(rigidbody2D.getRestitution());
-            newFixture.setSensor(rigidbody2D.isSensor());
-            rigidbody2D.getBody().destroyFixture(fixture);
+            FixtureDef fixtureDef = new FixtureDef();
+            fixtureDef.shape = shape;
+            fixtureDef.density = rigidbody2D.getDensity();
+            fixtureDef.friction = rigidbody2D.getFriction();
+            fixtureDef.density = rigidbody2D.getRestitution();
+            fixtureDef.isSensor = rigidbody2D.isSensor();
 
-            fixture = newFixture;
+            fixture = rigidbody2D.getBody().createFixture(fixtureDef);
         }
     }
 
@@ -55,7 +59,7 @@ public class BoxCollider2D
     public Vector2f getOffset() { return offset; }
     public void setOffset(Vector2f offset)
     {
-        this.offset = offset;
+        this.offset.set(offset);
 
         updateShape();
     }
@@ -63,7 +67,7 @@ public class BoxCollider2D
     public Vector2f getScale() { return scale; }
     public void setScale(Vector2f scale)
     {
-        this.scale = scale;
+        this.scale.set(scale);
 
         updateShape();
     }

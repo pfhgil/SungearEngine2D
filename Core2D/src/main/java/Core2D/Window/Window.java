@@ -150,7 +150,7 @@ public class Window
                 size.y = height;
 
                 // сделать настройки более гибкими
-                Graphics.setViewMode(Graphics.getViewMode());
+                //Graphics.setViewMode(Graphics.getViewMode());
                 OpenGL.glCall((params) -> glViewport(0, 0, size.x, size.y));
             });
 

@@ -78,6 +78,7 @@ public abstract class Graphics
 
                 AudioListener.update();
 
+                /*
                 Vector2i windowSize = Core2D.getWindow().getSize();
                 if (CamerasManager.mainCamera2D != null) {
                     Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
@@ -97,6 +98,8 @@ public abstract class Graphics
                         camera2DComponent.setViewportSize(new Vector2f(windowSize.x, windowSize.y));
                     }
                 }
+
+                 */
 
                 if (!screenCleared) {
                     OpenGL.glCall((params) -> glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, screenClearColor.w));

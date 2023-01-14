@@ -1,4 +1,58 @@
-[#FFFFFF] 2023/01/13 22:49:23 | [#008000] Current session log file was created!
-[#FFFFFF] 2023/01/13 22:49:23 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2023/01/13 22:49:23 | [#008000] Core2D started!
-[#FFFFFF] 2023/01/13 22:49:23 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2023/01/15 01:56:04 | [#008000] Current session log file was created!
+[#FFFFFF] 2023/01/15 01:56:04 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2023/01/15 01:56:05 | [#008000] Core2D started!
+[#FFFFFF] 2023/01/15 01:56:05 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2023/01/15 01:56:05 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2023/01/15 01:56:09 | [#FFFFFF] scene manager code: {
+  "scene2DStoredValues": [
+    {
+      "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\kek0.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl0.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl1.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl2.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\tets0.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\test1.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\test5.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl6.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\stable\\s_lvl0.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    }
+  ],
+  "mainScene2DPath": ""
+}
+[#FFFFFF] 2023/01/15 01:56:18 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
+[#FFFFFF] 2023/01/15 01:56:30 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
+[#FFFFFF] 2023/01/15 01:56:33 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
