@@ -30,6 +30,16 @@ public class System
 
     }
 
+    public void collider2DEnter(Entity otherObj)
+    {
+
+    }
+
+    public void collider2DExit(Entity otherObj)
+    {
+
+    }
+
     public boolean isActive() { return active; }
 
     public void setActive(boolean active) { this.active = active; }

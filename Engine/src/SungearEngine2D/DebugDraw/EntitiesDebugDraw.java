@@ -8,9 +8,14 @@ import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.Systems.PrimitivesRendererSystem;
+import Core2D.Physics.PhysicsWorld;
 import Core2D.Transform.Transform;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
+import org.jbox2d.collision.shapes.CircleShape;
+import org.jbox2d.collision.shapes.PolygonShape;
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Body;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 
@@ -42,15 +47,9 @@ public class EntitiesDebugDraw
                     BoxCollider2DComponent boxCollider2DComponent = boxCollider2DComponents.get(i);
 
                     if (boxes.size() < i + 1) {
-                        Entity newBox = new Entity();
+                        Entity newBox = Entity.createAsBox();
 
-                        BoxComponent boxComponent = new BoxComponent();
-                        boxComponent.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-                       // boxComponent.scaleWithEntity = true;
-
-                        newBox.addComponent(new TransformComponent());
-                        newBox.addComponent(boxComponent);
-                        newBox.addSystem(new PrimitivesRendererSystem());
+                        newBox.getComponent(BoxComponent.class).setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 
                         boxes.add(newBox);
 
@@ -61,15 +60,28 @@ public class EntitiesDebugDraw
 
                     box.active = true;
 
-                    Transform boxTransform = box.getComponent(TransformComponent.class).getTransform();
                     BoxComponent boxComponent = box.getComponent(BoxComponent.class);
 
-                    boxComponent.setSize(new Vector2f(boxCollider2DComponent.getBoxCollider2D().getScale().x * 100.0f, boxCollider2DComponent.getBoxCollider2D().getScale().y * 100.0f));
-                    boxComponent.setOffset(boxCollider2DComponent.getBoxCollider2D().getOffset());
+                    PolygonShape polygonShape = (PolygonShape) boxCollider2DComponent.getBoxCollider2D().getFixture().getShape();
+                    Vec2[] verticesPos = polygonShape.getVertices();
+                    Body body = boxCollider2DComponent.getBoxCollider2D().getRigidbody2D().getBody();
 
-                    boxTransform.setPosition(new Vector2f(entityTransform.getPosition()));
-                    //boxTransform.setScale(boxCollider2DComponent.getBoxCollider2D().getScale());
-                    boxTransform.setRotation(entityTransform.getRotation());
+                    Vec2 wp0 = body.getWorldPoint(verticesPos[0]);
+                    Vec2 wp1 = body.getWorldPoint(verticesPos[1]);
+                    Vec2 wp2 = body.getWorldPoint(verticesPos[2]);
+                    Vec2 wp3 = body.getWorldPoint(verticesPos[3]);
+
+                    boxComponent.getLinesData()[0].getVertices()[0].set(wp0.x * PhysicsWorld.RATIO, wp0.y * PhysicsWorld.RATIO);
+                    boxComponent.getLinesData()[0].getVertices()[1].set(wp1.x * PhysicsWorld.RATIO, wp1.y * PhysicsWorld.RATIO);
+
+                    boxComponent.getLinesData()[1].getVertices()[0].set(wp1.x * PhysicsWorld.RATIO, wp1.y * PhysicsWorld.RATIO);
+                    boxComponent.getLinesData()[1].getVertices()[1].set(wp2.x * PhysicsWorld.RATIO, wp2.y * PhysicsWorld.RATIO);
+
+                    boxComponent.getLinesData()[2].getVertices()[0].set(wp2.x * PhysicsWorld.RATIO, wp2.y * PhysicsWorld.RATIO);
+                    boxComponent.getLinesData()[2].getVertices()[1].set(wp3.x * PhysicsWorld.RATIO, wp3.y * PhysicsWorld.RATIO);
+
+                    boxComponent.getLinesData()[3].getVertices()[0].set(wp3.x * PhysicsWorld.RATIO, wp3.y * PhysicsWorld.RATIO);
+                    boxComponent.getLinesData()[3].getVertices()[1].set(wp0.x * PhysicsWorld.RATIO, wp0.y * PhysicsWorld.RATIO);
 
                     box.update();
                 }
@@ -78,15 +90,9 @@ public class EntitiesDebugDraw
                     CircleCollider2DComponent circleCollider2DComponent = circleCollider2DComponents.get(i);
 
                     if (circles.size() < i + 1) {
-                        Entity newCircle = new Entity();
+                        Entity newCircle = Entity.createAsCircle();
 
-                        CircleComponent circleComponent = new CircleComponent();
-                        circleComponent.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-                        //circleComponent.scaleWithEntity = true;
-
-                        newCircle.addComponent(new TransformComponent());
-                        newCircle.addComponent(circleComponent);
-                        newCircle.addSystem(new PrimitivesRendererSystem());
+                        newCircle.getComponent(CircleComponent.class).setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 
                         circles.add(newCircle);
 
@@ -97,12 +103,14 @@ public class EntitiesDebugDraw
 
                     circle.active = true;
 
-                    Transform circleTransform = circle.getComponent(TransformComponent.class).getTransform();
+                    CircleComponent circleComponent = circle.getComponent(CircleComponent.class);
 
-                    circleTransform.setPosition(new Vector2f(entityTransform.getPosition()));
-                    circle.getComponent(CircleComponent.class).setRadius(circleCollider2DComponent.getCircleCollider2D().getRadius());
-                    circle.getComponent(CircleComponent.class).setOffset(circleCollider2DComponent.getCircleCollider2D().getOffset());
-                    circleTransform.setRotation(entityTransform.getRotation());
+                    CircleShape circleShape = (CircleShape) circleCollider2DComponent.getCircleCollider2D().getFixture().getShape();
+                    Vec2 circlePos = circleCollider2DComponent.getCircleCollider2D().getRigidbody2D().getBody().getWorldPoint(circleShape.m_p);
+                    float circleRadius = circleShape.m_radius * PhysicsWorld.RATIO;
+
+                    circleComponent.setOffset(new Vector2f(circlePos.x * PhysicsWorld.RATIO, circlePos.y * PhysicsWorld.RATIO));
+                    circleComponent.setRadius(circleRadius);
 
                     circle.update();
                 }
@@ -120,143 +128,4 @@ public class EntitiesDebugDraw
             entity.deltaUpdate(deltaTime);
         }
     }
-
-    // запрос объектов для отрисовки дебага (занять нужное кол-во объектов для дебага)
-    /*
-    public static void requestEntities()
-    {
-        boxesPool.releaseAllUsedPoolObjects();
-        circlesPool.releaseAllUsedPoolObjects();
-
-        if(ViewsManager.getInspectorView().getCurrentInspectingObject() instanceof Entity entity) {
-            List<BoxCollider2DComponent> boxCollider2DComponents = entity.getAllComponents(BoxCollider2DComponent.class);
-            List<CircleCollider2DComponent> circleCollider2DComponents = entity.getAllComponents(CircleCollider2DComponent.class);
-
-            for(BoxCollider2DComponent boxCollider2DComponent : boxCollider2DComponents) {
-                if (!boxesPool.hasFree()) {
-                    Entity newBox = new Entity();
-                    newBox.addComponent(new BoxComponent());
-                    boxesPool.addPoolObject(newBox);
-                }
-                boxesPool.get();
-            }
-
-            for(CircleCollider2DComponent circleCollider2DComponent : circleCollider2DComponents) {
-                if (!circlesPool.hasFree()) {
-                    Entity newCircle = new Entity();
-                    newCircle.addComponent(new CircleComponent());
-                    circlesPool.addPoolObject(newCircle);
-                }
-                circlesPool.get();
-            }
-        }
-    }
-
-     */
-
-    /*private static Line2D[] currentPickedObject2DDebugLines = new Line2D[4];
-
-    private static Box2D[] currentPickedObject2DCollidersBoxes2D = new Box2D[100];
-    private static Circle2D[] currentPickedObject2DCollidersCircles2D = new Circle2D[100];
-
-    public static void init()
-    {
-        for(int i = 0; i < currentPickedObject2DCollidersBoxes2D.length; i++) {
-            currentPickedObject2DCollidersBoxes2D[i] = new Box2D();
-            currentPickedObject2DCollidersBoxes2D[i].setLinesColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-            currentPickedObject2DCollidersCircles2D[i] = new Circle2D(1);
-            currentPickedObject2DCollidersCircles2D[i].setLinesColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
-            System.out.println("initialized " + i + " colliders");
-        }
-
-        for(int i = 0; i < currentPickedObject2DDebugLines.length; i++) {
-            currentPickedObject2DDebugLines[i] = new Line2D();
-            currentPickedObject2DDebugLines[i].setColor(new Vector4f(0.25f, 0.9f, 0.5f, 1.0f));
-            currentPickedObject2DDebugLines[i].setLineWidth(3);
-        }
-    }
-
-    public static void draw()
-    {
-        if(ViewsManager.getInspectorView().getCurrentInspectingObject() instanceof Object2D) {
-            Object2D object2D = (Object2D) ViewsManager.getInspectorView().getCurrentInspectingObject();
-            if(!object2D.isShouldDestroy()) {
-
-                for (Line2D line2D : currentPickedObject2DDebugLines) {
-                    Graphics.getMainRenderer().render(line2D);
-                }
-
-                Transform transform = object2D.getComponent(TransformComponent.class).getTransform();
-                float rotation = MatrixUtils.getRotation(transform.getResultModelMatrix());
-                Vector2f center = new Vector2f(MatrixUtils.getPosition(transform.getResultModelMatrix()));
-                Vector2f scale = MatrixUtils.getScale(transform.getResultModelMatrix());
-                Vector2f halfSize = new Vector2f(100.0f * scale.x, 100.0f * scale.y);
-
-                Vector2f min = new Vector2f(center).sub(new Vector2f(halfSize).mul(0.5f));
-                Vector2f max = new Vector2f(center).add(new Vector2f(halfSize).mul(0.5f));
-
-                Vector2f[] vertices = {
-                        new Vector2f(min.x, min.y), new Vector2f(min.x, max.y),
-                        new Vector2f(max.x, max.y), new Vector2f(max.x, min.y)
-                };
-
-                if (rotation != 0.0f) {
-                    for (Vector2f vert : vertices) {
-                        MathUtils.rotate(vert, rotation, center);
-                    }
-                }
-
-                currentPickedObject2DDebugLines[0].setStart(new Vector2f(vertices[0].x, vertices[0].y));
-                currentPickedObject2DDebugLines[0].setEnd(new Vector2f(vertices[1].x, vertices[1].y));
-
-                currentPickedObject2DDebugLines[1].setStart(new Vector2f(vertices[1].x, vertices[1].y));
-                currentPickedObject2DDebugLines[1].setEnd(new Vector2f(vertices[2].x, vertices[2].y));
-
-                currentPickedObject2DDebugLines[2].setStart(new Vector2f(vertices[2].x, vertices[2].y));
-                currentPickedObject2DDebugLines[2].setEnd(new Vector2f(vertices[3].x, vertices[3].y));
-
-                currentPickedObject2DDebugLines[3].setStart(new Vector2f(vertices[3].x, vertices[3].y));
-                currentPickedObject2DDebugLines[3].setEnd(new Vector2f(vertices[0].x, vertices[0].y));
-
-                List<BoxCollider2DComponent> boxCollider2DComponents = object2D.getAllComponents(BoxCollider2DComponent.class);
-                List<CircleCollider2DComponent> circleCollider2DComponents = object2D.getAllComponents(CircleCollider2DComponent.class);
-
-                for(int i = 0; i < boxCollider2DComponents.size(); i++) {
-                    if(i < currentPickedObject2DCollidersBoxes2D.length) {
-                        BoxCollider2D boxCollider2D = boxCollider2DComponents.get(i).getBoxCollider2D();
-
-                        Vector2f position = new Vector2f(MatrixUtils.getPosition(transform.getResultModelMatrix()));
-                        Vector3f rotatedOffset = new Vector3f(boxCollider2D.getOffset().x, boxCollider2D.getOffset().y, 0.0f);
-                        rotatedOffset.rotateZ((float) Math.toRadians(MatrixUtils.getRotation(transform.getResultModelMatrix())));
-                        position.add(new Vector2f(rotatedOffset.x, rotatedOffset.y));
-
-                        currentPickedObject2DCollidersBoxes2D[i].getTransform().setPosition(position);
-                        currentPickedObject2DCollidersBoxes2D[i].getTransform().setRotationAround(MatrixUtils.getRotation(transform.getResultModelMatrix()),
-                                new Vector2f(MatrixUtils.getPosition(transform.getResultModelMatrix()).add(new Vector2f(position).add(transform.getCentre()).negate())));
-                        currentPickedObject2DCollidersBoxes2D[i].getTransform().setScale(new Vector2f(boxCollider2D.getScale()));
-
-                        currentPickedObject2DCollidersBoxes2D[i].draw();
-                    }
-                }
-
-                for(int i = 0; i < circleCollider2DComponents.size(); i++) {
-                    if(i < currentPickedObject2DCollidersCircles2D.length) {
-                        CircleCollider2D circleCollider2D = circleCollider2DComponents.get(i).getCircleCollider2D();
-
-                        Vector2f position = new Vector2f(MatrixUtils.getPosition(transform.getResultModelMatrix()));
-                        Vector3f rotatedOffset = new Vector3f(circleCollider2D.getOffset().x, circleCollider2D.getOffset().y, 0.0f);
-                        rotatedOffset.rotateZ((float) Math.toRadians(MatrixUtils.getRotation(transform.getResultModelMatrix())));
-                        position.add(new Vector2f(rotatedOffset.x, rotatedOffset.y));
-
-                        currentPickedObject2DCollidersCircles2D[i].getTransform().setPosition(position);
-                        currentPickedObject2DCollidersCircles2D[i].getTransform().setRotationAround(MatrixUtils.getRotation(transform.getResultModelMatrix()),
-                                new Vector2f(MatrixUtils.getPosition(transform.getResultModelMatrix()).add(new Vector2f(position).add(transform.getCentre()).negate())));
-                        currentPickedObject2DCollidersCircles2D[i].setRadius(circleCollider2D.getRadius());
-
-                        currentPickedObject2DCollidersCircles2D[i].draw();
-                    }
-                }
-            }
-        }
-    }*/
 }

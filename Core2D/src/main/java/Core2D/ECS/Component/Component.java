@@ -69,6 +69,16 @@ public class Component
 
     }
 
+    public void collider2DEnter(Entity otherObj)
+    {
+
+    }
+
+    public void collider2DExit(Entity otherObj)
+    {
+
+    }
+
     public boolean isActive() { return active; }
 
     /**

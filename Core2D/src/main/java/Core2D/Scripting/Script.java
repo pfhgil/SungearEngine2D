@@ -4,6 +4,7 @@ import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Entity;
+import Core2D.ECS.System.System;
 import Core2D.Graphics.RenderParts.RenderMethod;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
@@ -29,11 +30,6 @@ public class Script
     public String path = "";
     private String name = "";
 
-    private transient Method updateMethod;
-    private transient Method deltaUpdateMethod;
-    private transient Method collider2DEnterMethod;
-    private transient Method collider2DExitMethod;
-
     private boolean active = true;
 
     private transient Class<?> scriptClass;
@@ -48,7 +44,7 @@ public class Script
         File scriptFile = new File(script.path);
 
         String name = FilenameUtils.getBaseName(scriptFile.getName()).replace("\\\\/", ".");
-        System.out.println("name: " + name);
+        //System.out.println("name: " + name);
         this.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(), scriptFile.getPath(), name);
 
         if(script != this) {
@@ -64,11 +60,6 @@ public class Script
         scriptClass = cls;
 
         this.scriptClassInstance = scriptClassInstance;
-
-        deltaUpdateMethod = getMethod("deltaUpdate", float.class);
-        updateMethod = getMethod("update");
-        collider2DEnterMethod = getMethod("collider2DEnter", Entity.class);
-        collider2DExitMethod = getMethod("collider2DExit", Entity.class);
     }
 
     public void loadClass(String scriptsDirPath, String fullPath, String baseName)
@@ -92,7 +83,7 @@ public class Script
                 flexibleURLClassLoader.addURL(scriptDirURL);
                 // ЕСЛИ БУДУТ БАГИ, ТО РАСКОММЕНТИРОВАТЬ
                 //ScriptSystem.loadAllChildURLs(flexibleURLClassLoader, scriptsDirPath);
-                System.out.println(scriptDirURL);
+                //System.out.println(scriptDirURL);
 
                 scriptClass = flexibleURLClassLoader.loadNewClass(fullPath.replace(".java", ".class"));
                 // если в in-build
@@ -106,11 +97,6 @@ public class Script
 
             path = fullPath;
             name = baseName;
-
-            deltaUpdateMethod = Script.getMethod(scriptClass, "deltaUpdate", float.class);
-            updateMethod = Script.getMethod(scriptClass, "update");
-            collider2DEnterMethod = Script.getMethod(scriptClass, "collider2DEnter", Entity.class);
-            collider2DExitMethod = Script.getMethod(scriptClass, "collider2DExit", Entity.class);
 
             lastModified = new File(fullPath).lastModified();
         } catch (InstantiationException | IllegalAccessException | IOException | InvocationTargetException | NoSuchMethodException e) {
@@ -209,9 +195,11 @@ public class Script
     public void update()
     {
         if(active) {
-            if (updateMethod != null) {
-                invokeMethod(updateMethod);
-                //System.out.println(updateMethod);
+            if(scriptClassInstance instanceof Component component) {
+                component.update();
+            }
+            if(scriptClassInstance instanceof System system) {
+                system.update();
             }
 
             if(scriptClass != null) {
@@ -226,22 +214,31 @@ public class Script
 
     public void deltaUpdate(float deltaTime)
     {
-        if(active && deltaUpdateMethod != null) {
-            invokeMethod(deltaUpdateMethod, deltaTime);
+        if(scriptClassInstance instanceof Component component) {
+            component.deltaUpdate(deltaTime);
+        }
+        if(scriptClassInstance instanceof System system) {
+            system.deltaUpdate(deltaTime);
         }
     }
 
     public void collider2DEnter(Entity otherObj)
     {
-        if(active && collider2DEnterMethod != null) {
-            invokeMethod(collider2DEnterMethod, otherObj);
+        if(scriptClassInstance instanceof Component component) {
+            component.collider2DEnter(otherObj);
+        }
+        if(scriptClassInstance instanceof System system) {
+            system.collider2DEnter(otherObj);
         }
     }
 
     public void collider2DExit(Entity otherObj)
     {
-        if(active && collider2DExitMethod != null) {
-            invokeMethod(collider2DExitMethod, otherObj);
+        if(scriptClassInstance instanceof Component component) {
+            component.collider2DExit(otherObj);
+        }
+        if(scriptClassInstance instanceof System system) {
+            system.collider2DExit(otherObj);
         }
     }
 
@@ -308,12 +305,4 @@ public class Script
     public void setLastModified(long lastModified) { this.lastModified = lastModified; }
 
     public List<ScriptTempValue> getScriptTempValues() { return scriptTempValues; }
-
-    public Method getUpdateMethod() { return updateMethod; }
-
-    public Method getDeltaUpdateMethod() { return deltaUpdateMethod; }
-
-    public Method getCollider2DEnterMethod() { return collider2DEnterMethod; }
-
-    public Method getCollider2DExitMethod() { return collider2DExitMethod; }
 }

@@ -11,6 +11,7 @@ import Core2D.ECS.Entity;
 import Core2D.ECS.NonRemovable;
 import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Log.Log;
+import Core2D.Physics.PhysicsWorld;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scripting.Script;
 import Core2D.Utils.ExceptionsUtils;
@@ -214,20 +215,29 @@ public class ComponentsView extends View
                     case "BoxCollider2DComponent" -> {
                         BoxCollider2DComponent boxCollider2DComponent = (BoxCollider2DComponent) currentComponent;
 
-                        float[] offset = new float[] { boxCollider2DComponent.getBoxCollider2D().getOffset().x, boxCollider2DComponent.getBoxCollider2D().getOffset().y };
                         ImGui.pushID("BoxCollider2DOffsetDragFloat_" + i);
                         {
+                            float[] offset = new float[] { boxCollider2DComponent.getBoxCollider2D().getOffset().x, boxCollider2DComponent.getBoxCollider2D().getOffset().y };
                             if (ImGui.dragFloat2("Offset", offset)) {
                                 boxCollider2DComponent.getBoxCollider2D().setOffset(new Vector2f(offset[0], offset[1]));
                             }
                         }
                         ImGui.popID();
 
-                        float[] scale = new float[] { boxCollider2DComponent.getBoxCollider2D().getScale().x, boxCollider2DComponent.getBoxCollider2D().getScale().y };
                         ImGui.pushID("BoxCollider2DScaleDragFloat_" + i);
                         {
+                            float[] scale = new float[] { boxCollider2DComponent.getBoxCollider2D().getScale().x, boxCollider2DComponent.getBoxCollider2D().getScale().y };
                             if (ImGui.dragFloat2("Scale", scale, 0.01f)) {
                                 boxCollider2DComponent.getBoxCollider2D().setScale(new Vector2f(scale[0], scale[1]));
+                            }
+                        }
+                        ImGui.popID();
+
+                        ImGui.pushID("BoxCollider2DRotationDragFloat_" + i);
+                        {
+                            float[] angle = new float[] { boxCollider2DComponent.getBoxCollider2D().getAngle() };
+                            if (ImGui.dragFloat("Rotation", angle)) {
+                                boxCollider2DComponent.getBoxCollider2D().setAngle(angle[0]);
                             }
                         }
                         ImGui.popID();
@@ -235,9 +245,9 @@ public class ComponentsView extends View
                     case "CircleCollider2DComponent" -> {
                         CircleCollider2DComponent circleCollider2DComponent = (CircleCollider2DComponent) currentComponent;
 
-                        float[] offset = new float[] { circleCollider2DComponent.getCircleCollider2D().getOffset().x, circleCollider2DComponent.getCircleCollider2D().getOffset().y };
                         ImGui.pushID("CircleCollider2DOffsetDragFloat_" + i);
                         {
+                            float[] offset = new float[] { circleCollider2DComponent.getCircleCollider2D().getOffset().x, circleCollider2DComponent.getCircleCollider2D().getOffset().y };
                             if (ImGui.dragFloat2("Offset", offset)) {
                                 circleCollider2DComponent.getCircleCollider2D().setOffset(new Vector2f(offset[0], offset[1]));
                             }

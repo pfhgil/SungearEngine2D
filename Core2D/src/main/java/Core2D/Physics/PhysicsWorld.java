@@ -205,7 +205,7 @@ public class PhysicsWorld extends World
 
         PolygonShape shape = new PolygonShape();
         Vector2f halfSize = new Vector2f((100.0f / RATIO / 2.0f) * boxCollider2D.getScale().x, (100.0f / RATIO / 2.0f) * boxCollider2D.getScale().y);
-        shape.setAsBox(halfSize.x, halfSize.y, new Vec2(boxCollider2D.getOffset().x / PhysicsWorld.RATIO, boxCollider2D.getOffset().y / PhysicsWorld.RATIO), rigidbody2D.getBody().getAngle());
+        shape.setAsBox(halfSize.x, halfSize.y, new Vec2(boxCollider2D.getOffset().x / PhysicsWorld.RATIO, boxCollider2D.getOffset().y / PhysicsWorld.RATIO), boxCollider2D.getAngle() / PhysicsWorld.RATIO);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;

@@ -49,6 +49,11 @@ public class FrameBuffer implements Serializable
     // текстурный блок fbo
     private int textureBlock;
 
+
+
+    // --------- stencil test
+    private boolean stencilTestActive = false;
+
     public FrameBuffer(int width, int height, int type, int textureBlock)
     {
         this.width = width;
@@ -86,6 +91,9 @@ public class FrameBuffer implements Serializable
     {
         OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, handler));
         OpenGL.glCall((params) -> glViewport(0, 0, viewportWidth, viewportHeight));
+        if(stencilTestActive) {
+            OpenGL.glCall((params) -> glClear(GL_STENCIL_BUFFER_BIT));
+        }
     }
 
     // отключает FBO
@@ -254,4 +262,16 @@ public class FrameBuffer implements Serializable
     public void setViewportHeight(int viewportHeight) { this.viewportHeight = viewportHeight; }
 
     public int getTextureBlock() { return textureBlock; }
+
+    public boolean isStencilTestActive() { return stencilTestActive; }
+    public void setStencilTestActive(boolean stencilTestActive)
+    {
+        this.stencilTestActive = stencilTestActive;
+
+        if(stencilTestActive) {
+            OpenGL.glCall((params) -> glEnable(GL_STENCIL_TEST));
+        } else {
+            OpenGL.glCall((params) -> glDisable(GL_STENCIL_TEST));
+        }
+    }
 }
