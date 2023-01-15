@@ -431,11 +431,13 @@ public class ResourcesView extends View
                         "        \n" +
                         "    }\n" +
                         "    \n" +
+                        "    @Override\n" +
                         "    public void collider2DEnter(Entity otherObj)\n" +
                         "    {\n" +
                         "        \n" +
                         "    }\n" +
                         "    \n" +
+                        "    @Override\n" +
                         "    public void collider2DExit(Entity otherObj)\n" +
                         "    {\n" +
                         "        \n" +
@@ -466,11 +468,13 @@ public class ResourcesView extends View
                         "        \n" +
                         "    }\n" +
                         "    \n" +
+                        "    @Override\n" +
                         "    public void collider2DEnter(Entity otherObj)\n" +
                         "    {\n" +
                         "        \n" +
                         "    }\n" +
                         "    \n" +
+                        "    @Override\n" +
                         "    public void collider2DExit(Entity otherObj)\n" +
                         "    {\n" +
                         "        \n" +
