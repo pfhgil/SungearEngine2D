@@ -6,7 +6,7 @@ import java.util.List;
 public class SceneObject {
     private List<Attribute> attributes;
 
-    public void addComponent(Attribute attribute) {
+    public void addAttribute(Attribute attribute) {
         if (this.attributes == null) {
             this.attributes = new ArrayList<>();
         }
@@ -20,7 +20,7 @@ public class SceneObject {
      * @param <T>
      */
     @SuppressWarnings("unchecked")
-    public <T extends Attribute> T getComponent(Class<T> clazz) {
+    public <T extends Attribute> T getAttribute(Class<T> clazz) {
         if (this.attributes != null) {
             for (Attribute attribute : attributes) {
                 if (clazz.isInstance(attribute)) {
