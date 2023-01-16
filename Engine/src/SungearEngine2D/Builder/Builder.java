@@ -1,6 +1,5 @@
 package SungearEngine2D.Builder;
 
-import Core2D.Audio.AudioInfo;
 import Core2D.Core2D.Core2D;
 import Core2D.ECS.Component.Components.AudioComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
@@ -20,8 +19,8 @@ import Core2D.Utils.Utils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Utils.AppData.AppDataManager;
-import SungearEngine2D.exception.SungearEngineError;
-import SungearEngine2D.exception.SungearEngineException;
+import sungear.exception.SungearEngineError;
+import sungear.exception.SungearEngineException;
 
 import java.io.File;
 import java.io.IOException;

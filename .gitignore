@@ -5,6 +5,7 @@
 **/.gradle
 **/**/.gradle
 **/build/
+**/.idea/
 **/*.sm
 **/*.sgp
 **/*.txt

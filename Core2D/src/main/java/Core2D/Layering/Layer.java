@@ -93,7 +93,6 @@ public class Layer
                 entity.destroy();
                 layerObjectIterator.remove();
             } else {
-                // ВНИМАНИЕ! ЕСЛИ ДЕЛЬТА АПДЕЙТ БУДЕТ ИСПОЛЬЗОВАН КАК ТО ПО ДРУГОМУ (НАПРИМЕР: БУДЕТ ВЫЗЫВАТЬСЯ В ЦИКЛЕ),
                 // ТО gameObject.update() нужно перенести в отдельный метод update у слоя (его нужно реализовать)
                 entity.update();
                 entity.deltaUpdate(deltaTime);
