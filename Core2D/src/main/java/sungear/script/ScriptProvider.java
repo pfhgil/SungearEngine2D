@@ -1,6 +1,6 @@
 package sungear.script;
 
-import sungear.attribute.SceneObjectAttribute;
+import sungear.scene.object.Attribute;
 import sungear.exception.SungearEngineError;
 import sungear.exception.SungearEngineException;
 
@@ -23,7 +23,7 @@ public class ScriptProvider {
     }
 
     private void register(Class<?> clazz) {
-        if (SceneObjectAttribute.class.equals(clazz)) {
+        if (Attribute.class.equals(clazz)) {
             // TODO: add to index for UI search and core initialization
         }
     }
