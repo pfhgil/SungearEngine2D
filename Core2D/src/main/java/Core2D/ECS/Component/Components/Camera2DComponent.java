@@ -21,10 +21,17 @@ import java.util.Vector;
 
 import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
 import static org.lwjgl.opengl.GL11.glClear;
+import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13C.GL_TEXTURE1;
 
 public class Camera2DComponent extends Component implements NonDuplicated
 {
+    public interface Camera2DCallback
+    {
+        void preRender();
+        void postRender();
+    }
+
     private Vector2f viewportSize = new Vector2f(Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y);
 
     private transient Matrix4f projectionMatrix = new Matrix4f().ortho2D(-viewportSize.x / 2.0f, viewportSize.x / 2.0f, -viewportSize.y / 2.0f, viewportSize.y / 2.0f);
@@ -35,7 +42,12 @@ public class Camera2DComponent extends Component implements NonDuplicated
 
     private FrameBuffer frameBuffer;
 
-    private List<Entity> additionalEntitiesToRender = new ArrayList<>();
+    public Camera2DCallback camera2DCallback;
+
+    public Camera2DComponent()
+    {
+
+    }
 
     @Override
     public void init()
@@ -55,14 +67,16 @@ public class Camera2DComponent extends Component implements NonDuplicated
 
         frameBuffer.bind();
 
-        OpenGL.glCall((params) -> glClear(GL_COLOR_BUFFER_BIT));
+        if(camera2DCallback != null) {
+            camera2DCallback.preRender();
+        }
 
         if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
             SceneManager.currentSceneManager.getCurrentScene2D().draw();
         }
 
-        for(Entity renderingEntity : additionalEntitiesToRender) {
-            Graphics.getMainRenderer().render(renderingEntity);
+        if(camera2DCallback != null) {
+            camera2DCallback.postRender();
         }
 
         frameBuffer.unBind();
@@ -127,6 +141,4 @@ public class Camera2DComponent extends Component implements NonDuplicated
     }
 
     public FrameBuffer getFrameBuffer() { return frameBuffer; }
-
-    public List<Entity> getAdditionalEntitiesToRender() { return additionalEntitiesToRender; }
 }

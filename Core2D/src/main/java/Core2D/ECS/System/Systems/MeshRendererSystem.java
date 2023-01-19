@@ -51,7 +51,7 @@ public class MeshRendererSystem extends System
                             meshComponent.shader.getProgramHandler(),
                             "sampler",
                             meshComponent.texture.getFormattedTextureBlock()
-                    ); //FIXME: сделать нормальный метод для того что бы задовать сразу несколько юниформ
+                    );
 
                     // нарисовать два треугольника
                     OpenGL.glCall((params) -> glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0));

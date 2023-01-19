@@ -3,6 +3,7 @@ package Core2D.Graphics.RenderParts;
 import Core2D.DataClasses.ShaderData;
 import Core2D.Graphics.OpenGL;
 import Core2D.Log.Log;
+import org.joml.Vector2f;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -22,7 +23,7 @@ public class Shader implements Serializable
 
     public Shader(ShaderData shaderData)
     {
-        set(create(shaderData.getSourceCode()));
+        set(create(shaderData));
     }
 
     public static Shader create(ShaderData shaderData)

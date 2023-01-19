@@ -49,6 +49,8 @@ public class FrameBuffer implements Serializable
     // текстурный блок fbo
     private int textureBlock;
 
+    private boolean complete = false;
+
 
 
     // --------- stencil test
@@ -68,7 +70,7 @@ public class FrameBuffer implements Serializable
 
         handler = OpenGL.glCall((params) -> glGenFramebuffers(), Integer.class);
 
-        bind();
+        OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, handler));
 
         if(type == BuffersTypes.COLOR_BUFFER) {
             createTextureAttachment(width, height);
@@ -81,26 +83,31 @@ public class FrameBuffer implements Serializable
 
         if(OpenGL.glCall((params) -> glCheckFramebufferStatus(GL_FRAMEBUFFER), Integer.class) != GL_FRAMEBUFFER_COMPLETE) {
             Log.CurrentSession.println(new RuntimeException("Error while creating Framebuffer!"), Log.MessageType.ERROR);
+        } else {
+            complete = true;
         }
 
-        unBind();
+        OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, 0));
     }
 
     // активирует FBO
     public void bind()
     {
+        //if(complete) {
         OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, handler));
         OpenGL.glCall((params) -> glViewport(0, 0, viewportWidth, viewportHeight));
-        if(stencilTestActive) {
-            OpenGL.glCall((params) -> glClear(GL_STENCIL_BUFFER_BIT));
-        }
+        int toClear = stencilTestActive ? GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT : GL_COLOR_BUFFER_BIT;
+        OpenGL.glCall((params) -> glClear(toClear));
+        //}
     }
 
     // отключает FBO
     public void unBind()
     {
+        //if(complete) {
         OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, 0));
         OpenGL.glCall((params) -> glViewport(0, 0, Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y));
+        //}
     }
 
     // активирует rbo
@@ -129,7 +136,7 @@ public class FrameBuffer implements Serializable
 
         handler = OpenGL.glCall((params) -> glGenFramebuffers(), Integer.class);
 
-        bind();
+        OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, handler));
 
         if(type == BuffersTypes.COLOR_BUFFER) {
             createTextureAttachment(width, height);
@@ -140,7 +147,7 @@ public class FrameBuffer implements Serializable
             createTextureAttachment(width, height);
         }
 
-        unBind();
+        OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, 0));
     }
 
     // перестать использовать текстуру
@@ -157,9 +164,13 @@ public class FrameBuffer implements Serializable
 
         bindRBO();
 
-        OpenGL.glCall((params) -> glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height));
+        //OpenGL.glCall((params) -> glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height));
 
-        OpenGL.glCall((params) -> glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, RBOHandler));
+        //OpenGL.glCall((params) -> glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, RBOHandler));
+
+        OpenGL.glCall((params) -> glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height));
+
+        OpenGL.glCall((params) -> glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBOHandler));
 
         unBindRBO();
     }

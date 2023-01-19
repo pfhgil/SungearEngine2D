@@ -37,11 +37,6 @@ public class CamerasDebugLines
 
         inspectorCamera2DBox.getComponent(BoxComponent.class).setColor(new Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
         mainCamera2DBox.getComponent(BoxComponent.class).setColor(new Vector4f(1.0f, 0.0f, 1.0f, 1.0f));
-
-        Main.getMainCamera2D().getComponent(Camera2DComponent.class).getAdditionalEntitiesToRender().add(inspectorCamera2DIcon);
-        Main.getMainCamera2D().getComponent(Camera2DComponent.class).getAdditionalEntitiesToRender().add(inspectorCamera2DBox);
-        Main.getMainCamera2D().getComponent(Camera2DComponent.class).getAdditionalEntitiesToRender().add(mainCamera2DIcon);
-        Main.getMainCamera2D().getComponent(Camera2DComponent.class).getAdditionalEntitiesToRender().add(mainCamera2DBox);
     }
 
     public static void draw() {
@@ -99,9 +94,9 @@ public class CamerasDebugLines
         mainCamera2DIcon.update();
         mainCamera2DBox.update();
 
-        inspectorCamera2DIcon.getComponent(TransformComponent.class).getTransform().update(0.0f);
-        inspectorCamera2DBox.getComponent(TransformComponent.class).getTransform().update(0.0f);
-        mainCamera2DIcon.getComponent(TransformComponent.class).getTransform().update(0.0f);
-        mainCamera2DBox.getComponent(TransformComponent.class).getTransform().update(0.0f);
+        Graphics.getMainRenderer().render(inspectorCamera2DIcon);
+        Graphics.getMainRenderer().render(inspectorCamera2DBox);
+        Graphics.getMainRenderer().render(mainCamera2DIcon);
+        Graphics.getMainRenderer().render(mainCamera2DBox);
     }
 }

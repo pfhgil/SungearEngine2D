@@ -64,6 +64,13 @@ public class AssetManager implements Serializable
 
         addAsset(new Asset(whiteTextureData, whiteTexturePath));
         addAsset(new Asset(defaultProgressBarTextureData, defaultProgressBarTexturePath));
+
+        // ---------------- other graphics shaders
+        String onlyColorShaderPath = "/data/shaders/common/only_color_shader.glsl";
+
+        ShaderData onlyColorShader = new ShaderData().load(Core2D.class.getResourceAsStream(onlyColorShaderPath));
+
+        addAsset(new Asset(onlyColorShader, onlyColorShaderPath));
     }
 
     public void save()

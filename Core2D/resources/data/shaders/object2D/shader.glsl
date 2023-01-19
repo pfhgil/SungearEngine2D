@@ -17,9 +17,7 @@
 #endif
 
 #ifdef FRAGMENT
-    precision mediump float;
-
-    out mediump vec4 fragColor;
+    out vec4 fragColor;
 
     // режим отрисовки
     // 0 - без текстуры
@@ -28,7 +26,7 @@
     uniform int drawMode;
     uniform sampler2D sampler;
 
-    uniform mediump vec4 color;
+    uniform vec4 color;
 
     in vec2 vs_textureCoords;
 

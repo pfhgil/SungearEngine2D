@@ -73,6 +73,7 @@ public class Gizmo
     {
         Camera2DComponent mainCamera2DComponent = Main.getMainCamera2D().getComponent(Camera2DComponent.class);
 
+        /*
         mainCamera2DComponent.getAdditionalEntitiesToRender().add(yArrow);
         mainCamera2DComponent.getAdditionalEntitiesToRender().add(xArrow);
 
@@ -87,6 +88,8 @@ public class Gizmo
         mainCamera2DComponent.getAdditionalEntitiesToRender().add(yScaleLine);
         mainCamera2DComponent.getAdditionalEntitiesToRender().add(xScaleHandler);
         mainCamera2DComponent.getAdditionalEntitiesToRender().add(xScaleLine);
+
+         */
 
         Vector2i size = Graphics.getScreenSize();
         gizmoPickingTarget = new FrameBuffer(size.x, size.y, FrameBuffer.BuffersTypes.COLOR_BUFFER, GL13.GL_TEXTURE0);
@@ -248,16 +251,6 @@ public class Gizmo
                 xScaleHandler.update();
                 xScaleLine.update();
 
-                yArrow.getComponent(TransformComponent.class).getTransform().update(0.0f);
-                xArrow.getComponent(TransformComponent.class).getTransform().update(0.0f);
-                centrePoint.getComponent(TransformComponent.class).getTransform().update(0.0f);
-                centrePointToEditCentre.getComponent(TransformComponent.class).getTransform().update(0.0f);
-                rotationCircleTransform.update(0.0f);
-                rotationHandler.getComponent(TransformComponent.class).getTransform().update(0.0f);
-                yScaleHandler.getComponent(TransformComponent.class).getTransform().update(0.0f);
-                yScaleLine.getComponent(TransformComponent.class).getTransform().update(0.0f);
-                xScaleHandler.getComponent(TransformComponent.class).getTransform().update(0.0f);
-                xScaleLine.getComponent(TransformComponent.class).getTransform().update(0.0f);
 
                 if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_1)) {
                     gizmoPickingTarget.bind();
@@ -422,6 +415,21 @@ public class Gizmo
                                 entityTransform.getCentre().add(new Vector2f(offset).negate());
                     }
                 }
+
+                Graphics.getMainRenderer().render(yArrow);
+                Graphics.getMainRenderer().render(xArrow);
+
+                Graphics.getMainRenderer().render(centrePoint);
+
+                Graphics.getMainRenderer().render(centrePointToEditCentre);
+
+                Graphics.getMainRenderer().render(rotationCircle);
+                Graphics.getMainRenderer().render(rotationHandler);
+
+                Graphics.getMainRenderer().render(yScaleHandler);
+                Graphics.getMainRenderer().render(yScaleLine);
+                Graphics.getMainRenderer().render(xScaleHandler);
+                Graphics.getMainRenderer().render(xScaleLine);
             }
         }
     }

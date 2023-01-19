@@ -78,29 +78,6 @@ public abstract class Graphics
 
                 AudioListener.update();
 
-                /*
-                Vector2i windowSize = Core2D.getWindow().getSize();
-                if (CamerasManager.mainCamera2D != null) {
-                    Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
-                    if(camera2DComponent != null) {
-                        camera2DComponent.setViewportSize(new Vector2f(windowSize.x, windowSize.y));
-                    }
-                }
-
-                if (SceneManager.currentSceneManager != null &&
-                        SceneManager.currentSceneManager.getCurrentScene2D() != null &&
-                        SceneManager.currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
-                    Camera2DComponent camera2DComponent = SceneManager
-                            .currentSceneManager.getCurrentScene2D()
-                            .getSceneMainCamera2D()
-                            .getComponent(Camera2DComponent.class);
-                    if(camera2DComponent == null) {
-                        camera2DComponent.setViewportSize(new Vector2f(windowSize.x, windowSize.y));
-                    }
-                }
-
-                 */
-
                 if (!screenCleared) {
                     OpenGL.glCall((params) -> glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, screenClearColor.w));
                     screenCleared = true;
@@ -151,16 +128,6 @@ public abstract class Graphics
         Vector4f selectedPixelColor = new Vector4f(pixelBuffer.get(0), pixelBuffer.get(1), pixelBuffer.get(2), pixelBuffer.get(3));
         pixelBuffer.clear();
 
-        /*
-        FloatBuffer pixelBuffer = BufferUtils.createFloatBuffer(3);
-        glReadPixels((int) oglPosition.x, (int) oglPosition.y, 1, 1, GL_RGB, GL_FLOAT, pixelBuffer);
-
-        Vector3f selectedPixelColor = new Vector3f(pixelBuffer.get(0), pixelBuffer.get(1), pixelBuffer.get(2));
-        pixelBuffer.clear();
-        pixelBuffer = null;
-
-         */
-
         return selectedPixelColor;
     }
 
@@ -168,7 +135,6 @@ public abstract class Graphics
     public static Entity getPickedObject2D(Vector2f oglPosition)
     {
         pickingRenderTarget.bind();
-        OpenGL.glCall((params) -> glClear(GL_COLOR_BUFFER_BIT));
 
         if(!screenCleared) {
             OpenGL.glCall((params) -> glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, screenClearColor.w));

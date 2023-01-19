@@ -27,14 +27,6 @@ public class GraphicsRenderer
     {
         //Grid.draw();
 
-        //currentSceneManager.drawCurrentScene2D();
-
-        CamerasDebugLines.draw();
-
-        EntitiesDebugDraw.draw();
-
-        Gizmo.draw();
-
         if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && !ViewsManager.isSomeViewFocusedExceptSceneView) {
             Vector2f mousePosition = Mouse.getMousePosition();
 

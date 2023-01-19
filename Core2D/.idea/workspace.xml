@@ -57,6 +57,7 @@
         <option value="Interface" />
         <option value="AnnotationType" />
         <option value="Class" />
+        <option value="shader-template" />
       </list>
     </option>
   </component>
@@ -82,7 +83,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Pixelfield/SungearEngine2D_stable/Engine&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Pixelfield/SungearEngine2D/Engine&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
@@ -235,7 +236,10 @@
       <workItem from="1673726515172" duration="7444000" />
       <workItem from="1673775169668" duration="6212000" />
       <workItem from="1673800455669" duration="3834000" />
-      <workItem from="1673805074996" duration="1262000" />
+      <workItem from="1673805074996" duration="11729000" />
+      <workItem from="1673978477137" duration="3738000" />
+      <workItem from="1674069206485" duration="3751000" />
+      <workItem from="1674147291120" duration="5736000" />
     </task>
     <servers />
   </component>

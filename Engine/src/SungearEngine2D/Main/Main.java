@@ -1,42 +1,50 @@
 package SungearEngine2D.Main;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.Audio;
 import Core2D.CamerasManager.CamerasManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DUserCallback;
 import Core2D.Core2D.Settings;
-import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Graphics.Graphics;
+import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scripting.Script;
-import Core2D.Systems.ScriptSystem;
+import Core2D.ShaderUtils.FrameBuffer;
+import Core2D.ShaderUtils.ShaderUtils;
 import Core2D.Tasks.StoppableTask;
-import Core2D.Transform.Transform;
 import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.CameraController.CameraController;
+import SungearEngine2D.DebugDraw.CamerasDebugLines;
+import SungearEngine2D.DebugDraw.EntitiesDebugDraw;
+import SungearEngine2D.DebugDraw.Gizmo;
 import SungearEngine2D.GUI.GUI;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Utils.AppData.AppDataManager;
+import imgui.ImGui;
+import imgui.ImVec2;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector2f;
+import org.joml.Vector2i;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
-import org.newdawn.slick.Game;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
+import static org.lwjgl.opengl.GL46C.*;
 
 public class Main
 {
@@ -49,9 +57,11 @@ public class Main
     // TODO: delete this
     public static Audio fuckYouAudio = new Audio();
 
+    private static Shader onlyColorShader;
+
     public static void main(String[] main)
     {
-        Settings.Core2D.destinationFPS = 60;
+        Settings.Core2D.destinationFPS = 120;
         Graphics.setScreenClearColor(new Vector4f(0.65f, 0.65f, 0.65f, 1.0f));
         AppDataManager.init();
         core2DUserCallback = new Core2DUserCallback() {
@@ -158,6 +168,69 @@ public class Main
                 fuckYouAudio.loadAndSetup(Core2D.class.getResourceAsStream("/data/audio/audio_1.wav"));
 
                 /** -------------------- */
+
+                onlyColorShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/common/only_color_shader.glsl"));
+
+                mainCamera2D.getComponent(Camera2DComponent.class).getFrameBuffer().setStencilTestActive(true);
+                glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+                glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+                mainCamera2D.getComponent(Camera2DComponent.class).camera2DCallback = new Camera2DComponent.Camera2DCallback() {
+                    @Override
+                    public void preRender()
+                    {
+                        if(ViewsManager.getInspectorView().getCurrentInspectingObject() != null) {
+                            // обработка стенсил буфера отключена
+                            glStencilMask(0x00);
+
+                            ((Entity) ViewsManager.getInspectorView().getCurrentInspectingObject()).active = false;
+                        }
+                    }
+
+                    @Override
+                    public void postRender()
+                    {
+                        if(ViewsManager.getInspectorView().getCurrentInspectingObject() != null) {
+                            Entity inspectingEntity = (Entity) ViewsManager.getInspectorView().getCurrentInspectingObject();
+                            inspectingEntity.active = true;
+
+                            // первый проход рендера - отрисовывается объект в стенсил буфер и заполняется единицами
+                            glStencilFunc(GL_ALWAYS, 1, 0xFF);
+                            glStencilMask(0xFF);
+                            Graphics.getMainRenderer().render(inspectingEntity);
+
+                            MeshComponent meshComponent = inspectingEntity.getComponent(MeshComponent.class);
+                            TransformComponent transformComponent = inspectingEntity.getComponent(TransformComponent.class);
+                            if(meshComponent != null && transformComponent != null) {
+
+                                Shader lastShader = meshComponent.shader;
+                                Vector2f lastScale = new Vector2f(transformComponent.getTransform().getScale());
+                                Vector4f lastColor = new Vector4f(inspectingEntity.color);
+
+                                meshComponent.shader = onlyColorShader;
+                                transformComponent.getTransform().setScale(new Vector2f(lastScale).add(new Vector2f(0.1f, 0.1f)));
+                                transformComponent.update();
+                                inspectingEntity.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 1.0f));
+
+                                // второй проход рендера - отрисовываю объект чуть побольше только одним цветом. все значения пикселей в стенсио буфере, которые не равняются 0xFF будут отрисованы
+                                glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+                                glStencilMask(0x00);
+                                Graphics.getMainRenderer().render(inspectingEntity);
+
+                                // третяя обработка - все пиксели будут перезаписаны. включаю обработку стенсил буфера
+                                glStencilFunc(GL_ALWAYS, 0, 0xFF);
+                                glStencilMask(0xFF);
+
+                                meshComponent.shader = lastShader;
+                                transformComponent.getTransform().setScale(lastScale);
+                                inspectingEntity.setColor(lastColor);
+                            }
+                        }
+
+                        CamerasDebugLines.draw();
+                        EntitiesDebugDraw.draw();
+                        Gizmo.draw();
+                    }
+                };
 
 
                 System.gc();

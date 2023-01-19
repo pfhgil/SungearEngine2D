@@ -134,27 +134,6 @@ public class Transform implements Serializable
             setPositionLikeRigidbody2D();
             setRotationLikeRigidbody2D();
         }
-
-        if(parentTransform != null) {
-            Matrix4f translationMatrix = MatrixUtils.getTranslationMatrix(parentTransform.getResultModelMatrix());
-            Matrix4f rotationMatrix = MatrixUtils.getRotationMatrix(parentTransform.getResultModelMatrix());
-
-            Vector2f parentScale = MatrixUtils.getScale(parentTransform.getResultModelMatrix());
-
-            Vector2f lastScale = new Vector2f(scale);
-            setScale(new Vector2f(scale).mul(parentScale));
-            scale.set(lastScale);
-
-            Vector2f lastPosition = new Vector2f(position);
-            setPosition(new Vector2f(position).mul(parentScale));
-            position.set(lastPosition);
-
-            Matrix4f result = new Matrix4f(translationMatrix).mul(rotationMatrix);
-            resultModelMatrix.set(result);
-            resultModelMatrix.mul(modelMatrix);
-        } else {
-            resultModelMatrix.set(modelMatrix);
-        }
     }
 
     public void translate(Vector2f translation)
@@ -343,6 +322,27 @@ public class Transform implements Serializable
     private void updateModelMatrix()
     {
         modelMatrix = new Matrix4f().mul(translationMatrix).mul(rotationMatrix).mul(scaleMatrix);
+
+        if(parentTransform != null) {
+            Matrix4f translationMatrix = MatrixUtils.getTranslationMatrix(parentTransform.getResultModelMatrix());
+            Matrix4f rotationMatrix = MatrixUtils.getRotationMatrix(parentTransform.getResultModelMatrix());
+
+            Vector2f parentScale = MatrixUtils.getScale(parentTransform.getResultModelMatrix());
+
+            Vector2f lastScale = new Vector2f(scale);
+            setScale(new Vector2f(scale).mul(parentScale));
+            scale.set(lastScale);
+
+            Vector2f lastPosition = new Vector2f(position);
+            setPosition(new Vector2f(position).mul(parentScale));
+            position.set(lastPosition);
+
+            Matrix4f result = new Matrix4f(translationMatrix).mul(rotationMatrix);
+            resultModelMatrix.set(result);
+            resultModelMatrix.mul(modelMatrix);
+        } else {
+            resultModelMatrix.set(modelMatrix);
+        }
     }
 
     private void updateRigidbody2D()

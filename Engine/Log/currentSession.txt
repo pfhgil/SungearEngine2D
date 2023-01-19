@@ -1,9 +1,9 @@
-[#FFFFFF] 2023/01/15 21:12:24 | [#008000] Current session log file was created!
-[#FFFFFF] 2023/01/15 21:12:24 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2023/01/15 21:12:25 | [#008000] Core2D started!
-[#FFFFFF] 2023/01/15 21:12:25 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
-[#FFFFFF] 2023/01/15 21:12:25 | [#FFFFFF] Initializing compiler...  
-[#FFFFFF] 2023/01/15 21:12:28 | [#FFFFFF] scene manager code: {
+[#FFFFFF] 2023/01/19 22:55:08 | [#008000] Current session log file was created!
+[#FFFFFF] 2023/01/19 22:55:08 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2023/01/19 22:55:08 | [#008000] Core2D started!
+[#FFFFFF] 2023/01/19 22:55:08 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2023/01/19 22:55:08 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2023/01/19 22:55:10 | [#FFFFFF] scene manager code: {
   "scene2DStoredValues": [
     {
       "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\kek0.sgs",
@@ -53,18 +53,4 @@
   ],
   "mainScene2DPath": ""
 }
-[#FFFFFF] 2023/01/15 21:12:46 | [#FFFFFF] Compiling script VoidsTestSystem.java... 
-[#FFFFFF] 2023/01/15 21:12:46 | [#008000] Script VoidsTestSystem.java was successfully built!
-[#FFFFFF] 2023/01/15 21:12:47 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/01/15 21:12:48 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/01/15 21:12:48 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/01/15 21:12:49 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/01/15 21:12:49 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/01/15 21:12:49 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/01/15 21:12:52 | [#FFFFFF] Log cleared! See log directory in the engine directory.
-[#FFFFFF] 2023/01/15 21:12:58 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/01/15 21:12:59 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/01/15 21:12:59 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/01/15 21:12:59 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/01/15 21:12:59 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/01/15 21:12:59 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
+[#FFFFFF] 2023/01/19 22:55:31 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists

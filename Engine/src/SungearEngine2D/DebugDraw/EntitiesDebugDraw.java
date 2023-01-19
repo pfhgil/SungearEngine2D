@@ -8,6 +8,7 @@ import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.Systems.PrimitivesRendererSystem;
+import Core2D.Graphics.Graphics;
 import Core2D.Physics.PhysicsWorld;
 import Core2D.Transform.Transform;
 import SungearEngine2D.GUI.Views.ViewsManager;
@@ -52,9 +53,9 @@ public class EntitiesDebugDraw
                         newBox.getComponent(BoxComponent.class).setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 
                         boxes.add(newBox);
-
-                        Main.getMainCamera2D().getComponent(Camera2DComponent.class).getAdditionalEntitiesToRender().add(newBox);
                     }
+
+                    if(boxCollider2DComponent.getBoxCollider2D().getFixture() == null) continue;
 
                     Entity box = boxes.get(i);
 
@@ -84,6 +85,8 @@ public class EntitiesDebugDraw
                     boxComponent.getLinesData()[3].getVertices()[1].set(wp0.x * PhysicsWorld.RATIO, wp0.y * PhysicsWorld.RATIO);
 
                     box.update();
+
+                    Graphics.getMainRenderer().render(box);
                 }
 
                 for (int i = 0; i < circleCollider2DComponents.size(); i++) {
@@ -95,9 +98,9 @@ public class EntitiesDebugDraw
                         newCircle.getComponent(CircleComponent.class).setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 
                         circles.add(newCircle);
-
-                        Main.getMainCamera2D().getComponent(Camera2DComponent.class).getAdditionalEntitiesToRender().add(newCircle);
                     }
+
+                    if(circleCollider2DComponent.getCircleCollider2D().getFixture() == null) continue;
 
                     Entity circle = circles.get(i);
 
@@ -113,6 +116,8 @@ public class EntitiesDebugDraw
                     circleComponent.setRadius(circleRadius);
 
                     circle.update();
+
+                    Graphics.getMainRenderer().render(circle);
                 }
             }
         }
