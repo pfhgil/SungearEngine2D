@@ -11,7 +11,6 @@ import Core2D.Physics.PhysicsWorld;
 import Core2D.Physics.Rigidbody2D;
 import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.Tag;
-import Core2D.Utils.Utils;
 import org.jbox2d.common.Vec2;
 import org.joml.Vector2f;
 import org.joml.Vector4f;

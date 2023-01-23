@@ -1,13 +1,11 @@
 package Core2D.ECS.System.Systems;
 
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
+import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Scripting.Script;
-
-import java.util.function.Consumer;
 
 public class ScriptableSystem extends System
 {
@@ -29,6 +27,7 @@ public class ScriptableSystem extends System
     public void update()
     {
         super.update();
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         script.update();
     }
 
@@ -40,6 +39,7 @@ public class ScriptableSystem extends System
     @Override
     public void deltaUpdate(float deltaTime)
     {
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         script.deltaUpdate(deltaTime);
     }
 
@@ -47,8 +47,10 @@ public class ScriptableSystem extends System
      * Calls the collider2DEnter method of the script if current scene is set.
      * @see Script#collider2DEnter(Entity)
      */
+    @Override
     public void collider2DEnter(Entity otherEntity)
     {
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         script.collider2DEnter(otherEntity);
     }
 
@@ -56,17 +58,24 @@ public class ScriptableSystem extends System
      * Calls the collider2DExit method of the script if current scene is set.
      * @see Script#collider2DExit(Entity)
      */
+    @Override
     public void collider2DExit(Entity otherEntity)
     {
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         script.collider2DExit(otherEntity);
     }
 
-    // сделано для избежания рекурсивных вызовов дефолтных методов (update, deltaUpdate, collider2DEnter, collider2DExit).
-    // они могут ссылаться сами на себя, если в ребенке, наследующем данный класс не реализованы какие-либо из этих четырек методов
-    public void callMethod(Consumer<Object[]> func)
+    @Override
+    public void render()
     {
-        if(SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
-            func.accept(null);
-        }
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
+        script.render();
+    }
+
+    @Override
+    public void render(Shader shader)
+    {
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
+        script.render(shader);
     }
 }

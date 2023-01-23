@@ -1,9 +1,16 @@
 package Core2D.Core2D;
 
+import Core2D.Graphics.OpenGL;
 import org.joml.Vector3f;
+import org.lwjgl.opengl.GL11C;
 
 public class Settings
 {
+    public static void init()
+    {
+        Graphics.setStencilTestActive(Graphics.isStencilTestActive());
+    }
+
     /**
      * Types of quality .
      */
@@ -24,6 +31,21 @@ public class Settings
             public static class TexturesFiltrationQuality
             {
                 public static QualityType quality = QualityType.LOW;
+            }
+        }
+
+        private static boolean stencilTestActive = true;
+
+        public static boolean isStencilTestActive() { return stencilTestActive; }
+
+        public static void setStencilTestActive(boolean stencilTestActive)
+        {
+            Graphics.stencilTestActive = stencilTestActive;
+
+            if(stencilTestActive) {
+                OpenGL.glCall((params) -> GL11C.glEnable(GL11C.GL_STENCIL_TEST));
+            } else {
+                OpenGL.glCall((params) -> GL11C.glDisable(GL11C.GL_STENCIL_TEST));
             }
         }
     }

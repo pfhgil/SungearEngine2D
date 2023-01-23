@@ -122,7 +122,7 @@ public class ScriptSystem
 
                         scriptComponent.script.setFieldValue(scriptComponent.script.getField("entity"), scriptComponent.entity);
 
-                        System.out.println("lastScriptPath: " + lastScriptPath);
+                        Log.Console.println("lastScriptPath: " + lastScriptPath);
                     }
 
                     for(ScriptableSystem scriptableSystem : scriptableSystems) {

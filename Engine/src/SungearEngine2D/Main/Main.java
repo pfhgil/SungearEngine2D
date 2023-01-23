@@ -6,6 +6,7 @@ import Core2D.CamerasManager.CamerasManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DUserCallback;
 import Core2D.Core2D.Settings;
+import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
@@ -40,6 +41,7 @@ import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,9 +116,33 @@ public class Main
                                                 scriptComponents.forEach(scriptComponent -> allScripts.add(scriptComponent.script));
                                                 scriptableSystems.forEach(scriptableSystem -> allScripts.add(scriptableSystem.script));
 
+                                                for(Component component : layer.getEntities().get(i).getComponents()) {
+                                                    Class<?> componentClass = component.getClass();
+                                                    Object componentInstance = component;
+                                                    if(component instanceof ScriptComponent scriptComponent) {
+                                                        componentClass = scriptComponent.script.getScriptClassInstance().getClass();
+                                                        componentInstance = scriptComponent.script.getScriptClassInstance();
+                                                    }
+
+                                                    for(Field field : componentClass.getFields()) {
+                                                        if(field.getType().isAssignableFrom(Shader.class)) {
+                                                            Shader shader = (Shader) field.get(componentInstance);
+
+                                                            String shaderFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + shader.path;
+                                                            File file = new File(shaderFullPath);
+
+                                                            if(file.exists()) {
+                                                                long lastModified = file.lastModified();
+                                                                if (lastModified != shader.lastModified) {
+                                                                    Compiler.addShaderToCompile(shader);
+                                                                }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+
                                                 for (int k = 0; k < allScripts.size(); k++) {
                                                     // был ли уже скомпилирован скрипт
-
                                                     boolean alreadyCompiled = compiledScripts.contains(allScripts.get(k).getPath());
                                                     if (alreadyCompiled) {
                                                         continue;
@@ -171,7 +197,6 @@ public class Main
 
                 onlyColorShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/common/only_color_shader.glsl"));
 
-                mainCamera2D.getComponent(Camera2DComponent.class).getFrameBuffer().setStencilTestActive(true);
                 glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
                 glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
                 mainCamera2D.getComponent(Camera2DComponent.class).camera2DCallback = new Camera2DComponent.Camera2DCallback() {
@@ -201,12 +226,9 @@ public class Main
                             MeshComponent meshComponent = inspectingEntity.getComponent(MeshComponent.class);
                             TransformComponent transformComponent = inspectingEntity.getComponent(TransformComponent.class);
                             if(meshComponent != null && transformComponent != null) {
-
-                                Shader lastShader = meshComponent.shader;
                                 Vector2f lastScale = new Vector2f(transformComponent.getTransform().getScale());
                                 Vector4f lastColor = new Vector4f(inspectingEntity.color);
 
-                                meshComponent.shader = onlyColorShader;
                                 transformComponent.getTransform().setScale(new Vector2f(lastScale).add(new Vector2f(0.1f, 0.1f)));
                                 transformComponent.update();
                                 inspectingEntity.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 1.0f));
@@ -214,13 +236,12 @@ public class Main
                                 // второй проход рендера - отрисовываю объект чуть побольше только одним цветом. все значения пикселей в стенсио буфере, которые не равняются 0xFF будут отрисованы
                                 glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
                                 glStencilMask(0x00);
-                                Graphics.getMainRenderer().render(inspectingEntity);
+                                Graphics.getMainRenderer().render(inspectingEntity, onlyColorShader);
 
                                 // третяя обработка - все пиксели будут перезаписаны. включаю обработку стенсил буфера
                                 glStencilFunc(GL_ALWAYS, 0, 0xFF);
                                 glStencilMask(0xFF);
 
-                                meshComponent.shader = lastShader;
                                 transformComponent.getTransform().setScale(lastScale);
                                 inspectingEntity.setColor(lastColor);
                             }
@@ -246,6 +267,8 @@ public class Main
             @Override
             public void onDrawFrame() {
                 Core2D.getWindow().setName("Sungear Engine 2D. FPS: " + Core2D.getDeltaTimer().getFPS());
+
+                Compiler.compileAllShaders();
 
                 TransformComponent cameraTransformComponent = mainCamera2D.getComponent(TransformComponent.class);
                 if(cameraTransformComponent != null) {

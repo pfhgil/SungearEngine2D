@@ -1,7 +1,5 @@
 package arch.DataClasses;
 
-import com.google.gson.annotations.SerializedName;
-
 import java.nio.ByteBuffer;
 
 public class Texture2DData

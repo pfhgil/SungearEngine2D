@@ -1,15 +1,16 @@
 package Core2D.ShaderUtils;
 
 import Core2D.Graphics.OpenGL;
-import Core2D.Log.Log;
 import Core2D.Utils.MatrixUtils;
 import org.joml.*;
+
 import static org.lwjgl.opengl.GL32C.*;
 
 public class ShaderUtils
 {
     public static boolean setUniform(int programHandler, String uniformName, Matrix4f matrix4f)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
@@ -22,6 +23,7 @@ public class ShaderUtils
     }
     public static boolean setUniform(int programHandler, String uniformName, Matrix3f matrix3f)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
@@ -34,6 +36,7 @@ public class ShaderUtils
     }
     public static boolean setUniform(int programHandler, String uniformName, Vector2f vector2f)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
@@ -45,6 +48,7 @@ public class ShaderUtils
     }
     public static boolean setUniform(int programHandler, String uniformName, Vector3f vector3f)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
@@ -56,6 +60,7 @@ public class ShaderUtils
     }
     public static boolean setUniform(int programHandler, String uniformName, Vector4f vector4f)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
@@ -67,6 +72,7 @@ public class ShaderUtils
     }
     public static boolean setUniform(int programHandler, String uniformName, int _int)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
@@ -78,6 +84,7 @@ public class ShaderUtils
     }
     public static boolean setUniform(int programHandler, String uniformName, float _float)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
@@ -89,6 +96,7 @@ public class ShaderUtils
     }
     public static boolean setUniform(int programHandler, String uniformName, boolean _boolean)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {

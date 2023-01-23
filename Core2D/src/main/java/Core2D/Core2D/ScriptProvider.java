@@ -1,5 +1,7 @@
 package Core2D.Core2D;
 
+import Core2D.Log.Log;
+
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
@@ -15,14 +17,14 @@ public class ScriptProvider {
         Class<TestInterface> testScript2Class = customLoader.loadNewClass(scriptPath2);
         TestInterface testScript1 = testScript1Class.getConstructor().newInstance();
         TestInterface testScript2 = testScript2Class.getConstructor().newInstance();
-        System.out.println(testScript1.getMsg());
-        System.out.println(testScript2.getMsg());
-        System.out.println("_________");
+        Log.Console.println(testScript1.getMsg());
+        Log.Console.println(testScript2.getMsg());
+        Log.Console.println("_________");
         customLoader = new CustomLoader();
         Class<TestInterface> newTestScript1Class = customLoader.loadNewClass(scriptPath1);
         TestInterface newTestScript1 = newTestScript1Class.getConstructor().newInstance();
-        System.out.println(newTestScript1.getMsg());
-        System.out.println(newTestScript1.getBroMsg());
+        Log.Console.println(newTestScript1.getMsg());
+        Log.Console.println(newTestScript1.getBroMsg());
     }
 
     public static class CustomLoader extends ClassLoader {

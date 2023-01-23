@@ -2,10 +2,7 @@ package Core2D.Physics.Collider2D;
 
 import Core2D.Physics.PhysicsWorld;
 import Core2D.Physics.Rigidbody2D;
-import org.jbox2d.callbacks.DebugDraw;
 import org.jbox2d.collision.shapes.PolygonShape;
-import org.jbox2d.common.Color3f;
-import org.jbox2d.common.Transform;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Fixture;
 import org.jbox2d.dynamics.FixtureDef;

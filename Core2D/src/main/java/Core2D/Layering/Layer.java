@@ -1,10 +1,11 @@
 package Core2D.Layering;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Entity;
-import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Graphics.Graphics;
+import Core2D.Graphics.RenderParts.Shader;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
@@ -20,6 +21,8 @@ public class Layer
 
     private transient boolean shouldDestroy;
 
+    private transient Shader pickingShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/mesh/picking_shader.glsl"));
+
     public Layer(int ID, String name)
     {
         this.ID = ID;
@@ -33,19 +36,18 @@ public class Layer
         for(int i = 0; i < entities.size(); i++) {
             Entity entity = entities.get(i);
 
-            Vector4f lastColor = new Vector4f(entity.getColor());
-
-            entity.setColor(new Vector4f(entity.getPickColor().x / 255.0f,
-                    entity.getPickColor().y / 255.0f,
-                    entity.getPickColor().z / 255.0f,
-                    1.0f));
-
             MeshComponent meshComponent = entity.getComponent(MeshComponent.class);
             if(meshComponent != null) {
-                meshComponent.textureDrawMode = Texture2D.TextureDrawModes.ONLY_ALPHA;
-                Graphics.getMainRenderer().render(entity);
+                Vector4f lastColor = new Vector4f(entity.getColor());
+
+                entity.setColor(new Vector4f(entity.getPickColor().x / 255.0f,
+                        entity.getPickColor().y / 255.0f,
+                        entity.getPickColor().z / 255.0f,
+                        1.0f));
+
+                Graphics.getMainRenderer().render(entity, pickingShader);
+
                 entity.setColor(lastColor);
-                meshComponent.textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
             }
         }
     }

@@ -4,8 +4,8 @@ import Core2D.AssetManager.AssetManager;
 import Core2D.ECS.Component.Component;
 import Core2D.Graphics.RenderParts.Material2D;
 import Core2D.Graphics.RenderParts.Shader;
-import Core2D.ShaderUtils.*;
 import Core2D.Graphics.RenderParts.Texture2D;
+import Core2D.ShaderUtils.*;
 import Core2D.Utils.PositionsQuad;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -16,7 +16,7 @@ public class MeshComponent extends Component
 {
     public Texture2D texture = new Texture2D();
 
-    public transient Shader shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/object2D/shader.glsl"));
+    public Shader shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/mesh/default_shader.glsl"));
 
     public Material2D material2D;
 
@@ -41,7 +41,6 @@ public class MeshComponent extends Component
             size.x / 2.0f, -size.y / 2.0f,
             1, 0,
     };
-    public int textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
 
     public MeshComponent() { }
 
@@ -62,7 +61,6 @@ public class MeshComponent extends Component
             if(meshComponent.data != null) {
                 data = meshComponent.data;
             }
-            textureDrawMode = meshComponent.textureDrawMode;
 
             loadVAO();
         }

@@ -1,7 +1,6 @@
 package Core2D.Window;
 
 import Core2D.Core2D.Settings;
-import Core2D.Graphics.Graphics;
 import Core2D.Graphics.OpenGL;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
@@ -73,7 +72,7 @@ public class Window
     {
         try {
             Log.CurrentSession.println("Starting Core2D...", Log.MessageType.INFO);
-            System.out.println("начало инициализации окна");
+            Log.Console.println("начало инициализации окна");
 
             GLFWErrorCallback.createPrint(System.err).set();
 

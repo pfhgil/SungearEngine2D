@@ -3,7 +3,6 @@ package Core2D.Graphics.RenderParts;
 import Core2D.DataClasses.ShaderData;
 import Core2D.Graphics.OpenGL;
 import Core2D.Log.Log;
-import org.joml.Vector2f;
 
 import java.io.Serializable;
 import java.util.HashMap;
@@ -17,7 +16,11 @@ public class Shader implements Serializable
 
     public String path = "";
 
-    private ShaderData shaderData;
+    private transient ShaderData shaderData;
+
+    private transient boolean compiled = false;
+
+    public long lastModified = -1;
 
     public Shader() { }
 
@@ -28,8 +31,8 @@ public class Shader implements Serializable
 
     public static Shader create(ShaderData shaderData)
     {
-        Shader shader = create(shaderData.getSourceCode());
-        shader.shaderData = shaderData;
+        Shader shader = new Shader();
+        shader.compile(shaderData);
         return shader;
     }
 
@@ -37,15 +40,14 @@ public class Shader implements Serializable
     {
         Shader shader = new Shader();
 
-        shader.createShaderPart(GL_VERTEX_SHADER, sourceCode);
-        shader.createShaderPart(GL_FRAGMENT_SHADER, sourceCode);
-
-        shader.createProgram();
+        shader.shaderData = new ShaderData();
+        shader.shaderData.setSourceCode(sourceCode);
+        shader.compile(shader.shaderData);
 
         return shader;
     }
 
-    public void createShaderPart(int shaderType, String shaderSourceCode)
+    public boolean createShaderPart(int shaderType, String shaderSourceCode)
     {
         int shaderPartHandler = OpenGL.glCall((params) -> glCreateShader(shaderType), Integer.class);
         shaderPartsHandlers.put(shaderType, shaderPartHandler);
@@ -69,10 +71,14 @@ public class Shader implements Serializable
 
             Log.CurrentSession.println("Error while creating and compiling shader. Shader type is: " + shaderPartTypeToString(shaderType) + ". Error is: " + errorString, Log.MessageType.ERROR);
             Log.CurrentSession.println(shaderSourceCode, Log.MessageType.ERROR);
+
+            compiled = false;
         }
+
+        return compiled;
     }
 
-    public void createProgram() {
+    public boolean createProgram() {
         programHandler = OpenGL.glCall((params) -> glCreateProgram(), Integer.class);
 
         for (int shaderHandler : shaderPartsHandlers.values()) {
@@ -97,7 +103,26 @@ public class Shader implements Serializable
             destroy();
 
             Log.CurrentSession.println("Error while creating and linking program. Error is: " + errorString, Log.MessageType.ERROR);
+
+            compiled = false;
         }
+
+        return compiled;
+    }
+
+    public boolean compile(ShaderData shaderData)
+    {
+        this.shaderData = shaderData;
+        path = shaderData.getPath();
+
+        compiled = true;
+
+        createShaderPart(GL_VERTEX_SHADER, shaderData.getSourceCode());
+        createShaderPart(GL_FRAGMENT_SHADER, shaderData.getSourceCode());
+
+        createProgram();
+
+        return compiled;
     }
 
     public void destroyShaderPart(int shaderPartType)
@@ -140,11 +165,9 @@ public class Shader implements Serializable
 
     public void bind()
     {
-        OpenGL.glCall((params) -> glUseProgram(programHandler));
-    }
-    public void unBind()
-    {
-        OpenGL.glCall((params) -> glUseProgram(0));
+        if(glIsProgram(programHandler)) {
+            OpenGL.glCall((params) -> glUseProgram(programHandler));
+        }
     }
 
     public int getShaderPartHandler(int shaderTypePart) { return shaderPartsHandlers.get(shaderTypePart); }
@@ -154,4 +177,6 @@ public class Shader implements Serializable
     public HashMap<Integer, Integer> getShaderPartsHandlers() { return shaderPartsHandlers; }
 
     public ShaderData getShaderData() { return shaderData; }
+
+    public boolean isCompiled() { return compiled; }
 }

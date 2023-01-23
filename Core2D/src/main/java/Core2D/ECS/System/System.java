@@ -1,6 +1,7 @@
 package Core2D.ECS.System;
 
 import Core2D.ECS.Entity;
+import Core2D.Graphics.RenderParts.Shader;
 
 public class System
 {
@@ -36,6 +37,16 @@ public class System
     }
 
     public void collider2DExit(Entity otherObj)
+    {
+
+    }
+
+    public void render()
+    {
+
+    }
+
+    public void render(Shader shader)
     {
 
     }

@@ -2,9 +2,9 @@ package Core2D.Graphics;
 
 import Core2D.Audio.AudioListener;
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Entity;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
@@ -147,7 +147,7 @@ public abstract class Graphics
 
         Vector4f selectedPixelColor = getPixelColor(oglPosition);
 
-        System.out.println("selectedPixelColor: " + selectedPixelColor.x + ", " + selectedPixelColor.y + ", " + selectedPixelColor.z + ", " + selectedPixelColor.w);
+        Log.Console.println("selectedPixelColor: " + selectedPixelColor.x + ", " + selectedPixelColor.y + ", " + selectedPixelColor.z + ", " + selectedPixelColor.w);
 
         OpenGL.glCall((params) -> glEnable(GL_BLEND));
         pickingRenderTarget.unBind();

@@ -126,6 +126,7 @@ public class Core2D extends Graphics
         try {
             Graphics.init();
             OpenAL.init();
+            Settings.init();
 
             core2DInputCallbacks = new Core2DInputCallbacks();
 

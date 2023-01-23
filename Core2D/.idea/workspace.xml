@@ -97,6 +97,11 @@
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Pixelfield\SungearEngine2D\Core2D\resources\data\shaders\object2D" />
+    </key>
+  </component>
   <component name="RunManager" selected="Shell Script.build">
     <configuration name="Core2D [build]" type="GradleRunConfiguration" factoryName="Gradle">
       <ExternalSystemSettings>
@@ -240,6 +245,10 @@
       <workItem from="1673978477137" duration="3738000" />
       <workItem from="1674069206485" duration="3751000" />
       <workItem from="1674147291120" duration="5736000" />
+      <workItem from="1674219648988" duration="7771000" />
+      <workItem from="1674395441558" duration="2953000" />
+      <workItem from="1674415288622" duration="10711000" />
+      <workItem from="1674479283243" duration="17038000" />
     </task>
     <servers />
   </component>

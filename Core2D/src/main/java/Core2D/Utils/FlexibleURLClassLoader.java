@@ -1,7 +1,6 @@
 package Core2D.Utils;
 
 import Core2D.Log.Log;
-import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -9,7 +8,6 @@ import java.net.URL;
 import java.net.URLClassLoader;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.jar.Manifest;
 
 public class FlexibleURLClassLoader extends URLClassLoader
 {
@@ -23,7 +21,7 @@ public class FlexibleURLClassLoader extends URLClassLoader
 
     public Class<?> loadNewClass(String path)
     {
-        System.out.println("path: " + path);
+        Log.Console.println("path: " + path);
         if(!(new File(path).exists())) return null;
         try {
             byte[] classBytes = Files.readAllBytes(Path.of(path));

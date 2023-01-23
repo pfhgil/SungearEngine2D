@@ -43,13 +43,13 @@ public class ResourcesView extends View
 {
     public static String currentDirectoryPath = "";
 
-    private Vector2f iconImageSize = new Vector2f(75.0f, 75.0f);
-    private Vector2f iconImageOffset = new Vector2f(90.0f, 140.0f);
+    private final Vector2f iconImageSize = new Vector2f(75.0f, 75.0f);
+    private final Vector2f iconImageOffset = new Vector2f(90.0f, 140.0f);
 
     // id файла, на которую сейчас наведена мышка
     private int hoveredFileID = -1;
     // цвет файла, на которую сейчас наведена мышка
-    private Vector4f hoveredFileImageColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
+    private final Vector4f hoveredFileImageColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
 
     // последний id файла, на который была нажат мышь
     private int lastRightClickedFileID = -1;
@@ -57,7 +57,7 @@ public class ResourcesView extends View
     // id текущего изменяемого имени файла
     private int currentEditableFileNameID = -1;
     // текущее изменяемое имя файла
-    private ImString currentEditableFileName = new ImString();
+    private final ImString currentEditableFileName = new ImString();
     // сейчас имя файла изменяется?
     private boolean filenameEditing = false;
 
@@ -68,12 +68,12 @@ public class ResourcesView extends View
     private boolean mouseRightClickedOnResourcesView = false;
 
     // максимальная длина имени файла на строке
-    private int maxFileNameInLineLength = 8;
+    private final int maxFileNameInLineLength = 8;
     // максимальная длина имени файла + "..."
-    private int maxFileNameLength = 27;
+    private final int maxFileNameLength = 27;
 
     private boolean canOpenScene2D = true;
-    private Timer openScene2DTimer = new Timer(new TimerCallback() {
+    private final Timer openScene2DTimer = new Timer(new TimerCallback() {
         @Override
         public void deltaUpdate(float v) {
 
@@ -159,6 +159,14 @@ public class ResourcesView extends View
                         }
                         if(ImGui.menuItem("Text file")) {
                             ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Text");
+                        }
+                        ImGui.separator();
+                        if(ImGui.beginMenu("GLSL")) {
+                            if(ImGui.menuItem("ComplexShader")) {
+                                ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("GLSL.ComplexShader");
+                            }
+
+                            ImGui.endMenu();
                         }
                         ImGui.separator();
                         if(ImGui.menuItem("Scene2D")) {
@@ -402,6 +410,7 @@ public class ResourcesView extends View
                 case "Java.Component", "Java.System" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".java");
                 case "Text" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".txt");
                 case "Directory" -> FileUtils.createFolder(ResourcesView.currentDirectoryPath + "\\" + name);
+                case "GLSL.ComplexShader" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".glsl");
                 default -> null;
             };
             if(newFile == null) return;
@@ -410,78 +419,145 @@ public class ResourcesView extends View
             // если тип файл - java, то создаю этот файл с заранее подготовленным кодом
             if(fileType.equals("Java.Component")) {
                 fileString =
-                        "import Core2D.ECS.*;\n" +
-                        "import Core2D.ECS.Component.Component;\n" +
-                        "import Core2D.ECS.Component.Components.*;\n" +
-                        "import Core2D.Scripting.*;\n" +
-                        "import Core2D.Log.*;\n" +
-                        "\n" +
-                        "// Attention! We do not recommend writing logic in components. Try to declare only fields in components.\n" +
-                        "public class " + name + " extends Component\n" +
-                        "{\n" +
-                        "    @Override\n" +
-                        "    public void update()\n" +
-                        "    {\n" +
-                        "        \n" +
-                        "    }\n" +
-                        "    \n" +
-                        "    @Override\n" +
-                        "    public void deltaUpdate(float deltaTime)\n" +
-                        "    {\n" +
-                        "        \n" +
-                        "    }\n" +
-                        "    \n" +
-                        "    @Override\n" +
-                        "    public void collider2DEnter(Entity otherObj)\n" +
-                        "    {\n" +
-                        "        \n" +
-                        "    }\n" +
-                        "    \n" +
-                        "    @Override\n" +
-                        "    public void collider2DExit(Entity otherObj)\n" +
-                        "    {\n" +
-                        "        \n" +
-                        "    }\n" +
-                        "}";
+                        """
+                        import Core2D.ECS.*;
+                        import Core2D.ECS.Component.Component;
+                        import Core2D.ECS.Component.Components.*;
+                        import Core2D.ECS.System.System;
+                        import Core2D.ECS.System.Systems.*;
+                        import Core2D.Scripting.*;
+                        import Core2D.Log.*;
+                        
+                        // Attention! We do not recommend writing logic in components. Try to declare only fields in components.
+                        public class %s extends Component
+                        {
+                            @Override
+                            public void update()
+                            {
+                        
+                            }
+                            
+                            @Override
+                            public void deltaUpdate(float deltaTime)
+                            {
+                            
+                            }
+
+                            @Override
+                            public void collider2DEnter(Entity otherObj)
+                            {
+                            
+                            }
+                            
+                            @Override
+                            public void collider2DExit(Entity otherObj)
+                            {
+                            
+                            }
+                            
+                            @Override
+                            public void render()
+                            {
+                            
+                            }
+                            
+                            @Override
+                            public void render(Shader shader)
+                            {
+                            
+                            }
+                        }
+                        """.formatted(name);
             } else if(fileType.equals("Java.System")) {
                 fileString =
-                        "import Core2D.ECS.*;\n" +
-                        "import Core2D.ECS.Component.Component;\n" +
-                        "import Core2D.ECS.Component.Components.*;\n" +
-                        "import Core2D.ECS.System.System;\n" +
-                        "import Core2D.ECS.System.Systems.*;\n" +
-                        "import Core2D.Scripting.*;\n" +
-                        "import Core2D.Log.*;\n" +
-                        "\n" +
-                        "// Attention! Do not declare fields with the @InspectorView annotation in systems. They will not be processed and shown in the Inspector.\n" +
-                        "public class " + name + " extends System\n" +
-                        "{\n" +
-                        "    @Override\n" +
-                        "    public void update()\n" +
-                        "    {\n" +
-                        "        \n" +
-                        "    }\n" +
-                        "    \n" +
-                        "    @Override\n" +
-                        "    public void deltaUpdate(float deltaTime)\n" +
-                        "    {\n" +
-                        "        \n" +
-                        "    }\n" +
-                        "    \n" +
-                        "    @Override\n" +
-                        "    public void collider2DEnter(Entity otherObj)\n" +
-                        "    {\n" +
-                        "        \n" +
-                        "    }\n" +
-                        "    \n" +
-                        "    @Override\n" +
-                        "    public void collider2DExit(Entity otherObj)\n" +
-                        "    {\n" +
-                        "        \n" +
-                        "    }\n" +
-                        "}";
+                        """
+                        import Core2D.ECS.*;
+                        import Core2D.ECS.Component.Component;
+                        import Core2D.ECS.Component.Components.*;
+                        import Core2D.ECS.System.System;
+                        import Core2D.ECS.System.Systems.*;
+                        import Core2D.Scripting.*;
+                        import Core2D.Log.*;
+                        
+                        // Attention! Do not declare fields with the @InspectorView annotation in systems. They will not be processed and shown in the Inspector.
+                        public class %s extends System
+                        {
+                            @Override
+                            public void update()
+                            {
+                        
+                            }
+                            
+                            @Override
+                            public void deltaUpdate(float deltaTime)
+                            {
+                            
+                            }
+
+                            @Override
+                            public void collider2DEnter(Entity otherObj)
+                            {
+                            
+                            }
+                            
+                            @Override
+                            public void collider2DExit(Entity otherObj)
+                            {
+                            
+                            }
+                            
+                            @Override
+                            public void render()
+                            {
+                            
+                            }
+                            
+                            @Override
+                            public void render(Shader shader)
+                            {
+                            
+                            }
+                        }
+                        """.formatted(name);
             } else if(fileType.equals("Text")) { // если тип файла - текст, то создаю файл с надписью hello! (по приколу)
                 fileString = "Hello world!";
+            } else if(fileType.equals("GLSL.ComplexShader")) {
+                fileString =
+                        """
+                        // ATTENTION: do not write the shader version!
+                        #ifdef VERTEX
+                            layout (location = 0) in vec2 positionAttribute;
+                            layout (location = 1) in vec2 textureCoordsAttribute;
+    
+                            uniform mat4 mvpMatrix;
+    
+                            out vec2 vs_textureCoords;
+    
+                            void main()
+                            {
+                                vs_textureCoords = textureCoordsAttribute;
+                            
+                                gl_Position = mvpMatrix * vec4(positionAttribute, 0.0, 1.0);
+                            }
+                        #endif
+
+                        #ifdef FRAGMENT
+                            out vec4 fragColor;
+
+                            uniform sampler2D sampler;
+
+                            uniform vec4 color;
+
+                            in vec2 vs_textureCoords;
+
+                            void main()
+                            {
+                                vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0f - vs_textureCoords.y));
+
+                                fragColor = color * textureColor;
+                            }
+                        #endif
+                        """;
             }
 
             if(newFile.exists()) {

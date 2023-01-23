@@ -2,7 +2,6 @@ package Core2D.Graphics;
 
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
-import org.lwjgl.openal.AL10;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL46C;
 

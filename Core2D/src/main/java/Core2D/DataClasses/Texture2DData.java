@@ -35,8 +35,10 @@ public class Texture2DData extends Data
     @Override
     public Texture2DData load(String path)
     {
+        this.path = path;
+
         try {
-            load(new BufferedInputStream(new FileInputStream(path)));
+            load(new BufferedInputStream(new FileInputStream(path)), path);
         } catch (FileNotFoundException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException(e)), Log.MessageType.ERROR);
         }
@@ -45,8 +47,10 @@ public class Texture2DData extends Data
     }
 
     @Override
-    public Texture2DData load(InputStream inputStream)
+    public Texture2DData load(InputStream inputStream, String path)
     {
+        this.path = path;
+
         // буфер для ширины текстуры
         IntBuffer widthBuffer = BufferUtils.createIntBuffer(1);
         // буфер для высоты текстуры

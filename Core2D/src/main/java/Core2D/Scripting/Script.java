@@ -5,13 +5,11 @@ import Core2D.Core2D.Core2DMode;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
-import Core2D.Graphics.RenderParts.RenderMethod;
+import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
-import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
-import Core2D.Utils.FileUtils;
 import Core2D.Utils.FlexibleURLClassLoader;
 import org.apache.commons.io.FilenameUtils;
 
@@ -21,7 +19,6 @@ import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -201,13 +198,29 @@ public class Script
             if(scriptClassInstance instanceof System system) {
                 system.update();
             }
+        }
+    }
 
-            if(scriptClass != null) {
-                for (Method method : scriptClass.getMethods()) {
-                    if (method.isAnnotationPresent(RenderMethod.class)) {
-                        invokeMethod(method);
-                    }
-                }
+    public void render()
+    {
+        if(active) {
+            if(scriptClassInstance instanceof Component component) {
+                component.render();
+            }
+            if(scriptClassInstance instanceof System system) {
+                system.render();
+            }
+        }
+    }
+
+    public void render(Shader shader)
+    {
+        if(active) {
+            if(scriptClassInstance instanceof Component component) {
+                component.render(shader);
+            }
+            if(scriptClassInstance instanceof System system) {
+                system.render(shader);
             }
         }
     }

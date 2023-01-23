@@ -1,16 +1,16 @@
 package Core2D.Deserializers;
 
 import Core2D.AssetManager.AssetManager;
-import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.*;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
-import Core2D.ECS.Component.Components.Primitives.LineComponent;
+import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.*;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.ScriptableSystem;
-import Core2D.Project.ProjectsManager;
+import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
+import Core2D.Project.ProjectsManager;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Tag;
 import com.google.gson.*;
@@ -107,48 +107,21 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
             int lastComponentID = component.componentID;
             if(component instanceof TransformComponent) {
                 entity.addComponent(component);
-            } else if(component instanceof MeshComponent textureComponent) {
-                Texture2D texture2D = new Texture2D();
-                // если режим работы ядра в движке
-                if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                    String textureFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + textureComponent.texture.path;
-
-                    if(new File(textureFullPath).exists()) {
-                        texture2D = new Texture2D(
-                                AssetManager.getInstance().getTexture2DData(textureComponent.texture.path),
-                                textureComponent.texture.getGLTextureBlock()
-                        );
-                        texture2D.path = textureComponent.texture.path;
-                    } else { // для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
-                        // чтобы это исправить загружаем по этому пути текстуру, находим относительный путь и присваиваем его source для того,
-                        // чтобы в следующий раз выполнился блок кода выше
-                        if(new File(textureComponent.texture.path).exists()) {
-                            String relativePath = FileUtils.getRelativePath(
-                                    new File(textureComponent.texture.path),
-                                    new File(ProjectsManager.getCurrentProject().getProjectPath())
-                            );
-                            texture2D = new Texture2D(
-                                    AssetManager.getInstance().getTexture2DData(relativePath),
-                                    textureComponent.texture.getGLTextureBlock()
-                            );
-                            texture2D.path = relativePath;
-                        }
-                    }
-                // если режим работы в билде
-                } else {
-                    texture2D = new Texture2D(
-                            AssetManager.getInstance().getTexture2DData(textureComponent.texture.path),
-                            textureComponent.texture.getGLTextureBlock()
-                    );
-                }
+            } else if(component instanceof MeshComponent meshComponent) {
+                Shader shader = new Shader(AssetManager.getInstance().getShaderData(meshComponent.shader.path));
+                Texture2D texture2D = new Texture2D(
+                        AssetManager.getInstance().getTexture2DData(meshComponent.texture.path),
+                        meshComponent.texture.getGLTextureBlock()
+                );
 
                 //texture2D.blendSourceFactor = textureComponent.texture.blendSourceFactor;
                 //texture2D.blendDestinationFactor = textureComponent.texture.blendDestinationFactor;
 
-                MeshComponent meshComponent = new MeshComponent();
-                entity.addComponent(meshComponent);
-                entity.getComponent(MeshComponent.class).set(component);
-                entity.getComponent(MeshComponent.class).texture.set(texture2D);
+                MeshComponent newMeshComponent = new MeshComponent();
+                entity.addComponent(newMeshComponent);
+                newMeshComponent.set(component);
+                newMeshComponent.texture = texture2D;
+                newMeshComponent.shader = shader;
             } else if(component instanceof Rigidbody2DComponent rigidbody2DComponent) {
                 rigidbody2DComponent.set(component);
                 entity.addComponent(rigidbody2DComponent);

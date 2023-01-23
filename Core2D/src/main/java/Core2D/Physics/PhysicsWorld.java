@@ -1,12 +1,11 @@
 package Core2D.Physics;
 
+import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.BoxCollider2DComponent;
 import Core2D.ECS.Component.Components.CircleCollider2DComponent;
 import Core2D.ECS.Component.Components.Rigidbody2DComponent;
-import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
-import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Log.Log;
 import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.Physics.Collider2D.CircleCollider2D;
@@ -103,26 +102,20 @@ public class PhysicsWorld extends World
 
             if (shouldCollider2DEnter) {
                 if (!entityAEnter.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsA = entityAEnter.getAllComponents(ScriptComponent.class);
-                    List<ScriptableSystem> scriptableSystemsA = entityAEnter.getAllSystems(ScriptableSystem.class);
-
-                    for (ScriptComponent scriptComponent : scriptComponentsA) {
-                        scriptComponent.callMethod((params) -> scriptComponent.collider2DEnter(entityBEnter));
+                    for(Component component : entityAEnter.getComponents()) {
+                        component.collider2DEnter(entityBEnter);
                     }
-                    for (ScriptableSystem scriptableSystem : scriptableSystemsA) {
-                        scriptableSystem.callMethod((params) -> scriptableSystem.collider2DEnter(entityBEnter));
+                    for(System system : entityAEnter.getSystems()) {
+                        system.collider2DEnter(entityBEnter);
                     }
                 }
 
                 if (!entityBEnter.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsB = entityBEnter.getAllComponents(ScriptComponent.class);
-                    List<ScriptableSystem> scriptableSystemsB = entityBEnter.getAllSystems(ScriptableSystem.class);
-
-                    for (ScriptComponent scriptComponent : scriptComponentsB) {
-                        scriptComponent.callMethod((params) -> scriptComponent.collider2DEnter(entityAEnter));
+                    for(Component component : entityBEnter.getComponents()) {
+                        component.collider2DEnter(entityAEnter);
                     }
-                    for (ScriptableSystem scriptableSystem : scriptableSystemsB) {
-                        scriptableSystem.callMethod((params) -> scriptableSystem.collider2DEnter(entityAEnter));
+                    for(System system : entityBEnter.getSystems()) {
+                        system.collider2DEnter(entityAEnter);
                     }
                 }
 
@@ -131,26 +124,20 @@ public class PhysicsWorld extends World
 
             if (shouldCollider2DExit) {
                 if (!entityAExit.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsA = entityAExit.getAllComponents(ScriptComponent.class);
-                    List<ScriptableSystem> scriptableSystemsB = entityAEnter.getAllSystems(ScriptableSystem.class);
-
-                    for (ScriptComponent scriptComponent : scriptComponentsA) {
-                        scriptComponent.callMethod((params) -> scriptComponent.collider2DExit(entityBExit));
+                    for(Component component : entityAExit.getComponents()) {
+                        component.collider2DEnter(entityBExit);
                     }
-                    for (ScriptableSystem scriptableSystem : scriptableSystemsB) {
-                        scriptableSystem.callMethod((params) -> scriptableSystem.collider2DEnter(entityBExit));
+                    for(System system : entityAExit.getSystems()) {
+                        system.collider2DEnter(entityBExit);
                     }
                 }
 
                 if (!entityBExit.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsB = entityBExit.getAllComponents(ScriptComponent.class);
-                    List<ScriptableSystem> scriptableSystemsB = entityBEnter.getAllSystems(ScriptableSystem.class);
-
-                    for (ScriptComponent scriptComponent : scriptComponentsB) {
-                        scriptComponent.callMethod((params) -> scriptComponent.collider2DExit(entityAExit));
+                    for(Component component : entityBExit.getComponents()) {
+                        component.collider2DEnter(entityAExit);
                     }
-                    for (ScriptableSystem scriptableSystem : scriptableSystemsB) {
-                        scriptableSystem.callMethod((params) -> scriptableSystem.collider2DEnter(entityAEnter));
+                    for(System system : entityBExit.getSystems()) {
+                        system.collider2DEnter(entityAExit);
                     }
                 }
 

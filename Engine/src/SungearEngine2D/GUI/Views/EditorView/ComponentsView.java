@@ -9,6 +9,7 @@ import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.Primitives.LineComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.NonRemovable;
+import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Log.Log;
 import Core2D.Physics.PhysicsWorld;
@@ -146,8 +147,9 @@ public class ComponentsView extends View
                     }
                     case "MeshComponent" -> {
                         MeshComponent meshRendererComponent = (MeshComponent) currentComponent;
+
                         ImString textureName = new ImString(new File(meshRendererComponent.texture.path).getName());
-                        ImGui.inputText("Path", textureName, ImGuiInputTextFlags.ReadOnly);
+                        ImGui.inputText("Texture", textureName, ImGuiInputTextFlags.ReadOnly);
                         if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
                             if (ImGui.beginDragDropTarget()) {
                                 Object imageFile = ImGui.acceptDragDropPayload("File");
@@ -156,11 +158,36 @@ public class ComponentsView extends View
                                     String relativePath = FileUtils.getRelativePath(
                                             new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
                                             new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                                    meshRendererComponent.texture.set(
-                                            new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath))
-                                    );
+                                    meshRendererComponent.texture = new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath));
                                     meshRendererComponent.texture.path = relativePath;
                                     ViewsManager.getResourcesView().setCurrentMovingFile(null);
+                                }
+
+                                ImGui.endDragDropTarget();
+                            }
+                        }
+
+                        ImString shaderName = new ImString(new File(meshRendererComponent.shader.path).getName());
+                        ImGui.inputText("Shader", shaderName, ImGuiInputTextFlags.ReadOnly);
+                        if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileShader(ViewsManager.getResourcesView().getCurrentMovingFile())) {
+                            if (ImGui.beginDragDropTarget()) {
+                                Object imageFile = ImGui.acceptDragDropPayload("File");
+                                if (imageFile != null) {
+                                    shaderName.set(ViewsManager.getResourcesView().getCurrentMovingFile().getName(), true);
+                                    String relativePath = FileUtils.getRelativePath(
+                                            new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
+                                            new File(ProjectsManager.getCurrentProject().getProjectPath()));
+                                    meshRendererComponent.shader = new Shader(AssetManager.getInstance().getShaderData(relativePath));
+                                    meshRendererComponent.shader.path = relativePath;
+                                    ViewsManager.getResourcesView().setCurrentMovingFile(null);
+
+                                    /*
+                                    if(!meshRendererComponent.shader.isCompiled()) {
+                                        ViewsManager.getBottomMenuView().leftSideInfo = "Shader " + meshRendererComponent.shader.path + " was not compiled. See the log for details";
+                                        ViewsManager.getBottomMenuView().leftSideInfoColor.set(1.0f, 0.0f, 0.0f, 1.0f);
+                                    }
+
+                                     */
                                 }
 
                                 ImGui.endDragDropTarget();
@@ -184,8 +211,6 @@ public class ComponentsView extends View
                             if (ImGui.selectable("Kinematic")) {
                                 rigidbody2DComponent.getRigidbody2D().setType(BodyType.KINEMATIC);
                             }
-
-                            //System.out.println("x: " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.x + ", " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.y);
 
                             ImGui.endCombo();
                         }

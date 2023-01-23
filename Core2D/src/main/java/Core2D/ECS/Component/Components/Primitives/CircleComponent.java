@@ -2,8 +2,8 @@ package Core2D.ECS.Component.Components.Primitives;
 
 import Core2D.DataClasses.LineData;
 import Core2D.ECS.Component.Component;
-import org.joml.Vector2f;
 import Core2D.Utils.MathUtils;
+import org.joml.Vector2f;
 
 public class CircleComponent extends PrimitiveComponent
 {

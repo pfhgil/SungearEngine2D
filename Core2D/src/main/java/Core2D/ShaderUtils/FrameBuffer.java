@@ -51,11 +51,6 @@ public class FrameBuffer implements Serializable
 
     private boolean complete = false;
 
-
-
-    // --------- stencil test
-    private boolean stencilTestActive = false;
-
     public FrameBuffer(int width, int height, int type, int textureBlock)
     {
         this.width = width;
@@ -96,7 +91,7 @@ public class FrameBuffer implements Serializable
         //if(complete) {
         OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, handler));
         OpenGL.glCall((params) -> glViewport(0, 0, viewportWidth, viewportHeight));
-        int toClear = stencilTestActive ? GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT : GL_COLOR_BUFFER_BIT;
+        int toClear = Settings.Graphics.isStencilTestActive() ? GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT : GL_COLOR_BUFFER_BIT;
         OpenGL.glCall((params) -> glClear(toClear));
         //}
     }
@@ -273,16 +268,4 @@ public class FrameBuffer implements Serializable
     public void setViewportHeight(int viewportHeight) { this.viewportHeight = viewportHeight; }
 
     public int getTextureBlock() { return textureBlock; }
-
-    public boolean isStencilTestActive() { return stencilTestActive; }
-    public void setStencilTestActive(boolean stencilTestActive)
-    {
-        this.stencilTestActive = stencilTestActive;
-
-        if(stencilTestActive) {
-            OpenGL.glCall((params) -> glEnable(GL_STENCIL_TEST));
-        } else {
-            OpenGL.glCall((params) -> glDisable(GL_STENCIL_TEST));
-        }
-    }
 }

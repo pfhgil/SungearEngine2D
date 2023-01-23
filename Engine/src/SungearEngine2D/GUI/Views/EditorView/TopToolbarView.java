@@ -20,6 +20,7 @@ import SungearEngine2D.Main.Resources;
 import SungearEngine2D.Utils.AppData.AppDataManager;
 import SungearEngine2D.Utils.AppData.UserSettings;
 import imgui.ImGui;
+import imgui.flag.ImGuiCol;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector2f;
@@ -372,11 +373,13 @@ public class TopToolbarView
             if(ImGui.beginMenu("Objects")) {
                 if(ImGui.beginMenu("New...")) {
                     if(ImGui.menuItem("Object2D")) {
-                        new Entity().setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
+                        if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+                            new Entity().setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
+                        }
                     }
 
                     if(ImGui.menuItem("Camera2D")) {
-                        if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+                        if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
                             Entity camera2D = Entity.createAsCamera2D();
                             camera2D.setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
                         }

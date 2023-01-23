@@ -1,8 +1,7 @@
 package Core2D.ECS.Component;
 
 import Core2D.ECS.Entity;
-
-import java.io.Serializable;
+import Core2D.Graphics.RenderParts.Shader;
 
 /**
  * An abstract class that other components inherit.
@@ -75,6 +74,16 @@ public class Component
     }
 
     public void collider2DExit(Entity otherObj)
+    {
+
+    }
+
+    public void render()
+    {
+
+    }
+
+    public void render(Shader shader)
     {
 
     }

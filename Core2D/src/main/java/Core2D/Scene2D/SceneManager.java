@@ -1,11 +1,11 @@
 package Core2D.Scene2D;
 
 import Core2D.Audio.AudioManager;
-import Core2D.ECS.Component.Components.ScriptComponent;
-import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.Core2D.Settings;
+import Core2D.ECS.Component.Components.ScriptComponent;
+import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
@@ -135,7 +135,7 @@ public class SceneManager
 
                 for(ScriptComponent scriptComponent : scriptComponents) {
                     for(ScriptTempValue scriptTempValue : scriptComponent.script.getScriptTempValues()) {
-                        System.out.println("entity: " + entity.name + ", scriptTempValue name: " + scriptTempValue.getFieldName() + ", value: " + scriptTempValue.getValue());
+                        Log.Console.println("entity: " + entity.name + ", scriptTempValue name: " + scriptTempValue.getFieldName() + ", value: " + scriptTempValue.getValue());
                     }
                 }
             }

@@ -1,11 +1,9 @@
 package Core2D.ECS.Component.Components;
 
-import Core2D.ECS.Component.Component;
-import Core2D.ECS.Entity;
-import Core2D.ECS.NonDuplicated;
 import Core2D.Core2D.Core2D;
+import Core2D.ECS.Component.Component;
+import Core2D.ECS.NonDuplicated;
 import Core2D.Graphics.Graphics;
-import Core2D.Graphics.OpenGL;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.ShaderUtils.FrameBuffer;
@@ -15,13 +13,6 @@ import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector3f;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Vector;
-
-import static org.lwjgl.opengl.GL11.GL_COLOR_BUFFER_BIT;
-import static org.lwjgl.opengl.GL11.glClear;
-import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13C.GL_TEXTURE1;
 
 public class Camera2DComponent extends Component implements NonDuplicated

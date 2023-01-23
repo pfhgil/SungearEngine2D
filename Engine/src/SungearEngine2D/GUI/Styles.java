@@ -93,8 +93,9 @@ public class Styles
         style.setTabRounding(0.0f);
 
         colors[ImGuiCol.Text] = new float[] { 0.90f, 0.90f, 0.90f, 1.00f };
-        colors[ImGuiCol.TextDisabled] = new float[] { 0.5f, 0.5f, 0.5f, 1.00f };
+        //colors[ImGuiCol.Window] = new float[] { 0.5f, 0.5f, 0.5f, 1.00f };
         colors[ImGuiCol.WindowBg] = new float[] { 34.0f / 255.0f, 34.0f / 255.0f, 34.0f / 255.0f, 1.00f };
+        colors[ImGuiCol.MenuBarBg] = new float[] { 29.0f / 255.0f, 29.0f / 255.0f, 29.0f / 255.0f, 1.00f };
         colors[ImGuiCol.ChildBg] = new float[] { 34.0f / 255.0f, 34.0f / 255.0f, 34.0f / 255.0f, 1.00f };
         colors[ImGuiCol.PopupBg] = new float[] { 0.00f, 0.00f, 0.00f, 1.00f };
         colors[ImGuiCol.Border] = new float[] { 0.82f, 0.77f, 0.78f, 1.00f };
@@ -102,10 +103,9 @@ public class Styles
         colors[ImGuiCol.FrameBg] = new float[] { 1.00f, 1.00f, 1.00f, 0.28f };
         colors[ImGuiCol.FrameBgHovered] = new float[] { 0.68f, 0.68f, 0.68f, 0.67f };
         colors[ImGuiCol.FrameBgActive] = new float[] { 0.79f, 0.73f, 0.73f, 0.62f };
-        colors[ImGuiCol.TitleBg] = new float[] { 24.0f / 255.0f, 24.0f / 255.0f, 24.0f / 255.0f, 1.00f };
+        colors[ImGuiCol.TitleBg] = new float[] { 29.0f / 255.0f, 29.0f / 255.0f, 29.0f / 255.0f, 1.00f };
         colors[ImGuiCol.TitleBgActive] = new float[] { 0.46f, 0.46f, 0.46f, 1.00f };
         colors[ImGuiCol.TitleBgCollapsed] = new float[] { 0.00f, 0.00f, 0.00f, 1.00f };
-        colors[ImGuiCol.MenuBarBg] = new float[] { 0.00f, 0.00f, 0.00f, 0.80f };
         colors[ImGuiCol.ScrollbarBg] = new float[] { 0.00f, 0.00f, 0.00f, 0.60f };
         colors[ImGuiCol.ScrollbarGrab] = new float[] { 1.00f, 1.00f, 1.00f, 0.87f };
         colors[ImGuiCol.ScrollbarGrabHovered] = new float[] { 1.00f, 1.00f, 1.00f, 0.79f };

@@ -1,9 +1,9 @@
 package Core2D.Utils;
 
+import Core2D.AssetManager.Asset;
+import Core2D.Deserializers.*;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.TransformComponent;
-import Core2D.DataClasses.Data;
-import Core2D.Deserializers.*;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
 import Core2D.Layering.Layer;
@@ -30,20 +30,16 @@ public class Utils
 {
     private static Random random = new Random();
 
-    private static final CommonDeserializer<Data> dataDeserializer = new CommonDeserializer<>();
-    private static final CommonDeserializer<Component> componentDeserializer = new CommonDeserializer<>();
-    private static final CommonDeserializer<System> systemDeserializer = new CommonDeserializer<>();
-
     public static Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .registerTypeAdapter(Prefab.class, new PrefabDeserializer())
             .registerTypeAdapter(Entity.class, new EntityDeserializer())
             .registerTypeAdapter(Scene2D.class, new Scene2DDeserializer())
-            .registerTypeAdapter(Data.class, dataDeserializer)
-            .registerTypeAdapter(Component.class, componentDeserializer)
-            .registerTypeAdapter(System.class, systemDeserializer)
+            .registerTypeAdapter(Component.class, new CommonDeserializer<Component>())
+            .registerTypeAdapter(System.class, new CommonDeserializer<System>())
             .registerTypeAdapter(Layer.class, new LayerDeserializer())
             .registerTypeAdapter(Layering.class, new LayeringDeserializer())
+            .registerTypeAdapter(Asset.class, new AssetDeserializer())
             .create();
 
     // создает FloatBuffer, помещает туда data и возвращает получившийся буфер

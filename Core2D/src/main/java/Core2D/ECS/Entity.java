@@ -1,8 +1,8 @@
 package Core2D.ECS;
 
+import Core2D.Core2D.Settings;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
-import Core2D.Core2D.Settings;
 import Core2D.ECS.Component.Components.Primitives.BoxComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.Primitives.LineComponent;
@@ -23,7 +23,6 @@ import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
-import javax.swing.*;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -201,28 +200,18 @@ public class Entity implements Serializable, PoolObject
             ID = Utils.getRandom(0, 1000000000);
         }
 
-        java.lang.System.out.println("object id: " + ID);
+        Log.Console.println("object id: " + ID);
     }
 
     public void update()
     {
         if(active && !shouldDestroy) {
             for(Component component : components) {
-                if(component.getClass().isAssignableFrom(ScriptComponent.class) || component instanceof ScriptComponent) {
-                     ScriptComponent sc = (ScriptComponent) component;
-                     sc.callMethod((params) -> sc.update());
-                } else {
-                    component.update();
-                }
+                component.update();
             }
 
             for(System system : systems) {
-                if(system.getClass().isAssignableFrom(ScriptableSystem.class) || system instanceof ScriptableSystem) {
-                    ScriptableSystem ss = (ScriptableSystem) system;
-                    ss.callMethod((params) -> ss.update());
-                } else {
-                    system.update();
-                }
+                system.update();
             }
         }
     }
@@ -231,21 +220,11 @@ public class Entity implements Serializable, PoolObject
     {
         if(active && !shouldDestroy) {
             for(Component component : components) {
-                if(component.getClass().isAssignableFrom(ScriptComponent.class) || component instanceof ScriptComponent) {
-                    ScriptComponent sc = (ScriptComponent) component;
-                    sc.callMethod((params) -> sc.deltaUpdate(deltaTime));
-                } else {
-                    component.deltaUpdate(deltaTime);
-                }
+                component.deltaUpdate(deltaTime);
             }
 
             for(System system : systems) {
-                if(system.getClass().isAssignableFrom(ScriptableSystem.class) || system instanceof ScriptableSystem) {
-                    ScriptableSystem ss = (ScriptableSystem) system;
-                    ss.callMethod((params) -> ss.deltaUpdate(deltaTime));
-                } else {
-                    system.deltaUpdate(deltaTime);
-                }
+                system.deltaUpdate(deltaTime);
             }
         }
     }
@@ -707,6 +686,6 @@ public class Entity implements Serializable, PoolObject
     @Override
     protected synchronized void finalize()
     {
-        java.lang.System.out.println("Object destroyed: " + name);
+        Log.Console.println("Object destroyed: " + name);
     }
 }

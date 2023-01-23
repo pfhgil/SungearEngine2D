@@ -3,14 +3,15 @@ package SungearEngine2D.DebugDraw;
 //import Core2D.Component.Components.TextureComponent;
 /*import Core2D.Drawable.Primitives.Circle2D;
 import Core2D.Drawable.Primitives.Line2D;*/
+import Core2D.AssetManager.AssetManager;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.Primitives.LineComponent;
-import Core2D.ECS.Component.Components.TextureComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
+import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Input.PC.Mouse;
 import Core2D.ShaderUtils.FrameBuffer;
@@ -69,27 +70,11 @@ public class Gizmo
 
     private static FrameBuffer gizmoPickingTarget;
 
+    private static Shader pickingShader;
+
     public static void init()
     {
         Camera2DComponent mainCamera2DComponent = Main.getMainCamera2D().getComponent(Camera2DComponent.class);
-
-        /*
-        mainCamera2DComponent.getAdditionalEntitiesToRender().add(yArrow);
-        mainCamera2DComponent.getAdditionalEntitiesToRender().add(xArrow);
-
-        mainCamera2DComponent.getAdditionalEntitiesToRender().add(centrePoint);
-
-        mainCamera2DComponent.getAdditionalEntitiesToRender().add(centrePointToEditCentre);
-
-        mainCamera2DComponent.getAdditionalEntitiesToRender().add(rotationCircle);
-        mainCamera2DComponent.getAdditionalEntitiesToRender().add(rotationHandler);
-
-        mainCamera2DComponent.getAdditionalEntitiesToRender().add(yScaleHandler);
-        mainCamera2DComponent.getAdditionalEntitiesToRender().add(yScaleLine);
-        mainCamera2DComponent.getAdditionalEntitiesToRender().add(xScaleHandler);
-        mainCamera2DComponent.getAdditionalEntitiesToRender().add(xScaleLine);
-
-         */
 
         Vector2i size = Graphics.getScreenSize();
         gizmoPickingTarget = new FrameBuffer(size.x, size.y, FrameBuffer.BuffersTypes.COLOR_BUFFER, GL13.GL_TEXTURE0);
@@ -142,6 +127,8 @@ public class Gizmo
         xScaleLine.getComponent(LineComponent.class).setLinesWidth(6.0f);
         //Transform rotationCircleTransform = rotationCircle.getComponent(TransformComponent.class).getTransform();
         //rotationHandler.getComponent(TransformComponent.class).getTransform().setPosition(new Vector2f(rotationCircleTransform.getPosition()).add(new Vector2f(0.0f, rotationCircleTransform.getScale().x * 100.0f / 2.0f)));
+
+        pickingShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/mesh/picking_shader.glsl"));
     }
 
     public static void draw()
@@ -274,36 +261,20 @@ public class Gizmo
                     Vector4f xScaleHandlerLastColor = new Vector4f(xScaleHandler.getColor());
                     xScaleHandler.setColor(new Vector4f(xScaleHandler.getPickColor().x / 255.0f, xScaleHandler.getPickColor().y / 255.0f, xScaleHandler.getPickColor().z / 255.0f, 1.0f));
 
-                    MeshComponent yArrowTextureComponent = yArrow.getComponent(MeshComponent.class);
-                    MeshComponent xArrowTextureComponent = xArrow.getComponent(MeshComponent.class);
-                    MeshComponent centrePointTextureComponent = centrePoint.getComponent(MeshComponent.class);
-                    MeshComponent centrePointToEditCentreTextureComponent = centrePointToEditCentre.getComponent(MeshComponent.class);
-                    MeshComponent rotationHandlerTextureComponent = rotationHandler.getComponent(MeshComponent.class);
-                    MeshComponent yScaleHandlerTextureComponent = yScaleHandler.getComponent(MeshComponent.class);
-                    MeshComponent xScaleHandlerTextureComponent = xScaleHandler.getComponent(MeshComponent.class);
-
-                    yArrowTextureComponent.textureDrawMode = Texture2D.TextureDrawModes.ONLY_ALPHA;
-                    xArrowTextureComponent.textureDrawMode = Texture2D.TextureDrawModes.ONLY_ALPHA;
-                    centrePointTextureComponent.textureDrawMode = Texture2D.TextureDrawModes.ONLY_ALPHA;
-                    centrePointToEditCentreTextureComponent.textureDrawMode = Texture2D.TextureDrawModes.ONLY_ALPHA;
-                    rotationHandlerTextureComponent.textureDrawMode = Texture2D.TextureDrawModes.ONLY_ALPHA;
-                    yScaleHandlerTextureComponent.textureDrawMode = Texture2D.TextureDrawModes.ONLY_ALPHA;
-                    xScaleHandlerTextureComponent.textureDrawMode = Texture2D.TextureDrawModes.ONLY_ALPHA;
-
                     if (gizmoMode == GizmoMode.SCALE || gizmoMode == GizmoMode.TRANSLATION_SCALE || gizmoMode == GizmoMode.ROTATION_SCALE || gizmoMode == GizmoMode.TRANSLATION_ROTATION_SCALE) {
-                        Graphics.getMainRenderer().render(yScaleLine);
-                        Graphics.getMainRenderer().render(yScaleHandler);
-                        Graphics.getMainRenderer().render(xScaleLine);
-                        Graphics.getMainRenderer().render(xScaleHandler);
+                        Graphics.getMainRenderer().render(yScaleLine, pickingShader);
+                        Graphics.getMainRenderer().render(yScaleHandler, pickingShader);
+                        Graphics.getMainRenderer().render(xScaleLine, pickingShader);
+                        Graphics.getMainRenderer().render(xScaleHandler, pickingShader);
                     }
                     if (gizmoMode == GizmoMode.TRANSLATION || gizmoMode == GizmoMode.TRANSLATION_SCALE || gizmoMode == GizmoMode.TRANSLATION_ROTATION || gizmoMode == GizmoMode.TRANSLATION_ROTATION_SCALE) {
-                        Graphics.getMainRenderer().render(yArrow);
-                        Graphics.getMainRenderer().render(xArrow);
-                        Graphics.getMainRenderer().render(centrePoint);
+                        Graphics.getMainRenderer().render(yArrow, pickingShader);
+                        Graphics.getMainRenderer().render(xArrow, pickingShader);
+                        Graphics.getMainRenderer().render(centrePoint, pickingShader);
                     }
                     if (gizmoMode == GizmoMode.ROTATION || gizmoMode == GizmoMode.TRANSLATION_ROTATION || gizmoMode == GizmoMode.ROTATION_SCALE || gizmoMode == GizmoMode.TRANSLATION_ROTATION_SCALE) {
-                        Graphics.getMainRenderer().render(rotationCircle);
-                        Graphics.getMainRenderer().render(rotationHandler);
+                        Graphics.getMainRenderer().render(rotationCircle, pickingShader);
+                        Graphics.getMainRenderer().render(rotationHandler, pickingShader);
                     }
 
                     Graphics.getMainRenderer().render(centrePointToEditCentre);
@@ -317,13 +288,6 @@ public class Gizmo
                     rotationHandler.setColor(rotationHandlerLastColor);
                     yScaleHandler.setColor(yScaleHandlerLastColor);
                     xScaleHandler.setColor(xScaleHandlerLastColor);
-                    yArrowTextureComponent.textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
-                    xArrowTextureComponent.textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
-                    centrePointTextureComponent.textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
-                    centrePointToEditCentreTextureComponent.textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
-                    rotationHandlerTextureComponent.textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
-                    yScaleHandlerTextureComponent.textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
-                    xScaleHandlerTextureComponent.textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
 
                     GL13.glEnable(GL13.GL_BLEND);
 

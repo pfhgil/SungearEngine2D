@@ -1,7 +1,6 @@
 package Core2D.ShaderUtils;
 
 import Core2D.Log.Log;
-import Core2D.Graphics.RenderParts.Texture2D;
 
 import static org.lwjgl.opengl.GL11C.GL_FLOAT;
 import static org.lwjgl.opengl.GL11C.GL_INT;

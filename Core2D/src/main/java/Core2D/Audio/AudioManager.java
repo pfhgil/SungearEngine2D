@@ -4,6 +4,7 @@ import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.AudioComponent;
 import Core2D.ECS.Entity;
 import Core2D.Layering.Layer;
+import Core2D.Log.Log;
 import Core2D.Scene2D.SceneManager;
 import org.lwjgl.openal.AL10;
 
@@ -47,7 +48,7 @@ public class AudioManager
                     for (int k = 0; k < componentsNum; k++) {
                         Component component = entity.getComponents().get(k);
                         if (component instanceof AudioComponent audioComponent) {
-                            System.out.println("destroyed source: " + audioComponent.audio.source);
+                            Log.Console.println("destroyed source: " + audioComponent.audio.source);
                             audioComponent.audio.destroy();
                         }
                     }

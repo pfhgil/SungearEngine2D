@@ -2,26 +2,21 @@ package Core2D.Graphics.RenderParts;
 
 import Core2D.DataClasses.Texture2DData;
 import Core2D.Graphics.OpenGL;
+import Core2D.Project.ProjectsManager;
+import Core2D.Utils.FileUtils;
 import com.google.gson.annotations.SerializedName;
+
+import java.io.File;
 
 import static org.lwjgl.opengl.GL46.*;
 
 public class Texture2D
 {
-    // режимы отрисовки текстуры
-    public static class TextureDrawModes
-    {
-        public static final int NO_TEXTURE = 0;
-        public static final int DEFAULT = 1;
-        public static final int ONLY_ALPHA = 2;
-    }
-
     // reference
     private transient Texture2DData texture2DData;
 
     // id текстуры
     private transient int textureHandler = -1;
-
 
     @SerializedName("source")
     // путь до текстуры
@@ -46,6 +41,15 @@ public class Texture2D
     public void createTexture(Texture2DData texture2DData)
     {
         this.texture2DData = texture2DData;
+
+        if(ProjectsManager.getCurrentProject() != null) {
+            this.path = FileUtils.getRelativePath(
+                    new File(texture2DData.getPath()),
+                    new File(ProjectsManager.getCurrentProject().getProjectPath())
+            );
+        } else {
+            this.path = texture2DData.getPath();
+        }
 
         // активирую нулевой текстурный блок
         OpenGL.glCall((params) -> glActiveTexture(textureBlock));

@@ -1,6 +1,5 @@
 package Core2D.AssetManager;
 
-import Core2D.Audio.AudioInfo;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.DataClasses.AudioData;
@@ -17,6 +16,7 @@ import java.io.File;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Objects;
 
@@ -41,24 +41,30 @@ public class AssetManager implements Serializable
 
         //String progressBarFragmentShaderText = FileUtils.readAllFile(Core2D.class.getResourceAsStream("/data/Shaders/UI/ProgressBar/fragmentShader.glsl"));
 
-        String object2DShaderPath = "/data/shaders/object2D/shader.glsl";
-        String objects2DInstancingShaderPath = "/data/shaders/object2D/instancing/shader.glsl";
+        String entityDefaultShaderPath = "/data/shaders/mesh/default_shader.glsl";
+        String entitiesInstancingShaderPath = "/data/shaders/mesh/instancing_shader.glsl";
+        String entityPickingShader = "/data/shaders/mesh/picking_shader.glsl";
+
         String line2DShaderPath = "/data/shaders/primitives/line2D/shader.glsl";
         String lines2DInstancingShaderPath = "/data/shaders/primitives/line2D/instancing/shader.glsl";
 
         String whiteTexturePath = "/data/textures/white_texture.png";
         String defaultProgressBarTexturePath = "/data/textures/ui/progressBar/progress_bar.png";
 
-        ShaderData object2DShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(object2DShaderPath));
-        ShaderData objects2DInstancingShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(objects2DInstancingShaderPath));
-        ShaderData line2DShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(line2DShaderPath));
-        ShaderData lines2DInstancingShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(lines2DInstancingShaderPath));
+        ShaderData entityDefaultShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(entityDefaultShaderPath), entityDefaultShaderPath);
+        ShaderData entitiesInstancingShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(entitiesInstancingShaderPath), entitiesInstancingShaderPath);
+        ShaderData entityPickingShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(entityPickingShader), entityPickingShader);
 
-        Texture2DData whiteTextureData = new Texture2DData().load(Core2D.class.getResourceAsStream(whiteTexturePath));
-        Texture2DData defaultProgressBarTextureData = new Texture2DData().load(Core2D.class.getResourceAsStream(defaultProgressBarTexturePath));
+        ShaderData line2DShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(line2DShaderPath), line2DShaderPath);
+        ShaderData lines2DInstancingShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(lines2DInstancingShaderPath), lines2DInstancingShaderPath);
 
-        addAsset(new Asset(object2DShaderData, object2DShaderPath));
-        addAsset(new Asset(objects2DInstancingShaderData, objects2DInstancingShaderPath));
+        Texture2DData whiteTextureData = new Texture2DData().load(Core2D.class.getResourceAsStream(whiteTexturePath), whiteTexturePath);
+        Texture2DData defaultProgressBarTextureData = new Texture2DData().load(Core2D.class.getResourceAsStream(defaultProgressBarTexturePath), defaultProgressBarTexturePath);
+
+        addAsset(new Asset(entityDefaultShaderData, entityDefaultShaderPath));
+        addAsset(new Asset(entitiesInstancingShaderData, entitiesInstancingShaderPath));
+        addAsset(new Asset(entityPickingShaderData, entityPickingShader));
+
         addAsset(new Asset(line2DShaderData, line2DShaderPath));
         addAsset(new Asset(lines2DInstancingShaderData, lines2DInstancingShaderPath));
 
@@ -68,7 +74,7 @@ public class AssetManager implements Serializable
         // ---------------- other graphics shaders
         String onlyColorShaderPath = "/data/shaders/common/only_color_shader.glsl";
 
-        ShaderData onlyColorShader = new ShaderData().load(Core2D.class.getResourceAsStream(onlyColorShaderPath));
+        ShaderData onlyColorShader = new ShaderData().load(Core2D.class.getResourceAsStream(onlyColorShaderPath), onlyColorShaderPath);
 
         addAsset(new Asset(onlyColorShader, onlyColorShaderPath));
     }
@@ -110,9 +116,10 @@ public class AssetManager implements Serializable
     public AssetManager load(AssetManager assetManager)
     {
         for(Asset asset : assetManager.assets) {
+            Log.Console.println("asset obj: " + asset.getAssetObject().getClass());
             Asset loadedAsset = getAsset(asset);
-            if(loadedAsset != null) {
-                loadedAsset.getAssetObject().setNotTransientFields(asset.getAssetObject());
+            if(loadedAsset != null && asset.getAssetObject() instanceof Data data) {
+                data.setNotTransientFields(data);
             }
         }
         return this;
@@ -162,7 +169,7 @@ public class AssetManager implements Serializable
      * @param path Relative path of asset.
      * @return Null if the asset is not found and asset if the asset is found.
      */
-    public Asset getAsset(String path, Class<? extends Data> assetObjectClass)
+    public Asset getAsset(String path, Class<?> assetObjectClass)
     {
         Asset asset = null;
         for(Asset a : assets) {
@@ -213,11 +220,13 @@ public class AssetManager implements Serializable
         return returnAsset;
     }
 
-    public <T extends Data> T getAssetObject(String path, Class<T> assetObjectClass)
+    public <T> T getAssetObject(String path, Class<?> assetObjectClass)
     {
-        T assetObj = null;
+        //Log.CurrentSession.println("path: " + path, Log.MessageType.WARNING);
+
+        Object assetObj = null;
         for(Asset asset : assets) {
-            if(asset.path.equals(path) && asset.getAssetObject().getClass().isAssignableFrom(assetObjectClass)) {
+            if(asset.path.equals(path) && assetObjectClass.isAssignableFrom(asset.getAssetObject().getClass())) {
                 assetObj = assetObjectClass.cast(asset.getAssetObject());
             }
         }
@@ -229,7 +238,8 @@ public class AssetManager implements Serializable
                     Object objToCast = null;
                     if (assetObjectClass.getSuperclass().isAssignableFrom(Data.class)) {
                         try {
-                            objToCast = assetObjectClass.getConstructor().newInstance().load(fullPath);
+                            //System.out.println("assignable from: " + assetObjectClass.getName());
+                            objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(fullPath);
                         } catch (InstantiationException |
                                  IllegalAccessException |
                                  InvocationTargetException |
@@ -246,7 +256,7 @@ public class AssetManager implements Serializable
                 Object objToCast = null;
                 if (assetObjectClass.getSuperclass().isAssignableFrom(Data.class)) {
                     try {
-                        objToCast = assetObjectClass.getConstructor().newInstance().load(Core2D.class.getResourceAsStream(path));
+                        objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(Core2D.class.getResourceAsStream(path), path);
                     } catch (InstantiationException |
                              IllegalAccessException |
                              InvocationTargetException |
@@ -261,14 +271,45 @@ public class AssetManager implements Serializable
             }
 
             assets.add(new Asset(assetObj, path));
-            System.out.println("added new asset! data type: " + assetObj.getClass().getSimpleName() +
-                    ", path: " + path + ", asset class: " + assetObjectClass.getName());
+            if(assetObj != null) {
+                Log.Console.println("added new asset! data type: " + assetObj.getClass().getSimpleName() +
+                        ", path: " + path + ", asset class: " + assetObjectClass.getName());
+            }
         }
 
-        return assetObj;
+        return (T) assetObj;
     }
 
-    public List<Asset> getAssets() { return assets; }
+    public Asset addAsset(Object obj, String path)
+    {
+        Asset asset = new Asset(obj, path);
+        assets.add(asset);
+        return asset;
+    }
+
+    public void removeAsset(String path)
+    {
+        Iterator<Asset> assetsIterator = assets.iterator();
+        while(assetsIterator.hasNext()) {
+            Asset asset = assetsIterator.next();
+
+            if(asset.path.equals(path)) {
+                assetsIterator.remove();
+                break;
+            }
+        }
+    }
+
+    public void removeAsset(Asset asset)
+    {
+        assets.remove(asset);
+    }
+
+    public Asset reloadAsset(String path, Class<?> assetObjectClass)
+    {
+        removeAsset(path);
+        return getAsset(path, assetObjectClass);
+    }
 
     public static AssetManager getInstance()
     {

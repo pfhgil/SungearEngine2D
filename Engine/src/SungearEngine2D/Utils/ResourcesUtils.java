@@ -43,6 +43,15 @@ public class ResourcesUtils
         };
     }
 
+    public static boolean isFileShader(File file)
+    {
+        String fileExtension = FilenameUtils.getExtension(file.getPath());
+        return switch (fileExtension) {
+            case "glsl", "vert", "frag" -> true;
+            default -> false;
+        };
+    }
+
     public static int getNumOfAllSystemFiles()
     {
         int num = 0;

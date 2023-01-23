@@ -2,10 +2,9 @@ package Core2D.ECS.Component.Components;
 
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Entity;
+import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Scripting.Script;
-
-import java.util.function.Consumer;
 
 /**
  * The ScriptComponent.
@@ -44,6 +43,7 @@ public class ScriptComponent extends Component
     public void update()
     {
         super.update();
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         script.update();
     }
 
@@ -55,6 +55,7 @@ public class ScriptComponent extends Component
     @Override
     public void deltaUpdate(float deltaTime)
     {
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         script.deltaUpdate(deltaTime);
     }
 
@@ -64,6 +65,7 @@ public class ScriptComponent extends Component
      */
     public void collider2DEnter(Entity otherObj)
     {
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         script.collider2DEnter(otherObj);
     }
 
@@ -73,15 +75,21 @@ public class ScriptComponent extends Component
      */
     public void collider2DExit(Entity otherObj)
     {
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         script.collider2DExit(otherObj);
     }
 
-    // сделано для избежания рекурсивных вызовов дефолтных методов (update, deltaUpdate, collider2DEnter, collider2DExit).
-    // они могут ссылаться сами на себя, если в ребенке, наследующем данный класс не реализованы какие-либо из этих четырек методов
-    public void callMethod(Consumer<Object[]> func)
+    @Override
+    public void render()
     {
-        if(SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
-            func.accept(null);
-        }
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
+        script.render();
+    }
+
+    @Override
+    public void render(Shader shader)
+    {
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
+        script.render(shader);
     }
 }
