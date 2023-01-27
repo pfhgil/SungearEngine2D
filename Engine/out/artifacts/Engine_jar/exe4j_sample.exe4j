@@ -3,7 +3,7 @@
   <directoryPresets config="D:/Pixelfield/SungearEngine2D/Engine/out/artifacts/Engine_jar" />
   <application name="Sungear Engine 2D" distributionSourceDir="D:/Pixelfield/SungearEngine2D/Engine/out/artifacts/Engine_jar" />
   <executable name="Sungear Engine 2D" wrapperType="embed" executableDir="." executableMode="gui" />
-  <java mainClass="SungearEngine2D.Main.Main" minVersion="1" maxVersion="10" allowBetaVM="true">
+  <java mainClass="SungearEngine2D.Main.Main" minVersion="1" maxVersion="21" allowBetaVM="true">
     <classPath>
       <archive location="D:/Pixelfield/SungearEngine2D/Engine/out/artifacts/Engine_jar/Engine.jar" failOnError="false" />
     </classPath>
