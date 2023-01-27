@@ -26,16 +26,6 @@
       "isMainScene2D": false
     },
     {
-      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\test1.sgs",
-      "inBuild": false,
-      "isMainScene2D": false
-    },
-    {
-      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\test5.sgs",
-      "inBuild": false,
-      "isMainScene2D": false
-    },
-    {
       "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl6.sgs",
       "inBuild": false,
       "isMainScene2D": false
@@ -46,7 +36,7 @@
       "isMainScene2D": false
     },
     {
-      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\test10.sgs",
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\for_alesha.sgs",
       "inBuild": false,
       "isMainScene2D": false
     }

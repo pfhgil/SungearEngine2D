@@ -224,7 +224,7 @@ public class AssetManager implements Serializable
 
     public <T> T getAssetObject(String path, Class<?> assetObjectClass)
     {
-        //Log.CurrentSession.println("path: " + path, Log.MessageType.WARNING);
+        Log.CurrentSession.println("path: " + path, Log.MessageType.WARNING);
 
         Object assetObj = null;
         for(Asset asset : assets) {

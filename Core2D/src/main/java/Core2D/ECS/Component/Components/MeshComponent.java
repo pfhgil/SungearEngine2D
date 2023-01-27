@@ -15,7 +15,7 @@ import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
 public class MeshComponent extends Component
 {
-    public Texture2D texture = new Texture2D();
+    public Texture2D texture = new Texture2D(AssetManager.getInstance().getTexture2DData("/data/textures/white_texture.png"));
 
     public Shader shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/mesh/default_shader.glsl"));
 

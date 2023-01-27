@@ -42,7 +42,7 @@ public class Texture2D
     {
         this.texture2DData = texture2DData;
 
-        if(ProjectsManager.getCurrentProject() != null) {
+        if(ProjectsManager.getCurrentProject() != null && new File(texture2DData.getPath()).exists()) {
             this.path = FileUtils.getRelativePath(
                     new File(texture2DData.getPath()),
                     new File(ProjectsManager.getCurrentProject().getProjectPath())

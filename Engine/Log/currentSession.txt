@@ -1,5 +1,308 @@
-[#FFFFFF] 2023/01/27 18:33:44 | [#008000] Current session log file was created!
-[#FFFFFF] 2023/01/27 18:33:44 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2023/01/27 18:33:44 | [#008000] Core2D started!
-[#FFFFFF] 2023/01/27 18:33:44 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
-[#FFFFFF] 2023/01/27 18:33:45 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2023/01/28 00:08:27 | [#008000] Current session log file was created!
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2023/01/28 00:08:27 | [#008000] Core2D started!
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/primitives/line2D/shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/primitives/line2D/shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/primitives/line2D/shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/primitives/line2D/shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/primitives/line2D/shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/mesh/picking_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2023/01/28 00:08:27 | [#FFFF00] path: /data/shaders/common/only_color_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:31 | [#FFFFFF] scene manager code: {
+  "scene2DStoredValues": [
+    {
+      "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\kek0.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl0.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl1.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl2.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\tets0.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl6.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\stable\\s_lvl0.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\for_alesha.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    }
+  ],
+  "mainScene2DPath": ""
+}
+[#FFFFFF] 2023/01/28 00:08:31 | [#FFFF00] path: Resources\textures\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg
+[#FFFFFF] 2023/01/28 00:08:31 | [#FFFF00] path: Resources\shaders\for_alesha_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:32 | [#FFFFFF] Log cleared! See log directory in the engine directory.
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/shaders/mesh/picking_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: Resources\shaders\for_alesha_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: Resources\textures\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/shaders/mesh/picking_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/shaders/mesh/picking_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: Resources\shaders\for_alesha_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: Resources\textures\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: /data/shaders/mesh/picking_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#FFFF00] path: Resources\shaders\for_alesha_shader.glsl
+[#FFFFFF] 2023/01/28 00:08:36 | [#008000] Shader Resources\shaders\for_alesha_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/01/28 00:08:51 | [#FFFFFF] new 18032437
+[#FFFFFF] 2023/01/28 00:09:14 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:09:14 | [#FF0000] Error while creating and compiling shader. Shader type is: GL_FRAGMENT_SHADER. Error is: 0(31) : error C1503: undefined variable "time"
+
+[#FFFFFF] 2023/01/28 00:09:14 | [#FF0000] // ATTENTION: do not write the shader version!
+#ifdef VERTEX
+    layout (location = 0) in vec2 positionAttribute;
+    layout (location = 1) in vec2 textureCoordsAttribute;
+
+    uniform mat4 mvpMatrix;
+
+    out vec2 vs_textureCoords;
+
+    void main()
+    {
+        vs_textureCoords = textureCoordsAttribute;
+
+        gl_Position = mvpMatrix * vec4(positionAttribute, 0.0, 1.0);
+    }
+#endif
+
+#ifdef FRAGMENT
+    out vec4 fragColor;
+
+    uniform sampler2D sampler;
+
+    uniform vec4 color;
+
+    in vec2 vs_textureCoords;
+
+    void main()
+    {
+        float step = 0.01 + sin(time) * 0.01;
+        //float step = 0.01;
+
+        vec4 tex0 = texture(sampler, vec2(vs_textureCoords.x + step, 1.0 - vs_textureCoords.y));
+        vec4 tex1 = texture(sampler, vec2(vs_textureCoords.x - step, 1.0 - vs_textureCoords.y));
+        vec4 tex2 = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y + step));
+        vec4 tex3 = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y - step));
+        vec4 tex4 = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y));
+        //vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0f - vs_textureCoords.y));
+
+        //fragColor = color * textureColor;
+        //fragColor = vec4(color.x, color.y * sin(time), color.z * cos(time), color.w) * textureColor;
+        fragColor = (tex0 + tex1 + tex2 + tex3 + tex4) / 4.0f;
+    }
+#endif
+
+[#FFFFFF] 2023/01/28 00:09:14 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:09:14 | [#FF0000] Error while creating and compiling shader. Shader type is: GL_FRAGMENT_SHADER. Error is: 0(31) : error C1503: undefined variable "time"
+
+[#FFFFFF] 2023/01/28 00:09:14 | [#FF0000] // ATTENTION: do not write the shader version!
+#ifdef VERTEX
+    layout (location = 0) in vec2 positionAttribute;
+    layout (location = 1) in vec2 textureCoordsAttribute;
+
+    uniform mat4 mvpMatrix;
+
+    out vec2 vs_textureCoords;
+
+    void main()
+    {
+        vs_textureCoords = textureCoordsAttribute;
+
+        gl_Position = mvpMatrix * vec4(positionAttribute, 0.0, 1.0);
+    }
+#endif
+
+#ifdef FRAGMENT
+    out vec4 fragColor;
+
+    uniform sampler2D sampler;
+
+    uniform vec4 color;
+
+    in vec2 vs_textureCoords;
+
+    void main()
+    {
+        float step = 0.01 + sin(time) * 0.01;
+        //float step = 0.01;
+
+        vec4 tex0 = texture(sampler, vec2(vs_textureCoords.x + step, 1.0 - vs_textureCoords.y));
+        vec4 tex1 = texture(sampler, vec2(vs_textureCoords.x - step, 1.0 - vs_textureCoords.y));
+        vec4 tex2 = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y + step));
+        vec4 tex3 = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y - step));
+        vec4 tex4 = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y));
+        //vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0f - vs_textureCoords.y));
+
+        //fragColor = color * textureColor;
+        //fragColor = vec4(color.x, color.y * sin(time), color.z * cos(time), color.w) * textureColor;
+        fragColor = (tex0 + tex1 + tex2 + tex3 + tex4) / 4.0f;
+    }
+#endif
+
+[#FFFFFF] 2023/01/28 00:09:24 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:09:24 | [#008000] Shader Resources\shaders\new_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/01/28 00:09:46 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:09:46 | [#008000] Shader Resources\shaders\new_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/01/28 00:10:25 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\for_alesha.txt' already exists
+[#FFFFFF] 2023/01/28 00:10:27 | [#FFFF00] path: /data/shaders/mesh/picking_shader.glsl
+[#FFFFFF] 2023/01/28 00:10:27 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:10:27 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:10:27 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:10:27 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:10:27 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:10:27 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:10:27 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:10:27 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:10:27 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:10:27 | [#FFFF00] path: Resources\textures\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg
+[#FFFFFF] 2023/01/28 00:10:27 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:10:27 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:10:27 | [#FFFF00] path: /data/shaders/mesh/picking_shader.glsl
+[#FFFFFF] 2023/01/28 00:10:27 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:10:27 | [#008000] Shader Resources\shaders\new_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/01/28 00:10:32 | [#FFFFFF] Compiling script UniformsSystem.java... 
+[#FFFFFF] 2023/01/28 00:10:32 | [#FF0000] D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scripts\UniformsSystem.java:54: error: cannot find symbol
+    public void render(Shader shader)
+                       ^
+  symbol:   class Shader
+  location: class UniformsSystem
+D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scripts\UniformsSystem.java:39: error: cannot find symbol
+        float time = (float) glfwGetTime();
+                             ^
+  symbol:   method glfwGetTime()
+  location: class UniformsSystem
+D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scripts\UniformsSystem.java:45: error: cannot find symbol
+            ShaderUtils.setUniform(
+            ^
+  symbol:   variable ShaderUtils
+  location: class UniformsSystem
+3 errors
+
+[#FFFFFF] 2023/01/28 00:10:49 | [#FFFFFF] Compiling script UniformsSystem.java... 
+[#FFFFFF] 2023/01/28 00:10:50 | [#008000] Script UniformsSystem.java was successfully built!
+[#FFFFFF] 2023/01/28 00:10:54 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\for_alesha.txt' already exists
+[#FFFFFF] 2023/01/28 00:11:05 | [#FFFF00] path: /data/shaders/mesh/picking_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:05 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:11:05 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:05 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:05 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:11:05 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:11:05 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:05 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:11:05 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:05 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:05 | [#FFFF00] path: Resources\textures\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg
+[#FFFFFF] 2023/01/28 00:11:05 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:11:05 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:05 | [#FFFF00] path: /data/shaders/mesh/picking_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:05 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:05 | [#008000] Shader Resources\shaders\new_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/01/28 00:11:15 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:15 | [#008000] Shader Resources\shaders\new_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/01/28 00:11:17 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\for_alesha.txt' already exists
+[#FFFFFF] 2023/01/28 00:11:25 | [#FFFF00] path: /data/shaders/mesh/picking_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:25 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:11:25 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:25 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:25 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:11:25 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:11:25 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:25 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:11:25 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:25 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:25 | [#FFFF00] path: Resources\textures\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg
+[#FFFFFF] 2023/01/28 00:11:25 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:11:25 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:25 | [#FFFF00] path: /data/shaders/mesh/picking_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:25 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:25 | [#008000] Shader Resources\shaders\new_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/01/28 00:11:29 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:29 | [#008000] Shader Resources\shaders\new_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/01/28 00:11:30 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\for_alesha.txt' already exists
+[#FFFFFF] 2023/01/28 00:11:39 | [#FFFF00] path: /data/shaders/mesh/picking_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:39 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:11:39 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:39 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:39 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:11:39 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:11:39 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:39 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:11:39 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:39 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:39 | [#FFFF00] path: Resources\textures\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg
+[#FFFFFF] 2023/01/28 00:11:39 | [#FFFF00] path: /data/textures/white_texture.png
+[#FFFFFF] 2023/01/28 00:11:39 | [#FFFF00] path: /data/shaders/mesh/default_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:39 | [#FFFF00] path: /data/shaders/mesh/picking_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:39 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:39 | [#008000] Shader Resources\shaders\new_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/01/28 00:11:42 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:42 | [#008000] Shader Resources\shaders\new_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/01/28 00:11:44 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:11:44 | [#008000] Shader Resources\shaders\new_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/01/28 00:12:01 | [#FFFF00] path: Resources\shaders\new_shader.glsl
+[#FFFFFF] 2023/01/28 00:12:01 | [#008000] Shader Resources\shaders\new_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/01/28 00:45:34 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists

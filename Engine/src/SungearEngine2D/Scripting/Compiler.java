@@ -86,12 +86,13 @@ public class Compiler
 
                 String command = "\"" + ProjectsManager.getCurrentProject().getProjectSettings().getJdkPath() +
                         "\\bin\\javac\" -sourcepath " +
-                        "\"" + ProjectsManager.getCurrentProject().getScriptsPath() + "\" \n" +
+                        "\"" + ProjectsManager.getCurrentProject().getScriptsPath() + "\" " +
                         "-classpath " +
                         "\"" + compilerPath.getCanonicalPath() + "\\Core2D.jar\" " +
                         "\"" + scriptFile.getCanonicalPath() + "\"";
 
-
+                System.out.println("command:  " + command);
+                
                 proc = Runtime.getRuntime().exec(command);
 
                 // жду завершения процесса

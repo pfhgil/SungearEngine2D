@@ -39,9 +39,11 @@ public class Texture2DData extends Data
     {
         this.path = path;
 
-        try {
-            load(new BufferedInputStream(new FileInputStream(path)), path);
-        } catch (FileNotFoundException e) {
+        Log.Console.println("texture data path: " + path);
+
+        try (FileInputStream fis = new FileInputStream(path); BufferedInputStream bis = new BufferedInputStream(fis)) {
+            load(bis, path);
+        } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException(e)), Log.MessageType.ERROR);
         }
 
