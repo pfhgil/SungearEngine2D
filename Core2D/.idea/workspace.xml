@@ -89,7 +89,7 @@
     &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
     &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
     &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
     &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
     &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
     &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
@@ -249,6 +249,14 @@
       <workItem from="1674395441558" duration="2953000" />
       <workItem from="1674415288622" duration="10711000" />
       <workItem from="1674479283243" duration="17038000" />
+      <workItem from="1674577771880" duration="4175000" />
+      <workItem from="1674588086247" duration="1328000" />
+      <workItem from="1674600386525" duration="527000" />
+      <workItem from="1674667639005" duration="4619000" />
+      <workItem from="1674744486715" duration="2094000" />
+      <workItem from="1674754286605" duration="4629000" />
+      <workItem from="1674833039883" duration="1426000" />
+      <workItem from="1674843199974" duration="1882000" />
     </task>
     <servers />
   </component>

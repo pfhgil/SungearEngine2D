@@ -5,6 +5,7 @@ import Core2D.ECS.Component.Component;
 import Core2D.Graphics.RenderParts.Material2D;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
+import Core2D.Log.Log;
 import Core2D.ShaderUtils.*;
 import Core2D.Utils.PositionsQuad;
 import org.joml.Vector2f;
@@ -78,6 +79,16 @@ public class MeshComponent extends Component
         if(vertexArray != null) {
             vertexArray.destroy();
             vertexArray = null;
+        }
+
+        if(texture != null) {
+            texture.destroy();
+            texture = null;
+        }
+
+        if(shader != null) {
+            shader.destroy();
+            shader = null;
         }
     }
 

@@ -16,6 +16,8 @@ import Core2D.Window.Window;
 import org.joml.Vector2i;
 import org.lwjgl.Version;
 
+import java.util.Scanner;
+
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -125,14 +127,19 @@ public class Core2D extends Graphics
     private void initCore() {
         try {
             Graphics.init();
+            Log.Console.println("graphics initialized");
             OpenAL.init();
+            Log.Console.println("al initialized");
             Settings.init();
+            Log.Console.println("settings initialized");
 
             core2DInputCallbacks = new Core2DInputCallbacks();
 
             /** инициализация **/
 
             AssetManager.getInstance().init();
+
+            Log.Console.println("asset manager initialized");
 
             deltaTimer.getTimerCallbacks().add(new TimerCallback() {
                 @Override

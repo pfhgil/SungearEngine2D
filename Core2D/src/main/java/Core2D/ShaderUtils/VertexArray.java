@@ -12,7 +12,7 @@ import static org.lwjgl.opengl.GL15C.GL_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15C.glBufferSubData;
 import static org.lwjgl.opengl.GL30C.*;
 
-public class VertexArray implements AutoCloseable
+public class VertexArray
 {
     // array id
     private int handler;
@@ -35,6 +35,9 @@ public class VertexArray implements AutoCloseable
     // удаление vao
     public void destroy()
     {
+        // удаление vao
+        OpenGL.glCall((params) -> glDeleteVertexArrays(handler));
+
         Iterator<VertexBuffer> vbosIterator = VBOs.iterator();
         while (vbosIterator.hasNext()) {
             VertexBuffer vbo = vbosIterator.next();
@@ -51,15 +54,6 @@ public class VertexArray implements AutoCloseable
 
         VBOs = null;
         IBOs = null;
-
-        // удаление vao
-        OpenGL.glCall((params) -> glDeleteVertexArrays(handler));
-
-        try {
-            close();
-        } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-        }
     }
 
     // связка
@@ -99,9 +93,4 @@ public class VertexArray implements AutoCloseable
     public List<VertexBuffer> getVBOs() { return VBOs; }
 
     public List<IndexBuffer> getIBOs() { return IBOs; }
-
-    @Override
-    public void close() throws Exception {
-
-    }
 }

@@ -4,6 +4,7 @@ import Core2D.AssetManager.AssetManager;
 import Core2D.DataClasses.LineData;
 import Core2D.ECS.Component.Component;
 import Core2D.Graphics.RenderParts.Shader;
+import Core2D.Log.Log;
 import Core2D.ShaderUtils.BufferLayout;
 import Core2D.ShaderUtils.VertexArray;
 import Core2D.ShaderUtils.VertexAttribute;
@@ -71,6 +72,24 @@ public class PrimitiveComponent extends Component
 
         // отвязываю vao
         vertexArray.unBind();
+    }
+
+    @Override
+    public void destroy()
+    {
+        if(vertexArray != null) {
+            vertexArray.destroy();
+            vertexArray = null;
+
+            Log.Console.println("entity " + entity.name + " primitive`s vao was destroyed!");
+        }
+
+        if(shader != null) {
+            shader.destroy();
+            shader = null;
+
+            Log.Console.println("entity " + entity.name + " primitive`s  shader was destroyed!");
+        }
     }
 
     public LineData[] getLinesData() { return linesData; }

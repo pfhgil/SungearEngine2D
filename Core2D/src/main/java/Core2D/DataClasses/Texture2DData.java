@@ -3,8 +3,10 @@ package Core2D.DataClasses;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 import org.lwjgl.BufferUtils;
+import sun.misc.Unsafe;
 
 import java.io.*;
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
@@ -58,10 +60,8 @@ public class Texture2DData extends Data
         // буфер для каналов текстуры
         IntBuffer channelsBuffer = BufferUtils.createIntBuffer(1);
 
-        try {
+        try(inputStream) {
             pixelsData = stbi_load_from_memory(Core2D.Utils.Utils.resourceToByteBuffer(inputStream), widthBuffer, heightBuffer, channelsBuffer, 0);
-
-            inputStream.close();
 
             // получаю из буферов размер и каналы загруженной текстуры
             width = widthBuffer.get(0);
@@ -83,6 +83,10 @@ public class Texture2DData extends Data
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
+
+        widthBuffer.clear();
+        heightBuffer.clear();
+        channelsBuffer.clear();
 
         return this;
     }

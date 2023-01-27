@@ -67,11 +67,14 @@ public abstract class Graphics
         long capDiff = System.currentTimeMillis();
         long capInit = System.currentTimeMillis();
 
+        Log.Console.println("first");
+
         while (!glfwWindowShouldClose(Core2D.getWindow().getWindow())) {
             try {
                 if(Settings.Core2D.sleepCore2D) {
                     Thread.sleep(1000);
                 }
+
                 //System.out.println("delay: " + delay + ", delta: " + Core2D.getDeltaTimer().getDeltaTime());
 
                 Core2D.getDeltaTimer().startFrame();

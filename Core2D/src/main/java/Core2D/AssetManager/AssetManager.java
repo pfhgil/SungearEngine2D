@@ -13,6 +13,8 @@ import Core2D.Utils.FileUtils;
 import Core2D.Utils.Utils;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -255,12 +257,13 @@ public class AssetManager implements Serializable
             } else {
                 Object objToCast = null;
                 if (assetObjectClass.getSuperclass().isAssignableFrom(Data.class)) {
-                    try {
-                        objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(Core2D.class.getResourceAsStream(path), path);
+                    try(InputStream resource = Core2D.class.getResourceAsStream(path)) {
+                        objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(resource, path);
                     } catch (InstantiationException |
                              IllegalAccessException |
                              InvocationTargetException |
-                             NoSuchMethodException e) {
+                             NoSuchMethodException |
+                             IOException e) {
                         Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                     }
                 }

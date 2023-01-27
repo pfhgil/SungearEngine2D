@@ -15,6 +15,7 @@ import Core2D.Log.Log;
 import Core2D.Physics.PhysicsWorld;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scripting.Script;
+import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import SungearEngine2D.GUI.ImGuiUtils;

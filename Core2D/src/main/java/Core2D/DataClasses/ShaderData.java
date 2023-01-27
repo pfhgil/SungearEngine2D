@@ -1,9 +1,12 @@
 package Core2D.DataClasses;
 
+import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
+import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStream;
 
 public class ShaderData extends Data

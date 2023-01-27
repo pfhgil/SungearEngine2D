@@ -20,8 +20,6 @@ import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scripting.Script;
-import Core2D.ShaderUtils.FrameBuffer;
-import Core2D.ShaderUtils.ShaderUtils;
 import Core2D.Tasks.StoppableTask;
 import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.CameraController.CameraController;
@@ -32,11 +30,8 @@ import SungearEngine2D.GUI.GUI;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Utils.AppData.AppDataManager;
-import imgui.ImGui;
-import imgui.ImVec2;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector2f;
-import org.joml.Vector2i;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
@@ -289,7 +284,9 @@ public class Main
 
             @Override
             public void onDeltaUpdate(float deltaTime) {
-                mainCamera2D.deltaUpdate(deltaTime);
+                if(mainCamera2D != null) {
+                    mainCamera2D.deltaUpdate(deltaTime);
+                }
                 currentSceneManager.updateCurrentScene2D(deltaTime);
 
                 GraphicsRenderer.deltaUpdate(deltaTime);

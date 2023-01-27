@@ -28,15 +28,6 @@ public class CircleComponent extends PrimitiveComponent
         }
     }
 
-    @Override
-    public void destroy()
-    {
-        if (vertexArray != null) {
-            vertexArray.destroy();
-            vertexArray = null;
-        }
-    }
-
     public float getRadius() { return radius; }
     public void setRadius(float radius)
     {

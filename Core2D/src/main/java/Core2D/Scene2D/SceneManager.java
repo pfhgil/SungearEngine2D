@@ -116,10 +116,14 @@ public class SceneManager
 
     public static SceneManager loadSceneManager(InputStream inputStream)
     {
-        String deserialized = (String) FileUtils.deSerializeObject(inputStream);
-        if(deserialized != null && !deserialized.equals("")) {
-            Log.CurrentSession.println("scene manager code: " + deserialized, Log.MessageType.INFO);
-            return Utils.gson.fromJson(deserialized, SceneManager.class);
+        try(inputStream) {
+            String deserialized = (String) FileUtils.deSerializeObject(inputStream);
+            if (deserialized != null && !deserialized.equals("")) {
+                Log.CurrentSession.println("scene manager code: " + deserialized, Log.MessageType.INFO);
+                return Utils.gson.fromJson(deserialized, SceneManager.class);
+            }
+        } catch(Exception e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
         return new SceneManager();
@@ -209,17 +213,11 @@ public class SceneManager
             String deserialized = (String) FileUtils.deSerializeObject(path);
             return scene2DFromJson(path, deserialized);
         } else {
-            InputStream inputStream = Core2D.class.getResourceAsStream(path);
-            if(inputStream != null) {
+            try(InputStream inputStream = Core2D.class.getResourceAsStream(path)) {
                 String deserialized = (String) FileUtils.deSerializeObject(inputStream);
-                try {
-                    if (inputStream != null) {
-                        inputStream.close();
-                    }
-                } catch (IOException e) {
-                    Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-                }
                 return scene2DFromJson(path, deserialized);
+            } catch (IOException e) {
+                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }
         }
         return null;

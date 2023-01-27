@@ -48,6 +48,8 @@ public class Log
 
         // записывает в файл лога информацию (новая строка)
         public static void println(Object obj, MessageType messageType) {
+            Console.println(obj);
+
             if(new File(directoryPath + File.separator + currentSessionFileName).exists()) {
                 FileWriter fileWriter = null;
                 try {
@@ -107,6 +109,7 @@ public class Log
             currentSessionFile = FileUtils.reCreateFile(currentSessionFile);
 
             if(currentSessionFile.exists()) {
+                Console.println("Current session log file was created!");
                 println("Current session log file was created!", MessageType.SUCCESS);
             }
         }

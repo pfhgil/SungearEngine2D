@@ -6,7 +6,7 @@ import Core2D.Utils.ExceptionsUtils;
 
 import static org.lwjgl.opengl.GL15C.*;
 
-public class IndexBuffer implements AutoCloseable
+public class IndexBuffer
 {
     // id буфера
     private int handler;
@@ -41,12 +41,6 @@ public class IndexBuffer implements AutoCloseable
 
         if(layout != null) layout.destroy();
         layout = null;
-
-        try {
-            close();
-        } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-        }
     }
     // положить данные
     public void putData()
@@ -68,9 +62,4 @@ public class IndexBuffer implements AutoCloseable
     public short[] getData() { return data; }
 
     public int getUsage() { return usage; }
-
-    @Override
-    public void close() throws Exception {
-
-    }
 }

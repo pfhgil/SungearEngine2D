@@ -43,15 +43,6 @@ public class BoxComponent extends PrimitiveComponent
         }
     }
 
-    @Override
-    public void destroy()
-    {
-        if(vertexArray != null) {
-            vertexArray.destroy();
-            vertexArray = null;
-        }
-    }
-
     public VertexArray getVertexArrayObject() { return vertexArray; }
 
     public Vector2f getSize() { return size; }

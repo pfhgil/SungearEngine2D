@@ -19,12 +19,4 @@ public class LineComponent extends PrimitiveComponent
                 new LineData(new Vector2f(), new Vector2f(), new Vector2f(0.0f, 100.0f))
         };
     }
-
-    @Override
-    public void destroy() {
-        if(vertexArray != null) {
-            vertexArray.destroy();
-            vertexArray = null;
-        }
-    }
 }

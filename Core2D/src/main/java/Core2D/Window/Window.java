@@ -72,7 +72,7 @@ public class Window
     {
         try {
             Log.CurrentSession.println("Starting Core2D...", Log.MessageType.INFO);
-            Log.Console.println("начало инициализации окна");
+            Log.Console.println("starting window initialization...");
 
             GLFWErrorCallback.createPrint(System.err).set();
 
@@ -153,6 +153,7 @@ public class Window
                 OpenGL.glCall((params) -> glViewport(0, 0, size.x, size.y));
             });
 
+            Log.Console.println("Core2D started!");
             Log.CurrentSession.println("Core2D started!", Log.MessageType.SUCCESS);
         } catch(Exception e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);

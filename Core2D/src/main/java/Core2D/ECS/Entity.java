@@ -286,7 +286,12 @@ public class Entity implements Serializable, PoolObject
         components.add(component);
         component.entity = this;
         if(component instanceof ScriptComponent scriptComponent) {
-            scriptComponent.script.setFieldValue(scriptComponent.script.getField("entity"), this);
+            if(scriptComponent.script.getScriptClassInstance() instanceof Component componentScriptInstance) {
+                componentScriptInstance.entity = this;
+                //scriptComponent.script.setFieldValue(scriptComponent.script.getField("entity"), this);
+            } else if(scriptComponent.script.getScriptClassInstance() instanceof System systemScriptInstance) {
+                systemScriptInstance.entity = this;
+            }
         }
         component.init();
         return component;
@@ -681,11 +686,5 @@ public class Entity implements Serializable, PoolObject
 
         this.layer.getEntities().remove(this);
         this.layer.getEntities().add(this);
-    }
-
-    @Override
-    protected synchronized void finalize()
-    {
-        Log.Console.println("Object destroyed: " + name);
     }
 }

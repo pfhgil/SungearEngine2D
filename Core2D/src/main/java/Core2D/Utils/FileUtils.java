@@ -58,14 +58,9 @@ public class FileUtils
     {
         Object obj = null;
 
-        try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            ObjectInputStream objectOutputStream = new ObjectInputStream(fileInputStream);
-
-            obj = objectOutputStream.readObject();
-
-            objectOutputStream.close();
-            fileInputStream.close();
+        try(FileInputStream fileInputStream = new FileInputStream(file);
+            ObjectInputStream objectInputStream = new ObjectInputStream(fileInputStream)) {
+            obj = objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -76,16 +71,13 @@ public class FileUtils
     {
         Object obj = null;
 
-        ObjectInputStream objectOutputStream = null;
-        try {
-            objectOutputStream = new ObjectInputStream(inputStream);
-
-            obj = objectOutputStream.readObject();
-
-            objectOutputStream.close();
+        try(ObjectInputStream objectInputStream = new ObjectInputStream(inputStream);
+            inputStream) {
+            obj = objectInputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
+
 
         return obj;
     }
@@ -110,13 +102,9 @@ public class FileUtils
     public static void serializeObject(File file, Object obj)
     {
         reCreateFile(file);
-        try {
-            FileOutputStream fos = new FileOutputStream(file);
-            ObjectOutputStream oos = new ObjectOutputStream(fos);
+        try(FileOutputStream fos = new FileOutputStream(file);
+            ObjectOutputStream oos = new ObjectOutputStream(fos)) {
             oos.writeObject(obj);
-
-            oos.close();
-            fos.close();
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -128,15 +116,13 @@ public class FileUtils
     {
         StringBuilder stringBuilder = new StringBuilder(); // для операций со строками
 
-        try {
-            Scanner scanner = new Scanner(file).useDelimiter("\\A"); // использую разделитель \n
+        try(Scanner scanner = new Scanner(file).useDelimiter("\\A")) {
             stringBuilder = new StringBuilder();
 
             // выполняю пока есть следующая линия
             while(scanner.hasNext()) {
                 stringBuilder.append(scanner.next()); // соединяю fileText с scanner.next(). scanner.next - следующая линия
             }
-            scanner.close();
         } catch (Exception e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);;
         }
@@ -148,13 +134,11 @@ public class FileUtils
     {
         StringBuilder stringBuilder = new StringBuilder(); // для операций со строками
 
-        try {
-            stringBuilder = new StringBuilder();
-
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new BOMInputStream(inputStream, false,
-                    ByteOrderMark.UTF_8,
-                    ByteOrderMark.UTF_16BE, ByteOrderMark.UTF_16LE,
-                    ByteOrderMark.UTF_32BE, ByteOrderMark.UTF_32LE)));
+        try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new BOMInputStream(inputStream, false,
+                ByteOrderMark.UTF_8,
+                ByteOrderMark.UTF_16BE, ByteOrderMark.UTF_16LE,
+                ByteOrderMark.UTF_32BE, ByteOrderMark.UTF_32LE)));
+            inputStream) {
 
             String curLine = "";
 
@@ -162,9 +146,6 @@ public class FileUtils
             while((curLine = bufferedReader.readLine()) != null) {
                 stringBuilder.append(curLine).append("\n");
             }
-
-            bufferedReader.close();
-            inputStream.close();
         } catch (Exception e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -176,14 +157,9 @@ public class FileUtils
     public static void writeToFile(String path, String data, boolean append) { writeToFile(new File(path), data, append); }
     public static void writeToFile(File file, String data, boolean append)
     {
-        FileWriter fileWriter = null;
-        try {
-            fileWriter = new FileWriter(file, append);
-
-            fileWriter.write(data);
-
+        try(FileWriter fileWriter = new FileWriter(file, append)) {
             fileWriter.flush();
-            fileWriter.close();
+            fileWriter.write(data);
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -192,14 +168,9 @@ public class FileUtils
     public static void writeToFile(String path, byte[] data, boolean append) { writeToFile(new File(path), data, append); }
     public static void writeToFile(File file, byte[] data, boolean append)
     {
-        FileOutputStream outputStream = null;
-        try {
-            outputStream = new FileOutputStream(file, append);
-
-            outputStream.write(data);
-
+        try(FileOutputStream outputStream = new FileOutputStream(file, append)) {
             outputStream.flush();
-            outputStream.close();
+            outputStream.write(data);
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -248,7 +219,7 @@ public class FileUtils
     // копирует файл из input stream в файл по пути toPath
     public static void copyFile(InputStream from, String toPath)
     {
-        try {
+        try(from) {
             Files.copy(from, Paths.get(toPath), StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
