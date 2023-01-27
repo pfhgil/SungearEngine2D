@@ -4,6 +4,4 @@
 **/.gradle
 **/**/.gradle
 **/build/
-**/*.sm
-**/*.sgp
 **/*.txt
