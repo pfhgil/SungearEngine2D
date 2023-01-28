@@ -95,6 +95,7 @@ public class MeshComponent extends Component
     private void loadVAO() {
         if (vertexArray != null) {
             vertexArray.destroy();
+            vertexArray = null;
         }
 
         vertexArray = new VertexArray();

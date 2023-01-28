@@ -2,11 +2,16 @@ package Core2D.Graphics.RenderParts;
 
 import Core2D.DataClasses.Texture2DData;
 import Core2D.Graphics.OpenGL;
+import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Utils.FileUtils;
+import Core2D.Utils.Utils;
 import com.google.gson.annotations.SerializedName;
+import org.lwjgl.BufferUtils;
+import org.lwjgl.stb.STBImage;
 
 import java.io.File;
+import java.nio.ByteBuffer;
 
 import static org.lwjgl.opengl.GL46.*;
 
@@ -38,6 +43,27 @@ public class Texture2D
         createTexture(texture2DData);
     }
 
+    public static ByteBuffer cloneByteBuffer(final ByteBuffer original) {
+        // Create clone with same capacity as original.
+        final ByteBuffer clone = (original.isDirect()) ?
+                ByteBuffer.allocateDirect(original.capacity()) :
+                ByteBuffer.allocate(original.capacity());
+
+        // Create a read-only copy of the original.
+        // This allows reading from the original without modifying it.
+        final ByteBuffer readOnlyCopy = original.asReadOnlyBuffer();
+
+        // Flip and read from the original.
+        readOnlyCopy.flip();
+        clone.put(readOnlyCopy);
+
+        clone.position(original.position());
+        clone.limit(original.limit());
+        clone.order(original.order());
+
+        return clone;
+    }
+
     public void createTexture(Texture2DData texture2DData)
     {
         this.texture2DData = texture2DData;
@@ -58,6 +84,8 @@ public class Texture2D
         textureHandler = OpenGL.glCall((params) -> glGenTextures(), Integer.class);
         bind();
 
+        // ставлю режим выравнивания данных текстуры по 1 байту (чтобы цвет текстуры был правильный)
+        OpenGL.glCall((params) -> glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
         OpenGL.glCall((params) -> glTexImage2D(GL_TEXTURE_2D,
                 0,
                 texture2DData.getInternalFormat(),
@@ -72,9 +100,6 @@ public class Texture2D
         OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, texture2DData.getWrapParam()));
         OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, texture2DData.getWrapParam()));
 
-        // ставлю режим выравнивания данных текстуры по 1 байту (чтобы цвет текстуры был правильный)
-        OpenGL.glCall((params) -> glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
-
         // устанавливаю параметры текстуры
         OpenGL.glCall((params) -> glGenerateMipmap(GL_TEXTURE_2D));
 
@@ -85,6 +110,10 @@ public class Texture2D
         OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE));
 
         unBind();
+
+        int[] gpuMemAvailable = new int[1];
+        glGetIntegerv(0x9049, gpuMemAvailable);
+        Log.CurrentSession.println("loaded texture: " + path + ", gpu mem available: " + gpuMemAvailable[0] + " KB (" + gpuMemAvailable[0] / 1024.0f + " MB)", Log.MessageType.INFO);
     }
 
     // удаление текстур

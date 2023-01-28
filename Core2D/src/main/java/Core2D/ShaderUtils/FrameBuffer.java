@@ -235,10 +235,16 @@ public class FrameBuffer implements Serializable
     // удаляет FBO
     public void destroy()
     {
+        OpenGL.glCall((params) -> glDeleteTextures(textureHandler));
+        unBindTexture();
+
+        bind();
+        OpenGL.glCall((params) -> glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 0, 0));
         unBind();
 
-        OpenGL.glCall((params) -> glDeleteTextures(textureHandler));
         OpenGL.glCall((params) -> glDeleteFramebuffers(handler));
+        OpenGL.glCall((params) -> glDeleteRenderbuffers(RBOHandler));
+
     }
 
     public int getHandler() { return handler; }

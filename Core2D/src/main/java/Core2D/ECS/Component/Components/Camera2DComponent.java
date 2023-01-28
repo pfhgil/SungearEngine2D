@@ -43,6 +43,10 @@ public class Camera2DComponent extends Component implements NonDuplicated
     @Override
     public void init()
     {
+        if(frameBuffer != null) {
+            //frameBuffer.destroy();
+            //frameBuffer = null;
+        }
         setScene2DMainCamera2D(isScene2DMainCamera2D);
         frameBuffer = new FrameBuffer(Graphics.getScreenSize().x, Graphics.getScreenSize().y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE1);
     }
@@ -77,6 +81,7 @@ public class Camera2DComponent extends Component implements NonDuplicated
     public void destroy()
     {
         setScene2DMainCamera2D(false);
+        frameBuffer.destroy();
     }
 
     public void updateViewMatrix()

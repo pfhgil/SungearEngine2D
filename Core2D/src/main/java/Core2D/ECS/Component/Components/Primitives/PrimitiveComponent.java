@@ -59,6 +59,11 @@ public class PrimitiveComponent extends Component
     }
 
     protected void loadVAO() {
+        if(vertexArray != null) {
+            vertexArray.destroy();
+            vertexArray = null;
+        }
+
         vertexArray = new VertexArray();
         VertexBuffer vertexBuffer = new VertexBuffer(data);
 

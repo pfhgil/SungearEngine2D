@@ -92,7 +92,7 @@ public class Compiler
                         "\"" + scriptFile.getCanonicalPath() + "\"";
 
                 System.out.println("command:  " + command);
-                
+
                 proc = Runtime.getRuntime().exec(command);
 
                 // жду завершения процесса

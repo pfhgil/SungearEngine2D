@@ -39,6 +39,11 @@
       "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\for_alesha.sgs",
       "inBuild": false,
       "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\kek.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
     }
   ],
   "mainScene2DPath": ""

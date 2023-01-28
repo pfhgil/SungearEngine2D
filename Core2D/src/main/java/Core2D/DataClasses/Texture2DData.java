@@ -3,6 +3,7 @@ package Core2D.DataClasses;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 import org.lwjgl.BufferUtils;
+import org.lwjgl.stb.STBImage;
 import sun.misc.Unsafe;
 
 import java.io.*;
@@ -39,7 +40,7 @@ public class Texture2DData extends Data
     {
         this.path = path;
 
-        Log.Console.println("texture data path: " + path);
+        //Log.Console.println("texture data path: " + path);
 
         try (FileInputStream fis = new FileInputStream(path); BufferedInputStream bis = new BufferedInputStream(fis)) {
             load(bis, path);
