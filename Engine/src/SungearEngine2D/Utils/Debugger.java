@@ -1,5 +1,6 @@
 package SungearEngine2D.Utils;
 
+import Core2D.Graphics.OpenGL;
 import Core2D.Log.Log;
 import Core2D.Transform.Transform;
 import Core2D.Utils.ExceptionsUtils;
@@ -7,6 +8,7 @@ import SungearEngine2D.exception.SungearEngineException;
 import com.sun.tools.attach.AttachNotSupportedException;
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;
+import org.lwjgl.opengl.GL46C;
 
 import javax.management.MBeanServer;
 import javax.management.MBeanServerConnection;
@@ -60,9 +62,28 @@ public class Debugger
 
     public static class GPU
     {
-        public static String getGPUUsagePercentage() {
-            //Runtime.getRuntime().gc();
-            return "";
+        public static long getGPUTotalMemInKB()
+        {
+            int[] param = new int[1];
+            OpenGL.glCall((params) -> GL46C.glGetIntegerv(OpenGL.GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX, param));
+            return param[0];
+        }
+
+        public static long getGPUCurrentMemAvailableInKB()
+        {
+            int[] param = new int[1];
+            OpenGL.glCall((params) -> GL46C.glGetIntegerv(OpenGL.GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX, param));
+            return param[0];
+        }
+
+        public static float getGPUUsageInKB()
+        {
+            return getGPUTotalMemInKB() - getGPUCurrentMemAvailableInKB();
+        }
+
+        public static float getGPUUsagePercentage()
+        {
+            return getGPUUsageInKB() / getGPUTotalMemInKB() * 100.0f;
         }
     }
 

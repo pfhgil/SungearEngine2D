@@ -106,7 +106,7 @@ public class GameView extends View
             Mouse.setViewportSize(new Vector2f(sceneViewWindowSize.x, sceneViewWindowSize.y));
 
             if(currentSceneManager != null && currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
-                ImGui.image(currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().getComponent(Camera2DComponent.class).getFrameBuffer().getTextureHandler(), sceneViewWindowSize.x, sceneViewWindowSize.y, 0, 1, 1, 0);
+                ImGui.image(currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().getComponent(Camera2DComponent.class).getResultFrameBuffer().getTextureHandler(), sceneViewWindowSize.x, sceneViewWindowSize.y);
             }
 
             ImGui.popStyleColor(1);

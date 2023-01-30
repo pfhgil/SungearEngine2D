@@ -3,6 +3,7 @@ package Core2D.Scripting;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
 import Core2D.Graphics.RenderParts.Shader;
@@ -201,26 +202,26 @@ public class Script
         }
     }
 
-    public void render()
+    public void render(Camera2DComponent camera2DComponent)
     {
         if(active) {
             if(scriptClassInstance instanceof Component component) {
-                component.render();
+                component.render(camera2DComponent);
             }
             if(scriptClassInstance instanceof System system) {
-                system.render();
+                system.render(camera2DComponent);
             }
         }
     }
 
-    public void render(Shader shader)
+    public void render(Camera2DComponent camera2DComponent, Shader shader)
     {
         if(active) {
             if(scriptClassInstance instanceof Component component) {
-                component.render(shader);
+                component.render(camera2DComponent, shader);
             }
             if(scriptClassInstance instanceof System system) {
-                system.render(shader);
+                system.render(camera2DComponent, shader);
             }
         }
     }

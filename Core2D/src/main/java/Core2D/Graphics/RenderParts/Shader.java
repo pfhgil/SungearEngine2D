@@ -112,6 +112,8 @@ public class Shader implements Serializable
 
     public boolean compile(ShaderData shaderData)
     {
+        destroy();
+
         this.shaderData = shaderData;
         path = shaderData.getPath();
 
@@ -136,16 +138,16 @@ public class Shader implements Serializable
     {
         for(int shaderPartType : shaderPartsHandlers.keySet()) {
             OpenGL.glCall((params) -> glDeleteShader(shaderPartsHandlers.get(shaderPartType)));
+            OpenGL.glCall((params) -> glDetachShader(programHandler, shaderPartsHandlers.get(shaderPartType)));
         }
         shaderPartsHandlers.clear();
     }
 
     public void destroy()
     {
+        destroyAllShaderParts();
         // удаление шейдера
         OpenGL.glCall((params) -> glDeleteProgram(programHandler));
-
-        destroyAllShaderParts();
     }
 
     public static String shaderPartTypeToString(int shaderType)

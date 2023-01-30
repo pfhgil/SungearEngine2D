@@ -1,5 +1,6 @@
 package Core2D.Layering;
 
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Entity;
 import Core2D.Log.Log;
 import org.joml.Vector4f;
@@ -15,10 +16,10 @@ public class Layering {
     private transient boolean shouldDestroy = false;
 
     // рисует все объекты разными цветами при выборке объектов
-    public void drawPicking()
+    public void drawPicking(Camera2DComponent camera2DComponent)
     {
         for(Layer layer : layers) {
-            layer.drawPicking();
+            layer.drawPicking(camera2DComponent);
         }
     }
 

@@ -34,6 +34,8 @@ public class PrimitiveComponent extends Component
     public void set(Component component)
     {
         if(component instanceof PrimitiveComponent primitiveComponent) {
+            destroy();
+
             linesData = new LineData[primitiveComponent.linesData.length];
 
             for(int i = 0; i < linesData.length; i++) {
@@ -53,6 +55,8 @@ public class PrimitiveComponent extends Component
     @Override
     public void init()
     {
+        destroy();
+
         shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/primitives/line2D/shader.glsl"));
 
         loadVAO();
@@ -85,15 +89,11 @@ public class PrimitiveComponent extends Component
         if(vertexArray != null) {
             vertexArray.destroy();
             vertexArray = null;
-
-            Log.Console.println("entity " + entity.name + " primitive`s vao was destroyed!");
         }
 
         if(shader != null) {
             shader.destroy();
             shader = null;
-
-            Log.Console.println("entity " + entity.name + " primitive`s  shader was destroyed!");
         }
     }
 

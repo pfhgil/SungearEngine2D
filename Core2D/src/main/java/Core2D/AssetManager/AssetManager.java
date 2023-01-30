@@ -50,6 +50,8 @@ public class AssetManager implements Serializable
         String line2DShaderPath = "/data/shaders/primitives/line2D/shader.glsl";
         String lines2DInstancingShaderPath = "/data/shaders/primitives/line2D/instancing/shader.glsl";
 
+        String postprocessingDefaultShaderPath = "/data/shaders/postprocessing/postprocessing_default_shader.glsl";
+
         String whiteTexturePath = "/data/textures/white_texture.png";
         String defaultProgressBarTexturePath = "/data/textures/ui/progressBar/progress_bar.png";
 
@@ -60,6 +62,8 @@ public class AssetManager implements Serializable
         ShaderData line2DShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(line2DShaderPath), line2DShaderPath);
         ShaderData lines2DInstancingShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(lines2DInstancingShaderPath), lines2DInstancingShaderPath);
 
+        ShaderData postprocessingDefaultShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(postprocessingDefaultShaderPath), postprocessingDefaultShaderPath);
+
         Texture2DData whiteTextureData = new Texture2DData().load(Core2D.class.getResourceAsStream(whiteTexturePath), whiteTexturePath);
         Texture2DData defaultProgressBarTextureData = new Texture2DData().load(Core2D.class.getResourceAsStream(defaultProgressBarTexturePath), defaultProgressBarTexturePath);
 
@@ -69,6 +73,8 @@ public class AssetManager implements Serializable
 
         addAsset(new Asset(line2DShaderData, line2DShaderPath));
         addAsset(new Asset(lines2DInstancingShaderData, lines2DInstancingShaderPath));
+
+        addAsset(new Asset(postprocessingDefaultShaderData, postprocessingDefaultShaderPath));
 
         addAsset(new Asset(whiteTextureData, whiteTexturePath));
         addAsset(new Asset(defaultProgressBarTextureData, defaultProgressBarTexturePath));

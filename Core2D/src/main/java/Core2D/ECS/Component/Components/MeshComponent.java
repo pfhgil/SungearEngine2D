@@ -15,14 +15,14 @@ import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
 public class MeshComponent extends Component
 {
-    public Texture2D texture = new Texture2D(AssetManager.getInstance().getTexture2DData("/data/textures/white_texture.png"));
+    private Texture2D texture = new Texture2D(AssetManager.getInstance().getTexture2DData("/data/textures/white_texture.png"));
 
-    public Shader shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/mesh/default_shader.glsl"));
+    private Shader shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/mesh/default_shader.glsl"));
 
     public Material2D material2D;
 
     // VAO четырехугольника (VAO - Vertex Array Object. Хранит в себе указатели на VBO, IBO и т.д.)
-    public transient VertexArray vertexArray;
+    private transient VertexArray vertexArray;
     private int drawingMode = GL_TRIANGLES;
     private transient short[] indices = new short[] { 0, 1, 2, 0, 2, 3 };
 
@@ -53,6 +53,7 @@ public class MeshComponent extends Component
     @Override
     public void set(Component component)
     {
+        /*
         if(component instanceof MeshComponent meshComponent) {
             shader.set(meshComponent.shader);
             texture.set(meshComponent.texture);
@@ -65,6 +66,8 @@ public class MeshComponent extends Component
 
             loadVAO();
         }
+
+         */
     }
 
     @Override
@@ -154,4 +157,22 @@ public class MeshComponent extends Component
     public float[] getData() { return data; }
 
     public VertexArray getVertexArrayObject() { return vertexArray; }
+
+    public Texture2D getTexture() { return texture; }
+    public void setTexture(Texture2D texture)
+    {
+        if(this.texture != null) {
+            this.texture.destroy();
+        }
+        this.texture = texture;
+    }
+
+    public Shader getShader() { return shader; }
+    public void setShader(Shader shader)
+    {
+        if(this.shader != null) {
+            this.shader.destroy();
+        }
+        this.shader = shader;
+    }
 }

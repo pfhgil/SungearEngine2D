@@ -80,16 +80,16 @@ public class ScriptComponent extends Component
     }
 
     @Override
-    public void render()
+    public void render(Camera2DComponent camera2DComponent)
     {
         if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
-        script.render();
+        script.render(camera2DComponent);
     }
 
     @Override
-    public void render(Shader shader)
+    public void render(Camera2DComponent camera2DComponent, Shader shader)
     {
         if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
-        script.render(shader);
+        script.render(camera2DComponent, shader);
     }
 }

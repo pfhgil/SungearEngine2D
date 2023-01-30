@@ -43,27 +43,6 @@ public class Texture2D
         createTexture(texture2DData);
     }
 
-    public static ByteBuffer cloneByteBuffer(final ByteBuffer original) {
-        // Create clone with same capacity as original.
-        final ByteBuffer clone = (original.isDirect()) ?
-                ByteBuffer.allocateDirect(original.capacity()) :
-                ByteBuffer.allocate(original.capacity());
-
-        // Create a read-only copy of the original.
-        // This allows reading from the original without modifying it.
-        final ByteBuffer readOnlyCopy = original.asReadOnlyBuffer();
-
-        // Flip and read from the original.
-        readOnlyCopy.flip();
-        clone.put(readOnlyCopy);
-
-        clone.position(original.position());
-        clone.limit(original.limit());
-        clone.order(original.order());
-
-        return clone;
-    }
-
     public void createTexture(Texture2DData texture2DData)
     {
         this.texture2DData = texture2DData;
@@ -110,10 +89,6 @@ public class Texture2D
         OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE));
 
         unBind();
-
-        int[] gpuMemAvailable = new int[1];
-        glGetIntegerv(0x9049, gpuMemAvailable);
-        Log.CurrentSession.println("loaded texture: " + path + ", gpu mem available: " + gpuMemAvailable[0] + " KB (" + gpuMemAvailable[0] / 1024.0f + " MB)", Log.MessageType.INFO);
     }
 
     // удаление текстур
@@ -124,6 +99,8 @@ public class Texture2D
 
     public void set(Texture2D texture2D)
     {
+        destroy();
+
         texture2DData = texture2D.texture2DData;
         textureHandler = texture2D.getTextureHandler();
         textureBlock = texture2D.getGLTextureBlock();

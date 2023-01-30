@@ -44,10 +44,10 @@ public class FunnySystem extends System
 
         MeshComponent meshComponent = entity.getComponent(MeshComponent.class);
         if(meshComponent != null) {
-            meshComponent.shader.bind();
+            meshComponent.getShader().bind();
 
             ShaderUtils.setUniform(
-                    meshComponent.shader.getProgramHandler(),
+                    meshComponent.getShader().getProgramHandler(),
                     "time",
                     time
             );

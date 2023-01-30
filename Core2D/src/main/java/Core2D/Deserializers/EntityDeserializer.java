@@ -108,20 +108,20 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
             if(component instanceof TransformComponent) {
                 entity.addComponent(component);
             } else if(component instanceof MeshComponent meshComponent) {
-                Shader shader = new Shader(AssetManager.getInstance().getShaderData(meshComponent.shader.path));
+                Shader shader = new Shader(AssetManager.getInstance().getShaderData(meshComponent.getShader().path));
                 Texture2D texture2D = new Texture2D(
-                        AssetManager.getInstance().getTexture2DData(meshComponent.texture.path),
-                        meshComponent.texture.getGLTextureBlock()
+                        AssetManager.getInstance().getTexture2DData(meshComponent.getTexture().path),
+                        meshComponent.getTexture().getGLTextureBlock()
                 );
 
                 //texture2D.blendSourceFactor = textureComponent.texture.blendSourceFactor;
                 //texture2D.blendDestinationFactor = textureComponent.texture.blendDestinationFactor;
 
-                MeshComponent newMeshComponent = new MeshComponent();
-                entity.addComponent(newMeshComponent);
-                newMeshComponent.set(component);
-                newMeshComponent.texture = texture2D;
-                newMeshComponent.shader = shader;
+
+                meshComponent.setTexture(texture2D);
+                meshComponent.setShader(shader);
+                entity.addComponent(meshComponent);
+                //newMeshComponent.set(component);
             } else if(component instanceof Rigidbody2DComponent rigidbody2DComponent) {
                 rigidbody2DComponent.set(component);
                 entity.addComponent(rigidbody2DComponent);
@@ -161,8 +161,7 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                     entity.addComponent(sc);
                     sc.set(scriptComponent);
                 }
-            } else if(component instanceof AudioComponent) {
-                AudioComponent audioComponent = (AudioComponent) component;
+            } else if(component instanceof AudioComponent audioComponent) {
                 // если режим работы ядра в движке
                 if (Core2D.core2DMode == Core2DMode.IN_ENGINE) {
                     String audioFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + audioComponent.audio.path;
@@ -190,6 +189,11 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                 }
 
                 entity.addComponent(audioComponent);
+            } else if(component instanceof Camera2DComponent camera2DComponent) {
+                Shader shader = new Shader(AssetManager.getInstance().getShaderData(camera2DComponent.getPostprocessingShader().path));
+
+                camera2DComponent.setPostprocessingShader(shader);
+                entity.addComponent(camera2DComponent);
             } else {
                 entity.addComponent(component);
             }

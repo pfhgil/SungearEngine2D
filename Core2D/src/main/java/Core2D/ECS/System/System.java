@@ -1,5 +1,6 @@
 package Core2D.ECS.System;
 
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.RenderParts.Shader;
 
@@ -41,12 +42,12 @@ public class System
 
     }
 
-    public void render()
+    public void render(Camera2DComponent camera2DComponent)
     {
 
     }
 
-    public void render(Shader shader)
+    public void render(Camera2DComponent camera2DComponent, Shader shader)
     {
 
     }

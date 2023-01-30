@@ -21,6 +21,7 @@ public class CircleComponent extends PrimitiveComponent
     @Override
     public void set(Component component)
     {
+        destroy();
         super.set(component);
 
         if(component instanceof CircleComponent circleComponent) {

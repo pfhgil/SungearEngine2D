@@ -12,6 +12,7 @@ import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
+import Core2D.ECS.System.Systems.MeshRendererSystem;
 import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.RenderParts.Shader;
@@ -56,6 +57,8 @@ public class Main
 
     private static Shader onlyColorShader;
 
+    private static Camera2DComponent mainCamera2DComponent;
+
     public static void main(String[] main)
     {
         Settings.Core2D.destinationFPS = 120;
@@ -70,6 +73,8 @@ public class Main
                 mainCamera2D = Entity.createAsCamera2D();
                 CamerasManager.mainCamera2D = mainCamera2D;
                 CameraController.controlledCamera2D = mainCamera2D;
+
+                mainCamera2DComponent = mainCamera2D.getComponent(Camera2DComponent.class);
 
                 CameraController.init();
 
@@ -216,7 +221,7 @@ public class Main
                             // первый проход рендера - отрисовывается объект в стенсил буфер и заполняется единицами
                             glStencilFunc(GL_ALWAYS, 1, 0xFF);
                             glStencilMask(0xFF);
-                            Graphics.getMainRenderer().render(inspectingEntity);
+                            Graphics.getMainRenderer().render(inspectingEntity, mainCamera2DComponent);
 
                             MeshComponent meshComponent = inspectingEntity.getComponent(MeshComponent.class);
                             TransformComponent transformComponent = inspectingEntity.getComponent(TransformComponent.class);
@@ -231,7 +236,7 @@ public class Main
                                 // второй проход рендера - отрисовываю объект чуть побольше только одним цветом. все значения пикселей в стенсио буфере, которые не равняются 0xFF будут отрисованы
                                 glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
                                 glStencilMask(0x00);
-                                Graphics.getMainRenderer().render(inspectingEntity, onlyColorShader);
+                                Graphics.getMainRenderer().render(inspectingEntity, mainCamera2DComponent, onlyColorShader);
 
                                 // третяя обработка - все пиксели будут перезаписаны. включаю обработку стенсил буфера
                                 glStencilFunc(GL_ALWAYS, 0, 0xFF);
@@ -299,4 +304,6 @@ public class Main
     }
 
     public static Entity getMainCamera2D() { return mainCamera2D; }
+
+    public static Camera2DComponent getMainCamera2DComponent() { return mainCamera2DComponent; }
 }

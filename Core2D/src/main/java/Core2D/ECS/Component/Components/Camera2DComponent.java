@@ -1,18 +1,24 @@
 package Core2D.ECS.Component.Components;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.Core2D.Core2D;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.NonDuplicated;
 import Core2D.Graphics.Graphics;
+import Core2D.Graphics.OpenGL;
+import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
-import Core2D.ShaderUtils.FrameBuffer;
+import Core2D.ShaderUtils.*;
 import Core2D.Utils.MatrixUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector3f;
 
+import static org.lwjgl.glfw.GLFW.glfwGetTime;
+import static org.lwjgl.opengl.GL11C.*;
+import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
 import static org.lwjgl.opengl.GL13C.GL_TEXTURE1;
 
 public class Camera2DComponent extends Component implements NonDuplicated
@@ -31,9 +37,38 @@ public class Camera2DComponent extends Component implements NonDuplicated
 
     private boolean isScene2DMainCamera2D = false;
 
-    private FrameBuffer frameBuffer;
+    // промежуточный фрейм буфер без пост процессинга
+    private transient FrameBuffer frameBuffer;
 
-    public Camera2DCallback camera2DCallback;
+    // результативный фрейм буфер с пост процессингом
+    private transient FrameBuffer resultFrameBuffer;
+
+    public transient Camera2DCallback camera2DCallback;
+
+
+    // post processing quad -----------------------------------------------------
+    private transient short[] ppQuadIndices = new short[] { 0, 1, 2, 0, 2, 3 };
+
+    // массив данных о вершинах
+    // первые строки - позиции вершин, вторые строки - текстурные координаты
+    private transient Vector2f ppQuadSize = new Vector2f(100.0f, 100.0f);
+    private transient float[] ppQuadData = new float[] {
+            -1, -1,
+            0, 0,
+
+            -1, 1,
+            0, 1,
+
+            1, 1,
+            1, 1,
+
+            1, -1,
+            1, 0,
+    };
+
+    private transient VertexArray ppQuadVertexArray;
+
+    private Shader postprocessingShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/postprocessing/postprocessing_default_shader.glsl"));
 
     public Camera2DComponent()
     {
@@ -44,11 +79,46 @@ public class Camera2DComponent extends Component implements NonDuplicated
     public void init()
     {
         if(frameBuffer != null) {
-            //frameBuffer.destroy();
-            //frameBuffer = null;
+            frameBuffer.destroy();
+            frameBuffer = null;
         }
+        if(resultFrameBuffer != null) {
+            resultFrameBuffer.destroy();
+            resultFrameBuffer = null;
+        }
+        loadVAO();
         setScene2DMainCamera2D(isScene2DMainCamera2D);
-        frameBuffer = new FrameBuffer(Graphics.getScreenSize().x, Graphics.getScreenSize().y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE1);
+        frameBuffer = new FrameBuffer(Graphics.getScreenSize().x, Graphics.getScreenSize().y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
+        resultFrameBuffer = new FrameBuffer(Graphics.getScreenSize().x, Graphics.getScreenSize().y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
+    }
+
+    private void loadVAO()
+    {
+        if (ppQuadVertexArray != null) {
+            ppQuadVertexArray.destroy();
+            ppQuadVertexArray = null;
+        }
+
+        ppQuadVertexArray = new VertexArray();
+        // VBO вершин (VBO - Vertex Buffer Object. Может хранить в себе цвета, позиции вершин и т.д.)
+        VertexBuffer vertexBuffer = new VertexBuffer(ppQuadData);
+        // IBO вершин (IBO - Index Buffer Object. IBO хранит в себе индексы вершин, по которым будут соединяться вершины)
+        IndexBuffer indexBuffer = new IndexBuffer(ppQuadIndices);
+
+        // создаю описание аттрибутов в шейдерной программе
+        BufferLayout attributesLayout = new BufferLayout(
+                new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2),
+                new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2)
+        );
+
+        vertexBuffer.setLayout(attributesLayout);
+        ppQuadVertexArray.putVBO(vertexBuffer, false);
+        ppQuadVertexArray.putIBO(indexBuffer);
+
+        ppQuadIndices = null;
+
+        // отвязываю vao
+        ppQuadVertexArray.unBind();
     }
 
     @Override
@@ -60,6 +130,7 @@ public class Camera2DComponent extends Component implements NonDuplicated
 
         updateViewMatrix();
 
+        //postprocessingShader.bind();
         frameBuffer.bind();
 
         if(camera2DCallback != null) {
@@ -67,7 +138,7 @@ public class Camera2DComponent extends Component implements NonDuplicated
         }
 
         if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-            SceneManager.currentSceneManager.getCurrentScene2D().draw();
+            SceneManager.currentSceneManager.getCurrentScene2D().draw(this);
         }
 
         if(camera2DCallback != null) {
@@ -75,6 +146,42 @@ public class Camera2DComponent extends Component implements NonDuplicated
         }
 
         frameBuffer.unBind();
+
+        resultFrameBuffer.bind();
+
+        ppQuadVertexArray.bind();
+        frameBuffer.bindTexture();
+        postprocessingShader.bind();
+
+        /*
+        ShaderUtils.setUniform(
+                postprocessingShader.getProgramHandler(),
+                "color",
+                entity.getColor()
+        );
+
+         */
+        ShaderUtils.setUniform(
+                postprocessingShader.getProgramHandler(),
+                "sampler",
+                frameBuffer.getTextureBlock() - GL_TEXTURE0
+        );
+
+        float time = (float) glfwGetTime();
+
+        ShaderUtils.setUniform(
+                postprocessingShader.getProgramHandler(),
+                "time",
+                time
+        );
+
+        // нарисовать два треугольника
+        OpenGL.glCall((params) -> glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0));
+
+        frameBuffer.unBindTexture();
+        ppQuadVertexArray.unBind();
+
+        resultFrameBuffer.unBind();
     }
 
     @Override
@@ -82,6 +189,8 @@ public class Camera2DComponent extends Component implements NonDuplicated
     {
         setScene2DMainCamera2D(false);
         frameBuffer.destroy();
+        ppQuadVertexArray.destroy();
+        resultFrameBuffer.destroy();
     }
 
     public void updateViewMatrix()
@@ -136,5 +245,15 @@ public class Camera2DComponent extends Component implements NonDuplicated
         }
     }
 
-    public FrameBuffer getFrameBuffer() { return frameBuffer; }
+    public FrameBuffer getResultFrameBuffer() { return resultFrameBuffer; }
+
+    public Shader getPostprocessingShader() { return postprocessingShader; }
+
+    public void setPostprocessingShader(Shader postprocessingShader)
+    {
+        if(this.postprocessingShader != null) {
+            this.postprocessingShader.destroy();
+        }
+        this.postprocessingShader = postprocessingShader;
+    }
 }

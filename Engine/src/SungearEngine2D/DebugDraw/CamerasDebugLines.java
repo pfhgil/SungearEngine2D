@@ -27,12 +27,12 @@ public class CamerasDebugLines
 
     public static void init()
     {
-        inspectorCamera2DIcon.getComponent(MeshComponent.class).texture.set(Resources.Textures.Icons.cameraIcon);
+        inspectorCamera2DIcon.getComponent(MeshComponent.class).getTexture().set(Resources.Textures.Icons.cameraIcon);
         Vector2f cameraSize = new Vector2f(Resources.Textures.Icons.cameraIcon.getTexture2DData().getWidth(),
                 Resources.Textures.Icons.cameraIcon.getTexture2DData().getHeight());
         inspectorCamera2DIcon.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(cameraSize.x / 100.0f, cameraSize.y / 100.0f));
 
-        mainCamera2DIcon.getComponent(MeshComponent.class).texture.set(Resources.Textures.Icons.cameraIcon);
+        mainCamera2DIcon.getComponent(MeshComponent.class).getTexture().set(Resources.Textures.Icons.cameraIcon);
         mainCamera2DIcon.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(cameraSize.x / 100.0f, cameraSize.y / 100.0f));
 
         inspectorCamera2DBox.getComponent(BoxComponent.class).setColor(new Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
@@ -94,9 +94,9 @@ public class CamerasDebugLines
         mainCamera2DIcon.update();
         mainCamera2DBox.update();
 
-        Graphics.getMainRenderer().render(inspectorCamera2DIcon);
-        Graphics.getMainRenderer().render(inspectorCamera2DBox);
-        Graphics.getMainRenderer().render(mainCamera2DIcon);
-        Graphics.getMainRenderer().render(mainCamera2DBox);
+        Graphics.getMainRenderer().render(inspectorCamera2DIcon, Main.getMainCamera2DComponent());
+        Graphics.getMainRenderer().render(inspectorCamera2DBox, Main.getMainCamera2DComponent());
+        Graphics.getMainRenderer().render(mainCamera2DIcon, Main.getMainCamera2DComponent());
+        Graphics.getMainRenderer().render(mainCamera2DBox, Main.getMainCamera2DComponent());
     }
 }

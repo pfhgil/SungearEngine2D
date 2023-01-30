@@ -56,8 +56,8 @@
       <list>
         <option value="Interface" />
         <option value="AnnotationType" />
-        <option value="Class" />
         <option value="shader-template" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -261,6 +261,10 @@
       <workItem from="1674851018665" duration="1129000" />
       <workItem from="1674852242291" duration="1396000" />
       <workItem from="1674919833355" duration="12834000" />
+      <workItem from="1674990125081" duration="3722000" />
+      <workItem from="1675002801070" duration="1517000" />
+      <workItem from="1675022178973" duration="5174000" />
+      <workItem from="1675086741709" duration="15257000" />
     </task>
     <servers />
   </component>

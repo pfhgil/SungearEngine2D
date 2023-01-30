@@ -4,6 +4,7 @@ import Core2D.Audio.AudioManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.Core2D.Settings;
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
@@ -38,9 +39,9 @@ public class SceneManager
     public static SceneManager currentSceneManager = new SceneManager();
 
     // рисует все объекты разными цветами при выборке объектов
-    public void drawCurrentScene2DPicking()
+    public void drawCurrentScene2DPicking(Camera2DComponent camera2DComponent)
     {
-        if(currentScene2D != null) currentScene2D.drawPicking();
+        if(currentScene2D != null) currentScene2D.drawPicking(camera2DComponent);
     }
 
     public Entity getPickedObject2D(Vector4f pixelColor)
@@ -248,27 +249,21 @@ public class SceneManager
 
     public boolean isScene2DExists(String name)
     {
-        return getScene2D(name) != null;
+        boolean[] found = new boolean[] { false };
+        scene2DStoredValues.forEach(scene2D -> {
+            if(FilenameUtils.getBaseName(new File(scene2D.path).getName()).equals(name)) {
+                found[0] = true;
+            }
+        });
+
+        return found[0];
     }
 
     public void setCurrentScene2D(Scene2D scene2D)
     {
-        if (scene2D != null) {
-            scene2D.setSceneLoaded(false);
-        }
-
-        AudioManager.destroyCurrentScene2DAllSources();
-
-        if(currentScene2D != null) {
-            currentScene2D.saveScriptsTempValues();
-        }
-
         if(currentScene2D != null) {
             currentScene2D.destroy();
-            currentScene2D = null;
         }
-
-        System.gc();
 
         currentScene2D = scene2D;
         if(currentScene2D != null) {

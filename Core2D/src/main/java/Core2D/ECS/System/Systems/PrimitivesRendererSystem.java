@@ -1,6 +1,7 @@
 package Core2D.ECS.System.Systems;
 
 import Core2D.DataClasses.LineData;
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.Primitives.PrimitiveComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.System.System;
@@ -18,7 +19,8 @@ import static org.lwjgl.opengl.GL11C.*;
 
 public class PrimitivesRendererSystem extends System
 {
-    public void render()
+    @Override
+    public void render(Camera2DComponent camera2DComponent)
     {
         if(entity != null) {
             if(entity.isShouldDestroy()) return;
@@ -28,12 +30,13 @@ public class PrimitivesRendererSystem extends System
 
             List<PrimitiveComponent> primitiveComponents = entity.getAllComponents(PrimitiveComponent.class);
             for (PrimitiveComponent primitiveComponent : primitiveComponents) {
-                renderPrimitiveComponent(transformComponent, primitiveComponent, primitiveComponent.shader);
+                renderPrimitiveComponent(camera2DComponent, transformComponent, primitiveComponent, primitiveComponent.shader);
             }
         }
     }
 
-    public void render(Shader shader)
+    @Override
+    public void render(Camera2DComponent camera2DComponent, Shader shader)
     {
         if(entity != null) {
             if(entity.isShouldDestroy()) return;
@@ -43,12 +46,12 @@ public class PrimitivesRendererSystem extends System
 
             List<PrimitiveComponent> primitiveComponents = entity.getAllComponents(PrimitiveComponent.class);
             for (PrimitiveComponent primitiveComponent : primitiveComponents) {
-                renderPrimitiveComponent(transformComponent, primitiveComponent, shader);
+                renderPrimitiveComponent(camera2DComponent, transformComponent, primitiveComponent, shader);
             }
         }
     }
 
-    private void renderPrimitiveComponent(TransformComponent transformComponent, PrimitiveComponent primitiveComponent, Shader shader)
+    private void renderPrimitiveComponent(Camera2DComponent camera2DComponent, TransformComponent transformComponent, PrimitiveComponent primitiveComponent, Shader shader)
     {
         primitiveComponent.vertexArray.bind();
 
@@ -59,10 +62,10 @@ public class PrimitivesRendererSystem extends System
             ShaderUtils.setUniform(
                     shader.getProgramHandler(),
                     "mvpMatrix",
-                    transformComponent.getMvpMatrix()
+                    transformComponent.getMvpMatrix(camera2DComponent)
             );
         } else {
-            Matrix4f resultMatrix = new Matrix4f(transformComponent.getMvpMatrix());
+            Matrix4f resultMatrix = new Matrix4f(transformComponent.getMvpMatrix(camera2DComponent));
             Vector2f scale = MatrixUtils.getScale(transformComponent.getTransform().getResultModelMatrix());
             resultMatrix.scale(new Vector3f(1.0f / scale.x, 1.0f / scale.y, 1.0f));
             ShaderUtils.setUniform(

@@ -149,7 +149,7 @@ public class ComponentsView extends View
                     case "MeshComponent" -> {
                         MeshComponent meshRendererComponent = (MeshComponent) currentComponent;
 
-                        ImString textureName = new ImString(new File(meshRendererComponent.texture.path).getName());
+                        ImString textureName = new ImString(new File(meshRendererComponent.getTexture().path).getName());
                         ImGui.inputText("Texture", textureName, ImGuiInputTextFlags.ReadOnly);
                         if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
                             if (ImGui.beginDragDropTarget()) {
@@ -159,8 +159,8 @@ public class ComponentsView extends View
                                     String relativePath = FileUtils.getRelativePath(
                                             new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
                                             new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                                    meshRendererComponent.texture = new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath));
-                                    meshRendererComponent.texture.path = relativePath;
+                                    meshRendererComponent.setTexture(new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath)));
+                                    meshRendererComponent.getTexture().path = relativePath;
                                     ViewsManager.getResourcesView().setCurrentMovingFile(null);
                                 }
 
@@ -168,7 +168,7 @@ public class ComponentsView extends View
                             }
                         }
 
-                        ImString shaderName = new ImString(new File(meshRendererComponent.shader.path).getName());
+                        ImString shaderName = new ImString(new File(meshRendererComponent.getShader().path).getName());
                         ImGui.inputText("Shader", shaderName, ImGuiInputTextFlags.ReadOnly);
                         if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileShader(ViewsManager.getResourcesView().getCurrentMovingFile())) {
                             if (ImGui.beginDragDropTarget()) {
@@ -178,8 +178,8 @@ public class ComponentsView extends View
                                     String relativePath = FileUtils.getRelativePath(
                                             new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
                                             new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                                    meshRendererComponent.shader = new Shader(AssetManager.getInstance().getShaderData(relativePath));
-                                    meshRendererComponent.shader.path = relativePath;
+                                    meshRendererComponent.setShader(new Shader(AssetManager.getInstance().getShaderData(relativePath)));
+                                    meshRendererComponent.getShader().path = relativePath;
                                     ViewsManager.getResourcesView().setCurrentMovingFile(null);
 
                                     /*

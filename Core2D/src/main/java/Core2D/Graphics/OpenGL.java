@@ -12,6 +12,9 @@ import static org.lwjgl.opengl.GL11.*;
 
 public class OpenGL
 {
+    public static final int GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX = 0x9048;
+    public static final int GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX = 0x9049;
+
     public static void init()
     {
         GL.createCapabilities();

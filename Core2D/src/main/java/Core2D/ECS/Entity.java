@@ -199,8 +199,6 @@ public class Entity implements Serializable, PoolObject
         } else {
             ID = Utils.getRandom(0, 1000000000);
         }
-
-        Log.Console.println("object id: " + ID);
     }
 
     public void update()

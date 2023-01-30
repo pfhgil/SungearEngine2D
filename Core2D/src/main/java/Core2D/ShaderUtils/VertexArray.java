@@ -35,9 +35,6 @@ public class VertexArray
     // удаление vao
     public void destroy()
     {
-        // удаление vao
-        OpenGL.glCall((params) -> glDeleteVertexArrays(handler));
-
         Iterator<VertexBuffer> vbosIterator = VBOs.iterator();
         while (vbosIterator.hasNext()) {
             VertexBuffer vbo = vbosIterator.next();
@@ -51,6 +48,9 @@ public class VertexArray
             ibo.destroy();
             ibosIterator.remove();
         }
+
+        // удаление vao
+        OpenGL.glCall((params) -> glDeleteVertexArrays(handler));
 
         VBOs = null;
         IBOs = null;

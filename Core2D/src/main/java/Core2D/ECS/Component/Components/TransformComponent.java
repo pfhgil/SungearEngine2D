@@ -64,23 +64,11 @@ public class TransformComponent extends Component implements NonDuplicated
         transform.update(deltaTime);
     }
 
-    @Override
-    public void update()
-    {
-        Matrix4f modelMatrix = new Matrix4f().set(entity.getComponent(TransformComponent.class).getTransform().getResultModelMatrix());
-
-        if(CamerasManager.mainCamera2D != null && !entity.isUIElement) {
-            Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
-            if(camera2DComponent != null) {
-                mvpMatrix = new Matrix4f(camera2DComponent.getProjectionMatrix()).mul(camera2DComponent.getViewMatrix())
-                        .mul(modelMatrix);
-            }
-        } else {
-            mvpMatrix = new Matrix4f().mul(modelMatrix);
-        }
-    }
-
     public Transform getTransform() { return transform; }
 
-    public Matrix4f getMvpMatrix() { return mvpMatrix; }
+    public Matrix4f getMvpMatrix(Camera2DComponent camera2DComponent)
+    {
+        return new Matrix4f(camera2DComponent.getProjectionMatrix()).mul(camera2DComponent.getViewMatrix())
+            .mul(transform.getResultModelMatrix());
+    }
 }

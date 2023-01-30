@@ -1,6 +1,7 @@
 package Core2D.Graphics;
 
 import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
 import Core2D.Graphics.RenderParts.Shader;
@@ -10,7 +11,7 @@ import Core2D.Scene2D.SceneManager;
 
 public class Renderer
 {
-    public void render(Entity entity, Shader shader)
+    public void render(Entity entity, Camera2DComponent camera2DComponent, Shader shader)
     {
         if(!entity.active || entity.isShouldDestroy()) return;
 
@@ -19,7 +20,7 @@ public class Renderer
                 SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts;
 
         for (Component component : entity.getComponents()) {
-            component.render(shader);
+            component.render(camera2DComponent, shader);
             /*
             if(component instanceof ScriptComponent scriptComponent && runScripts) {
                 callRenderMethods(scriptComponent.script.getScriptClass(), scriptComponent.script.getScriptClassInstance(), shader);
@@ -31,7 +32,7 @@ public class Renderer
         }
 
         for (System system : entity.getSystems()) {
-            system.render(shader);
+            system.render(camera2DComponent, shader);
             /*
             if(system instanceof ScriptableSystem scriptableSystem && runScripts) {
                 callRenderMethods(scriptableSystem.script.getScriptClass(), scriptableSystem.script.getScriptClassInstance(), shader);
@@ -43,7 +44,7 @@ public class Renderer
         }
     }
 
-    public void render(Entity entity)
+    public void render(Entity entity, Camera2DComponent camera2DComponent)
     {
         if(!entity.active || entity.isShouldDestroy()) return;
 
@@ -52,85 +53,32 @@ public class Renderer
                 SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts;
 
         for (Component component : entity.getComponents()) {
-            component.render();
-            /*
-            if(component instanceof ScriptComponent scriptComponent && runScripts) {
-                scriptComponent.callMethod((params) -> scriptComponent.render());
-            } else {
-                component.render();
-            }
-
-             */
-            /*
-            if(component instanceof ScriptComponent scriptComponent && runScripts) {
-                callRenderMethods(scriptComponent.script.getScriptClass(), scriptComponent.script.getScriptClassInstance());
-            } else {
-                callRenderMethods(component.getClass(), component);
-            }
-
-             */
+            component.render(camera2DComponent);
         }
 
         for (System system : entity.getSystems()) {
-            system.render();
-            /*
-            if(system instanceof ScriptableSystem scriptableSystem && runScripts) {
-                scriptableSystem.callMethod((params) -> scriptableSystem.render());
-            } else {
-                system.render();
-            }
-
-             */
-            /*
-            if(system instanceof ScriptableSystem scriptableSystem && runScripts) {
-                callRenderMethods(scriptableSystem.script.getScriptClass(), scriptableSystem.script.getScriptClassInstance());
-            } else {
-                callRenderMethods(system.getClass(), system);
-            }
-
-             */
+            system.render(camera2DComponent);
         }
     }
 
-    /*
-    private void callRenderMethods(Class<?> cls, Object clsInstance, Object... params)
-    {
-        for (Method method : cls.getMethods()) {
-            if (method.isAnnotationPresent(RenderMethod.class)) {
-                try {
-                    Class<?>[] paramsTypes = method.getParameterTypes();
-                    if(params.length == 0 && paramsTypes.length == 0) {
-                        method.invoke(clsInstance);
-                    } else if(paramsTypes.length > 0 && params.length > 0 && paramsTypes[0].isAssignableFrom(Shader.class) && params[0] instanceof Shader) {
-                        method.invoke(clsInstance, params[0]);
-                    }
-                } catch (IllegalAccessException | InvocationTargetException e) {
-                    Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-                }
-            }
-        }
-    }
-
-     */
-
-    public void render(Layering layering)
+    public void render(Layering layering, Camera2DComponent camera2DComponent)
     {
         if(layering.isShouldDestroy()) return;
         int layersNum = layering.getLayers().size();
         for(int i = 0; i < layersNum; i++) {
             if(layering.isShouldDestroy()) break;
-            render(layering.getLayers().get(i));
+            render(layering.getLayers().get(i), camera2DComponent);
         }
     }
 
-    public void render(Layer layer)
+    public void render(Layer layer, Camera2DComponent camera2DComponent)
     {
         if(layer.isShouldDestroy()) return;
 
         int renderingObjectsNum = layer.getEntities().size();
         for(int i = 0; i < renderingObjectsNum; i++) {
             if(layer.isShouldDestroy()) break;
-            render(layer.getEntities().get(i));
+            render(layer.getEntities().get(i), camera2DComponent);
         }
     }
 }

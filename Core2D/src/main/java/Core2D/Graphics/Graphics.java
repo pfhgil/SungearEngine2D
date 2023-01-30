@@ -135,7 +135,7 @@ public abstract class Graphics
     }
 
     // полуячить выбранный мышкой объект
-    public static Entity getPickedObject2D(Vector2f oglPosition)
+    public static Entity getPickedObject2D(Camera2DComponent camera2DComponent, Vector2f oglPosition)
     {
         pickingRenderTarget.bind();
 
@@ -146,7 +146,7 @@ public abstract class Graphics
 
         OpenGL.glCall((params) -> glDisable(GL_BLEND));
 
-        SceneManager.currentSceneManager.drawCurrentScene2DPicking();
+        SceneManager.currentSceneManager.drawCurrentScene2DPicking(camera2DComponent);
 
         Vector4f selectedPixelColor = getPixelColor(oglPosition);
 

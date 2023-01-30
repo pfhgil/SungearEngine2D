@@ -29,7 +29,7 @@ public class Grid
         //grid.getComponent(TextureComponent.class).getTexture2D().param = GL_REPEAT;
         //grid.setColor(new Vector4f(0.3f, 0.3f, 0.3f, 1.0f));
         //grid.setShaderProgram(null);
-        c.getComponent(MeshComponent.class).shader = Resources.Shaders.Grid.gridShader;
+        c.getComponent(MeshComponent.class).setShader(Resources.Shaders.Grid.gridShader);
         //grid.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Icons.object2DFileIcon);
     }
 

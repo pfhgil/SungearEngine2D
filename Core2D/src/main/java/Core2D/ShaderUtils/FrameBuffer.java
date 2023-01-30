@@ -88,12 +88,10 @@ public class FrameBuffer implements Serializable
     // активирует FBO
     public void bind()
     {
-        //if(complete) {
         OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, handler));
         OpenGL.glCall((params) -> glViewport(0, 0, viewportWidth, viewportHeight));
         int toClear = Settings.Graphics.isStencilTestActive() ? GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT : GL_COLOR_BUFFER_BIT;
         OpenGL.glCall((params) -> glClear(toClear));
-        //}
     }
 
     // отключает FBO
@@ -148,7 +146,7 @@ public class FrameBuffer implements Serializable
     // перестать использовать текстуру
     public void unBindTexture()
     {
-        //glActiveTexture(GL_TEXTURE0);
+        glActiveTexture(GL_TEXTURE0);
         OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, 0));
     }
 
@@ -208,8 +206,8 @@ public class FrameBuffer implements Serializable
             OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE));
         }
 
-        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER));
-        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER));
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
     }
 
     // создает прикрепление глубины к fbo
@@ -236,15 +234,8 @@ public class FrameBuffer implements Serializable
     public void destroy()
     {
         OpenGL.glCall((params) -> glDeleteTextures(textureHandler));
-        unBindTexture();
-
-        bind();
-        OpenGL.glCall((params) -> glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 0, 0));
-        unBind();
-
         OpenGL.glCall((params) -> glDeleteFramebuffers(handler));
         OpenGL.glCall((params) -> glDeleteRenderbuffers(RBOHandler));
-
     }
 
     public int getHandler() { return handler; }

@@ -1,6 +1,8 @@
 package Core2D.Scene2D;
 
+import Core2D.Audio.AudioManager;
 import Core2D.CamerasManager.CamerasManager;
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
@@ -102,10 +104,10 @@ public class Scene2D
         }
     }
 
-    public void draw()
+    public void draw(Camera2DComponent camera2DComponent)
     {
         if(!shouldDestroy) {
-            Graphics.getMainRenderer().render(layering);
+            Graphics.getMainRenderer().render(layering, camera2DComponent);
 
             if (scene2DCallback != null) {
                 scene2DCallback.onDraw();
@@ -114,10 +116,10 @@ public class Scene2D
     }
 
     // рисует все объекты разными цветами при выборке объектов
-    public void drawPicking()
+    public void drawPicking(Camera2DComponent camera2DComponent)
     {
         if(!shouldDestroy) {
-            layering.drawPicking();
+            layering.drawPicking(camera2DComponent);
         }
     }
 
@@ -245,6 +247,12 @@ public class Scene2D
 
     public void destroy()
     {
+        sceneLoaded = false;
+
+        saveScriptsTempValues();
+
+        AudioManager.destroyScene2DAllSources(this);
+
         shouldDestroy = true;
 
         layering.destroy();
@@ -256,6 +264,10 @@ public class Scene2D
         tags = null;
 
         sceneMainCamera2D = null;
+
+        Log.CurrentSession.println("scene destroyed: " + name, Log.MessageType.SUCCESS);
+
+        System.gc();
     }
 
     public String getName() { return name; }
