@@ -8,6 +8,8 @@ import Core2D.Log.Log;
 import java.io.Serializable;
 import java.nio.ByteBuffer;
 
+import static org.lwjgl.opengl.GL11C.GL_ALWAYS;
+import static org.lwjgl.opengl.GL11C.glStencilFunc;
 import static org.lwjgl.opengl.GL46.*;
 
 public class FrameBuffer implements Serializable
@@ -161,7 +163,9 @@ public class FrameBuffer implements Serializable
         bindRBO();
 
         OpenGL.glCall((params) -> glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height));
+        glStencilFunc(GL_ALWAYS, 1, 0xFF);
 
+        // ЕСЛИ НУЖЕН БУДЕТ DEPTH, ТО ПРИДЕТСЯ ДЕЛАТЬ ДОП. ПРОВЕРКУ И УСТАНОВКУ GL_DEPTH_STENCIL_ATTACHMENT
         OpenGL.glCall((params) -> glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBOHandler));
 
         unBindRBO();

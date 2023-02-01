@@ -203,7 +203,6 @@ public class Main
                     @Override
                     public void preRender()
                     {
-                        if(true) return;
                         if(ViewsManager.getInspectorView().getCurrentInspectingObject() != null) {
                             // обработка стенсил буфера отключена
                             glStencilMask(0x00);
