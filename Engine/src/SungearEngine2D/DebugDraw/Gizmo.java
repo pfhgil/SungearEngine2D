@@ -239,6 +239,7 @@ public class Gizmo
 
                 if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_1)) {
                     gizmoPickingTarget.bind();
+                    gizmoPickingTarget.clear();
 
                     GL13.glClear(GL13.GL_COLOR_BUFFER_BIT);
 

@@ -72,8 +72,8 @@ public class FrameBuffer implements Serializable
         } else if(type == BuffersTypes.DEPTH_BUFFER) {
             createDepthTextureAttachment(width, height);
         } else if(type == BuffersTypes.RENDERING_BUFFER) {
-            createRBOAttachment(width, height);
             createTextureAttachment(width, height);
+            createRBOAttachment(width, height);
         }
 
         if(OpenGL.glCall((params) -> glCheckFramebufferStatus(GL_FRAMEBUFFER), Integer.class) != GL_FRAMEBUFFER_COMPLETE) {
@@ -89,18 +89,21 @@ public class FrameBuffer implements Serializable
     public void bind()
     {
         OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, handler));
+
         OpenGL.glCall((params) -> glViewport(0, 0, viewportWidth, viewportHeight));
-        int toClear = Settings.Graphics.isStencilTestActive() ? GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT : GL_COLOR_BUFFER_BIT;
+    }
+
+    public void clear()
+    {
+        int toClear = type == BuffersTypes.RENDERING_BUFFER ? GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT : GL_COLOR_BUFFER_BIT;
         OpenGL.glCall((params) -> glClear(toClear));
     }
 
     // отключает FBO
     public void unBind()
     {
-        //if(complete) {
         OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, 0));
         OpenGL.glCall((params) -> glViewport(0, 0, Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y));
-        //}
     }
 
     // активирует rbo
@@ -136,8 +139,8 @@ public class FrameBuffer implements Serializable
         } else if(type == BuffersTypes.DEPTH_BUFFER) {
             createDepthTextureAttachment(width, height);
         } else if(type == BuffersTypes.RENDERING_BUFFER) {
-            createRBOAttachment(width, height);
             createTextureAttachment(width, height);
+            createRBOAttachment(width, height);
         }
 
         OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, 0));
@@ -146,7 +149,7 @@ public class FrameBuffer implements Serializable
     // перестать использовать текстуру
     public void unBindTexture()
     {
-        glActiveTexture(GL_TEXTURE0);
+        //glActiveTexture(GL_TEXTURE0);
         OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, 0));
     }
 
@@ -157,13 +160,9 @@ public class FrameBuffer implements Serializable
 
         bindRBO();
 
-        //OpenGL.glCall((params) -> glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH_COMPONENT, width, height));
-
-        //OpenGL.glCall((params) -> glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_RENDERBUFFER, RBOHandler));
-
         OpenGL.glCall((params) -> glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height));
 
-        OpenGL.glCall((params) -> glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBOHandler));
+        OpenGL.glCall((params) -> glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBOHandler));
 
         unBindRBO();
     }

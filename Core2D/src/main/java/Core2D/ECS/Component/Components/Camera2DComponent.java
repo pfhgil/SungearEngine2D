@@ -7,19 +7,24 @@ import Core2D.ECS.NonDuplicated;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.OpenGL;
 import Core2D.Graphics.RenderParts.Shader;
+import Core2D.Layering.Layer;
+import Core2D.Layering.PostprocessingLayer;
+import Core2D.Log.Log;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.ShaderUtils.*;
 import Core2D.Utils.MatrixUtils;
-import org.joml.Matrix4f;
-import org.joml.Vector2f;
-import org.joml.Vector2i;
-import org.joml.Vector3f;
+import org.joml.*;
+import org.lwjgl.opengl.GL46C;
+
+import java.lang.Math;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Optional;
 
 import static org.lwjgl.glfw.GLFW.glfwGetTime;
-import static org.lwjgl.opengl.GL11C.*;
-import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
-import static org.lwjgl.opengl.GL13C.GL_TEXTURE1;
+import static org.lwjgl.opengl.GL46C.*;
 
 public class Camera2DComponent extends Component implements NonDuplicated
 {
@@ -68,7 +73,9 @@ public class Camera2DComponent extends Component implements NonDuplicated
 
     private transient VertexArray ppQuadVertexArray;
 
-    private Shader postprocessingShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/postprocessing/postprocessing_default_shader.glsl"));
+    private Shader postprocessingDefaultShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/postprocessing/postprocessing_default_shader.glsl"));
+
+    private List<PostprocessingLayer> postprocessingLayers = new ArrayList<>();
 
     public Camera2DComponent()
     {
@@ -88,8 +95,9 @@ public class Camera2DComponent extends Component implements NonDuplicated
         }
         loadVAO();
         setScene2DMainCamera2D(isScene2DMainCamera2D);
-        frameBuffer = new FrameBuffer(Graphics.getScreenSize().x, Graphics.getScreenSize().y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
-        resultFrameBuffer = new FrameBuffer(Graphics.getScreenSize().x, Graphics.getScreenSize().y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
+        Vector2i screenSize = Graphics.getScreenSize();
+        frameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
+        resultFrameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
     }
 
     private void loadVAO()
@@ -130,58 +138,90 @@ public class Camera2DComponent extends Component implements NonDuplicated
 
         updateViewMatrix();
 
-        //postprocessingShader.bind();
-        frameBuffer.bind();
-
-        if(camera2DCallback != null) {
-            camera2DCallback.preRender();
-        }
-
         if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-            SceneManager.currentSceneManager.getCurrentScene2D().draw(this);
+            frameBuffer.bind();
+            frameBuffer.clear();
+            if(camera2DCallback != null) {
+                camera2DCallback.preRender();
+            }
+            frameBuffer.unBind();
+
+            for(Layer layer : SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
+                Optional<PostprocessingLayer> ppLayerFoundOptional = postprocessingLayers.stream().filter(ppLayer -> ppLayer.getEntitiesLayerToRender() == layer).findFirst();
+                if(ppLayerFoundOptional.isPresent()) {
+                    PostprocessingLayer ppLayerFound= ppLayerFoundOptional.get();
+
+                    ppLayerFound.getFrameBuffer().bind();
+                    ppLayerFound.getFrameBuffer().clear();
+
+                    Graphics.getMainRenderer().render(ppLayerFound.getEntitiesLayerToRender(), this);
+
+                    ppLayerFound.getFrameBuffer().unBind();
+                } else {
+                    frameBuffer.bind();
+                    Graphics.getMainRenderer().render(layer, this);
+                    frameBuffer.unBind();
+                }
+            }
+
+            frameBuffer.bind();
+            if(camera2DCallback != null) {
+                camera2DCallback.postRender();
+            }
+            frameBuffer.unBind();
+
+            // quad render -----------------------------------------------------
+
+            resultFrameBuffer.bind();
+            resultFrameBuffer.clear();
+            ppQuadVertexArray.bind();
+            for(Layer layer : SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
+                PostprocessingLayer ppLayerFound = null;
+
+                Shader shader = postprocessingDefaultShader;
+                FrameBuffer frameBufferToBind = frameBuffer;
+
+                Optional<PostprocessingLayer> ppLayerFoundOptional = postprocessingLayers.stream().filter(ppLayer -> ppLayer.getEntitiesLayerToRender() == layer).findFirst();
+                if(ppLayerFoundOptional.isPresent()) {
+                    ppLayerFound = ppLayerFoundOptional.get();
+
+                    shader = ppLayerFound.getShader();
+
+                    frameBufferToBind = ppLayerFound.getFrameBuffer();
+                }
+
+                frameBufferToBind.bindTexture();
+
+                shader.bind();
+
+                ShaderUtils.setUniform(
+                        shader.getProgramHandler(),
+                        "color",
+                        new Vector4f(1.0f)
+                );
+
+                ShaderUtils.setUniform(
+                        shader.getProgramHandler(),
+                        "sampler",
+                        frameBufferToBind.getTextureBlock() - GL_TEXTURE0
+                );
+
+                float time = (float) glfwGetTime();
+
+                ShaderUtils.setUniform(
+                        shader.getProgramHandler(),
+                        "time",
+                        time
+                );
+
+                // нарисовать два треугольника
+                OpenGL.glCall((params) -> glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0));
+
+                frameBufferToBind.unBindTexture();
+            }
+            ppQuadVertexArray.unBind();
+            resultFrameBuffer.unBind();
         }
-
-        if(camera2DCallback != null) {
-            camera2DCallback.postRender();
-        }
-
-        frameBuffer.unBind();
-
-        resultFrameBuffer.bind();
-
-        ppQuadVertexArray.bind();
-        frameBuffer.bindTexture();
-        postprocessingShader.bind();
-
-        /*
-        ShaderUtils.setUniform(
-                postprocessingShader.getProgramHandler(),
-                "color",
-                entity.getColor()
-        );
-
-         */
-        ShaderUtils.setUniform(
-                postprocessingShader.getProgramHandler(),
-                "sampler",
-                frameBuffer.getTextureBlock() - GL_TEXTURE0
-        );
-
-        float time = (float) glfwGetTime();
-
-        ShaderUtils.setUniform(
-                postprocessingShader.getProgramHandler(),
-                "time",
-                time
-        );
-
-        // нарисовать два треугольника
-        OpenGL.glCall((params) -> glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0));
-
-        frameBuffer.unBindTexture();
-        ppQuadVertexArray.unBind();
-
-        resultFrameBuffer.unBind();
     }
 
     @Override
@@ -191,6 +231,10 @@ public class Camera2DComponent extends Component implements NonDuplicated
         frameBuffer.destroy();
         ppQuadVertexArray.destroy();
         resultFrameBuffer.destroy();
+
+        for(PostprocessingLayer ppLayer : postprocessingLayers) {
+            ppLayer.destroy();
+        }
     }
 
     public void updateViewMatrix()
@@ -229,8 +273,10 @@ public class Camera2DComponent extends Component implements NonDuplicated
         if(scene2D != null &&
                 scene2DMainCamera2D && scene2D.getSceneMainCamera2D() != null) {
             Camera2DComponent camera2DComponent = scene2D.getSceneMainCamera2D().getComponent(Camera2DComponent.class);
-            camera2DComponent.isScene2DMainCamera2D = false;
-            scene2D.setSceneMainCamera2D(null);
+            if(camera2DComponent != null) {
+                camera2DComponent.isScene2DMainCamera2D = false;
+                scene2D.setSceneMainCamera2D(null);
+            }
         }
         isScene2DMainCamera2D = scene2DMainCamera2D;
         if(scene2D != null) {
@@ -245,15 +291,39 @@ public class Camera2DComponent extends Component implements NonDuplicated
         }
     }
 
+    public FrameBuffer getFrameBuffer() { return frameBuffer; }
+
     public FrameBuffer getResultFrameBuffer() { return resultFrameBuffer; }
 
-    public Shader getPostprocessingShader() { return postprocessingShader; }
+    public Shader getPostprocessingDefaultShader() { return postprocessingDefaultShader; }
 
-    public void setPostprocessingShader(Shader postprocessingShader)
+    public void setPostprocessingDefaultShader(Shader postprocessingDefaultShader)
     {
-        if(this.postprocessingShader != null) {
-            this.postprocessingShader.destroy();
+        if(this.postprocessingDefaultShader != null) {
+            this.postprocessingDefaultShader.destroy();
         }
-        this.postprocessingShader = postprocessingShader;
+        this.postprocessingDefaultShader = postprocessingDefaultShader;
     }
+
+    public void addPostprocessingLayer(PostprocessingLayer postprocessingLayer)
+    {
+        postprocessingLayers.add(postprocessingLayer);
+    }
+
+    public int getPostprocessingLayersNum() { return postprocessingLayers.size(); }
+
+    public PostprocessingLayer getPostprocessingLayer(int n)
+    {
+        return postprocessingLayers.get(n);
+    }
+
+    public Iterator<PostprocessingLayer> getPostprocessingLayersIterator() { return postprocessingLayers.iterator(); }
+    /*
+
+    public void addPostprocessingLayer(Layer layer, Shader shader, boolean enabled)
+    {
+        postprocessingLayers.add(new PostprocessingLayer(layer, ));
+    }
+
+     */
 }

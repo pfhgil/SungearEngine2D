@@ -1,9 +1,9 @@
-[#FFFFFF] 2023/01/31 00:03:23 | [#008000] Current session log file was created!
-[#FFFFFF] 2023/01/31 00:03:23 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2023/01/31 00:03:24 | [#008000] Core2D started!
-[#FFFFFF] 2023/01/31 00:03:24 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
-[#FFFFFF] 2023/01/31 00:03:24 | [#FFFFFF] Initializing compiler...  
-[#FFFFFF] 2023/01/31 00:03:28 | [#FFFFFF] scene manager code: {
+[#FFFFFF] 2023/02/01 23:37:14 | [#008000] Current session log file was created!
+[#FFFFFF] 2023/02/01 23:37:14 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2023/02/01 23:37:14 | [#008000] Core2D started!
+[#FFFFFF] 2023/02/01 23:37:14 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2023/02/01 23:37:14 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2023/02/01 23:37:19 | [#FFFFFF] scene manager code: {
   "scene2DStoredValues": [
     {
       "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\kek0.sgs",
@@ -53,32 +53,4 @@
   ],
   "mainScene2DPath": ""
 }
-[#FFFFFF] 2023/01/31 00:04:30 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/01/31 00:04:34 | [#008000] scene destroyed: kek
-[#FFFFFF] 2023/01/31 00:04:35 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/01/31 00:04:37 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/01/31 00:04:38 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/01/31 00:04:39 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/01/31 00:04:39 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/01/31 00:04:39 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/01/31 00:04:39 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/01/31 00:04:39 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/01/31 00:04:39 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/01/31 00:04:40 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/01/31 00:04:40 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/01/31 00:04:40 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/01/31 00:04:40 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/01/31 00:04:41 | [#008000] name: limon
-[#FFFFFF] 2023/01/31 00:04:41 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/01/31 00:04:41 | [#008000] name: limon
-[#FFFFFF] 2023/01/31 00:04:41 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/01/31 00:04:41 | [#008000] name: limon
-[#FFFFFF] 2023/01/31 00:04:41 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/01/31 00:04:41 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/01/31 00:04:44 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/01/31 00:04:46 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/01/31 00:04:46 | [#008000] scene destroyed: kek
-[#FFFFFF] 2023/01/31 00:04:49 | [#008000] scene destroyed: kek
-[#FFFFFF] 2023/01/31 00:04:52 | [#008000] scene destroyed: kek
-[#FFFFFF] 2023/01/31 00:04:55 | [#008000] scene destroyed: kek
-[#FFFFFF] 2023/01/31 00:05:23 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2023/02/01 23:37:58 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists

@@ -10,6 +10,7 @@ import Core2D.ECS.Entity;
 import Core2D.ECS.System.Systems.PrimitivesRendererSystem;
 import Core2D.Graphics.Graphics;
 import Core2D.Physics.PhysicsWorld;
+import Core2D.ShaderUtils.FrameBuffer;
 import Core2D.Transform.Transform;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
@@ -22,6 +23,8 @@ import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import static org.lwjgl.opengl.GL11C.glBlendFunc;
 
 public class EntitiesDebugDraw
 {

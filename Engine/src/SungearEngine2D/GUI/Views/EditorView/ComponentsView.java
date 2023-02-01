@@ -11,9 +11,12 @@ import Core2D.ECS.Entity;
 import Core2D.ECS.NonRemovable;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
+import Core2D.Layering.Layering;
+import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
 import Core2D.Physics.PhysicsWorld;
 import Core2D.Project.ProjectsManager;
+import Core2D.Scene2D.SceneManager;
 import Core2D.Scripting.Script;
 import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.ExceptionsUtils;
@@ -35,6 +38,7 @@ import org.joml.Vector4f;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.util.Iterator;
 import java.util.List;
 
 public class ComponentsView extends View
@@ -673,6 +677,29 @@ public class ComponentsView extends View
                         Camera2DComponent camera2DComponent = (Camera2DComponent) currentComponent;
                         if(ImGui.checkbox("Scene2D main Camera2D", camera2DComponent.isScene2DMainCamera2D())) {
                             camera2DComponent.setScene2DMainCamera2D(!camera2DComponent.isScene2DMainCamera2D());
+                        }
+
+                        if(ImGui.button("add entity layer as pp")) {
+                            camera2DComponent.addPostprocessingLayer(new PostprocessingLayer(inspectingEntity.getLayer()));
+                        }
+
+                        ImGui.image(camera2DComponent.getFrameBuffer().getTextureHandler(), 150.0f, 150.0f);
+
+                        Iterator<PostprocessingLayer> ppCamLayers = camera2DComponent.getPostprocessingLayersIterator();
+                        int k = 0;
+                        while(ppCamLayers.hasNext()) {
+                            PostprocessingLayer ppLayer = ppCamLayers.next();
+                            opened = ImGui.collapsingHeader("pplayer: " + (ppLayer.getEntitiesLayerToRender() != null ? ppLayer.getEntitiesLayerToRender().getName() : " unknown ") + ", " + k);
+
+                            if(opened) {
+                                ImGui.image(ppLayer.getFrameBuffer().getTextureHandler(), 150.0f, 150.0f);
+
+                                if(ImGui.button("remove " + k)) {
+                                    ppCamLayers.remove();
+                                }
+                            }
+
+                            k++;
                         }
                     }
                 }

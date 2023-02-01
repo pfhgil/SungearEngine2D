@@ -82,7 +82,7 @@ public abstract class Graphics
                 AudioListener.update();
 
                 if (!screenCleared) {
-                    OpenGL.glCall((params) -> glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, screenClearColor.w));
+                    OpenGL.glCall((params) -> glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, 0.0f));
                     screenCleared = true;
                 }
 
@@ -138,6 +138,7 @@ public abstract class Graphics
     public static Entity getPickedObject2D(Camera2DComponent camera2DComponent, Vector2f oglPosition)
     {
         pickingRenderTarget.bind();
+        pickingRenderTarget.clear();
 
         if(!screenCleared) {
             OpenGL.glCall((params) -> glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, screenClearColor.w));

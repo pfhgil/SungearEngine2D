@@ -169,7 +169,7 @@ public class InspectorView extends View
                             @Override
                             public void onRightButtonClicked() {
                                 if (!newName.get().equals("")) {
-                                    currentSceneManager.getCurrentScene2D().getLayering().addLayer(new Layer(currentSceneManager.getCurrentScene2D().getLayering().getLayers().size(), newName.get()));
+                                    currentSceneManager.getCurrentScene2D().getLayering().addLayer(new Layer(currentSceneManager.getCurrentScene2D().getLayering().getLayersMaxID() + 1, newName.get()));
                                     dialogWindow.setActive(false);
                                     newName.set("", true);
                                 }

@@ -112,11 +112,14 @@ public class Texture2D
         // активирую нулевой текстурный блок
         OpenGL.glCall((params) -> glActiveTexture(textureBlock));
         OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, textureHandler));
+        //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
     public void unBind()
     {
         OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, 0));
-        OpenGL.glCall((params) -> glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+        //OpenGL.glCall((params) -> glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+       // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
     public static String blendFactorToString(int blendFactor)

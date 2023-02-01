@@ -12,6 +12,7 @@ import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Input.PC.Mouse;
 import Core2D.Prefab.Prefab;
 import Core2D.Project.ProjectsManager;
+import Core2D.Scene2D.Scene2DCallback;
 import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.FileUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;

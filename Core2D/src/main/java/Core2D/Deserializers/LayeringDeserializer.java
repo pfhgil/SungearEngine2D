@@ -19,7 +19,7 @@ public class LayeringDeserializer implements JsonDeserializer<Layering>
 
         for(JsonElement element : layers) {
             Layer layer = context.deserialize(element, Layer.class);
-            layering.addLayer(layer);
+            layering.getLayers().add(layer);
         }
         return layering;
     }

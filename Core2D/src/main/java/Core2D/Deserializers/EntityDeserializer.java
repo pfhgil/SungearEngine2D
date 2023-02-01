@@ -10,6 +10,7 @@ import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
+import Core2D.Layering.PostprocessingLayer;
 import Core2D.Project.ProjectsManager;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Tag;
@@ -190,16 +191,22 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
 
                 entity.addComponent(audioComponent);
             } else if(component instanceof Camera2DComponent camera2DComponent) {
-                Shader shader = new Shader(AssetManager.getInstance().getShaderData(camera2DComponent.getPostprocessingShader().path));
+                Shader defaultShader = new Shader(AssetManager.getInstance().getShaderData(camera2DComponent.getPostprocessingDefaultShader().path));
 
-                camera2DComponent.setPostprocessingShader(shader);
+                camera2DComponent.setPostprocessingDefaultShader(defaultShader);
+                for(int i = 0; i < camera2DComponent.getPostprocessingLayersNum(); i++) {
+                    PostprocessingLayer ppLayer = camera2DComponent.getPostprocessingLayer(i);
+                    Shader layerShader = new Shader(AssetManager.getInstance().getShaderData(ppLayer.getShader().path));
+
+                    ppLayer.setShader(layerShader);
+                    ppLayer.init();
+                }
                 entity.addComponent(camera2DComponent);
             } else {
                 entity.addComponent(component);
             }
 
             component.componentID = lastComponentID;
-            //object2D.getComponents().get(object2D.getComponents().size() - 1).componentID = lastComponentID;
         }
 
         return entity;

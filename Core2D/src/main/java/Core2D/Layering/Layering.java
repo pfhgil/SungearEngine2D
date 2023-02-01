@@ -2,6 +2,7 @@ package Core2D.Layering;
 
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Entity;
+import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Log.Log;
 import org.joml.Vector4f;
 
@@ -66,12 +67,35 @@ public class Layering {
 
         if(foundLayer == null) {
             layers.add(layer);
+            /*
+            for(Layer layerToAddPP : layers) {
+                for(Entity entity : layerToAddPP.getEntities()) {
+                    List<Camera2DComponent> camera2DComponents = entity.getAllComponents(Camera2DComponent.class);
+                    for(Camera2DComponent camera2DComponent : camera2DComponents) {
+                        camera2DComponent.addPostprocessingLayer(new PostprocessingLayer(layerToAddPP));
+                        Log.Console.println("added layer: " + layer.getName());
+                    }
+                }
+            }
+
+             */
 
             sort();
         } else {
             Log.CurrentSession.println("Layer with name '" + foundLayer.getName() + "' already exists", Log.MessageType.ERROR);
             Log.showErrorDialog("Layer with name '" + foundLayer.getName() + "' already exists");
         }
+    }
+
+    public int getLayersMaxID()
+    {
+        int maxID = 0;
+        for(Layer layer : layers) {
+            if(layer.getID() > maxID) {
+                maxID = layer.getID();
+            }
+        }
+        return maxID;
     }
 
     public Layer getLayer(int id)
