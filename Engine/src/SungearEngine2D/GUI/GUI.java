@@ -56,6 +56,8 @@ public class GUI
         renderer.startFrame();
 
         ViewsManager.draw();
+        //ImGui.showDemoWindow();
+        //ImGui.showMetricsWindow();
 
         renderer.endFrame();
     }

@@ -3,19 +3,20 @@ package Core2D.ECS.Component.Components;
 import Core2D.AssetManager.AssetManager;
 import Core2D.Core2D.Core2D;
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.NonDuplicated;
+import Core2D.ECS.System.System;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.OpenGL;
 import Core2D.Graphics.RenderParts.Shader;
+import Core2D.Input.PC.Keyboard;
+import Core2D.Input.PC.Mouse;
 import Core2D.Layering.Layer;
 import Core2D.Layering.PostprocessingLayer;
-import Core2D.Log.Log;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.ShaderUtils.*;
 import Core2D.Utils.MatrixUtils;
 import org.joml.*;
-import org.lwjgl.opengl.GL46C;
+import org.lwjgl.glfw.GLFW;
 
 import java.lang.Math;
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ import java.util.Optional;
 import static org.lwjgl.glfw.GLFW.glfwGetTime;
 import static org.lwjgl.opengl.GL46C.*;
 
-public class Camera2DComponent extends Component implements NonDuplicated
+public class Camera2DComponent extends Component
 {
     public interface Camera2DCallback
     {
@@ -76,6 +77,20 @@ public class Camera2DComponent extends Component implements NonDuplicated
     private Shader postprocessingDefaultShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/postprocessing/postprocessing_default_shader.glsl"));
 
     private List<PostprocessingLayer> postprocessingLayers = new ArrayList<>();
+
+    // to delete ------------------
+    /*
+    private transient Random random = new Random();
+
+    private transient int totalFrames = 0;
+
+    private transient Vector3f cameraPosition = new Vector3f(-3.9999986f, 2.9999995f, 0.0f);
+    private transient Vector2f lightPos = new Vector2f(0.0f, 0.0f);
+    private transient Vector2f lastMousePosition = new Vector2f();
+    private transient Vector2f mousePosition = new Vector2f();
+
+     */
+    // -----------------------------
 
     public Camera2DComponent()
     {
@@ -206,6 +221,9 @@ public class Camera2DComponent extends Component implements NonDuplicated
                         frameBufferToBind.getTextureBlock() - GL_TEXTURE0
                 );
 
+                // ray tracing ---------
+
+                /*
                 float time = (float) glfwGetTime();
 
                 ShaderUtils.setUniform(
@@ -213,6 +231,79 @@ public class Camera2DComponent extends Component implements NonDuplicated
                         "time",
                         time
                 );
+
+                if(Keyboard.keyDown(GLFW.GLFW_KEY_W)) {
+                    cameraPosition.x += 0.1f;
+                }
+                if(Keyboard.keyDown(GLFW.GLFW_KEY_S)) {
+                    cameraPosition.x -= 0.1f;
+                }
+                if(Keyboard.keyDown(GLFW.GLFW_KEY_A)) {
+                    cameraPosition.y -= 0.1f;
+                }
+                if(Keyboard.keyDown(GLFW.GLFW_KEY_D)) {
+                    cameraPosition.y += 0.1f;
+                }
+
+                if(Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_1)) {
+                    Vector2f mousePos = Mouse.getMousePosition();
+                    Vector2f offset = new Vector2f(lastMousePosition).add(new Vector2f(mousePos).negate());
+                    lastMousePosition.set(mousePos);
+
+                    mousePosition.add(offset);
+                } else {
+                    Vector2f mousePos = Mouse.getMousePosition();
+                    lastMousePosition.set(mousePos);
+                }
+
+                lightPos.x += 0.01f;
+                lightPos.y += 0.01f;
+
+                ShaderUtils.setUniform(
+                        shader.getProgramHandler(),
+                        "iResolution",
+                        new Vector2f(windowSize.x, windowSize.y));
+
+                ShaderUtils.setUniform(
+                        shader.getProgramHandler(),
+                        "iMouse",
+                        mousePosition);
+
+                ShaderUtils.setUniform(
+                        shader.getProgramHandler(),
+                        "cameraPosition",
+                        cameraPosition);
+
+                ShaderUtils.setUniform(
+                        shader.getProgramHandler(),
+                        "lightPos",
+                        lightPos);
+
+
+                Vector2f rnd0 = new Vector2f(random.nextFloat() * 999.0f, random.nextFloat() * 999.0f);
+                Vector2f rnd1 = new Vector2f(random.nextFloat() * 999.0f, random.nextFloat() * 999.0f);
+                //System.out.println("x: " + rnd.x + ", " + rnd.y);
+
+                ShaderUtils.setUniform(
+                        shader.getProgramHandler(),
+                        "u_seed1",
+                        rnd0);
+
+                ShaderUtils.setUniform(
+                        shader.getProgramHandler(),
+                        "u_seed2",
+                        rnd1);
+
+                float samplerPart = 1.0f / totalFrames;
+                //System.out.println(samplerPart);
+
+                ShaderUtils.setUniform(
+                        shader.getProgramHandler(),
+                        "samplerPart",
+                        samplerPart);
+
+
+*/
 
                 // нарисовать два треугольника
                 OpenGL.glCall((params) -> glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0));
@@ -307,7 +398,14 @@ public class Camera2DComponent extends Component implements NonDuplicated
 
     public void addPostprocessingLayer(PostprocessingLayer postprocessingLayer)
     {
-        postprocessingLayers.add(postprocessingLayer);
+        if(postprocessingLayers.stream().noneMatch((ppLayer) -> ppLayer.getEntitiesLayerToRender() == postprocessingLayer.getEntitiesLayerToRender())) {
+            postprocessingLayers.add(postprocessingLayer);
+        }
+    }
+
+    public boolean isPostprocessingLayerExists(Layer layer)
+    {
+        return postprocessingLayers.stream().anyMatch((ppLayer) -> ppLayer.getEntitiesLayerToRender() == layer);
     }
 
     public int getPostprocessingLayersNum() { return postprocessingLayers.size(); }
@@ -317,13 +415,17 @@ public class Camera2DComponent extends Component implements NonDuplicated
         return postprocessingLayers.get(n);
     }
 
-    public Iterator<PostprocessingLayer> getPostprocessingLayersIterator() { return postprocessingLayers.iterator(); }
-    /*
-
-    public void addPostprocessingLayer(Layer layer, Shader shader, boolean enabled)
+    public PostprocessingLayer getPostprocessingLayerByName(String name)
     {
-        postprocessingLayers.add(new PostprocessingLayer(layer, ));
+        Optional<PostprocessingLayer> foundLayer = postprocessingLayers.stream().filter(ppLayer -> {
+            if(ppLayer.getEntitiesLayerToRender() != null) {
+                return ppLayer.getEntitiesLayerToRender().getName().equals(name);
+            }
+            return false;
+        }).findFirst();
+
+        return foundLayer.orElse(null);
     }
 
-     */
+    public Iterator<PostprocessingLayer> getPostprocessingLayersIterator() { return postprocessingLayers.iterator(); }
 }

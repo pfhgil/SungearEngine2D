@@ -4,10 +4,8 @@ import Core2D.AssetManager.AssetManager;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.ShaderUtils.FrameBuffer;
-import org.joml.Vector2i;
 
 import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
-import static org.lwjgl.opengl.GL13C.GL_TEXTURE1;
 
 public class PostprocessingLayer
 {
@@ -18,7 +16,7 @@ public class PostprocessingLayer
 
     private FrameBuffer frameBuffer;
 
-    private Shader shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/postprocessing/postprocessing_test0_shader.glsl"));
+    private Shader shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/postprocessing/postprocessing_default_shader.glsl"));
 
     public PostprocessingLayer(Layer entitiesLayerToRender)
     {

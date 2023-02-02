@@ -11,6 +11,7 @@ import Core2D.ECS.Entity;
 import Core2D.ECS.NonRemovable;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
+import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
 import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
@@ -28,6 +29,7 @@ import SungearEngine2D.Main.Resources;
 import SungearEngine2D.Utils.ResourcesUtils;
 import imgui.ImGui;
 import imgui.ImVec2;
+import imgui.ImVec4;
 import imgui.flag.*;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
@@ -40,10 +42,15 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
+
+import static Core2D.Scene2D.SceneManager.currentSceneManager;
 
 public class ComponentsView extends View
 {
     private boolean showPopupWindow = false;
+
+    private boolean showAddPPPopupWindow = false;
 
     private boolean someButtonInPopupWindowHovered = false;
 
@@ -185,14 +192,6 @@ public class ComponentsView extends View
                                     meshRendererComponent.setShader(new Shader(AssetManager.getInstance().getShaderData(relativePath)));
                                     meshRendererComponent.getShader().path = relativePath;
                                     ViewsManager.getResourcesView().setCurrentMovingFile(null);
-
-                                    /*
-                                    if(!meshRendererComponent.shader.isCompiled()) {
-                                        ViewsManager.getBottomMenuView().leftSideInfo = "Shader " + meshRendererComponent.shader.path + " was not compiled. See the log for details";
-                                        ViewsManager.getBottomMenuView().leftSideInfoColor.set(1.0f, 0.0f, 0.0f, 1.0f);
-                                    }
-
-                                     */
                                 }
 
                                 ImGui.endDragDropTarget();
@@ -675,29 +674,74 @@ public class ComponentsView extends View
                     }
                     case "Camera2DComponent" -> {
                         Camera2DComponent camera2DComponent = (Camera2DComponent) currentComponent;
-                        if(ImGui.checkbox("Scene2D main Camera2D", camera2DComponent.isScene2DMainCamera2D())) {
+                        ImGui.pushID("Scene2DMainCamera_" + i);
+                        if(ImGui.checkbox("Scene2D main camera", camera2DComponent.isScene2DMainCamera2D())) {
                             camera2DComponent.setScene2DMainCamera2D(!camera2DComponent.isScene2DMainCamera2D());
                         }
+                        ImGui.popID();
 
-                        if(ImGui.button("add entity layer as pp")) {
-                            camera2DComponent.addPostprocessingLayer(new PostprocessingLayer(inspectingEntity.getLayer()));
+                        int k = 0;
+
+                        if(ImGuiUtils.arrowButton("Add PP layer...", "AddPPLayerButton_" + i, true)) {
+                            ImGui.pushID("PPLayersToAddListBox_" + i);
+                            ImGui.sameLine();
+                            if(ImGui.beginListBox("", 150.0f, 75.0f)) {
+                                for (Layer layer : currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
+                                    if (!camera2DComponent.isPostprocessingLayerExists(layer)) {
+                                        ImGui.pushID("PPLayerToAdd_" + k + "_" + i);
+                                        if (ImGui.selectable(layer.getName())) {
+                                            camera2DComponent.addPostprocessingLayer(new PostprocessingLayer(layer));
+                                            ImGuiUtils.setArrowButtonRetention("AddPPLayerButton_" + i, false);
+                                        }
+                                        ImGui.popID();
+                                    }
+                                    k++;
+                                }
+                                ImGui.endListBox();
+                            }
+                            ImGui.popID();
                         }
 
-                        ImGui.image(camera2DComponent.getFrameBuffer().getTextureHandler(), 150.0f, 150.0f);
+                        if(ImGui.beginPopup("govno")) {
+                            ImGui.endPopup();
+                        }
 
-                        Iterator<PostprocessingLayer> ppCamLayers = camera2DComponent.getPostprocessingLayersIterator();
-                        int k = 0;
-                        while(ppCamLayers.hasNext()) {
-                            PostprocessingLayer ppLayer = ppCamLayers.next();
-                            opened = ImGui.collapsingHeader("pplayer: " + (ppLayer.getEntitiesLayerToRender() != null ? ppLayer.getEntitiesLayerToRender().getName() : " unknown ") + ", " + k);
-
-                            if(opened) {
+                        k = 0;
+                        Iterator<PostprocessingLayer> ppCamLayersIterator = camera2DComponent.getPostprocessingLayersIterator();
+                        while(ppCamLayersIterator.hasNext()) {
+                            PostprocessingLayer ppLayer = ppCamLayersIterator.next();
+                            ImGui.pushID("PPLayer_" + k + "_" + i);
+                            if (ImGui.treeNode("Postprocessing layer \"" + (ppLayer.getEntitiesLayerToRender() != null ? ppLayer.getEntitiesLayerToRender().getName() + "\"" : "unknown\""))) {
                                 ImGui.image(ppLayer.getFrameBuffer().getTextureHandler(), 150.0f, 150.0f);
 
-                                if(ImGui.button("remove " + k)) {
-                                    ppCamLayers.remove();
+                                ImString shaderName = new ImString(new File(ppLayer.getShader().path).getName());
+                                ImGui.inputText("Shader", shaderName, ImGuiInputTextFlags.ReadOnly);
+                                if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileShader(ViewsManager.getResourcesView().getCurrentMovingFile())) {
+                                    if (ImGui.beginDragDropTarget()) {
+                                        Object imageFile = ImGui.acceptDragDropPayload("File");
+                                        if (imageFile != null) {
+                                            shaderName.set(ViewsManager.getResourcesView().getCurrentMovingFile().getName(), true);
+                                            String relativePath = FileUtils.getRelativePath(
+                                                    new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
+                                                    new File(ProjectsManager.getCurrentProject().getProjectPath()));
+                                            ppLayer.setShader(new Shader(AssetManager.getInstance().getShaderData(relativePath)));
+                                            ppLayer.getShader().path = relativePath;
+                                            ViewsManager.getResourcesView().setCurrentMovingFile(null);
+                                        }
+
+                                        ImGui.endDragDropTarget();
+                                    }
                                 }
+
+                                ImGui.pushID("RemovePPLayer" + k + "_" + i);
+                                if (ImGui.button("Remove")) {
+                                    ppCamLayersIterator.remove();
+                                }
+                                ImGui.popID();
+
+                                ImGui.treePop();
                             }
+                            ImGui.popID();
 
                             k++;
                         }

@@ -52,6 +52,7 @@ public class AssetManager implements Serializable
 
         String postprocessingDefaultShaderPath = "/data/shaders/postprocessing/postprocessing_default_shader.glsl";
         String postprocessingTest0ShaderPath = "/data/shaders/postprocessing/postprocessing_test0_shader.glsl";
+        String postprocessingTest1ShaderPath = "/data/shaders/postprocessing/postprocessing_test1_shader.glsl";
 
         String whiteTexturePath = "/data/textures/white_texture.png";
         String defaultProgressBarTexturePath = "/data/textures/ui/progressBar/progress_bar.png";
@@ -65,6 +66,7 @@ public class AssetManager implements Serializable
 
         ShaderData postprocessingDefaultShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(postprocessingDefaultShaderPath), postprocessingDefaultShaderPath);
         ShaderData postprocessingTest0ShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(postprocessingTest0ShaderPath), postprocessingTest0ShaderPath);
+        ShaderData postprocessingTest1ShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(postprocessingTest1ShaderPath), postprocessingTest1ShaderPath);
 
         Texture2DData whiteTextureData = new Texture2DData().load(Core2D.class.getResourceAsStream(whiteTexturePath), whiteTexturePath);
         Texture2DData defaultProgressBarTextureData = new Texture2DData().load(Core2D.class.getResourceAsStream(defaultProgressBarTexturePath), defaultProgressBarTexturePath);
@@ -78,6 +80,7 @@ public class AssetManager implements Serializable
 
         addAsset(new Asset(postprocessingDefaultShaderData, postprocessingDefaultShaderPath));
         addAsset(new Asset(postprocessingTest0ShaderData, postprocessingTest0ShaderPath));
+        addAsset(new Asset(postprocessingTest1ShaderData, postprocessingTest1ShaderPath));
 
         addAsset(new Asset(whiteTextureData, whiteTexturePath));
         addAsset(new Asset(defaultProgressBarTextureData, defaultProgressBarTexturePath));

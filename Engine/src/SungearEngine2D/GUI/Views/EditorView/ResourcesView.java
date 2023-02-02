@@ -557,7 +557,7 @@ public class ResourcesView extends View
                         """;
             }
 
-            if(newFile.exists()) {
+            if(newFile.exists() && newFile.isFile()) {
                 System.out.println("path: " + newFile.getPath());
                 FileUtils.writeToFile(
                         newFile,

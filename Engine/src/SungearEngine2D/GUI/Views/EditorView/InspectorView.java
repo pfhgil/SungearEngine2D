@@ -390,14 +390,6 @@ public class InspectorView extends View
                 inspectingEntity.setColor(new Vector4f(col));
             }
 
-            ImGui.collapsingHeader("Matrices");
-            {
-                TransformComponent transformComponent = inspectingEntity.getComponent(TransformComponent.class);
-                if(transformComponent != null) {
-                    ImGui.text(transformComponent.getTransform().getResultModelMatrix().toString());
-                }
-            }
-
             ImVec2 windowSize = ImGui.getWindowSize();
 
             ImGui.pushStyleVar(ImGuiStyleVar.WindowRounding, 0.0f);
