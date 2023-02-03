@@ -1,9 +1,9 @@
-[#FFFFFF] 2023/02/03 00:22:39 | [#008000] Current session log file was created!
-[#FFFFFF] 2023/02/03 00:22:39 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2023/02/03 00:22:39 | [#008000] Core2D started!
-[#FFFFFF] 2023/02/03 00:22:39 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
-[#FFFFFF] 2023/02/03 00:22:40 | [#FFFFFF] Initializing compiler...  
-[#FFFFFF] 2023/02/03 00:22:42 | [#FFFFFF] scene manager code: {
+[#FFFFFF] 2023/02/04 00:35:06 | [#008000] Current session log file was created!
+[#FFFFFF] 2023/02/04 00:35:06 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2023/02/04 00:35:06 | [#008000] Core2D started!
+[#FFFFFF] 2023/02/04 00:35:06 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2023/02/04 00:35:07 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2023/02/04 00:35:09 | [#FFFFFF] scene manager code: {
   "scene2DStoredValues": [
     {
       "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\kek0.sgs",
@@ -53,133 +53,35 @@
   ],
   "mainScene2DPath": ""
 }
-[#FFFFFF] 2023/02/03 00:22:48 | [#FFFFFF] new 8399995
-[#FFFFFF] 2023/02/03 00:23:02 | [#FFFFFF] scene manager code: {
-  "scene2DStoredValues": [
-    {
-      "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\kek0.sgs",
-      "inBuild": false,
-      "isMainScene2D": false
-    },
-    {
-      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl0.sgs",
-      "inBuild": false,
-      "isMainScene2D": false
-    },
-    {
-      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl1.sgs",
-      "inBuild": false,
-      "isMainScene2D": false
-    },
-    {
-      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl2.sgs",
-      "inBuild": false,
-      "isMainScene2D": false
-    },
-    {
-      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\tets0.sgs",
-      "inBuild": false,
-      "isMainScene2D": false
-    },
-    {
-      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl6.sgs",
-      "inBuild": false,
-      "isMainScene2D": false
-    },
-    {
-      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\stable\\s_lvl0.sgs",
-      "inBuild": false,
-      "isMainScene2D": false
-    },
-    {
-      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\for_alesha.sgs",
-      "inBuild": false,
-      "isMainScene2D": false
-    },
-    {
-      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\kek.sgs",
-      "inBuild": false,
-      "isMainScene2D": false
-    }
-  ],
-  "mainScene2DPath": ""
-}
-[#FFFFFF] 2023/02/03 00:23:44 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/03 00:23:45 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:23:45 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:23:45 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:23:45 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:23:45 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:23:45 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:23:47 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:23:48 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/03 00:23:48 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/03 00:23:48 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:23:48 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:23:49 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/03 00:25:05 | [#FFFFFF] Compiling script PPTest0System.java... 
-[#FFFFFF] 2023/02/03 00:25:05 | [#008000] Script PPTest0System.java was successfully built!
-[#FFFFFF] 2023/02/03 00:25:12 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/03 00:25:13 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:25:13 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:25:13 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:25:13 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:25:13 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:25:14 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/03 00:25:16 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/03 00:25:16 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:25:16 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:25:16 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:25:19 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/03 00:25:22 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/03 00:25:23 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/03 00:25:44 | [#FFFFFF] Compiling script PPTest0System... 
-[#FFFFFF] 2023/02/03 00:25:45 | [#008000] Script PPTest0System.java was successfully built!
-[#FFFFFF] 2023/02/03 00:25:46 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/03 00:25:47 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:25:47 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:25:47 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:25:47 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:25:47 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:25:47 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:25:48 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:25:58 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/03 00:25:59 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/03 00:25:59 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:25:59 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:25:59 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:26:00 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/03 00:26:00 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/03 00:26:01 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:26:01 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:26:01 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:26:01 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:26:01 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:26:38 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/03 00:26:50 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/03 00:26:50 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:26:50 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:26:50 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:26:51 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:26:51 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:26:51 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:26:53 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/03 00:30:53 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/03 00:30:54 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/03 00:33:44 | [#FFFFFF] Compiling script PPTest1System.java... 
-[#FFFFFF] 2023/02/03 00:33:45 | [#008000] Script PPTest1System.java was successfully built!
-[#FFFFFF] 2023/02/03 00:33:58 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/03 00:33:59 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:33:59 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:33:59 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:33:59 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:33:59 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:34:03 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:34:08 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:37:23 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/03 00:37:24 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/03 00:37:24 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:37:24 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/03 00:37:24 | [#008000] name: limon
-[#FFFFFF] 2023/02/03 00:37:25 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/03 00:37:27 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2023/02/04 00:35:21 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
+[#FFFFFF] 2023/02/04 00:35:21 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
+[#FFFFFF] 2023/02/04 00:35:21 | [#008000] name: limon
+[#FFFFFF] 2023/02/04 00:35:22 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
+[#FFFFFF] 2023/02/04 00:35:22 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
+[#FFFFFF] 2023/02/04 00:35:22 | [#008000] name: limon
+[#FFFFFF] 2023/02/04 00:35:23 | [#008000] scene destroyed: tets0
+[#FFFFFF] 2023/02/04 00:35:23 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
+[#FFFFFF] 2023/02/04 00:35:24 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
+[#FFFFFF] 2023/02/04 00:35:24 | [#008000] name: limon
+[#FFFFFF] 2023/02/04 00:35:24 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
+[#FFFFFF] 2023/02/04 00:35:24 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
+[#FFFFFF] 2023/02/04 00:35:24 | [#008000] name: limon
+[#FFFFFF] 2023/02/04 00:35:24 | [#008000] name: limon
+[#FFFFFF] 2023/02/04 00:35:26 | [#008000] scene destroyed: tets0
+[#FFFFFF] 2023/02/04 00:35:35 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
+[#FFFFFF] 2023/02/04 00:35:36 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
+[#FFFFFF] 2023/02/04 00:35:36 | [#008000] name: limon
+[#FFFFFF] 2023/02/04 00:35:36 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
+[#FFFFFF] 2023/02/04 00:35:36 | [#008000] name: limon
+[#FFFFFF] 2023/02/04 00:35:36 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
+[#FFFFFF] 2023/02/04 00:35:37 | [#008000] name: limon
+[#FFFFFF] 2023/02/04 00:35:38 | [#008000] name: limon
+[#FFFFFF] 2023/02/04 00:35:46 | [#008000] scene destroyed: tets0
+[#FFFFFF] 2023/02/04 00:35:46 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
+[#FFFFFF] 2023/02/04 00:35:47 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
+[#FFFFFF] 2023/02/04 00:35:47 | [#008000] name: limon
+[#FFFFFF] 2023/02/04 00:35:47 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
+[#FFFFFF] 2023/02/04 00:35:47 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
+[#FFFFFF] 2023/02/04 00:35:49 | [#008000] name: limon
+[#FFFFFF] 2023/02/04 00:35:50 | [#008000] scene destroyed: tets0
+[#FFFFFF] 2023/02/04 00:35:51 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
