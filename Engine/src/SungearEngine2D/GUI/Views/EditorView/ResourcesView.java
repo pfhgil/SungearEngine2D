@@ -440,26 +440,30 @@ public class ResourcesView extends View
                             
                             }
 
+                            // otherEntity - an entity, one of whose colliders entered one of the colliders of this entity.
                             @Override
-                            public void collider2DEnter(Entity otherObj)
+                            public void collider2DEnter(Entity otherEntity)
                             {
                             
                             }
                             
+                            // otherEntity - an entity whose body came out of the colliders of this entity
                             @Override
-                            public void collider2DExit(Entity otherObj)
+                            public void collider2DExit(Entity otherEntity)
                             {
                             
                             }
                             
+                            // camera2DComponent - the camera that renders this entity.
                             @Override
-                            public void render()
+                            public void render(Camera2DComponent camera2DComponent)
                             {
                             
                             }
                             
+                            // Use the "shader" parameter to render this entity.
                             @Override
-                            public void render(Shader shader)
+                            public void render(Camera2DComponent camera2DComponent, Shader shader)
                             {
                             
                             }
@@ -491,26 +495,30 @@ public class ResourcesView extends View
                             
                             }
 
+                            // otherEntity - an entity, one of whose colliders entered one of the colliders of this entity.
                             @Override
-                            public void collider2DEnter(Entity otherObj)
+                            public void collider2DEnter(Entity otherEntity)
                             {
                             
                             }
                             
+                            // otherEntity - an entity whose body came out of the colliders of this entity
                             @Override
-                            public void collider2DExit(Entity otherObj)
+                            public void collider2DExit(Entity otherEntity)
                             {
                             
                             }
                             
+                            // camera2DComponent - the camera that renders this entity.
                             @Override
-                            public void render()
+                            public void render(Camera2DComponent camera2DComponent)
                             {
                             
                             }
                             
+                            // Use the "shader" parameter to render this entity.
                             @Override
-                            public void render(Shader shader)
+                            public void render(Camera2DComponent camera2DComponent, Shader shader)
                             {
                             
                             }

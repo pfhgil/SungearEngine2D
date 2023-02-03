@@ -138,6 +138,7 @@ public class MeshComponent extends Component
 
             if (vertexArray != null) {
                 VertexBuffer vbo = vertexArray.getVBOs().get(0);
+                //vbo.getData()[0];
                 vertexArray.updateVBO(vbo, data);
             }
         }
