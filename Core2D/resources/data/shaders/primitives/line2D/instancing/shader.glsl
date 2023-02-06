@@ -1,6 +1,4 @@
 #ifdef VERTEX
-    #version 330 core
-
     layout (location = 0) in vec2 positionAttribute[2];
     layout (location = 2) in mat4 modelMatrix;
     layout (location = 6) in vec4 color;
@@ -25,8 +23,6 @@
 #endif
 
 #ifdef FRAGMENT
-    #version 330 core
-
     precision mediump float;
 
     out mediump vec4 fragColor;

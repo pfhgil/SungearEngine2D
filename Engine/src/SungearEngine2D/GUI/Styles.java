@@ -80,8 +80,8 @@ public class Styles
         style.setWindowMinSize(1.0f, 1.0f);
         style.setChildRounding(0.0f);
         style.setFramePadding(5, 3);
-        style.setFrameRounding(0.0f);
-        style.setItemSpacing(9.0f, 3.0f);
+        style.setFrameRounding(2.0f);
+        style.setItemSpacing(9.0f, 4.0f);
         style.setItemInnerSpacing(9.0f, 3.0f);
         style.setIndentSpacing(21.0f);
         style.setScrollbarSize(6.0f);
@@ -93,19 +93,19 @@ public class Styles
         style.setTabRounding(0.0f);
 
         colors[ImGuiCol.Text] = new float[] { 0.90f, 0.90f, 0.90f, 1.00f };
-        colors[ImGuiCol.TextDisabled] = new float[] { 0.5f, 0.5f, 0.5f, 1.00f };
-        colors[ImGuiCol.WindowBg] = new float[] { 34.0f / 255.0f, 34.0f / 255.0f, 34.0f / 255.0f, 1.00f };
-        colors[ImGuiCol.ChildBg] = new float[] { 34.0f / 255.0f, 34.0f / 255.0f, 34.0f / 255.0f, 1.00f };
-        colors[ImGuiCol.PopupBg] = new float[] { 0.00f, 0.00f, 0.00f, 1.00f };
+        //colors[ImGuiCol.Window] = new float[] { 0.5f, 0.5f, 0.5f, 1.00f };
+        colors[ImGuiCol.WindowBg] = new float[] { 56.0f / 255.0f, 56.0f / 255.0f, 56.0f / 255.0f, 1.00f };
+        colors[ImGuiCol.MenuBarBg] = new float[] { 44.0f / 255.0f, 44.0f / 255.0f, 44.0f / 255.0f, 1.00f };
+        colors[ImGuiCol.ChildBg] = new float[] { 56.0f / 255.0f, 56.0f / 255.0f, 56.0f / 255.0f, 1.00f };
+        colors[ImGuiCol.PopupBg] = new float[] { 36.0f / 255.0f, 36.0f / 255.0f, 36.0f / 255.0f, 1.00f };
         colors[ImGuiCol.Border] = new float[] { 0.82f, 0.77f, 0.78f, 1.00f };
-        colors[ImGuiCol.BorderShadow] = new float[] { 0.35f, 0.35f, 0.35f, 0.66f };
-        colors[ImGuiCol.FrameBg] = new float[] { 1.00f, 1.00f, 1.00f, 0.28f };
+        colors[ImGuiCol.BorderShadow] = new float[] { 13 / 255.0f, 13 / 255.0f, 13 / 255.0f, 0.66f };
+        colors[ImGuiCol.FrameBg] = new float[] { 40 / 255.0f, 40 / 255.0f, 40 / 255.0f, 0.28f };
         colors[ImGuiCol.FrameBgHovered] = new float[] { 0.68f, 0.68f, 0.68f, 0.67f };
         colors[ImGuiCol.FrameBgActive] = new float[] { 0.79f, 0.73f, 0.73f, 0.62f };
-        colors[ImGuiCol.TitleBg] = new float[] { 24.0f / 255.0f, 24.0f / 255.0f, 24.0f / 255.0f, 1.00f };
+        colors[ImGuiCol.TitleBg] = new float[] { 44.0f / 255.0f, 44.0f / 255.0f, 44.0f / 255.0f, 1.00f };
         colors[ImGuiCol.TitleBgActive] = new float[] { 0.46f, 0.46f, 0.46f, 1.00f };
         colors[ImGuiCol.TitleBgCollapsed] = new float[] { 0.00f, 0.00f, 0.00f, 1.00f };
-        colors[ImGuiCol.MenuBarBg] = new float[] { 0.00f, 0.00f, 0.00f, 0.80f };
         colors[ImGuiCol.ScrollbarBg] = new float[] { 0.00f, 0.00f, 0.00f, 0.60f };
         colors[ImGuiCol.ScrollbarGrab] = new float[] { 1.00f, 1.00f, 1.00f, 0.87f };
         colors[ImGuiCol.ScrollbarGrabHovered] = new float[] { 1.00f, 1.00f, 1.00f, 0.79f };
@@ -119,7 +119,7 @@ public class Styles
         colors[ImGuiCol.Header] = new float[] { 0.72f, 0.72f, 0.72f, 0.54f };
         colors[ImGuiCol.HeaderHovered] = new float[] { 0.92f, 0.92f, 0.95f, 0.77f };
         colors[ImGuiCol.HeaderActive] = new float[] { 0.82f, 0.82f, 0.82f, 0.80f };
-        colors[ImGuiCol.Separator] = new float[] { 0.73f, 0.73f, 0.73f, 1.00f };
+        colors[ImGuiCol.Separator] = new float[] { 0.53f, 0.53f, 0.53f, 1.00f };
         colors[ImGuiCol.SeparatorHovered] = new float[] { 0.81f, 0.81f, 0.81f, 1.00f };
         colors[ImGuiCol.SeparatorActive] = new float[] { 0.74f, 0.74f, 0.74f, 1.00f };
         colors[ImGuiCol.ResizeGrip] = new float[] { 0.80f, 0.80f, 0.80f, 0.30f };
@@ -131,6 +131,16 @@ public class Styles
         colors[ImGuiCol.PlotHistogramHovered] = new float[] { 1.00f, 1.00f, 1.00f, 1.00f };
         colors[ImGuiCol.TextSelectedBg] = new float[] { 1.00f, 1.00f, 1.00f, 0.35f };
         colors[ImGuiCol.ModalWindowDimBg] = new float[] { 0.88f, 0.88f, 0.88f, 0.35f };
+        colors[ImGuiCol.Tab] = new float[] { 0.2f, 0.2f, 0.2f, 1.00f };
+        colors[ImGuiCol.TabHovered] = new float[] { 0.28f, 0.28f, 0.28f, 1.00f };
+        colors[ImGuiCol.TabActive] = new float[] { 0.35f, 0.35f, 0.35f, 1.00f };
+        colors[ImGuiCol.TabUnfocused] = new float[] { 0.2f, 0.2f, 0.2f, 1.00f };
+        colors[ImGuiCol.TabUnfocusedActive] = new float[] { 0.35f, 0.35f, 0.35f, 1.00f };
+        //colors[ImGuiCol.Tab] = new float[] { 46.0f / 255.0f, 46.0f / 255.0f, 46.0f / 255.0f, 1.00f };
+        //colors[ImGuiCol.TabHovered] = new float[] { 56.0f / 255.0f, 56.0f / 255.0f, 56.0f / 255.0f, 1.00f };
+        //colors[ImGuiCol.TabActive] = new float[] { 76.0f / 255.0f, 76.0f / 255.0f, 76.0f / 255.0f, 1.00f };
+
+        //style.setFrameBorderSize(1.0f);
 
         style.setColors(colors);
     }

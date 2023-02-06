@@ -1,6 +1,7 @@
 package SungearEngine2D.GUI.Windows.FileChooserWindow;
 
 import Core2D.Log.Log;
+import SungearEngine2D.GUI.ImGuiUtils;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindow;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindowCallback;
 import imgui.ImGui;
@@ -69,7 +70,7 @@ public class FileChooserWindow extends DialogWindow
                 if (fileChooserMode == FileChooserMode.CREATE_NEW_FILE){
                     ImGui.text("Chosen directory path: " + currentChosenFilePath + File.separator + newFileName.get());
                     ImGui.text("File name:"); ImGui.sameLine();
-                    ImGui.inputText("##", newFileName);
+                    ImGuiUtils.imCallWBorder(func -> ImGui.inputText("##", newFileName));
                     ImGui.beginChild("Browser", getCurrentWindowSize().x - 17, getCurrentWindowSize().y - 110, true);
                 } else{
                     ImGui.text("Chosen directory path: " + currentChosenFilePath);

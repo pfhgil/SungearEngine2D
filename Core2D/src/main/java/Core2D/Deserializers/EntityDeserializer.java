@@ -1,21 +1,23 @@
 package Core2D.Deserializers;
 
 import Core2D.AssetManager.AssetManager;
-import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.*;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
+import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.*;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
-import Core2D.Project.ProjectsManager;
+import Core2D.ECS.System.Systems.ScriptableSystem;
+import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
+import Core2D.Layering.PostprocessingLayer;
+import Core2D.Project.ProjectsManager;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Tag;
 import com.google.gson.*;
 import org.joml.Vector4f;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Type;
 
 public class EntityDeserializer implements JsonDeserializer<Entity>
@@ -57,8 +59,46 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
         entity.layerName = layerName;
 
         for(JsonElement element : systems) {
-            System system = context.deserialize(element, Component.class);
-            entity.addSystem(system);
+            System system = context.deserialize(element, System.class);
+            if(system instanceof ScriptableSystem scriptableSystem) {
+                if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+                    scriptableSystem.script.path = scriptableSystem.script.path.replaceAll(".java", "");
+
+                    String fullScriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptableSystem.script.path + ".java";
+                    String lastScriptPath = scriptableSystem.script.path;
+
+                    String scriptToLoadPath = "";
+                    String scriptToAddPath = "";
+
+                    if(new File(fullScriptPath).exists()) {
+                        scriptToLoadPath = fullScriptPath;
+                        scriptToAddPath = lastScriptPath;
+                    } else {// для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
+                        // чтобы это исправить загружаем по этому пути скрипт, находим относительный путь и присваиваем его path для того,
+                        // чтобы в следующий раз выполнился блок кода вышe
+                        if(new File(scriptableSystem.script.path + ".java").exists()) {
+                            String relativePath = FileUtils.getRelativePath(
+                                    new File(scriptableSystem.script.path + ".java"),
+                                    new File(ProjectsManager.getCurrentProject().getProjectPath())
+                            );
+                            scriptToLoadPath = scriptableSystem.script.path + ".java";
+                            scriptToAddPath = relativePath.replace(".java", "");
+                        }
+                    }
+
+                    scriptableSystem.script.path = scriptToLoadPath;
+                    // load the script component class
+                    scriptableSystem.set(scriptableSystem);
+                    scriptableSystem.script.path = scriptToAddPath;
+                    entity.addSystem(scriptableSystem);
+                } else {
+                    ScriptableSystem sc = new ScriptableSystem();
+                    entity.addSystem(sc);
+                    sc.set(scriptableSystem);
+                }
+            } else {
+                entity.addSystem(system);
+            }
         }
         //System.out.println("\u001B[32m size of game object " + gameObject.name + " list of components: " + gameObject.getComponents().size() + " \u001B[32m");
 
@@ -68,48 +108,21 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
             int lastComponentID = component.componentID;
             if(component instanceof TransformComponent) {
                 entity.addComponent(component);
-            } else if(component instanceof MeshComponent textureComponent) {
-                Texture2D texture2D = new Texture2D();
-                // если режим работы ядра в движке
-                if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                    String textureFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + textureComponent.texture.path;
-
-                    if(new File(textureFullPath).exists()) {
-                        texture2D = new Texture2D(
-                                AssetManager.getInstance().getTexture2DData(textureComponent.texture.path),
-                                textureComponent.texture.getGLTextureBlock()
-                        );
-                        texture2D.path = textureComponent.texture.path;
-                    } else { // для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
-                        // чтобы это исправить загружаем по этому пути текстуру, находим относительный путь и присваиваем его source для того,
-                        // чтобы в следующий раз выполнился блок кода выше
-                        if(new File(textureComponent.texture.path).exists()) {
-                            String relativePath = FileUtils.getRelativePath(
-                                    new File(textureComponent.texture.path),
-                                    new File(ProjectsManager.getCurrentProject().getProjectPath())
-                            );
-                            texture2D = new Texture2D(
-                                    AssetManager.getInstance().getTexture2DData(relativePath),
-                                    textureComponent.texture.getGLTextureBlock()
-                            );
-                            texture2D.path = relativePath;
-                        }
-                    }
-                // если режим работы в билде
-                } else {
-                    texture2D = new Texture2D(
-                            AssetManager.getInstance().getTexture2DData(textureComponent.texture.path),
-                            textureComponent.texture.getGLTextureBlock()
-                    );
-                }
+            } else if(component instanceof MeshComponent meshComponent) {
+                Shader shader = new Shader(AssetManager.getInstance().getShaderData(meshComponent.getShader().path));
+                Texture2D texture2D = new Texture2D(
+                        AssetManager.getInstance().getTexture2DData(meshComponent.getTexture().path),
+                        meshComponent.getTexture().getGLTextureBlock()
+                );
 
                 //texture2D.blendSourceFactor = textureComponent.texture.blendSourceFactor;
                 //texture2D.blendDestinationFactor = textureComponent.texture.blendDestinationFactor;
 
-                MeshComponent meshComponent = new MeshComponent();
+
+                meshComponent.setTexture(texture2D);
+                meshComponent.setShader(shader);
                 entity.addComponent(meshComponent);
-                entity.getComponent(MeshComponent.class).set(component);
-                entity.getComponent(MeshComponent.class).texture.set(texture2D);
+                //newMeshComponent.set(component);
             } else if(component instanceof Rigidbody2DComponent rigidbody2DComponent) {
                 rigidbody2DComponent.set(component);
                 entity.addComponent(rigidbody2DComponent);
@@ -126,8 +139,6 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                     if(new File(fullScriptPath).exists()) {
                         scriptToLoadPath = fullScriptPath;
                         scriptToAddPath = lastScriptPath;
-                        //scriptComponent.script.path = fullScriptPath;
-                        //((ScriptComponent) sc).script.path = lastScriptPath;
                     } else {// для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
                         // чтобы это исправить загружаем по этому пути скрипт, находим относительный путь и присваиваем его path для того,
                         // чтобы в следующий раз выполнился блок кода вышe
@@ -138,37 +149,20 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                             );
                             scriptToLoadPath = scriptComponent.script.path + ".java";
                             scriptToAddPath = relativePath.replace(".java", "");
-                            //scriptComponent.script.path += ".java";
-                            //relativePath = relativePath.replace(".java", "");
-                            //((ScriptComponent) sc).script.path = relativePath;
                         }
                     }
 
                     scriptComponent.script.path = scriptToLoadPath;
                     // load the script component class
                     scriptComponent.set(scriptComponent);
-                    java.lang.System.out.println(scriptComponent.script.getScriptClass());
-
-                    Component sc = null;
-                    try {
-                        sc = (Component) scriptComponent.script.getScriptClass().getConstructor().newInstance();
-                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                             NoSuchMethodException e) {
-                        throw new RuntimeException(e);
-                    }
-
-                    entity.addComponent(sc);
-                    sc.set(scriptComponent);
-
-                    ((ScriptComponent) sc).script.path = scriptToAddPath;
-                    java.lang.System.out.println("to add: " + scriptToAddPath);
+                    scriptComponent.script.path = scriptToAddPath;
+                    entity.addComponent(scriptComponent);
                 } else {
                     ScriptComponent sc = new ScriptComponent();
                     entity.addComponent(sc);
                     sc.set(scriptComponent);
                 }
-            } else if(component instanceof AudioComponent) {
-                AudioComponent audioComponent = (AudioComponent) component;
+            } else if(component instanceof AudioComponent audioComponent) {
                 // если режим работы ядра в движке
                 if (Core2D.core2DMode == Core2DMode.IN_ENGINE) {
                     String audioFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + audioComponent.audio.path;
@@ -196,12 +190,23 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                 }
 
                 entity.addComponent(audioComponent);
+            } else if(component instanceof Camera2DComponent camera2DComponent) {
+                Shader defaultShader = new Shader(AssetManager.getInstance().getShaderData(camera2DComponent.getPostprocessingDefaultShader().path));
+
+                camera2DComponent.setPostprocessingDefaultShader(defaultShader);
+                for(int i = 0; i < camera2DComponent.getPostprocessingLayersNum(); i++) {
+                    PostprocessingLayer ppLayer = camera2DComponent.getPostprocessingLayer(i);
+                    Shader layerShader = new Shader(AssetManager.getInstance().getShaderData(ppLayer.getShader().path));
+
+                    ppLayer.setShader(layerShader);
+                    ppLayer.init();
+                }
+                entity.addComponent(camera2DComponent);
             } else {
                 entity.addComponent(component);
             }
 
             component.componentID = lastComponentID;
-            //object2D.getComponents().get(object2D.getComponents().size() - 1).componentID = lastComponentID;
         }
 
         return entity;

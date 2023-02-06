@@ -122,7 +122,7 @@ public class SpriteAnimation
                 this.currentSprite = 0;
             }
 
-            attachedEntity.getComponent(MeshComponent.class).setUV(atlasTexturesPositions.get(this.currentSprite));
+            //attachedEntity.getComponent(MeshComponent.class).setUV(atlasTexturesPositions.get(this.currentSprite));
         } else {
             if (this.currentSprite > atlasTexturesPositions.size() - 1) {
                 this.currentSprite = 0;
@@ -130,7 +130,7 @@ public class SpriteAnimation
 
             MeshComponent textureComponent = attachedEntity.getComponent(MeshComponent.class);
             if(textureComponent != null) {
-                textureComponent.texture.set(sprites.get(this.currentSprite));
+                textureComponent.setTexture(sprites.get(this.currentSprite));
             }
         }
     }

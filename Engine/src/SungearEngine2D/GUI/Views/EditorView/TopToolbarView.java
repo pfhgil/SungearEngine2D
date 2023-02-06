@@ -10,12 +10,11 @@ import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import SungearEngine2D.Builder.Builder;
-import SungearEngine2D.GUI.Views.View;
+import SungearEngine2D.GUI.ImGuiUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindow;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindowCallback;
 import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindow;
-import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindowCallback;
 import SungearEngine2D.Main.Resources;
 import SungearEngine2D.Utils.AppData.AppDataManager;
 import SungearEngine2D.Utils.AppData.UserSettings;
@@ -24,11 +23,9 @@ import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
-import org.newdawn.slick.Game;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Iterator;
 
 public class TopToolbarView
 {
@@ -70,9 +67,10 @@ public class TopToolbarView
 
         ImGui.beginMainMenuBar();
         {
+            //ImGui.setNextWindowSize(175.0f, 150.0f);
             if(ImGui.beginMenu("File")) {
-                if(ImGui.beginMenu("New...")) {
-                    if(ImGui.menuItem("Project")) {
+                if(ImGuiUtils.beginMenuWithImage("New...", 0, 14.0f, 14.0f)) {
+                    if(ImGuiUtils.menuItemWithImage("Project", 0, 14, 14)) {
                         dialogWindow.setWindowName("New project");
                         dialogWindow.setRightButtonText("Create");
                         dialogWindow.setActive(true);
@@ -80,8 +78,8 @@ public class TopToolbarView
                         dialogWindow.setDialogWindowCallback(new DialogWindowCallback() {
                             @Override
                             public void onDraw() {
-                                ImGui.inputText("Project name", projectName);
-                                ImGui.inputText("Project path", projectPath);
+                                ImGuiUtils.imCallWBorder(func -> ImGui.inputText("Project name", projectName));
+                                ImGuiUtils.imCallWBorder(func -> ImGui.inputText("Project path", projectPath));
                                 ImGui.sameLine();
                                 if(ImGui.button("Browse...")) {
                                     dialogWindow.setActive(false);
@@ -121,19 +119,26 @@ public class TopToolbarView
                         currentAction = "File/New/Project";
                     }
 
-                    if(ImGui.menuItem("Directory")) {
+                    if(ImGuiUtils.menuItemWithImage("Directory", Resources.Textures.Icons.directoryIcon.getTextureHandler(), 14, 14)) {
                         currentFileTypeNeedCreate = "Directory";
                         showFileCreateDialog();
                     }
 
                     ImGui.separator();
 
-                    if(ImGui.menuItem("Java file")) {
-                        currentFileTypeNeedCreate = "Java";
-                        showFileCreateDialog();
+                    if(ImGuiUtils.beginMenuWithImage("Java file", Resources.Textures.Icons.javaFileIcon14.getTextureHandler(), 14, 14)) {
+                        if(ImGuiUtils.menuItemWithImage("Component", 0, 14, 14)) {
+                            currentFileTypeNeedCreate = "Java.Component";
+                            showFileCreateDialog();
+                        }
+                        if(ImGuiUtils.menuItemWithImage("System", 0, 14, 14)) {
+                            currentFileTypeNeedCreate = "Java.System";
+                            showFileCreateDialog();
+                        }
+                        ImGui.endMenu();
                     }
 
-                    if(ImGui.menuItem("Text file")) {
+                    if(ImGuiUtils.menuItemWithImage("Text file", Resources.Textures.Icons.textFileIcon14.getTextureHandler(), 14, 14)) {
                         currentFileTypeNeedCreate = "Text";
                         showFileCreateDialog();
                     }
@@ -141,10 +146,9 @@ public class TopToolbarView
                     ImGui.endMenu();
                 }
 
-                if(ImGui.beginMenu("Open")) {
-                    if(ImGui.menuItem("Project")) {
-
-
+                //ImGui.setCursorPosY(-2.0f);
+                if(ImGuiUtils.beginMenuWithImage("Open", Resources.Textures.Icons.openDirectoryIcon.getTextureHandler(), 14.0f, 14.0f)) {
+                    if(ImGuiUtils.menuItemWithImage("Project", 0, 14, 14)) {
                         dialogWindow.setWindowName("Open project");
                         dialogWindow.setRightButtonText("Open");
                         dialogWindow.setActive(true);
@@ -152,7 +156,7 @@ public class TopToolbarView
                         dialogWindow.setDialogWindowCallback(new DialogWindowCallback() {
                             @Override
                             public void onDraw() {
-                                ImGui.inputText("Project file path", projectPath);
+                                ImGuiUtils.imCallWBorder(func -> ImGui.inputText("Project file path", projectPath));
                                 if(!ImGui.isItemActive() && Keyboard.keyReleased(GLFW.GLFW_KEY_ENTER)) {
                                     onRightButtonClicked();
                                 }
@@ -193,11 +197,11 @@ public class TopToolbarView
 
                         currentAction = "File/Open/Project";
                     }
-                    if (ImGui.beginMenu("Last projects")) {
+                    if (ImGuiUtils.beginMenuWithImage("Last projects", 0, 14, 13)) {
                         int size = UserSettings.instance.lastProjects.size();
                          for(int i = 0; i < size; i++) {
                              String projectPath = UserSettings.instance.lastProjects.get(i);
-                             if (ImGui.menuItem(projectPath)) {
+                             if (ImGuiUtils.menuItemWithImage(projectPath, 0, 14, 14)) {
                                  if(!new File(projectPath).exists()) {
                                      Log.CurrentSession.println("It is not possible to load the project on the path \"" + projectPath + "\". Such a file does not exist.", Log.MessageType.ERROR);
                                      Log.showErrorDialog("It is not possible to load the project. See log for more info.");
@@ -216,15 +220,16 @@ public class TopToolbarView
                 }
 
                 if(ProjectsManager.getCurrentProject() != null) {
-                    if (ImGui.menuItem("Close project")) {
+                    //ImGui.setCursorPosX(33.0f);
+                    if (ImGuiUtils.menuItemWithImage("Close project", 0, 14, 14)) {
                         // сделать
                     }
 
-                    if (ImGui.menuItem("Project settings")) {
+                    if (ImGuiUtils.menuItemWithImage("Project settings", 0, 14, 14)) {
                         ViewsManager.getProjectSettingsView().active = true;
                     }
 
-                    if (ImGui.menuItem("Build project")) {
+                    if (ImGuiUtils.menuItemWithImage("Build project", 0, 14, 14)) {
                         dialogWindow.setWindowName("Build project");
                         dialogWindow.setRightButtonText("Build");
                         dialogWindow.setActive(true);
@@ -232,7 +237,7 @@ public class TopToolbarView
                         dialogWindow.setDialogWindowCallback(new DialogWindowCallback() {
                             @Override
                             public void onDraw() {
-                                ImGui.inputText("##", buildOutPath);
+                                ImGuiUtils.imCallWBorder(func -> ImGui.inputText("##", buildOutPath));
                                 AppDataManager.getSettings().lastBuildOutPath = buildOutPath.get();
 
                                 ImGui.sameLine();
@@ -245,7 +250,7 @@ public class TopToolbarView
                                 }
 
                                 ImString buildNameString = new ImString(AppDataManager.getSettings().lastBuildName, 256);
-                                if(ImGui.inputText("Build name", buildNameString)) {
+                                if(ImGuiUtils.imCallWBorder(func -> ImGui.inputText("Build name", buildNameString))) {
                                     AppDataManager.getSettings().lastBuildName = buildNameString.get();
                                 }
 
@@ -261,7 +266,7 @@ public class TopToolbarView
 
                                  */
                                 for (Scene2DStoredValues storedValues : SceneManager.currentSceneManager.getScene2DStoredValues()) {
-                                    if (ImGui.checkbox(FilenameUtils.getBaseName(new File(storedValues.path).getName()), storedValues.inBuild)) {
+                                    if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox(FilenameUtils.getBaseName(new File(storedValues.path).getName()), storedValues.inBuild))) {
                                         storedValues.inBuild = !storedValues.inBuild;
                                     }
                                 }
@@ -357,7 +362,7 @@ public class TopToolbarView
                     }
                 }
 
-                if(ImGui.menuItem("Exit")) {
+                if(ImGuiUtils.menuItemWithImage("Exit", 0, 14, 14)) {
                     // сделать
                 }
 
@@ -365,43 +370,37 @@ public class TopToolbarView
             }
 
             if(ImGui.beginMenu("Objects")) {
-                if(ImGui.beginMenu("New...")) {
-                    if(ImGui.menuItem("Object2D")) {
-                        new Entity().setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
-                    }
-
-                    if(ImGui.menuItem("Camera2D")) {
-                        if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-                            Entity camera2D = Entity.createCamera2D();
-                            camera2D.setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
+                if(ImGuiUtils.beginMenuWithImage("New...", 0, 14, 14)) {
+                    if(ImGuiUtils.menuItemWithImage("Object2D", Resources.Textures.Icons.object2DFileIcon.getTextureHandler(), 14, 14)) {
+                        if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+                            new Entity().setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
                         }
                     }
 
-                    if(ImGui.menuItem("Instancing object")) {
-                        // сделать
-                    }
-
-                    if(ImGui.menuItem("AtlasDrawing object")) {
-                        // сделать
+                    if(ImGuiUtils.menuItemWithImage("Camera2D", Resources.Textures.Icons.cameraIcon48.getTextureHandler(), 14, 14)) {
+                        if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+                            Entity camera2D = Entity.createAsCamera2D();
+                            camera2D.setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
+                        }
                     }
 
                     ImGui.endMenu();
                 }
 
-                ImGui.endMenu();
+                ImGui.end();
             }
 
             if(ImGui.beginMenu("UI")) {
-                if(ImGui.beginMenu("New...")) {
-                    if(ImGui.menuItem("Text")) {
+                if(ImGuiUtils.beginMenuWithImage("New...", 0, 14, 14)) {
+                    if(ImGuiUtils.menuItemWithImage("Text", 0, 14, 14)) {
                         // сделать
                     }
 
-                    if(ImGui.menuItem("Progress Bar")) {
+                    if(ImGuiUtils.menuItemWithImage("Progress Bar", 0, 14, 14)) {
                         // сделать
                     }
 
-                    if(ImGui.menuItem("Button")) {
+                    if(ImGuiUtils.menuItemWithImage("Button", 0, 14, 14)) {
                         // сделать
                     }
 
@@ -412,11 +411,11 @@ public class TopToolbarView
             }
 
             if(ImGui.beginMenu("Scene")) {
-                if(ImGui.menuItem("Create")) {
+                if(ImGuiUtils.menuItemWithImage("Create", 0, 14, 14)) {
                     showCreateScene2DDialog();
                 }
 
-                if(ImGui.menuItem("Save current")) {
+                if(ImGuiUtils.menuItemWithImage("Save current", 0, 14, 14)) {
                     if(ProjectsManager.getCurrentProject() != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
                         SceneManager.currentSceneManager.saveScene(SceneManager.currentSceneManager.getCurrentScene2D(), SceneManager.currentSceneManager.getCurrentScene2D().getScenePath());
                     }
@@ -426,11 +425,7 @@ public class TopToolbarView
             }
 
             if(ImGui.beginMenu("Engine")) {
-                if(ImGui.menuItem("Reload resources")) {
-                    //Resources.load();
-                }
-
-                if(ImGui.menuItem("Settings")) {
+                if(ImGuiUtils.menuItemWithImage("Settings", 0, 14, 14)) {
                     ViewsManager.getEngineSettingsView().active = true;
                 }
 
@@ -438,12 +433,12 @@ public class TopToolbarView
             }
 
             if(ImGui.beginMenu("Scene Manager")) {
-                if(ImGui.beginMenu("Main Scene2D")) {
+                if(ImGuiUtils.beginMenuWithImage("Main Scene2D", 0, 14, 14)) {
                     if(SceneManager.currentSceneManager != null) {
                         for (int i = 0; i < SceneManager.currentSceneManager.getScene2DStoredValues().size(); i++) {
                             Scene2DStoredValues storedValues = SceneManager.currentSceneManager.getScene2DStoredValues().get(i);
                             System.out.println(storedValues.path);
-                            boolean clicked = ImGui.menuItem(FilenameUtils.getBaseName(new File(storedValues.path).getName()));
+                            boolean clicked = ImGuiUtils.menuItemWithImage(FilenameUtils.getBaseName(new File(storedValues.path).getName()), 0, 14, 14);
                             if (storedValues.isMainScene2D) {
                                 ImGui.sameLine();
                                 ImGui.image(Resources.Textures.Icons.checkMarkIcon.getTextureHandler(), 12, 12);
@@ -464,7 +459,7 @@ public class TopToolbarView
             }
 
             if(ImGui.beginMenu("Views")) {
-                if(ImGui.menuItem("Debugger")) {
+                if(ImGuiUtils.menuItemWithImage("Debugger", 0, 14, 14)) {
                     ViewsManager.getDebuggerView().active = true;
                 }
                 ImGui.endMenu();
@@ -492,7 +487,7 @@ public class TopToolbarView
         dialogWindow.setDialogWindowCallback(new DialogWindowCallback() {
             @Override
             public void onDraw() {
-                ImGui.inputText("Scene name", newSceneName);
+                ImGuiUtils.imCallWBorder(func -> ImGui.inputText("Scene name", newSceneName));
                 if(!ImGui.isItemActive() && Keyboard.keyReleased(GLFW.GLFW_KEY_ENTER)) {
                     onRightButtonClicked();
                 }
@@ -524,7 +519,7 @@ public class TopToolbarView
 
                         String scenePath = ResourcesView.currentDirectoryPath + "\\" + scene2D.getName() + ".sgs";
 
-                        Entity camera2D = Entity.createCamera2D();
+                        Entity camera2D = Entity.createAsObject2D();
                         camera2D.setLayer(scene2D.getLayering().getLayer("default"));
                         scene2D.setSceneMainCamera2D(camera2D);
 
@@ -574,7 +569,7 @@ public class TopToolbarView
             dialogWindow.setDialogWindowCallback(new DialogWindowCallback() {
                 @Override
                 public void onDraw() {
-                    ImGui.inputText("File name", newFileName);
+                    ImGuiUtils.imCallWBorder(func -> ImGui.inputText("File name", newFileName));
                     if(!ImGui.isItemActive() && Keyboard.keyReleased(GLFW.GLFW_KEY_ENTER)) {
                         onRightButtonClicked();
                     }

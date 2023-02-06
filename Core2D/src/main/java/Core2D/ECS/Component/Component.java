@@ -1,6 +1,8 @@
 package Core2D.ECS.Component;
 
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Entity;
+import Core2D.Graphics.RenderParts.Shader;
 
 /**
  * An abstract class that other components inherit.
@@ -18,7 +20,7 @@ public class Component
 
     protected boolean active = true;
 
-    public Component() {}
+    public Component() { }
 
     /**
      * Sets the parameters of the transmitted component for this component.
@@ -63,6 +65,26 @@ public class Component
      * Initializes the component.
      */
     public void init()
+    {
+
+    }
+
+    public void collider2DEnter(Entity otherObj)
+    {
+
+    }
+
+    public void collider2DExit(Entity otherObj)
+    {
+
+    }
+
+    public void render(Camera2DComponent camera2DComponent)
+    {
+
+    }
+
+    public void render(Camera2DComponent camera2DComponent, Shader shader)
     {
 
     }

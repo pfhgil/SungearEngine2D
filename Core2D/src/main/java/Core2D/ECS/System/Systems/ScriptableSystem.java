@@ -1,19 +1,23 @@
 package Core2D.ECS.System.Systems;
 
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.ScriptComponent;
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
+import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Scripting.Script;
-
-import java.util.function.Consumer;
 
 public class ScriptableSystem extends System
 {
     public Script script = new Script();
 
     public ScriptableSystem() { }
+
+    public void set(ScriptableSystem scriptableSystem)
+    {
+        script.set(scriptableSystem.script);
+    }
 
     /**
      * Calls the update method of the script if current scene is set.
@@ -24,6 +28,8 @@ public class ScriptableSystem extends System
     public void update()
     {
         super.update();
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
+        script.update();
     }
 
     /**
@@ -34,33 +40,43 @@ public class ScriptableSystem extends System
     @Override
     public void deltaUpdate(float deltaTime)
     {
-
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
+        script.deltaUpdate(deltaTime);
     }
 
     /**
      * Calls the collider2DEnter method of the script if current scene is set.
      * @see Script#collider2DEnter(Entity)
      */
-    public void collider2DEnter(Entity otherObj)
+    @Override
+    public void collider2DEnter(Entity otherEntity)
     {
-
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
+        script.collider2DEnter(otherEntity);
     }
 
     /**
      * Calls the collider2DExit method of the script if current scene is set.
      * @see Script#collider2DExit(Entity)
      */
-    public void collider2DExit(Entity otherObj)
+    @Override
+    public void collider2DExit(Entity otherEntity)
     {
-
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
+        script.collider2DExit(otherEntity);
     }
 
-    // сделано для избежания рекурсивных вызовов дефолтных методов (update, deltaUpdate, collider2DEnter, collider2DExit).
-    // они могут ссылаться сами на себя, если в ребенке, наследующем данный класс не реализованы какие-либо из этих четырек методов
-    public void callMethod(Consumer<Object[]> func)
+    @Override
+    public void render(Camera2DComponent camera2DComponent)
     {
-        if(SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) {
-            func.accept(null);
-        }
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
+        script.render(camera2DComponent);
+    }
+
+    @Override
+    public void render(Camera2DComponent camera2DComponent, Shader shader)
+    {
+        if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
+        script.render(camera2DComponent, shader);
     }
 }

@@ -1,10 +1,14 @@
 package Core2D.ECS;
 
+import Core2D.Core2D.Settings;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
-import Core2D.Core2D.Settings;
+import Core2D.ECS.Component.Components.Primitives.BoxComponent;
+import Core2D.ECS.Component.Components.Primitives.CircleComponent;
+import Core2D.ECS.Component.Components.Primitives.LineComponent;
 import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.MeshRendererSystem;
+import Core2D.ECS.System.Systems.PrimitivesRendererSystem;
 import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
@@ -120,7 +124,7 @@ public class Entity implements Serializable, PoolObject
         addChildrenObjects(entity.getChildrenObjects());
     }
 
-    public static Entity createObject2D()
+    public static Entity createAsObject2D()
     {
         Entity entity = new Entity();
         entity.addComponent(new TransformComponent());
@@ -130,11 +134,41 @@ public class Entity implements Serializable, PoolObject
         return entity;
     }
 
-    public static Entity createCamera2D()
+    public static Entity createAsCamera2D()
     {
         Entity entity = new Entity();
         entity.addComponent(new TransformComponent());
         entity.addComponent(new Camera2DComponent());
+
+        return entity;
+    }
+
+    public static Entity createAsLine()
+    {
+        Entity entity = new Entity();
+        entity.addComponent(new TransformComponent());
+        entity.addComponent(new LineComponent());
+        entity.addSystem(new PrimitivesRendererSystem());
+
+        return entity;
+    }
+
+    public static Entity createAsBox()
+    {
+        Entity entity = new Entity();
+        entity.addComponent(new TransformComponent());
+        entity.addComponent(new BoxComponent());
+        entity.addSystem(new PrimitivesRendererSystem());
+
+        return entity;
+    }
+
+    public static Entity createAsCircle()
+    {
+        Entity entity = new Entity();
+        entity.addComponent(new TransformComponent());
+        entity.addComponent(new CircleComponent());
+        entity.addSystem(new PrimitivesRendererSystem());
 
         return entity;
     }
@@ -165,20 +199,17 @@ public class Entity implements Serializable, PoolObject
         } else {
             ID = Utils.getRandom(0, 1000000000);
         }
-
-        java.lang.System.out.println("object id: " + ID);
     }
 
     public void update()
     {
         if(active && !shouldDestroy) {
             for(Component component : components) {
-                if(component.getClass().isAssignableFrom(ScriptComponent.class) || component instanceof ScriptComponent) {
-                     ScriptComponent sc = (ScriptComponent) component;
-                     sc.callMethod((params) -> sc.update());
-                } else {
-                    component.update();
-                }
+                component.update();
+            }
+
+            for(System system : systems) {
+                system.update();
             }
         }
     }
@@ -187,12 +218,11 @@ public class Entity implements Serializable, PoolObject
     {
         if(active && !shouldDestroy) {
             for(Component component : components) {
-                if(component.getClass().isAssignableFrom(ScriptComponent.class) || component instanceof ScriptComponent) {
-                    ScriptComponent sc = (ScriptComponent) component;
-                    sc.callMethod((params) -> sc.deltaUpdate(deltaTime));
-                } else {
-                    component.deltaUpdate(deltaTime);
-                }
+                component.deltaUpdate(deltaTime);
+            }
+
+            for(System system : systems) {
+                system.deltaUpdate(deltaTime);
             }
         }
     }
@@ -227,9 +257,7 @@ public class Entity implements Serializable, PoolObject
     {
         shouldDestroy = true;
 
-        for (var component : components) {
-            component.setActive(false);
-        }
+        active = false;
     }
 
     @Override
@@ -237,9 +265,7 @@ public class Entity implements Serializable, PoolObject
     {
         shouldDestroy = false;
 
-        for (var component : components) {
-            component.setActive(true);
-        }
+        active = true;
     }
 
     // Components
@@ -257,6 +283,14 @@ public class Entity implements Serializable, PoolObject
         }
         components.add(component);
         component.entity = this;
+        if(component instanceof ScriptComponent scriptComponent) {
+            if(scriptComponent.script.getScriptClassInstance() instanceof Component componentScriptInstance) {
+                componentScriptInstance.entity = this;
+                //scriptComponent.script.setFieldValue(scriptComponent.script.getField("entity"), this);
+            } else if(scriptComponent.script.getScriptClassInstance() instanceof System systemScriptInstance) {
+                systemScriptInstance.entity = this;
+            }
+        }
         component.init();
         return component;
     }
@@ -272,9 +306,9 @@ public class Entity implements Serializable, PoolObject
     public <T extends Component> T getComponent(Class<T> componentClass)
     {
         for(var component : components) {
-            if(component.getClass().isAssignableFrom(componentClass)) {
+            if(componentClass.isAssignableFrom(component.getClass())) {
                 return componentClass.cast(component);
-            } else if(component.getClass().isAssignableFrom(ScriptComponent.class) && ((ScriptComponent) component).script.getScriptClass().isAssignableFrom(componentClass)) {
+            } else if(ScriptComponent.class.isAssignableFrom(component.getClass()) && componentClass.isAssignableFrom(((ScriptComponent) component).script.getScriptClass())) {
                 return componentClass.cast(((ScriptComponent) component).script.getScriptClassInstance());
             }
         }
@@ -286,9 +320,9 @@ public class Entity implements Serializable, PoolObject
     {
         List<T> componentsFound = new ArrayList<>();
         for(var component : components) {
-            if(component.getClass().isAssignableFrom(componentClass)){
+            if(componentClass.isAssignableFrom(component.getClass())){
                 componentsFound.add(componentClass.cast(component));
-            } else if(component.getClass().isAssignableFrom(ScriptComponent.class) && ((ScriptComponent) component).script.getScriptClass().isAssignableFrom(componentClass)) {
+            } else if(ScriptComponent.class.isAssignableFrom(component.getClass()) && componentClass.isAssignableFrom(((ScriptComponent) component).script.getScriptClass())) {
                 componentsFound.add(componentClass.cast(((ScriptComponent) component).script.getScriptClassInstance()));
             }
         }
@@ -339,7 +373,7 @@ public class Entity implements Serializable, PoolObject
                 } else {
                     List<ScriptComponent> scriptComponents = getAllComponents(ScriptComponent.class);
                     for(var scriptComponent : scriptComponents) {
-                        if(scriptComponent.script.getScriptClass().isAssignableFrom(componentClass)) {
+                        if(componentClass.isAssignableFrom(scriptComponent.script.getScriptClass())) {
                             removed = components.remove(scriptComponent);
                             if(removed) {
                                 component.destroy();
@@ -372,8 +406,8 @@ public class Entity implements Serializable, PoolObject
         while(componentsIterator.hasNext()) {
             Component component = componentsIterator.next();
 
-            boolean assignable = component.getClass().isAssignableFrom(componentClass) ||
-                    (component.getClass().isAssignableFrom(ScriptComponent.class) && ((ScriptComponent) component).script.getScriptClass().isAssignableFrom(componentClass));
+            boolean assignable = componentClass.isAssignableFrom(component.getClass()) ||
+                    (ScriptComponent.class.isAssignableFrom(component.getClass()) && componentClass.isAssignableFrom(((ScriptComponent) component).script.getScriptClass()));
             if(assignable && component instanceof NonRemovable) {
                 Log.showErrorDialog("Component " + component.getClass().getName() + " is non-removable");
 
@@ -403,6 +437,9 @@ public class Entity implements Serializable, PoolObject
          */
         systems.add(system);
         system.entity = this;
+        if(system instanceof ScriptableSystem scriptableSystem) {
+            scriptableSystem.script.setFieldValue(scriptableSystem.script.getField("entity"), this);
+        }
         system.init();
         return system;
     }
@@ -418,9 +455,9 @@ public class Entity implements Serializable, PoolObject
     public <T extends System> T getSystem(Class<T> systemClass)
     {
         for(var system : systems) {
-            if(system.getClass().isAssignableFrom(systemClass)) {
+            if(systemClass.isAssignableFrom(system.getClass())) {
                 return systemClass.cast(system);
-            } else if(system.getClass().isAssignableFrom(ScriptableSystem.class) && ((ScriptableSystem) system).script.getScriptClass().isAssignableFrom(systemClass)) {
+            } else if(ScriptableSystem.class.isAssignableFrom(system.getClass()) && systemClass.isAssignableFrom(((ScriptableSystem) system).script.getScriptClass())) {
                 return systemClass.cast(((ScriptableSystem) system).script.getScriptClassInstance());
             }
         }
@@ -432,9 +469,9 @@ public class Entity implements Serializable, PoolObject
     {
         List<T> systemsFound = new ArrayList<>();
         for(var system : systems) {
-            if(system.getClass().isAssignableFrom(systemClass)){
+            if(systemClass.isAssignableFrom(system.getClass())){
                 systemsFound.add(systemClass.cast(system));
-            } else if(system.getClass().isAssignableFrom(ScriptableSystem.class) && ((ScriptableSystem) system).script.getScriptClass().isAssignableFrom(systemClass)) {
+            } else if(ScriptableSystem.class.isAssignableFrom(system.getClass()) && systemClass.isAssignableFrom(((ScriptableSystem) system).script.getScriptClass())) {
                 systemsFound.add(systemClass.cast(((ScriptableSystem) system).script.getScriptClassInstance()));
             }
         }
@@ -486,7 +523,7 @@ public class Entity implements Serializable, PoolObject
                 } else {
                     List<ScriptableSystem> scriptableSystems = getAllSystems(ScriptableSystem.class);
                     for (var scriptableSystem : scriptableSystems) {
-                        if (scriptableSystem.script.getScriptClass().isAssignableFrom(systemClass)) {
+                        if (systemClass.isAssignableFrom(scriptableSystem.script.getScriptClass())) {
                             removed = systems.remove(scriptableSystem);
                             if (removed) {
                                 scriptableSystem.destroy();
@@ -508,8 +545,8 @@ public class Entity implements Serializable, PoolObject
         while(systemsIterator.hasNext()) {
             System system = systemsIterator.next();
 
-            boolean assignable = system.getClass().isAssignableFrom(systemClass) ||
-                    (system.getClass().isAssignableFrom(ScriptableSystem.class) && ((ScriptableSystem) system).script.getScriptClass().isAssignableFrom(systemClass));
+            boolean assignable = systemClass.isAssignableFrom(system.getClass()) ||
+                    (ScriptableSystem.class.isAssignableFrom(system.getClass()) && systemClass.isAssignableFrom(((ScriptableSystem) system).script.getScriptClass()));
             if(assignable && system instanceof NonRemovable) {
                 Log.showErrorDialog("System " + system.getClass().getName() + " is non-removable");
 
@@ -647,11 +684,5 @@ public class Entity implements Serializable, PoolObject
 
         this.layer.getEntities().remove(this);
         this.layer.getEntities().add(this);
-    }
-
-    @Override
-    protected synchronized void finalize()
-    {
-        java.lang.System.out.println("Object destroyed: " + name);
     }
 }

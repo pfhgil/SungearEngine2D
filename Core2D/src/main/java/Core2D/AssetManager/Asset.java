@@ -1,7 +1,5 @@
 package Core2D.AssetManager;
 
-import Core2D.DataClasses.Data;
-
 /**
  * Asset class.
  */
@@ -10,31 +8,35 @@ public class Asset
     /**
      * Stores the asset itself.
      */
-    private Data assetObject;
+    private Object assetObject;
     /**
      * Asset path (relative)
      */
     public String path;
 
-    private String className = "";
+    private String assetObjectClassName = "";
 
     public Asset() { }
 
-    public Asset(Data assetObject, String path)
+    public Asset(Object assetObject, String path)
     {
         this.assetObject = assetObject;
         this.path = path;
 
-        className = assetObject.getClass().getCanonicalName();
+        if(assetObject != null) {
+            assetObjectClassName = assetObject.getClass().getCanonicalName();
+        }
     }
 
-    public Data getAssetObject() { return assetObject; }
-    public void setAssetObject(Data assetObject)
+    public Object getAssetObject() { return assetObject; }
+    public void setAssetObject(Object assetObject)
     {
         this.assetObject = assetObject;
 
-        className = assetObject.getClass().getCanonicalName();
+        if(assetObject != null) {
+            assetObjectClassName = assetObject.getClass().getCanonicalName();
+        }
     }
 
-    public String getClassName() { return className; }
+   public String getAssetObjectClassName() { return assetObjectClassName; }
 }

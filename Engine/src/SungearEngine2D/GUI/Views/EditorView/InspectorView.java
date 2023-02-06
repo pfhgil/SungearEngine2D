@@ -3,16 +3,16 @@ package SungearEngine2D.GUI.Views.EditorView;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
 import Core2D.ECS.Entity;
-import Core2D.ECS.NonRemovable;
+import Core2D.ECS.System.System;
+import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
-import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scripting.Script;
 import Core2D.Tasks.StoppableTask;
-import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Tag;
+import SungearEngine2D.GUI.ImGuiUtils;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindow;
@@ -24,12 +24,10 @@ import imgui.ImVec2;
 import imgui.flag.*;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
-import org.jbox2d.dynamics.BodyType;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
@@ -84,18 +82,18 @@ public class InspectorView extends View
         ImGui.end();
     }
 
-    private void inspectObject2D(Entity inspectingObject2D)
+    private void inspectObject2D(Entity inspectingEntity)
     {
-        setCurrentInspectingObject(inspectingObject2D);
-        if(inspectingObject2D != null && !inspectingObject2D.isShouldDestroy()) {
+        setCurrentInspectingObject(inspectingEntity);
+        if(inspectingEntity != null && !inspectingEntity.isShouldDestroy()) {
             ImGui.image(Resources.Textures.Icons.object2DFileIcon.getTextureHandler(), 27.0f, 27.0f);
 
             ImGui.sameLine();
             ImGui.pushID("Object2DName");
             {
-                ImString name = new ImString(inspectingObject2D.name, 256);
-                if (ImGui.inputText("", name)) {
-                    inspectingObject2D.name = name.get();
+                ImString name = new ImString(inspectingEntity.name, 256);
+                if (ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", name))) {
+                    inspectingEntity.name = name.get();
                 }
             }
             ImGui.popID();
@@ -104,7 +102,7 @@ public class InspectorView extends View
             ImGui.sameLine();
             ImGui.pushID("LayersCombo");
             {
-                if (ImGui.beginCombo("", inspectingObject2D.layerName)) {
+                if (ImGuiUtils.imCallWBorder(func -> ImGui.beginCombo("", inspectingEntity.layerName))) {
                     List<Layer> layers = currentSceneManager.getCurrentScene2D().getLayering().getLayers();
                     for (int i = 0; i < layers.size(); i++) {
                         boolean selected = ImGui.selectable(layers.get(i).getID() + ".  " + layers.get(i).getName());
@@ -133,7 +131,7 @@ public class InspectorView extends View
                         }
 
                         if (selected) {
-                            inspectingObject2D.setLayer(currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(i));
+                            inspectingEntity.setLayer(currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(i));
                         }
                     }
                     layers = null;
@@ -151,7 +149,7 @@ public class InspectorView extends View
                                 ImGui.sameLine();
                                 ImGui.pushID("NewLayerNameInputText");
                                 {
-                                    ImGui.inputText("", newName);
+                                    ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", newName));
                                     if (!ImGui.isItemActive() && Keyboard.keyReleased(GLFW.GLFW_KEY_ENTER)) {
                                         onRightButtonClicked();
                                     }
@@ -172,7 +170,7 @@ public class InspectorView extends View
                             @Override
                             public void onRightButtonClicked() {
                                 if (!newName.get().equals("")) {
-                                    currentSceneManager.getCurrentScene2D().getLayering().addLayer(new Layer(currentSceneManager.getCurrentScene2D().getLayering().getLayers().size(), newName.get()));
+                                    currentSceneManager.getCurrentScene2D().getLayering().addLayer(new Layer(currentSceneManager.getCurrentScene2D().getLayering().getLayersMaxID() + 1, newName.get()));
                                     dialogWindow.setActive(false);
                                     newName.set("", true);
                                 }
@@ -206,13 +204,15 @@ public class InspectorView extends View
                                                 {
                                                     if (currentEditingID != i) {
                                                         currentName.set(currentLayer.getName(), true);
-                                                        ImGui.inputText("", currentName, ImGuiInputTextFlags.ReadOnly);
+
+                                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText("", currentName, ImGuiInputTextFlags.ReadOnly));
+
                                                         if (ImGui.isItemClicked()) {
                                                             currentEditingID = i;
                                                             currentEditingName.set(currentLayer.getName(), true);
                                                         }
                                                     } else {
-                                                        ImGui.inputText("", currentEditingName);
+                                                        ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", currentEditingName));
                                                         if (ImGui.isItemDeactivatedAfterEdit()) {
                                                             currentLayer.setName(currentEditingName.get());
                                                             currentEditingID = -1;
@@ -255,15 +255,15 @@ public class InspectorView extends View
             }
             ImGui.popID();
 
-            ImGui.text("Tag");
+            ImGui.text("Tag   ");
             ImGui.sameLine();
             ImGui.pushID("TagsCombo");
             {
-                if (ImGui.beginCombo("", inspectingObject2D.tag.getName())) {
+                if (ImGuiUtils.imCallWBorder(func -> ImGui.beginCombo("", inspectingEntity.tag.getName()))) {
                     List<Tag> tags = currentSceneManager.getCurrentScene2D().getTags();
                     for (int i = 0; i < tags.size(); i++) {
                         if (ImGui.selectable(tags.get(i).getName())) {
-                            inspectingObject2D.tag.set(tags.get(i));
+                            inspectingEntity.tag.set(tags.get(i));
                         }
                     }
 
@@ -280,7 +280,7 @@ public class InspectorView extends View
                                 ImGui.sameLine();
                                 ImGui.pushID("NewTagNameInputText");
                                 {
-                                    ImGui.inputText("", newName);
+                                    ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", newName));
                                     if (!ImGui.isItemActive() && Keyboard.keyReleased(GLFW.GLFW_KEY_ENTER)) {
                                         onRightButtonClicked();
                                     }
@@ -333,13 +333,15 @@ public class InspectorView extends View
                                                 {
                                                     if (currentEditingID != i) {
                                                         currentName.set(currentTag.getName(), true);
-                                                        ImGui.inputText("", currentName, ImGuiInputTextFlags.ReadOnly);
+
+                                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText("", currentName, ImGuiInputTextFlags.ReadOnly));
+
                                                         if (ImGui.isItemClicked()) {
                                                             currentEditingID = i;
                                                             currentEditingName.set(currentTag.getName(), true);
                                                         }
                                                     } else {
-                                                        ImGui.inputText("", currentEditingName);
+                                                        ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", currentEditingName));
                                                         if (ImGui.isItemDeactivatedAfterEdit()) {
                                                             currentTag.setName(currentEditingName.get());
                                                             currentEditingID = -1;
@@ -385,12 +387,12 @@ public class InspectorView extends View
             ImGui.separator();
 
             float[] col = new float[] {
-                    inspectingObject2D.getColor().x,
-                            inspectingObject2D.getColor().y,
-                            inspectingObject2D.getColor().z,
-                            inspectingObject2D.getColor().w  };
-            if (ImGui.colorEdit4("Color", col)) {
-                inspectingObject2D.setColor(new Vector4f(col));
+                    inspectingEntity.getColor().x,
+                            inspectingEntity.getColor().y,
+                            inspectingEntity.getColor().z,
+                            inspectingEntity.getColor().w  };
+            if (ImGuiUtils.imCallWBorder(func -> ImGui.colorEdit4("Color", col))) {
+                inspectingEntity.setColor(new Vector4f(col));
             }
 
             ImVec2 windowSize = ImGui.getWindowSize();
@@ -408,7 +410,7 @@ public class InspectorView extends View
         }
     }
 
-    public void compileAndAddScriptComponent(File javaFile, Entity inspectingObject2D)
+    public void compileAndAddScript(File javaFile, Entity inspectingObject2D)
     {
         ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + javaFile.getName() + "... ", 1.0f, 0.0f) {
             @Override
@@ -422,22 +424,20 @@ public class InspectorView extends View
                             new File(ProjectsManager.getCurrentProject().getProjectPath())
                     );
                     String baseName = FilenameUtils.getBaseName(javaFile.getName());
+
                     Script script = new Script();
-                    script.loadClass(javaFile.getParent(), javaFile.getPath(), baseName);
-                    Component newComponent = null;
-                    try {
-                        newComponent = (Component) script.getScriptClass().getConstructor().newInstance();
-                    } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                             NoSuchMethodException e) {
-                        Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                    script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(), javaFile.getPath(), baseName);
+                    script.path = relativePath;
+
+                    if(script.getScriptClass().getSuperclass().isAssignableFrom(Component.class)) {
+                        ScriptComponent scriptComponent = new ScriptComponent();
+                        scriptComponent.script = script;
+                        inspectingObject2D.addComponent(scriptComponent);
+                    } else if(script.getScriptClass().getSuperclass().isAssignableFrom(System.class)) {
+                        ScriptableSystem scriptableSystem = new ScriptableSystem();
+                        scriptableSystem.script = script;
+                        inspectingObject2D.addSystem(scriptableSystem);
                     }
-
-                    ScriptComponent sc = (ScriptComponent) newComponent;
-
-                    sc.script.set(script);
-                    sc.script.path = relativePath;
-
-                    inspectingObject2D.addComponent(sc);
                 }
             }
         });

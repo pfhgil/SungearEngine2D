@@ -1,5 +1,6 @@
 package Core2D.Project;
 
+import Core2D.Log.Log;
 import Core2D.Utils.FileUtils;
 
 import java.io.File;
@@ -28,6 +29,7 @@ public class ProjectsManager
     public static void loadProject(String projectFilePath)
     {
         currentProject = (Project) FileUtils.deSerializeObject(projectFilePath);
+        Log.Console.println("project scripts path: " + currentProject.getScriptsPath());
         currentProject.setProjectPath(new File(projectFilePath).getParent());
         currentProject.load();
     }

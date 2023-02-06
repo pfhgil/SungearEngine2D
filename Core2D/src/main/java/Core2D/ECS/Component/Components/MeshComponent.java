@@ -3,27 +3,26 @@ package Core2D.ECS.Component.Components;
 import Core2D.AssetManager.AssetManager;
 import Core2D.ECS.Component.Component;
 import Core2D.Graphics.RenderParts.Material2D;
-import Core2D.Graphics.RenderParts.RenderMethod;
 import Core2D.Graphics.RenderParts.Shader;
-import Core2D.ShaderUtils.*;
 import Core2D.Graphics.RenderParts.Texture2D;
+import Core2D.Log.Log;
+import Core2D.ShaderUtils.*;
 import Core2D.Utils.PositionsQuad;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
-import org.lwjgl.opengl.GL11C;
 
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
-public class MeshComponent extends Component {
+public class MeshComponent extends Component
+{
+    private Texture2D texture = new Texture2D(AssetManager.getInstance().getTexture2DData("/data/textures/white_texture.png"));
 
-    public Texture2D texture = new Texture2D();
-
-    public transient Shader shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/object2D/shader.glsl"));
+    public Shader shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/mesh/default_shader.glsl"));
 
     public Material2D material2D;
 
     // VAO четырехугольника (VAO - Vertex Array Object. Хранит в себе указатели на VBO, IBO и т.д.)
-    public transient VertexArray vertexArray;
+    private transient VertexArray vertexArray;
     private int drawingMode = GL_TRIANGLES;
     private transient short[] indices = new short[] { 0, 1, 2, 0, 2, 3 };
 
@@ -43,7 +42,6 @@ public class MeshComponent extends Component {
             size.x / 2.0f, -size.y / 2.0f,
             1, 0,
     };
-    public int textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
 
     public MeshComponent() { }
 
@@ -55,6 +53,7 @@ public class MeshComponent extends Component {
     @Override
     public void set(Component component)
     {
+        /*
         if(component instanceof MeshComponent meshComponent) {
             shader.set(meshComponent.shader);
             texture.set(meshComponent.texture);
@@ -64,10 +63,11 @@ public class MeshComponent extends Component {
             if(meshComponent.data != null) {
                 data = meshComponent.data;
             }
-            textureDrawMode = meshComponent.textureDrawMode;
 
             loadVAO();
         }
+
+         */
     }
 
     @Override
@@ -83,35 +83,44 @@ public class MeshComponent extends Component {
             vertexArray.destroy();
             vertexArray = null;
         }
+
+        if(texture != null) {
+            texture.destroy();
+            texture = null;
+        }
+
+        if(shader != null) {
+            shader.destroy();
+            shader = null;
+        }
     }
 
     private void loadVAO() {
-        if (Thread.currentThread().getName().equals("main")) {
-            if(vertexArray != null) {
-                vertexArray.destroy();
-            }
-
-            vertexArray = new VertexArray();
-            // VBO вершин (VBO - Vertex Buffer Object. Может хранить в себе цвета, позиции вершин и т.д.)
-            VertexBuffer vertexBuffer = new VertexBuffer(data);
-            // IBO вершин (IBO - Index Buffer Object. IBO хранит в себе индексы вершин, по которым будут соединяться вершины)
-            IndexBuffer indexBuffer = new IndexBuffer(indices);
-
-            // создаю описание аттрибутов в шейдерной программе
-            BufferLayout attributesLayout = new BufferLayout(
-                    new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2),
-                    new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2)
-            );
-
-            vertexBuffer.setLayout(attributesLayout);
-            vertexArray.putVBO(vertexBuffer, false);
-            vertexArray.putIBO(indexBuffer);
-
-            indices = null;
-
-            // отвязываю vao
-            vertexArray.unBind();
+        if (vertexArray != null) {
+            vertexArray.destroy();
+            vertexArray = null;
         }
+
+        vertexArray = new VertexArray();
+        // VBO вершин (VBO - Vertex Buffer Object. Может хранить в себе цвета, позиции вершин и т.д.)
+        VertexBuffer vertexBuffer = new VertexBuffer(data);
+        // IBO вершин (IBO - Index Buffer Object. IBO хранит в себе индексы вершин, по которым будут соединяться вершины)
+        IndexBuffer indexBuffer = new IndexBuffer(indices);
+
+        // создаю описание аттрибутов в шейдерной программе
+        BufferLayout attributesLayout = new BufferLayout(
+                new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2),
+                new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2)
+        );
+
+        vertexBuffer.setLayout(attributesLayout);
+        vertexArray.putVBO(vertexBuffer, false);
+        vertexArray.putIBO(indexBuffer);
+
+        indices = null;
+
+        // отвязываю vao
+        vertexArray.unBind();
     }
     public void setUV(float[] UV) {
         if (entity != null) {
@@ -129,6 +138,7 @@ public class MeshComponent extends Component {
 
             if (vertexArray != null) {
                 VertexBuffer vbo = vertexArray.getVBOs().get(0);
+                //vbo.getData()[0];
                 vertexArray.updateVBO(vbo, data);
             }
         }
@@ -148,4 +158,22 @@ public class MeshComponent extends Component {
     public float[] getData() { return data; }
 
     public VertexArray getVertexArrayObject() { return vertexArray; }
+
+    public Texture2D getTexture() { return texture; }
+    public void setTexture(Texture2D texture)
+    {
+        if(this.texture != null) {
+            this.texture.destroy();
+        }
+        this.texture = texture;
+    }
+
+    public Shader getShader() { return shader; }
+    public void setShader(Shader shader)
+    {
+        if(this.shader != null) {
+            this.shader.destroy();
+        }
+        this.shader = shader;
+    }
 }

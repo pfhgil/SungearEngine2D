@@ -97,7 +97,7 @@ public class SceneTreeView extends View
                         }
                         ImGui.treePop();
                     }*/
-                    if(ImGui.treeNode("Scene objects")) {
+                    if(ImGui.treeNode("Scene entities")) {
                         if (ImGui.beginDragDropTarget()) {
                             Object droppedObject = ImGui.acceptDragDropPayload("SceneGameObject");
                             if (droppedObject != null) {
@@ -113,8 +113,7 @@ public class SceneTreeView extends View
                                 Entity entity = currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(i).getEntities().get(k);
                                 if(!alreadyProcessedObjectsID.contains(entity.ID) && entity.getParentObject2D() == null) {
                                     ImGui.pushID("Scene2DWrappedObject_" + entity.ID);
-                                    boolean opened = false;
-                                    opened = ImGui.treeNode(entity.name);
+                                    boolean opened = ImGui.treeNode(entity.name + " | ID: " + entity.ID);
                                     if (ImGui.isItemHovered()) {
                                         isAnyTreeNodeHovered = true;
                                     }
@@ -141,6 +140,7 @@ public class SceneTreeView extends View
 
                                     if(action.equals("DestroyObject2D") && objectToActionIterator == iterator) {
                                         entity.destroy();
+                                        ViewsManager.getInspectorView().setCurrentInspectingObject(null);
                                         action = "";
                                         objectToActionIterator = -1;
                                     }
@@ -196,7 +196,7 @@ public class SceneTreeView extends View
         for(Entity entity : parentObject2D.getChildrenObjects()) {
             iterator++;
             if(parentOpened) {
-                boolean opened = ImGui.treeNode(entity.name);
+                boolean opened = ImGui.treeNode(entity.name + " | ID: " + entity.ID);
                 if(ImGui.isItemHovered()) {
                     isAnyTreeNodeHovered = true;
                 }

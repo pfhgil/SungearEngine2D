@@ -38,9 +38,6 @@ public class Transform implements Serializable
     // результативная матрица модели объекта
     private transient Matrix4f resultModelMatrix = new Matrix4f();
 
-    // кастомная матрица
-    private transient Matrix4f customMatrix = new Matrix4f();
-
     // позиция, куда нужно передвинуть плавно объект
     private transient Vector2f destinationPosition = new Vector2f();
     // множитель скорости, с которой будет передвигать объект в позицию moveToPosition
@@ -136,27 +133,6 @@ public class Transform implements Serializable
         if(rigidbody2D != null && canUpdateRigigbody2D) {
             setPositionLikeRigidbody2D();
             setRotationLikeRigidbody2D();
-        }
-
-        if(parentTransform != null) {
-            Matrix4f translationMatrix = MatrixUtils.getTranslationMatrix(parentTransform.getResultModelMatrix());
-            Matrix4f rotationMatrix = MatrixUtils.getRotationMatrix(parentTransform.getResultModelMatrix());
-
-            Vector2f parentScale = MatrixUtils.getScale(parentTransform.getResultModelMatrix());
-
-            Vector2f lastScale = new Vector2f(scale);
-            setScale(new Vector2f(scale).mul(parentScale));
-            scale.set(lastScale);
-
-            Vector2f lastPosition = new Vector2f(position);
-            setPosition(new Vector2f(position).mul(parentScale));
-            position.set(lastPosition);
-
-            Matrix4f result = new Matrix4f(translationMatrix).mul(rotationMatrix);
-            resultModelMatrix.set(result);
-            resultModelMatrix.mul(modelMatrix);
-        } else {
-            resultModelMatrix.set(modelMatrix);
         }
     }
 
@@ -345,7 +321,28 @@ public class Transform implements Serializable
     // обновление матрицы модели
     private void updateModelMatrix()
     {
-        modelMatrix = new Matrix4f(customMatrix).mul(translationMatrix).mul(rotationMatrix).mul(scaleMatrix);
+        modelMatrix = new Matrix4f().mul(translationMatrix).mul(rotationMatrix).mul(scaleMatrix);
+
+        if(parentTransform != null) {
+            Matrix4f translationMatrix = MatrixUtils.getTranslationMatrix(parentTransform.getResultModelMatrix());
+            Matrix4f rotationMatrix = MatrixUtils.getRotationMatrix(parentTransform.getResultModelMatrix());
+
+            Vector2f parentScale = MatrixUtils.getScale(parentTransform.getResultModelMatrix());
+
+            Vector2f lastScale = new Vector2f(scale);
+            setScale(new Vector2f(scale).mul(parentScale));
+            scale.set(lastScale);
+
+            Vector2f lastPosition = new Vector2f(position);
+            setPosition(new Vector2f(position).mul(parentScale));
+            position.set(lastPosition);
+
+            Matrix4f result = new Matrix4f(translationMatrix).mul(rotationMatrix);
+            resultModelMatrix.set(result);
+            resultModelMatrix.mul(modelMatrix);
+        } else {
+            resultModelMatrix.set(modelMatrix);
+        }
     }
 
     private void updateRigidbody2D()
@@ -368,8 +365,6 @@ public class Transform implements Serializable
         scaleMatrix = new Matrix4f(transform.getScaleMatrix());
 
         modelMatrix = new Matrix4f(transform.getModelMatrix());
-
-        customMatrix = new Matrix4f(transform.getCustomMatrix());
 
         destinationPosition = new Vector2f();
         moveToDestinationSpeedCoeff = new Vector2f();
@@ -465,6 +460,36 @@ public class Transform implements Serializable
         updateModelMatrix();
     }
 
+    public Vector2f getRealPosition()
+    {
+        return MatrixUtils.getPosition(resultModelMatrix);
+    }
+
+    public Vector2f getRealScale()
+    {
+        Vector2f scale = MatrixUtils.getScale(resultModelMatrix);
+
+        if(this.scale.x < 0.0f) {
+            scale.x *= -1.0f;
+        }
+        if(this.scale.y < 0.0f) {
+            scale.y *= -1.0f;
+        }
+
+        return scale;
+    }
+
+    public float getRealRotation()
+    {
+        float rotation = MatrixUtils.getRotation(resultModelMatrix);
+
+        if(scale.x < 0.0f) {
+            rotation -= 180.0f;
+        }
+
+        return rotation;
+    }
+
     public Vector2f getCentre() { return centre; }
     public void setCentre(Vector2f centre) { this.centre.set(centre); }
 
@@ -477,8 +502,6 @@ public class Transform implements Serializable
     public Matrix4f getModelMatrix() { return modelMatrix; }
 
     public Matrix4f getResultModelMatrix() { return resultModelMatrix; }
-
-    public Matrix4f getCustomMatrix() { return customMatrix; }
 
     public Rigidbody2D getRigidbody2D()
     {

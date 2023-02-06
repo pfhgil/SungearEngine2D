@@ -1,5 +1,6 @@
 package Core2D.Utils;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
@@ -7,10 +8,16 @@ public class ExceptionsUtils
 {
     public static String toString(Exception e)
     {
-        StringWriter sw = new StringWriter();
-        PrintWriter pw = new PrintWriter(sw);
-        e.printStackTrace(pw);
+        String output = "";
+        try(StringWriter sw = new StringWriter();
+            PrintWriter pw = new PrintWriter(sw)) {
+            e.printStackTrace(pw);
 
-        return sw.toString();
+            output = sw.toString();
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        return output;
     }
 }

@@ -20,6 +20,17 @@ public class Log
         ERROR
     }
 
+    public static class Console
+    {
+        public static void println(Object obj)
+        {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
+
+            System.out.println(dateFormat.format(date) + " | " + obj);
+        }
+    }
+
     public static class CurrentSession {
         // путь до папки для логов
         private static String directoryPath = "Log";
@@ -36,33 +47,34 @@ public class Log
 
 
         // записывает в файл лога информацию (новая строка)
-        public static void println(Object string, MessageType messageType) {
+        public static void println(Object obj, MessageType messageType) {
+            Console.println(obj);
+
             if(new File(directoryPath + File.separator + currentSessionFileName).exists()) {
                 FileWriter fileWriter = null;
                 try {
-                    fileWriter = new FileWriter(new File(directoryPath + File.separator + currentSessionFileName), true);
+                    fileWriter = new FileWriter(directoryPath + File.separator + currentSessionFileName, true);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date date = new Date();
+
                 if (fileWriter != null) {
                     try {
-                        // получаю текущую дату, час, минуту, секунду
-                        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                        Date date = new Date();
-
                         String str = "";
                         if (messageType == MessageType.SUCCESS) {
-                            str = "[#FFFFFF] " + dateFormat.format(date) + " | [#008000] " + string + "\n";
+                            str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#008000] " + obj + "\n";
                             successLog.append(str);
                         } else if (messageType == MessageType.INFO) {
-                            str = "[#FFFFFF] " + dateFormat.format(date) + " | [#FFFFFF] " + string + "\n";
+                            str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#FFFFFF] " + obj + "\n";
                             infoLog.append(str);
                         } else if (messageType == MessageType.WARNING) {
-                            str = "[#FFFFFF] " + dateFormat.format(date) + " | [#FFFF00] " + string + "\n";
+                            str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#FFFF00] " + obj + "\n";
                             warningLog.append(str);
                         } else if (messageType == MessageType.ERROR) {
-                            str = "[#FFFFFF] " + dateFormat.format(date) + " | [#FF0000] " + string + "\n";
+                            str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#FF0000] " + obj + "\n";
                             errorLog.append(str);
                         }
                         allLog.append(str);
@@ -97,6 +109,7 @@ public class Log
             currentSessionFile = FileUtils.reCreateFile(currentSessionFile);
 
             if(currentSessionFile.exists()) {
+                Console.println("Current session log file was created!");
                 println("Current session log file was created!", MessageType.SUCCESS);
             }
         }

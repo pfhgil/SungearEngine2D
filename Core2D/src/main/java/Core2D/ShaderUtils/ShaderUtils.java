@@ -1,101 +1,110 @@
 package Core2D.ShaderUtils;
 
-import Core2D.Log.Log;
+import Core2D.Graphics.OpenGL;
 import Core2D.Utils.MatrixUtils;
 import org.joml.*;
-import org.lwjgl.opengl.GL32C;
+
+import static org.lwjgl.opengl.GL32C.*;
 
 public class ShaderUtils
 {
-    public static void setUniform(int programHandler, String uniformName, Matrix4f matrix4f)
+    public static boolean setUniform(int programHandler, String uniformName, Matrix4f matrix4f)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
-        int uniformLocation = GL32C.glGetUniformLocation(programHandler, uniformName);
+        int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             float[] data = MatrixUtils.matrixToArray(matrix4f);
             // передача в uniform матрицу
-            GL32C.glUniformMatrix4fv(uniformLocation, false, data);
-        } else {
-            Log.CurrentSession.println("Uniform with name \"" + uniformName + "\" was not found!", Log.MessageType.ERROR);
+            OpenGL.glCall((params) -> glUniformMatrix4fv(uniformLocation, false, data));
         }
+
+        return uniformLocation != -1;
     }
-    public static void setUniform(int programHandler, String uniformName, Matrix3f matrix3f)
+    public static boolean setUniform(int programHandler, String uniformName, Matrix3f matrix3f)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
-        int uniformLocation = GL32C.glGetUniformLocation(programHandler, uniformName);
+        int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             float[] data = MatrixUtils.matrixToArray(matrix3f);
             // передача в uniform матрицу
-            GL32C.glUniformMatrix3fv(uniformLocation, false, data);
-        } else {
-            Log.CurrentSession.println("Uniform with name \"" + uniformName + "\" was not found!", Log.MessageType.ERROR);
+            OpenGL.glCall((params) -> glUniformMatrix3fv(uniformLocation, false, data));
         }
+
+        return uniformLocation != -1;
     }
-    public static void setUniform(int programHandler, String uniformName, Vector2f vector2f)
+    public static boolean setUniform(int programHandler, String uniformName, Vector2f vector2f)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
-        int uniformLocation = GL32C.glGetUniformLocation(programHandler, uniformName);
+        int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             // передача в uniform вектора
-            GL32C.glUniform2f(uniformLocation, vector2f.x, vector2f.y);
-        } else {
-            Log.CurrentSession.println("Uniform with name \"" + uniformName + "\" was not found!", Log.MessageType.ERROR);
+            OpenGL.glCall((params) -> glUniform2f(uniformLocation, vector2f.x, vector2f.y));
         }
+
+        return uniformLocation != -1;
     }
-    public static void setUniform(int programHandler, String uniformName, Vector3f vector3f)
+    public static boolean setUniform(int programHandler, String uniformName, Vector3f vector3f)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
-        int uniformLocation = GL32C.glGetUniformLocation(programHandler, uniformName);
+        int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             // передача в uniform вектора
-            GL32C.glUniform3f(uniformLocation, vector3f.x, vector3f.y, vector3f.z);
-        } else {
-            Log.CurrentSession.println("Uniform with name \"" + uniformName + "\" was not found!", Log.MessageType.ERROR);
+            OpenGL.glCall((params) -> glUniform3f(uniformLocation, vector3f.x, vector3f.y, vector3f.z));
         }
+
+        return uniformLocation != -1;
     }
-    public static void setUniform(int programHandler, String uniformName, Vector4f vector4f)
+    public static boolean setUniform(int programHandler, String uniformName, Vector4f vector4f)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
-        int uniformLocation = GL32C.glGetUniformLocation(programHandler, uniformName);
+        int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             // передача в uniform вектора
-            GL32C.glUniform4f(uniformLocation, vector4f.x, vector4f.y, vector4f.z, vector4f.w);
-        } else {
-            //Log.CurrentSession.println("Uniform with name \"" + uniformName + "\" was not found!", Log.MessageType.ERROR);
+            OpenGL.glCall((params) -> glUniform4f(uniformLocation, vector4f.x, vector4f.y, vector4f.z, vector4f.w));
         }
+
+        return uniformLocation != -1;
     }
-    public static void setUniform(int programHandler, String uniformName, int _int)
+    public static boolean setUniform(int programHandler, String uniformName, int _int)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
-        int uniformLocation = GL32C.glGetUniformLocation(programHandler, uniformName);
+        int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             // передача в uniform int
-            GL32C.glUniform1i(uniformLocation, _int);
-        } else {
-            Log.CurrentSession.println("Uniform with name \"" + uniformName + "\" was not found!", Log.MessageType.ERROR);
+            OpenGL.glCall((params) -> glUniform1i(uniformLocation, _int));
         }
+
+        return uniformLocation != -1;
     }
-    public static void setUniform(int programHandler, String uniformName, float _float)
+    public static boolean setUniform(int programHandler, String uniformName, float _float)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
-        int uniformLocation = GL32C.glGetUniformLocation(programHandler, uniformName);
+        int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             // передача в uniform float
-            GL32C.glUniform1f(uniformLocation, _float);
-        } else {
-            Log.CurrentSession.println("Uniform with name \"" + uniformName + "\" was not found!", Log.MessageType.ERROR);
+            OpenGL.glCall((params) -> glUniform1f(uniformLocation, _float));
         }
+
+        return uniformLocation != -1;
     }
-    public static void setUniform(int programHandler, String uniformName, boolean _boolean)
+    public static boolean setUniform(int programHandler, String uniformName, boolean _boolean)
     {
+        if(!glIsProgram(programHandler)) return false;
         // получить нахождение uniform в шейдерной программе
-        int uniformLocation = GL32C.glGetUniformLocation(programHandler, uniformName);
+        int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             // передача в uniform int
-            if (_boolean) GL32C.glUniform1i(uniformLocation, 1);
-            else GL32C.glUniform1i(uniformLocation, 0);
-        } else {
-            Log.CurrentSession.println("Uniform with name \"" + uniformName + "\" was not found!", Log.MessageType.ERROR);
+            if (_boolean) OpenGL.glCall((params) -> glUniform1i(uniformLocation, 1));
+            else OpenGL.glCall((params) -> glUniform1i(uniformLocation, 0));
         }
+
+        return uniformLocation != -1;
     }
 }

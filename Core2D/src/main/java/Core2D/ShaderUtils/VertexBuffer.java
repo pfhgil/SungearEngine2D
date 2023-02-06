@@ -1,5 +1,7 @@
 package Core2D.ShaderUtils;
 
+import Core2D.Graphics.OpenGL;
+
 import static org.lwjgl.opengl.GL15C.*;
 
 public class VertexBuffer
@@ -33,14 +35,14 @@ public class VertexBuffer
     // создание буфера
     private void create()
     {
-        handler = glGenBuffers();
+        handler = OpenGL.glCall((params) -> glGenBuffers(), Integer.class);
 
         bind();
     }
     // удаление буфера
     public void destroy()
     {
-        glDeleteBuffers(handler);
+        OpenGL.glCall((params) -> glDeleteBuffers(handler));
 
         data = null;
 
@@ -50,24 +52,24 @@ public class VertexBuffer
     // положить данные в буфер
     public void putData()
     {
-        glBufferData(GL_ARRAY_BUFFER, data, usage);
+        OpenGL.glCall((params) -> glBufferData(GL_ARRAY_BUFFER, data, usage));
     }
     // положить новые данные
     public void putNewData(float[] data)
     {
         this.data = data;
 
-        glBufferSubData(GL_ARRAY_BUFFER, 0, data);
+        OpenGL.glCall((params) -> glBufferSubData(GL_ARRAY_BUFFER, 0, data));
     }
     // связка
     public void bind()
     {
-        glBindBuffer(GL_ARRAY_BUFFER, handler);
+        OpenGL.glCall((params) -> glBindBuffer(GL_ARRAY_BUFFER, handler));
     }
     // развязывание
     public void unBind()
     {
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
+        OpenGL.glCall((params) -> glBindBuffer(GL_ARRAY_BUFFER, 0));
     }
 
     // геттеры и сеттеры

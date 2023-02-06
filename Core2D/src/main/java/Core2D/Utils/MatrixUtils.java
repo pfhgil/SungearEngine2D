@@ -40,9 +40,9 @@ public class MatrixUtils
 
     public static float getRotation(Matrix4f matrix4f)
     {
-        AxisAngle4f axisAngle4f = new AxisAngle4f();
-        matrix4f.getRotation(axisAngle4f);
-        return (float) Math.toDegrees(axisAngle4f.angle * axisAngle4f.z);
+        Vector3f eulerRotation = new Vector3f();
+        matrix4f.getEulerAnglesZYX(eulerRotation);
+        return (float) Math.toDegrees(eulerRotation.z);
     }
 
     public static Vector2f getScale(Matrix4f matrix4f)
@@ -61,7 +61,6 @@ public class MatrixUtils
     public static Matrix4f getRotationMatrix(Matrix4f from)
     {
         float rotation = getRotation(from);
-
 
         Quaternionf rotationQ = new Quaternionf();
 

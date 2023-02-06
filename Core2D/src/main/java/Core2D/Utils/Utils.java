@@ -1,10 +1,9 @@
 package Core2D.Utils;
 
-import Core2D.Core2D.Core2DClassLoader;
+import Core2D.AssetManager.Asset;
+import Core2D.Deserializers.*;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.TransformComponent;
-import Core2D.DataClasses.Data;
-import Core2D.Deserializers.*;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
 import Core2D.Layering.Layer;
@@ -31,20 +30,16 @@ public class Utils
 {
     private static Random random = new Random();
 
-    private static final CommonDeserializer<Data> dataDeserializer = new CommonDeserializer<>();
-    private static final CommonDeserializer<Component> componentDeserializer = new CommonDeserializer<>();
-    private static final CommonDeserializer<System> systemDeserializer = new CommonDeserializer<>();
-
     public static Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .registerTypeAdapter(Prefab.class, new PrefabDeserializer())
             .registerTypeAdapter(Entity.class, new EntityDeserializer())
             .registerTypeAdapter(Scene2D.class, new Scene2DDeserializer())
-            .registerTypeAdapter(Data.class, dataDeserializer)
-            .registerTypeAdapter(Component.class, componentDeserializer)
-            .registerTypeAdapter(System.class, systemDeserializer)
+            .registerTypeAdapter(Component.class, new CommonDeserializer<Component>())
+            .registerTypeAdapter(System.class, new CommonDeserializer<System>())
             .registerTypeAdapter(Layer.class, new LayerDeserializer())
             .registerTypeAdapter(Layering.class, new LayeringDeserializer())
+            .registerTypeAdapter(Asset.class, new AssetDeserializer())
             .create();
 
     // создает FloatBuffer, помещает туда data и возвращает получившийся буфер
@@ -87,29 +82,33 @@ public class Utils
 
     public static ByteBuffer resourceToByteBuffer(InputStream inputStream) throws IOException
     {
-        // создаю массив байтов и читаю байты из инпут стрима
-        byte[] bytes = IOUtils.toByteArray(inputStream);
-        // создаю байт буффер размером с длину массива байтов
-        ByteBuffer buffer = BufferUtils.createByteBuffer(bytes.length);
-        buffer.put(bytes);
-        // перевожу буффер на чтение
-        buffer.flip();
+        try(inputStream) {
+            // создаю массив байтов и читаю байты из инпут стрима
+            byte[] bytes = IOUtils.toByteArray(inputStream);
+            // создаю байт буффер размером с длину массива байтов
+            ByteBuffer buffer = BufferUtils.createByteBuffer(bytes.length);
+            buffer.put(bytes);
+            // перевожу буффер на чтение
+            buffer.flip();
 
-        return buffer;
+            return buffer;
+        } catch (Exception e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        }
+
+        return null;
     }
 
     public static byte[] serializeObject(Object obj)
     {
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ObjectOutputStream oos = null;
-        try {
-            oos = new ObjectOutputStream(bos);
-            oos.writeObject(obj);
+        try(ByteArrayOutputStream bos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(bos)) {
             oos.flush();
-            byte[] objBytes = bos.toByteArray();
-            oos.close();
-            bos.close();
-            return objBytes;
+            bos.flush();
+
+            oos.writeObject(obj);
+
+            return bos.toByteArray();
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -122,22 +121,20 @@ public class Utils
         StringBuilder s = new StringBuilder();
         String newLine = "";
 
-        BufferedReader bufferedReader = null;
-        try {
-            bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "CP866"));
-        } catch (UnsupportedEncodingException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-            return "";
-        }
 
-        while(true) {
-            try {
-                if (((newLine = bufferedReader.readLine()) == null)) break;
-            } catch (IOException e) {
-                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        try(InputStreamReader isr = new InputStreamReader(inputStream, "CP866");
+            BufferedReader bufferedReader = new BufferedReader(isr)) {
+
+            while (true) {
+                try {
+                    if (((newLine = bufferedReader.readLine()) == null)) break;
+                } catch (IOException e) {
+                    Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                }
+                s.append(newLine).append("\n");
             }
-            s.append(newLine).append("\n");
-
+        } catch (IOException e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
         return s.toString();
@@ -145,9 +142,7 @@ public class Utils
 
     public static String outputStreamToString(OutputStream outputStream)
     {
-        ByteArrayOutputStream baos = null;
-        try {
-            baos = new ByteArrayOutputStream();
+        try(ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
             baos.writeTo(outputStream);
 
             return baos.toString();
@@ -155,7 +150,7 @@ public class Utils
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
-        return "no string";
+        return "";
     }
 
     // считывает из файла в ByteBuffer

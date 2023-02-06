@@ -19,6 +19,7 @@ public class FontData
     public static FontData load(String fontPathWithoutExtension)
     {
         FontData fontData = new FontData();
+        /*
         try {
             fontData.set(load(
                     new BufferedInputStream(new FileInputStream(fontPathWithoutExtension + ".fnt")),
@@ -26,9 +27,12 @@ public class FontData
         } catch (FileNotFoundException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException(e)), Log.MessageType.ERROR);
         }
+
+         */
         return fontData;
     }
 
+    /*
     public static FontData load(InputStream descriptionInputStream, InputStream fontImageInputStream)
     {
         //descriptionInputStream.
@@ -43,6 +47,8 @@ public class FontData
 
         return fontData;
     }
+
+     */
 
     public void set(FontData fontData)
     {

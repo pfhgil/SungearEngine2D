@@ -63,7 +63,7 @@ public class CameraController
                         Vector2f currentPosition = new Vector2f(Mouse.getMousePosition());
                         Vector2f difference = new Vector2f(currentPosition.x - lastCursorPosition.x, currentPosition.y - lastCursorPosition.y);
                         cameraTransformComponent.getTransform().translate(
-                                new Vector2f(difference.x * (1.0f / mouseCameraScale.x), difference.y * (1.0f / mouseCameraScale.y))
+                                new Vector2f(-difference.x * (1.0f / mouseCameraScale.x), -difference.y * (1.0f / mouseCameraScale.y))
                         );
                         lastCursorPosition = currentPosition;
                     }

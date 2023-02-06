@@ -1,25 +1,33 @@
 package SungearEngine2D.Main;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.Audio;
 import Core2D.CamerasManager.CamerasManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DUserCallback;
 import Core2D.Core2D.Settings;
 import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
+import Core2D.ECS.System.Systems.MeshRendererSystem;
+import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Graphics.Graphics;
+import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
+import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scripting.Script;
-import Core2D.Systems.ScriptSystem;
 import Core2D.Tasks.StoppableTask;
-import Core2D.Transform.Transform;
 import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.CameraController.CameraController;
+import SungearEngine2D.DebugDraw.CamerasDebugLines;
+import SungearEngine2D.DebugDraw.EntitiesDebugDraw;
+import SungearEngine2D.DebugDraw.Gizmo;
 import SungearEngine2D.GUI.GUI;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
@@ -28,14 +36,14 @@ import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
-import org.newdawn.slick.Game;
 
 import java.io.File;
-import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
+import static org.lwjgl.opengl.GL46C.*;
 
 public class Main
 {
@@ -48,9 +56,13 @@ public class Main
     // TODO: delete this
     public static Audio fuckYouAudio = new Audio();
 
+    private static Shader onlyColorShader;
+
+    private static Camera2DComponent mainCamera2DComponent;
+
     public static void main(String[] main)
     {
-        Settings.Core2D.destinationFPS = 60;
+        Settings.Core2D.destinationFPS = 120;
         Graphics.setScreenClearColor(new Vector4f(0.65f, 0.65f, 0.65f, 1.0f));
         AppDataManager.init();
         core2DUserCallback = new Core2DUserCallback() {
@@ -59,9 +71,11 @@ public class Main
                 //Debugger.init();
                 Resources.load();
 
-                mainCamera2D = Entity.createCamera2D();
+                mainCamera2D = Entity.createAsCamera2D();
                 CamerasManager.mainCamera2D = mainCamera2D;
                 CameraController.controlledCamera2D = mainCamera2D;
+
+                mainCamera2DComponent = mainCamera2D.getComponent(Camera2DComponent.class);
 
                 CameraController.init();
 
@@ -84,7 +98,7 @@ public class Main
                                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                             }
 
-                            if(currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().isSceneLoaded()) {
+                            if(currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().isSceneLoaded() && !EngineSettings.Playmode.active) {
                                 try {
                                     List<String> compiledScripts = new ArrayList<>();
 
@@ -98,55 +112,58 @@ public class Main
                                             if (layer.isShouldDestroy()) continue layersCycle;
                                             if (!layer.getEntities().get(i).isShouldDestroy()) {
                                                 List<ScriptComponent> scriptComponents = layer.getEntities().get(i).getAllComponents(ScriptComponent.class);
+                                                List<ScriptableSystem> scriptableSystems = layer.getEntities().get(i).getAllSystems(ScriptableSystem.class);
+                                                List<Script> allScripts = new ArrayList<>();
+                                                scriptComponents.forEach(scriptComponent -> allScripts.add(scriptComponent.script));
+                                                scriptableSystems.forEach(scriptableSystem -> allScripts.add(scriptableSystem.script));
 
-                                                for (int k = 0; k < scriptComponents.size(); k++) {
+                                                for(Component component : layer.getEntities().get(i).getComponents()) {
+                                                    if(component instanceof MeshComponent meshComponent) {
+                                                        Shader shader = meshComponent.getShader();
+
+                                                        Compiler.checkShaderToCompile(shader);
+                                                    }
+
+                                                    if(component instanceof Camera2DComponent camera2DComponent) {
+                                                        for(int k = 0; k < camera2DComponent.getPostprocessingLayersNum(); k++) {
+                                                            PostprocessingLayer ppLayer = camera2DComponent.getPostprocessingLayer(k);
+
+                                                            Shader shader = ppLayer.getShader();
+
+                                                            Compiler.checkShaderToCompile(shader);
+                                                        }
+                                                    }
+                                                }
+
+                                                for (int k = 0; k < allScripts.size(); k++) {
                                                     // был ли уже скомпилирован скрипт
-
-                                                    boolean alreadyCompiled = compiledScripts.contains(scriptComponents.get(k).script.getName());
+                                                    boolean alreadyCompiled = compiledScripts.contains(allScripts.get(k).getPath());
                                                     if (alreadyCompiled) {
                                                         continue;
                                                     }
 
-                                                    String scriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponents.get(k).script.path;
-                                                    long lastModified = new File(scriptPath + ".java").lastModified();
-                                                    //System.out.println("lm: " + lastModified + ", p: " + scriptPath + ", slm: " + scriptComponents.get(k).script.getLastModified());
-                                                    if (lastModified != scriptComponents.get(k).script.getLastModified()) {
+                                                    String scriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + allScripts.get(k).path;
+                                                    long lastModified = new File(scriptPath.replace(".java", "") + ".java").lastModified();
+                                                    if (lastModified != allScripts.get(k).getLastModified()) {
                                                         EngineSettings.Playmode.canEnterPlaymode = false;
-                                                        scriptComponents.get(k).script.setLastModified(lastModified);
+                                                        allScripts.get(k).setLastModified(lastModified);
 
                                                         int finalK = k;
-                                                        String lastScriptPath = scriptComponents.get(finalK).script.path;
-                                                        int finalI = i;
+                                                        String lastScriptPath = allScripts.get(finalK).path;
                                                         ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
                                                             public void run() {
                                                                 if (currentSceneManager.getCurrentScene2D() != null) {
-                                                                    scriptComponents.get(finalK).script.saveTempValues();
+                                                                    allScripts.get(finalK).saveTempValues();
 
                                                                     String newScriptPath = scriptPath.replace(".java", "");
                                                                     boolean compiled = Compiler.compileScript(newScriptPath + ".java");
                                                                     if (compiled) {
-                                                                        scriptComponents.get(finalK).script.loadClass(new File(scriptPath).getParent(), scriptPath, FilenameUtils.getBaseName(new File(scriptPath).getName()).replace("\\\\/", "."));
-                                                                        Component newComponent = null;
-                                                                        try {
-                                                                            newComponent = (Component) scriptComponents.get(finalK).script.getScriptClass().getConstructor().newInstance();
-                                                                        } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                                                                                 NoSuchMethodException e) {
-                                                                            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-                                                                        }
-
-                                                                        ScriptComponent sc = (ScriptComponent) newComponent;
-
-                                                                        sc.script.set(scriptComponents.get(finalK).script);
-                                                                        scriptComponents.get(finalK).script.path = lastScriptPath;
-                                                                        sc.script.path = scriptComponents.get(finalK).script.path;
-
-                                                                        layer.getEntities().get(finalI).removeComponent(scriptComponents.get(finalK));
-                                                                        sc.script.setLastModified(lastModified);
-                                                                        layer.getEntities().get(finalI).addComponent(sc);
+                                                                        allScripts.get(finalK).loadClass(ProjectsManager.getCurrentProject().getScriptsPath(), scriptPath, FilenameUtils.getBaseName(new File(scriptPath).getName()).replace("\\\\/", "."));
+                                                                        allScripts.get(finalK).path = lastScriptPath;
                                                                     }
-                                                                    compiledScripts.add(scriptComponents.get(finalK).script.getName());
+                                                                    compiledScripts.add(allScripts.get(finalK).getPath());
 
-                                                                    scriptComponents.get(finalK).script.applyTempValues();
+                                                                    allScripts.get(finalK).applyTempValues();
                                                                 }
                                                             }
                                                         });
@@ -172,6 +189,64 @@ public class Main
 
                 /** -------------------- */
 
+                onlyColorShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/common/only_color_shader.glsl"));
+
+                glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+                glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+                mainCamera2D.getComponent(Camera2DComponent.class).camera2DCallback = new Camera2DComponent.Camera2DCallback() {
+                    @Override
+                    public void preRender()
+                    {
+                        if(ViewsManager.getInspectorView().getCurrentInspectingObject() != null) {
+                            // обработка стенсил буфера отключена
+                            glStencilMask(0x00);
+
+                            ((Entity) ViewsManager.getInspectorView().getCurrentInspectingObject()).active = false;
+                        }
+                    }
+
+                    @Override
+                    public void postRender()
+                    {
+                        if(ViewsManager.getInspectorView().getCurrentInspectingObject() != null) {
+                            Entity inspectingEntity = (Entity) ViewsManager.getInspectorView().getCurrentInspectingObject();
+                            inspectingEntity.active = true;
+
+                            // первый проход рендера - отрисовывается объект в стенсил буфер и заполняется единицами
+                            glStencilFunc(GL_ALWAYS, 1, 0xFF);
+                            glStencilMask(0xFF);
+                            Graphics.getMainRenderer().render(inspectingEntity, mainCamera2DComponent);
+
+                            MeshComponent meshComponent = inspectingEntity.getComponent(MeshComponent.class);
+                            TransformComponent transformComponent = inspectingEntity.getComponent(TransformComponent.class);
+                            if(meshComponent != null && transformComponent != null) {
+                                Vector2f lastScale = new Vector2f(transformComponent.getTransform().getScale());
+                                Vector4f lastColor = new Vector4f(inspectingEntity.color);
+
+                                transformComponent.getTransform().setScale(new Vector2f(lastScale).add(new Vector2f(0.1f, 0.1f)));
+                                transformComponent.update();
+                                inspectingEntity.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 1.0f));
+
+                                // второй проход рендера - отрисовываю объект чуть побольше только одним цветом. все значения пикселей в стенсио буфере, которые не равняются 0xFF будут отрисованы
+                                glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
+                                glStencilMask(0x00);
+                                Graphics.getMainRenderer().render(inspectingEntity, mainCamera2DComponent, onlyColorShader);
+
+                                // третяя обработка - все пиксели будут перезаписаны. включаю обработку стенсил буфера
+                                glStencilFunc(GL_ALWAYS, 0, 0xFF);
+                                glStencilMask(0xFF);
+
+                                transformComponent.getTransform().setScale(lastScale);
+                                inspectingEntity.setColor(lastColor);
+                            }
+                        }
+
+                        CamerasDebugLines.draw();
+                        EntitiesDebugDraw.draw();
+                        Gizmo.draw();
+                    }
+                };
+
 
                 System.gc();
             }
@@ -187,26 +262,33 @@ public class Main
             public void onDrawFrame() {
                 Core2D.getWindow().setName("Sungear Engine 2D. FPS: " + Core2D.getDeltaTimer().getFPS());
 
+                Compiler.compileAllShaders();
+
                 TransformComponent cameraTransformComponent = mainCamera2D.getComponent(TransformComponent.class);
                 if(cameraTransformComponent != null) {
+                    //System.out.println("ddd");
                     cameraTransformComponent.getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
                 }
                 //cameraAnchor.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
                 CameraController.control();
 
+                mainCamera2D.update();
+
                 if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) GUI.draw();
 
                 GraphicsRenderer.draw();
-
-                mainCamera2D.update();
 
                 //Core2D.getWindow().setName("Sungear Engine 2D. FPS: " + Core2D.getDeltaTimer().getFPS());
             }
 
             @Override
             public void onDeltaUpdate(float deltaTime) {
-                mainCamera2D.deltaUpdate(deltaTime);
+                if(mainCamera2D != null) {
+                    mainCamera2D.deltaUpdate(deltaTime);
+                }
                 currentSceneManager.updateCurrentScene2D(deltaTime);
+
+                GraphicsRenderer.deltaUpdate(deltaTime);
             }
         };
 
@@ -216,4 +298,6 @@ public class Main
     }
 
     public static Entity getMainCamera2D() { return mainCamera2D; }
+
+    public static Camera2DComponent getMainCamera2DComponent() { return mainCamera2DComponent; }
 }

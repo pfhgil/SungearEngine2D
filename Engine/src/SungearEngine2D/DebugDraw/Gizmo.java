@@ -3,8 +3,16 @@ package SungearEngine2D.DebugDraw;
 //import Core2D.Component.Components.TextureComponent;
 /*import Core2D.Drawable.Primitives.Circle2D;
 import Core2D.Drawable.Primitives.Line2D;*/
+import Core2D.AssetManager.AssetManager;
+import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.MeshComponent;
+import Core2D.ECS.Component.Components.Primitives.CircleComponent;
+import Core2D.ECS.Component.Components.Primitives.LineComponent;
+import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
+import Core2D.Graphics.RenderParts.Shader;
+import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Input.PC.Mouse;
 import Core2D.ShaderUtils.FrameBuffer;
 import Core2D.Transform.Transform;
@@ -12,12 +20,13 @@ import Core2D.Utils.MathUtils;
 import Core2D.Utils.MatrixUtils;
 import SungearEngine2D.CameraController.CameraController;
 import SungearEngine2D.GUI.Views.ViewsManager;
+import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;
-import org.joml.Vector2f;
-import org.joml.Vector2i;
-import org.joml.Vector4f;
+import org.joml.*;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL13;
+
+import java.lang.Math;
 
 public class Gizmo
 {
@@ -38,20 +47,20 @@ public class Gizmo
 
     public static Vector2f scaleSensitivity = new Vector2f(0.1f, 0.1f);
 
-    public static final Entity yArrow = Entity.createObject2D();
-    public static final Entity xArrow = Entity.createObject2D();
+    public static final Entity yArrow = Entity.createAsObject2D();
+    public static final Entity xArrow = Entity.createAsObject2D();
 
-    public static final Entity centrePoint = Entity.createObject2D();
+    public static final Entity centrePoint = Entity.createAsObject2D();
 
-    public static final Entity centrePointToEditCentre = Entity.createObject2D();
+    public static final Entity centrePointToEditCentre = Entity.createAsObject2D();
 
-    //#FIXME public static final Circle2D rotationCircle = new Circle2D(300.0f, 1, new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
-    public static final Entity rotationHandler = Entity.createObject2D();
+    public static final Entity rotationCircle = Entity.createAsCircle(); //new Circle2D(300.0f, 1, new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
+    public static final Entity rotationHandler = Entity.createAsObject2D();
 
-    public static final Entity yScaleHandler = Entity.createObject2D();
-    //#FIXME public static final Line2D yScaleLine = new Line2D();
-    public static final Entity xScaleHandler = Entity.createObject2D();
-    //#FIXME public static final Line2D xScaleLine = new Line2D();
+    public static final Entity yScaleHandler = Entity.createAsObject2D();
+    public static final Entity yScaleLine = Entity.createAsLine();
+    public static final Entity xScaleHandler = Entity.createAsObject2D();
+    public static final Entity xScaleLine = Entity.createAsLine();
 
     private static Entity selectedGizmoTool;
 
@@ -60,6 +69,8 @@ public class Gizmo
     private static Vector2f lastMousePosition = new Vector2f();
 
     private static FrameBuffer gizmoPickingTarget;
+
+    private static Shader pickingShader;
 
     public static void init()
     {
@@ -74,137 +85,161 @@ public class Gizmo
         yScaleHandler.name = "gizmo.yScaleHandler";
         xScaleHandler.name = "gizmo.xScaleHandler";
 
-        /*yArrow.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoArrow);
-        xArrow.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoArrow);
-        centrePoint.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoPoint);
-        centrePointToEditCentre.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoPoint);
+        yArrow.getComponent(MeshComponent.class).setTexture(Resources.Textures.Gizmo.gizmoArrow);
+        xArrow.getComponent(MeshComponent.class).setTexture(Resources.Textures.Gizmo.gizmoArrow);
+        centrePoint.getComponent(MeshComponent.class).setTexture(Resources.Textures.Gizmo.gizmoPoint);
+        centrePointToEditCentre.getComponent(MeshComponent.class).setTexture(Resources.Textures.Gizmo.gizmoPoint);
         //rotationCircle.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoCircle);
-        rotationHandler.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoPoint);
-        yScaleHandler.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoPoint);
-        xScaleHandler.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoPoint);*///#FIXME
+        rotationHandler.getComponent(MeshComponent.class).setTexture(Resources.Textures.Gizmo.gizmoPoint);
+        yScaleHandler.getComponent(MeshComponent.class).setTexture(Resources.Textures.Gizmo.gizmoPoint);
+        xScaleHandler.getComponent(MeshComponent.class).setTexture(Resources.Textures.Gizmo.gizmoPoint);
 
-        /*yArrow.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 0.65f));
+        yArrow.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 0.65f));
         xArrow.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
         centrePoint.setColor(new Vector4f(0.5f, 0.5f, 0.5f, 1));
         centrePointToEditCentre.setColor(new Vector4f(0.25f, 0.9f, 0.5f, 1.0f));
-        //rotationCircle.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
+        rotationCircle.getComponent(CircleComponent.class).setColor(new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
         rotationHandler.setColor(new Vector4f(0.5f, 0.5f, 0.5f, 1));
         yScaleHandler.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1));
-        yScaleLine.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 0.65f));
+        yScaleLine.getComponent(LineComponent.class).setColor(new Vector4f(1.0f, 0.0f, 0.0f, 0.65f));
         xScaleHandler.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 1));
-        xScaleLine.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
+        xScaleLine.getComponent(LineComponent.class).setColor(new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
 
         //xArrow.getComponent(TransformComponent.class).getTransform().setRotation(-90.0f);
 
-        Vector2f arrowScale = new Vector2f(Resources.Textures.Gizmo.gizmoArrow.getWidth() / 100.0f, Resources.Textures.Gizmo.gizmoArrow.getHeight() / 100.0f).mul(1.5f);
-        Vector2f pointScale = new Vector2f(Resources.Textures.Gizmo.gizmoPoint.getWidth() / 100.0f, Resources.Textures.Gizmo.gizmoPoint.getHeight() / 100.0f);
+        Vector2f arrowScale = new Vector2f(Resources.Textures.Gizmo.gizmoArrow.getTexture2DData().getWidth() / 100.0f, Resources.Textures.Gizmo.gizmoArrow.getTexture2DData().getHeight() / 100.0f).mul(1.5f);
+        Vector2f pointScale = new Vector2f(Resources.Textures.Gizmo.gizmoPoint.getTexture2DData().getWidth() / 100.0f, Resources.Textures.Gizmo.gizmoPoint.getTexture2DData().getHeight() / 100.0f);
         //Vector2f rotationCircleScale = new Vector2f(Resources.Textures.Gizmo.gizmoCircle.getWidth() / 100.0f, Resources.Textures.Gizmo.gizmoCircle.getWidth() / 100.0f).mul(5.5f);
         yArrow.getComponent(TransformComponent.class).getTransform().setScale(arrowScale);
         xArrow.getComponent(TransformComponent.class).getTransform().setScale(arrowScale);
         centrePoint.getComponent(TransformComponent.class).getTransform().setScale(pointScale);
         centrePointToEditCentre.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(pointScale).div(2.5f));
+        rotationCircle.getComponent(CircleComponent.class).setRadius(300.0f);
+        rotationCircle.getComponent(CircleComponent.class).setAngleIncrement(5);
         //rotationCircle.getComponent(TransformComponent.class).getTransform().setScale(rotationCircleScale);
         rotationHandler.getComponent(TransformComponent.class).getTransform().setScale(pointScale);
         yScaleHandler.getComponent(TransformComponent.class).getTransform().setScale(pointScale);
         xScaleHandler.getComponent(TransformComponent.class).getTransform().setScale(pointScale);
 
-        yScaleLine.setLineWidth(6.0f);
-        xScaleLine.setLineWidth(6.0f);*///#FIXME
+        yScaleLine.getComponent(LineComponent.class).setLinesWidth(6.0f);
+        xScaleLine.getComponent(LineComponent.class).setLinesWidth(6.0f);
         //Transform rotationCircleTransform = rotationCircle.getComponent(TransformComponent.class).getTransform();
         //rotationHandler.getComponent(TransformComponent.class).getTransform().setPosition(new Vector2f(rotationCircleTransform.getPosition()).add(new Vector2f(0.0f, rotationCircleTransform.getScale().x * 100.0f / 2.0f)));
+
+        pickingShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/mesh/picking_shader.glsl"));
     }
 
     public static void draw()
     {
-        /*if(ViewsManager.getInspectorView().getCurrentInspectingObject() instanceof Object2D && active) {
-            Object2D object2D = (Object2D) ViewsManager.getInspectorView().getCurrentInspectingObject();
-            if(!object2D.isShouldDestroy()) {
+        yArrow.active = false;
+        xArrow.active = false;
+
+        centrePoint.active = false;
+
+        centrePointToEditCentre.active = false;
+
+        rotationCircle.active = false;
+        rotationHandler.active = false;
+
+        yScaleHandler.active = false;
+        yScaleLine.active = false;
+        xScaleHandler.active = false;
+        xScaleLine.active = false;
+
+        if(ViewsManager.getInspectorView().getCurrentInspectingObject() instanceof Entity entity && active) {
+            if(!entity.isShouldDestroy()) {
                 // Draw custom GIZMO
-                Transform object2DTransform = object2D.getComponent(TransformComponent.class).getTransform();
-                Vector2f object2DPosition = new Vector2f(MatrixUtils.getPosition(object2DTransform.getResultModelMatrix()));
-                float object2DRotation = MatrixUtils.getRotation(object2DTransform.getResultModelMatrix());
+                if(entity.getComponent(TransformComponent.class) == null) return;
+                Transform entityTransform = entity.getComponent(TransformComponent.class).getTransform();
+
+                Vector2f entityPosition = entityTransform.getRealPosition();
+                float entityRotation = entityTransform.getRotation();
 
                 Vector2f object2DCentrePosition = new Vector2f();
-                if(object2DTransform.getParentTransform() != null) {
-                    Vector2f parentPosition = MatrixUtils.getPosition(object2DTransform.getParentTransform().getResultModelMatrix());
-                    object2DCentrePosition.set(new Vector2f(object2DTransform.getPosition()).mul(MatrixUtils.getScale(object2DTransform.getParentTransform().getResultModelMatrix()))).add(object2DTransform.getCentre());
+                if(entityTransform.getParentTransform() != null) {
+                    Vector2f parentPosition = MatrixUtils.getPosition(entityTransform.getParentTransform().getResultModelMatrix());
+                    object2DCentrePosition.set(new Vector2f(entityTransform.getPosition()).mul(MatrixUtils.getScale(entityTransform.getParentTransform().getResultModelMatrix()))).add(entityTransform.getCentre());
                     object2DCentrePosition.add(parentPosition);
-                    MathUtils.rotate(object2DCentrePosition, MatrixUtils.getRotation(object2DTransform.getParentTransform().getResultModelMatrix()), parentPosition);
+                    MathUtils.rotate(object2DCentrePosition, MatrixUtils.getRotation(entityTransform.getParentTransform().getResultModelMatrix()), parentPosition);
                 } else {
-                    object2DCentrePosition.set(object2DTransform.getPosition()).add(object2DTransform.getCentre());
+                    object2DCentrePosition.set(entityTransform.getPosition()).add(entityTransform.getCentre());
                 }
 
                 Transform yArrowTransform = yArrow.getComponent(TransformComponent.class).getTransform();
                 Transform xArrowTransform = xArrow.getComponent(TransformComponent.class).getTransform();
                 Transform rotationHandlerTransform = rotationHandler.getComponent(TransformComponent.class).getTransform();
+                Transform rotationCircleTransform = rotationCircle.getComponent(TransformComponent.class).getTransform();
                 Transform yScaleHandlerTransform = yScaleHandler.getComponent(TransformComponent.class).getTransform();
                 Transform xScaleHandlerTransform = xScaleHandler.getComponent(TransformComponent.class).getTransform();
 
-                yArrowTransform.setPosition(new Vector2f(object2DPosition).add(new Vector2f(0.0f, yArrowTransform.getScale().y * 100.0f / 2.0f)));
-                xArrowTransform.setPosition(new Vector2f(object2DPosition));
-                centrePoint.getComponent(TransformComponent.class).getTransform().setPosition(object2DPosition);
+                yArrowTransform.setPosition(new Vector2f(entityPosition).add(new Vector2f(0.0f, yArrowTransform.getScale().y * 100.0f / 2.0f)));
+                xArrowTransform.setPosition(new Vector2f(entityPosition));
+                centrePoint.getComponent(TransformComponent.class).getTransform().setPosition(entityPosition);
                 centrePointToEditCentre.getComponent(TransformComponent.class).getTransform().setPosition(new Vector2f(object2DCentrePosition));
-                //Transform rotationCircleTransform = rotationCircle.getComponent(TransformComponent.class).getTransform();
-                rotationCircle.getTransform().setPosition(object2DCentrePosition);
-                rotationHandlerTransform.setPosition(new Vector2f(rotationCircle.getTransform().getPosition()).add(new Vector2f(0.0f, rotationCircle.getRadius())));
+                rotationCircleTransform.setPosition(object2DCentrePosition);
+                rotationHandlerTransform.setPosition(new Vector2f(rotationCircleTransform.getPosition()).add(new Vector2f(0.0f, rotationCircle.getComponent(CircleComponent.class).getRadius())));
                 Vector2f rotationOffset = new Vector2f(object2DCentrePosition).add(new Vector2f(rotationHandlerTransform.getPosition()).negate());
-                rotationHandlerTransform.setRotationAround(object2DRotation, rotationOffset);
+                rotationHandlerTransform.setRotationAround(entityRotation, rotationOffset);
                 float parentRotation = 0.0f;
                 Vector2f yScaleLineEnd = new Vector2f(0.0f, 350.0f);
                 Vector2f xScaleLineEnd = new Vector2f(350.0f, 0.0f);
                 Vector2f xArrowOffset = new Vector2f(xArrowTransform.getScale().y * 100.0f / 2.0f, 0.0f);
-                if (object2DTransform.getParentTransform() != null) {
-                    parentRotation = MatrixUtils.getRotation(object2DTransform.getParentTransform().getResultModelMatrix());
+                if (entityTransform.getParentTransform() != null) {
+                    parentRotation = MatrixUtils.getRotation(entityTransform.getParentTransform().getResultModelMatrix());
                     MathUtils.rotate(yScaleLineEnd, parentRotation, new Vector2f(0.0f));
                     MathUtils.rotate(xScaleLineEnd, parentRotation, new Vector2f(0.0f));
                     MathUtils.rotate(xArrowOffset, 90.0f, new Vector2f(0.0f));
                     xArrowTransform.translate(xArrowOffset);
 
-                    yArrowTransform.setRotationAround(parentRotation, new Vector2f(object2DPosition).add(new Vector2f(yArrowTransform.getPosition()).negate()));
-                    xArrowTransform.setRotationAround(parentRotation - 90.0f, new Vector2f(object2DPosition).add(new Vector2f(xArrowTransform.getPosition()).negate()));
+                    yArrowTransform.setRotationAround(parentRotation, new Vector2f(entityPosition).add(new Vector2f(yArrowTransform.getPosition()).negate()));
+                    xArrowTransform.setRotationAround(parentRotation - 90.0f, new Vector2f(entityPosition).add(new Vector2f(xArrowTransform.getPosition()).negate()));
                 } else {
                     xArrowTransform.translate(xArrowOffset);
                     yArrowTransform.setRotation(0.0f);
                     xArrowTransform.setRotation(-90.0f);
                 }
-                yScaleLine.setStart(object2DPosition);
-                yScaleLine.setEnd(new Vector2f(object2DPosition).add(yScaleLineEnd));
-                xScaleLine.setStart(object2DPosition);
-                xScaleLine.setEnd(new Vector2f(object2DPosition).add(xScaleLineEnd));
-                yScaleHandlerTransform.setPosition(new Vector2f(object2DPosition).add(yScaleLineEnd));
-                xScaleHandlerTransform.setPosition(new Vector2f(object2DPosition).add(xScaleLineEnd));
+
+                yScaleLine.getComponent(LineComponent.class).getLinesData()[0].getVertices()[0].set(entityPosition);
+                yScaleLine.getComponent(LineComponent.class).getLinesData()[0].getVertices()[1].set(new Vector2f(entityPosition).add(yScaleLineEnd));
+                xScaleLine.getComponent(LineComponent.class).getLinesData()[0].getVertices()[0].set(entityPosition);
+                xScaleLine.getComponent(LineComponent.class).getLinesData()[0].getVertices()[1].set(new Vector2f(entityPosition).add(xScaleLineEnd));
+                yScaleHandlerTransform.setPosition(new Vector2f(entityPosition).add(yScaleLineEnd));
+                xScaleHandlerTransform.setPosition(new Vector2f(entityPosition).add(xScaleLineEnd));
 
                 if (gizmoMode == GizmoMode.SCALE || gizmoMode == GizmoMode.TRANSLATION_SCALE || gizmoMode == GizmoMode.ROTATION_SCALE || gizmoMode == GizmoMode.TRANSLATION_ROTATION_SCALE) {
-                    Graphics.getMainRenderer().render(yScaleLine);
-                    Graphics.getMainRenderer().render(yScaleHandler);
-                    Graphics.getMainRenderer().render(xScaleLine);
-                    Graphics.getMainRenderer().render(xScaleHandler);
+                    yScaleLine.active = true;
+                    yScaleHandler.active = true;
+                    xScaleLine.active = true;
+                    xScaleHandler.active = true;
                 }
                 if (gizmoMode == GizmoMode.TRANSLATION || gizmoMode == GizmoMode.TRANSLATION_SCALE || gizmoMode == GizmoMode.TRANSLATION_ROTATION || gizmoMode == GizmoMode.TRANSLATION_ROTATION_SCALE) {
-                    Graphics.getMainRenderer().render(yArrow);
-                    Graphics.getMainRenderer().render(xArrow);
-                    Graphics.getMainRenderer().render(centrePoint);
+                    yArrow.active = true;
+                    xArrow.active = true;
+                    centrePoint.active = true;
                 }
                 if (gizmoMode == GizmoMode.ROTATION || gizmoMode == GizmoMode.TRANSLATION_ROTATION || gizmoMode == GizmoMode.ROTATION_SCALE || gizmoMode == GizmoMode.TRANSLATION_ROTATION_SCALE) {
-                    rotationCircle.draw();
-                    Graphics.getMainRenderer().render(rotationHandler);
+                    rotationCircle.active = true;
+                    rotationHandler.active = true;
                 }
 
-                Graphics.getMainRenderer().render(centrePointToEditCentre);
+                centrePointToEditCentre.active = true;
+                //Graphics.getMainRenderer().render(centrePointToEditCentre);
 
-                yArrow.getComponent(TransformComponent.class).getTransform().update(0.0f);
-                xArrow.getComponent(TransformComponent.class).getTransform().update(0.0f);
-                centrePoint.getComponent(TransformComponent.class).getTransform().update(0.0f);
-                centrePointToEditCentre.getComponent(TransformComponent.class).getTransform().update(0.0f);
-                rotationCircle.getTransform().update(0.0f);
-                rotationHandler.getComponent(TransformComponent.class).getTransform().update(0.0f);
-                yScaleHandler.getComponent(TransformComponent.class).getTransform().update(0.0f);
-                yScaleLine.getTransform().update(0.0f);
-                xScaleHandler.getComponent(TransformComponent.class).getTransform().update(0.0f);
-                xScaleLine.getTransform().update(0.0f);
+                yArrow.update();
+                xArrow.update();
+                centrePoint.update();
+                centrePointToEditCentre.update();
+                rotationCircle.update();
+                rotationHandler.update();
+                yScaleHandler.update();
+                yScaleLine.update();
+                xScaleHandler.update();
+                xScaleLine.update();
+
 
                 if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_1)) {
                     gizmoPickingTarget.bind();
+                    gizmoPickingTarget.clear();
 
                     GL13.glClear(GL13.GL_COLOR_BUFFER_BIT);
 
@@ -225,36 +260,23 @@ public class Gizmo
                     Vector4f xScaleHandlerLastColor = new Vector4f(xScaleHandler.getColor());
                     xScaleHandler.setColor(new Vector4f(xScaleHandler.getPickColor().x / 255.0f, xScaleHandler.getPickColor().y / 255.0f, xScaleHandler.getPickColor().z / 255.0f, 1.0f));
 
-                    TextureComponent yArrowTextureComponent = yArrow.getComponent(TextureComponent.class);
-                    TextureComponent xArrowTextureComponent = xArrow.getComponent(TextureComponent.class);
-                    TextureComponent centrePointTextureComponent = centrePoint.getComponent(TextureComponent.class);
-                    TextureComponent centrePointToEditCentreTextureComponent = centrePointToEditCentre.getComponent(TextureComponent.class);
-                    TextureComponent rotationHandlerTextureComponent = rotationHandler.getComponent(TextureComponent.class);
-                    TextureComponent yScaleHandlerTextureComponent = yScaleHandler.getComponent(TextureComponent.class);
-                    TextureComponent xScaleHandlerTextureComponent = xScaleHandler.getComponent(TextureComponent.class);
-
-                    yArrowTextureComponent.setTextureDrawMode(TextureDrawModes.ONLY_ALPHA);
-                    xArrowTextureComponent.setTextureDrawMode(TextureDrawModes.ONLY_ALPHA);
-                    centrePointTextureComponent.setTextureDrawMode(TextureDrawModes.ONLY_ALPHA);
-                    centrePointToEditCentreTextureComponent.setTextureDrawMode(TextureDrawModes.ONLY_ALPHA);
-                    rotationHandlerTextureComponent.setTextureDrawMode(TextureDrawModes.ONLY_ALPHA);
-                    yScaleHandlerTextureComponent.setTextureDrawMode(TextureDrawModes.ONLY_ALPHA);
-                    xScaleHandlerTextureComponent.setTextureDrawMode(TextureDrawModes.ONLY_ALPHA);
-
                     if (gizmoMode == GizmoMode.SCALE || gizmoMode == GizmoMode.TRANSLATION_SCALE || gizmoMode == GizmoMode.ROTATION_SCALE || gizmoMode == GizmoMode.TRANSLATION_ROTATION_SCALE) {
-                        Graphics.getMainRenderer().render(yScaleHandler);
-                        Graphics.getMainRenderer().render(xScaleHandler);
+                        Graphics.getMainRenderer().render(yScaleLine, Main.getMainCamera2DComponent(), pickingShader);
+                        Graphics.getMainRenderer().render(yScaleHandler, Main.getMainCamera2DComponent(), pickingShader);
+                        Graphics.getMainRenderer().render(xScaleLine, Main.getMainCamera2DComponent(), pickingShader);
+                        Graphics.getMainRenderer().render(xScaleHandler, Main.getMainCamera2DComponent(), pickingShader);
                     }
                     if (gizmoMode == GizmoMode.TRANSLATION || gizmoMode == GizmoMode.TRANSLATION_SCALE || gizmoMode == GizmoMode.TRANSLATION_ROTATION || gizmoMode == GizmoMode.TRANSLATION_ROTATION_SCALE) {
-                        Graphics.getMainRenderer().render(yArrow);
-                        Graphics.getMainRenderer().render(xArrow);
-                        Graphics.getMainRenderer().render(centrePoint);
+                        Graphics.getMainRenderer().render(yArrow, Main.getMainCamera2DComponent(), pickingShader);
+                        Graphics.getMainRenderer().render(xArrow, Main.getMainCamera2DComponent(), pickingShader);
+                        Graphics.getMainRenderer().render(centrePoint, Main.getMainCamera2DComponent(), pickingShader);
                     }
                     if (gizmoMode == GizmoMode.ROTATION || gizmoMode == GizmoMode.TRANSLATION_ROTATION || gizmoMode == GizmoMode.ROTATION_SCALE || gizmoMode == GizmoMode.TRANSLATION_ROTATION_SCALE) {
-                        Graphics.getMainRenderer().render(rotationHandler);
+                        Graphics.getMainRenderer().render(rotationCircle, Main.getMainCamera2DComponent(), pickingShader);
+                        Graphics.getMainRenderer().render(rotationHandler, Main.getMainCamera2DComponent(), pickingShader);
                     }
 
-                    Graphics.getMainRenderer().render(centrePointToEditCentre);
+                    Graphics.getMainRenderer().render(centrePointToEditCentre, Main.getMainCamera2DComponent());
 
                     Vector4f pickedColor = Graphics.getPixelColor(Mouse.getMousePosition());
 
@@ -265,13 +287,6 @@ public class Gizmo
                     rotationHandler.setColor(rotationHandlerLastColor);
                     yScaleHandler.setColor(yScaleHandlerLastColor);
                     xScaleHandler.setColor(xScaleHandlerLastColor);
-                    yArrowTextureComponent.setTextureDrawMode(TextureDrawModes.DEFAULT);
-                    xArrowTextureComponent.setTextureDrawMode(TextureDrawModes.DEFAULT);
-                    centrePointTextureComponent.setTextureDrawMode(TextureDrawModes.DEFAULT);
-                    centrePointToEditCentreTextureComponent.setTextureDrawMode(TextureDrawModes.DEFAULT);
-                    rotationHandlerTextureComponent.setTextureDrawMode(TextureDrawModes.DEFAULT);
-                    yScaleHandlerTextureComponent.setTextureDrawMode(TextureDrawModes.DEFAULT);
-                    xScaleHandlerTextureComponent.setTextureDrawMode(TextureDrawModes.DEFAULT);
 
                     GL13.glEnable(GL13.GL_BLEND);
 
@@ -339,31 +354,46 @@ public class Gizmo
                     Vector2f offset = new Vector2f(lastMousePosition).add(new Vector2f(mouseOGLPosition).negate());
                     Vector2f notRotatedOffset = new Vector2f(offset);
                     lastMousePosition.set(mouseOGLPosition);
-                    if (object2DTransform.getParentTransform() != null) {
-                        MathUtils.rotate(offset, -MatrixUtils.getRotation(object2DTransform.getParentTransform().getResultModelMatrix()),
+                    if (entityTransform.getParentTransform() != null) {
+                        MathUtils.rotate(offset, -MatrixUtils.getRotation(entityTransform.getParentTransform().getResultModelMatrix()),
                                 new Vector2f(0.0f, 0.0f));
                     }
-                    switch (selectedGizmoTool.getName()) {
-                        case "gizmo.yArrow" -> object2DTransform.translate(new Vector2f(0.0f, -offset.y));
-                        case "gizmo.xArrow" -> object2DTransform.translate(new Vector2f(-offset.x, 0.0f));
-                        case "gizmo.centrePoint" -> object2DTransform.translate(new Vector2f(-offset.x, -offset.y));
+                    switch (selectedGizmoTool.name) {
+                        case "gizmo.yArrow" -> entityTransform.translate(new Vector2f(0.0f, -offset.y));
+                        case "gizmo.xArrow" -> entityTransform.translate(new Vector2f(-offset.x, 0.0f));
+                        case "gizmo.centrePoint" -> entityTransform.translate(new Vector2f(-offset.x, -offset.y));
                         case "gizmo.rotationHandler" -> {
                             Vector2f p = new Vector2f(object2DCentrePosition);
-                            if(object2DTransform.getParentTransform() != null) {
-                                Vector2f parentPosition = MatrixUtils.getPosition(object2DTransform.getParentTransform().getResultModelMatrix());
-                                MathUtils.rotate(mouseOGLPosition, -MatrixUtils.getRotation(object2DTransform.getParentTransform().getResultModelMatrix()), parentPosition);
+                            if(entityTransform.getParentTransform() != null) {
+                                Vector2f parentPosition = MatrixUtils.getPosition(entityTransform.getParentTransform().getResultModelMatrix());
+                                MathUtils.rotate(mouseOGLPosition, -MatrixUtils.getRotation(entityTransform.getParentTransform().getResultModelMatrix()), parentPosition);
                             }
-                            object2DTransform.setRotation((float) (Math.atan2(mouseOGLPosition.y - p.y, mouseOGLPosition.x - p.x) / Math.PI / 2f) * 360f - (360f / 4f));
+                            entityTransform.setRotation((float) (Math.atan2(mouseOGLPosition.y - p.y, mouseOGLPosition.x - p.x) / Math.PI / 2f) * 360f - (360f / 4f));
                         }
                         case "gizmo.yScaleHandler" ->
-                                object2DTransform.scale(new Vector2f(0.0f, -offset.y * scaleSensitivity.y));
+                                entityTransform.scale(new Vector2f(0.0f, -offset.y * scaleSensitivity.y));
                         case "gizmo.xScaleHandler" ->
-                                object2DTransform.scale(new Vector2f(-offset.x * scaleSensitivity.x, 0.0f));
+                                entityTransform.scale(new Vector2f(-offset.x * scaleSensitivity.x, 0.0f));
                         case "gizmo.centrePointToEditCentre" ->
-                                object2DTransform.getCentre().add(new Vector2f(offset).negate());
+                                entityTransform.getCentre().add(new Vector2f(offset).negate());
                     }
                 }
+
+                Graphics.getMainRenderer().render(yArrow, Main.getMainCamera2DComponent());
+                Graphics.getMainRenderer().render(xArrow, Main.getMainCamera2DComponent());
+
+                Graphics.getMainRenderer().render(centrePoint, Main.getMainCamera2DComponent());
+
+                Graphics.getMainRenderer().render(centrePointToEditCentre, Main.getMainCamera2DComponent());
+
+                Graphics.getMainRenderer().render(rotationCircle, Main.getMainCamera2DComponent());
+                Graphics.getMainRenderer().render(rotationHandler, Main.getMainCamera2DComponent());
+
+                Graphics.getMainRenderer().render(yScaleHandler, Main.getMainCamera2DComponent());
+                Graphics.getMainRenderer().render(yScaleLine, Main.getMainCamera2DComponent());
+                Graphics.getMainRenderer().render(xScaleHandler, Main.getMainCamera2DComponent());
+                Graphics.getMainRenderer().render(xScaleLine, Main.getMainCamera2DComponent());
             }
-        }*///#FIXME
+        }
     }
 }

@@ -12,6 +12,8 @@ import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Input.PC.Mouse;
 import Core2D.Prefab.Prefab;
 import Core2D.Project.ProjectsManager;
+import Core2D.Scene2D.Scene2DCallback;
+import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.FileUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.View;
@@ -150,7 +152,7 @@ public class SceneView extends View
             Mouse.setViewportPosition(sceneViewWindowScreenPosition);
             Mouse.setViewportSize(new Vector2f(sceneViewWindowSize.x, sceneViewWindowSize.y));
 
-            ImGui.image(Main.getMainCamera2D().getComponent(Camera2DComponent.class).getFrameBuffer().getTextureHandler(), windowSize.x, windowSize.y, 0, 1, 1, 0);
+            ImGui.image(Main.getMainCamera2DComponent().getResultFrameBuffer().getTextureHandler(), windowSize.x, windowSize.y);
 
             if(ImGui.beginDragDropTarget()) {
                 if(ViewsManager.getResourcesView().getCurrentMovingFile() != null &&
@@ -212,19 +214,29 @@ public class SceneView extends View
             if (currentSceneManager.getCurrentScene2D() != null && EngineSettings.Playmode.canEnterPlaymode) {
                 EngineSettings.Playmode.active = true;
                 EngineSettings.Playmode.paused = false;
+
                 currentSceneManager.saveScene(currentSceneManager.getCurrentScene2D(), currentSceneManager.getCurrentScene2D().getScenePath());
+
+                ScriptSystem.reloadAllSceneScriptsWithGlobalClassLoader();
+
                 CamerasManager.mainCamera2D = currentSceneManager.getCurrentScene2D().getSceneMainCamera2D();
                 currentSceneManager.getCurrentScene2D().setRunning(true);
+                currentSceneManager.getCurrentScene2D().applyScriptsTempValues();
             }
         }
     }
 
     public void stopPlayMode()
     {
+        // вот уже все плохо =(
         if(currentSceneManager.getCurrentScene2D() != null && EngineSettings.Playmode.active) {
+            currentSceneManager.loadSceneAsCurrent(currentSceneManager.getCurrentScene2D().getScenePath());
+
+            ScriptSystem.reloadAllSceneScriptsWithUniqueClassLoader();
+
             EngineSettings.Playmode.active = false;
             EngineSettings.Playmode.paused = false;
-            currentSceneManager.loadSceneAsCurrent(currentSceneManager.getCurrentScene2D().getScenePath());
+
             ViewsManager.getInspectorView().setCurrentInspectingObject(null);
             currentSceneManager.getCurrentScene2D().setRunning(false);
         }
@@ -233,10 +245,9 @@ public class SceneView extends View
     public void pausePlayMode()
     {
         if(currentSceneManager.getCurrentScene2D() != null && EngineSettings.Playmode.active) {
+            System.out.println("paused!!");
             EngineSettings.Playmode.paused = !EngineSettings.Playmode.paused;
-            currentSceneManager.getCurrentScene2D().setRunning(currentSceneManager.getCurrentScene2D().isRunning());
-            currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = !currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics;
-            currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts = !currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts;
+            currentSceneManager.getCurrentScene2D().setRunning(!currentSceneManager.getCurrentScene2D().isRunning());
         }
     }
 
@@ -301,21 +312,21 @@ public class SceneView extends View
     {
         String extension = FilenameUtils.getExtension(file.getName());
         if(extension.equals("png") || extension.equals("jpg")) {
-            Entity newSceneEntity = Entity.createObject2D();
+            Entity newSceneEntity = Entity.createAsObject2D();
 
             String relativePath = FileUtils.getRelativePath(
                     new File(file.getPath()),
                     new File(ProjectsManager.getCurrentProject().getProjectPath()));
             MeshComponent meshComponent = newSceneEntity.getComponent(MeshComponent.class);
             Texture2D texture2D = new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath));
-            meshComponent.texture.set(texture2D);
-            meshComponent.texture.path = relativePath;
+            meshComponent.setTexture(texture2D);
+            meshComponent.getTexture().path = relativePath;
 
             Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
             newSceneEntity.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);
 
-            Vector2f newObject2DScale = new Vector2f(meshComponent.texture.getTexture2DData().getWidth() / 100.0f,
-                    meshComponent.texture.getTexture2DData().getHeight() / 100.0f);
+            Vector2f newObject2DScale = new Vector2f(meshComponent.getTexture().getTexture2DData().getWidth() / 100.0f,
+                    meshComponent.getTexture().getTexture2DData().getHeight() / 100.0f);
             newSceneEntity.getComponent(TransformComponent.class).getTransform().setScale(newObject2DScale);
 
             // дефолтный layer

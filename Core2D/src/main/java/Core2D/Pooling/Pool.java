@@ -12,6 +12,17 @@ public class Pool
         freePoolObjects.add(poolObject);
     }
 
+    public void releaseAllUsedPoolObjects()
+    {
+        Iterator<PoolObject> iterator = usedPoolObjects.listIterator();
+        while(iterator.hasNext()) {
+            PoolObject poolObject = iterator.next();
+            freePoolObjects.add(poolObject);
+            poolObject.destroyFromScene2D();
+            iterator.remove();
+        }
+    }
+
     public void releaseUsedPoolObject(PoolObject poolObject)
     {
         Iterator<PoolObject> iterator = usedPoolObjects.listIterator();
@@ -48,4 +59,8 @@ public class Pool
     {
         return freePoolObjects.size() != 0;
     }
+
+    public Queue<PoolObject> getFreePoolObjects() { return freePoolObjects; }
+
+    public List<PoolObject> getUsedPoolObjects() { return usedPoolObjects; }
 }

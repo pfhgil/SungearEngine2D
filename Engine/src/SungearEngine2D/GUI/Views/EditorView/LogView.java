@@ -17,8 +17,7 @@ public class LogView extends View
 
     public void draw()
     {
-        ImGui.begin("Log", ImGuiWindowFlags.NoMove);
-        {
+        if(ImGui.begin("Log", ImGuiWindowFlags.NoMove)) {
             ImVec2 windowSize = ImGui.getWindowSize();
             ImGui.beginChild("LogChild", windowSize.x - 17.0f, windowSize.y - 50.0f, true);
             {

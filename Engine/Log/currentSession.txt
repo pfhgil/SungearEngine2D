@@ -1,11 +1,9 @@
-[#FFFFFF] 2022/12/27 00:39:53 | [#008000] Current session log file was created!
-[#FFFFFF] 2022/12/27 00:39:53 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2022/12/27 00:39:53 | [#008000] Core2D started!
-[#FFFFFF] 2022/12/27 00:39:53 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
-[#FFFFFF] 2022/12/27 00:39:53 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/12/27 00:39:53 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/12/27 00:39:53 | [#FFFFFF] Initializing compiler...  
-[#FFFFFF] 2022/12/27 00:39:58 | [#FFFFFF] scene manager code: {
+[#FFFFFF] 2023/02/06 17:18:06 | [#008000] Current session log file was created!
+[#FFFFFF] 2023/02/06 17:18:06 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2023/02/06 17:18:06 | [#008000] Core2D started!
+[#FFFFFF] 2023/02/06 17:18:06 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2023/02/06 17:18:06 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2023/02/06 17:18:10 | [#FFFFFF] scene manager code: {
   "scene2DStoredValues": [
     {
       "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\kek0.sgs",
@@ -16,11 +14,60 @@
       "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl0.sgs",
       "inBuild": false,
       "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl1.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl2.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\tets0.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\lvl6.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\stable\\s_lvl0.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\for_alesha.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\kek.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
     }
   ],
   "mainScene2DPath": ""
 }
-[#FFFFFF] 2022/12/27 00:40:02 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/12/27 00:40:02 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/12/27 00:40:02 | [#FF0000] OpenGL error: 1280
-[#FFFFFF] 2022/12/27 00:44:34 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2023/02/06 17:18:14 | [#008000] Shader Resources\shaders\effect_2.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:14 | [#008000] Shader Resources\shaders\funny_effect.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:14 | [#008000] Shader Resources\shaders\for_alesha_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:21 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
+[#FFFFFF] 2023/02/06 17:18:21 | [#008000] scene destroyed: tets0
+[#FFFFFF] 2023/02/06 17:18:22 | [#008000] Shader Resources\shaders\effect_2.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:22 | [#008000] Shader Resources\shaders\funny_effect.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:22 | [#008000] Shader Resources\shaders\for_alesha_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:27 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
+[#FFFFFF] 2023/02/06 17:18:27 | [#008000] scene destroyed: tets0
+[#FFFFFF] 2023/02/06 17:18:27 | [#008000] Shader Resources\shaders\effect_2.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:27 | [#008000] Shader Resources\shaders\funny_effect.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:27 | [#008000] Shader Resources\shaders\for_alesha_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:28 | [#008000] scene destroyed: tets0
+[#FFFFFF] 2023/02/06 17:18:28 | [#008000] Shader Resources\shaders\effect_2.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:28 | [#008000] Shader Resources\shaders\funny_effect.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:28 | [#008000] Shader Resources\shaders\for_alesha_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:31 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists

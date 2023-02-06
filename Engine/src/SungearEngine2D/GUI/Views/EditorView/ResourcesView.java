@@ -12,10 +12,12 @@ import Core2D.Timer.Timer;
 import Core2D.Timer.TimerCallback;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
+import SungearEngine2D.GUI.ImGuiUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.EngineSettings;
+import SungearEngine2D.Main.Resources;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
@@ -43,13 +45,13 @@ public class ResourcesView extends View
 {
     public static String currentDirectoryPath = "";
 
-    private Vector2f iconImageSize = new Vector2f(75.0f, 75.0f);
-    private Vector2f iconImageOffset = new Vector2f(90.0f, 140.0f);
+    private final Vector2f iconImageSize = new Vector2f(75.0f, 75.0f);
+    private final Vector2f iconImageOffset = new Vector2f(90.0f, 140.0f);
 
     // id файла, на которую сейчас наведена мышка
     private int hoveredFileID = -1;
     // цвет файла, на которую сейчас наведена мышка
-    private Vector4f hoveredFileImageColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
+    private final Vector4f hoveredFileImageColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
 
     // последний id файла, на который была нажат мышь
     private int lastRightClickedFileID = -1;
@@ -57,7 +59,7 @@ public class ResourcesView extends View
     // id текущего изменяемого имени файла
     private int currentEditableFileNameID = -1;
     // текущее изменяемое имя файла
-    private ImString currentEditableFileName = new ImString();
+    private final ImString currentEditableFileName = new ImString();
     // сейчас имя файла изменяется?
     private boolean filenameEditing = false;
 
@@ -68,12 +70,12 @@ public class ResourcesView extends View
     private boolean mouseRightClickedOnResourcesView = false;
 
     // максимальная длина имени файла на строке
-    private int maxFileNameInLineLength = 8;
+    private final int maxFileNameInLineLength = 8;
     // максимальная длина имени файла + "..."
-    private int maxFileNameLength = 27;
+    private final int maxFileNameLength = 27;
 
     private boolean canOpenScene2D = true;
-    private Timer openScene2DTimer = new Timer(new TimerCallback() {
+    private final Timer openScene2DTimer = new Timer(new TimerCallback() {
         @Override
         public void deltaUpdate(float v) {
 
@@ -144,18 +146,32 @@ public class ResourcesView extends View
             if(mouseRightClickedOnResourcesView) {
                 if(ImGui.beginPopupContextWindow("File")) {
                     if(ImGui.beginMenu("Create")) {
-                        if(ImGui.menuItem("Directory")) {
+                        if(ImGuiUtils.menuItemWithImage("Directory", Resources.Textures.Icons.directoryIcon.getTextureHandler(), 14, 14)) {
                             ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Directory");
                         }
                         ImGui.separator();
-                        if(ImGui.menuItem("Java file")) {
-                            ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Java");
+                        if(ImGuiUtils.beginMenuWithImage("Java file", Resources.Textures.Icons.javaFileIcon14.getTextureHandler(), 14, 14)) {
+                            if(ImGuiUtils.menuItemWithImage("Component", 0, 14, 14)) {
+                                ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Java.Component");
+                            }
+                            if(ImGuiUtils.menuItemWithImage("System", 0, 14, 14)) {
+                                ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Java.System");
+                            }
+                            ImGui.endMenu();
                         }
-                        if(ImGui.menuItem("Text file")) {
+                        if(ImGuiUtils.menuItemWithImage("Text file", Resources.Textures.Icons.textFileIcon14.getTextureHandler(), 14, 14)) {
                             ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Text");
                         }
                         ImGui.separator();
-                        if(ImGui.menuItem("Scene2D")) {
+                        if(ImGuiUtils.beginMenuWithImage("GLSL", 0, 14, 14)) {
+                            if(ImGuiUtils.menuItemWithImage("ComplexShader", 0, 14, 14)) {
+                                ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("GLSL.ComplexShader");
+                            }
+
+                            ImGui.endMenu();
+                        }
+                        ImGui.separator();
+                        if(ImGuiUtils.menuItemWithImage("Scene2D", 0, 14, 14)) {
                             ViewsManager.getTopToolbarView().showCreateScene2DDialog();
                         }
                         ImGui.endMenu();
@@ -196,7 +212,7 @@ public class ResourcesView extends View
                     // чтобы убрать label
                     ImGui.pushItemWidth(75);
                     ImGui.pushID("File name");
-                    ImGui.inputText("", currentEditableFileName);
+                    ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", currentEditableFileName));
                     ImGui.popID();
                     ImGui.popItemWidth();
                 } else {
@@ -227,7 +243,7 @@ public class ResourcesView extends View
                     enableEditingFilename(files, i);
                 }
 
-                ImGui.setCursorPos(currentPosition.x, currentPosition.y);
+                ImGui.setCursorPos(currentPosition.x - 5.0f, currentPosition.y);
 
                 drawItem(files, i, getIconHandler(files[i]), files[i].isDirectory());
 
@@ -276,7 +292,6 @@ public class ResourcesView extends View
                         canOpenScene2D = false;
                         EngineSettings.Playmode.active = false;
                         EngineSettings.Playmode.paused = false;
-                        CamerasManager.mainCamera2D = Main.getMainCamera2D();
                         ViewsManager.getInspectorView().setCurrentInspectingObject(null);
                         if (currentSceneManager != null && currentSceneManager.getCurrentScene2D() != null) {
                             currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;
@@ -312,8 +327,6 @@ public class ResourcesView extends View
 
                         scene2D.getPhysicsWorld().simulatePhysics = false;
                         scene2D.getScriptSystem().runScripts = false;
-
-                        CamerasManager.mainCamera2D = Main.getMainCamera2D();
                     }
                 }
             }
@@ -393,49 +406,172 @@ public class ResourcesView extends View
     {
         if(ProjectsManager.getCurrentProject() != null) {
             File newFile = switch (fileType) {
-                case "Java" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".java");
+                case "Java.Component", "Java.System" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".java");
                 case "Text" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".txt");
                 case "Directory" -> FileUtils.createFolder(ResourcesView.currentDirectoryPath + "\\" + name);
+                case "GLSL.ComplexShader" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".glsl");
                 default -> null;
             };
             if(newFile == null) return;
+            String fileString = "";
+
             // если тип файл - java, то создаю этот файл с заранее подготовленным кодом
-            if(newFile.exists() && fileType.equals("Java")) {
-                String javaFileCode =
-                        "import Core2D.GameObject.*;\n" +
-                        "\n" +
-                        "public class " + name + "\n" +
-                        "{\n" +
-                        "    public void update()\n" +
-                        "    {\n" +
-                        "        \n" +
-                        "    }\n" +
-                        "    \n" +
-                        "    public void deltaUpdate(float deltaTime)\n" +
-                        "    {\n" +
-                        "        \n" +
-                        "    }\n" +
-                        "    \n" +
-                        "    public void collider2DEnter(GameObject otherObj)\n" +
-                        "    {\n" +
-                        "        \n" +
-                        "    }\n" +
-                        "    \n" +
-                        "    public void collider2DExit(GameObject otherObj)\n" +
-                        "    {\n" +
-                        "        \n" +
-                        "    }\n" +
-                        "}";
-                // создаю файл с уже заранее подготовленным кодом
-                FileUtils.writeToFile(
-                        newFile,
-                        javaFileCode,
-                        false
-                );
+            if(fileType.equals("Java.Component")) {
+                fileString =
+                        """
+                        import Core2D.ECS.*;
+                        import Core2D.ECS.Component.Component;
+                        import Core2D.ECS.Component.Components.*;
+                        import Core2D.ECS.System.System;
+                        import Core2D.ECS.System.Systems.*;
+                        import Core2D.Scripting.*;
+                        import Core2D.Log.*;
+                        
+                        // Attention! We do not recommend writing logic in components. Try to declare only fields in components.
+                        public class %s extends Component
+                        {
+                            @Override
+                            public void update()
+                            {
+                        
+                            }
+                            
+                            @Override
+                            public void deltaUpdate(float deltaTime)
+                            {
+                            
+                            }
+
+                            // otherEntity - an entity, one of whose colliders entered one of the colliders of this entity.
+                            @Override
+                            public void collider2DEnter(Entity otherEntity)
+                            {
+                            
+                            }
+                            
+                            // otherEntity - an entity whose body came out of the colliders of this entity
+                            @Override
+                            public void collider2DExit(Entity otherEntity)
+                            {
+                            
+                            }
+                            
+                            // camera2DComponent - the camera that renders this entity.
+                            @Override
+                            public void render(Camera2DComponent camera2DComponent)
+                            {
+                            
+                            }
+                            
+                            // Use the "shader" parameter to render this entity.
+                            @Override
+                            public void render(Camera2DComponent camera2DComponent, Shader shader)
+                            {
+                            
+                            }
+                        }
+                        """.formatted(name);
+            } else if(fileType.equals("Java.System")) {
+                fileString =
+                        """
+                        import Core2D.ECS.*;
+                        import Core2D.ECS.Component.Component;
+                        import Core2D.ECS.Component.Components.*;
+                        import Core2D.ECS.System.System;
+                        import Core2D.ECS.System.Systems.*;
+                        import Core2D.Scripting.*;
+                        import Core2D.Log.*;
+                        
+                        // Attention! Do not declare fields with the @InspectorView annotation in systems. They will not be processed and shown in the Inspector.
+                        public class %s extends System
+                        {
+                            @Override
+                            public void update()
+                            {
+                        
+                            }
+                            
+                            @Override
+                            public void deltaUpdate(float deltaTime)
+                            {
+                            
+                            }
+
+                            // otherEntity - an entity, one of whose colliders entered one of the colliders of this entity.
+                            @Override
+                            public void collider2DEnter(Entity otherEntity)
+                            {
+                            
+                            }
+                            
+                            // otherEntity - an entity whose body came out of the colliders of this entity
+                            @Override
+                            public void collider2DExit(Entity otherEntity)
+                            {
+                            
+                            }
+                            
+                            // camera2DComponent - the camera that renders this entity.
+                            @Override
+                            public void render(Camera2DComponent camera2DComponent)
+                            {
+                            
+                            }
+                            
+                            // Use the "shader" parameter to render this entity.
+                            @Override
+                            public void render(Camera2DComponent camera2DComponent, Shader shader)
+                            {
+                            
+                            }
+                        }
+                        """.formatted(name);
             } else if(fileType.equals("Text")) { // если тип файла - текст, то создаю файл с надписью hello! (по приколу)
+                fileString = "Hello world!";
+            } else if(fileType.equals("GLSL.ComplexShader")) {
+                fileString =
+                        """
+                        // ATTENTION: do not write the shader version!
+                        #ifdef VERTEX
+                            layout (location = 0) in vec2 positionAttribute;
+                            layout (location = 1) in vec2 textureCoordsAttribute;
+    
+                            uniform mat4 mvpMatrix;
+    
+                            out vec2 vs_textureCoords;
+    
+                            void main()
+                            {
+                                vs_textureCoords = textureCoordsAttribute;
+                            
+                                gl_Position = mvpMatrix * vec4(positionAttribute, 0.0, 1.0);
+                            }
+                        #endif
+
+                        #ifdef FRAGMENT
+                            out vec4 fragColor;
+
+                            uniform sampler2D sampler;
+
+                            uniform vec4 color;
+
+                            in vec2 vs_textureCoords;
+
+                            void main()
+                            {
+                                vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0f - vs_textureCoords.y));
+
+                                fragColor = color * textureColor;
+                            }
+                        #endif
+                        """;
+            }
+
+            if(newFile.exists() && newFile.isFile()) {
+                System.out.println("path: " + newFile.getPath());
                 FileUtils.writeToFile(
                         newFile,
-                        "Hello!",
+                        fileString,
                         false
                 );
             }

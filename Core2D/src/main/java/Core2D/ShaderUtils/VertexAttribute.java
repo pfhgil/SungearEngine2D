@@ -1,7 +1,6 @@
 package Core2D.ShaderUtils;
 
 import Core2D.Log.Log;
-import Core2D.Graphics.RenderParts.Texture2D;
 
 import static org.lwjgl.opengl.GL11C.GL_FLOAT;
 import static org.lwjgl.opengl.GL11C.GL_INT;
@@ -148,9 +147,6 @@ public class VertexAttribute
 
             case ShaderDataType.SHADER_DATA_TYPE_T_BOOLEAN: return 1;
         }
-
-        Texture2D texture2D = new Texture2D();
-        texture2D.getGLTextureBlock();
 
         Log.CurrentSession.println("Error: unknown attribute size!", Log.MessageType.ERROR);
         return 0;

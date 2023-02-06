@@ -15,7 +15,7 @@ public class Grid
 
     public static void init(Vector2f scale)
     {
-        grid = Entity.createObject2D();
+        grid = Entity.createAsObject2D();
 
         grid.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(1f, 1f));
         MeshComponent c = grid.getComponent(MeshComponent.class);
@@ -29,7 +29,7 @@ public class Grid
         //grid.getComponent(TextureComponent.class).getTexture2D().param = GL_REPEAT;
         //grid.setColor(new Vector4f(0.3f, 0.3f, 0.3f, 1.0f));
         //grid.setShaderProgram(null);
-        c.getComponent(MeshComponent.class).shader = Resources.Shaders.Grid.gridShader;
+        c.getComponent(MeshComponent.class).setShader(Resources.Shaders.Grid.gridShader);
         //grid.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Icons.object2DFileIcon);
     }
 

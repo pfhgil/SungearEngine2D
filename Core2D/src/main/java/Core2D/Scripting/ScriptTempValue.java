@@ -1,6 +1,5 @@
 package Core2D.Scripting;
 
-import Core2D.ECS.Component.Component;
 import Core2D.ECS.Entity;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
@@ -39,6 +38,8 @@ public class ScriptTempValue
 
     public void applyToScript(Script script)
     {
+        Log.Console.println("script: +" + script + ", field name: " + fieldName + ", value: " + value);
+
         if(script != null && fieldName != null && value != null) {
             try {
                 Field field = script.getScriptClass().getField(fieldName);

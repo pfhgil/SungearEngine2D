@@ -1,4 +1,4 @@
 {
-  "jdkPath": "D:\\Programming\\JetBrains\\apps\\IDEA-U\\ch-0\\223.7571.182\\jbr",
+  "jdkPath": "C:\\Program Files\\Java\\jdk-17",
   "currentPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\ProjectSettings.txt"
 }

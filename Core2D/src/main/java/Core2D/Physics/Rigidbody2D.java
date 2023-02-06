@@ -29,6 +29,7 @@ public class Rigidbody2D
         setFriction(rigidbody2D.getFriction());
         setSensor(rigidbody2D.isSensor());
         setFixedRotation(rigidbody2D.isFixedRotation());
+        //body.setA
     }
 
     public void destroy()

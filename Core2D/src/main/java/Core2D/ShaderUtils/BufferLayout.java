@@ -1,12 +1,12 @@
 package Core2D.ShaderUtils;
 
-import org.lwjgl.opengl.GL20C;
+import Core2D.Graphics.OpenGL;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.lwjgl.opengl.GL33C.glVertexAttribDivisor;
+import static org.lwjgl.opengl.GL46C.*;
 
 public class BufferLayout
 {
@@ -51,18 +51,18 @@ public class BufferLayout
     // добавить один аттрибут
     public void addAttribute(VertexAttribute attribute, boolean divisor)
     {
-        GL20C.glEnableVertexAttribArray(attribute.getID());
-        GL20C.glVertexAttribPointer(
+        OpenGL.glCall((params) -> glEnableVertexAttribArray(attribute.getID()));
+        OpenGL.glCall((params) -> glVertexAttribPointer(
                 attribute.getID(),
                 attribute.getElementAttributeSize(),
                 attribute.getConvertedShaderDataType(),
                 attribute.isNormalized(),
                 stride,
                 attribute.getOffset()
-        );
+        ));
 
         if(divisor) {
-            glVertexAttribDivisor(attribute.getID(), 1);
+            OpenGL.glCall((params) -> glVertexAttribDivisor(attribute.getID(), 1));
         }
     }
 

@@ -37,27 +37,25 @@ public class AudioInfo
 
     public static AudioInfo loadAudio(String path)
     {
-        AudioInputStream stream = null;
         File audioFile = new File(path);
-        try {
-            stream = AudioSystem.getAudioInputStream(audioFile);
+        try(AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile)) {
+            return createAudioInfo(audioInputStream);
         } catch (UnsupportedAudioFileException | IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
-        return createAudioInfo(stream);
+        return null;
     }
 
     public static AudioInfo loadAudio(InputStream inputStream)
     {
-        AudioInputStream stream = null;
-        try {
-            stream = AudioSystem.getAudioInputStream(new BufferedInputStream(inputStream));
+        try(AudioInputStream stream = AudioSystem.getAudioInputStream(new BufferedInputStream(inputStream)); inputStream) {
+            return createAudioInfo(stream);
         } catch (UnsupportedAudioFileException | IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
-        return createAudioInfo(stream);
+        return null;
     }
 
     private static AudioInfo createAudioInfo(AudioInputStream stream)
@@ -68,7 +66,7 @@ public class AudioInfo
 
         AudioInfo audioInfo = new AudioInfo();
 
-        if(stream != null) {
+        try(stream) {
             AudioFormat format = stream.getFormat();
             if (format.isBigEndian()) try {
                 throw new UnsupportedAudioFileException("Can't handle Big Endian formats yet");
@@ -115,6 +113,8 @@ public class AudioInfo
             audioInfo.frameLength = stream.getFrameLength();
             //and return the rough notion of length for the audio stream!
             audioInfo.audioLength = (long) (1000f * stream.getFrameLength() / format.getFrameRate());
+        } catch (Exception e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
         return audioInfo;
     }

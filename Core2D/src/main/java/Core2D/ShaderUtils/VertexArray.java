@@ -1,5 +1,6 @@
 package Core2D.ShaderUtils;
 
+import Core2D.Graphics.OpenGL;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 
@@ -11,7 +12,7 @@ import static org.lwjgl.opengl.GL15C.GL_ARRAY_BUFFER;
 import static org.lwjgl.opengl.GL15C.glBufferSubData;
 import static org.lwjgl.opengl.GL30C.*;
 
-public class VertexArray implements AutoCloseable
+public class VertexArray
 {
     // array id
     private int handler;
@@ -27,7 +28,7 @@ public class VertexArray implements AutoCloseable
     // создание vao
     private void create()
     {
-        handler = glGenVertexArrays();
+        handler = OpenGL.glCall((params) -> glGenVertexArrays(), Integer.class);
 
         bind();
     }
@@ -38,7 +39,6 @@ public class VertexArray implements AutoCloseable
         while (vbosIterator.hasNext()) {
             VertexBuffer vbo = vbosIterator.next();
             vbo.destroy();
-            vbo = null;
             vbosIterator.remove();
         }
 
@@ -46,32 +46,25 @@ public class VertexArray implements AutoCloseable
         while (ibosIterator.hasNext()) {
             IndexBuffer ibo = ibosIterator.next();
             ibo.destroy();
-            ibo = null;
             ibosIterator.remove();
         }
 
+        // удаление vao
+        OpenGL.glCall((params) -> glDeleteVertexArrays(handler));
+
         VBOs = null;
         IBOs = null;
-
-        // удаление vao
-        glDeleteVertexArrays(handler);
-
-        try {
-            close();
-        } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-        }
     }
 
     // связка
     public void bind()
     {
-        glBindVertexArray(handler);
+        OpenGL.glCall((params) -> glBindVertexArray(handler));
     }
     // развязывание
     public void unBind()
     {
-        glBindVertexArray(0);
+        OpenGL.glCall((params) -> glBindVertexArray(0));
     }
     public void putVBO(VertexBuffer vertexBuffer, boolean divisor)
     {
@@ -90,7 +83,7 @@ public class VertexArray implements AutoCloseable
     public void updateVBO(VertexBuffer VBO, float[] data)
     {
         VBO.bind();
-        glBufferSubData(GL_ARRAY_BUFFER, 0, data);
+        OpenGL.glCall((params) -> glBufferSubData(GL_ARRAY_BUFFER, 0, data));
         VBO.unBind();
     }
 
@@ -100,9 +93,4 @@ public class VertexArray implements AutoCloseable
     public List<VertexBuffer> getVBOs() { return VBOs; }
 
     public List<IndexBuffer> getIBOs() { return IBOs; }
-
-    @Override
-    public void close() throws Exception {
-
-    }
 }

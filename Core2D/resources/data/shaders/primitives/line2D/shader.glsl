@@ -1,25 +1,28 @@
 #ifdef VERTEX
-    #version 330 core
-
     // id аттрибута = 0. позиции вершин. входной параметр
     layout (location = 0) in vec2 positionAttribute;
 
     uniform mat4 mvpMatrix;
 
+    uniform vec2 offset;
+
+    uniform vec2 verticesPositions[2];
+
+    flat out int vertexID;
+
     void main()
     {
-        gl_Position = mvpMatrix * vec4(positionAttribute, 0.0, 1.0);
+        vertexID = gl_VertexID;
+        gl_Position = mvpMatrix * vec4(offset + verticesPositions[vertexID], 0.0, 1.0);
     }
 #endif
 
 #ifdef FRAGMENT
-    #version 330 core
+    out vec4 fragColor;
 
-    precision mediump float;
+    uniform vec4 color;
 
-    out mediump vec4 fragColor;
-
-    uniform mediump vec4 color;
+    flat in int vertexID;
 
     void main()
     {

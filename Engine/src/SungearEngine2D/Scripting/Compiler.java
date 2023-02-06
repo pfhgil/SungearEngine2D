@@ -1,5 +1,10 @@
 package SungearEngine2D.Scripting;
 
+import Core2D.AssetManager.Asset;
+import Core2D.AssetManager.AssetManager;
+import Core2D.DataClasses.ShaderData;
+import Core2D.Graphics.RenderParts.Shader;
+import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Tasks.StoppableTask;
@@ -10,12 +15,107 @@ import SungearEngine2D.Main.EngineSettings;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 public class Compiler
 {
     private static List<String> notCompiledScripts = new ArrayList<>();
+
+    private static List<Shader> shadersToCompile = new ArrayList<>();
+    public static void compileAllShaders()
+    {
+        Iterator<Shader> shadersIterator = shadersToCompile.iterator();
+        while(shadersIterator.hasNext()) {
+            Shader shader = shadersIterator.next();
+
+            String shaderFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + shader.path;
+            long lastModified = new File(shaderFullPath).lastModified();
+
+            if(shader.lastModified != lastModified) {
+                System.out.println("asset reloaded: " + shader.path);
+                Asset reloadedShaderData = AssetManager.getInstance().reloadAsset(shader.path, ShaderData.class);
+
+                boolean compiled = shader.compile((ShaderData) reloadedShaderData.getAssetObject());
+
+                if (compiled) {
+                    shadersIterator.remove();
+
+                    ViewsManager.getBottomMenuView().leftSideInfo = "Shader " + shader.path + " was successfully compiled!";
+                    ViewsManager.getBottomMenuView().leftSideInfoColor.set(0.0f, 1.0f, 0.0f, 1.0f);
+
+                    Log.CurrentSession.println("Shader " + shader.path + " was successfully compiled!", Log.MessageType.SUCCESS);
+                } else {
+                    ViewsManager.getBottomMenuView().leftSideInfo = "Shader " + shader.path + " was not compiled. See the log for details";
+                    ViewsManager.getBottomMenuView().leftSideInfoColor.set(1.0f, 0.0f, 0.0f, 1.0f);
+                }
+
+                shader.lastModified = lastModified;
+            }
+        }
+    }
+
+    public static void addShaderToCompile(Shader shader)
+    {
+        boolean[] shaderExists = new boolean[] { false };
+
+        shadersToCompile.forEach(s -> {
+            if(s.path.equals(shader.path)) {
+                shaderExists[0] = true;
+            }
+        });
+
+        if(!shaderExists[0]) {
+            shadersToCompile.add(shader);
+        }
+    }
+
+    public static void checkShaderToCompile(Shader shader)
+    {
+        if (shader != null) {
+            String shaderFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + shader.path;
+            File file = new File(shaderFullPath);
+
+            if (file.exists()) {
+                long lastModified = file.lastModified();
+                if (lastModified != shader.lastModified) {
+                    Compiler.addShaderToCompile(shader);
+                }
+            }
+        }
+    }
+
+    /*
+    public static void findAllShadersInClassAndCompile(Class<?> cls, Object clsInstance)
+    {
+        for(Field field : cls.getFields()) {
+            try {
+                field.setAccessible(true);
+                //System.out.println("field type: " + field.getType());
+                if (field.getType().isAssignableFrom(Shader.class)) {
+                    Shader shader = (Shader) field.get(clsInstance);
+
+                    if (shader != null) {
+                        String shaderFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + shader.path;
+                        File file = new File(shaderFullPath);
+
+                        if (file.exists()) {
+                            long lastModified = file.lastModified();
+                            if (lastModified != shader.lastModified) {
+                                Compiler.addShaderToCompile(shader);
+                            }
+                        }
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+            }
+        }
+    }
+
+     */
 
     public static boolean compileScript(String path)
     {
@@ -33,11 +133,12 @@ public class Compiler
 
                 String command = "\"" + ProjectsManager.getCurrentProject().getProjectSettings().getJdkPath() +
                         "\\bin\\javac\" -sourcepath " +
-                        "\"" + scriptFile.getParent() + "\" \n" +
+                        "\"" + ProjectsManager.getCurrentProject().getScriptsPath() + "\" " +
                         "-classpath " +
                         "\"" + compilerPath.getCanonicalPath() + "\\Core2D.jar\" " +
                         "\"" + scriptFile.getCanonicalPath() + "\"";
 
+                System.out.println("command:  " + command);
 
                 proc = Runtime.getRuntime().exec(command);
 
@@ -61,7 +162,7 @@ public class Compiler
                     ViewsManager.getBottomMenuView().leftSideInfoColor.set(1.0f, 0.0f, 0.0f, 1.0f);
                 }
                 if (outputString.equals("") && errorString.equals("")) {
-                    ViewsManager.getBottomMenuView().leftSideInfo = "Script " + scriptFile.getName() + " was successfully built!";
+                    ViewsManager.getBottomMenuView().leftSideInfo = "Script " + scriptFile.getName() + " was successfully compiled!";
                     ViewsManager.getBottomMenuView().leftSideInfoColor.set(0.0f, 1.0f, 0.0f, 1.0f);
                     Log.CurrentSession.println("Script " + scriptFile.getName() + " was successfully built!", Log.MessageType.SUCCESS);
                     result = true;
@@ -72,12 +173,9 @@ public class Compiler
             } catch (InterruptedException | IOException e) {
                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }
-
-            //Utils.reloadAllCore2DClassLoaderClasses();
             return result;
         } else {
-            //Utils.reloadAllCore2DClassLoaderClasses();
-            Log.CurrentSession.println("Error compiling script. File \"" + path + "\" does not exist", Log.MessageType.ERROR);
+            Log.CurrentSession.println(new RuntimeException("Error compiling script. File \"" + path + "\" does not exist"), Log.MessageType.ERROR);
             return false;
         }
     }

@@ -1,10 +1,11 @@
 package Core2D.Physics;
 
+import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.BoxCollider2DComponent;
 import Core2D.ECS.Component.Components.CircleCollider2DComponent;
 import Core2D.ECS.Component.Components.Rigidbody2DComponent;
-import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Entity;
+import Core2D.ECS.System.System;
 import Core2D.Log.Log;
 import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.Physics.Collider2D.CircleCollider2D;
@@ -101,50 +102,44 @@ public class PhysicsWorld extends World
 
             if (shouldCollider2DEnter) {
                 if (!entityAEnter.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsA = entityAEnter.getAllComponents(ScriptComponent.class);
-
-                    for (ScriptComponent scriptComponent : scriptComponentsA) {
-                        //scriptComponent.collider2DEnter(gameObjectBEnter);
-                        scriptComponent.callMethod((params) -> scriptComponent.collider2DEnter(entityBEnter));
+                    for(Component component : entityAEnter.getComponents()) {
+                        component.collider2DEnter(entityBEnter);
+                    }
+                    for(System system : entityAEnter.getSystems()) {
+                        system.collider2DEnter(entityBEnter);
                     }
                 }
 
                 if (!entityBEnter.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsB = entityBEnter.getAllComponents(ScriptComponent.class);
-
-                    for (ScriptComponent scriptComponent : scriptComponentsB) {
-                        //scriptComponent.collider2DEnter(gameObjectAEnter);
-                        scriptComponent.callMethod((params) -> scriptComponent.collider2DEnter(entityAEnter));
+                    for(Component component : entityBEnter.getComponents()) {
+                        component.collider2DEnter(entityAEnter);
+                    }
+                    for(System system : entityBEnter.getSystems()) {
+                        system.collider2DEnter(entityAEnter);
                     }
                 }
-
-                entityAEnter = null;
-                entityBEnter = null;
 
                 shouldCollider2DEnter = false;
             }
 
             if (shouldCollider2DExit) {
                 if (!entityAExit.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsA = entityAExit.getAllComponents(ScriptComponent.class);
-
-                    for (ScriptComponent scriptComponent : scriptComponentsA) {
-                        //scriptComponent.collider2DExit(gameObject2DBExit);
-                        scriptComponent.callMethod((params) -> scriptComponent.collider2DExit(entityBExit));
+                    for(Component component : entityAExit.getComponents()) {
+                        component.collider2DEnter(entityBExit);
+                    }
+                    for(System system : entityAExit.getSystems()) {
+                        system.collider2DEnter(entityBExit);
                     }
                 }
 
                 if (!entityBExit.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsB = entityBExit.getAllComponents(ScriptComponent.class);
-
-                    for (ScriptComponent scriptComponent : scriptComponentsB) {
-                        //scriptComponent.collider2DExit(gameObject2DAExit);
-                        scriptComponent.callMethod((params) -> scriptComponent.collider2DExit(entityAExit));
+                    for(Component component : entityBExit.getComponents()) {
+                        component.collider2DEnter(entityAExit);
+                    }
+                    for(System system : entityBExit.getSystems()) {
+                        system.collider2DEnter(entityAExit);
                     }
                 }
-
-                entityAExit = null;
-                entityBExit = null;
 
                 shouldCollider2DExit = false;
             }
@@ -197,7 +192,7 @@ public class PhysicsWorld extends World
 
         PolygonShape shape = new PolygonShape();
         Vector2f halfSize = new Vector2f((100.0f / RATIO / 2.0f) * boxCollider2D.getScale().x, (100.0f / RATIO / 2.0f) * boxCollider2D.getScale().y);
-        shape.setAsBox(halfSize.x, halfSize.y, new Vec2(boxCollider2D.getOffset().x / PhysicsWorld.RATIO, boxCollider2D.getOffset().y / PhysicsWorld.RATIO), 0);
+        shape.setAsBox(halfSize.x, halfSize.y, new Vec2(boxCollider2D.getOffset().x / PhysicsWorld.RATIO, boxCollider2D.getOffset().y / PhysicsWorld.RATIO), boxCollider2D.getAngle() / PhysicsWorld.RATIO);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
