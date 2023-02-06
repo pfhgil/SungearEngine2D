@@ -1,0 +1,28 @@
+plugins {
+    id 'java'
+}
+
+group 'sungear'
+version '1.0-SNAPSHOT'
+
+repositories {
+    flatDir {
+        dirs '../Core2D/build/libs'
+        dirs '../Core2D/libs'
+        dirs '../Engine/build/libs'
+        dirs '../Engine/libs'
+    }
+    mavenCentral()
+}
+
+dependencies {
+    implementation project(':common')
+    implementation project(':Engine')
+    implementation project(':Core2D')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+}
+
+test {
+    useJUnitPlatform()
+}
