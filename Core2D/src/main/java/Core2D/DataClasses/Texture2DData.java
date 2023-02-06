@@ -31,7 +31,7 @@ public class Texture2DData extends Data
     // сколько бит будет занимать каждый из каналов
     private transient int internalFormat;
 
-    private int filterParam = GL_NEAREST;
+    private int filterParam = GL_LINEAR;
 
     private int wrapParam = GL_CLAMP_TO_EDGE;
 

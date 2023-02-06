@@ -12,14 +12,10 @@ import Core2D.ECS.NonRemovable;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Layering.Layer;
-import Core2D.Layering.Layering;
 import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
-import Core2D.Physics.PhysicsWorld;
 import Core2D.Project.ProjectsManager;
-import Core2D.Scene2D.SceneManager;
 import Core2D.Scripting.Script;
-import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import SungearEngine2D.GUI.ImGuiUtils;
@@ -29,7 +25,6 @@ import SungearEngine2D.Main.Resources;
 import SungearEngine2D.Utils.ResourcesUtils;
 import imgui.ImGui;
 import imgui.ImVec2;
-import imgui.ImVec4;
 import imgui.flag.*;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
@@ -42,7 +37,6 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Optional;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
 
@@ -101,6 +95,11 @@ public class ComponentsView extends View
 
             ImGui.pushID(componentName + i);
 
+            if(i == 0) {
+                ImVec2 cursorPos = ImGui.getCursorPos();
+                ImGui.setCursorPos(cursorPos.x, cursorPos.y + 5.0f);
+            }
+
             boolean opened = false;
             if(!componentName.equals("ScriptComponent")) {
                 opened = ImGui.collapsingHeader(componentName + ". ID: " + currentComponent.componentID);
@@ -144,16 +143,16 @@ public class ComponentsView extends View
                                 transformComponent.getTransform().getCentre().y
                         };
 
-                        if (ImGui.dragFloat2("Position", pos)) {
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Position", pos))) {
                             transformComponent.getTransform().setPosition(new Vector2f(pos));
                         }
-                        if (ImGui.dragFloat("Rotation", rotation)) {
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Rotation", rotation))) {
                             transformComponent.getTransform().setRotation(rotation[0]);
                         }
-                        if (ImGui.dragFloat2("Scale", scale, 0.01f)) {
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Scale", scale, 0.01f))) {
                             transformComponent.getTransform().setScale(new Vector2f(scale));
                         }
-                        if (ImGui.dragFloat2("Centre", centre, 0.01f)) {
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Centre", centre, 0.01f))) {
                             transformComponent.getTransform().setCentre(new Vector2f(centre));
                         }
                     }
@@ -161,7 +160,9 @@ public class ComponentsView extends View
                         MeshComponent meshRendererComponent = (MeshComponent) currentComponent;
 
                         ImString textureName = new ImString(new File(meshRendererComponent.getTexture().path).getName());
-                        ImGui.inputText("Texture", textureName, ImGuiInputTextFlags.ReadOnly);
+
+                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText("Texture", textureName, ImGuiInputTextFlags.ReadOnly));
+
                         if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
                             if (ImGui.beginDragDropTarget()) {
                                 Object imageFile = ImGui.acceptDragDropPayload("File");
@@ -180,7 +181,9 @@ public class ComponentsView extends View
                         }
 
                         ImString shaderName = new ImString(new File(meshRendererComponent.getShader().path).getName());
-                        ImGui.inputText("Shader", shaderName, ImGuiInputTextFlags.ReadOnly);
+
+                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText("Shader", shaderName, ImGuiInputTextFlags.ReadOnly));
+
                         if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileShader(ViewsManager.getResourcesView().getCurrentMovingFile())) {
                             if (ImGui.beginDragDropTarget()) {
                                 Object imageFile = ImGui.acceptDragDropPayload("File");
@@ -202,7 +205,7 @@ public class ComponentsView extends View
                         Rigidbody2DComponent rigidbody2DComponent = (Rigidbody2DComponent) currentComponent;
 
                         ImGui.pushID("Rigidbody2DType");
-                        if (ImGui.beginCombo("Type", rigidbody2DComponent.getRigidbody2D().typeToString())) {
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.beginCombo("Type", rigidbody2DComponent.getRigidbody2D().typeToString()))) {
 
                             if (ImGui.selectable("Dynamic")) {
                                 rigidbody2DComponent.getRigidbody2D().setType(BodyType.DYNAMIC);
@@ -221,22 +224,22 @@ public class ComponentsView extends View
                         ImGui.popID();
 
                         float[] density = new float[] { rigidbody2DComponent.getRigidbody2D().getDensity() };
-                        if (ImGui.dragFloat("Density", density, 0.01f)) {
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Density", density, 0.01f))) {
                             rigidbody2DComponent.getRigidbody2D().setDensity(density[0]);
                         }
                         float[] restitution = new float[] { rigidbody2DComponent.getRigidbody2D().getRestitution() };
-                        if (ImGui.dragFloat("Restitution", restitution, 0.01f)) {
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Restitution", restitution, 0.01f))) {
                             rigidbody2DComponent.getRigidbody2D().setRestitution(restitution[0]);
                         }
                         float[] friction = new float[] { rigidbody2DComponent.getRigidbody2D().getFriction() };
-                        if (ImGui.dragFloat("Friction", friction, 0.01f)) {
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Friction", friction, 0.01f))) {
                             rigidbody2DComponent.getRigidbody2D().setFriction(friction[0]);
                         }
                         ImGui.separator();
-                        if (ImGui.checkbox("Sensor", rigidbody2DComponent.getRigidbody2D().isSensor())) {
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Sensor", rigidbody2DComponent.getRigidbody2D().isSensor()))) {
                             rigidbody2DComponent.getRigidbody2D().setSensor(!rigidbody2DComponent.getRigidbody2D().isSensor());
                         }
-                        if (ImGui.checkbox("Fixed rotation", rigidbody2DComponent.getRigidbody2D().isFixedRotation())) {
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Fixed rotation", rigidbody2DComponent.getRigidbody2D().isFixedRotation()))) {
                             rigidbody2DComponent.getRigidbody2D().setFixedRotation(!rigidbody2DComponent.getRigidbody2D().isFixedRotation());
                         }
                         ImGui.separator();
@@ -247,7 +250,7 @@ public class ComponentsView extends View
                         ImGui.pushID("BoxCollider2DOffsetDragFloat_" + i);
                         {
                             float[] offset = new float[] { boxCollider2DComponent.getBoxCollider2D().getOffset().x, boxCollider2DComponent.getBoxCollider2D().getOffset().y };
-                            if (ImGui.dragFloat2("Offset", offset)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Offset", offset))) {
                                 boxCollider2DComponent.getBoxCollider2D().setOffset(new Vector2f(offset[0], offset[1]));
                             }
                         }
@@ -256,7 +259,7 @@ public class ComponentsView extends View
                         ImGui.pushID("BoxCollider2DScaleDragFloat_" + i);
                         {
                             float[] scale = new float[] { boxCollider2DComponent.getBoxCollider2D().getScale().x, boxCollider2DComponent.getBoxCollider2D().getScale().y };
-                            if (ImGui.dragFloat2("Scale", scale, 0.01f)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Scale", scale, 0.01f))) {
                                 boxCollider2DComponent.getBoxCollider2D().setScale(new Vector2f(scale[0], scale[1]));
                             }
                         }
@@ -265,7 +268,7 @@ public class ComponentsView extends View
                         ImGui.pushID("BoxCollider2DRotationDragFloat_" + i);
                         {
                             float[] angle = new float[] { boxCollider2DComponent.getBoxCollider2D().getAngle() };
-                            if (ImGui.dragFloat("Rotation", angle)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Rotation", angle))) {
                                 boxCollider2DComponent.getBoxCollider2D().setAngle(angle[0]);
                             }
                         }
@@ -277,7 +280,7 @@ public class ComponentsView extends View
                         ImGui.pushID("CircleCollider2DOffsetDragFloat_" + i);
                         {
                             float[] offset = new float[] { circleCollider2DComponent.getCircleCollider2D().getOffset().x, circleCollider2DComponent.getCircleCollider2D().getOffset().y };
-                            if (ImGui.dragFloat2("Offset", offset)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Offset", offset))) {
                                 circleCollider2DComponent.getCircleCollider2D().setOffset(new Vector2f(offset[0], offset[1]));
                             }
                         }
@@ -286,7 +289,7 @@ public class ComponentsView extends View
                         float[] radius = new float[] { circleCollider2DComponent.getCircleCollider2D().getRadius() };
                         ImGui.pushID("CircleCollider2DRadiusDragFloat_" + i);
                         {
-                            if (ImGui.dragFloat("Radius", radius, 0.01f)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Radius", radius, 0.01f))) {
                                 circleCollider2DComponent.getCircleCollider2D().setRadius(radius[0]);
                             }
                         }
@@ -298,7 +301,7 @@ public class ComponentsView extends View
                         ImGui.pushID("LineOffsetDragFloat_" + i);
                         {
                             float[] offset = new float[] { lineComponent.getLinesData()[0].offset.x, lineComponent.getLinesData()[0].offset.y };
-                            if (ImGui.dragFloat2("Offset", offset)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Offset", offset))) {
                                 lineComponent.getLinesData()[0].offset.set(offset[0], offset[1]);
                             }
                         }
@@ -307,7 +310,7 @@ public class ComponentsView extends View
                         ImGui.pushID("LineStartDragFloat_" + i);
                         {
                             float[] start = new float[] { lineComponent.getLinesData()[0].getVertices()[0].x, lineComponent.getLinesData()[0].getVertices()[0].y };
-                            if (ImGui.dragFloat2("Start", start)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Start", start))) {
                                 lineComponent.getLinesData()[0].getVertices()[0].set(start[0], start[1]);
                             }
                         }
@@ -316,7 +319,7 @@ public class ComponentsView extends View
                         ImGui.pushID("LineEndDragFloat_" + i);
                         {
                             float[] end = new float[] { lineComponent.getLinesData()[0].getVertices()[1].x, lineComponent.getLinesData()[0].getVertices()[1].y };
-                            if (ImGui.dragFloat2("End", end)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("End", end))) {
                                 lineComponent.getLinesData()[0].getVertices()[1].set(end[0], end[1]);
                             }
                         }
@@ -326,7 +329,7 @@ public class ComponentsView extends View
                         {
                             float[] color = new float[] { lineComponent.getLinesData()[0].color.x, lineComponent.getLinesData()[0].color.y,
                                     lineComponent.getLinesData()[0].color.z, lineComponent.getLinesData()[0].color.w };
-                            if (ImGui.colorEdit4("Color", color)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.colorEdit4("Color", color))) {
                                 lineComponent.getLinesData()[0].color.set(color[0], color[1], color[2], color[3]);
                             }
                         }
@@ -335,7 +338,7 @@ public class ComponentsView extends View
                         ImGui.pushID("LineWidthDragFloat_" + i);
                         {
                             float[] width = new float[] { lineComponent.getLinesData()[0].lineWidth };
-                            if (ImGui.dragFloat("Width", width, 0.1f, 1.0f, 20.0f)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Width", width, 0.1f, 1.0f, 20.0f))) {
                                 width[0] = Math.clamp(1, 20, width[0]);
                                 lineComponent.getLinesData()[0].lineWidth = width[0];
                             }
@@ -344,7 +347,7 @@ public class ComponentsView extends View
 
                         ImGui.pushID("LineScaleWithEntityCheckbox_" + i);
                         {
-                            if (ImGui.checkbox("Scale with entity", lineComponent.scaleWithEntity)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Scale with entity", lineComponent.scaleWithEntity))) {
                                 lineComponent.scaleWithEntity = !lineComponent.scaleWithEntity;
                             }
                         }
@@ -356,7 +359,7 @@ public class ComponentsView extends View
                         ImGui.pushID("BoxOffsetDragFloat_" + i);
                         {
                             float[] offset = new float[] { boxComponent.getOffset().x, boxComponent.getOffset().y };
-                            if (ImGui.dragFloat2("Offset", offset)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Offset", offset))) {
                                 boxComponent.setOffset(new Vector2f(offset[0], offset[1]));
                             }
                         }
@@ -365,7 +368,7 @@ public class ComponentsView extends View
                         ImGui.pushID("BoxSizeDragFloat_" + i);
                         {
                             float[] size = new float[] { boxComponent.getSize().x, boxComponent.getSize().y };
-                            if (ImGui.dragFloat2("Size", size)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Size", size))) {
                                 boxComponent.setSize(new Vector2f(size[0], size[1]));
                             }
                         }
@@ -374,7 +377,7 @@ public class ComponentsView extends View
                         ImGui.pushID("BoxLinesWidthDragFloat_" + i);
                         {
                             float[] lineWidth = new float[] { boxComponent.getLinesWidth() };
-                            if (ImGui.dragFloat("Lines width", lineWidth, 0.1f, 1.0f, 20.0f)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Lines width", lineWidth, 0.1f, 1.0f, 20.0f))) {
                                 lineWidth[0] = Math.clamp(1, 20, lineWidth[0]);
                                 boxComponent.setLinesWidth(lineWidth[0]);
                             }
@@ -385,7 +388,7 @@ public class ComponentsView extends View
                         {
                             float[] color = new float[] { boxComponent.getColor().x, boxComponent.getColor().y,
                                     boxComponent.getColor().z, boxComponent.getColor().w };
-                            if (ImGui.colorEdit4("Color", color)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.colorEdit4("Color", color))) {
                                 boxComponent.setColor(new Vector4f(color[0], color[1], color[2], color[3]));
                             }
                         }
@@ -393,7 +396,7 @@ public class ComponentsView extends View
 
                         ImGui.pushID("BoxScaleWithEntityCheckbox_" + i);
                         {
-                            if (ImGui.checkbox("Scale with entity", boxComponent.scaleWithEntity)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Scale with entity", boxComponent.scaleWithEntity))) {
                                 boxComponent.scaleWithEntity = !boxComponent.scaleWithEntity;
                             }
                         }
@@ -405,7 +408,7 @@ public class ComponentsView extends View
                         ImGui.pushID("CircleOffsetDragFloat_" + i);
                         {
                             float[] offset = new float[] { circleComponent.getOffset().x, circleComponent.getOffset().y };
-                            if (ImGui.dragFloat2("Offset", offset)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Offset", offset))) {
                                 circleComponent.setOffset(new Vector2f(offset[0], offset[1]));
                             }
                         }
@@ -414,7 +417,7 @@ public class ComponentsView extends View
                         ImGui.pushID("CircleRadiusDragFloat_" + i);
                         {
                             float[] radius = new float[] { circleComponent.getRadius() };
-                            if (ImGui.dragFloat("Radius", radius, 0.1f)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Radius", radius, 0.1f))) {
                                 circleComponent.setRadius(radius[0]);
                             }
                         }
@@ -423,7 +426,7 @@ public class ComponentsView extends View
                         ImGui.pushID("CircleLinesWidthDragFloat_" + i);
                         {
                             float[] lineWidth = new float[] { circleComponent.getLinesWidth() };
-                            if (ImGui.dragFloat("Lines width", lineWidth, 0.1f, 1.0f, 20.0f)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Lines width", lineWidth, 0.1f, 1.0f, 20.0f))) {
                                 lineWidth[0] = Math.clamp(1.0f, 20.0f, lineWidth[0]);
                                 circleComponent.setLinesWidth(lineWidth[0]);
                             }
@@ -434,7 +437,7 @@ public class ComponentsView extends View
                         {
                             float[] color = new float[] { circleComponent.getColor().x, circleComponent.getColor().y,
                                     circleComponent.getColor().z, circleComponent.getColor().w };
-                            if (ImGui.colorEdit4("Color", color)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.colorEdit4("Color", color))) {
                                 circleComponent.setColor(new Vector4f(color[0], color[1], color[2], color[3]));
                             }
                         }
@@ -443,7 +446,7 @@ public class ComponentsView extends View
                         ImGui.pushID("CircleAngleIncrementDragInt_" + i);
                         {
                             int[] angleIncrement = new int[] { circleComponent.getAngleIncrement() };
-                            if (ImGui.dragInt("Angle increment", angleIncrement, 1, 1, 360)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragInt("Angle increment", angleIncrement, 1, 1, 360))) {
                                 angleIncrement[0] = Math.clamp(1, 360, angleIncrement[0]);
                                 circleComponent.setAngleIncrement(angleIncrement[0]);
                             }
@@ -452,7 +455,7 @@ public class ComponentsView extends View
 
                         ImGui.pushID("CircleScaleWithEntityCheckbox_" + i);
                         {
-                            if (ImGui.checkbox("Scale with entity", circleComponent.scaleWithEntity)) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Scale with entity", circleComponent.scaleWithEntity))) {
                                 circleComponent.scaleWithEntity = !circleComponent.scaleWithEntity;
                             }
                         }
@@ -471,7 +474,7 @@ public class ComponentsView extends View
                                 if (cs.isAssignableFrom(float.class)) {
                                     float[] floats = new float[]{(float) Script.getFieldValue(scriptClsInstance, field)};
                                     ImGui.pushID(field.getName() + "_" + i);
-                                    if (ImGui.dragFloat(field.getName(), floats)) {
+                                    if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat(field.getName(), floats))) {
                                         Script.setFieldValue(scriptClsInstance, field, floats[0]);
                                     }
                                     ImGui.popID();
@@ -479,7 +482,7 @@ public class ComponentsView extends View
                                     ImString string = new ImString((String) Script.getFieldValue(scriptClsInstance, field), 128);
 
                                     ImGui.pushID(field.getName() + "_" + i);
-                                    ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.CallbackAlways);
+                                    ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
                                     ImGui.popID();
 
                                     Script.setFieldValue(scriptClsInstance, field, string.get());
@@ -491,11 +494,11 @@ public class ComponentsView extends View
 
                                     ImGui.pushID(field.getName() + "_" + i);
                                     if(Script.getFieldValue(scriptClsInstance, field) != null) {
-                                        ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
+                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
                                     } else {
                                         ImGui.pushStyleColor(ImGuiCol.Text, 0.65f, 0.65f, 0.65f, 1.0f);
-                                        ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
-                                        ImGui.popStyleColor(1);
+                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
+                                        ImGui.popStyleColor();
                                     }
                                     ImGui.popID();
 
@@ -514,11 +517,11 @@ public class ComponentsView extends View
 
                                     ImGui.pushID(field.getName() + "_" + i);
                                     if(Script.getFieldValue(scriptClsInstance, field) != null) {
-                                        ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
+                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
                                     } else {
                                         ImGui.pushStyleColor(ImGuiCol.Text, 0.65f, 0.65f, 0.65f, 1.0f);
-                                        ImGui.inputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly);
-                                        ImGui.popStyleColor(1);
+                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
+                                        ImGui.popStyleColor();
                                     }
                                     ImGui.popID();
 
@@ -541,7 +544,7 @@ public class ComponentsView extends View
                         ImGui.text("Source ID: " + audioComponent.audio.source);
 
                         ImGui.pushID("AudioPath_" + i);
-                        ImGui.inputText("Path", audioName, ImGuiInputTextFlags.ReadOnly);
+                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText("Path", audioName, ImGuiInputTextFlags.ReadOnly));
                         ImGui.popID();
 
                         if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
@@ -562,7 +565,7 @@ public class ComponentsView extends View
                         }
 
                         ImGui.pushID("AudioType_" + i);
-                        if (ImGui.beginCombo("Type", audioComponent.audio.audioType.toString())) {
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.beginCombo("Type", audioComponent.audio.audioType.toString()))) {
                             ImGui.pushID("AudioTypeSelectable0_" + i);
                             if (ImGui.selectable("Background")) {
                                 audioComponent.audio.audioType = Audio.AudioType.BACKGROUND;
@@ -583,7 +586,7 @@ public class ComponentsView extends View
 
                         float[] maxDistance = new float[] { audioComponent.audio.getMaxDistance() };
                         ImGui.pushID("AudioMaxDistanceDragFloat_" + i);
-                        if(ImGui.dragFloat("Max distance", maxDistance)) {
+                        if(ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Max distance", maxDistance))) {
                             float res = Math.max(0, maxDistance[0]);
                             audioComponent.audio.setMaxDistance(res);
                         }
@@ -591,14 +594,14 @@ public class ComponentsView extends View
 
                         float[] volumePercent = new float[] { audioComponent.audio.volumePercent };
                         ImGui.pushID("AudioVolumePercentDragFloat_" + i);
-                        if(ImGui.dragFloat("Volume percent", volumePercent)) {
+                        if(ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Volume percent", volumePercent))) {
                             float res = Math.max(0, Math.min(volumePercent[0], 100.0f));
                             audioComponent.audio.volumePercent = res;
                         }
                         ImGui.popID();
 
                         ImGui.pushID("AudioIsCyclicCheckbox_" + i);
-                        if(ImGui.checkbox("Cyclic", audioComponent.audio.isCyclic())) {
+                        if(ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Cyclic", audioComponent.audio.isCyclic()))) {
                             audioComponent.audio.setCyclic(!audioComponent.audio.isCyclic());
                         }
                         ImGui.popID();
@@ -675,7 +678,7 @@ public class ComponentsView extends View
                     case "Camera2DComponent" -> {
                         Camera2DComponent camera2DComponent = (Camera2DComponent) currentComponent;
                         ImGui.pushID("Scene2DMainCamera_" + i);
-                        if(ImGui.checkbox("Scene2D main camera", camera2DComponent.isScene2DMainCamera2D())) {
+                        if(ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Scene2D main camera", camera2DComponent.isScene2DMainCamera2D()))) {
                             camera2DComponent.setScene2DMainCamera2D(!camera2DComponent.isScene2DMainCamera2D());
                         }
                         ImGui.popID();
@@ -685,7 +688,7 @@ public class ComponentsView extends View
                         if(ImGuiUtils.arrowButton("Add PP layer...", "AddPPLayerButton_" + i, true)) {
                             ImGui.pushID("PPLayersToAddListBox_" + i);
                             ImGui.sameLine();
-                            if(ImGui.beginListBox("", 150.0f, 75.0f)) {
+                            if(ImGuiUtils.imCallWBorder(func -> ImGui.beginListBox("", 150.0f, 75.0f))) {
                                 for (Layer layer : currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
                                     if (!camera2DComponent.isPostprocessingLayerExists(layer)) {
                                         ImGui.pushID("PPLayerToAdd_" + k + "_" + i);
@@ -702,20 +705,16 @@ public class ComponentsView extends View
                             ImGui.popID();
                         }
 
-                        if(ImGui.beginPopup("govno")) {
-                            ImGui.endPopup();
-                        }
-
                         k = 0;
                         Iterator<PostprocessingLayer> ppCamLayersIterator = camera2DComponent.getPostprocessingLayersIterator();
                         while(ppCamLayersIterator.hasNext()) {
                             PostprocessingLayer ppLayer = ppCamLayersIterator.next();
                             ImGui.pushID("PPLayer_" + k + "_" + i);
                             if (ImGui.treeNode("Postprocessing layer \"" + (ppLayer.getEntitiesLayerToRender() != null ? ppLayer.getEntitiesLayerToRender().getName() + "\"" : "unknown\""))) {
-                                ImGui.image(ppLayer.getFrameBuffer().getTextureHandler(), 150.0f, 150.0f);
-
                                 ImString shaderName = new ImString(new File(ppLayer.getShader().path).getName());
-                                ImGui.inputText("Shader", shaderName, ImGuiInputTextFlags.ReadOnly);
+
+                                ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText("Shader", shaderName, ImGuiInputTextFlags.ReadOnly));
+
                                 if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileShader(ViewsManager.getResourcesView().getCurrentMovingFile())) {
                                     if (ImGui.beginDragDropTarget()) {
                                         Object imageFile = ImGui.acceptDragDropPayload("File");
@@ -733,11 +732,29 @@ public class ComponentsView extends View
                                     }
                                 }
 
+
+                                if(ImGui.button("View...")) {
+                                    if(!ViewsManager.isFBOViewExists("PPLayerView_" + i + "_" + k)) {
+                                        ViewsManager.getFBOViews().add(new GameView("PPLayer \"" + ppLayer.getEntitiesLayerToRenderName() + "\"", "PPLayerView_" + i + "_" + k,
+                                                ppLayer.getFrameBuffer().getTextureHandler(), true, ppLayer, camera2DComponent));
+                                    } else {
+                                        GameView gameView = ViewsManager.getFBOView("PPLayerView_" + i + "_" + k);
+                                        gameView.setPostprocessingLayer(ppLayer, camera2DComponent);
+                                    }
+                                }
+
+                                ImGui.newLine();
+
                                 ImGui.pushID("RemovePPLayer" + k + "_" + i);
                                 if (ImGui.button("Remove")) {
+                                    ppLayer.destroy();
                                     ppCamLayersIterator.remove();
                                 }
                                 ImGui.popID();
+
+                                if(camera2DComponent.getPostprocessingLayersNum() > 1 && k != camera2DComponent.getPostprocessingLayersNum() - 1) {
+                                    ImGui.separator();
+                                }
 
                                 ImGui.treePop();
                             }

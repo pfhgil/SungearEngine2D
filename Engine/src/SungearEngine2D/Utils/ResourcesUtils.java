@@ -17,7 +17,7 @@ public class ResourcesUtils
             return switch (fileExtension) {
                 case "png", "jpg" -> Resources.Textures.Icons.imageFileIcon.getTextureHandler();
                 case "java" -> Resources.Textures.Icons.javaFileIcon.getTextureHandler();
-                case "txt" -> Resources.Textures.Icons.textFileIcon.getTextureHandler();
+                case "txt" -> Resources.Textures.Icons.textFileIcon96.getTextureHandler();
                 default -> Resources.Textures.Icons.unknownFileIcon.getTextureHandler();
             };
         } else {

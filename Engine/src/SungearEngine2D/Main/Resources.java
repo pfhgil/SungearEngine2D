@@ -25,10 +25,13 @@ public class Resources
         public static class Icons
         {
             public static Texture2D directoryIcon = new Texture2D();
+            public static Texture2D openDirectoryIcon = new Texture2D();
             public static Texture2D imageFileIcon = new Texture2D();
             public static Texture2D javaFileIcon = new Texture2D();
+            public static Texture2D javaFileIcon14 = new Texture2D();
             public static Texture2D object2DFileIcon = new Texture2D();
-            public static Texture2D textFileIcon = new Texture2D();
+            public static Texture2D textFileIcon96 = new Texture2D();
+            public static Texture2D textFileIcon14 = new Texture2D();
             public static Texture2D unknownFileIcon = new Texture2D();
 
             public static Texture2D layersIcon = new Texture2D();
@@ -39,7 +42,8 @@ public class Resources
             public static Texture2D stopButtonIcon = new Texture2D();
             public static Texture2D pauseButtonIcon = new Texture2D();
 
-            public static Texture2D cameraIcon = new Texture2D();
+            public static Texture2D cameraIcon96 = new Texture2D();
+            public static Texture2D cameraIcon48 = new Texture2D();
 
             public static Texture2D gizmoTranslationIcon = new Texture2D();
             public static Texture2D gizmoRotationIcon = new Texture2D();
@@ -54,11 +58,14 @@ public class Resources
             public static Texture2D collapseIcon = new Texture2D();
 
             public static void load() {
-                directoryIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/directory.png"), "/data/icons/directory.png"));
+                directoryIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/directory0.png"), "/data/icons/directory0.png"));
+                openDirectoryIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/open_directory.png"), "/data/icons/open_directory.png"));
                 imageFileIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/image_file.png"), "/data/icons/image_file.png"));
                 javaFileIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/java_file.png"), "/data/icons/java_file.png"));
+                javaFileIcon14.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/java_file_icon14.png"), "/data/icons/java_file_icon14.png"));
                 object2DFileIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/object2d_file.png"), "/data/icons/object2d_file.png"));
-                textFileIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/text_file.png"), "/data/icons/text_file.png"));
+                textFileIcon96.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/text_file_icon96.png"), "/data/icons/text_file_icon96.png"));
+                textFileIcon14.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/text_file_icon14.png"), "/data/icons/text_file_icon14.png"));
                 unknownFileIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/unknown_file.png"), "/data/icons/unknown_file.png"));
 
                 layersIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/layers.png"), "/data/icons/layers.png"));
@@ -69,7 +76,8 @@ public class Resources
                 stopButtonIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/stop_button.png"), "/data/icons/stop_button.png"));
                 pauseButtonIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/pause_button.png"), "/data/icons/pause_button.png"));
 
-                cameraIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/camera_icon.png"), "/data/icons/camera_icon.png"));
+                cameraIcon96.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/camera_icon96.png"), "/data/icons/camera_icon96.png"));
+                cameraIcon48.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/camera_icon48.png"), "/data/icons/camera_icon48.png"));
 
                 gizmoTranslationIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/gizmo_translation.png"), "/data/icons/gizmo_translation.png"));
                 gizmoRotationIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/gizmo_rotation.png"), "/data/icons/gizmo_rotation.png"));

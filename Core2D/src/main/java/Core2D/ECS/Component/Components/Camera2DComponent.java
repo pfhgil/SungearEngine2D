@@ -203,6 +203,8 @@ public class Camera2DComponent extends Component
                     shader = ppLayerFound.getShader();
 
                     frameBufferToBind = ppLayerFound.getFrameBuffer();
+
+                    ppLayerFound.updateName();
                 }
 
                 frameBufferToBind.bindTexture();
@@ -220,90 +222,6 @@ public class Camera2DComponent extends Component
                         "sampler",
                         frameBufferToBind.getTextureBlock() - GL_TEXTURE0
                 );
-
-                // ray tracing ---------
-
-                /*
-                float time = (float) glfwGetTime();
-
-                ShaderUtils.setUniform(
-                        shader.getProgramHandler(),
-                        "time",
-                        time
-                );
-
-                if(Keyboard.keyDown(GLFW.GLFW_KEY_W)) {
-                    cameraPosition.x += 0.1f;
-                }
-                if(Keyboard.keyDown(GLFW.GLFW_KEY_S)) {
-                    cameraPosition.x -= 0.1f;
-                }
-                if(Keyboard.keyDown(GLFW.GLFW_KEY_A)) {
-                    cameraPosition.y -= 0.1f;
-                }
-                if(Keyboard.keyDown(GLFW.GLFW_KEY_D)) {
-                    cameraPosition.y += 0.1f;
-                }
-
-                if(Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_1)) {
-                    Vector2f mousePos = Mouse.getMousePosition();
-                    Vector2f offset = new Vector2f(lastMousePosition).add(new Vector2f(mousePos).negate());
-                    lastMousePosition.set(mousePos);
-
-                    mousePosition.add(offset);
-                } else {
-                    Vector2f mousePos = Mouse.getMousePosition();
-                    lastMousePosition.set(mousePos);
-                }
-
-                lightPos.x += 0.01f;
-                lightPos.y += 0.01f;
-
-                ShaderUtils.setUniform(
-                        shader.getProgramHandler(),
-                        "iResolution",
-                        new Vector2f(windowSize.x, windowSize.y));
-
-                ShaderUtils.setUniform(
-                        shader.getProgramHandler(),
-                        "iMouse",
-                        mousePosition);
-
-                ShaderUtils.setUniform(
-                        shader.getProgramHandler(),
-                        "cameraPosition",
-                        cameraPosition);
-
-                ShaderUtils.setUniform(
-                        shader.getProgramHandler(),
-                        "lightPos",
-                        lightPos);
-
-
-                Vector2f rnd0 = new Vector2f(random.nextFloat() * 999.0f, random.nextFloat() * 999.0f);
-                Vector2f rnd1 = new Vector2f(random.nextFloat() * 999.0f, random.nextFloat() * 999.0f);
-                //System.out.println("x: " + rnd.x + ", " + rnd.y);
-
-                ShaderUtils.setUniform(
-                        shader.getProgramHandler(),
-                        "u_seed1",
-                        rnd0);
-
-                ShaderUtils.setUniform(
-                        shader.getProgramHandler(),
-                        "u_seed2",
-                        rnd1);
-
-                float samplerPart = 1.0f / totalFrames;
-                //System.out.println(samplerPart);
-
-                ShaderUtils.setUniform(
-                        shader.getProgramHandler(),
-                        "samplerPart",
-                        samplerPart);
-
-
-*/
 
                 // нарисовать два треугольника
                 OpenGL.glCall((params) -> glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0));

@@ -35,6 +35,11 @@ public class PostprocessingLayer
         frameBuffer = new FrameBuffer(Graphics.getScreenSize().x, Graphics.getScreenSize().y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
     }
 
+    public void updateName()
+    {
+        entitiesLayerToRenderName = entitiesLayerToRender.getName();
+    }
+
     public void destroy()
     {
         entitiesLayerToRender = null;
@@ -65,7 +70,9 @@ public class PostprocessingLayer
     public void setEntitiesLayerToRender(Layer entitiesLayerToRender)
     {
         this.entitiesLayerToRender = entitiesLayerToRender;
-        entitiesLayerToRenderName = entitiesLayerToRender.getName();
+        if(entitiesLayerToRender != null) {
+            entitiesLayerToRenderName = entitiesLayerToRender.getName();
+        }
     }
 
     public String getEntitiesLayerToRenderName() { return entitiesLayerToRenderName; }

@@ -12,10 +12,12 @@ import Core2D.Timer.Timer;
 import Core2D.Timer.TimerCallback;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
+import SungearEngine2D.GUI.ImGuiUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.EngineSettings;
+import SungearEngine2D.Main.Resources;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
@@ -144,32 +146,32 @@ public class ResourcesView extends View
             if(mouseRightClickedOnResourcesView) {
                 if(ImGui.beginPopupContextWindow("File")) {
                     if(ImGui.beginMenu("Create")) {
-                        if(ImGui.menuItem("Directory")) {
+                        if(ImGuiUtils.menuItemWithImage("Directory", Resources.Textures.Icons.directoryIcon.getTextureHandler(), 14, 14)) {
                             ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Directory");
                         }
                         ImGui.separator();
-                        if(ImGui.beginMenu("Java file")) {
-                            if(ImGui.menuItem("Component")) {
+                        if(ImGuiUtils.beginMenuWithImage("Java file", Resources.Textures.Icons.javaFileIcon14.getTextureHandler(), 14, 14)) {
+                            if(ImGuiUtils.menuItemWithImage("Component", 0, 14, 14)) {
                                 ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Java.Component");
                             }
-                            if(ImGui.menuItem("System")) {
+                            if(ImGuiUtils.menuItemWithImage("System", 0, 14, 14)) {
                                 ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Java.System");
                             }
                             ImGui.endMenu();
                         }
-                        if(ImGui.menuItem("Text file")) {
+                        if(ImGuiUtils.menuItemWithImage("Text file", Resources.Textures.Icons.textFileIcon14.getTextureHandler(), 14, 14)) {
                             ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Text");
                         }
                         ImGui.separator();
-                        if(ImGui.beginMenu("GLSL")) {
-                            if(ImGui.menuItem("ComplexShader")) {
+                        if(ImGuiUtils.beginMenuWithImage("GLSL", 0, 14, 14)) {
+                            if(ImGuiUtils.menuItemWithImage("ComplexShader", 0, 14, 14)) {
                                 ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("GLSL.ComplexShader");
                             }
 
                             ImGui.endMenu();
                         }
                         ImGui.separator();
-                        if(ImGui.menuItem("Scene2D")) {
+                        if(ImGuiUtils.menuItemWithImage("Scene2D", 0, 14, 14)) {
                             ViewsManager.getTopToolbarView().showCreateScene2DDialog();
                         }
                         ImGui.endMenu();
@@ -210,7 +212,7 @@ public class ResourcesView extends View
                     // чтобы убрать label
                     ImGui.pushItemWidth(75);
                     ImGui.pushID("File name");
-                    ImGui.inputText("", currentEditableFileName);
+                    ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", currentEditableFileName));
                     ImGui.popID();
                     ImGui.popItemWidth();
                 } else {
@@ -241,7 +243,7 @@ public class ResourcesView extends View
                     enableEditingFilename(files, i);
                 }
 
-                ImGui.setCursorPos(currentPosition.x, currentPosition.y);
+                ImGui.setCursorPos(currentPosition.x - 5.0f, currentPosition.y);
 
                 drawItem(files, i, getIconHandler(files[i]), files[i].isDirectory());
 

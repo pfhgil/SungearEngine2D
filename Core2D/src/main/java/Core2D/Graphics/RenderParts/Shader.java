@@ -146,8 +146,10 @@ public class Shader implements Serializable
     public void destroy()
     {
         destroyAllShaderParts();
-        // удаление шейдера
-        OpenGL.glCall((params) -> glDeleteProgram(programHandler));
+        //if(OpenGL.glCall((params) -> glIsProgram(programHandler), Boolean.class)) {
+            // удаление шейдера
+            OpenGL.glCall((params) -> glDeleteProgram(programHandler));
+        //}
     }
 
     public static String shaderPartTypeToString(int shaderType)

@@ -7,9 +7,11 @@ import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.RenderParts.Shader;
+import Core2D.Scene2D.SceneManager;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -114,6 +116,11 @@ public class Layer
             layerObjectIterator.remove();
         }
         entities = null;
+    }
+
+    public Entity getEntity(int entityID)
+    {
+        return entities.stream().filter(entity -> entity.ID == entityID).findFirst().orElse(null);
     }
 
     public List<Entity> getEntities() { return entities; }

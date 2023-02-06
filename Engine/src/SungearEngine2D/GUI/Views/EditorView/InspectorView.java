@@ -12,6 +12,7 @@ import Core2D.Scripting.Script;
 import Core2D.Tasks.StoppableTask;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Tag;
+import SungearEngine2D.GUI.ImGuiUtils;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindow;
@@ -91,7 +92,7 @@ public class InspectorView extends View
             ImGui.pushID("Object2DName");
             {
                 ImString name = new ImString(inspectingEntity.name, 256);
-                if (ImGui.inputText("", name)) {
+                if (ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", name))) {
                     inspectingEntity.name = name.get();
                 }
             }
@@ -101,7 +102,7 @@ public class InspectorView extends View
             ImGui.sameLine();
             ImGui.pushID("LayersCombo");
             {
-                if (ImGui.beginCombo("", inspectingEntity.layerName)) {
+                if (ImGuiUtils.imCallWBorder(func -> ImGui.beginCombo("", inspectingEntity.layerName))) {
                     List<Layer> layers = currentSceneManager.getCurrentScene2D().getLayering().getLayers();
                     for (int i = 0; i < layers.size(); i++) {
                         boolean selected = ImGui.selectable(layers.get(i).getID() + ".  " + layers.get(i).getName());
@@ -148,7 +149,7 @@ public class InspectorView extends View
                                 ImGui.sameLine();
                                 ImGui.pushID("NewLayerNameInputText");
                                 {
-                                    ImGui.inputText("", newName);
+                                    ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", newName));
                                     if (!ImGui.isItemActive() && Keyboard.keyReleased(GLFW.GLFW_KEY_ENTER)) {
                                         onRightButtonClicked();
                                     }
@@ -203,13 +204,15 @@ public class InspectorView extends View
                                                 {
                                                     if (currentEditingID != i) {
                                                         currentName.set(currentLayer.getName(), true);
-                                                        ImGui.inputText("", currentName, ImGuiInputTextFlags.ReadOnly);
+
+                                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText("", currentName, ImGuiInputTextFlags.ReadOnly));
+
                                                         if (ImGui.isItemClicked()) {
                                                             currentEditingID = i;
                                                             currentEditingName.set(currentLayer.getName(), true);
                                                         }
                                                     } else {
-                                                        ImGui.inputText("", currentEditingName);
+                                                        ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", currentEditingName));
                                                         if (ImGui.isItemDeactivatedAfterEdit()) {
                                                             currentLayer.setName(currentEditingName.get());
                                                             currentEditingID = -1;
@@ -256,7 +259,7 @@ public class InspectorView extends View
             ImGui.sameLine();
             ImGui.pushID("TagsCombo");
             {
-                if (ImGui.beginCombo("", inspectingEntity.tag.getName())) {
+                if (ImGuiUtils.imCallWBorder(func -> ImGui.beginCombo("", inspectingEntity.tag.getName()))) {
                     List<Tag> tags = currentSceneManager.getCurrentScene2D().getTags();
                     for (int i = 0; i < tags.size(); i++) {
                         if (ImGui.selectable(tags.get(i).getName())) {
@@ -277,7 +280,7 @@ public class InspectorView extends View
                                 ImGui.sameLine();
                                 ImGui.pushID("NewTagNameInputText");
                                 {
-                                    ImGui.inputText("", newName);
+                                    ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", newName));
                                     if (!ImGui.isItemActive() && Keyboard.keyReleased(GLFW.GLFW_KEY_ENTER)) {
                                         onRightButtonClicked();
                                     }
@@ -330,13 +333,15 @@ public class InspectorView extends View
                                                 {
                                                     if (currentEditingID != i) {
                                                         currentName.set(currentTag.getName(), true);
-                                                        ImGui.inputText("", currentName, ImGuiInputTextFlags.ReadOnly);
+
+                                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText("", currentName, ImGuiInputTextFlags.ReadOnly));
+
                                                         if (ImGui.isItemClicked()) {
                                                             currentEditingID = i;
                                                             currentEditingName.set(currentTag.getName(), true);
                                                         }
                                                     } else {
-                                                        ImGui.inputText("", currentEditingName);
+                                                        ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", currentEditingName));
                                                         if (ImGui.isItemDeactivatedAfterEdit()) {
                                                             currentTag.setName(currentEditingName.get());
                                                             currentEditingID = -1;
@@ -386,7 +391,7 @@ public class InspectorView extends View
                             inspectingEntity.getColor().y,
                             inspectingEntity.getColor().z,
                             inspectingEntity.getColor().w  };
-            if (ImGui.colorEdit4("Color", col)) {
+            if (ImGuiUtils.imCallWBorder(func -> ImGui.colorEdit4("Color", col))) {
                 inspectingEntity.setColor(new Vector4f(col));
             }
 

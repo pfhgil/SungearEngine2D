@@ -1,9 +1,9 @@
-[#FFFFFF] 2023/02/04 00:35:06 | [#008000] Current session log file was created!
-[#FFFFFF] 2023/02/04 00:35:06 | [#FFFFFF] Starting Core2D...
-[#FFFFFF] 2023/02/04 00:35:06 | [#008000] Core2D started!
-[#FFFFFF] 2023/02/04 00:35:06 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
-[#FFFFFF] 2023/02/04 00:35:07 | [#FFFFFF] Initializing compiler...  
-[#FFFFFF] 2023/02/04 00:35:09 | [#FFFFFF] scene manager code: {
+[#FFFFFF] 2023/02/06 17:18:06 | [#008000] Current session log file was created!
+[#FFFFFF] 2023/02/06 17:18:06 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2023/02/06 17:18:06 | [#008000] Core2D started!
+[#FFFFFF] 2023/02/06 17:18:06 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2023/02/06 17:18:06 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2023/02/06 17:18:10 | [#FFFFFF] scene manager code: {
   "scene2DStoredValues": [
     {
       "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\PROJECT12\\Scenes\\kek0.sgs",
@@ -53,35 +53,21 @@
   ],
   "mainScene2DPath": ""
 }
-[#FFFFFF] 2023/02/04 00:35:21 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/04 00:35:21 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/04 00:35:21 | [#008000] name: limon
-[#FFFFFF] 2023/02/04 00:35:22 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/04 00:35:22 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/04 00:35:22 | [#008000] name: limon
-[#FFFFFF] 2023/02/04 00:35:23 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/04 00:35:23 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/04 00:35:24 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/04 00:35:24 | [#008000] name: limon
-[#FFFFFF] 2023/02/04 00:35:24 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/04 00:35:24 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/04 00:35:24 | [#008000] name: limon
-[#FFFFFF] 2023/02/04 00:35:24 | [#008000] name: limon
-[#FFFFFF] 2023/02/04 00:35:26 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/04 00:35:35 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/04 00:35:36 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/04 00:35:36 | [#008000] name: limon
-[#FFFFFF] 2023/02/04 00:35:36 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/04 00:35:36 | [#008000] name: limon
-[#FFFFFF] 2023/02/04 00:35:36 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/04 00:35:37 | [#008000] name: limon
-[#FFFFFF] 2023/02/04 00:35:38 | [#008000] name: limon
-[#FFFFFF] 2023/02/04 00:35:46 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/04 00:35:46 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
-[#FFFFFF] 2023/02/04 00:35:47 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/04 00:35:47 | [#008000] name: limon
-[#FFFFFF] 2023/02/04 00:35:47 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/04 00:35:47 | [#008000] name: ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)
-[#FFFFFF] 2023/02/04 00:35:49 | [#008000] name: limon
-[#FFFFFF] 2023/02/04 00:35:50 | [#008000] scene destroyed: tets0
-[#FFFFFF] 2023/02/04 00:35:51 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists
+[#FFFFFF] 2023/02/06 17:18:14 | [#008000] Shader Resources\shaders\effect_2.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:14 | [#008000] Shader Resources\shaders\funny_effect.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:14 | [#008000] Shader Resources\shaders\for_alesha_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:21 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
+[#FFFFFF] 2023/02/06 17:18:21 | [#008000] scene destroyed: tets0
+[#FFFFFF] 2023/02/06 17:18:22 | [#008000] Shader Resources\shaders\effect_2.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:22 | [#008000] Shader Resources\shaders\funny_effect.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:22 | [#008000] Shader Resources\shaders\for_alesha_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:27 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\Scenes\tets0.txt' already exists
+[#FFFFFF] 2023/02/06 17:18:27 | [#008000] scene destroyed: tets0
+[#FFFFFF] 2023/02/06 17:18:27 | [#008000] Shader Resources\shaders\effect_2.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:27 | [#008000] Shader Resources\shaders\funny_effect.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:27 | [#008000] Shader Resources\shaders\for_alesha_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:28 | [#008000] scene destroyed: tets0
+[#FFFFFF] 2023/02/06 17:18:28 | [#008000] Shader Resources\shaders\effect_2.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:28 | [#008000] Shader Resources\shaders\funny_effect.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:28 | [#008000] Shader Resources\shaders\for_alesha_shader.glsl was successfully compiled!
+[#FFFFFF] 2023/02/06 17:18:31 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\PROJECT12\SceneManager.txt' already exists

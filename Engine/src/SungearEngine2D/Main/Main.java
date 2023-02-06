@@ -18,6 +18,7 @@ import Core2D.Graphics.Graphics;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
+import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scripting.Script;
@@ -117,26 +118,19 @@ public class Main
                                                 scriptableSystems.forEach(scriptableSystem -> allScripts.add(scriptableSystem.script));
 
                                                 for(Component component : layer.getEntities().get(i).getComponents()) {
-                                                    Class<?> componentClass = component.getClass();
-                                                    Object componentInstance = component;
-                                                    if(component instanceof ScriptComponent scriptComponent) {
-                                                        componentClass = scriptComponent.script.getScriptClassInstance().getClass();
-                                                        componentInstance = scriptComponent.script.getScriptClassInstance();
+                                                    if(component instanceof MeshComponent meshComponent) {
+                                                        Shader shader = meshComponent.getShader();
+
+                                                        Compiler.checkShaderToCompile(shader);
                                                     }
 
-                                                    for(Field field : componentClass.getFields()) {
-                                                        if(field.getType().isAssignableFrom(Shader.class)) {
-                                                            Shader shader = (Shader) field.get(componentInstance);
+                                                    if(component instanceof Camera2DComponent camera2DComponent) {
+                                                        for(int k = 0; k < camera2DComponent.getPostprocessingLayersNum(); k++) {
+                                                            PostprocessingLayer ppLayer = camera2DComponent.getPostprocessingLayer(k);
 
-                                                            String shaderFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + shader.path;
-                                                            File file = new File(shaderFullPath);
+                                                            Shader shader = ppLayer.getShader();
 
-                                                            if(file.exists()) {
-                                                                long lastModified = file.lastModified();
-                                                                if (lastModified != shader.lastModified) {
-                                                                    Compiler.addShaderToCompile(shader);
-                                                                }
-                                                            }
+                                                            Compiler.checkShaderToCompile(shader);
                                                         }
                                                     }
                                                 }

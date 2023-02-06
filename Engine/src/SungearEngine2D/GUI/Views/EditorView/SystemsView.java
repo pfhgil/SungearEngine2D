@@ -69,8 +69,12 @@ public class SystemsView extends View
             System currentSystem = inspectingEntity.getSystems().get(i);
             String systemName = currentSystem.getClass().getSimpleName();
 
-            ImGui.pushID(systemName + i);
+            if(i == 0) {
+                ImVec2 cursorPos = ImGui.getCursorPos();
+                ImGui.setCursorPos(cursorPos.x, cursorPos.y + 5.0f);
+            }
 
+            ImGui.pushID(systemName + i);
             if (!systemName.equals("ScriptableSystem")) {
                 ImGui.collapsingHeader(systemName);
             } else {
@@ -84,7 +88,6 @@ public class SystemsView extends View
                 ImGui.text(systemName);
                 ImGui.endDragDropSource();
             }
-
             ImGui.popID();
 
             if (ImGui.isMouseHoveringRect(minRect.x, minRect.y, maxRect.x, maxRect.y) &&

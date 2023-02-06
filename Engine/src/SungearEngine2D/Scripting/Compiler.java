@@ -4,6 +4,7 @@ import Core2D.AssetManager.Asset;
 import Core2D.AssetManager.AssetManager;
 import Core2D.DataClasses.ShaderData;
 import Core2D.Graphics.RenderParts.Shader;
+import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Tasks.StoppableTask;
@@ -14,6 +15,7 @@ import SungearEngine2D.Main.EngineSettings;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -69,6 +71,51 @@ public class Compiler
             shadersToCompile.add(shader);
         }
     }
+
+    public static void checkShaderToCompile(Shader shader)
+    {
+        if (shader != null) {
+            String shaderFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + shader.path;
+            File file = new File(shaderFullPath);
+
+            if (file.exists()) {
+                long lastModified = file.lastModified();
+                if (lastModified != shader.lastModified) {
+                    Compiler.addShaderToCompile(shader);
+                }
+            }
+        }
+    }
+
+    /*
+    public static void findAllShadersInClassAndCompile(Class<?> cls, Object clsInstance)
+    {
+        for(Field field : cls.getFields()) {
+            try {
+                field.setAccessible(true);
+                //System.out.println("field type: " + field.getType());
+                if (field.getType().isAssignableFrom(Shader.class)) {
+                    Shader shader = (Shader) field.get(clsInstance);
+
+                    if (shader != null) {
+                        String shaderFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + shader.path;
+                        File file = new File(shaderFullPath);
+
+                        if (file.exists()) {
+                            long lastModified = file.lastModified();
+                            if (lastModified != shader.lastModified) {
+                                Compiler.addShaderToCompile(shader);
+                            }
+                        }
+                    }
+                }
+            } catch (IllegalAccessException e) {
+                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+            }
+        }
+    }
+
+     */
 
     public static boolean compileScript(String path)
     {

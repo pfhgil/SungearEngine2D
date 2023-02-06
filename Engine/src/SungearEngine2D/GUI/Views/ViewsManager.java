@@ -1,6 +1,7 @@
 package SungearEngine2D.GUI.Views;
 
 import Core2D.Core2D.Core2D;
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import SungearEngine2D.GUI.Views.DebuggerView.DebuggerView;
 import SungearEngine2D.GUI.Views.EditorView.*;
 import SungearEngine2D.GUI.Views.Other.EngineSettingsView;
@@ -10,6 +11,12 @@ import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImBoolean;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+
+import static Core2D.Scene2D.SceneManager.currentSceneManager;
 
 public class ViewsManager
 {
@@ -29,7 +36,9 @@ public class ViewsManager
     private static ResourcesView resourcesView;
     private static SceneTreeView sceneTreeView;
     private static SceneView sceneView;
-    private static GameView gameView;
+    private static GameView mainCameraResultView;
+    // остальные виды FBO
+    private static List<GameView> FBOViews = new ArrayList<>();
     private static TopToolbarView topToolbarView;
     private static LogView logView;
     private static BottomMenuView bottomMenuView;
@@ -52,7 +61,7 @@ public class ViewsManager
         resourcesView = new ResourcesView();
         sceneTreeView = new SceneTreeView();
         sceneView = new SceneView();
-        gameView = new GameView();
+        mainCameraResultView = new GameView("Game view", "GameView", -1, false);
         topToolbarView = new TopToolbarView();
         logView = new LogView();
         bottomMenuView = new BottomMenuView();
@@ -81,6 +90,13 @@ public class ViewsManager
         ImGui.pushStyleVar(ImGuiStyleVar.WindowBorderSize, 0.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowPadding, 0.0f, 0.0f);
 
+        if(currentSceneManager != null && currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
+            Camera2DComponent camera2DComponent = currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().getComponent(Camera2DComponent.class);
+            if(camera2DComponent != null) {
+                mainCameraResultView.setViewTextureHandler(camera2DComponent.getResultFrameBuffer().getTextureHandler());
+            }
+        }
+
         ImGui.begin("Dockspace demo", new ImBoolean(true), windowFlags);
         {
             ImGui.popStyleVar(3);
@@ -101,7 +117,11 @@ public class ViewsManager
 
             sceneView.draw();
 
-            gameView.draw();
+            mainCameraResultView.draw();
+            for(int i = 0; i < FBOViews.size(); i++) {
+                FBOViews.get(i).draw();
+                FBOViews.get(i).handlePostprocessingLayer();
+            }
 
             logView.draw();
 
@@ -132,6 +152,21 @@ public class ViewsManager
 
     public static SceneView getSceneView() { return sceneView; }
 
+    public static GameView getMainCameraResultView() { return mainCameraResultView; }
+
+    public static List<GameView> getFBOViews() { return FBOViews; }
+    public static boolean isFBOViewExists(String windowID)
+    {
+        return FBOViews.stream().anyMatch(fbo -> fbo.getWindowID().equals(windowID));
+    }
+
+    public static GameView getFBOView(String windowID)
+    {
+        Optional<GameView> fboViewOptional = FBOViews.stream().filter(fboView -> fboView.getWindowID().equals(windowID)).findFirst();
+
+        return fboViewOptional.orElse(null);
+    }
+
     public static TopToolbarView getTopToolbarView() { return topToolbarView; }
 
     public static BottomMenuView getBottomMenuView() {  return bottomMenuView;  }
@@ -148,4 +183,6 @@ public class ViewsManager
         ViewsManager.lastFocusedDialogWindow = ViewsManager.currentFocusedDialogWindow;
         ViewsManager.currentFocusedDialogWindow = currentFocusedDialogWindow;
     }
+
+    public static int getMainDockspaceID() { return mainDockspaceID; }
 }
