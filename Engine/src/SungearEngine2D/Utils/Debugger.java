@@ -4,7 +4,6 @@ import Core2D.Graphics.OpenGL;
 import Core2D.Log.Log;
 import Core2D.Transform.Transform;
 import Core2D.Utils.ExceptionsUtils;
-import SungearEngine2D.exception.SungearEngineException;
 import com.sun.tools.attach.AttachNotSupportedException;
 import com.sun.tools.attach.VirtualMachine;
 import com.sun.tools.attach.VirtualMachineDescriptor;

@@ -2,9 +2,9 @@ plugins {
     id 'java'
 }
 
-group 'org.example'
+group 'sungear'
 version '1.0-SNAPSHOT'
-version = ''
+version ''
 
 repositories {
     mavenCentral()
@@ -35,6 +35,7 @@ repositories {
 }
 
 dependencies {
-    implementation files('libs/Core2D.jar')
+    implementation project(':common')
+    implementation project(':Core2D')
     implementation name: 'imgui-app-1.84.1.3'
 }

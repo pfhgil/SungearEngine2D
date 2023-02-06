@@ -1,17 +1,13 @@
 package Core2D.Layering;
 
-import Core2D.AssetManager.AssetManager;
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Entity;
+import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Graphics.Graphics;
-import Core2D.Graphics.RenderParts.Shader;
-import Core2D.Scene2D.SceneManager;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,8 +20,6 @@ public class Layer
 
     private transient boolean shouldDestroy;
 
-    private transient Shader pickingShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/mesh/picking_shader.glsl"));
-
     public Layer(int ID, String name)
     {
         this.ID = ID;
@@ -34,23 +28,25 @@ public class Layer
 
     // рисует все объекты разными цветами при выборке объектов
     // тут я ставлю цвет объекта для pick и отключаю текстуру
-    public void drawPicking(Camera2DComponent camera2DComponent)
+    // TODO: сделать не только для объектов отрисовку
+    public void drawPicking()
     {
         for(int i = 0; i < entities.size(); i++) {
             Entity entity = entities.get(i);
 
+            Vector4f lastColor = new Vector4f(entity.getColor());
+
+            entity.setColor(new Vector4f(entity.getPickColor().x / 255.0f,
+                    entity.getPickColor().y / 255.0f,
+                    entity.getPickColor().z / 255.0f,
+                    1.0f));
+
             MeshComponent meshComponent = entity.getComponent(MeshComponent.class);
             if(meshComponent != null) {
-                Vector4f lastColor = new Vector4f(entity.getColor());
-
-                entity.setColor(new Vector4f(entity.getPickColor().x / 255.0f,
-                        entity.getPickColor().y / 255.0f,
-                        entity.getPickColor().z / 255.0f,
-                        1.0f));
-
-                Graphics.getMainRenderer().render(entity, camera2DComponent, pickingShader);
-
+                meshComponent.textureDrawMode = Texture2D.TextureDrawModes.ONLY_ALPHA;
+                Graphics.getMainRenderer().render(entity);
                 entity.setColor(lastColor);
+                meshComponent.textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
             }
         }
     }
@@ -97,7 +93,6 @@ public class Layer
                 entity.destroy();
                 layerObjectIterator.remove();
             } else {
-                // ВНИМА НИЕ! ЕСЛИ ДЕЛЬТА АПДЕЙТ БУДЕТ ИСПОЛЬЗОВАН КАК ТО ПО ДРУГОМУ (НАПРИМЕР: БУДЕТ ВЫЗЫВАТЬСЯ В ЦИКЛЕ),
                 // ТО gameObject.update() нужно перенести в отдельный метод update у слоя (его нужно реализовать)
                 entity.update();
                 entity.deltaUpdate(deltaTime);
@@ -116,11 +111,6 @@ public class Layer
             layerObjectIterator.remove();
         }
         entities = null;
-    }
-
-    public Entity getEntity(int entityID)
-    {
-        return entities.stream().filter(entity -> entity.ID == entityID).findFirst().orElse(null);
     }
 
     public List<Entity> getEntities() { return entities; }
