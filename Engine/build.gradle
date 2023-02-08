@@ -6,10 +6,6 @@ group 'sungear'
 version '1.0-SNAPSHOT'
 version ''
 
-repositories {
-    mavenCentral()
-}
-
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
@@ -32,9 +28,11 @@ repositories {
         dirs '../Core2D/build/libs'
         dirs 'libs'
     }
+    mavenCentral()
 }
 
 dependencies {
+    implementation 'org.joml:joml:1.10.5'
     implementation project(':common')
     implementation project(':Core2D')
     implementation name: 'imgui-app-1.84.1.3'
