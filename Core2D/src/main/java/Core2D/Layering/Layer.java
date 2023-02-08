@@ -1,8 +1,11 @@
 package Core2D.Layering;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Entity;
+import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Graphics.Graphics;
 import org.joml.Vector4f;
@@ -20,6 +23,8 @@ public class Layer
 
     private transient boolean shouldDestroy;
 
+    private transient Shader pickingShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/mesh/picking_shader.glsl"));
+
     public Layer(int ID, String name)
     {
         this.ID = ID;
@@ -29,7 +34,7 @@ public class Layer
     // рисует все объекты разными цветами при выборке объектов
     // тут я ставлю цвет объекта для pick и отключаю текстуру
     // TODO: сделать не только для объектов отрисовку
-    public void drawPicking()
+    public void drawPicking(Camera2DComponent camera2DComponent)
     {
         for(int i = 0; i < entities.size(); i++) {
             Entity entity = entities.get(i);
@@ -41,13 +46,9 @@ public class Layer
                     entity.getPickColor().z / 255.0f,
                     1.0f));
 
-            MeshComponent meshComponent = entity.getComponent(MeshComponent.class);
-            if(meshComponent != null) {
-                meshComponent.textureDrawMode = Texture2D.TextureDrawModes.ONLY_ALPHA;
-                Graphics.getMainRenderer().render(entity);
-                entity.setColor(lastColor);
-                meshComponent.textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
-            }
+            Graphics.getMainRenderer().render(entity, camera2DComponent, pickingShader);
+
+            entity.setColor(lastColor);
         }
     }
 
@@ -111,6 +112,11 @@ public class Layer
             layerObjectIterator.remove();
         }
         entities = null;
+    }
+
+    public Entity getEntity(int entityID)
+    {
+        return entities.stream().filter(entity -> entity.ID == entityID).findFirst().orElse(null);
     }
 
     public List<Entity> getEntities() { return entities; }

@@ -68,6 +68,7 @@ public class Main
         core2DUserCallback = new Core2DUserCallback() {
             @Override
             public void onInit() {
+
                 //Debugger.init();
                 Resources.load();
 
