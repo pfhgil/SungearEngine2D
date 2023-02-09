@@ -9,7 +9,6 @@ import Core2D.Scripting.*;
 import Core2D.Log.*;
 import Core2D.Graphics.RenderParts.*;
 import Core2D.Timer.Timer;
-import static org.lwjgl.glfw.GLFW.*;
 import Core2D.ShaderUtils.ShaderUtils;
 
 // Attention! Do not declare fields with the @InspectorView annotation in systems. They will not be processed and shown in the Inspector.
@@ -40,9 +39,10 @@ public class UniformsSystem extends System
     }
 
     @Override
-    public void render()
+    public void render(Camera2DComponent camera2DComponent)
     {
-        float time = (float) glfwGetTime();
+        //float time = (float) glfwGetTime();
+        float time = 0.0f;
 
         MeshComponent meshComponent = entity.getComponent(MeshComponent.class);
         if(meshComponent != null) {
@@ -57,7 +57,7 @@ public class UniformsSystem extends System
     }
 
     @Override
-    public void render(Shader shader)
+    public void render(Camera2DComponent camera2DComponent, Shader shader)
     {
 
     }
