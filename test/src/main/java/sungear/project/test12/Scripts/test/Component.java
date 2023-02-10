@@ -1,10 +1,10 @@
 package sungear.project.test12.Scripts.test;
 
-import Core2D.ECS.Entity;
-
 public class Component
 {
     public Entity entity;
+
+    public boolean active = true;
 
     // вызывается при старте сцены
     public void start()

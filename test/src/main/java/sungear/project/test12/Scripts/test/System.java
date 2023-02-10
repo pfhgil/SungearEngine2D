@@ -7,9 +7,10 @@ import Core2D.Graphics.RenderParts.Shader;
 import java.util.ArrayList;
 import java.util.List;
 
-public class System
+public class System<T extends Component>
 {
-    private List<Component> componentsToProcess = new ArrayList<>();
+    protected List<T> componentsToProcess = new ArrayList<>();
+    /*
     private Class<?> typeOfComponentsToProcess;
 
     public System(Class<?> typeOfComponentsToProcess)
@@ -17,6 +18,7 @@ public class System
         this.typeOfComponentsToProcess = typeOfComponentsToProcess;
     }
 
+     */
     // вызывается при старте сцены
     public void start()
     {
@@ -30,57 +32,43 @@ public class System
 
     public void update()
     {
-        for(Component component : componentsToProcess) {
-            if(typeOfComponentsToProcess.isAssignableFrom(component.getClass())) {
-                // что-то сделать с компонентом
-            }
-        }
+
     }
 
     public void deltaUpdate(float deltaTime)
     {
-        for(Component component : componentsToProcess) {
-            if(typeOfComponentsToProcess.isAssignableFrom(component.getClass())) {
-                // что-то сделать с компонентом
-            }
-        }
+
     }
 
     public void collider2DEnter(Entity other)
     {
-        for(Component component : componentsToProcess) {
-            if(typeOfComponentsToProcess.isAssignableFrom(component.getClass())) {
-                // что-то сделать с компонентом
-            }
-        }
+
     }
 
     public void collider2DExit(Entity other)
     {
         for(Component component : componentsToProcess) {
-            if(typeOfComponentsToProcess.isAssignableFrom(component.getClass())) {
-                // что-то сделать с компонентом
-            }
+
         }
     }
 
     public void render(Camera2DComponent camera2DComponent)
     {
         for(Component component : componentsToProcess) {
-            if(typeOfComponentsToProcess.isAssignableFrom(component.getClass())) {
+            //if(typeOfComponentsToProcess.isAssignableFrom(component.getClass())) {
                 // что-то сделать с компонентом
-            }
+            //}
         }
     }
 
     public void render(Camera2DComponent camera2DComponent, Shader shader)
     {
         for(Component component : componentsToProcess) {
-            if(typeOfComponentsToProcess.isAssignableFrom(component.getClass())) {
+            //if(typeOfComponentsToProcess.isAssignableFrom(component.getClass())) {
                 // что-то сделать с компонентом
-            }
+            //}
         }
     }
 
-    public List<Component> getComponentsToProcess() { return componentsToProcess; }
+    public List<T> getComponentsToProcess() { return componentsToProcess; }
 }

@@ -1,10 +1,4 @@
 {
-  "scene2DStoredValues": [
-    {
-      "path": "D:\\Pixelfield\\Java Projects\\SungearEngine2D\\Engine\\Projects\\test10\\Scenes\\lvl0.sgs",
-      "inBuild": true,
-      "isMainScene2D": true
-    }
-  ],
+  "scene2DStoredValues": [],
   "mainScene2DPath": ""
 }
