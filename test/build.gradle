@@ -16,6 +16,30 @@ repositories {
 }
 
 dependencies {
+    implementation name: 'commons-io-2.11.0'
+    implementation name: 'gson-2.9.0'
+    implementation name: 'jbox2d-library-2.1.2.2'
+    implementation 'org.joml:joml:1.10.5'
+    implementation name: 'lwjgl'
+    implementation name: 'lwjgl-glfw'
+    implementation name: 'lwjgl-glfw-natives-windows'
+    implementation name: 'lwjgl-glfw-sources'
+    implementation name: 'lwjgl-natives-windows'
+    implementation name: 'lwjgl-openal'
+    implementation name: 'lwjgl-openal-natives-windows'
+    implementation name: 'lwjgl-openal-sources'
+    implementation name: 'lwjgl-opengl'
+    implementation name: 'lwjgl-opengl-natives-windows'
+    implementation name: 'lwjgl-opengl-sources'
+    implementation name: 'lwjgl-sources'
+    implementation name: 'lwjgl-stb'
+    implementation name: 'lwjgl-stb-natives-windows'
+    implementation name: 'lwjgl-stb-sources'
+    implementation name: 'slf4j-api-2.0.0-alpha5'
+    implementation name: 'slf4j-simple-2.0.0-alpha5'
+    implementation name: 'slick'
+    implementation name: 'slick-util'
+
     implementation project(':common')
     implementation project(':Engine')
     implementation project(':Core2D')

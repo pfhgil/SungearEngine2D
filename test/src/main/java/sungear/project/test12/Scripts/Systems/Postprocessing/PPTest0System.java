@@ -14,18 +14,7 @@ import Core2D.Layering.PostprocessingLayer;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.ShaderUtils.*;
-import Core2D.Utils.MatrixUtils;
-import org.joml.*;
-import Core2D.Log.Log;
 
-import java.lang.Math;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
-
-import static org.lwjgl.opengl.GL46C.*;
-import static org.lwjgl.glfw.GLFW.glfwGetTime;
 
 
 // Attention! Do not declare fields with the @InspectorView annotation in systems. They will not be processed and shown in the Inspector.
@@ -58,22 +47,7 @@ public class PPTest0System extends System
     @Override
     public void render(Camera2DComponent camera2DComponent)
     {
-        PostprocessingLayer ppLayer = camera2DComponent.getPostprocessingLayerByName("bloor_layer");
 
-        if(ppLayer != null) {
-            Shader shaderToBind = ppLayer.getShader();
-
-            float time = (float) glfwGetTime();
-
-            //shader.bind();
-            shaderToBind.bind();
-
-            ShaderUtils.setUniform(
-                    shaderToBind.getProgramHandler(),
-                    "time",
-                    time
-            );
-        }
     }
 
     @Override

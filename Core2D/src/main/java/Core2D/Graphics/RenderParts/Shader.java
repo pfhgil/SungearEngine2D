@@ -3,14 +3,40 @@ package Core2D.Graphics.RenderParts;
 import Core2D.DataClasses.ShaderData;
 import Core2D.Graphics.OpenGL;
 import Core2D.Log.Log;
+import org.lwjgl.BufferUtils;
 
 import java.io.Serializable;
+import java.nio.IntBuffer;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL20C.*;
 
 public class Shader implements Serializable
 {
+    public class ShaderUniform
+    {
+        private String name = "";
+        private int size;
+        private int type;
+
+        public ShaderUniform() { }
+
+        public ShaderUniform(String name, int size, int type)
+        {
+            this.name = name;
+            this.size = size;
+            this.type = type;
+        }
+
+        public String getName() { return name; }
+
+        public int getSize() { return size; }
+
+        public int getType() { return type; }
+    }
+
     private transient int programHandler;
     private transient HashMap<Integer, Integer> shaderPartsHandlers = new HashMap<>();
 
@@ -21,6 +47,8 @@ public class Shader implements Serializable
     private transient boolean compiled = false;
 
     public long lastModified = -1;
+
+    private List<ShaderUniform> shaderUniforms = new ArrayList<>();
 
     public Shader() { }
 
@@ -105,6 +133,31 @@ public class Shader implements Serializable
             Log.CurrentSession.println("Error while creating and linking program. Error is: " + errorString, Log.MessageType.ERROR);
 
             compiled = false;
+        }
+
+        // перезагрузка юниформ
+        int activeUniformsNum = OpenGL.glCall((params) -> glGetProgrami(programHandler, GL_ACTIVE_UNIFORMS), Integer.class);
+
+        for(int i = 0; i < activeUniformsNum; i++) {
+            ShaderUniform shaderUniform = null;
+            if(i < shaderUniforms.size()) {
+                shaderUniform = shaderUniforms.get(i);
+            } else {
+                shaderUniform = new ShaderUniform();
+                shaderUniforms.add(shaderUniform);
+            }
+
+            IntBuffer sizeBuffer = BufferUtils.createIntBuffer(1);
+            IntBuffer typeBuffer = BufferUtils.createIntBuffer(1);
+
+            final int finalI = i;
+
+            shaderUniform.name = OpenGL.glCall((params) -> glGetActiveUniform(programHandler, finalI, sizeBuffer, typeBuffer), String.class);
+            shaderUniform.size = sizeBuffer.get(0);
+            shaderUniform.type = typeBuffer.get(0);
+
+            sizeBuffer.clear();
+            typeBuffer.clear();
         }
 
         return compiled;
