@@ -57,6 +57,8 @@ public class Resources
 
             public static Texture2D collapseIcon = new Texture2D();
 
+            public static Texture2D editIcon24 = new Texture2D();
+
             public static void load() {
                 directoryIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/directory0.png"), "/data/icons/directory0.png"));
                 openDirectoryIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/open_directory.png"), "/data/icons/open_directory.png"));
@@ -87,7 +89,10 @@ public class Resources
 
                 checkMarkIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/check_mark.png"), "/data/icons/check_mark.png"));
                 xIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/x_icon.png"), "/data/icons/x_icon.png"));
+
                 collapseIcon.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/collapse_icon.png"), "/data/icons/collapse_icon.png"));
+
+                editIcon24.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/edit_icon24.png"), "/data/icons/edit_icon24.png"));
             }
         }
 

@@ -109,7 +109,10 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
             if(component instanceof TransformComponent) {
                 entity.addComponent(component);
             } else if(component instanceof MeshComponent meshComponent) {
-                Shader shader = new Shader(AssetManager.getInstance().getShaderData(meshComponent.getShader().path));
+                meshComponent.getShader().fixUniforms();
+                Shader shader = new Shader();
+                shader.getShaderUniforms().addAll(meshComponent.getShader().getShaderUniforms());
+                shader.compile(AssetManager.getInstance().getShaderData(meshComponent.getShader().path));
                 Texture2D texture2D = new Texture2D(
                         AssetManager.getInstance().getTexture2DData(meshComponent.getTexture().path),
                         meshComponent.getTexture().getGLTextureBlock()

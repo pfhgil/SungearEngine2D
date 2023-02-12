@@ -462,6 +462,9 @@ public class TopToolbarView
                 if(ImGuiUtils.menuItemWithImage("Debugger", 0, 14, 14)) {
                     ViewsManager.getDebuggerView().active = true;
                 }
+                if(ImGuiUtils.menuItemWithImage("Shaders Editor", 0, 14, 14)) {
+                    ViewsManager.getShadersEditorView().active = true;
+                }
                 ImGui.endMenu();
             }
         }

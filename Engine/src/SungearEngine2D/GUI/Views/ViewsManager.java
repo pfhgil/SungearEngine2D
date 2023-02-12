@@ -49,6 +49,8 @@ public class ViewsManager
 
     private static DebuggerView debuggerView;
 
+    private static ShadersEditorView shadersEditorView;
+
     public static void init()
     {
         mainDockspaceID = ImGui.getID("Main dockspace");
@@ -71,6 +73,8 @@ public class ViewsManager
         engineSettingsView = new EngineSettingsView();
 
         debuggerView = new DebuggerView();
+
+        shadersEditorView = new ShadersEditorView();
     }
 
     public static void draw()
@@ -119,8 +123,8 @@ public class ViewsManager
 
             mainCameraResultView.draw();
             for(int i = 0; i < FBOViews.size(); i++) {
-                FBOViews.get(i).draw();
                 FBOViews.get(i).handlePostprocessingLayer();
+                FBOViews.get(i).draw();
             }
 
             logView.draw();
@@ -130,6 +134,8 @@ public class ViewsManager
             toolbarView.draw();
 
             debuggerView.draw();
+
+            shadersEditorView.draw();
         }
         ImGui.end();
 
@@ -176,6 +182,8 @@ public class ViewsManager
     public static EngineSettingsView getEngineSettingsView() { return engineSettingsView; }
 
     public static DebuggerView getDebuggerView() { return debuggerView; }
+
+    public static ShadersEditorView getShadersEditorView() { return shadersEditorView; }
 
     public static int getCurrentFocusedDialogWindow() { return currentFocusedDialogWindow; }
     public static void setCurrentFocusedDialogWindow(int currentFocusedDialogWindow)

@@ -157,11 +157,11 @@ public class ComponentsView extends View
                         }
                     }
                     case "MeshComponent" -> {
-                        MeshComponent meshRendererComponent = (MeshComponent) currentComponent;
+                        MeshComponent meshComponent = (MeshComponent) currentComponent;
 
-                        ImString textureName = new ImString(new File(meshRendererComponent.getTexture().path).getName());
+                        ImString textureName = new ImString(new File(meshComponent.getTexture().path).getName());
 
-                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText("Texture", textureName, ImGuiInputTextFlags.ReadOnly));
+                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText("Texture", textureName, ImGuiInputTextFlags.ReadOnly));
 
                         if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
                             if (ImGui.beginDragDropTarget()) {
@@ -171,8 +171,8 @@ public class ComponentsView extends View
                                     String relativePath = FileUtils.getRelativePath(
                                             new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
                                             new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                                    meshRendererComponent.setTexture(new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath)));
-                                    meshRendererComponent.getTexture().path = relativePath;
+                                    meshComponent.setTexture(new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath)));
+                                    meshComponent.getTexture().path = relativePath;
                                     ViewsManager.getResourcesView().setCurrentMovingFile(null);
                                 }
 
@@ -180,9 +180,17 @@ public class ComponentsView extends View
                             }
                         }
 
-                        ImString shaderName = new ImString(new File(meshRendererComponent.getShader().path).getName());
+                        ImString shaderName = new ImString(new File(meshComponent.getShader().path).getName());
 
-                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText("Shader", shaderName, ImGuiInputTextFlags.ReadOnly));
+                        boolean[] shaderEditButtonPressed = new boolean[1];
+                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.inputTextWithRightButton("Shader", shaderName, ImGuiInputTextFlags.ReadOnly,
+                                Resources.Textures.Icons.editIcon24.getTextureHandler(), shaderEditButtonPressed, "Edit shader"));
+
+                        if(shaderEditButtonPressed[0]) {
+                            ViewsManager.getShadersEditorView().getEditingShaders().add(
+                                    new ShadersEditorView.ShaderEditorWindow(meshComponent.getShader(), meshComponent.entity.getLayer().getID(), meshComponent.entity.ID, meshComponent.componentID)
+                            );
+                        }
 
                         if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileShader(ViewsManager.getResourcesView().getCurrentMovingFile())) {
                             if (ImGui.beginDragDropTarget()) {
@@ -192,8 +200,8 @@ public class ComponentsView extends View
                                     String relativePath = FileUtils.getRelativePath(
                                             new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
                                             new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                                    meshRendererComponent.setShader(new Shader(AssetManager.getInstance().getShaderData(relativePath)));
-                                    meshRendererComponent.getShader().path = relativePath;
+                                    meshComponent.setShader(new Shader(AssetManager.getInstance().getShaderData(relativePath)));
+                                    meshComponent.getShader().path = relativePath;
                                     ViewsManager.getResourcesView().setCurrentMovingFile(null);
                                 }
 
@@ -482,7 +490,7 @@ public class ComponentsView extends View
                                     ImString string = new ImString((String) Script.getFieldValue(scriptClsInstance, field), 128);
 
                                     ImGui.pushID(field.getName() + "_" + i);
-                                    ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
+                                    ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
                                     ImGui.popID();
 
                                     Script.setFieldValue(scriptClsInstance, field, string.get());
@@ -494,10 +502,10 @@ public class ComponentsView extends View
 
                                     ImGui.pushID(field.getName() + "_" + i);
                                     if(Script.getFieldValue(scriptClsInstance, field) != null) {
-                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
+                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
                                     } else {
                                         ImGui.pushStyleColor(ImGuiCol.Text, 0.65f, 0.65f, 0.65f, 1.0f);
-                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
+                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
                                         ImGui.popStyleColor();
                                     }
                                     ImGui.popID();
@@ -517,10 +525,10 @@ public class ComponentsView extends View
 
                                     ImGui.pushID(field.getName() + "_" + i);
                                     if(Script.getFieldValue(scriptClsInstance, field) != null) {
-                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
+                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
                                     } else {
                                         ImGui.pushStyleColor(ImGuiCol.Text, 0.65f, 0.65f, 0.65f, 1.0f);
-                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
+                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
                                         ImGui.popStyleColor();
                                     }
                                     ImGui.popID();
@@ -544,7 +552,7 @@ public class ComponentsView extends View
                         ImGui.text("Source ID: " + audioComponent.audio.source);
 
                         ImGui.pushID("AudioPath_" + i);
-                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText("Path", audioName, ImGuiInputTextFlags.ReadOnly));
+                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText("Path", audioName, ImGuiInputTextFlags.ReadOnly));
                         ImGui.popID();
 
                         if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
@@ -713,7 +721,7 @@ public class ComponentsView extends View
                             if (ImGui.treeNode("Postprocessing layer \"" + (ppLayer.getEntitiesLayerToRender() != null ? ppLayer.getEntitiesLayerToRender().getName() + "\"" : "unknown\""))) {
                                 ImString shaderName = new ImString(new File(ppLayer.getShader().path).getName());
 
-                                ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText("Shader", shaderName, ImGuiInputTextFlags.ReadOnly));
+                                ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText("Shader", shaderName, ImGuiInputTextFlags.ReadOnly));
 
                                 if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileShader(ViewsManager.getResourcesView().getCurrentMovingFile())) {
                                     if (ImGui.beginDragDropTarget()) {

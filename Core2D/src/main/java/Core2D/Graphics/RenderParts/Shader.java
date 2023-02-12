@@ -3,23 +3,25 @@ package Core2D.Graphics.RenderParts;
 import Core2D.DataClasses.ShaderData;
 import Core2D.Graphics.OpenGL;
 import Core2D.Log.Log;
+import Core2D.ShaderUtils.ShaderUtils;
+import org.joml.*;
 import org.lwjgl.BufferUtils;
 
 import java.io.Serializable;
 import java.nio.IntBuffer;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
-import static org.lwjgl.opengl.GL20C.*;
+import static org.lwjgl.opengl.GL46C.*;
 
 public class Shader implements Serializable
 {
-    public class ShaderUniform
+    public static class ShaderUniform
     {
         private String name = "";
         private int size;
         private int type;
+
+        public Object value;
 
         public ShaderUniform() { }
 
@@ -28,6 +30,54 @@ public class Shader implements Serializable
             this.name = name;
             this.size = size;
             this.type = type;
+        }
+
+        public void setDefaultValue()
+        {
+            value = switch (type) {
+                case GL_FLOAT -> 0.0f;
+                case GL_FLOAT_VEC2 -> new Vector2f();
+                case GL_FLOAT_VEC3 -> new Vector3f();
+                case GL_FLOAT_VEC4 -> new Vector4f();
+
+                case GL_DOUBLE -> 0.0d;
+                case GL_DOUBLE_VEC2 -> new Vector2d();
+                case GL_DOUBLE_VEC3 -> new Vector3d();
+                case GL_DOUBLE_VEC4 -> new Vector4d();
+
+                case GL_INT, GL_UNSIGNED_INT, GL_SAMPLER_1D, GL_SAMPLER_2D, GL_SAMPLER_3D -> 0;
+                case GL_INT_VEC2, GL_UNSIGNED_INT_VEC2 -> new Vector2i();
+                case GL_INT_VEC3, GL_UNSIGNED_INT_VEC3 -> new Vector3i();
+                case GL_INT_VEC4, GL_UNSIGNED_INT_VEC4 -> new Vector4i();
+
+                case GL_BOOL -> false;
+
+                case GL_FLOAT_MAT2 -> new Matrix2f();
+                case GL_FLOAT_MAT3 -> new Matrix3f();
+                case GL_FLOAT_MAT4 -> new Matrix4f();
+                case GL_FLOAT_MAT3x2 -> new Matrix3x2f();
+                case GL_FLOAT_MAT4x3 -> new Matrix4x3f();
+
+                case GL_DOUBLE_MAT2 -> new Matrix2d();
+                case GL_DOUBLE_MAT3 -> new Matrix3d();
+                case GL_DOUBLE_MAT4 -> new Matrix4d();
+                case GL_DOUBLE_MAT3x2 -> new Matrix3x2d();
+                case GL_DOUBLE_MAT4x3 -> new Matrix4x3d();
+
+                default -> 0;
+            };
+        }
+
+        public <T> T get(Class<T> cls)
+        {
+            if(value == null) {
+                setDefaultValue();
+            }
+            if(cls.isAssignableFrom(value.getClass())) {
+                return cls.cast(value);
+            }
+
+            return null;
         }
 
         public String getName() { return name; }
@@ -137,28 +187,40 @@ public class Shader implements Serializable
 
         // перезагрузка юниформ
         int activeUniformsNum = OpenGL.glCall((params) -> glGetProgrami(programHandler, GL_ACTIVE_UNIFORMS), Integer.class);
+        List<String> actualUniformsNames = new ArrayList<>();
 
+        // нахождение юниформ, которых нет и их создание
         for(int i = 0; i < activeUniformsNum; i++) {
-            ShaderUniform shaderUniform = null;
-            if(i < shaderUniforms.size()) {
-                shaderUniform = shaderUniforms.get(i);
-            } else {
-                shaderUniform = new ShaderUniform();
-                shaderUniforms.add(shaderUniform);
-            }
-
             IntBuffer sizeBuffer = BufferUtils.createIntBuffer(1);
             IntBuffer typeBuffer = BufferUtils.createIntBuffer(1);
 
             final int finalI = i;
 
-            shaderUniform.name = OpenGL.glCall((params) -> glGetActiveUniform(programHandler, finalI, sizeBuffer, typeBuffer), String.class);
-            shaderUniform.size = sizeBuffer.get(0);
-            shaderUniform.type = typeBuffer.get(0);
+            String name = OpenGL.glCall((params) -> glGetActiveUniform(programHandler, finalI, sizeBuffer, typeBuffer), String.class);
+            actualUniformsNames.add(name);
+
+            if(shaderUniforms.stream().noneMatch(uniform -> uniform.name.equals(name))) {
+                ShaderUniform shaderUniform = new ShaderUniform(name, sizeBuffer.get(0), typeBuffer.get(0));
+                shaderUniform.setDefaultValue();
+                shaderUniforms.add(shaderUniform);
+            } else {
+                ShaderUniform shaderUniform = shaderUniforms.stream().filter(shader -> shader.name.equals(name)).findFirst().get();
+                shaderUniform.size = sizeBuffer.get(0);
+                if (shaderUniform.type != typeBuffer.get(0)) {
+                    System.out.println("setted name: " + shaderUniform.name);
+
+                    shaderUniform.setDefaultValue();
+                    shaderUniform.type = typeBuffer.get(0);
+                }
+
+                System.out.println("name: " + shaderUniform.name);
+            }
 
             sizeBuffer.clear();
             typeBuffer.clear();
         }
+
+        shaderUniforms.removeIf(shaderUniform -> actualUniformsNames.stream().noneMatch(uniformName -> uniformName.equals(shaderUniform.name)));
 
         return compiled;
     }
@@ -203,6 +265,17 @@ public class Shader implements Serializable
             // удаление шейдера
             OpenGL.glCall((params) -> glDeleteProgram(programHandler));
         //}
+
+        //shaderUniforms.clear();
+    }
+
+    public void fixUniforms()
+    {
+        for(ShaderUniform shaderUniform : shaderUniforms) {
+            if(shaderUniform.type == GL_FLOAT && shaderUniform.value instanceof Double d) {
+                shaderUniform.value = d.floatValue();
+            }
+        }
     }
 
     public static String shaderPartTypeToString(int shaderType)
@@ -224,6 +297,10 @@ public class Shader implements Serializable
     {
         if(glIsProgram(programHandler)) {
             OpenGL.glCall((params) -> glUseProgram(programHandler));
+
+            for(ShaderUniform shaderUniform : shaderUniforms) {
+                ShaderUtils.setUniform(programHandler, shaderUniform.name, shaderUniform.value);
+            }
         }
     }
 
@@ -232,6 +309,8 @@ public class Shader implements Serializable
     public int getProgramHandler() { return programHandler; }
 
     public HashMap<Integer, Integer> getShaderPartsHandlers() { return shaderPartsHandlers; }
+
+    public List<ShaderUniform> getShaderUniforms() { return shaderUniforms; }
 
     public ShaderData getShaderData() { return shaderData; }
 

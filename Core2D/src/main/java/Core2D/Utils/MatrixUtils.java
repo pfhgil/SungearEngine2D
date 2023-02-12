@@ -31,6 +31,72 @@ public class MatrixUtils
         return arr;
     }
 
+    public static float[] matrixToArray(Matrix2f matrix)
+    {
+        float[] arr = new float[4];
+        arr = matrix.get(arr);
+
+        return arr;
+    }
+
+    public static float[] matrixToArray(Matrix3x2f matrix)
+    {
+        float[] arr = new float[6];
+        arr = matrix.get(arr);
+
+        return arr;
+    }
+
+    public static float[] matrixToArray(Matrix4x3f matrix)
+    {
+        float[] arr = new float[12];
+        arr = matrix.get(arr);
+
+        return arr;
+    }
+
+
+    public static double[] matrixToArray(Matrix4d matrix)
+    {
+        double[] arr = new double[16];
+        arr = matrix.get(arr);
+
+        return arr;
+    }
+
+    public static double[] matrixToArray(Matrix3d matrix)
+    {
+        double[] arr = new double[9];
+        arr = matrix.get(arr);
+
+        return arr;
+    }
+
+    public static double[] matrixToArray(Matrix2d matrix)
+    {
+        double[] arr = new double[4];
+        arr = matrix.get(arr);
+
+        return arr;
+    }
+
+    public static double[] matrixToArray(Matrix3x2d matrix)
+    {
+        double[] arr = new double[6];
+        arr = matrix.get(arr);
+
+        return arr;
+    }
+
+    public static double[] matrixToArray(Matrix4x3d matrix)
+    {
+        double[] arr = new double[12];
+        arr = matrix.get(arr);
+
+        return arr;
+    }
+
+
     public static Vector2f getPosition(Matrix4f matrix4f)
     {
         Vector3f tmp = new Vector3f();

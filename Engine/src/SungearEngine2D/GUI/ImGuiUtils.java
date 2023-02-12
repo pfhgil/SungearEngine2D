@@ -2,13 +2,10 @@ package SungearEngine2D.GUI;
 
 import Core2D.Graphics.OpenGL;
 import imgui.ImGui;
-import imgui.ImGuiWindowClass;
 import imgui.ImVec2;
 import imgui.ImVec4;
 import imgui.flag.ImGuiCol;
-import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiStyleVar;
-import imgui.internal.ImGuiWindow;
 import imgui.type.ImString;
 import org.lwjgl.opengl.GL46C;
 
@@ -301,7 +298,7 @@ public class ImGuiUtils
         return beginMenuWithImage(text, text, textureID, iWidth, iHeight);
     }
 
-    public static boolean leftSideInputText(String text, String ID, ImString str, int flags)
+    public static boolean defaultInputText(String text, String ID, ImString str, int flags)
     {
         ImGui.pushID(ID);
         boolean edited = ImGui.inputText(text, str, flags);
@@ -310,8 +307,43 @@ public class ImGuiUtils
         return edited;
     }
 
-    public static boolean leftSideInputText(String text, ImString str, int flags)
+    public static boolean defaultInputText(String text, ImString str, int flags)
     {
-        return leftSideInputText(text, text, str, flags);
+        return defaultInputText(text, text, str, flags);
+    }
+
+    public static boolean inputTextWithRightButton(String text, String ID, ImString str, int flags, int buttonTexHandler, boolean[] buttonPressed, String buttonTooltip)
+    {
+        ImGui.pushID(ID);
+        boolean edited = ImGui.inputText("", str, flags);
+        ImGui.sameLine();
+        buttonPressed[0] = ImGui.imageButton(buttonTexHandler, 12, 12);
+        if(!buttonTooltip.equals("")) {
+            tooltip(buttonTooltip);
+        }
+        ImGui.sameLine();
+        ImGui.text(text);
+        ImGui.popID();
+
+        return edited;
+    }
+
+    public static boolean inputTextWithRightButton(String text, ImString str, int flags, int buttonTexHandler, boolean[] buttonPressed, String buttonTooltip)
+    {
+        return inputTextWithRightButton(text, text, str, flags, buttonTexHandler, buttonPressed, buttonTooltip);
+    }
+
+    public static boolean inputTextWithRightButton(String text, ImString str, int flags, int buttonTexHandler, boolean[] buttonPressed)
+    {
+        return inputTextWithRightButton(text, text, str, flags, buttonTexHandler, buttonPressed, "");
+    }
+
+    public static void tooltip(String tip)
+    {
+        if(ImGui.isItemHovered()) {
+            ImGui.beginTooltip();
+            ImGui.text(tip);
+            ImGui.endTooltip();
+        }
     }
 }

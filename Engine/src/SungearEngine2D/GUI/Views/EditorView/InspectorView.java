@@ -205,7 +205,7 @@ public class InspectorView extends View
                                                     if (currentEditingID != i) {
                                                         currentName.set(currentLayer.getName(), true);
 
-                                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText("", currentName, ImGuiInputTextFlags.ReadOnly));
+                                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText("", currentName, ImGuiInputTextFlags.ReadOnly));
 
                                                         if (ImGui.isItemClicked()) {
                                                             currentEditingID = i;
@@ -334,7 +334,7 @@ public class InspectorView extends View
                                                     if (currentEditingID != i) {
                                                         currentName.set(currentTag.getName(), true);
 
-                                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.leftSideInputText("", currentName, ImGuiInputTextFlags.ReadOnly));
+                                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText("", currentName, ImGuiInputTextFlags.ReadOnly));
 
                                                         if (ImGui.isItemClicked()) {
                                                             currentEditingID = i;
