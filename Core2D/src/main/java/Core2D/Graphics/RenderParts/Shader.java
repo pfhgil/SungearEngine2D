@@ -272,8 +272,12 @@ public class Shader implements Serializable
     public void fixUniforms()
     {
         for(ShaderUniform shaderUniform : shaderUniforms) {
-            if(shaderUniform.type == GL_FLOAT && shaderUniform.value instanceof Double d) {
-                shaderUniform.value = d.floatValue();
+            if(shaderUniform.value instanceof Double d) {
+                if (shaderUniform.type == GL_FLOAT) {
+                    shaderUniform.value = d.floatValue();
+                } else {
+                    shaderUniform.value = d.intValue();
+                }
             }
         }
     }

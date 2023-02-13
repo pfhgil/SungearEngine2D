@@ -187,7 +187,7 @@ public class ComponentsView extends View
                                 Resources.Textures.Icons.editIcon24.getTextureHandler(), shaderEditButtonPressed, "Edit shader"));
 
                         if(shaderEditButtonPressed[0]) {
-                            ViewsManager.getShadersEditorView().getEditingShaders().add(
+                            ViewsManager.getShadersEditorView().addEditingShader(
                                     new ShadersEditorView.ShaderEditorWindow(meshComponent.getShader(), meshComponent.entity.getLayer().getID(), meshComponent.entity.ID, meshComponent.componentID)
                             );
                         }

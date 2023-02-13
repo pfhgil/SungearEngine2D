@@ -15,7 +15,6 @@ public class ShaderUtils
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             float[] data = MatrixUtils.matrixToArray(val);
-            // передача в uniform матрицу
             OpenGL.glCall((params) -> glUniformMatrix4fv(uniformLocation, false, data));
         }
 
@@ -28,7 +27,6 @@ public class ShaderUtils
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             float[] data = MatrixUtils.matrixToArray(val);
-            // передача в uniform матрицу
             OpenGL.glCall((params) -> glUniformMatrix3fv(uniformLocation, false, data));
         }
 
@@ -41,7 +39,6 @@ public class ShaderUtils
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             float[] data = MatrixUtils.matrixToArray(val);
-            // передача в uniform матрицу
             OpenGL.glCall((params) -> glUniformMatrix3fv(uniformLocation, false, data));
         }
 
@@ -54,7 +51,6 @@ public class ShaderUtils
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             float[] data = MatrixUtils.matrixToArray(val);
-            // передача в uniform матрицу
             OpenGL.glCall((params) -> glUniformMatrix3fv(uniformLocation, false, data));
         }
 
@@ -67,7 +63,6 @@ public class ShaderUtils
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             float[] data = MatrixUtils.matrixToArray(val);
-            // передача в uniform матрицу
             OpenGL.glCall((params) -> glUniformMatrix3fv(uniformLocation, false, data));
         }
 
@@ -83,7 +78,6 @@ public class ShaderUtils
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             double[] data = MatrixUtils.matrixToArray(val);
-            // передача в uniform матрицу
             OpenGL.glCall((params) -> glUniformMatrix4dv(uniformLocation, false, data));
         }
 
@@ -96,7 +90,6 @@ public class ShaderUtils
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             double[] data = MatrixUtils.matrixToArray(val);
-            // передача в uniform матрицу
             OpenGL.glCall((params) -> glUniformMatrix3dv(uniformLocation, false, data));
         }
 
@@ -109,7 +102,6 @@ public class ShaderUtils
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             double[] data = MatrixUtils.matrixToArray(val);
-            // передача в uniform матрицу
             OpenGL.glCall((params) -> glUniformMatrix3dv(uniformLocation, false, data));
         }
 
@@ -122,7 +114,6 @@ public class ShaderUtils
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             double[] data = MatrixUtils.matrixToArray(val);
-            // передача в uniform матрицу
             OpenGL.glCall((params) -> glUniformMatrix3dv(uniformLocation, false, data));
         }
 
@@ -135,7 +126,6 @@ public class ShaderUtils
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
             double[] data = MatrixUtils.matrixToArray(val);
-            // передача в uniform матрицу
             OpenGL.glCall((params) -> glUniformMatrix3dv(uniformLocation, false, data));
         }
 
@@ -150,7 +140,6 @@ public class ShaderUtils
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
-            // передача в uniform float
             OpenGL.glCall((params) -> glUniform1f(uniformLocation, val));
         }
 
@@ -162,7 +151,6 @@ public class ShaderUtils
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
-            // передача в uniform вектора
             OpenGL.glCall((params) -> glUniform2f(uniformLocation, val.x, val.y));
         }
 
@@ -174,7 +162,6 @@ public class ShaderUtils
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
-            // передача в uniform вектора
             OpenGL.glCall((params) -> glUniform3f(uniformLocation, val.x, val.y, val.z));
         }
 
@@ -186,7 +173,6 @@ public class ShaderUtils
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
-            // передача в uniform вектора
             OpenGL.glCall((params) -> glUniform4f(uniformLocation, val.x, val.y, val.z, val.w));
         }
 
@@ -201,8 +187,7 @@ public class ShaderUtils
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
-            // передача в uniform float
-            //OpenGL.glCall((params) -> glUniform1d(uniformLocation, val));
+            OpenGL.glCall((params) -> glUniform1d(uniformLocation, val));
         }
 
         return uniformLocation != -1;
@@ -213,7 +198,6 @@ public class ShaderUtils
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
-            // передача в uniform вектора
             OpenGL.glCall((params) -> glUniform2d(uniformLocation, val.x, val.y));
         }
 
@@ -225,7 +209,6 @@ public class ShaderUtils
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
-            // передача в uniform вектора
             OpenGL.glCall((params) -> glUniform3d(uniformLocation, val.x, val.y, val.z));
         }
 
@@ -237,7 +220,6 @@ public class ShaderUtils
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
-            // передача в uniform вектора
             OpenGL.glCall((params) -> glUniform4d(uniformLocation, val.x, val.y, val.z, val.w));
         }
 
@@ -252,7 +234,6 @@ public class ShaderUtils
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
-            // передача в uniform int
             OpenGL.glCall((params) -> glUniform1i(uniformLocation, val));
         }
 
@@ -264,7 +245,6 @@ public class ShaderUtils
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
-            // передача в uniform вектора
             OpenGL.glCall((params) -> glUniform2i(uniformLocation, val.x, val.y));
         }
 
@@ -276,7 +256,6 @@ public class ShaderUtils
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
-            // передача в uniform вектора
             OpenGL.glCall((params) -> glUniform3i(uniformLocation, val.x, val.y, val.z));
         }
 
@@ -288,7 +267,6 @@ public class ShaderUtils
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
-            // передача в uniform вектора
             OpenGL.glCall((params) -> glUniform4i(uniformLocation, val.x, val.y, val.z, val.w));
         }
 
@@ -303,7 +281,6 @@ public class ShaderUtils
         // получить нахождение uniform в шейдерной программе
         int uniformLocation = OpenGL.glCall((params) -> glGetUniformLocation(programHandler, uniformName), Integer.class);
         if(uniformLocation != -1) {
-            // передача в uniform int
             if (val) OpenGL.glCall((params) -> glUniform1i(uniformLocation, 1));
             else OpenGL.glCall((params) -> glUniform1i(uniformLocation, 0));
         }

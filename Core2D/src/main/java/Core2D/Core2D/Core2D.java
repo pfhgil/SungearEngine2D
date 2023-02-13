@@ -193,7 +193,7 @@ public class Core2D extends Graphics
             Core2D.core2DUserCallback.onExit();
         }
 
-        System.exit(130);
+        System.exit(0);
     }
 
     public static Window getWindow() {

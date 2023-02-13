@@ -32,6 +32,7 @@ import SungearEngine2D.GUI.GUI;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Utils.AppData.AppDataManager;
+import imgui.ImGui;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
@@ -257,6 +258,8 @@ public class Main
                 if(ProjectsManager.getCurrentProject() != null) {
                     ProjectsManager.getCurrentProject().save();
                 }
+
+                ImGui.saveIniSettingsToDisk("imgui.ini");
             }
 
             @Override

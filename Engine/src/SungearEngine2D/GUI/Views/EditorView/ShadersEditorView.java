@@ -1,22 +1,18 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Layering.Layer;
-import Core2D.Layering.PostprocessingLayer;
 import SungearEngine2D.GUI.Views.View;
+import SungearEngine2D.GUI.Views.ViewsManager;
 import imgui.ImGui;
-import imgui.ImVec2;
 import imgui.flag.ImGuiStyleVar;
-import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImBoolean;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
@@ -47,10 +43,12 @@ public class ShadersEditorView extends View
             if(active) {
                 ImBoolean opened = new ImBoolean(true);
 
+                ImGui.setNextWindowDockID(ViewsManager.getShadersEditorView().dockspaceID);
                 ImGui.begin(new File(shader.path).getName(), opened);
 
                 if(!opened.get()) {
                     active = false;
+                    ViewsManager.getShadersEditorView().shaderEditorWindows.remove(this);
                 }
 
                 for (Shader.ShaderUniform shaderUniform : shader.getShaderUniforms()) {
@@ -94,7 +92,7 @@ public class ShadersEditorView extends View
 
     private int dockspaceID;
 
-    private List<ShaderEditorWindow> editingShaders = new ArrayList<>();
+    private List<ShaderEditorWindow> shaderEditorWindows = new ArrayList<>();
 
     public ShadersEditorView()
     {
@@ -122,10 +120,10 @@ public class ShadersEditorView extends View
 
             ImGui.dockSpace(dockspaceID);
 
-            int size = editingShaders.size();
+            int size = shaderEditorWindows.size();
             for(int i = 0; i < size; i++) {
-                editingShaders.get(i).handleShader();
-                editingShaders.get(i).draw();
+                shaderEditorWindows.get(i).handleShader();
+                shaderEditorWindows.get(i).draw();
             }
 
             /*
@@ -147,5 +145,14 @@ public class ShadersEditorView extends View
     }
 
 
-    public List<ShaderEditorWindow> getEditingShaders() { return editingShaders; }
+    public void addEditingShader(ShaderEditorWindow editorWindow)
+    {
+        if(shaderEditorWindows.stream().noneMatch(shaderEditorWindow -> shaderEditorWindow.shader.path.equals(editorWindow.shader.path))) {
+            shaderEditorWindows.add(editorWindow);
+        }
+    }
+
+    public int getDockspaceID() { return dockspaceID; }
+
+    //public List<ShaderEditorWindow> getShaderEditorWindows() { return shaderEditorWindows; }
 }
