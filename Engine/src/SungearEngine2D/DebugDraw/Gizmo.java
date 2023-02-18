@@ -4,7 +4,6 @@ package SungearEngine2D.DebugDraw;
 /*import Core2D.Drawable.Primitives.Circle2D;
 import Core2D.Drawable.Primitives.Line2D;*/
 import Core2D.AssetManager.AssetManager;
-import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.Primitives.LineComponent;
@@ -12,9 +11,8 @@ import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.RenderParts.Shader;
-import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Input.PC.Mouse;
-import Core2D.ShaderUtils.FrameBuffer;
+import Core2D.Graphics.OpenGL.FrameBuffer;
 import Core2D.Transform.Transform;
 import Core2D.Utils.MathUtils;
 import Core2D.Utils.MatrixUtils;

@@ -276,6 +276,24 @@ public class Main
                 //cameraAnchor.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
                 CameraController.control();
 
+                // чтобы пофиксить id компонентов
+                /*
+                if(Keyboard.keyReleased(GLFW.GLFW_KEY_T)) {
+                    if(currentSceneManager != null && currentSceneManager.getCurrentScene2D() != null) {
+                        for(Layer layer : currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
+                            for(Entity entity : layer.getEntities()) {
+                                int curId = 0;
+                                for(Component component : entity.getComponents()) {
+                                    component.ID = curId;
+                                    curId++;
+                                }
+                            }
+                        }
+                    }
+                }
+
+                 */
+
                 mainCamera2D.update();
 
                 if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) GUI.draw();

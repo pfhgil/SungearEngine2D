@@ -1,35 +1,17 @@
 package sungear.project.test12.Scripts.Systems.Postprocessing;
 
-import Core2D.AssetManager.AssetManager;
 import Core2D.Core2D.Core2D;
-import Core2D.ECS.Component.Component;
 import Core2D.ECS.*;
 import Core2D.ECS.Component.Components.*;
 import Core2D.ECS.System.System;
-import Core2D.Graphics.Graphics;
-import Core2D.Graphics.OpenGL;
 import Core2D.Graphics.RenderParts.Shader;
-import Core2D.Layering.Layer;
 import Core2D.Layering.PostprocessingLayer;
-import Core2D.Scene2D.Scene2D;
-import Core2D.Scene2D.SceneManager;
-import Core2D.ShaderUtils.*;
-import Core2D.Utils.MatrixUtils;
+import Core2D.Utils.ShaderUtils;
 import org.joml.*;
-import Core2D.Log.Log;
-
-import java.lang.Math;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
 
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
 import org.lwjgl.glfw.GLFW;
-
-import static org.lwjgl.opengl.GL46C.*;
-import static org.lwjgl.glfw.GLFW.glfwGetTime;
 
 // Attention! Do not declare fields with the @InspectorView annotation in systems. They will not be processed and shown in the Inspector.
 public class PPTest1System extends System

@@ -1,6 +1,6 @@
 package Core2D.Core2D;
 
-import Core2D.Graphics.OpenGL;
+import Core2D.Graphics.OpenGL.OpenGL;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL11C;
 

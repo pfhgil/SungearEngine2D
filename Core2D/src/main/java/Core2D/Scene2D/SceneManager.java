@@ -120,7 +120,6 @@ public class SceneManager
         try(inputStream) {
             String deserialized = (String) FileUtils.deSerializeObject(inputStream);
             if (deserialized != null && !deserialized.equals("")) {
-                Log.CurrentSession.println("scene manager code: " + deserialized, Log.MessageType.INFO);
                 return Utils.gson.fromJson(deserialized, SceneManager.class);
             }
         } catch(Exception e) {

@@ -1,16 +1,13 @@
 package SungearEngine2D.DebugDraw;
 
-import Core2D.ECS.Component.Components.BoxCollider2DComponent;
-import Core2D.ECS.Component.Components.Camera2DComponent;
-import Core2D.ECS.Component.Components.CircleCollider2DComponent;
+import Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent;
+import Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent;
 import Core2D.ECS.Component.Components.Primitives.BoxComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
-import Core2D.ECS.System.Systems.PrimitivesRendererSystem;
 import Core2D.Graphics.Graphics;
 import Core2D.Physics.PhysicsWorld;
-import Core2D.ShaderUtils.FrameBuffer;
 import Core2D.Transform.Transform;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
@@ -23,8 +20,6 @@ import org.joml.Vector4f;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.lwjgl.opengl.GL11C.glBlendFunc;
 
 public class EntitiesDebugDraw
 {
@@ -67,6 +62,8 @@ public class EntitiesDebugDraw
                     BoxComponent boxComponent = box.getComponent(BoxComponent.class);
 
                     PolygonShape polygonShape = (PolygonShape) boxCollider2DComponent.getBoxCollider2D().getFixture().getShape();
+                    if(polygonShape == null) return;
+
                     Vec2[] verticesPos = polygonShape.getVertices();
                     Body body = boxCollider2DComponent.getBoxCollider2D().getRigidbody2D().getBody();
 
@@ -112,6 +109,8 @@ public class EntitiesDebugDraw
                     CircleComponent circleComponent = circle.getComponent(CircleComponent.class);
 
                     CircleShape circleShape = (CircleShape) circleCollider2DComponent.getCircleCollider2D().getFixture().getShape();
+                    if(circleShape == null) return;
+
                     Vec2 circlePos = circleCollider2DComponent.getCircleCollider2D().getRigidbody2D().getBody().getWorldPoint(circleShape.m_p);
                     float circleRadius = circleShape.m_radius * PhysicsWorld.RATIO;
 

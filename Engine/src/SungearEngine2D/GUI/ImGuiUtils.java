@@ -1,6 +1,6 @@
 package SungearEngine2D.GUI;
 
-import Core2D.Graphics.OpenGL;
+import Core2D.Graphics.OpenGL.OpenGL;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.ImVec4;
@@ -312,10 +312,18 @@ public class ImGuiUtils
         return defaultInputText(text, text, str, flags);
     }
 
-    public static boolean inputTextWithRightButton(String text, String ID, ImString str, int flags, int buttonTexHandler, boolean[] buttonPressed, String buttonTooltip)
+    public static boolean inputTextWithRightButton(String text, String ID, ImString str, int flags, int buttonTexHandler, boolean[] buttonPressed, String buttonTooltip, boolean enableDragDrop, Object[] droppedObj, String dragDropDataType)
     {
         ImGui.pushID(ID);
         boolean edited = ImGui.inputText("", str, flags);
+        if(enableDragDrop) {
+            if (ImGui.beginDragDropTarget()) {
+                if (droppedObj != null && droppedObj.length > 0) {
+                    droppedObj[0] = ImGui.acceptDragDropPayload(dragDropDataType);
+                }
+                ImGui.endDragDropTarget();
+            }
+        }
         ImGui.sameLine();
         buttonPressed[0] = ImGui.imageButton(buttonTexHandler, 12, 12);
         if(!buttonTooltip.equals("")) {
@@ -328,14 +336,19 @@ public class ImGuiUtils
         return edited;
     }
 
+    public static boolean inputTextWithRightButton(String text, ImString str, int flags, int buttonTexHandler, boolean[] buttonPressed, String buttonTooltip, boolean enableDragDrop, Object[] droppedObj, String dragDropDataType)
+    {
+        return inputTextWithRightButton(text, text, str, flags, buttonTexHandler, buttonPressed, buttonTooltip, enableDragDrop, droppedObj, dragDropDataType);
+    }
+
     public static boolean inputTextWithRightButton(String text, ImString str, int flags, int buttonTexHandler, boolean[] buttonPressed, String buttonTooltip)
     {
-        return inputTextWithRightButton(text, text, str, flags, buttonTexHandler, buttonPressed, buttonTooltip);
+        return inputTextWithRightButton(text, text, str, flags, buttonTexHandler, buttonPressed, buttonTooltip, false, null, "");
     }
 
     public static boolean inputTextWithRightButton(String text, ImString str, int flags, int buttonTexHandler, boolean[] buttonPressed)
     {
-        return inputTextWithRightButton(text, text, str, flags, buttonTexHandler, buttonPressed, "");
+        return inputTextWithRightButton(text, text, str, flags, buttonTexHandler, buttonPressed, "", false, null, "");
     }
 
     public static void tooltip(String tip)

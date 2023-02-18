@@ -3,6 +3,7 @@ package Core2D.ECS;
 import Core2D.Core2D.Settings;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
+import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Component.Components.Primitives.BoxComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.Primitives.LineComponent;
@@ -279,7 +280,7 @@ public class Entity implements Serializable, PoolObject
         }
 
         if(components.size() > 0) {
-            component.componentID = components.stream().max(Comparator.comparingInt(c0 -> c0.componentID)).get().componentID + 1;
+            component.ID = components.stream().max(Comparator.comparingInt(c0 -> c0.ID)).get().ID + 1;
         }
         components.add(component);
         component.entity = this;
@@ -391,7 +392,7 @@ public class Entity implements Serializable, PoolObject
     public Component findComponentByID(int ID)
     {
         for(Component component : components) {
-            if(component.componentID == ID) {
+            if(component.ID == ID) {
                 return component;
             }
         }

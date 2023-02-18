@@ -1,15 +1,15 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.Core2D.Core2D;
+import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera2DComponent;
-import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
-import Core2D.Graphics.OpenGL;
+import Core2D.Graphics.OpenGL.*;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Input.PC.Mouse;
-import Core2D.Layering.Layer;
 import Core2D.Layering.PostprocessingLayer;
-import Core2D.ShaderUtils.*;
+import Core2D.Utils.ComponentHandler;
+import Core2D.Utils.ShaderUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.Main.Resources;
@@ -23,8 +23,6 @@ import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector4f;
 import org.lwjgl.opengl.GL46C;
-
-import java.util.*;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
 import static org.lwjgl.opengl.GL11C.*;
@@ -49,10 +47,7 @@ public class GameView extends View
 
     // слой постпроцесса
     private PostprocessingLayer postprocessingLayer;
-    private String ppLayerOriginalLayerName = "";
-    private int ppLayerEntityID;
-    private int ppLayerCameraComponentID;
-
+    private ComponentHandler camera2DComponentHandler = new ComponentHandler();
     private VertexArray ppQuadVertexArray;
 
     public GameView(String windowName, String windowID, int viewTextureHandler, boolean isClosable)
@@ -60,7 +55,7 @@ public class GameView extends View
         this(windowName, windowID, viewTextureHandler, isClosable, null, null);
     }
 
-    public GameView(String windowName, String windowID, int viewTextureHandler, boolean isClosable, PostprocessingLayer postprocessingLayer, Camera2DComponent camera2DComponentOfPPlayer)
+    public GameView(String windowName, String windowID, int viewTextureHandler, boolean isClosable, PostprocessingLayer postprocessingLayer, ComponentHandler camera2DComponentHandler)
     {
         this.windowName = windowName;
         this.windowID = windowID;
@@ -110,12 +105,10 @@ public class GameView extends View
             ppQuadVertexArray.unBind();
         }
 
-        if(camera2DComponentOfPPlayer != null) {
+        if(camera2DComponentHandler != null) {
             this.postprocessingLayer = postprocessingLayer;
 
-            ppLayerOriginalLayerName = camera2DComponentOfPPlayer.entity.layerName;
-            ppLayerEntityID = camera2DComponentOfPPlayer.entity.ID;
-            ppLayerCameraComponentID = camera2DComponentOfPPlayer.componentID;
+            this.camera2DComponentHandler = camera2DComponentHandler;
         }
     }
 
@@ -255,16 +248,10 @@ public class GameView extends View
     // поместить handle в отдельный поток.
     public void handlePostprocessingLayer()
     {
-        if(currentSceneManager != null && currentSceneManager.getCurrentScene2D() != null && postprocessingLayer != null) {
-            Layer layer = currentSceneManager.getCurrentScene2D().getLayering().getLayer(ppLayerOriginalLayerName);
-            Entity foundEntity = layer.getEntity(ppLayerEntityID);
-            if(foundEntity == null) return;
-            Camera2DComponent foundCamera2D = (Camera2DComponent) foundEntity.findComponentByID(ppLayerCameraComponentID);
-            if(foundCamera2D == null) return;
-            PostprocessingLayer foundPPLayer = foundCamera2D.getPostprocessingLayerByName(postprocessingLayer.getEntitiesLayerToRenderName());
-            if(foundPPLayer == null) return;
-
-            postprocessingLayer = foundPPLayer;
+        Component foundComponent = camera2DComponentHandler.getComponent();
+        if(foundComponent == null) return;
+        if(foundComponent instanceof Camera2DComponent camera2DComponent) {
+            postprocessingLayer = camera2DComponent.getPostprocessingLayerByName(postprocessingLayer.getEntitiesLayerToRenderName());
         }
     }
 
@@ -303,14 +290,12 @@ public class GameView extends View
     public int getViewTextureHandler() { return viewTextureHandler; }
     public void setViewTextureHandler(int viewTextureHandler) { this.viewTextureHandler = viewTextureHandler; }
 
-    public void setPostprocessingLayer(PostprocessingLayer postprocessingLayer, Camera2DComponent camera2DComponentOfPPlayer)
+    public void setPostprocessingLayer(PostprocessingLayer postprocessingLayer, ComponentHandler camera2DComponentHandler)
     {
-        if(camera2DComponentOfPPlayer != null) {
+        if(camera2DComponentHandler != null) {
             this.postprocessingLayer = postprocessingLayer;
 
-            ppLayerOriginalLayerName = camera2DComponentOfPPlayer.entity.layerName;
-            ppLayerEntityID = camera2DComponentOfPPlayer.entity.ID;
-            ppLayerCameraComponentID = camera2DComponentOfPPlayer.componentID;
+            this.camera2DComponentHandler = camera2DComponentHandler;
         }
     }
 

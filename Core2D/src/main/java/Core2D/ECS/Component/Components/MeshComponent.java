@@ -2,11 +2,10 @@ package Core2D.ECS.Component.Components;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.ECS.Component.Component;
+import Core2D.Graphics.OpenGL.*;
 import Core2D.Graphics.RenderParts.Material2D;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
-import Core2D.Log.Log;
-import Core2D.ShaderUtils.*;
 import Core2D.Utils.PositionsQuad;
 import org.joml.Vector2f;
 import org.joml.Vector4f;

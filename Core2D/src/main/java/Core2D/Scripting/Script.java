@@ -16,13 +16,11 @@ import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class Script
@@ -79,7 +77,7 @@ public class Script
             if (Core2D.core2DMode == Core2DMode.IN_ENGINE) {
                 File file = new File(scriptsDirPath);
 
-                URL scriptDirURL = file.toURI().toURL();
+                 URL scriptDirURL = file.toURI().toURL();
                 flexibleURLClassLoader.addURL(scriptDirURL);
                 // ЕСЛИ БУДУТ БАГИ, ТО РАСКОММЕНТИРОВАТЬ
                 //ScriptSystem.loadAllChildURLs(flexibleURLClassLoader, scriptsDirPath);
@@ -281,7 +279,7 @@ public class Script
                     if (value instanceof Entity entity) {
                         scriptTempValue.setValue(new ScriptValue(entity.ID, entity.name, ScriptValueType.TYPE_ENTITY));
                     } else if(value instanceof Component component) {
-                        scriptTempValue.setValue(new ScriptValue(component.entity.ID, component.componentID, component.entity.name, ScriptValueType.TYPE_COMPONENT));
+                        scriptTempValue.setValue(new ScriptValue(component.entity.ID, component.ID, component.entity.name, ScriptValueType.TYPE_COMPONENT));
                     } else {
                         scriptTempValue.setValue(value);
                     }

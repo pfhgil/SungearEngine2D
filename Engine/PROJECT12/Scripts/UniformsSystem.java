@@ -7,8 +7,9 @@ import Core2D.Scripting.*;
 import Core2D.Log.*;
 import Core2D.Graphics.RenderParts.*;
 import Core2D.Timer.Timer;
+import Core2D.Utils.ShaderUtils;
+
 import static org.lwjgl.glfw.GLFW.*;
-import Core2D.ShaderUtils.ShaderUtils;
 
 // Attention! Do not declare fields with the @InspectorView annotation in systems. They will not be processed and shown in the Inspector.
 public class UniformsSystem extends System
@@ -44,10 +45,10 @@ public class UniformsSystem extends System
 
         MeshComponent meshComponent = entity.getComponent(MeshComponent.class);
         if(meshComponent != null) {
-            meshComponent.shader.bind();
+            meshComponent.getShader().bind();
 
             ShaderUtils.setUniform(
-                    meshComponent.shader.getProgramHandler(),
+                    meshComponent.getShader().getProgramHandler(),
                     "time",
                     time
             );

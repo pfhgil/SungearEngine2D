@@ -2,7 +2,7 @@ package Core2D.ECS.Component.Components.Primitives;
 
 import Core2D.DataClasses.LineData;
 import Core2D.ECS.Component.Component;
-import Core2D.ShaderUtils.VertexArray;
+import Core2D.Graphics.OpenGL.VertexArray;
 import org.joml.Vector2f;
 
 public class BoxComponent extends PrimitiveComponent

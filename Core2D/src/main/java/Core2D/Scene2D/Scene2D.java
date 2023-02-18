@@ -3,6 +3,7 @@ package Core2D.Scene2D;
 import Core2D.Audio.AudioManager;
 import Core2D.CamerasManager.CamerasManager;
 import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
@@ -156,6 +157,15 @@ public class Scene2D
         setRunning(false);
 
         sceneLoaded = true;
+
+        // init shaders
+        for(Layer layer : layering.getLayers()) {
+            for(Entity entity : layer.getEntities()) {
+                for(MeshComponent meshComponent : entity.getAllComponents(MeshComponent.class)) {
+                    meshComponent.getShader().initUniforms();
+                }
+            }
+        }
     }
 
     public void addTag(Tag tag)

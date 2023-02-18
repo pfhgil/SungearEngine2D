@@ -2,20 +2,24 @@ package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.MeshComponent;
-import Core2D.ECS.Entity;
+import Core2D.ECS.Component.Components.ProgramTimeComponent;
+import Core2D.ECS.Component.Components.Shader.ShaderUniformFloatComponent;
+import Core2D.ECS.Component.Components.Shader.TextureComponent;
 import Core2D.Graphics.RenderParts.Shader;
-import Core2D.Layering.Layer;
+import Core2D.Utils.ComponentHandler;
+import SungearEngine2D.GUI.ImGuiUtils;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import imgui.ImGui;
+import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiStyleVar;
 import imgui.type.ImBoolean;
+import imgui.type.ImString;
+import org.lwjgl.opengl.GL46C;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import static Core2D.Scene2D.SceneManager.currentSceneManager;
 
 public class ShadersEditorView extends View
 {
@@ -25,17 +29,12 @@ public class ShadersEditorView extends View
 
         private Shader shader;
 
-        private int layerID = -1;
-        private int entityID = -1;
-        private int componentID = -1;
+        private ComponentHandler componentHandler;
 
-        public ShaderEditorWindow(Shader shader, int layerID, int entityID, int componentID)
+        public ShaderEditorWindow(Shader shader, ComponentHandler componentHandler)
         {
             this.shader = shader;
-
-            this.layerID = layerID;
-            this.entityID = entityID;
-            this.componentID = componentID;
+            this.componentHandler = componentHandler;
         }
 
         public void draw()
@@ -52,15 +51,84 @@ public class ShadersEditorView extends View
                 }
 
                 for (Shader.ShaderUniform shaderUniform : shader.getShaderUniforms()) {
+                    boolean isSampler = shaderUniform.getType() == GL46C.GL_SAMPLER_1D ||
+                            shaderUniform.getType() == GL46C.GL_SAMPLER_2D ||
+                            shaderUniform.getType() == GL46C.GL_SAMPLER_3D;
                     if (shaderUniform.value instanceof Integer) {
-                        int[] val = new int[]{(int) shaderUniform.value};
-                        if (ImGui.dragInt(shaderUniform.getName(), val)) {
-                            shaderUniform.value = val[0];
+                        if(!isSampler || shaderUniform.getAttachedComponent() == null) {
+                            int[] val = new int[]{(int) shaderUniform.value};
+                            if (ImGui.dragInt(shaderUniform.getName(), val)) {
+                                shaderUniform.value = val[0];
+                            }
+
+                            Object droppedObject = acceptDragDrop();
+
+                            ImGui.separator();
+
+                            if(droppedObject instanceof Component component) {
+                                shaderUniform.attachToComponent(component);
+                            }
+                        } else {
+                            String[] text = new String[1];
+                            if(shaderUniform.getAttachedComponent() instanceof TextureComponent textureComponent) {
+                                text[0] = new File(textureComponent.getTexture().path).getName();
+                            }
+
+                            ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText(shaderUniform.getName(), new ImString(text[0]), ImGuiInputTextFlags.ReadOnly));
+
+                            Object droppedObject = acceptDragDrop();
+
+                            if(droppedObject instanceof Component component) {
+                                shaderUniform.attachToComponent(component);
+                            }
+
+                            //ImGui.sameLine();
+
+                            ImGui.pushID("DetachComponentButton_" + shaderUniform.getName());
+                            if(ImGui.button("Detach component")) {
+                                shaderUniform.resetAttachedComponent();
+                            }
+                            ImGui.popID();
+
+                            ImGui.separator();
                         }
                     } else if (shaderUniform.value instanceof Float) {
-                        float[] val = new float[]{(float) shaderUniform.value};
-                        if (ImGui.dragFloat(shaderUniform.getName(), val, 0.01f)) {
-                            shaderUniform.value = val[0];
+                        if(shaderUniform.getAttachedComponent() == null) {
+                            float[] val = new float[]{(float) shaderUniform.value};
+                            if (ImGui.dragFloat(shaderUniform.getName(), val, 0.01f)) {
+                                shaderUniform.value = val[0];
+                            }
+
+                            Object droppedObject = acceptDragDrop();
+
+                            ImGui.separator();
+
+                            if(droppedObject instanceof Component component) {
+                                shaderUniform.attachToComponent(component);
+                            }
+                        } else {
+                            String[] text = new String[1];
+                            if(shaderUniform.getAttachedComponent() instanceof ProgramTimeComponent programTimeComponent) {
+                                text[0] = "" + programTimeComponent.uniformValue;
+                            }
+
+                            ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText(shaderUniform.getName(), new ImString(text[0]), ImGuiInputTextFlags.ReadOnly));
+
+                            Object droppedObject = acceptDragDrop();
+
+                            if(droppedObject instanceof Component component) {
+                                shaderUniform.attachToComponent(component);
+                            }
+
+                            //ImGui.sameLine();
+
+                            ImGui.pushID("DetachComponentButton_" + shaderUniform.getName());
+                            if(ImGui.button("Detach component")) {
+                                shaderUniform.resetAttachedComponent();
+                            }
+                            ImGui.popID();
+
+                            ImGui.separator();
                         }
                     }
                 }
@@ -69,22 +137,27 @@ public class ShadersEditorView extends View
             }
         }
 
+        private Object acceptDragDrop()
+        {
+            Object accepted = null;
+            if(ImGui.beginDragDropTarget()) {
+                accepted = ImGui.acceptDragDropPayload("Component");
+                ImGui.endDragDropTarget();
+            }
+            return accepted;
+        }
+
         // удержание шейдера, чтобы после десериализации иметь реальный handler. вынести в отдельный поток
         public void handleShader()
         {
-            if (currentSceneManager != null && currentSceneManager.getCurrentScene2D() != null && shader != null) {
-                Layer layer = currentSceneManager.getCurrentScene2D().getLayering().getLayer(layerID);
-                Entity foundEntity = layer.getEntity(entityID);
-                if (foundEntity == null) return;
-                Component foundComponent = foundEntity.findComponentByID(componentID);
-                if (foundComponent == null) return;
-                Shader foundShader = null;
-                if (foundComponent instanceof MeshComponent meshComponent) {
-                    foundShader = meshComponent.getShader();
-                }
-                if (foundShader == null) return;
-                shader = foundShader;
+            Component foundComponent = componentHandler.getComponent();
+            if (foundComponent == null) return;
+            Shader foundShader = null;
+            if (foundComponent instanceof MeshComponent meshComponent) {
+                foundShader = meshComponent.getShader();
             }
+            if (foundShader == null) return;
+            shader = foundShader;
         }
     }
 

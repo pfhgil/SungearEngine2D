@@ -16,7 +16,7 @@ public class Component
 
     private int object2DID = -1;
 
-    public int componentID = 0;
+    public int ID = 0;
 
     protected boolean active = true;
 
@@ -96,8 +96,6 @@ public class Component
      * @param active
      */
     public void setActive(boolean active) { this.active = active; }
-
-    public int getObject2DID() { return object2DID; }
 
     public <T extends Component> T getComponent(Class<T> componentClass)
     {

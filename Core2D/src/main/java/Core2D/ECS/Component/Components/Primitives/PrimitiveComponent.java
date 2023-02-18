@@ -4,11 +4,10 @@ import Core2D.AssetManager.AssetManager;
 import Core2D.DataClasses.LineData;
 import Core2D.ECS.Component.Component;
 import Core2D.Graphics.RenderParts.Shader;
-import Core2D.Log.Log;
-import Core2D.ShaderUtils.BufferLayout;
-import Core2D.ShaderUtils.VertexArray;
-import Core2D.ShaderUtils.VertexAttribute;
-import Core2D.ShaderUtils.VertexBuffer;
+import Core2D.Graphics.OpenGL.BufferLayout;
+import Core2D.Graphics.OpenGL.VertexArray;
+import Core2D.Graphics.OpenGL.VertexAttribute;
+import Core2D.Graphics.OpenGL.VertexBuffer;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 

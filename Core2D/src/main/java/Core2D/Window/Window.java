@@ -2,14 +2,12 @@ package Core2D.Window;
 
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
-import Core2D.Graphics.OpenGL;
+import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.glfw.GLFWWindowCloseCallback;
-import org.lwjgl.glfw.GLFWWindowIconifyCallbackI;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;

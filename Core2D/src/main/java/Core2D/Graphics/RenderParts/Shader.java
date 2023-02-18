@@ -1,9 +1,13 @@
 package Core2D.Graphics.RenderParts;
 
 import Core2D.DataClasses.ShaderData;
-import Core2D.Graphics.OpenGL;
+import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.Shader.ShaderUniformFloatComponent;
+import Core2D.ECS.Component.Components.Shader.TextureComponent;
+import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Log.Log;
-import Core2D.ShaderUtils.ShaderUtils;
+import Core2D.Utils.ShaderUtils;
+import Core2D.Utils.ComponentHandler;
 import org.joml.*;
 import org.lwjgl.BufferUtils;
 
@@ -23,6 +27,10 @@ public class Shader implements Serializable
 
         public Object value;
 
+        public ComponentHandler attachedComponentHandler = new ComponentHandler();
+
+        private transient Component attachedComponent;
+
         public ShaderUniform() { }
 
         public ShaderUniform(String name, int size, int type)
@@ -30,6 +38,12 @@ public class Shader implements Serializable
             this.name = name;
             this.size = size;
             this.type = type;
+        }
+
+        public void init()
+        {
+            attachedComponent = attachedComponentHandler.getComponent();
+            System.out.println("found component: " + attachedComponent);
         }
 
         public void setDefaultValue()
@@ -80,11 +94,46 @@ public class Shader implements Serializable
             return null;
         }
 
+        public void attachToComponent(Component component)
+        {
+            if(component != null) {
+                attachedComponentHandler.setComponentToHandle(component);
+                attachedComponent = component;
+            }
+        }
+
+        // applies uniform value to shader
+        // сначала нужно забиндить шейдер
+        public void apply(int programHandler)
+        {
+            if(attachedComponent instanceof ShaderUniformFloatComponent shaderUniformFloatComponent) {
+                value = shaderUniformFloatComponent.uniformValue;
+            } else if(attachedComponent instanceof TextureComponent textureComponent) {
+                value = textureComponent.getTexture().getFormattedTextureBlock();
+
+                textureComponent.getTexture().bind();
+            }
+
+            ShaderUtils.setUniform(
+                    programHandler,
+                    name,
+                    value
+            );
+        }
+
         public String getName() { return name; }
 
         public int getSize() { return size; }
 
         public int getType() { return type; }
+
+        public Component getAttachedComponent() { return attachedComponent; }
+
+        public void resetAttachedComponent()
+        {
+            attachedComponentHandler.reset();
+            attachedComponent = null;
+        }
     }
 
     private transient int programHandler;
@@ -187,7 +236,7 @@ public class Shader implements Serializable
 
         // перезагрузка юниформ
         int activeUniformsNum = OpenGL.glCall((params) -> glGetProgrami(programHandler, GL_ACTIVE_UNIFORMS), Integer.class);
-        List<String> actualUniformsNames = new ArrayList<>();
+        Map<String, Integer> actualUniformsNames = new HashMap<>();
 
         // нахождение юниформ, которых нет и их создание
         for(int i = 0; i < activeUniformsNum; i++) {
@@ -197,30 +246,36 @@ public class Shader implements Serializable
             final int finalI = i;
 
             String name = OpenGL.glCall((params) -> glGetActiveUniform(programHandler, finalI, sizeBuffer, typeBuffer), String.class);
-            actualUniformsNames.add(name);
+            actualUniformsNames.put(name, typeBuffer.get(0));
 
-            if(shaderUniforms.stream().noneMatch(uniform -> uniform.name.equals(name))) {
+            if(shaderUniforms.stream().noneMatch(uniform -> uniform.name.equals(name) || uniform.type == typeBuffer.get(0))) {
                 ShaderUniform shaderUniform = new ShaderUniform(name, sizeBuffer.get(0), typeBuffer.get(0));
                 shaderUniform.setDefaultValue();
                 shaderUniforms.add(shaderUniform);
             } else {
-                ShaderUniform shaderUniform = shaderUniforms.stream().filter(shader -> shader.name.equals(name)).findFirst().get();
-                shaderUniform.size = sizeBuffer.get(0);
-                if (shaderUniform.type != typeBuffer.get(0)) {
-                    System.out.println("setted name: " + shaderUniform.name);
+                //ShaderUniform shaderUniform = shaderUniforms.stream().filter(shader -> shader.name.equals(name)).findFirst().get();
+                Optional<ShaderUniform> optional = shaderUniforms.stream().filter(shader -> shader.name.equals(name)).findFirst();
+                if(optional.isPresent()) {
+                    ShaderUniform shaderUniform = optional.get();
 
-                    shaderUniform.setDefaultValue();
-                    shaderUniform.type = typeBuffer.get(0);
+                    shaderUniform.size = sizeBuffer.get(0);
+                    if (shaderUniform.type != typeBuffer.get(0)) {
+                        System.out.println("setted name: " + shaderUniform.name);
+
+                        shaderUniform.setDefaultValue();
+                        shaderUniform.type = typeBuffer.get(0);
+                    }
+
+                    System.out.println("name: " + shaderUniform.name);
                 }
-
-                System.out.println("name: " + shaderUniform.name);
             }
 
             sizeBuffer.clear();
             typeBuffer.clear();
         }
 
-        shaderUniforms.removeIf(shaderUniform -> actualUniformsNames.stream().noneMatch(uniformName -> uniformName.equals(shaderUniform.name)));
+        shaderUniforms.removeIf(shaderUniform -> actualUniformsNames.keySet().stream().noneMatch(uniformName -> uniformName.equals(shaderUniform.name)));
+        shaderUniforms.removeIf(shaderUniform -> actualUniformsNames.values().stream().noneMatch(uniformType -> uniformType == shaderUniform.type));
 
         return compiled;
     }
@@ -269,6 +324,13 @@ public class Shader implements Serializable
         //shaderUniforms.clear();
     }
 
+    public void initUniforms()
+    {
+        for(ShaderUniform shaderUniform : shaderUniforms) {
+            shaderUniform.init();
+        }
+    }
+
     public void fixUniforms()
     {
         for(ShaderUniform shaderUniform : shaderUniforms) {
@@ -303,7 +365,7 @@ public class Shader implements Serializable
             OpenGL.glCall((params) -> glUseProgram(programHandler));
 
             for(ShaderUniform shaderUniform : shaderUniforms) {
-                ShaderUtils.setUniform(programHandler, shaderUniform.name, shaderUniform.value);
+                shaderUniform.apply(programHandler);
             }
         }
     }

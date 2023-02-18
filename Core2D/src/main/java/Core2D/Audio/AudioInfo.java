@@ -5,6 +5,10 @@ import Core2D.Utils.ExceptionsUtils;
 import org.apache.commons.io.IOUtils;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.openal.AL10;
+import org.lwjgl.openal.ALUtil;
+import org.newdawn.slick.openal.Audio;
+import org.newdawn.slick.openal.AudioLoader;
+import org.newdawn.slick.openal.OpenALStreamPlayer;
 
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
@@ -49,6 +53,7 @@ public class AudioInfo
 
     public static AudioInfo loadAudio(InputStream inputStream)
     {
+        
         try(AudioInputStream stream = AudioSystem.getAudioInputStream(new BufferedInputStream(inputStream)); inputStream) {
             return createAudioInfo(stream);
         } catch (UnsupportedAudioFileException | IOException e) {

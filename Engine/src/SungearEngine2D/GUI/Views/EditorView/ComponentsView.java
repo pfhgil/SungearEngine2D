@@ -4,9 +4,13 @@ import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.Audio;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
+import Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent;
+import Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent;
+import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Component.Components.Primitives.BoxComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.Primitives.LineComponent;
+import Core2D.ECS.Component.Components.Shader.TextureComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.NonRemovable;
 import Core2D.Graphics.RenderParts.Shader;
@@ -16,6 +20,7 @@ import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scripting.Script;
+import Core2D.Utils.ComponentHandler;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import SungearEngine2D.GUI.ImGuiUtils;
@@ -26,12 +31,14 @@ import SungearEngine2D.Utils.ResourcesUtils;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.*;
+import imgui.type.ImInt;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
 import org.jbox2d.dynamics.BodyType;
 import org.joml.Math;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.lwjgl.opengl.GL46C;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -102,9 +109,9 @@ public class ComponentsView extends View
 
             boolean opened = false;
             if(!componentName.equals("ScriptComponent")) {
-                opened = ImGui.collapsingHeader(componentName + ". ID: " + currentComponent.componentID);
+                opened = ImGui.collapsingHeader(componentName + ". ID: " + currentComponent.ID);
             } else {
-                opened = ImGui.collapsingHeader(((ScriptComponent) currentComponent).script.getName() + " (" + componentName + ")" + ". ID: " + inspectingEntity.getComponents().get(i).componentID);
+                opened = ImGui.collapsingHeader(((ScriptComponent) currentComponent).script.getName() + " (" + componentName + ")" + ". ID: " + inspectingEntity.getComponents().get(i).ID);
             }
             ImVec2 minRect = ImGui.getItemRectMin();
             ImVec2 maxRect = ImGui.getItemRectMax();
@@ -183,33 +190,58 @@ public class ComponentsView extends View
                         ImString shaderName = new ImString(new File(meshComponent.getShader().path).getName());
 
                         boolean[] shaderEditButtonPressed = new boolean[1];
+                        Object[] droppedObject = new Object[1];
                         ImGuiUtils.imCallWBorder(func -> ImGuiUtils.inputTextWithRightButton("Shader", shaderName, ImGuiInputTextFlags.ReadOnly,
-                                Resources.Textures.Icons.editIcon24.getTextureHandler(), shaderEditButtonPressed, "Edit shader"));
+                                Resources.Textures.Icons.editIcon24.getTextureHandler(), shaderEditButtonPressed, "Edit shader", true, droppedObject, "File"));
+
+                        if (droppedObject[0] instanceof File file) {
+                            shaderName.set(file.getName(), true);
+                            String relativePath = FileUtils.getRelativePath(
+                                    new File(file.getPath()),
+                                    new File(ProjectsManager.getCurrentProject().getProjectPath()));
+                            meshComponent.setShader(new Shader(AssetManager.getInstance().getShaderData(relativePath)));
+                            meshComponent.getShader().path = relativePath;
+                        }
 
                         if(shaderEditButtonPressed[0]) {
                             ViewsManager.getShadersEditorView().addEditingShader(
-                                    new ShadersEditorView.ShaderEditorWindow(meshComponent.getShader(), meshComponent.entity.getLayer().getID(), meshComponent.entity.ID, meshComponent.componentID)
+                                    new ShadersEditorView.ShaderEditorWindow(meshComponent.getShader(), new ComponentHandler(meshComponent.entity.getLayer().getID(), meshComponent.entity.ID, meshComponent.ID))
                             );
                         }
+                    } case "TextureComponent" -> {
+                        TextureComponent textureComponent = (TextureComponent) currentComponent;
 
-                        if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileShader(ViewsManager.getResourcesView().getCurrentMovingFile())) {
-                            if (ImGui.beginDragDropTarget()) {
-                                Object imageFile = ImGui.acceptDragDropPayload("File");
-                                if (imageFile != null) {
-                                    shaderName.set(ViewsManager.getResourcesView().getCurrentMovingFile().getName(), true);
-                                    String relativePath = FileUtils.getRelativePath(
-                                            new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
-                                            new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                                    meshComponent.setShader(new Shader(AssetManager.getInstance().getShaderData(relativePath)));
-                                    meshComponent.getShader().path = relativePath;
-                                    ViewsManager.getResourcesView().setCurrentMovingFile(null);
-                                }
+                        ImString textureName = new ImString(new File(textureComponent.getTexture().path).getName());
 
-                                ImGui.endDragDropTarget();
+                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText("Texture", textureName, ImGuiInputTextFlags.ReadOnly));
+
+                        if (ImGui.beginDragDropTarget()) {
+                            Object imageFile = ImGui.acceptDragDropPayload("File");
+                            if (imageFile instanceof File file) {
+                                textureName.set(file.getName(), true);
+                                String relativePath = FileUtils.getRelativePath(
+                                        new File(file.getPath()),
+                                        new File(ProjectsManager.getCurrentProject().getProjectPath()));
+                                textureComponent.setTexture(new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath)));
+                                textureComponent.getTexture().path = relativePath;
                             }
+
+                            ImGui.endDragDropTarget();
                         }
-                    }
-                    case "Rigidbody2DComponent" -> {
+
+                        String[] allTextureBlocks = new String[32];
+                        for(int k = 0; k < allTextureBlocks.length; k++) {
+                            allTextureBlocks[k] = "" + k;
+                        }
+
+                        ImInt chosenTextureBlock = new ImInt(textureComponent.getTexture().getFormattedTextureBlock());
+
+                        ImGui.pushID("TextureBlockCombo_" + i);
+                        ImGui.combo("Texture block", chosenTextureBlock, allTextureBlocks);
+                        ImGui.popID();
+
+                        textureComponent.getTexture().setTextureBlock(GL46C.GL_TEXTURE0 + chosenTextureBlock.get());
+                    } case "Rigidbody2DComponent" -> {
                         Rigidbody2DComponent rigidbody2DComponent = (Rigidbody2DComponent) currentComponent;
 
                         ImGui.pushID("Rigidbody2DType");
@@ -744,10 +776,10 @@ public class ComponentsView extends View
                                 if(ImGui.button("View...")) {
                                     if(!ViewsManager.isFBOViewExists("PPLayerView_" + i + "_" + k)) {
                                         ViewsManager.getFBOViews().add(new GameView("PPLayer \"" + ppLayer.getEntitiesLayerToRenderName() + "\"", "PPLayerView_" + i + "_" + k,
-                                                ppLayer.getFrameBuffer().getTextureHandler(), true, ppLayer, camera2DComponent));
+                                                ppLayer.getFrameBuffer().getTextureHandler(), true, ppLayer, new ComponentHandler(camera2DComponent.entity.getLayer().getID(), camera2DComponent.entity.ID, camera2DComponent.ID)));
                                     } else {
                                         GameView gameView = ViewsManager.getFBOView("PPLayerView_" + i + "_" + k);
-                                        gameView.setPostprocessingLayer(ppLayer, camera2DComponent);
+                                        gameView.setPostprocessingLayer(ppLayer, new ComponentHandler(camera2DComponent.entity.getLayer().getID(), camera2DComponent.entity.ID, camera2DComponent.ID));
                                     }
                                 }
 
@@ -876,6 +908,14 @@ public class ComponentsView extends View
                         }
                         if(ImGui.selectable("CircleComponent")) {
                             inspectingEntity.addComponent(new CircleComponent());
+                            action = "";
+                        }
+                        if(ImGui.selectable("ProgramTimeComponent")) {
+                            inspectingEntity.addComponent(new ProgramTimeComponent());
+                            action = "";
+                        }
+                        if(ImGui.selectable("TextureComponent")) {
+                            inspectingEntity.addComponent(new TextureComponent());
                             action = "";
                         }
                     } catch (Exception e) {

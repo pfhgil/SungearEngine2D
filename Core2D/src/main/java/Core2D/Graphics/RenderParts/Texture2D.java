@@ -1,17 +1,12 @@
 package Core2D.Graphics.RenderParts;
 
 import Core2D.DataClasses.Texture2DData;
-import Core2D.Graphics.OpenGL;
-import Core2D.Log.Log;
+import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Project.ProjectsManager;
 import Core2D.Utils.FileUtils;
-import Core2D.Utils.Utils;
 import com.google.gson.annotations.SerializedName;
-import org.lwjgl.BufferUtils;
-import org.lwjgl.stb.STBImage;
 
 import java.io.File;
-import java.nio.ByteBuffer;
 
 import static org.lwjgl.opengl.GL46.*;
 
@@ -28,6 +23,48 @@ public class Texture2D
     public String path = "";
 
     private int textureBlock = GL_TEXTURE0;
+
+    /*
+    public static final String[] allTextureBlocksAsString = new String[] {
+            "0",
+            "1",
+            "2",
+            "3",
+            "4",
+            "5",
+            "6",
+            "7",
+            "8",
+            "9",
+            "10",
+            "11",
+            "12",
+            "13",
+            "14",
+            "15",
+            "16",
+            "17",
+            "18",
+            "19",
+            "20",
+            "21",
+            "22",
+            "23",
+            "24",
+            "25",
+            "26",
+            "27",
+            "2",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+            "0",
+    }
+
+     */
 
     public Texture2D() { }
 
@@ -176,4 +213,9 @@ public class Texture2D
      * @return Formatted texture block (textureBlock - GL_TEXTURE0)
      */
     public int getFormattedTextureBlock() { return textureBlock - GL_TEXTURE0; }
+
+    public void setTextureBlock(int textureBlock)
+    {
+        this.textureBlock = textureBlock;
+    }
 }

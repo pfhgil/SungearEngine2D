@@ -5,6 +5,8 @@ import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
+import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
+import Core2D.ECS.Component.Components.Shader.TextureComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.ScriptableSystem;
@@ -105,15 +107,14 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
         for(JsonElement element : components) {
             Component component = context.deserialize(element, Component.class);
 
-            int lastComponentID = component.componentID;
-            if(component instanceof TransformComponent) {
-                entity.addComponent(component);
-            } else if(component instanceof MeshComponent meshComponent) {
+            int lastComponentID = component.ID;
+            if(component instanceof MeshComponent meshComponent) {
                 meshComponent.getShader().fixUniforms();
                 Shader shader = new Shader();
                 shader.getShaderUniforms().addAll(meshComponent.getShader().getShaderUniforms());
                 shader.compile(AssetManager.getInstance().getShaderData(meshComponent.getShader().path));
-                Texture2D texture2D = new Texture2D(
+
+                Texture2D texture = new Texture2D(
                         AssetManager.getInstance().getTexture2DData(meshComponent.getTexture().path),
                         meshComponent.getTexture().getGLTextureBlock()
                 );
@@ -122,13 +123,28 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                 //texture2D.blendDestinationFactor = textureComponent.texture.blendDestinationFactor;
 
 
-                meshComponent.setTexture(texture2D);
+                meshComponent.setTexture(texture);
                 meshComponent.setShader(shader);
                 entity.addComponent(meshComponent);
+
+                meshComponent.ID = lastComponentID;
                 //newMeshComponent.set(component);
+            } else if(component instanceof TextureComponent textureComponent) {
+                Texture2D texture = new Texture2D(
+                        AssetManager.getInstance().getTexture2DData(textureComponent.getTexture().path),
+                        textureComponent.getTexture().getGLTextureBlock()
+                );
+
+                textureComponent.setTexture(texture);
+                entity.addComponent(textureComponent);
+
+                textureComponent.ID = lastComponentID;
             } else if(component instanceof Rigidbody2DComponent rigidbody2DComponent) {
                 rigidbody2DComponent.set(component);
+
                 entity.addComponent(rigidbody2DComponent);
+
+                rigidbody2DComponent.ID = lastComponentID;
             } else if(component instanceof ScriptComponent scriptComponent) {
                 if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
                     scriptComponent.script.path = scriptComponent.script.path.replaceAll(".java", "");
@@ -160,10 +176,14 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                     scriptComponent.set(scriptComponent);
                     scriptComponent.script.path = scriptToAddPath;
                     entity.addComponent(scriptComponent);
+
+                    scriptComponent.ID = lastComponentID;
                 } else {
                     ScriptComponent sc = new ScriptComponent();
                     entity.addComponent(sc);
                     sc.set(scriptComponent);
+
+                    sc.ID = lastComponentID;
                 }
             } else if(component instanceof AudioComponent audioComponent) {
                 // если режим работы ядра в движке
@@ -193,6 +213,8 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                 }
 
                 entity.addComponent(audioComponent);
+
+                audioComponent.ID = lastComponentID;
             } else if(component instanceof Camera2DComponent camera2DComponent) {
                 Shader defaultShader = new Shader(AssetManager.getInstance().getShaderData(camera2DComponent.getPostprocessingDefaultShader().path));
 
@@ -205,11 +227,13 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                     ppLayer.init();
                 }
                 entity.addComponent(camera2DComponent);
+
+                camera2DComponent.ID = lastComponentID;
             } else {
                 entity.addComponent(component);
             }
 
-            component.componentID = lastComponentID;
+            component.ID = lastComponentID;
         }
 
         return entity;

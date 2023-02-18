@@ -1,26 +1,16 @@
 package SungearEngine2D.Utils;
 
-import Core2D.Graphics.OpenGL;
+import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Log.Log;
-import Core2D.Transform.Transform;
 import Core2D.Utils.ExceptionsUtils;
-import com.sun.tools.attach.AttachNotSupportedException;
-import com.sun.tools.attach.VirtualMachine;
-import com.sun.tools.attach.VirtualMachineDescriptor;
 import org.lwjgl.opengl.GL46C;
 
-import javax.management.MBeanServer;
 import javax.management.MBeanServerConnection;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 import java.io.IOException;
-import java.lang.management.ManagementFactory;
 import java.net.MalformedURLException;
-import java.net.Socket;
-import java.net.SocketAddress;
-import java.util.List;
-import java.util.Properties;
 
 public class Debugger
 {
