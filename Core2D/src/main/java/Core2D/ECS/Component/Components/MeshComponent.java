@@ -23,24 +23,10 @@ public class MeshComponent extends Component
     // VAO четырехугольника (VAO - Vertex Array Object. Хранит в себе указатели на VBO, IBO и т.д.)
     private transient VertexArray vertexArray;
     private int drawingMode = GL_TRIANGLES;
-    private transient short[] indices = new short[] { 0, 1, 2, 0, 2, 3 };
 
     // массив данных о вершинах
     // первые строки - позиции вершин, вторые строки - текстурные координаты
     private transient Vector2f size = new Vector2f(100.0f, 100.0f);
-    private transient float[] data = new float[] {
-            -size.x / 2.0f, -size.y / 2.0f,
-            0, 0,
-
-            -size.x / 2.0f, size.y / 2.0f,
-            0, 1,
-
-            size.x / 2.0f, size.y / 2.0f,
-            1, 1,
-
-            size.x / 2.0f, -size.y / 2.0f,
-            1, 0,
-    };
 
     public MeshComponent() { }
 
@@ -94,7 +80,24 @@ public class MeshComponent extends Component
         }
     }
 
-    private void loadVAO() {
+    private void loadVAO()
+    {
+        float[] data = new float[] {
+                -size.x / 2.0f, -size.y / 2.0f,
+                0, 0,
+
+                -size.x / 2.0f, size.y / 2.0f,
+                0, 1,
+
+                size.x / 2.0f, size.y / 2.0f,
+                1, 1,
+
+                size.x / 2.0f, -size.y / 2.0f,
+                1, 0,
+        };
+
+        short[] indices = new short[] { 0, 1, 2, 0, 2, 3 };
+
         if (vertexArray != null) {
             vertexArray.destroy();
             vertexArray = null;
@@ -116,29 +119,27 @@ public class MeshComponent extends Component
         vertexArray.putVBO(vertexBuffer, false);
         vertexArray.putIBO(indexBuffer);
 
-        indices = null;
-
         // отвязываю vao
         vertexArray.unBind();
     }
-    public void setUV(float[] UV) {
+    public void setUV(float[] UV)
+    {
         if (entity != null) {
-            data[2] = UV[0];
-            data[3] = UV[1];
-
-            data[6] = UV[2];
-            data[7] = UV[3];
-
-            data[10] = UV[4];
-            data[11] = UV[5];
-
-            data[14] = UV[6];
-            data[15] = UV[7];
-
             if (vertexArray != null) {
                 VertexBuffer vbo = vertexArray.getVBOs().get(0);
-                //vbo.getData()[0];
-                vertexArray.updateVBO(vbo, data);
+                vbo.getData()[2] = UV[0];
+                vbo.getData()[3] = UV[1];
+
+                vbo.getData()[6] = UV[2];
+                vbo.getData()[7] = UV[3];
+
+                vbo.getData()[10] = UV[4];
+                vbo.getData()[11] = UV[5];
+
+                vbo.getData()[14] = UV[6];
+                vbo.getData()[15] = UV[7];
+
+                vertexArray.updateVBO(vbo, vbo.getData());
             }
         }
     }
@@ -153,8 +154,6 @@ public class MeshComponent extends Component
         Vector2f resP3 = new Vector2f(positionsQuad.getRightBottom().x / positionsQuad.getAtlasSize().x, positionsQuad.getRightBottom().y / positionsQuad.getAtlasSize().y);
         setUV(resP0, resP1, resP2, resP3);
     }
-
-    public float[] getData() { return data; }
 
     public VertexArray getVertexArrayObject() { return vertexArray; }
 

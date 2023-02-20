@@ -8,6 +8,14 @@ public class TextureComponent extends Component
 {
     private Texture2D texture = new Texture2D(AssetManager.getInstance().getTexture2DData("/data/textures/white_texture.png"));
 
+    @Override
+    public void destroy()
+    {
+        if(this.texture != null) {
+            this.texture.destroy();
+        }
+    }
+
     public Texture2D getTexture() { return texture; }
     public void setTexture(Texture2D texture)
     {

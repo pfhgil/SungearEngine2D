@@ -24,7 +24,10 @@
 
     in vec2 vs_textureCoords;
 
+//
     uniform float programTime;
+
+    uniform float s;
 
     // ----------
     vec2 canvasSize = vec2(1000.0, 1000.0);
@@ -41,7 +44,7 @@
         distanceVec = distanceVec * vec2(canvasSize.x / canvasSize.y, 1.0);
         float dist = sqrt(distanceVec.x * distanceVec.x + distanceVec.y * distanceVec.y);
 
-        float sin_factor = sin(dist * 20.0 - programTime * 150.0) * 0.05;
+        float sin_factor = sin(dist * 20.0 - programTime * 10.0) * 0.05;
         float discard_factor = clamp(wave_radius - abs(wave_offset - dist), 0.0, 1.0);
         //f
 

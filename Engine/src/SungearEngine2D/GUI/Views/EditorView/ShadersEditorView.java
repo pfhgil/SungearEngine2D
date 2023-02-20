@@ -20,6 +20,8 @@ import org.lwjgl.opengl.GL46C;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class ShadersEditorView extends View
 {
@@ -35,6 +37,59 @@ public class ShadersEditorView extends View
         {
             this.shader = shader;
             this.componentHandler = componentHandler;
+        }
+
+        private void editUniformValue(Shader.ShaderUniform shaderUniform, boolean cond, Runnable ifNotAttachedComponentRunnable, Runnable ifAttachedComponentRunnable, Class<?>... componentClassToDrop)
+        {
+            if(cond) {
+                ifNotAttachedComponentRunnable.run();
+
+                Object droppedObject = acceptDragDrop();
+                boolean instanceOfNeededComponent = false;
+
+                if(droppedObject != null) {
+                    for (Class<?> cls : componentClassToDrop) {
+                        if (cls.isAssignableFrom(droppedObject.getClass())) {
+                            instanceOfNeededComponent = true;
+                            break;
+                        }
+                    }
+                }
+
+                ImGui.separator();
+
+                if (instanceOfNeededComponent && droppedObject instanceof Component component) {
+                    shaderUniform.attachToComponent(component);
+                }
+            } else {
+                ifAttachedComponentRunnable.run();
+
+                Object droppedObject = acceptDragDrop();
+                boolean instanceOfNeededComponent = false;
+
+                if(droppedObject != null) {
+                    for (Class<?> cls : componentClassToDrop) {
+                        if (cls.isAssignableFrom(droppedObject.getClass())) {
+                            instanceOfNeededComponent = true;
+                            break;
+                        }
+                    }
+                }
+
+                System.out.println("uniform name: " + shaderUniform.getName());
+
+                if (instanceOfNeededComponent && droppedObject instanceof Component component) {
+                    shaderUniform.attachToComponent(component);
+                }
+
+                ImGui.pushID("DetachComponentButton_" + shaderUniform.getName());
+                if(ImGui.button("Detach component")) {
+                    shaderUniform.resetAttachedComponent();
+                }
+                ImGui.popID();
+
+                ImGui.separator();
+            }
         }
 
         public void draw()
@@ -55,81 +110,39 @@ public class ShadersEditorView extends View
                             shaderUniform.getType() == GL46C.GL_SAMPLER_2D ||
                             shaderUniform.getType() == GL46C.GL_SAMPLER_3D;
                     if (shaderUniform.value instanceof Integer) {
-                        if(!isSampler || shaderUniform.getAttachedComponent() == null) {
-                            int[] val = new int[]{(int) shaderUniform.value};
-                            if (ImGui.dragInt(shaderUniform.getName(), val)) {
-                                shaderUniform.value = val[0];
-                            }
-
-                            Object droppedObject = acceptDragDrop();
-
-                            ImGui.separator();
-
-                            if(droppedObject instanceof Component component) {
-                                shaderUniform.attachToComponent(component);
-                            }
-                        } else {
-                            String[] text = new String[1];
-                            if(shaderUniform.getAttachedComponent() instanceof TextureComponent textureComponent) {
-                                text[0] = new File(textureComponent.getTexture().path).getName();
-                            }
-
-                            ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText(shaderUniform.getName(), new ImString(text[0]), ImGuiInputTextFlags.ReadOnly));
-
-                            Object droppedObject = acceptDragDrop();
-
-                            if(droppedObject instanceof Component component) {
-                                shaderUniform.attachToComponent(component);
-                            }
-
-                            //ImGui.sameLine();
-
-                            ImGui.pushID("DetachComponentButton_" + shaderUniform.getName());
-                            if(ImGui.button("Detach component")) {
-                                shaderUniform.resetAttachedComponent();
-                            }
-                            ImGui.popID();
-
-                            ImGui.separator();
-                        }
+                        editUniformValue(shaderUniform,
+                                !isSampler || shaderUniform.getAttachedComponent() == null,
+                                () -> {
+                                    int[] val = new int[]{(int) shaderUniform.value};
+                                    if (ImGui.dragInt(shaderUniform.getName(), val)) {
+                                        shaderUniform.value = val[0];
+                                    }
+                                },
+                                () -> {
+                                    String[] text = new String[1];
+                                    if (shaderUniform.getAttachedComponent() instanceof TextureComponent textureComponent) {
+                                        text[0] = new File(textureComponent.getTexture().path).getName();
+                                    }
+                                    ImGuiUtils.imCallWBorder(imguiFunc -> ImGuiUtils.defaultInputText(shaderUniform.getName(), new ImString(text[0]), ImGuiInputTextFlags.ReadOnly));
+                                },
+                                TextureComponent.class);
                     } else if (shaderUniform.value instanceof Float) {
-                        if(shaderUniform.getAttachedComponent() == null) {
-                            float[] val = new float[]{(float) shaderUniform.value};
-                            if (ImGui.dragFloat(shaderUniform.getName(), val, 0.01f)) {
-                                shaderUniform.value = val[0];
-                            }
-
-                            Object droppedObject = acceptDragDrop();
-
-                            ImGui.separator();
-
-                            if(droppedObject instanceof Component component) {
-                                shaderUniform.attachToComponent(component);
-                            }
-                        } else {
-                            String[] text = new String[1];
-                            if(shaderUniform.getAttachedComponent() instanceof ProgramTimeComponent programTimeComponent) {
-                                text[0] = "" + programTimeComponent.uniformValue;
-                            }
-
-                            ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText(shaderUniform.getName(), new ImString(text[0]), ImGuiInputTextFlags.ReadOnly));
-
-                            Object droppedObject = acceptDragDrop();
-
-                            if(droppedObject instanceof Component component) {
-                                shaderUniform.attachToComponent(component);
-                            }
-
-                            //ImGui.sameLine();
-
-                            ImGui.pushID("DetachComponentButton_" + shaderUniform.getName());
-                            if(ImGui.button("Detach component")) {
-                                shaderUniform.resetAttachedComponent();
-                            }
-                            ImGui.popID();
-
-                            ImGui.separator();
-                        }
+                        editUniformValue(shaderUniform,
+                                shaderUniform.getAttachedComponent() == null,
+                                () -> {
+                                    float[] val = new float[]{(float) shaderUniform.value};
+                                    if (ImGui.dragFloat(shaderUniform.getName(), val, 0.01f)) {
+                                        shaderUniform.value = val[0];
+                                    }
+                                },
+                                () -> {
+                                    String[] text = new String[1];
+                                    if (shaderUniform.getAttachedComponent() instanceof ProgramTimeComponent programTimeComponent) {
+                                        text[0] = "" + programTimeComponent.uniformValue;
+                                    }
+                                    ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText(shaderUniform.getName(), new ImString(text[0]), ImGuiInputTextFlags.ReadOnly));
+                                },
+                                ShaderUniformFloatComponent.class);
                     }
                 }
 
