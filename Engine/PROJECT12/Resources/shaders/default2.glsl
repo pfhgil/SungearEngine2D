@@ -19,6 +19,7 @@
     out vec4 fragColor;
 
     uniform sampler2D sampler;
+    uniform sampler2D sampler2;
 
     uniform vec4 color;
 
@@ -26,8 +27,9 @@
 
     void main()
     {
-        vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0f - vs_textureCoords.y));
+        vec4 tex0 = texture(sampler, vec2(vs_textureCoords.x, 1.0f - vs_textureCoords.y));
+        vec4 tex1 = texture(sampler2, vec2(vs_textureCoords.x,  vs_textureCoords.y));
 
-        fragColor = color * textureColor;
+        fragColor = vec4(1.0, 0.0, 0.0, 1.0);
     }
 #endif

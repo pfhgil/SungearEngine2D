@@ -2,7 +2,6 @@ package Core2D.Layering;
 
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Entity;
-import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Log.Log;
 import org.joml.Vector4f;
 
@@ -24,11 +23,11 @@ public class Layering {
         }
     }
 
-    public Entity getPickedObject2D(Vector4f pixelColor)
+    public Entity getPickedEntity(Vector4f pixelColor)
     {
         Entity pickedEntity = null;
         for(Layer layer : layers) {
-            pickedEntity = layer.getPickedObject2D(pixelColor);
+            pickedEntity = layer.getPickedEntity(pixelColor);
             if(pickedEntity != null) {
                 return pickedEntity;
             }

@@ -35,7 +35,7 @@
         vec4 tex3 = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y - step));
         vec4 tex4 = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y));
 
-        vec4 currentTextureColor = (tex0 + tex1 + tex2 + tex3 + tex4) / 4.0f;
+        vec4 currentTextureColor = (tex0 + tex1 + tex2 + tex3 + tex4) / 4.0;
 
         fragColor = color * currentTextureColor;
     }

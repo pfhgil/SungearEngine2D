@@ -1,10 +1,18 @@
 package SungearEngine2D.Main;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.Core2D.Core2D;
 import Core2D.DataClasses.ShaderData;
 import Core2D.DataClasses.Texture2DData;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
+import Core2D.Log.Log;
+import Core2D.Utils.ExceptionsUtils;
+import org.lwjgl.PointerBuffer;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWImage;
+
+import java.nio.ByteBuffer;
 
 // TODO: в дальнейшем все это перенести в AssetManager
 public class Resources
@@ -15,9 +23,24 @@ public class Resources
         Textures.Icons.load();
         Shaders.Grid.load();
         Textures.Gizmo.load();
+        Cursors.load();
         //Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality = Settings.QualityType.LOW;
 
         System.gc();
+    }
+
+    public static class Cursors
+    {
+        private static Texture2D cursorHandMove16 = new Texture2D();
+        private static long cursorMove;
+
+        public static void load()
+        {
+            cursorMove = GLFW.glfwCreateStandardCursor(GLFW.GLFW_HAND_CURSOR);
+            GLFW.glfwSetCursor(Core2D.getWindow().getWindow(), cursorMove);
+        }
+
+        public static long getCursorMove() { return cursorMove; }
     }
 
     public static class Textures

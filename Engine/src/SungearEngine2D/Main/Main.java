@@ -69,6 +69,8 @@ public class Main
         core2DUserCallback = new Core2DUserCallback() {
             @Override
             public void onInit() {
+                //Log.CurrentSession.willPrintToFile = false;
+                //Log.Console.willPrint = false;
 
                 //Debugger.init();
                 Resources.load();
@@ -225,8 +227,8 @@ public class Main
                                 Vector2f lastScale = new Vector2f(transformComponent.getTransform().getScale());
                                 Vector4f lastColor = new Vector4f(inspectingEntity.color);
 
-                                transformComponent.getTransform().setScale(new Vector2f(lastScale).add(new Vector2f(0.1f, 0.1f)));
-                                transformComponent.update();
+                                transformComponent.getTransform().setScale(new Vector2f(lastScale).add(new Vector2f(0.35f, 0.35f)));
+                                transformComponent.getTransform().updateModelMatrix();
                                 inspectingEntity.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 1.0f));
 
                                 // второй проход рендера - отрисовываю объект чуть побольше только одним цветом. все значения пикселей в стенсио буфере, которые не равняются 0xFF будут отрисованы
@@ -239,6 +241,7 @@ public class Main
                                 glStencilMask(0xFF);
 
                                 transformComponent.getTransform().setScale(lastScale);
+                                transformComponent.getTransform().updateModelMatrix();
                                 inspectingEntity.setColor(lastColor);
                             }
                         }

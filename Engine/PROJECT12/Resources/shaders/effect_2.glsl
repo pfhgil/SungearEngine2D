@@ -32,6 +32,7 @@
 
         float s = sin(time);
         float clamped = clamp(s, 0.1, 0.2);
-        fragColor = color * textureColor * length(0.5 - vec2(vs_textureCoords.x, 1.0f - vs_textureCoords.y)) * (5.0 * s - clamped);
+        //fragColor = color * textureColor * length(0.5 - vec2(vs_textureCoords.x, 1.0f - vs_textureCoords.y)) * (5.0 * s - clamped);
+        fragColor = color * textureColor;
     }
 #endif

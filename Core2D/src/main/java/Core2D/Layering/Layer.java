@@ -3,10 +3,8 @@ package Core2D.Layering;
 import Core2D.AssetManager.AssetManager;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera2DComponent;
-import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.RenderParts.Shader;
-import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Graphics.Graphics;
 import org.joml.Vector4f;
 
@@ -52,7 +50,7 @@ public class Layer
         }
     }
 
-    public Entity getPickedObject2D(Vector4f pixelColor)
+    public Entity getPickedEntity(Vector4f pixelColor)
     {
         for(int i = 0; i < entities.size(); i++) {
             Entity entity = entities.get(i);
@@ -73,8 +71,8 @@ public class Layer
         while(layerObjectIterator.hasNext()) {
             Entity entity = layerObjectIterator.next();
             if(entity.isShouldDestroy()) {
-                if (entity.getParentObject2D() != null) {
-                    entity.getParentObject2D().removeChild(entity);
+                if (entity.getParentEntity() != null) {
+                    entity.getParentEntity().removeChildEntity(entity);
                     entity.parentEntity = null;
                 }
 
@@ -85,7 +83,7 @@ public class Layer
                     componentsIterator.remove();
                 }
 
-                Iterator<Entity> childrenIterator = entity.getChildrenObjects().iterator();
+                Iterator<Entity> childrenIterator = entity.getChildrenEntities().iterator();
                 while (childrenIterator.hasNext()) {
                     Entity child = childrenIterator.next();
                     child.destroy();

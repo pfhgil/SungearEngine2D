@@ -1,11 +1,11 @@
 package Core2D.Log;
 
+import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 
 import javax.swing.*;
 import java.io.File;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -22,8 +22,12 @@ public class Log
 
     public static class Console
     {
+        public static boolean willPrint = true;
+
         public static void println(Object obj)
         {
+            if(!willPrint) return;
+
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
 
@@ -45,57 +49,42 @@ public class Log
         private static StringBuilder errorLog = new StringBuilder();
         private static StringBuilder allLog = new StringBuilder();
 
+        public static boolean willPrintToFile = true;
+
 
         // записывает в файл лога информацию (новая строка)
         public static void println(Object obj, MessageType messageType) {
             Console.println(obj);
 
+            if(!willPrintToFile) return;
+
             if(new File(directoryPath + File.separator + currentSessionFileName).exists()) {
-                FileWriter fileWriter = null;
-                try {
-                    fileWriter = new FileWriter(directoryPath + File.separator + currentSessionFileName, true);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                try(FileWriter fileWriter = new FileWriter(directoryPath + File.separator + currentSessionFileName, true)) {
 
-                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                Date date = new Date();
+                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                    Date date = new Date();
 
-                if (fileWriter != null) {
-                    try {
-                        String str = "";
-                        if (messageType == MessageType.SUCCESS) {
-                            str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#008000] " + obj + "\n";
-                            successLog.append(str);
-                        } else if (messageType == MessageType.INFO) {
-                            str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#FFFFFF] " + obj + "\n";
-                            infoLog.append(str);
-                        } else if (messageType == MessageType.WARNING) {
-                            str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#FFFF00] " + obj + "\n";
-                            warningLog.append(str);
-                        } else if (messageType == MessageType.ERROR) {
-                            str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#FF0000] " + obj + "\n";
-                            errorLog.append(str);
-                        }
-                        allLog.append(str);
-                        // записываю в файл лога информацию
-                        fileWriter.write(str);
-
-                        fileWriter.flush();
-                        fileWriter.close();
-                    } catch (IOException e) {
-                        showWarningDialog("LOG: String was not logged!");
+                    String str = "";
+                    if (messageType == MessageType.SUCCESS) {
+                        str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#008000] " + obj + "\n";
+                        successLog.append(str);
+                    } else if (messageType == MessageType.INFO) {
+                        str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#FFFFFF] " + obj + "\n";
+                        infoLog.append(str);
+                    } else if (messageType == MessageType.WARNING) {
+                        str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#FFFF00] " + obj + "\n";
+                        warningLog.append(str);
+                    } else if (messageType == MessageType.ERROR) {
+                        str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#FF0000] " + obj + "\n";
+                        errorLog.append(str);
                     }
-                } else {
-                    showWarningDialog("LOG: String was not logged!");
-                }
+                    allLog.append(str);
+                    // записываю в файл лога информацию
+                    fileWriter.write(str);
 
-                if (fileWriter != null) {
-                    try {
-                        fileWriter.close();
-                    } catch (IOException e) {
-                        showWarningDialog("LOG: File writer thread was not closed!");
-                    }
+                    fileWriter.flush();
+                } catch (Exception e) {
+                    Console.println(ExceptionsUtils.toString(e));
                 }
             }
         }

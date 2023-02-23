@@ -45,10 +45,10 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
         if(layerNameJElement != null) {
             layerName = layerNameJElement.getAsString();
         }
-        JsonArray childrenObjectsIDJArray = jsonObject.getAsJsonArray("childrenObjectsID");
+        JsonArray childrenObjectsIDJArray = jsonObject.getAsJsonArray("childrenEntitiesID");
         if(childrenObjectsIDJArray != null) {
             for(JsonElement element : childrenObjectsIDJArray) {
-                entity.getChildrenObjectsID().add(element.getAsInt());
+                entity.getChildrenEntitiesID().add(element.getAsInt());
             }
         }
 
@@ -221,7 +221,11 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                 camera2DComponent.setPostprocessingDefaultShader(defaultShader);
                 for(int i = 0; i < camera2DComponent.getPostprocessingLayersNum(); i++) {
                     PostprocessingLayer ppLayer = camera2DComponent.getPostprocessingLayer(i);
-                    Shader layerShader = new Shader(AssetManager.getInstance().getShaderData(ppLayer.getShader().path));
+
+                    ppLayer.getShader().fixUniforms();
+                    Shader layerShader = new Shader();
+                    layerShader.getShaderUniforms().addAll(ppLayer.getShader().getShaderUniforms());
+                    layerShader.compile(AssetManager.getInstance().getShaderData(ppLayer.getShader().path));
 
                     ppLayer.setShader(layerShader);
                     ppLayer.init();

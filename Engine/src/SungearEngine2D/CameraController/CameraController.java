@@ -10,6 +10,7 @@ import Core2D.Input.PC.Mouse;
 import Core2D.Transform.Transform;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
+import SungearEngine2D.Main.Resources;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
@@ -48,17 +49,19 @@ public class CameraController
     public static void control()
     {
         if(CamerasManager.mainCamera2D != null && controlledCamera2D.ID == CamerasManager.mainCamera2D.ID && allowMove) {
-            if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
+            if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
                 lastCursorPosition = new Vector2f(Mouse.getMousePosition());
+                //GLFW.glfwSetInputMode(Core2D.getWindow().getWindow(), GLFW.GLFW_CURSOR, GLFW.GLFW_HAND_CURSOR);
+                GLFW.glfwSetCursor(Core2D.getWindow().getWindow(), Resources.Cursors.getCursorMove());
             }
-            if (Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
+            if (Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
                 lastCursorPosition = new Vector2f(Mouse.getMousePosition());
             }
             if (controlledCamera2D != null && !ViewsManager.isSomeViewFocusedExceptSceneView) {
                 TransformComponent cameraTransformComponent = controlledCamera2D.getComponent(TransformComponent.class);
 
                 if(cameraTransformComponent != null) {
-                    if (Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
+                    if (Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
                         controlledCamera2D.getComponent(TransformComponent.class).getTransform().setNeedToMoveToDestination(false);
                         Vector2f currentPosition = new Vector2f(Mouse.getMousePosition());
                         Vector2f difference = new Vector2f(currentPosition.x - lastCursorPosition.x, currentPosition.y - lastCursorPosition.y);

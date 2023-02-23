@@ -45,7 +45,7 @@ public class Texture2DData extends Data
         try (FileInputStream fis = new FileInputStream(path); BufferedInputStream bis = new BufferedInputStream(fis)) {
             load(bis, path);
         } catch (IOException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException(e)), Log.MessageType.ERROR);
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
         return this;
@@ -82,7 +82,15 @@ public class Texture2DData extends Data
                 internalFormat = GL_RGB8;
                 // текстура будет поддерживать GL_RGB
                 format = GL_RGB;
+            } else if (channels == 2) {
+                internalFormat = GL_RG8;
+                format = GL_RG;
+            } else if (channels == 1) {
+                internalFormat = GL_LUMINANCE8;
+                format = GL_LUMINANCE;
             }
+
+            Log.CurrentSession.println("Loaded texture: " + path + ", width: " + width + ", height: " + height + ", internalFormat: " + internalFormat + ", format: " + format + ", channels: " + channels, Log.MessageType.SUCCESS);
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }

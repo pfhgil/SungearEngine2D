@@ -102,6 +102,11 @@ public class CamerasDebugLines
         mainCamera2DIcon.update();
         mainCamera2DBox.update();
 
+        inspectorCamera2DIcon.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
+        inspectorCamera2DBox.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
+        mainCamera2DIcon.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
+        mainCamera2DBox.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
+
         Graphics.getMainRenderer().render(inspectorCamera2DIcon, Main.getMainCamera2DComponent());
         Graphics.getMainRenderer().render(inspectorCamera2DBox, Main.getMainCamera2DComponent());
         Graphics.getMainRenderer().render(mainCamera2DIcon, Main.getMainCamera2DComponent());

@@ -46,7 +46,7 @@ public class Prefab
             SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID++;
             prefabObject.ID = SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID;
             prefabObject.setLayer(layer);
-            prefabObject.getChildrenObjectsID().clear();
+            prefabObject.getChildrenEntitiesID().clear();
             for (Prefab prefab : childrenObjects) {
                 layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer(prefab.getPrefabObject().layerName);
                 if (layer == null) {
@@ -56,7 +56,7 @@ public class Prefab
 
                 prefab.getPrefabObject().ID = SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID;
                 prefab.getPrefabObject().setLayer(layer);
-                prefabObject.getChildrenObjectsID().add(prefab.getPrefabObject().ID);
+                prefabObject.getChildrenEntitiesID().add(prefab.getPrefabObject().ID);
                 applyChildPrefabToScene(prefab);
             }
         }
@@ -73,7 +73,7 @@ public class Prefab
 
             childPrefab.getPrefabObject().ID = SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID;
             childPrefab.getPrefabObject().setLayer(layer);
-            parentPrefab.getPrefabObject().getChildrenObjectsID().add(childPrefab.getPrefabObject().ID);
+            parentPrefab.getPrefabObject().getChildrenEntitiesID().add(childPrefab.getPrefabObject().ID);
             applyChildPrefabToScene(childPrefab);
         }
     }
@@ -84,7 +84,7 @@ public class Prefab
         this.prefabObject = prefabObject;
 
         childrenObjects.clear();
-        for (Entity childObject : prefabObject.getChildrenObjects()) {
+        for (Entity childObject : prefabObject.getChildrenEntities()) {
             childrenObjects.add(new Prefab(childObject));
         }
     }

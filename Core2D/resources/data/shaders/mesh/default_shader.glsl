@@ -27,7 +27,7 @@
 
     void main()
     {
-        vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0f - vs_textureCoords.y));
+        vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y));
 
         fragColor = color * textureColor;
     }

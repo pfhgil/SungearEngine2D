@@ -1,11 +1,13 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.ProgramTimeComponent;
 import Core2D.ECS.Component.Components.Shader.ShaderUniformFloatComponent;
 import Core2D.ECS.Component.Components.Shader.TextureComponent;
 import Core2D.Graphics.RenderParts.Shader;
+import Core2D.Layering.PostprocessingLayer;
 import Core2D.Utils.ComponentHandler;
 import SungearEngine2D.GUI.ImGuiUtils;
 import SungearEngine2D.GUI.Views.View;
@@ -32,6 +34,9 @@ public class ShadersEditorView extends View
         private Shader shader;
 
         private ComponentHandler componentHandler;
+
+        // если шейдер изменяется у слоя постпроцессинга
+        public String ppLayerName = "";
 
         public ShaderEditorWindow(Shader shader, ComponentHandler componentHandler)
         {
@@ -168,6 +173,11 @@ public class ShadersEditorView extends View
             Shader foundShader = null;
             if (foundComponent instanceof MeshComponent meshComponent) {
                 foundShader = meshComponent.getShader();
+            } else if(foundComponent instanceof Camera2DComponent camera2DComponent) {
+                PostprocessingLayer ppLayer = camera2DComponent.getPostprocessingLayerByName(ppLayerName);
+                if(ppLayer != null) {
+                    foundShader = ppLayer.getShader();
+                }
             }
             if (foundShader == null) return;
             shader = foundShader;
@@ -221,6 +231,7 @@ public class ShadersEditorView extends View
             ImGui.endChild();
 
              */
+
 
             if(!opened.get()) {
                 active = false;

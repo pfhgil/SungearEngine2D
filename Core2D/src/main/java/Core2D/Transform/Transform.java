@@ -134,6 +134,8 @@ public class Transform implements Serializable
             setPositionLikeRigidbody2D();
             setRotationLikeRigidbody2D();
         }
+
+        updateModelMatrix();
     }
 
     public void translate(Vector2f translation)
@@ -151,7 +153,7 @@ public class Transform implements Serializable
             rigidbody2D.getBody().setTransform(newPosition, rigidbody2D.getBody().getAngle());
         }
 
-        updateModelMatrix();
+        //updateModelMatrix();
     }
 
     public void translateInRotationDirection(Vector2f translation)
@@ -173,7 +175,7 @@ public class Transform implements Serializable
             rigidbody2D.getBody().setTransform(newPosition, rigidbody2D.getBody().getAngle());
         }
 
-        updateModelMatrix();
+        //updateModelMatrix();
     }
 
     public void rotate(float rotation)
@@ -193,7 +195,7 @@ public class Transform implements Serializable
             rigidbody2D.getBody().setTransform(rigidbody2D.getBody().getTransform().position, (float) Math.toRadians(newAngle));
         }
 
-        updateModelMatrix();
+        //updateModelMatrix();
     }
 
     public void rotate(float rotation, Matrix4f dest)
@@ -224,7 +226,7 @@ public class Transform implements Serializable
             rigidbody2D.getBody().setTransform(rigidbody2D.getBody().getTransform().position, (float) Math.toRadians(newAngle));
         }
 
-        updateModelMatrix();
+        //updateModelMatrix();
     }
 
     public float getRotationOfLookAt(Vector2f target)
@@ -254,7 +256,7 @@ public class Transform implements Serializable
         scaleMatrix.identity();
         scaleMatrix.scale(this.scale.x, this.scale.y, 1.0f);
 
-        updateModelMatrix();
+        //updateModelMatrix();
     }
 
     public void scaleMul(Vector2f scale)
@@ -264,7 +266,7 @@ public class Transform implements Serializable
         scaleMatrix.identity();
         scaleMatrix.scale(this.scale.x, this.scale.y, 1.0f);
 
-        updateModelMatrix();
+        //updateModelMatrix();
     }
 
     public void lerpMoveTo(Vector2f toPosition, Vector2f coeff)
@@ -319,9 +321,18 @@ public class Transform implements Serializable
     }
 
     // обновление матрицы модели
-    private void updateModelMatrix()
+    public void updateModelMatrix()
     {
-        modelMatrix = new Matrix4f().mul(translationMatrix).mul(rotationMatrix).mul(scaleMatrix);
+        modelMatrix.identity().mul(translationMatrix).mul(rotationMatrix).mul(scaleMatrix);
+
+        if(parentTransform != null) {
+            resultModelMatrix.set(parentTransform.getModelMatrix()).mul(modelMatrix);
+        } else {
+            resultModelMatrix.set(modelMatrix);
+        }
+
+        /*
+        modelMatrix.identity().mul(translationMatrix).mul(rotationMatrix).mul(scaleMatrix);
 
         if(parentTransform != null) {
             Matrix4f translationMatrix = MatrixUtils.getTranslationMatrix(parentTransform.getResultModelMatrix());
@@ -330,11 +341,30 @@ public class Transform implements Serializable
             Vector2f parentScale = MatrixUtils.getScale(parentTransform.getResultModelMatrix());
 
             Vector2f lastScale = new Vector2f(scale);
-            setScale(new Vector2f(scale).mul(parentScale));
+            // ------------------ setScale функция, но без вызова updateModelMatrix функции, чтобы не был java.lang.StackOverflowError
+            this.scale.set(new Vector2f(scale).mul(parentScale));
+
+            scaleMatrix.identity();
+            scaleMatrix.scale(this.scale.x, this.scale.y, 1.0f);
+
+            if(rigidbody2D != null) {
+                Vec2 newPosition = new Vec2(rigidbody2D.getBody().getTransform().position);
+                rigidbody2D.getBody().setTransform(newPosition, rigidbody2D.getBody().getAngle());
+            }
+            // ------------------------------------------------------------------------------------
+            //setScale(new Vector2f(scale).mul(parentScale));
             scale.set(lastScale);
 
             Vector2f lastPosition = new Vector2f(position);
-            setPosition(new Vector2f(position).mul(parentScale));
+            // ------------------ setScale функция, но без вызова updateModelMatrix функции, чтобы не был java.lang.StackOverflowError
+            this.position.set(new Vector2f(position).mul(parentScale));
+
+            translationMatrix.identity();
+            translationMatrix.translate(this.position.x, this.position.y, 0.0f);
+
+            updateRigidbody2D();
+            // setPosition(new Vector2f(position).mul(parentScale));
+            // ------------------------------------------------------------------------------------
             position.set(lastPosition);
 
             Matrix4f result = new Matrix4f(translationMatrix).mul(rotationMatrix);
@@ -343,6 +373,10 @@ public class Transform implements Serializable
         } else {
             resultModelMatrix.set(modelMatrix);
         }
+
+
+
+         */
     }
 
     private void updateRigidbody2D()
@@ -382,7 +416,7 @@ public class Transform implements Serializable
         translationMatrix.translate(this.position.x, this.position.y, 0.0f);
 
         updateRigidbody2D();
-        updateModelMatrix();
+        //updateModelMatrix();
     }
     private void setPositionLikeRigidbody2D()
     {
@@ -392,7 +426,7 @@ public class Transform implements Serializable
         translationMatrix.identity();
         translationMatrix.translate(position.x, position.y, 0.0f);
 
-        updateModelMatrix();
+        //updateModelMatrix();
     }
 
     public float getRotation() { return rotation; }
@@ -410,7 +444,6 @@ public class Transform implements Serializable
         rotationMatrix.rotateAround(rotationQ, centre.x, centre.y, 0.0f);
 
         updateRigidbody2D();
-        updateModelMatrix();
     }
     public void setRotationAround(float angle, Vector2f point)
     {
@@ -426,7 +459,7 @@ public class Transform implements Serializable
         rotationMatrix.rotateAround(rotationQ, point.x, point.y, 0.0f);
 
         updateRigidbody2D();
-        updateModelMatrix();
+        //updateModelMatrix();
     }
     private void setRotationLikeRigidbody2D()
     {
@@ -441,7 +474,7 @@ public class Transform implements Serializable
 
         rotationMatrix.rotateAroundLocal(rotationQ, centre.x, centre.y, 0.0f);
 
-        updateModelMatrix();
+        //updateModelMatrix();
     }
 
     public Vector2f getScale() { return scale; }
@@ -457,7 +490,7 @@ public class Transform implements Serializable
             rigidbody2D.getBody().setTransform(newPosition, rigidbody2D.getBody().getAngle());
         }
 
-        updateModelMatrix();
+        //updateModelMatrix();
     }
 
     public Vector2f getRealPosition()

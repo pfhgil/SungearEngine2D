@@ -208,7 +208,8 @@ public class ComponentsView extends View
                                     new ShadersEditorView.ShaderEditorWindow(meshComponent.getShader(), new ComponentHandler(meshComponent.entity.getLayer().getID(), meshComponent.entity.ID, meshComponent.ID))
                             );
                         }
-                    } case "TextureComponent" -> {
+                    }
+                    case "TextureComponent" -> {
                         TextureComponent textureComponent = (TextureComponent) currentComponent;
 
                         ImString textureName = new ImString(new File(textureComponent.getTexture().path).getName());
@@ -241,7 +242,8 @@ public class ComponentsView extends View
                         ImGui.popID();
 
                         textureComponent.getTexture().setTextureBlock(GL46C.GL_TEXTURE0 + chosenTextureBlock.get());
-                    } case "Rigidbody2DComponent" -> {
+                    }
+                    case "Rigidbody2DComponent" -> {
                         Rigidbody2DComponent rigidbody2DComponent = (Rigidbody2DComponent) currentComponent;
 
                         ImGui.pushID("Rigidbody2DType");
@@ -753,23 +755,27 @@ public class ComponentsView extends View
                             if (ImGui.treeNode("Postprocessing layer \"" + (ppLayer.getEntitiesLayerToRender() != null ? ppLayer.getEntitiesLayerToRender().getName() + "\"" : "unknown\""))) {
                                 ImString shaderName = new ImString(new File(ppLayer.getShader().path).getName());
 
-                                ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText("Shader", shaderName, ImGuiInputTextFlags.ReadOnly));
+                                boolean[] shaderEditButtonPressed = new boolean[1];
+                                Object[] droppedObject = new Object[1];
+                                ImGuiUtils.imCallWBorder(func -> ImGuiUtils.inputTextWithRightButton("Shader", shaderName, ImGuiInputTextFlags.ReadOnly,
+                                        Resources.Textures.Icons.editIcon24.getTextureHandler(), shaderEditButtonPressed, "Edit shader", true, droppedObject, "File"));
 
-                                if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileShader(ViewsManager.getResourcesView().getCurrentMovingFile())) {
-                                    if (ImGui.beginDragDropTarget()) {
-                                        Object imageFile = ImGui.acceptDragDropPayload("File");
-                                        if (imageFile != null) {
-                                            shaderName.set(ViewsManager.getResourcesView().getCurrentMovingFile().getName(), true);
-                                            String relativePath = FileUtils.getRelativePath(
-                                                    new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
-                                                    new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                                            ppLayer.setShader(new Shader(AssetManager.getInstance().getShaderData(relativePath)));
-                                            ppLayer.getShader().path = relativePath;
-                                            ViewsManager.getResourcesView().setCurrentMovingFile(null);
-                                        }
+                                if (droppedObject[0] instanceof File file) {
+                                    shaderName.set(file.getName(), true);
+                                    String relativePath = FileUtils.getRelativePath(
+                                            new File(file.getPath()),
+                                            new File(ProjectsManager.getCurrentProject().getProjectPath()));
+                                    ppLayer.setShader(new Shader(AssetManager.getInstance().getShaderData(relativePath)));
+                                    ppLayer.getShader().path = relativePath;
+                                }
 
-                                        ImGui.endDragDropTarget();
-                                    }
+                                if(shaderEditButtonPressed[0]) {
+                                    ShadersEditorView.ShaderEditorWindow newShaderEditorWindow = new ShadersEditorView.ShaderEditorWindow(
+                                            ppLayer.getShader(),
+                                            new ComponentHandler(camera2DComponent.entity.getLayer().getID(),
+                                                    camera2DComponent.entity.ID, camera2DComponent.ID));
+                                    newShaderEditorWindow.ppLayerName =  ppLayer.getEntitiesLayerToRenderName();
+                                    ViewsManager.getShadersEditorView().addEditingShader(newShaderEditorWindow);
                                 }
 
 

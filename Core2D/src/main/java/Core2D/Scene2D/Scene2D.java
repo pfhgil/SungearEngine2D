@@ -9,6 +9,7 @@ import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
+import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
 import Core2D.Physics.PhysicsWorld;
 import Core2D.Physics.Rigidbody2D;
@@ -124,9 +125,9 @@ public class Scene2D
         }
     }
 
-    public Entity getPickedObject2D(Vector4f pixelColor)
+    public Entity getPickedEntity(Vector4f pixelColor)
     {
-        return layering.getPickedObject2D(pixelColor);
+        return layering.getPickedEntity(pixelColor);
     }
 
     public void deltaUpdate(float deltaTime)
@@ -163,6 +164,12 @@ public class Scene2D
             for(Entity entity : layer.getEntities()) {
                 for(MeshComponent meshComponent : entity.getAllComponents(MeshComponent.class)) {
                     meshComponent.getShader().initUniforms();
+                }
+                for(Camera2DComponent camera2DComponent : entity.getAllComponents(Camera2DComponent.class)) {
+                    for(int i = 0; i < camera2DComponent.getPostprocessingLayersNum(); i++) {
+                        PostprocessingLayer ppLayer = camera2DComponent.getPostprocessingLayer(i);
+                        ppLayer.getShader().initUniforms();
+                    }
                 }
             }
         }
@@ -205,12 +212,12 @@ public class Scene2D
         tags.remove(tag);
     }
 
-    public Entity findObject2DByName(String name)
+    public Entity findEntityByName(String name)
     {
         for(Layer layer : layering.getLayers()) {
-            for(Entity go : layer.getEntities()) {
-                if(go.name.equals(name)) {
-                    return go;
+            for(Entity e : layer.getEntities()) {
+                if(e.name.equals(name)) {
+                    return e;
                 }
             }
         }
@@ -218,12 +225,12 @@ public class Scene2D
         return null;
     }
 
-    public Entity findObject2DByTag(String tag)
+    public Entity findEntityByTag(String tag)
     {
         for(Layer layer : layering.getLayers()) {
-            for(Entity go : layer.getEntities()) {
-                if(go.tag.getName().equals(tag)) {
-                    return go;
+            for(Entity e : layer.getEntities()) {
+                if(e.tag.getName().equals(tag)) {
+                    return e;
                 }
             }
         }
@@ -231,12 +238,12 @@ public class Scene2D
         return null;
     }
 
-    public Entity findGameObjectByID(int ID)
+    public Entity findEntityByID(int ID)
     {
         for(Layer layer : layering.getLayers()) {
-            for(Entity go : layer.getEntities()) {
-                if(go.ID == ID) {
-                    return go;
+            for(Entity e : layer.getEntities()) {
+                if(e.ID == ID) {
+                    return e;
                 }
             }
         }
@@ -253,6 +260,17 @@ public class Scene2D
     public void applyScriptsTempValues()
     {
         ScriptSystem.applyScriptsTempValues(this);
+    }
+
+    // применить все зависимости к объектам
+    public void applyEntityDependencies()
+    {
+        for(int i = 0; i < layering.getLayers().size(); i++) {
+            for (int k = 0; k < layering.getLayers().get(i).getEntities().size(); k++) {
+                Entity entity = layering.getLayers().get(i).getEntities().get(k);
+                entity.applyChildrenEntitiesID(this);
+            }
+        }
     }
 
     public void destroy()

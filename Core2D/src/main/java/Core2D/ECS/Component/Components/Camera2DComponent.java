@@ -197,6 +197,16 @@ public class Camera2DComponent extends Component
 
                     shader = ppLayerFound.getShader();
 
+                    /*
+                    System.out.println("-------------------------------------------------------------");
+                    System.out.println("shader: " + shader.path + ", is shader program valid: " + glIsProgram(shader.getProgramHandler()));
+                    for(Shader.ShaderUniform shaderUniform : shader.getShaderUniforms()) {
+                        System.out.println("shader uniform. name: " + shaderUniform.getName() + ", value: " + shaderUniform.value);
+                    }
+                    System.out.println("-------------------------------------------------------------");
+
+                     */
+
                     frameBufferToBind = ppLayerFound.getFrameBuffer();
 
                     ppLayerFound.updateName();

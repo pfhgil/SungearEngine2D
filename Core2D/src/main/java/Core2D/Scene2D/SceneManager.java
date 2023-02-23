@@ -1,6 +1,5 @@
 package Core2D.Scene2D;
 
-import Core2D.Audio.AudioManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.Core2D.Settings;
@@ -47,7 +46,7 @@ public class SceneManager
     public Entity getPickedObject2D(Vector4f pixelColor)
     {
         if(currentScene2D != null) {
-            return currentScene2D.getPickedObject2D(pixelColor);
+            return currentScene2D.getPickedEntity(pixelColor);
         }
 
         return null;
@@ -70,19 +69,15 @@ public class SceneManager
     public static void saveSceneManager(String path)
     {
         String serialized = Utils.gson.toJson(currentSceneManager);
-        String newPath = new File(path).getParent() + "\\" + FilenameUtils.getBaseName(new File(path).getName()) + ".txt";
-        FileUtils.createFile(newPath);
-        FileUtils.writeToFile(new File(newPath), serialized, false);
-        FileUtils.serializeObject(path, serialized);
+        FileUtils.createFile(path);
+        FileUtils.writeToFile(path, serialized, false);
     }
 
     public static void saveSceneManager(String path, SceneManager sceneManager)
     {
         String serialized = Utils.gson.toJson(sceneManager);
-        String newPath = new File(path).getParent() + "\\" + FilenameUtils.getBaseName(new File(path).getName()) + ".txt";
-        FileUtils.createFile(newPath);
-        FileUtils.writeToFile(new File(newPath), serialized, false);
-        FileUtils.serializeObject(path, serialized);
+        FileUtils.createFile(path);
+        FileUtils.writeToFile(path, serialized, false);
     }
 
     public static void loadSceneManagerAsCurrent()
@@ -118,8 +113,8 @@ public class SceneManager
     public static SceneManager loadSceneManager(InputStream inputStream)
     {
         try(inputStream) {
-            String deserialized = (String) FileUtils.deSerializeObject(inputStream);
-            if (deserialized != null && !deserialized.equals("")) {
+            String deserialized = FileUtils.readAllFile(inputStream);
+            if (!deserialized.equals("")) {
                 return Utils.gson.fromJson(deserialized, SceneManager.class);
             }
         } catch(Exception e) {
@@ -147,12 +142,8 @@ public class SceneManager
 
         String serialized = Utils.gson.toJson(scene);
 
-        File f = new File(path);
-        String s = f.getParentFile().getPath() + "/" + FilenameUtils.getBaseName(f.getName()) + ".txt";
-        File f0 = FileUtils.createFile(s);
-        FileUtils.writeToFile(f0, serialized, false);
-
-        FileUtils.serializeObject(path, serialized);
+        FileUtils.createFile(path);
+        FileUtils.writeToFile(path, serialized, false);
     }
 
     public void saveScene(Scene2D scene, String path, boolean saveTempValues)
@@ -163,12 +154,8 @@ public class SceneManager
 
         String serialized = Utils.gson.toJson(scene);
 
-        File f = new File(path);
-        String s = f.getParentFile().getPath() + "/" + FilenameUtils.getBaseName(f.getName()) + ".txt";
-        File f0 = FileUtils.createFile(s);
-        FileUtils.writeToFile(f0, serialized, false);
-
-        FileUtils.serializeObject(path, serialized);
+        FileUtils.createFile(path);
+        FileUtils.writeToFile(path, serialized, false);
     }
 
     public Scene2D loadSceneAsCurrent(String path)
@@ -210,28 +197,17 @@ public class SceneManager
         File sceneFile = new File(path);
 
         if(sceneFile.exists()) {
-            String deserialized = (String) FileUtils.deSerializeObject(path);
+            String deserialized = FileUtils.readAllFile(path);
             return scene2DFromJson(path, deserialized);
         } else {
             try(InputStream inputStream = Core2D.class.getResourceAsStream(path)) {
-                String deserialized = (String) FileUtils.deSerializeObject(inputStream);
+                String deserialized = FileUtils.readAllFile(inputStream);
                 return scene2DFromJson(path, deserialized);
             } catch (IOException e) {
                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }
         }
         return null;
-    }
-
-    // применить все зависимости к объектам
-    private void applyObject2DDependencies(Scene2D scene2D)
-    {
-        for(int i = 0; i < scene2D.getLayering().getLayers().size(); i++) {
-            for (int k = 0; k < scene2D.getLayering().getLayers().get(i).getEntities().size(); k++) {
-                Entity entity = scene2D.getLayering().getLayers().get(i).getEntities().get(k);
-                entity.applyChildrenObjectsID();
-            }
-        }
     }
 
     public Scene2D getScene2D(String name)
@@ -270,7 +246,7 @@ public class SceneManager
         }
 
         if(currentScene2D != null) {
-            applyObject2DDependencies(currentScene2D);
+            currentScene2D.applyEntityDependencies();
         }
 
         Keyboard.handleKeyboardInput();

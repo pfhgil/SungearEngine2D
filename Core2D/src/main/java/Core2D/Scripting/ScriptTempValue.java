@@ -53,7 +53,7 @@ public class ScriptTempValue
                 if(resValue instanceof Double && field.getType().isAssignableFrom(float.class)) {
                     field.setFloat(script.getScriptClassInstance(), ((Double) resValue).floatValue());
                 } else if(resValue instanceof ScriptValue object) {
-                    Entity foundEntity = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(object.entityID);
+                    Entity foundEntity = SceneManager.currentSceneManager.getCurrentScene2D().findEntityByID(object.entityID);
                     switch(object.objectType) {
                         case TYPE_ENTITY:
                             if(foundEntity != null) {

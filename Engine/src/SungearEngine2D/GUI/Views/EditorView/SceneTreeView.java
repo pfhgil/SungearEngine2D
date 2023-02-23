@@ -10,7 +10,6 @@ import SungearEngine2D.Main.Resources;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiMouseButton;
-import imgui.flag.ImGuiTreeNodeFlags;
 import imgui.flag.ImGuiWindowFlags;
 import org.joml.Vector2f;
 
@@ -43,12 +42,12 @@ public class SceneTreeView extends View
             update();
 
             for(Entity child : childrenNeedFree) {
-                child.setParentObject2D(null);
+                child.setParentEntity(null);
             }
 
             for(int i = 0; i < parentsToSet.size(); i++) {
-                parentsToSet.get(i).addChildObject(childrenNeedFree.get(i));
-                childrenNeedFree.get(i).setParentObject2D(parentsToSet.get(i));
+                parentsToSet.get(i).addChildEntity(childrenNeedFree.get(i));
+                childrenNeedFree.get(i).setParentEntity(parentsToSet.get(i));
             }
 
             if(childrenNeedFree.size() != 0) {
@@ -101,7 +100,7 @@ public class SceneTreeView extends View
                         if (ImGui.beginDragDropTarget()) {
                             Object droppedObject = ImGui.acceptDragDropPayload("SceneGameObject");
                             if (droppedObject != null) {
-                                ((Entity) droppedObject).setParentObject2D(null);
+                                ((Entity) droppedObject).setParentEntity(null);
                             }
                             ImGui.endDragDropTarget();
                         }
@@ -111,7 +110,7 @@ public class SceneTreeView extends View
                             for (int k = 0; k < currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(i).getEntities().size(); k++) {
                                 iterator++;
                                 Entity entity = currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(i).getEntities().get(k);
-                                if(!alreadyProcessedObjectsID.contains(entity.ID) && entity.getParentObject2D() == null) {
+                                if(!alreadyProcessedObjectsID.contains(entity.ID) && entity.getParentEntity() == null) {
                                     ImGui.pushID("Scene2DWrappedObject_" + entity.ID);
                                     boolean opened = ImGui.treeNode(entity.name + " | ID: " + entity.ID);
                                     if (ImGui.isItemHovered()) {
@@ -193,7 +192,7 @@ public class SceneTreeView extends View
 
     private static void showParent(List<Integer> alreadyProcessedObjectsID, Entity parentObject2D, boolean parentOpened)
     {
-        for(Entity entity : parentObject2D.getChildrenObjects()) {
+        for(Entity entity : parentObject2D.getChildrenEntities()) {
             iterator++;
             if(parentOpened) {
                 boolean opened = ImGui.treeNode(entity.name + " | ID: " + entity.ID);

@@ -234,6 +234,17 @@ public class Gizmo
                 xScaleHandler.update();
                 xScaleLine.update();
 
+                yArrow.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
+                xArrow.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
+                centrePoint.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
+                centrePointToEditCentre.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
+                rotationCircle.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
+                rotationHandler.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
+                yScaleHandler.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
+                yScaleLine.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
+                xScaleHandler.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
+                xScaleLine.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
+
 
                 if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_1)) {
                     gizmoPickingTarget.bind();

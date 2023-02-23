@@ -14,6 +14,7 @@ import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Pooling.PoolObject;
+import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Transform.Transform;
 import Core2D.Utils.ExceptionsUtils;
@@ -58,10 +59,10 @@ public class Entity implements Serializable, PoolObject
     protected transient Vector3f pickColor = new Vector3f();
 
     public transient Entity parentEntity;
-    protected int parentObject2DID = -1;
+    protected int parentEntityID = -1;
 
-    protected transient List<Entity> childrenObjects = new ArrayList<>();
-    protected List<Integer> childrenObjectsID = new ArrayList<>();
+    protected transient List<Entity> childrenEntities = new ArrayList<>();
+    protected List<Integer> childrenEntitiesID = new ArrayList<>();
 
     public Entity()
     {
@@ -121,8 +122,8 @@ public class Entity implements Serializable, PoolObject
 
         isUIElement = entity.isUIElement;
         setColor(entity.getColor());
-        setParentObject2D(entity.getParentObject2D());
-        addChildrenObjects(entity.getChildrenObjects());
+        setParentEntity(entity.getParentEntity());
+        addChildrenEntities(entity.getChildrenEntities());
     }
 
     public static Entity createAsObject2D()
@@ -233,7 +234,7 @@ public class Entity implements Serializable, PoolObject
         shouldDestroy = true;
 
         if (parentEntity != null) {
-            parentEntity.removeChild(this);
+            parentEntity.removeChildEntity(this);
             parentEntity = null;
         }
 
@@ -244,11 +245,10 @@ public class Entity implements Serializable, PoolObject
             componentsIterator.remove();
         }
 
-        Iterator<Entity> childrenIterator = childrenObjects.iterator();
-        while (childrenIterator.hasNext()) {
-            Entity child = childrenIterator.next();
-            child.destroy();
-            childrenIterator.remove();
+        //int size = childrenEntities.size();
+        for (int i = 0; i < childrenEntities.size(); i++) {
+            childrenEntities.get(i).destroy();
+            //childrenIterator.remove();
         }
         layer = null;
     }
@@ -570,8 +570,8 @@ public class Entity implements Serializable, PoolObject
 
     public Vector3f getPickColor() { return pickColor; }
 
-    public Entity getParentObject2D() { return parentEntity; }
-    public void setParentObject2D(Entity parentEntity)
+    public Entity getParentEntity() { return parentEntity; }
+    public void setParentEntity(Entity parentEntity)
     {
         if(this.parentEntity != null) {
             // если у этого объекта больше нет родителя
@@ -585,90 +585,93 @@ public class Entity implements Serializable, PoolObject
                         .add(MatrixUtils.getPosition(parentTransform.getResultModelMatrix())));
                 transform.setScale(new Vector2f(transform.getScale()).mul(MatrixUtils.getScale(parentTransform.getResultModelMatrix())));
 
-                this.parentEntity.removeChild(this);
+                this.parentEntity.removeChildEntity(this);
             }
         }
         this.parentEntity = parentEntity;
         if(parentEntity != null) {
             // выполняю некоторые преобразования, чтобы этот объект встал на нужную локальную позицию
-            this.parentObject2DID = parentEntity.ID;
+            this.parentEntityID = parentEntity.ID;
             Transform transform = getComponent(TransformComponent.class).getTransform();
             Transform parentTransform = this.parentEntity.getComponent(TransformComponent.class).getTransform();
             transform.setParentTransform(parentTransform);
+            java.lang.System.out.println("attached parent transform: " + parentTransform);
             transform.setPosition(new Vector2f(transform.getPosition()).add(MatrixUtils.getPosition(parentTransform.getResultModelMatrix()).negate()));
             transform.setScale(new Vector2f(transform.getScale()).div(MatrixUtils.getScale(parentTransform.getResultModelMatrix())));
         } else {
-            this.parentObject2DID = -1;
+            this.parentEntityID = -1;
             getComponent(TransformComponent.class).getTransform().setParentTransform(null);
         }
     }
 
-    public int getParentObject2DID() { return parentObject2DID; }
-    public void setParentObject2DID(int parentObject2DID)
+    public int getParentEntityID() { return parentEntityID; }
+    public void setParentEntityID(int parentObject2DID)
     {
-        this.parentObject2DID = parentObject2DID;
+        this.parentEntityID = parentObject2DID;
 
         if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-            setParentObject2D(SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(parentObject2DID));
+            setParentEntity(SceneManager.currentSceneManager.getCurrentScene2D().findEntityByID(parentObject2DID));
         }
     }
 
-    public List<Entity> getChildrenObjects() { return childrenObjects; }
-    public void addChildObject(Entity entity)
+    public List<Entity> getChildrenEntities() { return childrenEntities; }
+    public void addChildEntity(Entity entity)
     {
-        childrenObjects.add(entity);
-        childrenObjectsID.add(entity.ID);
-        entity.setParentObject2D(this);
+        childrenEntities.add(entity);
+        childrenEntitiesID.add(entity.ID);
+        entity.setParentEntity(this);
     }
-    public void addChildrenObjects(List<Entity> objects2D)
+    public void addChildrenEntities(List<Entity> objects2D)
     {
-        childrenObjects.addAll(objects2D);
+        childrenEntities.addAll(objects2D);
         for(int i = 0; i < objects2D.size(); i++) {
-            childrenObjectsID.add(objects2D.get(i).ID);
-            objects2D.get(i).setParentObject2D(this);
+            childrenEntitiesID.add(objects2D.get(i).ID);
+            objects2D.get(i).setParentEntity(this);
         }
     }
-    public void addChildObjectByID(int object2DID)
+    public void addChildEntityByID(int object2DID)
     {
         if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-            Entity entity = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(object2DID);
+            Entity entity = SceneManager.currentSceneManager.getCurrentScene2D().findEntityByID(object2DID);
             if(entity != null) {
-                childrenObjects.add(entity);
-                childrenObjectsID.add(entity.ID);
-                entity.setParentObject2D(this);
+                childrenEntities.add(entity);
+                childrenEntitiesID.add(entity.ID);
+                entity.setParentEntity(this);
             }
         }
     }
-    public void addChildrenObjectsByID(List<Integer> objects2DID)
+    public void addChildrenEntitiesByID(List<Integer> objects2DID)
     {
         if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
             for (int i = 0; i < objects2DID.size(); i++) {
-                Entity entity = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(objects2DID.get(i));
+                Entity entity = SceneManager.currentSceneManager.getCurrentScene2D().findEntityByID(objects2DID.get(i));
                 if(entity != null) {
-                    childrenObjects.add(entity);
-                    childrenObjectsID.add(entity.ID);
-                    entity.setParentObject2D(this);
+                    childrenEntities.add(entity);
+                    childrenEntitiesID.add(entity.ID);
+                    entity.setParentEntity(this);
                 }
             }
         }
     }
-    public void removeChild(Entity child)
+    public void removeChildEntity(Entity child)
     {
-        childrenObjects.remove(child);
-        childrenObjectsID.remove((Integer) child.ID);
+        childrenEntities.remove(child);
+        childrenEntitiesID.remove((Integer) child.ID);
     }
 
-    public List<Integer> getChildrenObjectsID() { return childrenObjectsID; }
+    public List<Integer> getChildrenEntitiesID() { return childrenEntitiesID; }
 
-    public void applyChildrenObjectsID()
+    public void applyChildrenEntitiesID(Scene2D scene2D)
     {
-        if(SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-            for (int i = 0; i < childrenObjectsID.size(); i++) {
-                Entity entity = SceneManager.currentSceneManager.getCurrentScene2D().findGameObjectByID(childrenObjectsID.get(i));
-                if(entity != null) {
-                    childrenObjects.add(entity);
-                    entity.setParentObject2D(this);
-                }
+        java.lang.System.out.println("applying: " + childrenEntitiesID.size());
+        for (int i = 0; i < childrenEntitiesID.size(); i++) {
+            java.lang.System.out.println("id to apply: " + childrenEntitiesID.get(i));
+            Entity entity = scene2D.findEntityByID(childrenEntitiesID.get(i));
+            if (entity != null) {
+                childrenEntities.add(entity);
+                //childrenEntitiesID.add(entity.ID);
+                entity.setParentEntity(this);
+                java.lang.System.out.println("parent " + name + " applied to entity " + entity.name);
             }
         }
     }

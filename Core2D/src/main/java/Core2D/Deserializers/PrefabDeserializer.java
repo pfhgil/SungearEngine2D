@@ -28,13 +28,13 @@ public class PrefabDeserializer implements JsonDeserializer<Prefab>, JsonSeriali
         try {
             Entity entity = context.deserialize(properties, Class.forName(type));
 
-            entity.getChildrenObjectsID().clear();
+            entity.getChildrenEntitiesID().clear();
             JsonArray childrenObjectsJArray = jsonObject.getAsJsonArray("childrenObjects");
             if (childrenObjectsJArray != null) {
                 for (JsonElement element : childrenObjectsJArray) {
                     Prefab pref = context.deserialize(element, Prefab.class);
 
-                    entity.addChildObject(pref.getPrefabObject());
+                    entity.addChildEntity(pref.getPrefabObject());
 
                     addPrefabChildren(pref);
                 }
@@ -63,7 +63,7 @@ public class PrefabDeserializer implements JsonDeserializer<Prefab>, JsonSeriali
         if(prefab.getPrefabObject() instanceof Entity) {
             for (Prefab pref : prefab.getChildrenObjects()) {
                 if (pref.getPrefabObject() instanceof Entity) {
-                    ((Entity) prefab.getPrefabObject()).addChildObject((Entity) pref.getPrefabObject());
+                    ((Entity) prefab.getPrefabObject()).addChildEntity((Entity) pref.getPrefabObject());
                 }
             }
         }

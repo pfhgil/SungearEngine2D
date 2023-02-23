@@ -164,8 +164,11 @@ public class ResourcesView extends View
                         }
                         ImGui.separator();
                         if(ImGuiUtils.beginMenuWithImage("GLSL", 0, 14, 14)) {
-                            if(ImGuiUtils.menuItemWithImage("ComplexShader", 0, 14, 14)) {
-                                ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("GLSL.ComplexShader");
+                            if(ImGuiUtils.menuItemWithImage("MeshComplexShader", 0, 14, 14)) {
+                                ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("GLSL.MeshComplexShader");
+                            }
+                            if(ImGuiUtils.menuItemWithImage("PostprocessingComplexShader", 0, 14, 14)) {
+                                ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("GLSL.PostprocessingComplexShader");
                             }
 
                             ImGui.endMenu();
@@ -409,7 +412,7 @@ public class ResourcesView extends View
                 case "Java.Component", "Java.System" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".java");
                 case "Text" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".txt");
                 case "Directory" -> FileUtils.createFolder(ResourcesView.currentDirectoryPath + "\\" + name);
-                case "GLSL.ComplexShader" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".glsl");
+                case "GLSL.MeshComplexShader", "GLSL.PostprocessingComplexShader" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".glsl");
                 default -> null;
             };
             if(newFile == null) return;
@@ -528,7 +531,7 @@ public class ResourcesView extends View
                         """.formatted(name);
             } else if(fileType.equals("Text")) { // если тип файла - текст, то создаю файл с надписью hello! (по приколу)
                 fileString = "Hello world!";
-            } else if(fileType.equals("GLSL.ComplexShader")) {
+            } else if(fileType.equals("GLSL.MeshComplexShader")) {
                 fileString =
                         """
                         // ATTENTION: do not write the shader version!
@@ -559,7 +562,44 @@ public class ResourcesView extends View
 
                             void main()
                             {
-                                vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0f - vs_textureCoords.y));
+                                vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y));
+
+                                fragColor = color * textureColor;
+                            }
+                        #endif
+                        """;
+            } else if(fileType.equals("GLSL.PostprocessingComplexShader")) {
+                fileString =
+                        """
+                        // ATTENTION: do not write the shader version!
+                        #ifdef VERTEX
+                            layout (location = 0) in vec2 positionAttribute;
+                            layout (location = 1) in vec2 textureCoordsAttribute;
+    
+                            uniform mat4 mvpMatrix;
+    
+                            out vec2 vs_textureCoords;
+    
+                            void main()
+                            {
+                                vs_textureCoords = textureCoordsAttribute;
+                            
+                                gl_Position = vec4(positionAttribute, 0.0, 1.0);
+                            }
+                        #endif
+
+                        #ifdef FRAGMENT
+                            out vec4 fragColor;
+
+                            uniform sampler2D sampler;
+
+                            uniform vec4 color;
+
+                            in vec2 vs_textureCoords;
+
+                            void main()
+                            {
+                                vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y));
 
                                 fragColor = color * textureColor;
                             }

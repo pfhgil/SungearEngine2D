@@ -71,6 +71,6 @@ public class Grid
 
         //System.out.println(1.0f / Main.getMainCamera2D().getTransform().getScale().x + ", " + 1.0f / Main.getMainCamera2D().getTransform().getScale().y + ", " + newLevel);
         //Graphics.getMainRenderer().render(grid);
-        grid.getComponent(TransformComponent.class).getTransform().update(0.0f);
+        grid.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
     }
 }

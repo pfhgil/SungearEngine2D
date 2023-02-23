@@ -143,6 +143,18 @@ public class TopToolbarView
                         showFileCreateDialog();
                     }
 
+                    if(ImGuiUtils.beginMenuWithImage("GLSL", 0, 14, 14)) {
+                        if(ImGuiUtils.menuItemWithImage("MeshComplexShader", 0, 14, 14)) {
+                            currentFileTypeNeedCreate = "GLSL.MeshComplexShader";
+                            showFileCreateDialog();
+                        }
+                        if(ImGuiUtils.menuItemWithImage("Postprocessing", 0, 14, 14)) {
+                            currentFileTypeNeedCreate = "GLSL.PostprocessingComplexShader";
+                            showFileCreateDialog();
+                        }
+                        ImGui.endMenu();
+                    }
+
                     ImGui.endMenu();
                 }
 

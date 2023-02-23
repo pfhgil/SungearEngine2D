@@ -51,7 +51,7 @@ public class GlassPane extends JComponent implements AWTEventListener {
 	}
 
 	/**
-	 * Sets the glass pane as visible or invisible. The mouse cursor will be set
+	 * Sets the glass pane as visible or invisible. The cursor cursor will be set
 	 * accordingly.
 	 */
 	public void setVisible(boolean visible) {
