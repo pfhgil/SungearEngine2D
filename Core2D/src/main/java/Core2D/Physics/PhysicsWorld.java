@@ -1,13 +1,15 @@
 package Core2D.Physics;
 
-import Core2D.Component.Components.BoxCollider2DComponent;
-import Core2D.Component.Components.CircleCollider2DComponent;
-import Core2D.Component.Components.Rigidbody2DComponent;
-import Core2D.Component.Components.ScriptComponent;
-import Core2D.Drawable.Object2D;
+import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent;
+import Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent;
+import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
+import Core2D.ECS.Entity;
+import Core2D.ECS.System.System;
 import Core2D.Log.Log;
 import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.Physics.Collider2D.CircleCollider2D;
+import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
 import org.jbox2d.callbacks.ContactImpulse;
 import org.jbox2d.callbacks.ContactListener;
@@ -26,19 +28,20 @@ public class PhysicsWorld extends World
 {
     public static final float RATIO = 30.0f;
 
-    public boolean simulatePhysics = true;
+    public boolean simulatePhysics = false;
 
     private boolean shouldCollider2DEnter = false;
-    private Object2D object2DAEnter;
-    private Object2D object2DBEnter;
+    private Entity entityAEnter;
+    private Entity entityBEnter;
 
     private boolean shouldCollider2DExit = false;
-    private Object2D object2DAExit;
-    private Object2D object2DBExit;
+    private Entity entityAExit;
+    private Entity entityBExit;
 
     public PhysicsWorld()
     {
         super(new Vec2(0.0f, -20.0f), false);
+        //this.setAutoClearForces(true);
 
         Settings.velocityThreshold = 0.0f;
 
@@ -53,10 +56,10 @@ public class PhysicsWorld extends World
                     Object userDataA = aBody.getUserData();
                     Object userDataB = bBody.getUserData();
 
-                    if(userDataA instanceof Object2D && userDataB instanceof Object2D) {
+                    if(userDataA instanceof Entity && userDataB instanceof Entity) {
                         shouldCollider2DEnter = true;
-                        object2DAEnter = (Object2D) userDataA;
-                        object2DBEnter = (Object2D) userDataB;
+                        entityAEnter = (Entity) userDataA;
+                        entityBEnter = (Entity) userDataB;
                     }
                 }
             }
@@ -71,10 +74,10 @@ public class PhysicsWorld extends World
                     Object userDataA = aBody.getUserData();
                     Object userDataB = bBody.getUserData();
 
-                    if(userDataA instanceof Object2D && userDataB instanceof Object2D) {
+                    if(userDataA instanceof Entity && userDataB instanceof Entity) {
                         shouldCollider2DExit = true;
-                        object2DAExit = (Object2D) userDataA;
-                        object2DBExit = (Object2D) userDataB;
+                        entityAExit = (Entity) userDataA;
+                        entityBExit = (Entity) userDataB;
                     }
                 }
             }
@@ -97,22 +100,16 @@ public class PhysicsWorld extends World
         if(simulatePhysics) {
             super.step(deltaTime, velocityIterations, positionIterations);
 
-            if(shouldCollider2DEnter) {
-                if(!object2DAEnter.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsA = object2DAEnter.getAllComponents(ScriptComponent.class);
-
-                    for (ScriptComponent scriptComponent : scriptComponentsA) {
-                        scriptComponent.collider2DEnter(object2DBEnter);
+            if (shouldCollider2DEnter) {
+                if (!entityAEnter.isShouldDestroy()) {
+                    for(Component component : entityAEnter.getComponents()) {
+                        component.collider2DEnter(entityBEnter);
+                    }
+                    for(System system : entityAEnter.getSystems()) {
+                        system.collider2DEnter(entityBEnter);
                     }
                 }
 
-<<<<<<< Updated upstream
-                if(!object2DBEnter.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsB = object2DBEnter.getAllComponents(ScriptComponent.class);
-
-                    for (ScriptComponent scriptComponent : scriptComponentsB) {
-                        scriptComponent.collider2DEnter(object2DAEnter);
-=======
                 if (!entityBEnter.isShouldDestroy()) {
                     for(Component component : entityBEnter.getComponents()) {
                         component.collider2DEnter(entityAEnter);
@@ -120,26 +117,14 @@ public class PhysicsWorld extends World
                     /*
                     for(System system : entityBEnter.getSystems()) {
                         system.collider2DEnter(entityAEnter);
->>>>>>> Stashed changes
                     }
 
                      */
                 }
 
-                object2DAEnter = null;
-                object2DBEnter = null;
-
                 shouldCollider2DEnter = false;
             }
 
-<<<<<<< Updated upstream
-            if(shouldCollider2DExit) {
-                if(!object2DAExit.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsA = object2DAExit.getAllComponents(ScriptComponent.class);
-
-                    for (ScriptComponent scriptComponent : scriptComponentsA) {
-                        scriptComponent.collider2DExit(object2DBExit);
-=======
             if (shouldCollider2DExit) {
                 if (!entityAExit.isShouldDestroy()) {
                     for(Component component : entityAExit.getComponents()) {
@@ -148,19 +133,11 @@ public class PhysicsWorld extends World
                     /*
                     for(System system : entityAExit.getSystems()) {
                         system.collider2DEnter(entityBExit);
->>>>>>> Stashed changes
                     }
 
                      */
                 }
 
-<<<<<<< Updated upstream
-                if(!object2DBExit.isShouldDestroy()) {
-                    List<ScriptComponent> scriptComponentsB = object2DBExit.getAllComponents(ScriptComponent.class);
-
-                    for (ScriptComponent scriptComponent : scriptComponentsB) {
-                        scriptComponent.collider2DExit(object2DAExit);
-=======
                 if (!entityBExit.isShouldDestroy()) {
                     for(Component component : entityBExit.getComponents()) {
                         component.collider2DEnter(entityAExit);
@@ -168,37 +145,33 @@ public class PhysicsWorld extends World
                     /*
                     for(System system : entityBExit.getSystems()) {
                         system.collider2DEnter(entityAExit);
->>>>>>> Stashed changes
                     }
-                    
+
                      */
                 }
 
-                object2DAExit = null;
-                object2DBExit = null;
-
                 shouldCollider2DExit = false;
-            }
+             }
         }
     }
 
-    public void addRigidbody2D(Object2D object2D)
+    public Rigidbody2D addRigidbody2D(Entity entity, Scene2D scene2D)
     {
-        Rigidbody2DComponent rigidbody2DComponent = object2D.getComponent(Rigidbody2DComponent.class);
+        Rigidbody2DComponent rigidbody2DComponent = entity.getComponent(Rigidbody2DComponent.class);
         if(rigidbody2DComponent != null) {
             Rigidbody2D rigidbody2D = rigidbody2DComponent.getRigidbody2D();
 
             BodyDef bodyDef = new BodyDef();
 
-            if (SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-                rigidbody2D.setScene2D(SceneManager.currentSceneManager.getCurrentScene2D());
+            if (scene2D != null) {
+                rigidbody2D.setScene2D(scene2D);
             }
             rigidbody2D.setBody(createBody(bodyDef));
             rigidbody2D.set(rigidbody2D);
-            rigidbody2D.getBody().setUserData(object2D);
+            rigidbody2D.getBody().setUserData(entity);
 
-            List<BoxCollider2DComponent> boxCollider2DComponentList = object2D.getAllComponents(BoxCollider2DComponent.class);
-            List<CircleCollider2DComponent> circleCollider2DComponents = object2D.getAllComponents(CircleCollider2DComponent.class);
+            List<BoxCollider2DComponent> boxCollider2DComponentList = entity.getAllComponents(BoxCollider2DComponent.class);
+            List<CircleCollider2DComponent> circleCollider2DComponents = entity.getAllComponents(CircleCollider2DComponent.class);
 
             for (BoxCollider2DComponent boxCollider2DComponent : boxCollider2DComponentList) {
                 addBoxCollider2D(rigidbody2D, boxCollider2DComponent.getBoxCollider2D());
@@ -206,7 +179,16 @@ public class PhysicsWorld extends World
             for (CircleCollider2DComponent circleCollider2DComponent : circleCollider2DComponents) {
                 addCircleCollider2D(rigidbody2D, circleCollider2DComponent.getCircleCollider2D());
             }
+
+            return rigidbody2D;
         }
+
+        return null;
+    }
+
+    public Rigidbody2D addRigidbody2D(Entity entity)
+    {
+        return addRigidbody2D(entity, SceneManager.currentSceneManager.getCurrentScene2D());
     }
 
     public void addBoxCollider2D(Rigidbody2D rigidbody2D, BoxCollider2D boxCollider2D)
@@ -219,7 +201,7 @@ public class PhysicsWorld extends World
 
         PolygonShape shape = new PolygonShape();
         Vector2f halfSize = new Vector2f((100.0f / RATIO / 2.0f) * boxCollider2D.getScale().x, (100.0f / RATIO / 2.0f) * boxCollider2D.getScale().y);
-        shape.setAsBox(halfSize.x, halfSize.y, new Vec2(boxCollider2D.getOffset().x / PhysicsWorld.RATIO, boxCollider2D.getOffset().y / PhysicsWorld.RATIO), 0);
+        shape.setAsBox(halfSize.x, halfSize.y, new Vec2(boxCollider2D.getOffset().x / PhysicsWorld.RATIO, boxCollider2D.getOffset().y / PhysicsWorld.RATIO), boxCollider2D.getAngle() / PhysicsWorld.RATIO);
 
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
