@@ -16,7 +16,7 @@ public class ViewsManager
     private static int mainDockspaceID;
 
     // находится ли какой-то вид в фокусе кроме вида сцены
-    public static boolean isSomeViewFocusedExceptSceneView = false;
+    public static boolean isSceneViewFocused = false;
 
     private static int lastFocusedDialogWindow = -1;
     private static int currentFocusedDialogWindow = -1;

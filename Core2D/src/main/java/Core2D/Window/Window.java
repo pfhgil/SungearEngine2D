@@ -7,11 +7,16 @@ import Core2D.Utils.ExceptionsUtils;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
+<<<<<<< Updated upstream
 import org.lwjgl.glfw.GLFWWindowIconifyCallbackI;
 import org.lwjgl.opengl.GL11C;
+=======
+import org.lwjgl.stb.STBTruetype;
+>>>>>>> Stashed changes
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
+import java.util.Stack;
 
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.system.MemoryStack.stackPush;
@@ -19,7 +24,7 @@ import static org.lwjgl.system.MemoryUtil.NULL;
 
 public class Window
 {
-    public static Vector2i defaultWindowSize = new Vector2i(1080, 720);
+    public static Vector2i defaultWindowSize = new Vector2i(1280, 720);
 
     public static String defaultWindowName = "Powered by Core2D";
 
@@ -83,6 +88,8 @@ public class Window
             // конфигурация GLFW
             glfwDefaultWindowHints(); // установка для будущего окна дефолтных настроек
             glfwWindowHint(GLFW_VISIBLE, GLFW_FALSE); // окно будет невидимым после его создания
+            //glfwWindowHint(GLFW_DECORATED, GLFW_TRUE);
+            //glfwWindowHint(GLFW_FOCUS_ON_SHOW, GLFW_TRUE);
             //glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE); // окну нельзя будет изменять размер
 
             if (hintsNames != null) {
@@ -97,8 +104,9 @@ public class Window
 
             // создание окна
             window = glfwCreateWindow(size.x, size.y, name, NULL, NULL);
-            if (window == NULL)
+            if (window == NULL) {
                 throw new RuntimeException("Failed to create GLFW window!"); // если окно не создалось, выдать исключение
+            }
 
             // добавление обработчика на нажатие клавиш
             glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
@@ -139,10 +147,12 @@ public class Window
             // включить вертикальную синхронизацию (частота кадров синхронизируется с герцовкой монитора)
             glfwSwapInterval(0);
 
+            //glfwSetInputMode(window, GLFW_RAW_MOUSE_MOTION, GLFW_TRUE);
+
             // сделать окно видимым
             glfwShowWindow(window);
 
-            glfwSetInputMode(window, GLFW_LOCK_KEY_MODS, GLFW_TRUE);
+            //glfwSetInputMode(window, GLFW_LOCK_KEY_MODS, GLFW_FALSE);
 
             glfwSetWindowSizeCallback(window, (window, width, height) -> {
                 size.x = width;

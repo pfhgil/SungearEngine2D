@@ -3,6 +3,7 @@ package Core2D.Utils;
 import Core2D.Log.Log;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -166,10 +167,22 @@ public class FileUtils
     public static void writeToFile(String path, String data, boolean append) { writeToFile(new File(path), data, append); }
     public static void writeToFile(File file, String data, boolean append)
     {
+<<<<<<< Updated upstream
         FileWriter fileWriter = null;
         try {
             fileWriter = new FileWriter(file, append);
 
+=======
+        try(PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file, append), "cp1251"))) {
+            pw.println(data);
+            pw.flush();
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        }
+        /*
+        try(FileWriter fileWriter = new FileWriter(file, StandardCharsets.UTF_8, append)) {
+            fileWriter.flush();
+>>>>>>> Stashed changes
             fileWriter.write(data);
 
             fileWriter.flush();
@@ -177,6 +190,8 @@ public class FileUtils
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
+
+         */
     }
     // записывает данные в файл
     public static void writeToFile(String path, byte[] data, boolean append) { writeToFile(new File(path), data, append); }

@@ -1,8 +1,14 @@
 package Core2D.Component.Components;
 
+<<<<<<< Updated upstream:Core2D/src/main/java/Core2D/Component/Components/TransformComponent.java
 import Core2D.Component.Component;
 import Core2D.Component.NonDuplicated;
 import Core2D.Component.NonRemovable;
+=======
+import Core2D.ECS.Component.Component;
+import Core2D.ECS.NonDuplicated;
+import Core2D.ECS.NonRemovable;
+>>>>>>> Stashed changes:Core2D/src/main/java/Core2D/ECS/Component/Components/TransformComponent.java
 import Core2D.Transform.Transform;
 
 /**
@@ -52,4 +58,14 @@ public class TransformComponent extends Component implements NonRemovable, NonDu
     }
 
     public Transform getTransform() { return transform; }
+<<<<<<< Updated upstream:Core2D/src/main/java/Core2D/Component/Components/TransformComponent.java
+=======
+
+    public Matrix4f getMvpMatrix(Camera2DComponent camera2DComponent)
+    {
+        transform.updateModelMatrix();
+        return new Matrix4f(camera2DComponent.getProjectionMatrix()).mul(camera2DComponent.getViewMatrix())
+            .mul(transform.getGlobalModelMatrix());
+    }
+>>>>>>> Stashed changes:Core2D/src/main/java/Core2D/ECS/Component/Components/TransformComponent.java
 }

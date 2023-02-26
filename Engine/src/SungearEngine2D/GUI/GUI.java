@@ -5,6 +5,13 @@ import Core2D.Project.ProjectsManager;
 import Core2D.Utils.FileUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.EditorView.ResourcesView;
+<<<<<<< Updated upstream
+=======
+import SungearEngine2D.Main.Main;
+import imgui.ImGui;
+import imgui.ImGuiIO;
+import imgui.ImVec2;
+>>>>>>> Stashed changes
 import org.apache.commons.io.FilenameUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWDropCallback;
@@ -53,6 +60,12 @@ public class GUI
         renderer.startFrame();
 
         ViewsManager.draw();
+<<<<<<< Updated upstream
+=======
+        //ImGuiUtils.drawCursor();
+        //ImGui.showDemoWindow();
+        //ImGui.showMetricsWindow();
+>>>>>>> Stashed changes
 
         renderer.endFrame();
     }

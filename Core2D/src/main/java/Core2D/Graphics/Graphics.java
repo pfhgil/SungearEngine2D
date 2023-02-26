@@ -20,6 +20,7 @@ import org.lwjgl.glfw.GLFWVidMode;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL11C;
 
+import javax.swing.*;
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
@@ -99,6 +100,9 @@ public abstract class Graphics
                     SceneManager.currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().setViewportSize(new Vector2f(windowSize.x, windowSize.y));
                 }
 
+                //GLFW.glfwSetInputMode(Core2D.getWindow().getWindow(), GLFW.GLFW_CURSOR, GLFW.GLFW_CURSOR_NORMAL);
+
+
                 if (!screenCleared) {
                     GL11C.glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, screenClearColor.w);
                     screenCleared = true;
@@ -120,6 +124,8 @@ public abstract class Graphics
 
                 // брать сообщения из очереди и обрабатывать их
                 glfwPollEvents();
+
+                //glfwWaitEvents();
 
                 if(Settings.Core2D.destinationFPS > 0) {
                     capDiff = System.currentTimeMillis() - capInit;

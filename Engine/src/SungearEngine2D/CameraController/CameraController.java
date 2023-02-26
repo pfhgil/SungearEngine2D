@@ -9,6 +9,11 @@ import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
+<<<<<<< Updated upstream
+=======
+import imgui.ImGui;
+import imgui.flag.ImGuiConfigFlags;
+>>>>>>> Stashed changes
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
@@ -33,7 +38,11 @@ public class CameraController
 
             @Override
             public void onScroll(double xoffset, double yoffset) {
+<<<<<<< Updated upstream
                 if(controlledCamera2DAnchor != null && !ViewsManager.isSomeViewFocusedExceptSceneView && Main.getMainCamera2D().getID() == CamerasManager.getMainCamera2D().getID()) {
+=======
+                if(controlledCamera2D != null && ViewsManager.isSceneViewFocused && controlledCamera2D.ID == CamerasManager.mainCamera2D.ID) {
+>>>>>>> Stashed changes
                     Vector2f scale = new Vector2f((float) yoffset / 5.0f * mouseCameraScale.x, (float) yoffset / 5.0f * mouseCameraScale.y);
                     mouseCameraScale.x += scale.x;
                     mouseCameraScale.y += scale.y;
@@ -46,10 +55,23 @@ public class CameraController
 
     public static void control()
     {
+<<<<<<< Updated upstream
         if(CamerasManager.getMainCamera2D() != null && Main.getMainCamera2D().getID() == CamerasManager.getMainCamera2D().getID() && allowMove) {
             if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
+=======
+        if(CamerasManager.mainCamera2D != null && controlledCamera2D.ID == CamerasManager.mainCamera2D.ID && allowMove) {
+            if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
                 lastCursorPosition = new Vector2f(Mouse.getMousePosition());
+                ImGui.getIO().addConfigFlags(ImGuiConfigFlags.NoMouseCursorChange);
+                GLFW.glfwSetCursor(Core2D.getWindow().getWindow(), GLFW.glfwCreateStandardCursor(GLFW.GLFW_RESIZE_ALL_CURSOR));
             }
+            if (Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
+>>>>>>> Stashed changes
+                lastCursorPosition = new Vector2f(Mouse.getMousePosition());
+                ImGui.getIO().removeConfigFlags(ImGuiConfigFlags.NoMouseCursorChange);
+                GLFW.glfwSetCursor(Core2D.getWindow().getWindow(), GLFW.glfwCreateStandardCursor(GLFW.GLFW_ARROW_CURSOR));
+            }
+<<<<<<< Updated upstream
             if (Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
                 lastCursorPosition = new Vector2f(Mouse.getMousePosition());
             }
@@ -61,6 +83,10 @@ public class CameraController
                     Main.getMainCamera2D().getTransform().translate(new Vector2f(difference.x * (1.0f / mouseCameraScale.x), difference.y * (1.0f / mouseCameraScale.y)));
                     lastCursorPosition = currentPosition;
                 }
+=======
+            if (controlledCamera2D != null && ViewsManager.isSceneViewFocused) {
+                TransformComponent cameraTransformComponent = controlledCamera2D.getComponent(TransformComponent.class);
+>>>>>>> Stashed changes
 
                 if (Keyboard.keyDown(GLFW.GLFW_KEY_K)) {
                     Main.getMainCamera2D().getTransform().rotate(1.0f);

@@ -11,8 +11,15 @@ public class AudioListener
 
     public static void update()
     {
+<<<<<<< Updated upstream
         if(CamerasManager.getMainCamera2D() != null) {
             Vector2f pos = MatrixUtils.getPosition(CamerasManager.getMainCamera2D().getTransform().getResultModelMatrix()).negate();
+=======
+        if(CamerasManager.mainCamera2D != null) {
+            TransformComponent cameraTransformComponent = CamerasManager.mainCamera2D.getComponent(TransformComponent.class);
+            if(cameraTransformComponent == null) return;
+            Vector2f pos = MatrixUtils.getPosition(cameraTransformComponent.getTransform().getGlobalModelMatrix()).negate();
+>>>>>>> Stashed changes
 
             if(Float.isNaN(pos.x) || Float.isInfinite(pos.x)) {
                 pos.x = 0.0f;

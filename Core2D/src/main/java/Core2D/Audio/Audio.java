@@ -63,7 +63,7 @@ public class Audio
 
     public void setup()
     {
-        Vector2f position = MatrixUtils.getPosition(transform.getResultModelMatrix());
+        Vector2f position = MatrixUtils.getPosition(transform.getGlobalModelMatrix());
 
         source = OpenAL.alCall((params) -> AL10.alGenSources(), Integer.class);
         OpenAL.alCall((params) -> AL10.alSourcei(source, AL10.AL_BUFFER, audioInfo.getBuffer()));
@@ -91,7 +91,7 @@ public class Audio
     public void update()
     {
         if(audioType == AudioType.WORLDSPACE) {
-            Vector2f position = MatrixUtils.getPosition(transform.getResultModelMatrix());
+            Vector2f position = MatrixUtils.getPosition(transform.getGlobalModelMatrix());
 
             OpenAL.alCall((params) -> AL10.alSource3f(source, AL10.AL_POSITION, position.x, position.y, 0f), source);
 

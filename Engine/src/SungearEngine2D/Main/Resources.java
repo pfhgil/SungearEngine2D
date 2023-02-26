@@ -1,6 +1,7 @@
 package SungearEngine2D.Main;
 
 import Core2D.Core2D.Core2D;
+<<<<<<< Updated upstream
 import Core2D.Shader.Shader;
 import Core2D.Shader.ShaderProgram;
 import Core2D.Texture2D.Texture2D;
@@ -8,6 +9,21 @@ import Core2D.Utils.FileUtils;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL13;
 import org.lwjgl.opengl.GL46C;
+=======
+import Core2D.DataClasses.ShaderData;
+import Core2D.DataClasses.Texture2DData;
+import Core2D.ECS.Entity;
+import Core2D.Graphics.RenderParts.Shader;
+import Core2D.Graphics.RenderParts.Texture2D;
+import Core2D.Log.Log;
+import Core2D.Utils.ExceptionsUtils;
+import org.lwjgl.PointerBuffer;
+import org.lwjgl.glfw.GLFW;
+import org.lwjgl.glfw.GLFWImage;
+import org.lwjgl.system.MemoryUtil;
+
+import java.nio.ByteBuffer;
+>>>>>>> Stashed changes
 
 // TODO: в дальнейшем все это перенести в AssetManager
 public class Resources
@@ -23,6 +39,19 @@ public class Resources
         System.gc();
     }
 
+<<<<<<< Updated upstream
+=======
+    public static class Cursors
+    {
+        public static Texture2D cursorHandMove16 = new Texture2D();
+
+        public static void load()
+        {
+            cursorHandMove16.createTexture(new Texture2DData().load(Core2D.class.getResourceAsStream("/data/icons/cursor/hand_icon16.png"), "/data/icons/cursor/hand_icon16.png"));
+        }
+    }
+
+>>>>>>> Stashed changes
     public static class Textures
     {
         public static class Icons

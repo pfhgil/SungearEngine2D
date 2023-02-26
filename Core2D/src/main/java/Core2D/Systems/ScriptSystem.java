@@ -59,4 +59,104 @@ public class ScriptSystem
             }
         }
     }
+<<<<<<< Updated upstream
+=======
+
+    public static void reloadAllSceneScriptsWithGlobalClassLoader()
+    {
+        globalFlexibleURLClassLoader = new FlexibleURLClassLoader(new URL[] { });
+
+        if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+            for(Layer layer : SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
+                for (Entity entity : layer.getEntities()) {
+                    List<ScriptComponent> scriptComponents = entity.getAllComponents(ScriptComponent.class);
+
+                    for(ScriptComponent scriptComponent : scriptComponents) {
+                        String lastScriptPath = scriptComponent.script.path;
+                        scriptComponent.script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(),
+                                ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptComponent.script.path),
+                                FilenameUtils.getBaseName(new File(scriptComponent.script.path).getName()), globalFlexibleURLClassLoader);
+                        scriptComponent.script.path = lastScriptPath;
+
+                        scriptComponent.script.setFieldValue(scriptComponent.script.getField("entity"), scriptComponent.entity);
+                    }
+
+                    /*
+                    for(ScriptableSystem scriptableSystem : scriptableSystems) {
+                        String lastScriptPath = scriptableSystem.script.path;
+                        scriptableSystem.script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(),
+                                ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptableSystem.script.path),
+                                FilenameUtils.getBaseName(new File(scriptableSystem.script.path).getName()), globalFlexibleURLClassLoader);
+                        scriptableSystem.script.path = lastScriptPath;
+
+                        scriptableSystem.script.setFieldValue(scriptableSystem.script.getField("entity"), scriptableSystem.entity);
+                    }
+
+                     */
+                }
+            }
+        }
+    }
+
+    public static void reloadAllSceneScriptsWithUniqueClassLoader()
+    {
+        if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
+            for(Layer layer : SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
+                for (Entity entity : layer.getEntities()) {
+                    List<ScriptComponent> scriptComponents = entity.getAllComponents(ScriptComponent.class);
+                    //List<ScriptableSystem> scriptableSystems = entity.getAllSystems(ScriptableSystem.class);
+
+                    for(ScriptComponent scriptComponent : scriptComponents) {
+                        String lastScriptPath = scriptComponent.script.path;
+                        scriptComponent.script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(),
+                                ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptComponent.script.path),
+                                FilenameUtils.getBaseName(new File(scriptComponent.script.path).getName()));
+                        scriptComponent.script.path = lastScriptPath;
+
+                        scriptComponent.script.setFieldValue(scriptComponent.script.getField("entity"), scriptComponent.entity);
+
+                        Log.Console.println("lastScriptPath: " + lastScriptPath);
+                    }
+
+                    /*
+                    for(ScriptableSystem scriptableSystem : scriptableSystems) {
+                        String lastScriptPath = scriptableSystem.script.path;
+                        scriptableSystem.script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(),
+                                ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptableSystem.script.path),
+                                FilenameUtils.getBaseName(new File(scriptableSystem.script.path).getName()));
+                        scriptableSystem.script.path = lastScriptPath;
+
+                        scriptableSystem.script.setFieldValue(scriptableSystem.script.getField("entity"), scriptableSystem.entity);
+                    }
+
+                     */
+                }
+            }
+
+            applyScriptsTempValues(SceneManager.currentSceneManager.getCurrentScene2D());
+        }
+    }
+
+    public static void loadAllChildURLs(FlexibleURLClassLoader flexibleURLClassLoader, String parentPath)
+    {
+        File parent = new File(parentPath);
+
+        if(parent.exists()) {
+            File[] listFile = parent.listFiles();
+            if(listFile == null) return;
+            for(File child : listFile) {
+                if(child.isDirectory()) {
+                    try {
+                        flexibleURLClassLoader.addURL(child.toURI().toURL());
+                    } catch (MalformedURLException e) {
+                        Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                    }
+                    loadAllChildURLs(flexibleURLClassLoader, child.getPath());
+                }
+            }
+        }
+    }
+
+    public static FlexibleURLClassLoader getGlobalFlexibleURLClassLoader() { return globalFlexibleURLClassLoader; }
+>>>>>>> Stashed changes
 }

@@ -1,7 +1,17 @@
 package SungearEngine2D.GUI;
 
+<<<<<<< Updated upstream
 import imgui.ImGui;
 import imgui.ImVec2;
+=======
+import Core2D.Graphics.OpenGL.OpenGL;
+import Core2D.Graphics.RenderParts.Texture2D;
+import imgui.ImGui;
+import imgui.ImVec2;
+import imgui.ImVec4;
+import imgui.flag.ImGuiCol;
+import imgui.flag.ImGuiMouseCursor;
+>>>>>>> Stashed changes
 import imgui.flag.ImGuiStyleVar;
 
 public class ImGuiUtils

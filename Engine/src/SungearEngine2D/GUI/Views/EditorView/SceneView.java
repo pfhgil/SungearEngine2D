@@ -9,7 +9,11 @@ import Core2D.Graphics.Graphics;
 import Core2D.Input.PC.Mouse;
 import Core2D.Prefab.Prefab;
 import Core2D.Project.ProjectsManager;
+<<<<<<< Updated upstream
 import Core2D.Texture2D.Texture2D;
+=======
+import Core2D.Systems.ScriptSystem;
+>>>>>>> Stashed changes
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.MathUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
@@ -22,9 +26,7 @@ import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Utils.ResourcesUtils;
 import imgui.ImGui;
 import imgui.ImVec2;
-import imgui.flag.ImGuiCol;
-import imgui.flag.ImGuiStyleVar;
-import imgui.flag.ImGuiWindowFlags;
+import imgui.flag.*;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -47,7 +49,13 @@ public class SceneView extends View
     private Vector2f ratioCameraScale = new Vector2f();
 
     // превью нового объекта на сцене
+<<<<<<< Updated upstream
     private Object2D newObject2DPreview;
+=======
+    private Entity newEntityPreview;
+
+    private boolean isWindowFocused = false;
+>>>>>>> Stashed changes
 
     public SceneView()
     {
@@ -66,7 +74,10 @@ public class SceneView extends View
     {
         ImGui.pushStyleColor(ImGuiCol.ChildBg, 0.65f, 0.65f, 0.65f, 1.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowPadding, 0.0f, 0.0f);
-        boolean windowOpened = ImGui.begin("Scene2D view", ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.MenuBar);
+        boolean windowOpened = ImGui.begin("Scene2D view",
+                ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.MenuBar);
+
+        isWindowFocused = (ImGui.isMouseClicked(ImGuiMouseButton.Left) || ImGui.isMouseClicked(ImGuiMouseButton.Right)) && ImGui.isWindowHovered();
         if(windowOpened) {
             CamerasManager.setMainCamera2D(Main.getMainCamera2D());
 
@@ -118,11 +129,15 @@ public class SceneView extends View
                     }
                 }
             }
-            boolean hovered = ImGui.isAnyItemHovered();
+            boolean hovered = ImGui.isWindowHovered();
 
             ImGui.endMenuBar();
 
-            ViewsManager.isSomeViewFocusedExceptSceneView = !ImGui.isWindowFocused() || hovered;
+            if(isWindowFocused || hovered) {
+                ViewsManager.isSceneViewFocused = true;
+            } else {
+                ViewsManager.isSceneViewFocused = false;
+            }
 
             //ImGui.popStyleColor(1);
 
@@ -158,27 +173,39 @@ public class SceneView extends View
                                 ResourcesUtils.isFilePrefab(ViewsManager.getResourcesView().getCurrentMovingFile())) &&
                         currentSceneManager.getCurrentScene2D() != null) {
                     // если превью не существует, то создаю его
+<<<<<<< Updated upstream
                     if(newObject2DPreview == null) {
                         newObject2DPreview = createSceneObject2D(ViewsManager.getResourcesView().getCurrentMovingFile());
+=======
+                    if(newEntityPreview == null) {
+                        newEntityPreview = createSceneEntity(ViewsManager.getResourcesView().getCurrentMovingFile());
+>>>>>>> Stashed changes
                     }
                     // нахожу позицию для превью относительно мыши, чтобы он за ней следовал
                     Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
                     // ставлю превью в эту позицию
-                    newObject2DPreview.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);
+                    newEntityPreview.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);
 
                     Object droppedObject = ImGui.acceptDragDropPayload("File");
                     //ImGui.setMouseCursor(ImGuiMouseCursor.ResizeAll);
                     // если мышка отжата, то есть droppedFile != null, то создаю объект на сцене по координатам мышки, а превью удаляю
                     if(droppedObject instanceof File) {
                         File file = (File) droppedObject;
+<<<<<<< Updated upstream
                         Object2D newSceneObject2D = createSceneObject2D(file);
                         if(newSceneObject2D != null) {
                             newSceneObject2D.getComponent(TransformComponent.class).getTransform().setPosition(
                                     newObject2DPreview.getComponent(TransformComponent.class).getTransform().getPosition()
+=======
+                        Entity entity = createSceneEntity(file);
+                        if(entity != null) {
+                            entity.getComponent(TransformComponent.class).getTransform().setPosition(
+                                    newEntityPreview.getComponent(TransformComponent.class).getTransform().getPosition()
+>>>>>>> Stashed changes
                             );
                         }
-                        newObject2DPreview.destroy();
-                        newObject2DPreview = null;
+                        newEntityPreview.destroy();
+                        newEntityPreview = null;
                     }
                 } else {
                     //System.out.println("dsds");
@@ -189,9 +216,9 @@ public class SceneView extends View
             }
 
             // если мышка не находится в окне и объект превью существует, то удаляю его
-            if(!isHovered() && newObject2DPreview != null) {
-                newObject2DPreview.destroy();
-                newObject2DPreview = null;
+            if(!isHovered() && newEntityPreview != null) {
+                newEntityPreview.destroy();
+                newEntityPreview = null;
             }
 
             update();

@@ -132,7 +132,14 @@ public class SceneTreeView extends View
                                             ViewsManager.getInspectorView().setCurrentInspectingObject(object2D);
                                         }
                                         if (ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left)) {
+<<<<<<< Updated upstream
                                             Main.getCameraAnchor().getComponent(TransformComponent.class).getTransform().lerpMoveTo(object2D.getComponent(TransformComponent.class).getTransform().getPosition(), new Vector2f(10));
+=======
+                                            Main.getMainCamera2D().getComponent(TransformComponent.class).getTransform().lerpMoveTo(
+                                                    MatrixUtils.getPosition(entity.getComponent(TransformComponent.class).getTransform().getGlobalModelMatrix()).negate(),
+                                                    new Vector2f(10)
+                                            );
+>>>>>>> Stashed changes
                                         }
                                     }
                                     if (ImGui.beginDragDropSource()) {
@@ -212,8 +219,14 @@ public class SceneTreeView extends View
                         ViewsManager.getInspectorView().setCurrentInspectingObject(object2D);
                     }
                     if (ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left)) {
+<<<<<<< Updated upstream
                         Main.getCameraAnchor().getComponent(TransformComponent.class).getTransform().lerpMoveTo(
                                 MatrixUtils.getPosition(object2D.getComponent(TransformComponent.class).getTransform().getResultModelMatrix()), new Vector2f(10));
+=======
+                        Main.getMainCamera2D().getComponent(TransformComponent.class).getTransform().lerpMoveTo(
+                                MatrixUtils.getPosition(entity.getComponent(TransformComponent.class).getTransform().getGlobalModelMatrix()).negate(),
+                                new Vector2f(10));
+>>>>>>> Stashed changes
                     }
                 }
                 if (ImGui.beginDragDropSource()) {

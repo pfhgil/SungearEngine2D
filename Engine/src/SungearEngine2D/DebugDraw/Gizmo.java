@@ -126,11 +126,19 @@ public class Gizmo
                 float object2DRotation = MatrixUtils.getRotation(object2DTransform.getResultModelMatrix());
 
                 Vector2f object2DCentrePosition = new Vector2f();
+<<<<<<< Updated upstream
                 if(object2DTransform.getParentTransform() != null) {
                     Vector2f parentPosition = MatrixUtils.getPosition(object2DTransform.getParentTransform().getResultModelMatrix());
                     object2DCentrePosition.set(new Vector2f(object2DTransform.getPosition()).mul(MatrixUtils.getScale(object2DTransform.getParentTransform().getResultModelMatrix()))).add(object2DTransform.getCentre());
                     object2DCentrePosition.add(parentPosition);
                     MathUtils.rotate(object2DCentrePosition, MatrixUtils.getRotation(object2DTransform.getParentTransform().getResultModelMatrix()), parentPosition);
+=======
+                if(entityTransform.getParentTransform() != null) {
+                    Vector2f parentPosition = MatrixUtils.getPosition(entityTransform.getParentTransform().getGlobalModelMatrix());
+                    object2DCentrePosition.set(new Vector2f(entityTransform.getPosition()).mul(MatrixUtils.getScale(entityTransform.getParentTransform().getGlobalModelMatrix()))).add(entityTransform.getCentre());
+                    object2DCentrePosition.add(parentPosition);
+                    MathUtils.rotate(object2DCentrePosition, MatrixUtils.getRotation(entityTransform.getParentTransform().getGlobalModelMatrix()), parentPosition);
+>>>>>>> Stashed changes
                 } else {
                     object2DCentrePosition.set(object2DTransform.getPosition()).add(object2DTransform.getCentre());
                 }
@@ -141,6 +149,7 @@ public class Gizmo
                 Transform yScaleHandlerTransform = yScaleHandler.getComponent(TransformComponent.class).getTransform();
                 Transform xScaleHandlerTransform = xScaleHandler.getComponent(TransformComponent.class).getTransform();
 
+<<<<<<< Updated upstream
                 yArrowTransform.setPosition(new Vector2f(object2DPosition).add(new Vector2f(0.0f, yArrowTransform.getScale().y * 100.0f / 2.0f)));
                 xArrowTransform.setPosition(new Vector2f(object2DPosition));
                 centrePoint.getComponent(TransformComponent.class).getTransform().setPosition(object2DPosition);
@@ -150,19 +159,49 @@ public class Gizmo
                 rotationHandlerTransform.setPosition(new Vector2f(rotationCircle.getTransform().getPosition()).add(new Vector2f(0.0f, rotationCircle.getRadius())));
                 Vector2f rotationOffset = new Vector2f(object2DCentrePosition).add(new Vector2f(rotationHandlerTransform.getPosition()).negate());
                 rotationHandlerTransform.setRotationAround(object2DRotation, rotationOffset);
+=======
+                yArrowTransform.setCentre(new Vector2f());
+                xArrowTransform.setCentre(new Vector2f());
+                rotationHandlerTransform.setCentre(new Vector2f());
+
+                yArrowTransform.setPosition(new Vector2f(entityPosition).add(new Vector2f(0.0f, yArrowTransform.getScale().y * 100.0f / 2.0f)));
+                xArrowTransform.setPosition(new Vector2f(entityPosition));
+                centrePoint.getComponent(TransformComponent.class).getTransform().setPosition(entityPosition);
+                centrePointToEditCentre.getComponent(TransformComponent.class).getTransform().setPosition(new Vector2f(object2DCentrePosition));
+                rotationCircleTransform.setPosition(object2DCentrePosition);
+
+                rotationHandlerTransform.setPosition(new Vector2f(rotationCircleTransform.getPosition()).add(new Vector2f(0.0f, rotationCircle.getComponent(CircleComponent.class).getRadius())));
+                Vector2f rotationOffset = new Vector2f(object2DCentrePosition).add(new Vector2f(rotationHandlerTransform.getPosition()).negate());
+                rotationHandlerTransform.setCentre(rotationOffset);
+                rotationHandlerTransform.setRotation(entityRotation);
+
+>>>>>>> Stashed changes
                 float parentRotation = 0.0f;
                 Vector2f yScaleLineEnd = new Vector2f(0.0f, 350.0f);
                 Vector2f xScaleLineEnd = new Vector2f(350.0f, 0.0f);
                 Vector2f xArrowOffset = new Vector2f(xArrowTransform.getScale().y * 100.0f / 2.0f, 0.0f);
+<<<<<<< Updated upstream
                 if (object2DTransform.getParentTransform() != null) {
                     parentRotation = MatrixUtils.getRotation(object2DTransform.getParentTransform().getResultModelMatrix());
+=======
+                if (entityTransform.getParentTransform() != null) {
+                    parentRotation = MatrixUtils.getRotation(entityTransform.getParentTransform().getGlobalModelMatrix());
+>>>>>>> Stashed changes
                     MathUtils.rotate(yScaleLineEnd, parentRotation, new Vector2f(0.0f));
                     MathUtils.rotate(xScaleLineEnd, parentRotation, new Vector2f(0.0f));
                     MathUtils.rotate(xArrowOffset, 90.0f, new Vector2f(0.0f));
                     xArrowTransform.translate(xArrowOffset);
 
+<<<<<<< Updated upstream
                     yArrowTransform.setRotationAround(parentRotation, new Vector2f(object2DPosition).add(new Vector2f(yArrowTransform.getPosition()).negate()));
                     xArrowTransform.setRotationAround(parentRotation - 90.0f, new Vector2f(object2DPosition).add(new Vector2f(xArrowTransform.getPosition()).negate()));
+=======
+                    yArrowTransform.setCentre(new Vector2f(entityPosition).add(new Vector2f(yArrowTransform.getPosition()).negate()));
+                    yArrowTransform.setRotation(parentRotation);
+
+                    xArrowTransform.setCentre(new Vector2f(entityPosition).add(new Vector2f(xArrowTransform.getPosition()).negate()));
+                    xArrowTransform.setRotation(parentRotation - 90.0f);
+>>>>>>> Stashed changes
                 } else {
                     xArrowTransform.translate(xArrowOffset);
                     yArrowTransform.setRotation(0.0f);
@@ -340,8 +379,13 @@ public class Gizmo
                     Vector2f offset = new Vector2f(lastMousePosition).add(new Vector2f(mouseOGLPosition).negate());
                     Vector2f notRotatedOffset = new Vector2f(offset);
                     lastMousePosition.set(mouseOGLPosition);
+<<<<<<< Updated upstream
                     if (object2DTransform.getParentTransform() != null) {
                         MathUtils.rotate(offset, -MatrixUtils.getRotation(object2DTransform.getParentTransform().getResultModelMatrix()),
+=======
+                    if (entityTransform.getParentTransform() != null) {
+                        MathUtils.rotate(offset, -MatrixUtils.getRotation(entityTransform.getParentTransform().getGlobalModelMatrix()),
+>>>>>>> Stashed changes
                                 new Vector2f(0.0f, 0.0f));
                     }
                     switch (selectedGizmoTool.getName()) {
@@ -350,9 +394,15 @@ public class Gizmo
                         case "gizmo.centrePoint" -> object2DTransform.translate(new Vector2f(-offset.x, -offset.y));
                         case "gizmo.rotationHandler" -> {
                             Vector2f p = new Vector2f(object2DCentrePosition);
+<<<<<<< Updated upstream
                             if(object2DTransform.getParentTransform() != null) {
                                 Vector2f parentPosition = MatrixUtils.getPosition(object2DTransform.getParentTransform().getResultModelMatrix());
                                 MathUtils.rotate(mouseOGLPosition, -MatrixUtils.getRotation(object2DTransform.getParentTransform().getResultModelMatrix()), parentPosition);
+=======
+                            if(entityTransform.getParentTransform() != null) {
+                                Vector2f parentPosition = MatrixUtils.getPosition(entityTransform.getParentTransform().getGlobalModelMatrix());
+                                MathUtils.rotate(mouseOGLPosition, -MatrixUtils.getRotation(entityTransform.getParentTransform().getGlobalModelMatrix()), parentPosition);
+>>>>>>> Stashed changes
                             }
                             object2DTransform.setRotation((float) (Math.atan2(mouseOGLPosition.y - p.y, mouseOGLPosition.x - p.x) / Math.PI / 2f) * 360f - (360f / 4f));
                         }

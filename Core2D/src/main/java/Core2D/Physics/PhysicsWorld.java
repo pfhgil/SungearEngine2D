@@ -106,12 +106,24 @@ public class PhysicsWorld extends World
                     }
                 }
 
+<<<<<<< Updated upstream
                 if(!object2DBEnter.isShouldDestroy()) {
                     List<ScriptComponent> scriptComponentsB = object2DBEnter.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponentsB) {
                         scriptComponent.collider2DEnter(object2DAEnter);
+=======
+                if (!entityBEnter.isShouldDestroy()) {
+                    for(Component component : entityBEnter.getComponents()) {
+                        component.collider2DEnter(entityAEnter);
                     }
+                    /*
+                    for(System system : entityBEnter.getSystems()) {
+                        system.collider2DEnter(entityAEnter);
+>>>>>>> Stashed changes
+                    }
+
+                     */
                 }
 
                 object2DAEnter = null;
@@ -120,21 +132,46 @@ public class PhysicsWorld extends World
                 shouldCollider2DEnter = false;
             }
 
+<<<<<<< Updated upstream
             if(shouldCollider2DExit) {
                 if(!object2DAExit.isShouldDestroy()) {
                     List<ScriptComponent> scriptComponentsA = object2DAExit.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponentsA) {
                         scriptComponent.collider2DExit(object2DBExit);
+=======
+            if (shouldCollider2DExit) {
+                if (!entityAExit.isShouldDestroy()) {
+                    for(Component component : entityAExit.getComponents()) {
+                        component.collider2DEnter(entityBExit);
                     }
+                    /*
+                    for(System system : entityAExit.getSystems()) {
+                        system.collider2DEnter(entityBExit);
+>>>>>>> Stashed changes
+                    }
+
+                     */
                 }
 
+<<<<<<< Updated upstream
                 if(!object2DBExit.isShouldDestroy()) {
                     List<ScriptComponent> scriptComponentsB = object2DBExit.getAllComponents(ScriptComponent.class);
 
                     for (ScriptComponent scriptComponent : scriptComponentsB) {
                         scriptComponent.collider2DExit(object2DAExit);
+=======
+                if (!entityBExit.isShouldDestroy()) {
+                    for(Component component : entityBExit.getComponents()) {
+                        component.collider2DEnter(entityAExit);
                     }
+                    /*
+                    for(System system : entityBExit.getSystems()) {
+                        system.collider2DEnter(entityAExit);
+>>>>>>> Stashed changes
+                    }
+                    
+                     */
                 }
 
                 object2DAExit = null;

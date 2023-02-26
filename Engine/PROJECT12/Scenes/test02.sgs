@@ -1,0 +1,3855 @@
+{
+  "name": "test02",
+  "scenePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\PROJECT12\\Scenes\\test02.sgs",
+  "layering": {
+    "layers": [
+      {
+        "entities": [
+          {
+            "name": "default",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 738786320,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": -1002.54346,
+                      "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 738786320,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "/data/textures/white_texture.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 738786320,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.System.Systems.ScriptableSystem",
+                "properties": {
+                  "script": {
+                    "path": "Scripts\\test\\FirstScript",
+                    "name": "FirstScript",
+                    "active": true,
+                    "lastModified": 1677271314092,
+                    "scriptTempValues": []
+                  },
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": [
+              99,
+              101,
+              104,
+              107,
+              110,
+              113,
+              116,
+              119,
+              122
+            ]
+          },
+          {
+            "name": "влад2",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 30,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": -3170.8477,
+                      "y": 0.4723816
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 13.340639,
+                      "y": 13.341
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 30,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "Resources\\shaders\\vlad_shader.glsl",
+                    "lastModified": 1677170169050,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "programTime",
+                        "size": 1,
+                        "type": 5126,
+                        "value": 78.973465,
+                        "attachedComponentHandler": {
+                          "layerID": 0,
+                          "entityID": 30,
+                          "componentID": 4
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 30,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ProgramTimeComponent",
+                "properties": {
+                  "uniformValue": 78.973465,
+                  "object2DID": -1,
+                  "ID": 4,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Shader.TextureComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "textureBlock": 33985
+                  },
+                  "object2DID": 30,
+                  "ID": 5,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 33,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": -1394.0774,
+                      "y": -1085.8356
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 4.814402,
+                      "y": 1.68
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 33,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "Resources\\shaders\\effect_2.glsl",
+                    "lastModified": 1677168758193,
+                    "shaderUniforms": [
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 33,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "properties": {
+                  "boxCollider2D": {
+                    "scale": {
+                      "x": 4.814,
+                      "y": 1.68
+                    },
+                    "offset": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "angle": 0.0
+                  },
+                  "object2DID": 33,
+                  "ID": 2,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "properties": {
+                  "rigidbody2D": {
+                    "bodyType": "STATIC",
+                    "density": 1.0,
+                    "restitution": 0.0,
+                    "friction": 0.1,
+                    "isSensor": false,
+                    "isFixedRotation": false
+                  },
+                  "object2DID": 33,
+                  "ID": 3,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ProgramTimeComponent",
+                "properties": {
+                  "uniformValue": 78.973465,
+                  "object2DID": -1,
+                  "ID": 4,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 36,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": -1817.645,
+                      "y": -825.98773
+                    },
+                    "rotation": -42.510433,
+                    "scale": {
+                      "x": 5.5092745,
+                      "y": 1.68
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 36,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "Resources\\shaders\\effect_2.glsl",
+                    "lastModified": 1677168758193,
+                    "shaderUniforms": [
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 36,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "properties": {
+                  "rigidbody2D": {
+                    "bodyType": "STATIC",
+                    "density": 1.0,
+                    "restitution": 0.0,
+                    "friction": 0.1,
+                    "isSensor": false,
+                    "isFixedRotation": false
+                  },
+                  "object2DID": 36,
+                  "ID": 2,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "properties": {
+                  "boxCollider2D": {
+                    "scale": {
+                      "x": 5.509,
+                      "y": 1.68
+                    },
+                    "offset": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "angle": 0.0
+                  },
+                  "object2DID": 36,
+                  "ID": 3,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ProgramTimeComponent",
+                "properties": {
+                  "uniformValue": 78.973465,
+                  "object2DID": -1,
+                  "ID": 4,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 39,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": -1979.7839,
+                      "y": -274.71527
+                    },
+                    "rotation": -90.0,
+                    "scale": {
+                      "x": 5.7409153,
+                      "y": 1.68
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 39,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "Resources\\shaders\\effect_2.glsl",
+                    "lastModified": 1677168758193,
+                    "shaderUniforms": [
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 39,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "properties": {
+                  "rigidbody2D": {
+                    "bodyType": "STATIC",
+                    "density": 1.0,
+                    "restitution": 0.0,
+                    "friction": 0.1,
+                    "isSensor": false,
+                    "isFixedRotation": false
+                  },
+                  "object2DID": 39,
+                  "ID": 2,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "properties": {
+                  "boxCollider2D": {
+                    "scale": {
+                      "x": 5.741,
+                      "y": 1.68
+                    },
+                    "offset": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "angle": 0.0
+                  },
+                  "object2DID": 39,
+                  "ID": 3,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ProgramTimeComponent",
+                "properties": {
+                  "uniformValue": 78.973465,
+                  "object2DID": -1,
+                  "ID": 4,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 42,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": -1762.0546,
+                      "y": 183.90613
+                    },
+                    "rotation": -134.99567,
+                    "scale": {
+                      "x": 5.0460424,
+                      "y": 1.68
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 42,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "Resources\\shaders\\effect_2.glsl",
+                    "lastModified": 1677168758193,
+                    "shaderUniforms": [
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 42,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "properties": {
+                  "rigidbody2D": {
+                    "bodyType": "STATIC",
+                    "density": 1.0,
+                    "restitution": 0.0,
+                    "friction": 0.1,
+                    "isSensor": false,
+                    "isFixedRotation": false
+                  },
+                  "object2DID": 42,
+                  "ID": 2,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "properties": {
+                  "boxCollider2D": {
+                    "scale": {
+                      "x": 5.046,
+                      "y": 1.68
+                    },
+                    "offset": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "angle": 0.0
+                  },
+                  "object2DID": 42,
+                  "ID": 3,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ProgramTimeComponent",
+                "properties": {
+                  "uniformValue": 78.973465,
+                  "object2DID": -1,
+                  "ID": 4,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 45,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": -1182.0,
+                      "y": 385.19003
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 8.057186,
+                      "y": 1.68
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 45,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "Resources\\shaders\\effect_2.glsl",
+                    "lastModified": 1677168758193,
+                    "shaderUniforms": [
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 45,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "properties": {
+                  "boxCollider2D": {
+                    "scale": {
+                      "x": 8.057,
+                      "y": 1.68
+                    },
+                    "offset": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "angle": 0.0
+                  },
+                  "object2DID": 45,
+                  "ID": 2,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "properties": {
+                  "rigidbody2D": {
+                    "bodyType": "STATIC",
+                    "density": 1.0,
+                    "restitution": 0.0,
+                    "friction": 0.1,
+                    "isSensor": false,
+                    "isFixedRotation": false
+                  },
+                  "object2DID": 45,
+                  "ID": 3,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ProgramTimeComponent",
+                "properties": {
+                  "uniformValue": 78.973465,
+                  "object2DID": -1,
+                  "ID": 4,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "perlin_noise",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 48,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": -643.29626,
+                      "y": 211.07227
+                    },
+                    "rotation": -54.405304,
+                    "scale": {
+                      "x": 3.6562595,
+                      "y": 1.68
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 48,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "Resources\\shaders\\effect_2.glsl",
+                    "lastModified": 1677168758193,
+                    "shaderUniforms": [
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 48,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "properties": {
+                  "rigidbody2D": {
+                    "bodyType": "STATIC",
+                    "density": 1.0,
+                    "restitution": 0.0,
+                    "friction": 0.1,
+                    "isSensor": false,
+                    "isFixedRotation": false
+                  },
+                  "object2DID": 48,
+                  "ID": 2,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "properties": {
+                  "boxCollider2D": {
+                    "scale": {
+                      "x": 3.656,
+                      "y": 1.68
+                    },
+                    "offset": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "angle": 0.0
+                  },
+                  "object2DID": 48,
+                  "ID": 3,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ProgramTimeComponent",
+                "properties": {
+                  "uniformValue": 78.973465,
+                  "object2DID": -1,
+                  "ID": 4,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 51,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": -539.06464,
+                      "y": -296.25443
+                    },
+                    "rotation": -90.56171,
+                    "scale": {
+                      "x": 5.972525,
+                      "y": 1.68
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 51,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "Resources\\shaders\\effect_2.glsl",
+                    "lastModified": 1677168758193,
+                    "shaderUniforms": [
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 51,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "properties": {
+                  "rigidbody2D": {
+                    "bodyType": "STATIC",
+                    "density": 1.0,
+                    "restitution": 0.0,
+                    "friction": 0.1,
+                    "isSensor": false,
+                    "isFixedRotation": false
+                  },
+                  "object2DID": 51,
+                  "ID": 2,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "properties": {
+                  "boxCollider2D": {
+                    "scale": {
+                      "x": 5.973,
+                      "y": 1.68
+                    },
+                    "offset": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "angle": 0.0
+                  },
+                  "object2DID": 51,
+                  "ID": 3,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ProgramTimeComponent",
+                "properties": {
+                  "uniformValue": 78.973465,
+                  "object2DID": -1,
+                  "ID": 4,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 53,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": -798.48676,
+                      "y": -827.0778
+                    },
+                    "rotation": -143.22952,
+                    "scale": {
+                      "x": 7.593912,
+                      "y": 1.68
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 53,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "Resources\\shaders\\effect_2.glsl",
+                    "lastModified": 1677168758193,
+                    "shaderUniforms": [
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 53,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "properties": {
+                  "rigidbody2D": {
+                    "bodyType": "STATIC",
+                    "density": 1.0,
+                    "restitution": 0.0,
+                    "friction": 0.1,
+                    "isSensor": false,
+                    "isFixedRotation": false
+                  },
+                  "object2DID": 53,
+                  "ID": 2,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "properties": {
+                  "boxCollider2D": {
+                    "scale": {
+                      "x": 7.594,
+                      "y": 1.68
+                    },
+                    "offset": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "angle": 0.0
+                  },
+                  "object2DID": 53,
+                  "ID": 3,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ProgramTimeComponent",
+                "properties": {
+                  "uniformValue": 78.973465,
+                  "object2DID": -1,
+                  "ID": 4,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ScriptComponent",
+                "properties": {
+                  "script": {
+                    "path": "Scripts\\FunnyAudio",
+                    "name": "FunnyAudio",
+                    "active": true,
+                    "lastModified": 1676581789214,
+                    "scriptTempValues": []
+                  },
+                  "object2DID": 53,
+                  "ID": 5,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 56,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": -1161.734,
+                      "y": -229.02829
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 56,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "Resources\\shaders\\vlad_shader.glsl",
+                    "lastModified": 1677170169050,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "programTime",
+                        "size": 1,
+                        "type": 5126,
+                        "value": 0.0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 56,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "properties": {
+                  "circleCollider2D": {
+                    "offset": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "radius": 100.0
+                  },
+                  "object2DID": 56,
+                  "ID": 2,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "properties": {
+                  "rigidbody2D": {
+                    "bodyType": "DYNAMIC",
+                    "density": 1.0,
+                    "restitution": 0.0,
+                    "friction": 4.02,
+                    "isSensor": false,
+                    "isFixedRotation": false
+                  },
+                  "object2DID": 56,
+                  "ID": 3,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ProgramTimeComponent",
+                "properties": {
+                  "uniformValue": 78.973465,
+                  "object2DID": -1,
+                  "ID": 4,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ScriptComponent",
+                "properties": {
+                  "script": {
+                    "path": "Scripts\\FunnyAudio",
+                    "name": "FunnyAudio",
+                    "active": true,
+                    "lastModified": 1676581789214,
+                    "scriptTempValues": []
+                  },
+                  "object2DID": 56,
+                  "ID": 6,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.AudioComponent",
+                "properties": {
+                  "audio": {
+                    "path": "Resources\\audio\\scala1.wav",
+                    "name": "",
+                    "audioInfo": {
+                      "buffer": 21,
+                      "audioFormat": {
+                        "sampleRate": 48000.0,
+                        "sampleSizeInBits": 16,
+                        "channels": 2,
+                        "frameSize": 4,
+                        "frameRate": 48000.0,
+                        "bigEndian": false
+                      },
+                      "frameLength": 57266,
+                      "audioLength": 1193
+                    },
+                    "source": 3,
+                    "transform": {
+                      "position": {
+                        "x": 0.0,
+                        "y": 0.0
+                      },
+                      "rotation": 0.0,
+                      "scale": {
+                        "x": 1.0,
+                        "y": 1.0
+                      },
+                      "centre": {
+                        "x": 0.0,
+                        "y": 0.0
+                      }
+                    },
+                    "audioType": "BACKGROUND",
+                    "maxDistance": 750.0,
+                    "referenceDistance": 25.0,
+                    "rolloffFactor": 0.1,
+                    "volumePercent": 100.0,
+                    "playing": false,
+                    "paused": false,
+                    "state": 4113,
+                    "currentSecond": 0.0,
+                    "cyclic": false
+                  },
+                  "object2DID": 56,
+                  "ID": 7,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Camera2DComponent",
+                "properties": {
+                  "viewportSize": {
+                    "x": 1280.0,
+                    "y": 720.0
+                  },
+                  "isScene2DMainCamera2D": true,
+                  "postprocessingDefaultShader": {
+                    "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": []
+                  },
+                  "postprocessingLayers": [
+                    {
+                      "entitiesLayerToRenderName": "default",
+                      "frameBuffer": {
+                        "handler": 9,
+                        "RBOHandler": 6,
+                        "textureHandler": 571,
+                        "type": 2,
+                        "width": 2560,
+                        "height": 1440,
+                        "viewportWidth": 2560,
+                        "viewportHeight": 1440,
+                        "textureBlock": 33984,
+                        "complete": true
+                      },
+                      "shader": {
+                        "path": "Resources\\shaders\\pp_shader0.glsl",
+                        "lastModified": 1677179893776,
+                        "shaderUniforms": [
+                          {
+                            "name": "color",
+                            "size": 1,
+                            "type": 35666,
+                            "value": {
+                              "x": 0.0,
+                              "y": 0.0,
+                              "z": 0.0,
+                              "w": 1.0
+                            },
+                            "attachedComponentHandler": {
+                              "layerID": -1,
+                              "entityID": -1,
+                              "componentID": -1
+                            }
+                          },
+                          {
+                            "name": "programTime",
+                            "size": 1,
+                            "type": 5126,
+                            "value": 78.973465,
+                            "attachedComponentHandler": {
+                              "layerID": 0,
+                              "entityID": 56,
+                              "componentID": 4
+                            }
+                          },
+                          {
+                            "name": "sampler",
+                            "size": 1,
+                            "type": 35678,
+                            "value": 0,
+                            "attachedComponentHandler": {
+                              "layerID": -1,
+                              "entityID": -1,
+                              "componentID": -1
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "object2DID": -1,
+                  "ID": 8,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Shader.TextureComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "textureBlock": 33984
+                  },
+                  "object2DID": 56,
+                  "ID": 9,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "perlin_noise",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 74,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": -56.21547,
+                      "y": -2097.2263
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 12.8,
+                      "y": 12.8
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 74,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\perlin_noise.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 74,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2_child",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 88,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": 1750.734,
+                      "y": 229.02829
+                    },
+                    "rotation": -1.0,
+                    "scale": {
+                      "x": 2.29,
+                      "y": 0.5
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 88,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 88,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 96,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": -435.643,
+                      "y": 1118.2308
+                    },
+                    "rotation": -116.563736,
+                    "scale": {
+                      "x": 3.45,
+                      "y": 0.78
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 96,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 96,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2_0",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 99,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": 44677.1,
+                      "y": -626.20935
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 0.28985506,
+                      "y": 1.2820512
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 99,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 99,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": 738786320,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2_1",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 101,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": 42206.81,
+                      "y": 100.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 101,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 101,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": 738786320,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2_2",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 104,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": 42206.81,
+                      "y": -100.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 104,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 104,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": 738786320,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2_3",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 107,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": 42006.81,
+                      "y": -100.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 107,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 107,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": 738786320,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2_4",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 110,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": 42006.81,
+                      "y": 100.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 110,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 110,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": 738786320,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2_5",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 113,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": 42306.81,
+                      "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 113,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 113,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.System.Systems.ScriptableSystem",
+                "properties": {
+                  "script": {
+                    "path": "Scripts\\test\\SecondScript",
+                    "name": "SecondScript",
+                    "active": true,
+                    "lastModified": 1677271395702,
+                    "scriptTempValues": []
+                  },
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": 738786320,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2_7",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 116,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": 42106.81,
+                      "y": 200.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 116,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 116,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": 738786320,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2_8",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 119,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": 42106.81,
+                      "y": -200.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 119,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 119,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": 738786320,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "влад2_6",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 122,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": 41906.81,
+                      "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 122,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\влад2.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 122,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": 738786320,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "perlin_noise__",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 129,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": -1305.9625,
+                      "y": -484.61536
+                    },
+                    "rotation": 37.0,
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 129,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\perlin_noise.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 129,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "properties": {
+                  "circleCollider2D": {
+                    "offset": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "radius": 100.0
+                  },
+                  "object2DID": 129,
+                  "ID": 2,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "properties": {
+                  "rigidbody2D": {
+                    "bodyType": "DYNAMIC",
+                    "density": 1.0,
+                    "restitution": 1.0,
+                    "friction": 0.1,
+                    "isSensor": false,
+                    "isFixedRotation": false
+                  },
+                  "object2DID": 129,
+                  "ID": 3,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": [
+              133
+            ]
+          },
+          {
+            "name": "test0__",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 133,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": 0.0,
+                      "y": 355.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 0.9999993,
+                      "y": 0.9999993
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 133,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\perlin_noise.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 133,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": 129,
+            "childrenEntitiesID": []
+          }
+        ],
+        "ID": 0,
+        "name": "default"
+      }
+    ]
+  },
+  "screenClearColor": {
+    "x": 1.0,
+    "y": 1.0,
+    "z": 1.0,
+    "w": 1.0
+  },
+  "tags": [
+    {
+      "name": "default"
+    }
+  ],
+  "scriptSystem": {},
+  "maxObjectID": 141,
+  "inBuild": false,
+  "isMainScene2D": false
+}

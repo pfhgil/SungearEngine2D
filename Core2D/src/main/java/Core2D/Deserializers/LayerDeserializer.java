@@ -16,6 +16,7 @@ public class LayerDeserializer implements JsonDeserializer<Layer>
 
         String name = jsonObject.get("name").getAsString();
         int ID = jsonObject.get("ID").getAsInt();
+<<<<<<< Updated upstream
         JsonArray renderingObjects = jsonObject.getAsJsonArray("renderingObjects");
 
         Layer layer = new Layer(ID, name);
@@ -27,6 +28,15 @@ public class LayerDeserializer implements JsonDeserializer<Layer>
             objParams.setLayer(layer);
 
             object.setObject(null);
+=======
+        JsonArray entities = jsonObject.getAsJsonArray("entities");
+
+        Layer layer = new Layer(ID, name);
+
+        for(JsonElement element : entities) {
+            Entity entity = context.deserialize(element, Entity.class);
+            entity.setLayer(layer);
+>>>>>>> Stashed changes
         }
         return layer;
     }

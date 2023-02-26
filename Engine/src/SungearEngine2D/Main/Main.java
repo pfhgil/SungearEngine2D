@@ -17,12 +17,20 @@ import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Tasks.StoppableTask;
 import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.FileUtils;
 import SungearEngine2D.CameraController.CameraController;
 import SungearEngine2D.GUI.GUI;
+import SungearEngine2D.GUI.ImGuiUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Utils.AppData.AppDataManager;
+<<<<<<< Updated upstream
 import SungearEngine2D.Utils.Debugger;
+=======
+import imgui.ImGui;
+import imgui.flag.ImGuiConfigFlags;
+import imgui.flag.ImGuiMouseCursor;
+>>>>>>> Stashed changes
 import org.apache.commons.io.FilenameUtils;
 import org.apache.commons.io.IOUtils;
 import org.joml.Vector2f;
@@ -82,6 +90,18 @@ public class Main
                 GUI.init();
 
                 GraphicsRenderer.init();
+
+
+                // тест кодировки
+                /*
+
+                String path = "test.txt";
+                //FileUtils.createFile(path);
+                FileUtils.writeToFile(path, "привет мир!\nhello world!", true);
+
+                 */
+
+
 
                 helpThread = new Thread(new Runnable() {
                     @Override
@@ -177,11 +197,25 @@ public class Main
 
             @Override
             public void onDrawFrame() {
+                //GLFW.glfwFocusWindow(Core2D.getWindow().getWindow());
                 Core2D.getWindow().setName("Sungear Engine 2D. FPS: " + Core2D.getDeltaTimer().getFPS());
 
+<<<<<<< Updated upstream
                 mainCamera2D.getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
+=======
+                //GLFW.glfwSetCursor(Core2D.getWindow().getWindow(),  GLFW.glfwCreateStandardCursor(GLFW.GLFW_HAND_CURSOR));
+
+                Compiler.compileAllShaders();
+
+                TransformComponent cameraTransformComponent = mainCamera2D.getComponent(TransformComponent.class);
+                if(cameraTransformComponent != null) {
+                    //System.out.println("ddd");
+                    cameraTransformComponent.getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
+                }
+>>>>>>> Stashed changes
                 //cameraAnchor.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
                 CameraController.control();
+                //GLFW.glfwSetCursor(Core2D.getWindow().getWindow(), GLFW.glfwCreateStandardCursor(GLFW.GLFW_HAND_CURSOR));
 
                 if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) GUI.draw();
 

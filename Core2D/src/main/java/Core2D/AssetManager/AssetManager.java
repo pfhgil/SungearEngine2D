@@ -92,7 +92,58 @@ public class AssetManager
         addAsset(new Asset(whiteTexture, "whiteTexture"));
         addAsset(new Asset(defaultProgressBarTexture, "defaultProgressBarTexture"));
 
+<<<<<<< Updated upstream
         addAsset(new Asset(comicSansSM, "comicSansSM"));
+=======
+        addAsset(new Asset(onlyColorShader, onlyColorShaderPath));
+    }
+
+    public void save()
+    {
+        if(ProjectsManager.getCurrentProject() != null && Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+            save(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + "AssetManager.txt");
+        }
+    }
+
+    public void save(String path)
+    {
+        if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+            String gsonObj = Utils.gson.toJson(this);
+            //Log.CurrentSession.println(gsonObj, Log.MessageType.WARNING);
+            FileUtils.reCreateFile(path);
+            FileUtils.writeToFile(path, gsonObj, false);
+        }
+    }
+
+    public AssetManager load()
+    {
+        if(ProjectsManager.getCurrentProject() != null && Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+            return load(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + "AssetManager.txt");
+        }
+        return this;
+    }
+
+    public AssetManager load(String path)
+    {
+        if(Core2D.core2DMode == Core2DMode.IN_ENGINE && new File(path).exists()) {
+            String fileText = FileUtils.readAllFile(path);
+            AssetManager assetManager = Utils.gson.fromJson(fileText, AssetManager.class);
+            load(assetManager);
+        }
+        return this;
+    }
+
+    public AssetManager load(AssetManager assetManager)
+    {
+        for(Asset asset : assetManager.assets) {
+            Log.Console.println("asset obj: " + asset.getAssetObject().getClass());
+            Asset loadedAsset = getAsset(asset);
+            if(loadedAsset != null && asset.getAssetObject() instanceof Data data) {
+                data.setNotTransientFields(data);
+            }
+        }
+        return this;
+>>>>>>> Stashed changes
     }
 
     /**
@@ -180,6 +231,98 @@ public class AssetManager
             }
         }
 
+<<<<<<< Updated upstream
         return null;
+=======
+        if(assetObj == null) {
+            if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+                if(ProjectsManager.getCurrentProject() != null) {
+                    String resPath = path;
+                    if(new File(path).exists()) {
+                        resPath = FileUtils.getRelativePath(path, ProjectsManager.getCurrentProject().getProjectPath());
+                    }
+
+                    String fullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + resPath;
+                    Object objToCast = null;
+                    if (assetObjectClass.getSuperclass().isAssignableFrom(Data.class)) {
+                        try {
+                            //System.out.println("assignable from: " + assetObjectClass.getName());
+                            objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(fullPath);
+                        } catch (InstantiationException |
+                                 IllegalAccessException |
+                                 InvocationTargetException |
+                                 NoSuchMethodException e) {
+                            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                        }
+                    }
+
+                    if(objToCast != null) {
+                        assetObj = assetObjectClass.cast(objToCast);
+                    }
+                }
+            } else {
+                Object objToCast = null;
+                if (assetObjectClass.getSuperclass().isAssignableFrom(Data.class)) {
+                    try(InputStream resource = Core2D.class.getResourceAsStream(path)) {
+                        objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(resource, path);
+                    } catch (InstantiationException |
+                             IllegalAccessException |
+                             InvocationTargetException |
+                             NoSuchMethodException |
+                             IOException e) {
+                        Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                    }
+                }
+
+                if(objToCast != null) {
+                    assetObj = assetObjectClass.cast(objToCast);
+                }
+            }
+
+            assets.add(new Asset(assetObj, path));
+            if(assetObj != null) {
+                Log.Console.println("added new asset! data type: " + assetObj.getClass().getSimpleName() +
+                        ", path: " + path + ", asset class: " + assetObjectClass.getName());
+            }
+        }
+
+        return (T) assetObj;
+    }
+
+    public Asset addAsset(Object obj, String path)
+    {
+        Asset asset = new Asset(obj, path);
+        assets.add(asset);
+        return asset;
+    }
+
+    public void removeAsset(String path)
+    {
+        Iterator<Asset> assetsIterator = assets.iterator();
+        while(assetsIterator.hasNext()) {
+            Asset asset = assetsIterator.next();
+
+            if(asset.path.equals(path)) {
+                assetsIterator.remove();
+                break;
+            }
+        }
+    }
+
+    public void removeAsset(Asset asset)
+    {
+        assets.remove(asset);
+    }
+
+    public Asset reloadAsset(String path, Class<?> assetObjectClass)
+    {
+        removeAsset(path);
+        return getAsset(path, assetObjectClass);
+    }
+
+    public static AssetManager getInstance()
+    {
+        return instance = Objects.requireNonNullElseGet(instance, () -> new AssetManager());
+>>>>>>> Stashed changes
     }
 }

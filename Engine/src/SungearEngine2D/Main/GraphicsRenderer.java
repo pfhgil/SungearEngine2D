@@ -43,6 +43,7 @@ public class GraphicsRenderer
         if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) sceneRenderTarget.bind();
         if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) glClear(GL_COLOR_BUFFER_BIT);
 
+<<<<<<< Updated upstream
         Grid.draw();
 
         currentSceneManager.drawCurrentScene2D();
@@ -56,6 +57,9 @@ public class GraphicsRenderer
         if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) sceneRenderTarget.unBind();
 
         if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && !ViewsManager.isSomeViewFocusedExceptSceneView && !ViewsManager.getInspectorView().isEditing()) {
+=======
+        if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && ViewsManager.isSceneViewFocused) {
+>>>>>>> Stashed changes
             Vector2f mousePosition = Mouse.getMousePosition();
 
             Object2D pickedObject2D = Graphics.getPickedObject2D(mousePosition);
