@@ -7,10 +7,11 @@ import Core2D.ECS.Entity;
 import Core2D.Input.Core2DUserInputCallback;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
-import Core2D.Transform.Transform;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;
+import imgui.ImGui;
+import imgui.flag.ImGuiConfigFlags;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
@@ -35,7 +36,7 @@ public class CameraController
 
             @Override
             public void onScroll(double xoffset, double yoffset) {
-                if(controlledCamera2D != null && !ViewsManager.isSomeViewFocusedExceptSceneView && controlledCamera2D.ID == CamerasManager.mainCamera2D.ID) {
+                if(controlledCamera2D != null && ViewsManager.isSceneViewFocused && controlledCamera2D.ID == CamerasManager.mainCamera2D.ID) {
                     Vector2f scale = new Vector2f((float) yoffset / 5.0f * mouseCameraScale.x, (float) yoffset / 5.0f * mouseCameraScale.y);
                     mouseCameraScale.x += scale.x;
                     mouseCameraScale.y += scale.y;
@@ -51,13 +52,17 @@ public class CameraController
         if(CamerasManager.mainCamera2D != null && controlledCamera2D.ID == CamerasManager.mainCamera2D.ID && allowMove) {
             if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
                 lastCursorPosition = new Vector2f(Mouse.getMousePosition());
-                //GLFW.glfwSetInputMode(Core2D.getWindow().getWindow(), GLFW.GLFW_CURSOR, GLFW.GLFW_HAND_CURSOR);
-                GLFW.glfwSetCursor(Core2D.getWindow().getWindow(), Resources.Cursors.getCursorMove());
+
+                ImGui.getIO().addConfigFlags(ImGuiConfigFlags.NoMouseCursorChange);
+                GLFW.glfwSetCursor(Core2D.getWindow().getWindow(), Resources.Cursors.getCursorResizeAll());
             }
             if (Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
                 lastCursorPosition = new Vector2f(Mouse.getMousePosition());
+
+                ImGui.getIO().removeConfigFlags(ImGuiConfigFlags.NoMouseCursorChange);
+                GLFW.glfwSetCursor(Core2D.getWindow().getWindow(), Resources.Cursors.getCursorArrow());
             }
-            if (controlledCamera2D != null && !ViewsManager.isSomeViewFocusedExceptSceneView) {
+            if (controlledCamera2D != null && ViewsManager.isSceneViewFocused) {
                 TransformComponent cameraTransformComponent = controlledCamera2D.getComponent(TransformComponent.class);
 
                 if(cameraTransformComponent != null) {

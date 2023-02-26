@@ -11,7 +11,7 @@ java {
         languageVersion = JavaLanguageVersion.of(17)
     }
 }
-
+//
 sourceSets {
     main {
         java {
@@ -78,4 +78,8 @@ dependencies {
 
 test {
     useJUnitPlatform()
+}
+
+task prepareKotlinBuildScriptModel {
+
 }

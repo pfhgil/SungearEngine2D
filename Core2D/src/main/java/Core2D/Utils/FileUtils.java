@@ -157,9 +157,9 @@ public class FileUtils
     public static void writeToFile(String path, String data, boolean append) { writeToFile(new File(path), data, append); }
     public static void writeToFile(File file, String data, boolean append)
     {
-        try(FileWriter fileWriter = new FileWriter(file, append)) {
-            fileWriter.flush();
-            fileWriter.write(data);
+        try(PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file, append), "cp1251"))) {
+            pw.println(data);
+            pw.flush();
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -169,8 +169,8 @@ public class FileUtils
     public static void writeToFile(File file, byte[] data, boolean append)
     {
         try(FileOutputStream outputStream = new FileOutputStream(file, append)) {
-            outputStream.flush();
             outputStream.write(data);
+            outputStream.flush();
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }

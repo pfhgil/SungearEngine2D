@@ -12,7 +12,6 @@ import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Input.PC.Mouse;
 import Core2D.Prefab.Prefab;
 import Core2D.Project.ProjectsManager;
-import Core2D.Scene2D.Scene2DCallback;
 import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.FileUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
@@ -25,6 +24,7 @@ import SungearEngine2D.Utils.ResourcesUtils;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
+import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
 import org.apache.commons.io.FilenameUtils;
@@ -49,7 +49,9 @@ public class SceneView extends View
     private Vector2f ratioCameraScale = new Vector2f();
 
     // превью нового объекта на сцене
-    private Entity newObject2DPreview;
+    private Entity newEntityPreview;
+
+    private boolean isWindowFocused = false;
 
     public SceneView()
     {
@@ -68,7 +70,10 @@ public class SceneView extends View
     {
         ImGui.pushStyleColor(ImGuiCol.ChildBg, 0.65f, 0.65f, 0.65f, 1.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowPadding, 0.0f, 0.0f);
+
         boolean windowOpened = ImGui.begin("Scene2D view", ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.MenuBar);
+
+        isWindowFocused = (ImGui.isMouseClicked(ImGuiMouseButton.Left) || ImGui.isMouseClicked(ImGuiMouseButton.Right)) && ImGui.isWindowHovered();
         if(windowOpened) {
             CamerasManager.mainCamera2D = Main.getMainCamera2D();
 
@@ -120,11 +125,16 @@ public class SceneView extends View
                     }
                 }
             }
-            boolean hovered = ImGui.isAnyItemHovered();
+
+            boolean hovered = ImGui.isWindowHovered();
 
             ImGui.endMenuBar();
 
-            ViewsManager.isSomeViewFocusedExceptSceneView = !ImGui.isWindowFocused() || hovered;
+            if(isWindowFocused || hovered) {
+                ViewsManager.isSceneViewFocused = true;
+            } else {
+                ViewsManager.isSceneViewFocused = false;
+            }
 
             //ImGui.popStyleColor(1);
 
@@ -160,13 +170,13 @@ public class SceneView extends View
                                 ResourcesUtils.isFilePrefab(ViewsManager.getResourcesView().getCurrentMovingFile())) &&
                         currentSceneManager.getCurrentScene2D() != null) {
                     // если превью не существует, то создаю его
-                    if(newObject2DPreview == null) {
-                        newObject2DPreview = createSceneEntity(ViewsManager.getResourcesView().getCurrentMovingFile());
+                    if(newEntityPreview == null) {
+                        newEntityPreview = createSceneEntity(ViewsManager.getResourcesView().getCurrentMovingFile());
                     }
                     // нахожу позицию для превью относительно мыши, чтобы он за ней следовал
                     Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
                     // ставлю превью в эту позицию
-                    newObject2DPreview.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);
+                    newEntityPreview.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);
 
                     Object droppedObject = ImGui.acceptDragDropPayload("File");
                     //ImGui.setMouseCursor(ImGuiMouseCursor.ResizeAll);
@@ -176,11 +186,11 @@ public class SceneView extends View
                         Entity entity = createSceneEntity(file);
                         if(entity != null) {
                             entity.getComponent(TransformComponent.class).getTransform().setPosition(
-                                    newObject2DPreview.getComponent(TransformComponent.class).getTransform().getPosition()
+                                    newEntityPreview.getComponent(TransformComponent.class).getTransform().getPosition()
                             );
                         }
-                        newObject2DPreview.destroy();
-                        newObject2DPreview = null;
+                        newEntityPreview.destroy();
+                        newEntityPreview = null;
                     }
                 } else {
                     //System.out.println("dsds");
@@ -191,9 +201,9 @@ public class SceneView extends View
             }
 
             // если мышка не находится в окне и объект превью существует, то удаляю его
-            if(!isHovered() && newObject2DPreview != null) {
-                newObject2DPreview.destroy();
-                newObject2DPreview = null;
+            if(!isHovered() && newEntityPreview != null) {
+                newEntityPreview.destroy();
+                newEntityPreview = null;
             }
 
             update();

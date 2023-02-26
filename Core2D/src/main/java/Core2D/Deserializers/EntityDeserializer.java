@@ -99,6 +99,7 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                     sc.set(scriptableSystem);
                 }
             } else {
+                if(system == null) continue;
                 entity.addSystem(system);
             }
         }
@@ -106,6 +107,8 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
 
         for(JsonElement element : components) {
             Component component = context.deserialize(element, Component.class);
+
+            if(component == null) continue;
 
             int lastComponentID = component.ID;
             if(component instanceof MeshComponent meshComponent) {

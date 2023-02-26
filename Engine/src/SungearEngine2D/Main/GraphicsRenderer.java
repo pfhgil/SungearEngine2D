@@ -27,7 +27,7 @@ public class GraphicsRenderer
     {
         //Grid.draw();
 
-        if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && !ViewsManager.isSomeViewFocusedExceptSceneView) {
+        if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && ViewsManager.isSceneViewFocused) {
             Vector2f mousePosition = Mouse.getMousePosition();
 
             Entity pickedObject2D = Graphics.getPickedObject2D(Main.getMainCamera2DComponent(), mousePosition);
