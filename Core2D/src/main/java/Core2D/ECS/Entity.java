@@ -378,6 +378,8 @@ public class Entity implements Serializable, PoolObject
                 }
             }
         }
+
+        ECSWorld.getCurrentECSWorld().removeComponent(component);
     }
 
     public void removeFirstComponent(Class<? extends Component> componentClass)

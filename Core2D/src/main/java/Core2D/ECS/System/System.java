@@ -21,14 +21,6 @@ public class System
 
     public System() {}
 
-    /*
-    public void destroy()
-    {
-
-    }
-
-     */
-
     public void update()
     {
 
@@ -38,19 +30,6 @@ public class System
     {
 
     }
-
-    /*
-    public void initComponents()
-    {
-
-    }
-
-    public void initSystem()
-    {
-
-    }
-
-     */
 
     // срабатывает при добавлении компонента в систему
     public void initComponentOnAdd(Component component)
@@ -134,6 +113,8 @@ public class System
                 componentsQuery.getComponents().remove(component);
             }
         });
+
+        destroyComponent(component);
     }
 
     public ComponentsQuery findComponentsQuery(int entityID)

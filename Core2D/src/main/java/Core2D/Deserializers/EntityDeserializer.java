@@ -9,8 +9,6 @@ import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Component.Components.Shader.TextureComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
-import Core2D.ECS.System.System;
-import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Layering.PostprocessingLayer;
@@ -225,7 +223,7 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
             } else if(component instanceof Camera2DComponent camera2DComponent) {
                 Shader defaultShader = new Shader(AssetManager.getInstance().getShaderData(camera2DComponent.postprocessingDefaultShader.path));
 
-                ECSWorld.getCurrentECSWorld().camerasUpdater.setPostprocessingDefaultShader(camera2DComponent, defaultShader);
+                ECSWorld.getCurrentECSWorld().camerasManager.setPostprocessingDefaultShader(camera2DComponent, defaultShader);
                 //camera2DComponent.setPostprocessingDefaultShader(defaultShader);
                 for(int i = 0; i < camera2DComponent.postprocessingLayers.size(); i++) {
                     PostprocessingLayer ppLayer = camera2DComponent.postprocessingLayers.get(i);

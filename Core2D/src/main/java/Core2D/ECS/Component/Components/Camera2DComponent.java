@@ -52,7 +52,7 @@ public class Camera2DComponent extends Component
 
     // массив данных о вершинах
     // первые строки - позиции вершин, вторые строки - текстурные координаты
-    private transient Vector2f ppQuadSize = new Vector2f(100.0f, 100.0f);
+    //private transient Vector2f ppQuadSize = new Vector2f(100.0f, 100.0f);
     public transient float[] ppQuadData = new float[] {
             -1, -1,
             0, 0,
@@ -72,5 +72,4 @@ public class Camera2DComponent extends Component
     public Shader postprocessingDefaultShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/postprocessing/postprocessing_default_shader.glsl"));
 
     public List<PostprocessingLayer> postprocessingLayers = new ArrayList<>();
-
 }

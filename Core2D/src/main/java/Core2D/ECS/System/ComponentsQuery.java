@@ -6,12 +6,10 @@ import Core2D.ECS.Component.Components.ScriptComponent;
 import java.util.ArrayList;
 import java.util.List;
 
-// связка компонентов, необходимых для одной задачи
+// связка компонентов, необходимых для одной задачи (например для рендера)
 public class ComponentsQuery
 {
     private List<Component> components = new ArrayList<>();
-    // список классов компонентов, которые может принимать
-    //private List<Class<?>> componentsClasses = new ArrayList<>();
 
     // ID сущности, представителем которой является  данная связка компонентов
     public int entityID;
@@ -33,16 +31,6 @@ public class ComponentsQuery
 
         return null;
     }
-
-    /*
-    public void addComponent(Component component)
-    {
-        if(componentsClasses.contains(component.getClass())) {
-            components.add(component);
-        }
-    }
-
-     */
 
     public List<Component> getComponents() { return components; }
 }

@@ -722,7 +722,7 @@ public class ComponentsView extends View
                         Camera2DComponent camera2DComponent = (Camera2DComponent) currentComponent;
                         ImGui.pushID("Scene2DMainCamera_" + i);
                         if(ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Scene2D main camera", camera2DComponent.isScene2DMainCamera2D))) {
-                            ECSWorld.getCurrentECSWorld().camerasUpdater.setScene2DMainCamera2D(camera2DComponent, !camera2DComponent.isScene2DMainCamera2D);
+                            ECSWorld.getCurrentECSWorld().componentsManager.setScene2DMainCamera2D(camera2DComponent, !camera2DComponent.isScene2DMainCamera2D);
                             //camera2DComponent.setScene2DMainCamera2D(!camera2DComponent.isScene2DMainCamera2D);
                         }
                         ImGui.popID();
@@ -734,7 +734,7 @@ public class ComponentsView extends View
                             ImGui.sameLine();
                             if(ImGuiUtils.imCallWBorder(func -> ImGui.beginListBox("", 150.0f, 75.0f))) {
                                 for (Layer layer : currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
-                                    if (!ECSWorld.getCurrentECSWorld().camerasUpdater.isPostprocessingLayerExists(camera2DComponent, layer)) {
+                                    if (!ECSWorld.getCurrentECSWorld().camerasManager.isPostprocessingLayerExists(camera2DComponent, layer)) {
                                         ImGui.pushID("PPLayerToAdd_" + k + "_" + i);
                                         if (ImGui.selectable(layer.getName())) {
                                             camera2DComponent.postprocessingLayers.add(new PostprocessingLayer(layer));

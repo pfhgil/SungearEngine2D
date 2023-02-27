@@ -23,8 +23,6 @@ import org.lwjgl.opengl.GL46C;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
-import java.util.function.Predicate;
 
 public class ShadersEditorView extends View
 {
@@ -175,7 +173,7 @@ public class ShadersEditorView extends View
             if (foundComponent instanceof MeshComponent meshComponent) {
                 foundShader = meshComponent.getShader();
             } else if(foundComponent instanceof Camera2DComponent camera2DComponent) {
-                PostprocessingLayer ppLayer = ECSWorld.getCurrentECSWorld().camerasUpdater.getPostprocessingLayerByName(camera2DComponent, ppLayerName);
+                PostprocessingLayer ppLayer = ECSWorld.getCurrentECSWorld().camerasManager.getPostprocessingLayerByName(camera2DComponent, ppLayerName);
                 if(ppLayer != null) {
                     foundShader = ppLayer.getShader();
                 }

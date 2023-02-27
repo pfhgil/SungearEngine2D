@@ -2,16 +2,13 @@ package Core2D.ECS;
 
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.System.System;
-import Core2D.ECS.System.Systems.CamerasUpdater;
+import Core2D.ECS.System.Systems.CamerasManager;
+import Core2D.ECS.System.Systems.ComponentsManager;
 import Core2D.ECS.System.Systems.MeshesRenderer;
 import Core2D.ECS.System.Systems.PrimitivesRenderer;
-import Core2D.Utils.Utils;
 
-import java.lang.reflect.Method;
-import java.nio.ShortBuffer;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.Function;
 
 public class ECSWorld
 {
@@ -21,14 +18,16 @@ public class ECSWorld
     private List<System> systems = new ArrayList<>();
 
     // поля для дефолтных систем (имплементируют NonRemovable, то есть удалить их не получится, но отключить можно)
+    public final ComponentsManager componentsManager = new ComponentsManager();
     public final MeshesRenderer meshesRenderer = new MeshesRenderer();
     public final PrimitivesRenderer primitivesRenderer = new PrimitivesRenderer();
-    public final CamerasUpdater camerasUpdater = new CamerasUpdater();
+    public final CamerasManager camerasManager = new CamerasManager();
     // ----------------------------------
 
     public ECSWorld()
     {
-        systems.add(camerasUpdater);
+        systems.add(componentsManager);
+        systems.add(camerasManager);
         systems.add(meshesRenderer);
         systems.add(primitivesRenderer);
     }
