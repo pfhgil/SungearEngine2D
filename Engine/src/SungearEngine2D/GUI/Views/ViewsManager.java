@@ -97,7 +97,7 @@ public class ViewsManager
         if(currentSceneManager != null && currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
             Camera2DComponent camera2DComponent = currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().getComponent(Camera2DComponent.class);
             if(camera2DComponent != null) {
-                mainCameraResultView.setViewTextureHandler(camera2DComponent.getResultFrameBuffer().getTextureHandler());
+                mainCameraResultView.setViewTextureHandler(camera2DComponent.resultFrameBuffer.getTextureHandler());
             }
         }
 

@@ -109,7 +109,7 @@ public class System
                 } else {
                     componentsQuery.getComponents().add(component);
                     foundQuery = true;
-                    Log.CurrentSession.println("adding component: " + component + ". entity id: " + component.entity.ID + ". system: " + this, Log.MessageType.WARNING, true);
+                    Log.CurrentSession.println("adding component: " + component + ". entity id: " + component.entity.ID + ". system: " + this, Log.MessageType.WARNING);
                 }
             }
         }
@@ -120,7 +120,7 @@ public class System
                 componentsQuery.getComponents().add(component);
             }
             componentsQueries.add(componentsQuery);
-            Log.CurrentSession.println("created query. adding component: " + component + ". entity id: " + component.entity.ID + ". system: " + this, Log.MessageType.WARNING, true);
+            Log.CurrentSession.println("created query. adding component: " + component + ". entity id: " + component.entity.ID + ". system: " + this, Log.MessageType.WARNING);
         }
 
         initComponentOnAdd(component);

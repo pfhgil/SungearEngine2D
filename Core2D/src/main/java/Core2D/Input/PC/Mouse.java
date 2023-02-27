@@ -152,8 +152,8 @@ public class Mouse
 
             Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
             if(camera2DComponent != null) {
-                camera2DComponent.getViewMatrix().invert(inverseView);
-                camera2DComponent.getProjectionMatrix().invert(inverseProjection);
+                camera2DComponent.viewMatrix.invert(inverseView);
+                camera2DComponent.projectionMatrix.invert(inverseProjection);
             }
 
             inverseView.mul(inverseProjection, viewProjection);

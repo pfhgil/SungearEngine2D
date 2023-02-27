@@ -1,5 +1,6 @@
 package Core2D.ECS.System.Systems;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.Core2D.Core2D;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera2DComponent;
@@ -113,6 +114,7 @@ public class CamerasUpdater extends System
 
                 updateViewMatrix(camera2DComponent);
 
+                // TODO: вынести рендер в отдельный метод (чтобы в будущем была возможность разбить на потоки)
                 if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
                     camera2DComponent.frameBuffer.bind();
                     camera2DComponent.frameBuffer.clear();
@@ -234,5 +236,30 @@ public class CamerasUpdater extends System
         if(SceneManager.currentSceneManager != null) {
             setScene2DMainCamera2D(camera2DComponent, scene2DMainCamera2D, SceneManager.currentSceneManager.getCurrentScene2D());
         }
+    }
+
+    public void setPostprocessingDefaultShader(Camera2DComponent camera2DComponent, Shader postprocessingDefaultShader)
+    {
+        if(camera2DComponent.postprocessingDefaultShader != null) {
+            camera2DComponent.postprocessingDefaultShader.destroy();
+        }
+        camera2DComponent.postprocessingDefaultShader = postprocessingDefaultShader;
+    }
+
+    public boolean isPostprocessingLayerExists(Camera2DComponent camera2DComponent, Layer layer)
+    {
+        return camera2DComponent.postprocessingLayers.stream().anyMatch((ppLayer) -> ppLayer.getEntitiesLayerToRender() == layer);
+    }
+
+    public PostprocessingLayer getPostprocessingLayerByName(Camera2DComponent camera2DComponent, String name)
+    {
+        Optional<PostprocessingLayer> foundLayer = camera2DComponent.postprocessingLayers.stream().filter(ppLayer -> {
+            if(ppLayer.getEntitiesLayerToRender() != null) {
+                return ppLayer.getEntitiesLayerToRender().getName().equals(name);
+            }
+            return false;
+        }).findFirst();
+
+        return foundLayer.orElse(null);
     }
 }

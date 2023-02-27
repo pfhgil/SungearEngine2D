@@ -68,7 +68,7 @@ public class TransformComponent extends Component implements NonDuplicated
 
     public Matrix4f getMvpMatrix(Camera2DComponent camera2DComponent)
     {
-        return new Matrix4f(camera2DComponent.getProjectionMatrix()).mul(camera2DComponent.getViewMatrix())
+        return new Matrix4f(camera2DComponent.projectionMatrix).mul(camera2DComponent.viewMatrix)
             .mul(transform.getResultModelMatrix());
     }
 }

@@ -6,6 +6,7 @@ import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.ProgramTimeComponent;
 import Core2D.ECS.Component.Components.Shader.ShaderUniformFloatComponent;
 import Core2D.ECS.Component.Components.Shader.TextureComponent;
+import Core2D.ECS.ECSWorld;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Layering.PostprocessingLayer;
 import Core2D.Utils.ComponentHandler;
@@ -174,7 +175,7 @@ public class ShadersEditorView extends View
             if (foundComponent instanceof MeshComponent meshComponent) {
                 foundShader = meshComponent.getShader();
             } else if(foundComponent instanceof Camera2DComponent camera2DComponent) {
-                PostprocessingLayer ppLayer = camera2DComponent.getPostprocessingLayerByName(ppLayerName);
+                PostprocessingLayer ppLayer = ECSWorld.getCurrentECSWorld().camerasUpdater.getPostprocessingLayerByName(camera2DComponent, ppLayerName);
                 if(ppLayer != null) {
                     foundShader = ppLayer.getShader();
                 }

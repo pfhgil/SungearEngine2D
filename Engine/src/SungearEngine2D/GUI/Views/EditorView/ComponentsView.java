@@ -11,6 +11,7 @@ import Core2D.ECS.Component.Components.Primitives.BoxComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.Primitives.LineComponent;
 import Core2D.ECS.Component.Components.Shader.TextureComponent;
+import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.ECS.NonRemovable;
 import Core2D.Graphics.RenderParts.Shader;
@@ -720,8 +721,9 @@ public class ComponentsView extends View
                     case "Camera2DComponent" -> {
                         Camera2DComponent camera2DComponent = (Camera2DComponent) currentComponent;
                         ImGui.pushID("Scene2DMainCamera_" + i);
-                        if(ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Scene2D main camera", camera2DComponent.isScene2DMainCamera2D()))) {
-                            camera2DComponent.setScene2DMainCamera2D(!camera2DComponent.isScene2DMainCamera2D());
+                        if(ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Scene2D main camera", camera2DComponent.isScene2DMainCamera2D))) {
+                            ECSWorld.getCurrentECSWorld().camerasUpdater.setScene2DMainCamera2D(camera2DComponent, !camera2DComponent.isScene2DMainCamera2D);
+                            //camera2DComponent.setScene2DMainCamera2D(!camera2DComponent.isScene2DMainCamera2D);
                         }
                         ImGui.popID();
 
@@ -732,10 +734,10 @@ public class ComponentsView extends View
                             ImGui.sameLine();
                             if(ImGuiUtils.imCallWBorder(func -> ImGui.beginListBox("", 150.0f, 75.0f))) {
                                 for (Layer layer : currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
-                                    if (!camera2DComponent.isPostprocessingLayerExists(layer)) {
+                                    if (!ECSWorld.getCurrentECSWorld().camerasUpdater.isPostprocessingLayerExists(camera2DComponent, layer)) {
                                         ImGui.pushID("PPLayerToAdd_" + k + "_" + i);
                                         if (ImGui.selectable(layer.getName())) {
-                                            camera2DComponent.addPostprocessingLayer(new PostprocessingLayer(layer));
+                                            camera2DComponent.postprocessingLayers.add(new PostprocessingLayer(layer));
                                             ImGuiUtils.setArrowButtonRetention("AddPPLayerButton_" + i, false);
                                         }
                                         ImGui.popID();
@@ -748,7 +750,7 @@ public class ComponentsView extends View
                         }
 
                         k = 0;
-                        Iterator<PostprocessingLayer> ppCamLayersIterator = camera2DComponent.getPostprocessingLayersIterator();
+                        Iterator<PostprocessingLayer> ppCamLayersIterator = camera2DComponent.postprocessingLayers.listIterator();
                         while(ppCamLayersIterator.hasNext()) {
                             PostprocessingLayer ppLayer = ppCamLayersIterator.next();
                             ImGui.pushID("PPLayer_" + k + "_" + i);
@@ -798,7 +800,7 @@ public class ComponentsView extends View
                                 }
                                 ImGui.popID();
 
-                                if(camera2DComponent.getPostprocessingLayersNum() > 1 && k != camera2DComponent.getPostprocessingLayersNum() - 1) {
+                                if(camera2DComponent.postprocessingLayers.size() > 1 && k != camera2DComponent.postprocessingLayers.size() - 1) {
                                     ImGui.separator();
                                 }
 

@@ -2,6 +2,7 @@ package Core2D.ECS;
 
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.System.System;
+import Core2D.ECS.System.Systems.CamerasUpdater;
 import Core2D.ECS.System.Systems.MeshesRenderer;
 import Core2D.ECS.System.Systems.PrimitivesRenderer;
 import Core2D.Utils.Utils;
@@ -22,12 +23,21 @@ public class ECSWorld
     // поля для дефолтных систем (имплементируют NonRemovable, то есть удалить их не получится, но отключить можно)
     public final MeshesRenderer meshesRenderer = new MeshesRenderer();
     public final PrimitivesRenderer primitivesRenderer = new PrimitivesRenderer();
+    public final CamerasUpdater camerasUpdater = new CamerasUpdater();
     // ----------------------------------
 
     public ECSWorld()
     {
+        systems.add(camerasUpdater);
         systems.add(meshesRenderer);
         systems.add(primitivesRenderer);
+    }
+
+    public void update()
+    {
+        for(System system : systems) {
+            system.update();
+        }
     }
 
     /*

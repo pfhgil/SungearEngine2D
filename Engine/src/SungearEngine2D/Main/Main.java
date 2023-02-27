@@ -130,8 +130,8 @@ public class Main
                                                     }
 
                                                     if(component instanceof Camera2DComponent camera2DComponent) {
-                                                        for(int k = 0; k < camera2DComponent.getPostprocessingLayersNum(); k++) {
-                                                            PostprocessingLayer ppLayer = camera2DComponent.getPostprocessingLayer(k);
+                                                        for(int k = 0; k < camera2DComponent.postprocessingLayers.size(); k++) {
+                                                            PostprocessingLayer ppLayer = camera2DComponent.postprocessingLayers.get(k);
 
                                                             Shader shader = ppLayer.getShader();
 

@@ -162,7 +162,7 @@ public class SceneView extends View
             Mouse.setViewportPosition(sceneViewWindowScreenPosition);
             Mouse.setViewportSize(new Vector2f(sceneViewWindowSize.x, sceneViewWindowSize.y));
 
-            ImGui.image(Main.getMainCamera2DComponent().getResultFrameBuffer().getTextureHandler(), windowSize.x, windowSize.y);
+            ImGui.image(Main.getMainCamera2DComponent().resultFrameBuffer.getTextureHandler(), windowSize.x, windowSize.y);
 
             if(ImGui.beginDragDropTarget()) {
                 if(ViewsManager.getResourcesView().getCurrentMovingFile() != null &&
@@ -374,8 +374,8 @@ public class SceneView extends View
 
         Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
         if(camera2DComponent != null) {
-            camera2DComponent.getViewMatrix().invert(inverseView);
-            camera2DComponent.getProjectionMatrix().invert(inverseProjection);
+            camera2DComponent.viewMatrix.invert(inverseView);
+            camera2DComponent.projectionMatrix.invert(inverseProjection);
         }
 
         inverseView.mul(inverseProjection, viewProjection);

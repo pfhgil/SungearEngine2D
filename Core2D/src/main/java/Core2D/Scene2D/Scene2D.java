@@ -113,7 +113,7 @@ public class Scene2D
     public void draw(Camera2DComponent camera2DComponent)
     {
         if(!shouldDestroy) {
-            Graphics.getMainRenderer().render(layering, camera2DComponent);
+            Graphics.getMainRenderer().render(layering);
 
             if (scene2DCallback != null) {
                 scene2DCallback.onDraw();
@@ -136,6 +136,8 @@ public class Scene2D
 
     public void deltaUpdate(float deltaTime)
     {
+        // FIXME: сделать отдельный метод апдейта (без дельты)
+        ECSWorld.getCurrentECSWorld().update();
         physicsWorld.step(deltaTime, 6, 2);
 
         layering.deltaUpdate(deltaTime);
@@ -170,8 +172,8 @@ public class Scene2D
                     meshComponent.getShader().initUniforms();
                 }
                 for(Camera2DComponent camera2DComponent : entity.getAllComponents(Camera2DComponent.class)) {
-                    for(int i = 0; i < camera2DComponent.getPostprocessingLayersNum(); i++) {
-                        PostprocessingLayer ppLayer = camera2DComponent.getPostprocessingLayer(i);
+                    for(int i = 0; i < camera2DComponent.postprocessingLayers.size(); i++) {
+                        PostprocessingLayer ppLayer = camera2DComponent.postprocessingLayers.get(i);
                         ppLayer.getShader().initUniforms();
                     }
                 }

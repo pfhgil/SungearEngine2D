@@ -7,6 +7,7 @@ import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
 import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Component.Components.Shader.TextureComponent;
+import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.ScriptableSystem;
@@ -222,11 +223,12 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
 
                 audioComponent.ID = lastComponentID;
             } else if(component instanceof Camera2DComponent camera2DComponent) {
-                Shader defaultShader = new Shader(AssetManager.getInstance().getShaderData(camera2DComponent.getPostprocessingDefaultShader().path));
+                Shader defaultShader = new Shader(AssetManager.getInstance().getShaderData(camera2DComponent.postprocessingDefaultShader.path));
 
-                camera2DComponent.setPostprocessingDefaultShader(defaultShader);
-                for(int i = 0; i < camera2DComponent.getPostprocessingLayersNum(); i++) {
-                    PostprocessingLayer ppLayer = camera2DComponent.getPostprocessingLayer(i);
+                ECSWorld.getCurrentECSWorld().camerasUpdater.setPostprocessingDefaultShader(camera2DComponent, defaultShader);
+                //camera2DComponent.setPostprocessingDefaultShader(defaultShader);
+                for(int i = 0; i < camera2DComponent.postprocessingLayers.size(); i++) {
+                    PostprocessingLayer ppLayer = camera2DComponent.postprocessingLayers.get(i);
 
                     ppLayer.getShader().fixUniforms();
                     Shader layerShader = new Shader();

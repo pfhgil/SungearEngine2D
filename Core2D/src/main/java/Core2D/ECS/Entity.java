@@ -294,14 +294,15 @@ public class Entity implements Serializable, PoolObject
 
          */
 
-        // добавление компонента во все системы у ecs мира
-        ECSWorld.getCurrentECSWorld().addComponent(component);
-
         if(components.size() > 0) {
             component.ID = components.stream().max(Comparator.comparingInt(c0 -> c0.ID)).get().ID + 1;
         }
         components.add(component);
         component.entity = this;
+
+        // добавление компонента во все системы у ecs мира
+        ECSWorld.getCurrentECSWorld().addComponent(component);
+
         if(component instanceof ScriptComponent scriptComponent) {
             if(scriptComponent.script.getScriptClassInstance() instanceof Component componentScriptInstance) {
                 componentScriptInstance.entity = this;
@@ -312,7 +313,7 @@ public class Entity implements Serializable, PoolObject
             }
             */
         }
-        //component.init();
+        component.init();
 
         return component;
     }

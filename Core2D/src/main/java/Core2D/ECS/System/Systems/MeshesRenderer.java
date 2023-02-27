@@ -10,6 +10,7 @@ import Core2D.ECS.System.System;
 import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Layering.Layer;
+import Core2D.Log.Log;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.ShaderUtils;
 import org.joml.Vector4f;
@@ -87,11 +88,14 @@ public class MeshesRenderer extends System implements NonRemovable
         MeshComponent meshComponent = componentsQuery.getComponent(MeshComponent.class);
         TransformComponent transformComponent = componentsQuery.getComponent(TransformComponent.class);
         Camera2DComponent camera2DComponent = componentsQuery.getComponent(Camera2DComponent.class);
+        //Log.CurrentSession.println("2 passed: " + componentsQuery.entityID + ", mesh: " + meshComponent + ", transform: " + transformComponent + ", cam: " + camera2DComponent, Log.MessageType.ERROR);
         if(meshComponent == null || transformComponent == null || camera2DComponent == null) return;
 
         if(shader == null) {
             shader = meshComponent.getShader();
         }
+
+        //Log.CurrentSession.println("3 passed: " + componentsQuery.entityID, Log.MessageType.ERROR);
 
         // использую VAO, текстуру и шейдер
         meshComponent.getVertexArrayObject().bind();

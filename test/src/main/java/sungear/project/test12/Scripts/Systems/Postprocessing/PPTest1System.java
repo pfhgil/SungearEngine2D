@@ -49,9 +49,11 @@ public class PPTest1System extends System
 
     }
 
+    /*
     @Override
     public void renderEntity(Camera2DComponent camera2DComponent)
     {
+
         PostprocessingLayer ppLayer = camera2DComponent.getPostprocessingLayerByName("ray_traced_layer");
 
         if(ppLayer != null) {
@@ -135,11 +137,18 @@ public class PPTest1System extends System
             //
 
         }
+
+
     }
 
+     */
+
+    /*
     @Override
     public void renderEntity(Camera2DComponent camera2DComponent, Shader shader)
     {
 
     }
+
+     */
 }
