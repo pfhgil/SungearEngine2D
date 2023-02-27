@@ -23,8 +23,6 @@ public class Component
      */
     public transient Entity entity;
 
-    private int object2DID = -1;
-
     public int ID = 0;
 
     public boolean active = true;
@@ -57,9 +55,7 @@ public class Component
      */
     public void update()
     {
-        if(entity != null) {
-            object2DID = entity.ID;
-        }
+        
     }
 
     /**
