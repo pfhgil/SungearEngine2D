@@ -5,6 +5,7 @@ import Core2D.CamerasManager.CamerasManager;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Layering.Layer;
@@ -39,6 +40,9 @@ public class Scene2D
     private List<Tag> tags = new ArrayList<>();
 
     private transient PhysicsWorld physicsWorld = new PhysicsWorld();
+
+    // пока что transient
+    private transient ECSWorld ecsWorld = new ECSWorld();
 
     private ScriptSystem scriptSystem = new ScriptSystem();
 

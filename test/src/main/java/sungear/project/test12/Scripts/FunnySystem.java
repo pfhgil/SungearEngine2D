@@ -34,11 +34,12 @@ public class FunnySystem extends System
     }
 
     @Override
-    public void render(Camera2DComponent camera2DComponent)
+    public void renderEntity(Camera2DComponent camera2DComponent)
     {
         //float time = (float) glfwGetTime();
         float time = 0.0f;
 
+        /*
         MeshComponent meshComponent = entity.getComponent(MeshComponent.class);
         if(meshComponent != null) {
             meshComponent.getShader().bind();
@@ -49,12 +50,14 @@ public class FunnySystem extends System
                     time
             );
         }
+
+         */
 // ff
         //Log.CurrentSession.println("time: " + time, Log.MessageType.WARNING);
     }
 
     @Override
-    public void render(Camera2DComponent camera2DComponent, Shader shader)
+    public void renderEntity(Camera2DComponent camera2DComponent, Shader shader)
     {
 
     }

@@ -44,7 +44,8 @@ public class Layer
                     entity.getPickColor().z / 255.0f,
                     1.0f));
 
-            Graphics.getMainRenderer().render(entity, camera2DComponent, pickingShader);
+            // FIXME
+            Graphics.getMainRenderer().render(entity, pickingShader);
 
             entity.setColor(lastColor);
         }

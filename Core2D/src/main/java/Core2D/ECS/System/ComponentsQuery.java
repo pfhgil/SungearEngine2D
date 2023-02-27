@@ -1,0 +1,48 @@
+package Core2D.ECS.System;
+
+import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.ScriptComponent;
+
+import java.util.ArrayList;
+import java.util.List;
+
+// связка компонентов, необходимых для одной задачи
+public class ComponentsQuery
+{
+    private List<Component> components = new ArrayList<>();
+    // список классов компонентов, которые может принимать
+    //private List<Class<?>> componentsClasses = new ArrayList<>();
+
+    // ID сущности, представителем которой является  данная связка компонентов
+    public int entityID;
+
+    public ComponentsQuery(int entityID)
+    {
+        this.entityID = entityID;
+    }
+
+    public <T extends Component> T getComponent(Class<T> componentClass)
+    {
+        for(var component : components) {
+            if(componentClass.isAssignableFrom(component.getClass())) {
+                return componentClass.cast(component);
+            } else if(ScriptComponent.class.isAssignableFrom(component.getClass()) && componentClass.isAssignableFrom(((ScriptComponent) component).script.getScriptClass())) {
+                return componentClass.cast(((ScriptComponent) component).script.getScriptClassInstance());
+            }
+        }
+
+        return null;
+    }
+
+    /*
+    public void addComponent(Component component)
+    {
+        if(componentsClasses.contains(component.getClass())) {
+            components.add(component);
+        }
+    }
+
+     */
+
+    public List<Component> getComponents() { return components; }
+}

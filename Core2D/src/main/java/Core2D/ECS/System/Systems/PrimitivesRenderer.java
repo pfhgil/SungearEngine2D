@@ -4,6 +4,7 @@ import Core2D.DataClasses.LineData;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.Primitives.PrimitiveComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
 import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Graphics.RenderParts.Shader;
@@ -13,15 +14,14 @@ import org.joml.Matrix4f;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 
-import java.util.List;
-
 import static org.lwjgl.opengl.GL11C.*;
 
-public class PrimitivesRendererSystem extends System
+public class PrimitivesRenderer extends System
 {
     @Override
-    public void render(Camera2DComponent camera2DComponent)
+    public void renderEntity(Entity entity)
     {
+        /*
         if(entity != null) {
             if(entity.isShouldDestroy()) return;
 
@@ -33,11 +33,14 @@ public class PrimitivesRendererSystem extends System
                 renderPrimitiveComponent(camera2DComponent, transformComponent, primitiveComponent, primitiveComponent.shader);
             }
         }
+
+         */
     }
 
     @Override
-    public void render(Camera2DComponent camera2DComponent, Shader shader)
+    public void renderEntity(Entity entity, Shader shader)
     {
+        /*
         if(entity != null) {
             if(entity.isShouldDestroy()) return;
 
@@ -49,6 +52,8 @@ public class PrimitivesRendererSystem extends System
                 renderPrimitiveComponent(camera2DComponent, transformComponent, primitiveComponent, shader);
             }
         }
+
+         */
     }
 
     private void renderPrimitiveComponent(Camera2DComponent camera2DComponent, TransformComponent transformComponent, PrimitiveComponent primitiveComponent, Shader shader)

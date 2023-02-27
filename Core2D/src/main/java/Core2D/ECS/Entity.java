@@ -8,9 +8,6 @@ import Core2D.ECS.Component.Components.Primitives.BoxComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.Primitives.LineComponent;
 import Core2D.ECS.System.System;
-import Core2D.ECS.System.Systems.MeshRendererSystem;
-import Core2D.ECS.System.Systems.PrimitivesRendererSystem;
-import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Pooling.PoolObject;
@@ -27,10 +24,7 @@ import org.joml.Vector4f;
 
 import java.io.Serializable;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class Entity implements Serializable, PoolObject
 {
@@ -50,7 +44,7 @@ public class Entity implements Serializable, PoolObject
 
     // лист компонентов
     protected List<Component> components = new ArrayList<>();
-    protected List<System> systems = new ArrayList<>();
+    //protected List<System> systems = new ArrayList<>();
 
     public boolean isUIElement = false;
 
@@ -131,7 +125,7 @@ public class Entity implements Serializable, PoolObject
         Entity entity = new Entity();
         entity.addComponent(new TransformComponent());
         entity.addComponent(new MeshComponent());
-        entity.addSystem(new MeshRendererSystem());
+        //entity.addSystem(new MeshRendererSystem());
 
         return entity;
     }
@@ -150,7 +144,7 @@ public class Entity implements Serializable, PoolObject
         Entity entity = new Entity();
         entity.addComponent(new TransformComponent());
         entity.addComponent(new LineComponent());
-        entity.addSystem(new PrimitivesRendererSystem());
+        //entity.addSystem(new PrimitivesRendererSystem());
 
         return entity;
     }
@@ -160,7 +154,7 @@ public class Entity implements Serializable, PoolObject
         Entity entity = new Entity();
         entity.addComponent(new TransformComponent());
         entity.addComponent(new BoxComponent());
-        entity.addSystem(new PrimitivesRendererSystem());
+        //entity.addSystem(new PrimitivesRendererSystem());
 
         return entity;
     }
@@ -170,7 +164,7 @@ public class Entity implements Serializable, PoolObject
         Entity entity = new Entity();
         entity.addComponent(new TransformComponent());
         entity.addComponent(new CircleComponent());
-        entity.addSystem(new PrimitivesRendererSystem());
+        //entity.addSystem(new PrimitivesRendererSystem());
 
         return entity;
     }
@@ -203,6 +197,7 @@ public class Entity implements Serializable, PoolObject
         }
     }
 
+    // FIXME
     public void update()
     {
         if(active && !shouldDestroy) {
@@ -210,12 +205,16 @@ public class Entity implements Serializable, PoolObject
                 component.update();
             }
 
+            /*
             for(System system : systems) {
                 system.update();
             }
+
+             */
         }
     }
 
+    // FIXME
     public void deltaUpdate(float deltaTime)
     {
         if(active && !shouldDestroy) {
@@ -223,9 +222,12 @@ public class Entity implements Serializable, PoolObject
                 component.deltaUpdate(deltaTime);
             }
 
+            /*
             for(System system : systems) {
                 system.deltaUpdate(deltaTime);
             }
+
+             */
         }
     }
 
@@ -272,12 +274,28 @@ public class Entity implements Serializable, PoolObject
     // Components
     public <T extends Component> T addComponent (T component)
     {
+        if(component instanceof NonDuplicated) {
+            Optional<Component> foundComponent = components.stream().filter(c -> c.getClass().equals(component.getClass())).findAny();
+            if(foundComponent.isPresent()) {
+                // FIXME: убрать вывод диалогового окна и сделать просто принт в лог и чтобы слева внизу в редакторе показывалась ошибка
+                Log.showErrorDialog("Component " + component.getClass().getName() + " already exists");
+                Log.CurrentSession.println("Component " + component.getClass().getName() + " already exists. Component '" + component + "' is NonDuplicated", Log.MessageType.ERROR, true);
+
+                return component;
+            }
+        }
+        /*
         for(var currentComponent : components) {
             if(currentComponent.getClass().equals(component.getClass()) && currentComponent instanceof NonDuplicated) {
                 Log.showErrorDialog("Component " + component.getClass().getName() + " already exists");
                 Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Component " + component.getClass().getName() + " already exists")), Log.MessageType.ERROR);
             }
         }
+
+         */
+
+        // добавление компонента во все системы у ecs мира
+        ECSWorld.getCurrentECSWorld().addComponent(component);
 
         if(components.size() > 0) {
             component.ID = components.stream().max(Comparator.comparingInt(c0 -> c0.ID)).get().ID + 1;
@@ -288,11 +306,14 @@ public class Entity implements Serializable, PoolObject
             if(scriptComponent.script.getScriptClassInstance() instanceof Component componentScriptInstance) {
                 componentScriptInstance.entity = this;
                 //scriptComponent.script.setFieldValue(scriptComponent.script.getField("entity"), this);
-            } else if(scriptComponent.script.getScriptClassInstance() instanceof System systemScriptInstance) {
+            } // FIXME:
+             /* else if(scriptComponent.script.getScriptClassInstance() instanceof System systemScriptInstance) {
                 systemScriptInstance.entity = this;
             }
+            */
         }
-        component.init();
+        //component.init();
+
         return component;
     }
 
@@ -421,6 +442,7 @@ public class Entity implements Serializable, PoolObject
     }
 
     // Systems
+    /*
     public <T extends System> T addSystem(T system)
     {
         for(var currentSystem : systems) {
@@ -430,18 +452,12 @@ public class Entity implements Serializable, PoolObject
             }
         }
 
-        /*
-        if(components.size() > 0) {
-            system.componentID = components.stream().max(Comparator.comparingInt(c0 -> c0.componentID)).get().componentID + 1;
-        }
-
-         */
         systems.add(system);
         system.entity = this;
         if(system instanceof ScriptableSystem scriptableSystem) {
             scriptableSystem.script.setFieldValue(scriptableSystem.script.getField("entity"), this);
         }
-        system.init();
+        system.initSystem();
         return system;
     }
 
@@ -559,11 +575,13 @@ public class Entity implements Serializable, PoolObject
         }
     }
 
+     */
+
     public boolean isShouldDestroy() { return shouldDestroy; }
 
     public List<Component> getComponents() { return components; }
 
-    public List<System> getSystems() { return systems; }
+    //public List<System> getSystems() { return systems; }
 
     public Vector4f getColor() { return color; }
     public void setColor(Vector4f color) { this.color = new Vector4f(color); }

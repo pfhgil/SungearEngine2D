@@ -161,8 +161,11 @@ public abstract class Graphics
     }
 
     public static ViewMode getViewMode() { return viewMode; }
+    @Deprecated
+    // TODO: delete this
     public static void setViewMode(ViewMode newViewMode)
     {
+        /*
         viewMode = newViewMode;
         if(CamerasManager.mainCamera2D != null) {
             Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
@@ -180,6 +183,8 @@ public abstract class Graphics
                 );
             }
         }
+
+         */
     }
 
     public static FrameBuffer getPickingRenderTarget() { return pickingRenderTarget; }

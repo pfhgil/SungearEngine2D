@@ -60,6 +60,7 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
         entity.ID = ID;
         entity.layerName = layerName;
 
+        /*
         for(JsonElement element : systems) {
             System system = context.deserialize(element, System.class);
             if(system instanceof ScriptableSystem scriptableSystem) {
@@ -103,6 +104,8 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                 entity.addSystem(system);
             }
         }
+
+         */
         //System.out.println("\u001B[32m size of game object " + gameObject.name + " list of components: " + gameObject.getComponents().size() + " \u001B[32m");
 
         for(JsonElement element : components) {

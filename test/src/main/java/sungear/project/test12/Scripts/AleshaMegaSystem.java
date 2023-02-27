@@ -34,11 +34,12 @@ public class AleshaMegaSystem extends System
     }
 
     @Override
-    public void render(Camera2DComponent camera2DComponent)
+    public void renderEntity(Camera2DComponent camera2DComponent)
     {
         //float time = (float) glfwGetTime();
         float time = 0.0f;
 
+        /*
         MeshComponent meshComponent = entity.getComponent(MeshComponent.class);
         if(meshComponent != null) {
             meshComponent.shader.bind();
@@ -49,10 +50,12 @@ public class AleshaMegaSystem extends System
                     time
             );
         }
+
+         */
     }
 
     @Override
-    public void render(Camera2DComponent camera2DComponent, Shader shader)
+    public void renderEntity(Camera2DComponent camera2DComponent, Shader shader)
     {
     }
 }

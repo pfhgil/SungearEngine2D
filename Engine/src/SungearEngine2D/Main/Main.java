@@ -12,8 +12,6 @@ import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
 import Core2D.ECS.Entity;
-import Core2D.ECS.System.Systems.MeshRendererSystem;
-import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Input.PC.Keyboard;
@@ -39,7 +37,6 @@ import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -93,6 +90,8 @@ public class Main
                         EngineSettings.initCompiler();
 
                         while(true) {
+                            //Log.CurrentSession.println("test", Log.MessageType.ERROR);
+
                             try {
                                 Thread.sleep(100);
                                 if(Settings.Core2D.sleepCore2D) {
@@ -116,10 +115,12 @@ public class Main
                                             if (layer.isShouldDestroy()) continue layersCycle;
                                             if (!layer.getEntities().get(i).isShouldDestroy()) {
                                                 List<ScriptComponent> scriptComponents = layer.getEntities().get(i).getAllComponents(ScriptComponent.class);
-                                                List<ScriptableSystem> scriptableSystems = layer.getEntities().get(i).getAllSystems(ScriptableSystem.class);
+                                                // FIXME
+                                                //List<ScriptableSystem> scriptableSystems = layer.getEntities().get(i).getAllSystems(ScriptableSystem.class);
                                                 List<Script> allScripts = new ArrayList<>();
                                                 scriptComponents.forEach(scriptComponent -> allScripts.add(scriptComponent.script));
-                                                scriptableSystems.forEach(scriptableSystem -> allScripts.add(scriptableSystem.script));
+
+                                                //scriptableSystems.forEach(scriptableSystem -> allScripts.add(scriptableSystem.script));
 
                                                 for(Component component : layer.getEntities().get(i).getComponents()) {
                                                     if(component instanceof MeshComponent meshComponent) {
@@ -219,7 +220,7 @@ public class Main
                             // первый проход рендера - отрисовывается объект в стенсил буфер и заполняется единицами
                             glStencilFunc(GL_ALWAYS, 1, 0xFF);
                             glStencilMask(0xFF);
-                            Graphics.getMainRenderer().render(inspectingEntity, mainCamera2DComponent);
+                            Graphics.getMainRenderer().render(inspectingEntity);
 
                             MeshComponent meshComponent = inspectingEntity.getComponent(MeshComponent.class);
                             TransformComponent transformComponent = inspectingEntity.getComponent(TransformComponent.class);
@@ -234,7 +235,7 @@ public class Main
                                 // второй проход рендера - отрисовываю объект чуть побольше только одним цветом. все значения пикселей в стенсио буфере, которые не равняются 0xFF будут отрисованы
                                 glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
                                 glStencilMask(0x00);
-                                Graphics.getMainRenderer().render(inspectingEntity, mainCamera2DComponent, onlyColorShader);
+                                Graphics.getMainRenderer().render(inspectingEntity, onlyColorShader);
 
                                 // третяя обработка - все пиксели будут перезаписаны. включаю обработку стенсил буфера
                                 glStencilFunc(GL_ALWAYS, 0, 0xFF);

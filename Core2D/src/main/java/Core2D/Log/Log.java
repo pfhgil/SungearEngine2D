@@ -24,14 +24,35 @@ public class Log
     {
         public static boolean willPrint = true;
 
-        public static void println(Object obj)
+        public static void println(Object obj, boolean appendCallableMethodDescription)
         {
             if(!willPrint) return;
 
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
 
-            System.out.println(dateFormat.format(date) + " | " + obj);
+            StringBuilder strBuilder = new StringBuilder(dateFormat.format(date));
+            if(appendCallableMethodDescription) {
+                StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+
+                int depth = ste[2].getMethodName().equals("println") ? 3 : 2;
+
+                strBuilder.append(" | Called from: ")
+                        .append(ste[depth].getClassName())
+                        .append("::").append(ste[depth].getMethodName())
+                        .append(". Line: ")
+                        .append(ste[depth].getLineNumber())
+                        .append(" [#FFFFFF]");
+            }
+
+            strBuilder.append(" | ").append(obj);
+
+            System.out.println(strBuilder);
+        }
+
+        public static void println(Object obj)
+        {
+            println(obj, false);
         }
     }
 
@@ -53,8 +74,9 @@ public class Log
 
 
         // записывает в файл лога информацию (новая строка)
-        public static void println(Object obj, MessageType messageType) {
-            Console.println(obj);
+        // appendCallableMethodDescription - к строке будет присоединена строка описание метода, откуда был вызван метод println
+        public static void println(Object obj, MessageType messageType, boolean appendCallableMethodDescription) {
+            Console.println(obj, appendCallableMethodDescription);
 
             if(!willPrintToFile) return;
 
@@ -64,29 +86,50 @@ public class Log
                     DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
                     Date date = new Date();
 
-                    String str = "";
-                    if (messageType == MessageType.SUCCESS) {
-                        str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#008000] " + obj + "\n";
-                        successLog.append(str);
-                    } else if (messageType == MessageType.INFO) {
-                        str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#FFFFFF] " + obj + "\n";
-                        infoLog.append(str);
-                    } else if (messageType == MessageType.WARNING) {
-                        str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#FFFF00] " + obj + "\n";
-                        warningLog.append(str);
-                    } else if (messageType == MessageType.ERROR) {
-                        str = "[#FFFFFF] " + dateFormat.format(date.getTime()) + " | [#FF0000] " + obj + "\n";
-                        errorLog.append(str);
+                    StringBuilder strBuilder = new StringBuilder("[#FFFFFF] ").append(dateFormat.format(date.getTime()));
+                    if(appendCallableMethodDescription) {
+                        StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+
+                        int depth = ste[2].getMethodName().equals("println") ? 3 : 2;
+
+                        strBuilder.append(" | [#9932CC] Called from: ")
+                                .append(ste[depth].getClassName())
+                                .append("::").append(ste[depth].getMethodName())
+                                .append(". Line: ")
+                                .append(ste[depth].getLineNumber())
+                                .append(" [#FFFFFF]");
                     }
-                    allLog.append(str);
+
+                    switch(messageType) {
+                        case SUCCESS ->  {
+                            strBuilder.append(" | [#008000] ").append(obj).append("\n");
+                            successLog.append(strBuilder);
+                        } case INFO -> {
+                            strBuilder.append(" | [#FFFFFF] ").append(obj).append("\n");
+                            infoLog.append(strBuilder);
+                        } case WARNING -> {
+                            strBuilder.append(" | [#FFFF00] ").append(obj).append("\n");
+                            warningLog.append(strBuilder);
+                        } case ERROR -> {
+                            strBuilder.append(" | [#FF0000] ").append(obj).append("\n");
+                            errorLog.append(strBuilder);
+                        }
+                    }
+
+                    allLog.append(strBuilder);
+
                     // записываю в файл лога информацию
-                    fileWriter.write(str);
+                    fileWriter.write(strBuilder.toString());
 
                     fileWriter.flush();
                 } catch (Exception e) {
                     Console.println(ExceptionsUtils.toString(e));
                 }
             }
+        }
+
+        public static void println(Object obj, MessageType messageType) {
+            println(obj, messageType, false);
         }
 
         // создает файл лога для текущей сессии

@@ -9,6 +9,15 @@ import Core2D.Graphics.RenderParts.Shader;
  */
 public class Component
 {
+    // уровень доступа к ComponentsQueries. если LOCAL, то данный компонент будет добавляться только в те, ComponentsQuery,
+    // у которых entityID == entity.ID (смотреть поле entity в это классе далее). если уровень доступа == GLOBAL,
+    // то будет добавляться абсолютно во все ComponentsQueries, которые принимают данный тип компонента
+    public enum AccessLevelToQueries
+    {
+        LOCAL,
+        GLOBAL
+    }
+
     /**
      * The object to which this component is bound.
      */
@@ -18,7 +27,9 @@ public class Component
 
     public int ID = 0;
 
-    protected boolean active = true;
+    public boolean active = true;
+
+    public AccessLevelToQueries accessLevelToQueries = AccessLevelToQueries.LOCAL;
 
     public Component() { }
 
@@ -88,14 +99,6 @@ public class Component
     {
 
     }
-
-    public boolean isActive() { return active; }
-
-    /**
-     * Sets whether the object is active.
-     * @param active
-     */
-    public void setActive(boolean active) { this.active = active; }
 
     public <T extends Component> T getComponent(Class<T> componentClass)
     {

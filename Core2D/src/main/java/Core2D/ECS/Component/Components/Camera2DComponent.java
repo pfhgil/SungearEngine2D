@@ -30,30 +30,30 @@ public class Camera2DComponent extends Component
         void postRender();
     }
 
-    private Vector2f viewportSize = new Vector2f(Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y);
+    public Vector2f viewportSize = new Vector2f(Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y);
 
-    private transient Matrix4f projectionMatrix = new Matrix4f().ortho2D(-viewportSize.x / 2.0f, viewportSize.x / 2.0f, -viewportSize.y / 2.0f, viewportSize.y / 2.0f);
+    public transient Matrix4f projectionMatrix = new Matrix4f().ortho2D(-viewportSize.x / 2.0f, viewportSize.x / 2.0f, -viewportSize.y / 2.0f, viewportSize.y / 2.0f);
 
-    private transient Matrix4f viewMatrix = new Matrix4f();
+    public transient Matrix4f viewMatrix = new Matrix4f();
 
-    private boolean isScene2DMainCamera2D = false;
+    public boolean isScene2DMainCamera2D = false;
 
     // промежуточный фрейм буфер без пост процессинга
-    private transient FrameBuffer frameBuffer;
+    public transient FrameBuffer frameBuffer;
 
     // результативный фрейм буфер с пост процессингом
-    private transient FrameBuffer resultFrameBuffer;
+    public transient FrameBuffer resultFrameBuffer;
 
     public transient Camera2DCallback camera2DCallback;
 
 
     // post processing quad -----------------------------------------------------
-    private transient short[] ppQuadIndices = new short[] { 0, 1, 2, 0, 2, 3 };
+    public transient short[] ppQuadIndices = new short[] { 0, 1, 2, 0, 2, 3 };
 
     // массив данных о вершинах
     // первые строки - позиции вершин, вторые строки - текстурные координаты
     private transient Vector2f ppQuadSize = new Vector2f(100.0f, 100.0f);
-    private transient float[] ppQuadData = new float[] {
+    public transient float[] ppQuadData = new float[] {
             -1, -1,
             0, 0,
 
@@ -67,11 +67,11 @@ public class Camera2DComponent extends Component
             1, 0,
     };
 
-    private transient VertexArray ppQuadVertexArray;
+    public transient VertexArray ppQuadVertexArray;
 
-    private Shader postprocessingDefaultShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/postprocessing/postprocessing_default_shader.glsl"));
+    public Shader postprocessingDefaultShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/postprocessing/postprocessing_default_shader.glsl"));
 
-    private List<PostprocessingLayer> postprocessingLayers = new ArrayList<>();
+    public List<PostprocessingLayer> postprocessingLayers = new ArrayList<>();
 
     // to delete ------------------
     /*
@@ -95,6 +95,9 @@ public class Camera2DComponent extends Component
     @Override
     public void init()
     {
+        /*
+        accessLevelToQueries = AccessLevelToQueries.GLOBAL;
+
         if(frameBuffer != null) {
             frameBuffer.destroy();
             frameBuffer = null;
@@ -108,10 +111,13 @@ public class Camera2DComponent extends Component
         Vector2i screenSize = Graphics.getScreenSize();
         frameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
         resultFrameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
+
+         */
     }
 
     private void loadVAO()
     {
+        /*
         if (ppQuadVertexArray != null) {
             ppQuadVertexArray.destroy();
             ppQuadVertexArray = null;
@@ -137,11 +143,14 @@ public class Camera2DComponent extends Component
 
         // отвязываю vao
         ppQuadVertexArray.unBind();
+
+         */
     }
 
     @Override
     public void update()
     {
+        /*
         Vector2i windowSize = Core2D.getWindow().getSize();
         this.viewportSize.set(windowSize);
         projectionMatrix = new Matrix4f().ortho2D(-viewportSize.x / 2.0f, viewportSize.x / 2.0f, -viewportSize.y / 2.0f, viewportSize.y / 2.0f);
@@ -197,16 +206,6 @@ public class Camera2DComponent extends Component
 
                     shader = ppLayerFound.getShader();
 
-                    /*
-                    System.out.println("-------------------------------------------------------------");
-                    System.out.println("shader: " + shader.path + ", is shader program valid: " + glIsProgram(shader.getProgramHandler()));
-                    for(Shader.ShaderUniform shaderUniform : shader.getShaderUniforms()) {
-                        System.out.println("shader uniform. name: " + shaderUniform.getName() + ", value: " + shaderUniform.value);
-                    }
-                    System.out.println("-------------------------------------------------------------");
-
-                     */
-
                     frameBufferToBind = ppLayerFound.getFrameBuffer();
 
                     ppLayerFound.updateName();
@@ -236,6 +235,8 @@ public class Camera2DComponent extends Component
             ppQuadVertexArray.unBind();
             resultFrameBuffer.unBind();
         }
+
+         */
     }
 
     @Override
@@ -253,6 +254,7 @@ public class Camera2DComponent extends Component
 
     public void updateViewMatrix()
     {
+        /*
         TransformComponent transformComponent = entity.getComponent(TransformComponent.class);
         if(transformComponent != null) {
             Vector2f position = MatrixUtils.getPosition(transformComponent.getTransform().getResultModelMatrix());
@@ -265,15 +267,8 @@ public class Camera2DComponent extends Component
             viewMatrix.rotate((float) Math.toRadians(-rotation), 0f, 0f, 1f);
             viewMatrix.translate(new Vector3f(-position.x, -position.y, 1f));
         }
-    }
 
-    public Vector2f getViewportSize() { return viewportSize; }
-    @Deprecated
-    public void setViewportSize(Vector2f viewportSize)
-    {
-        this.viewportSize = viewportSize;
-
-        projectionMatrix = new Matrix4f().ortho2D(-viewportSize.x / 2.0f, viewportSize.x / 2.0f, -viewportSize.y / 2.0f, viewportSize.y / 2.0f);
+         */
     }
 
     public Matrix4f getProjectionMatrix() { return projectionMatrix; }

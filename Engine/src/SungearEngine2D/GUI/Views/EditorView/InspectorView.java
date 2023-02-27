@@ -433,11 +433,12 @@ public class InspectorView extends View
                         ScriptComponent scriptComponent = new ScriptComponent();
                         scriptComponent.script = script;
                         inspectingObject2D.addComponent(scriptComponent);
-                    } else if(script.getScriptClass().getSuperclass().isAssignableFrom(System.class)) {
+                    } // FIXME
+                    /*else if(script.getScriptClass().getSuperclass().isAssignableFrom(System.class)) {
                         ScriptableSystem scriptableSystem = new ScriptableSystem();
                         scriptableSystem.script = script;
                         inspectingObject2D.addSystem(scriptableSystem);
-                    }
+                    } */
                 }
             }
         });

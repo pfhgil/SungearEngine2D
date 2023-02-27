@@ -208,9 +208,12 @@ public class Script
             if(scriptClassInstance instanceof Component component) {
                 component.render(camera2DComponent);
             }
+            /*
             if(scriptClassInstance instanceof System system) {
-                system.render(camera2DComponent);
+                system.renderEntity(camera2DComponent);
             }
+
+             */
         }
     }
 
@@ -220,9 +223,13 @@ public class Script
             if(scriptClassInstance instanceof Component component) {
                 component.render(camera2DComponent, shader);
             }
+            // FIXME:
+            /*
             if(scriptClassInstance instanceof System system) {
-                system.render(camera2DComponent, shader);
+                system.renderEntity(camera2DComponent, shader);
             }
+
+             */
         }
     }
 

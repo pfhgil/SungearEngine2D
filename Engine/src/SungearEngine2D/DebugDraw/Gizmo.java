@@ -270,22 +270,22 @@ public class Gizmo
                     xScaleHandler.setColor(new Vector4f(xScaleHandler.getPickColor().x / 255.0f, xScaleHandler.getPickColor().y / 255.0f, xScaleHandler.getPickColor().z / 255.0f, 1.0f));
 
                     if (gizmoMode == GizmoMode.SCALE || gizmoMode == GizmoMode.TRANSLATION_SCALE || gizmoMode == GizmoMode.ROTATION_SCALE || gizmoMode == GizmoMode.TRANSLATION_ROTATION_SCALE) {
-                        Graphics.getMainRenderer().render(yScaleLine, Main.getMainCamera2DComponent(), pickingShader);
-                        Graphics.getMainRenderer().render(yScaleHandler, Main.getMainCamera2DComponent(), pickingShader);
-                        Graphics.getMainRenderer().render(xScaleLine, Main.getMainCamera2DComponent(), pickingShader);
-                        Graphics.getMainRenderer().render(xScaleHandler, Main.getMainCamera2DComponent(), pickingShader);
+                        Graphics.getMainRenderer().render(yScaleLine,  pickingShader);
+                        Graphics.getMainRenderer().render(yScaleHandler, pickingShader);
+                        Graphics.getMainRenderer().render(xScaleLine,  pickingShader);
+                        Graphics.getMainRenderer().render(xScaleHandler,  pickingShader);
                     }
                     if (gizmoMode == GizmoMode.TRANSLATION || gizmoMode == GizmoMode.TRANSLATION_SCALE || gizmoMode == GizmoMode.TRANSLATION_ROTATION || gizmoMode == GizmoMode.TRANSLATION_ROTATION_SCALE) {
-                        Graphics.getMainRenderer().render(yArrow, Main.getMainCamera2DComponent(), pickingShader);
-                        Graphics.getMainRenderer().render(xArrow, Main.getMainCamera2DComponent(), pickingShader);
-                        Graphics.getMainRenderer().render(centrePoint, Main.getMainCamera2DComponent(), pickingShader);
+                        Graphics.getMainRenderer().render(yArrow,  pickingShader);
+                        Graphics.getMainRenderer().render(xArrow,  pickingShader);
+                        Graphics.getMainRenderer().render(centrePoint, pickingShader);
                     }
                     if (gizmoMode == GizmoMode.ROTATION || gizmoMode == GizmoMode.TRANSLATION_ROTATION || gizmoMode == GizmoMode.ROTATION_SCALE || gizmoMode == GizmoMode.TRANSLATION_ROTATION_SCALE) {
-                        Graphics.getMainRenderer().render(rotationCircle, Main.getMainCamera2DComponent(), pickingShader);
-                        Graphics.getMainRenderer().render(rotationHandler, Main.getMainCamera2DComponent(), pickingShader);
+                        Graphics.getMainRenderer().render(rotationCircle, pickingShader);
+                        Graphics.getMainRenderer().render(rotationHandler, pickingShader);
                     }
 
-                    Graphics.getMainRenderer().render(centrePointToEditCentre, Main.getMainCamera2DComponent());
+                    Graphics.getMainRenderer().render(centrePointToEditCentre);
 
                     Vector4f pickedColor = Graphics.getPixelColor(Mouse.getMousePosition());
 
@@ -388,20 +388,20 @@ public class Gizmo
                     }
                 }
 
-                Graphics.getMainRenderer().render(yArrow, Main.getMainCamera2DComponent());
-                Graphics.getMainRenderer().render(xArrow, Main.getMainCamera2DComponent());
+                Graphics.getMainRenderer().render(yArrow);
+                Graphics.getMainRenderer().render(xArrow);
 
-                Graphics.getMainRenderer().render(centrePoint, Main.getMainCamera2DComponent());
+                Graphics.getMainRenderer().render(centrePoint);
 
-                Graphics.getMainRenderer().render(centrePointToEditCentre, Main.getMainCamera2DComponent());
+                Graphics.getMainRenderer().render(centrePointToEditCentre);
 
-                Graphics.getMainRenderer().render(rotationCircle, Main.getMainCamera2DComponent());
-                Graphics.getMainRenderer().render(rotationHandler, Main.getMainCamera2DComponent());
+                Graphics.getMainRenderer().render(rotationCircle);
+                Graphics.getMainRenderer().render(rotationHandler);
 
-                Graphics.getMainRenderer().render(yScaleHandler, Main.getMainCamera2DComponent());
-                Graphics.getMainRenderer().render(yScaleLine, Main.getMainCamera2DComponent());
-                Graphics.getMainRenderer().render(xScaleHandler, Main.getMainCamera2DComponent());
-                Graphics.getMainRenderer().render(xScaleLine, Main.getMainCamera2DComponent());
+                Graphics.getMainRenderer().render(yScaleHandler);
+                Graphics.getMainRenderer().render(yScaleLine);
+                Graphics.getMainRenderer().render(xScaleHandler);
+                Graphics.getMainRenderer().render(xScaleLine);
             }
         }
     }

@@ -68,8 +68,8 @@ public class CamerasDebugLines
                 Vector2f camera2DRealScale = cameraTransformComponent.getTransform().getRealScale();
                 boxTransform.setPosition(realPosition);
                 boxTransform.setRotation(realRotation);
-                boxComponent.setWidth(camera2DComponent.getViewportSize().x * (1.0f / camera2DRealScale.x));
-                boxComponent.setHeight(camera2DComponent.getViewportSize().y * (1.0f / camera2DRealScale.y));
+                boxComponent.setWidth(camera2DComponent.viewportSize.x * (1.0f / camera2DRealScale.x));
+                boxComponent.setHeight(camera2DComponent.viewportSize.y * (1.0f / camera2DRealScale.y));
             }
         }
         if (currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
@@ -92,8 +92,8 @@ public class CamerasDebugLines
                 Vector2f camera2DRealScale = cameraTransformComponent.getTransform().getRealScale();
                 boxTransform.setPosition(realPosition);
                 boxTransform.setRotation(realRotation);
-                boxComponent.setWidth(camera2DComponent.getViewportSize().x * (1.0f / camera2DRealScale.x));
-                boxComponent.setHeight(camera2DComponent.getViewportSize().y * (1.0f / camera2DRealScale.y));
+                boxComponent.setWidth(camera2DComponent.viewportSize.x * (1.0f / camera2DRealScale.x));
+                boxComponent.setHeight(camera2DComponent.viewportSize.y * (1.0f / camera2DRealScale.y));
             }
         }
 
@@ -107,9 +107,9 @@ public class CamerasDebugLines
         mainCamera2DIcon.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
         mainCamera2DBox.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
 
-        Graphics.getMainRenderer().render(inspectorCamera2DIcon, Main.getMainCamera2DComponent());
-        Graphics.getMainRenderer().render(inspectorCamera2DBox, Main.getMainCamera2DComponent());
-        Graphics.getMainRenderer().render(mainCamera2DIcon, Main.getMainCamera2DComponent());
-        Graphics.getMainRenderer().render(mainCamera2DBox, Main.getMainCamera2DComponent());
+        Graphics.getMainRenderer().render(inspectorCamera2DIcon);
+        Graphics.getMainRenderer().render(inspectorCamera2DBox);
+        Graphics.getMainRenderer().render(mainCamera2DIcon);
+        Graphics.getMainRenderer().render(mainCamera2DBox);
     }
 }

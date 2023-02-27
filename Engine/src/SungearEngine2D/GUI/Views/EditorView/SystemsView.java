@@ -1,26 +1,11 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
-import Core2D.ECS.Entity;
-import Core2D.ECS.NonRemovable;
-import Core2D.ECS.System.System;
-import Core2D.ECS.System.Systems.MeshRendererSystem;
-import Core2D.ECS.System.Systems.PrimitivesRendererSystem;
-import Core2D.ECS.System.Systems.ScriptableSystem;
-import Core2D.Log.Log;
-import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.GUI.Views.View;
-import SungearEngine2D.GUI.Views.ViewsManager;
-import imgui.ImGui;
-import imgui.ImVec2;
-import imgui.flag.ImGuiMouseButton;
-import imgui.flag.ImGuiStyleVar;
-import imgui.flag.ImGuiWindowFlags;
-import org.apache.commons.io.FilenameUtils;
-
-import java.io.File;
 
 public class SystemsView extends View
 {
+    // FIXME
+    /*
     private boolean showPopupWindow = false;
 
     private boolean someButtonInPopupWindowHovered = false;
@@ -167,4 +152,6 @@ public class SystemsView extends View
             ImGui.popID();
         }
     }
+
+     */
 }

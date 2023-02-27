@@ -105,18 +105,24 @@ public class PhysicsWorld extends World
                     for(Component component : entityAEnter.getComponents()) {
                         component.collider2DEnter(entityBEnter);
                     }
+                    /*
                     for(System system : entityAEnter.getSystems()) {
                         system.collider2DEnter(entityBEnter);
                     }
+
+                     */
                 }
 
                 if (!entityBEnter.isShouldDestroy()) {
                     for(Component component : entityBEnter.getComponents()) {
                         component.collider2DEnter(entityAEnter);
                     }
+                    /*
                     for(System system : entityBEnter.getSystems()) {
                         system.collider2DEnter(entityAEnter);
                     }
+
+                     */
                 }
 
                 shouldCollider2DEnter = false;
@@ -127,18 +133,24 @@ public class PhysicsWorld extends World
                     for(Component component : entityAExit.getComponents()) {
                         component.collider2DEnter(entityBExit);
                     }
+                    /*
                     for(System system : entityAExit.getSystems()) {
                         system.collider2DEnter(entityBExit);
                     }
+
+                     */
                 }
 
                 if (!entityBExit.isShouldDestroy()) {
                     for(Component component : entityBExit.getComponents()) {
                         component.collider2DEnter(entityAExit);
                     }
+                    /*
                     for(System system : entityBExit.getSystems()) {
                         system.collider2DEnter(entityAExit);
                     }
+
+                     */
                 }
 
                 shouldCollider2DExit = false;

@@ -67,16 +67,18 @@ public class ScriptableSystem extends System
     }
 
     @Override
-    public void render(Camera2DComponent camera2DComponent)
+    public void renderEntity(Entity entity)
     {
         if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
-        script.render(camera2DComponent);
+        // FIXME:
+        //script.render(camera2DComponent);
     }
 
     @Override
-    public void render(Camera2DComponent camera2DComponent, Shader shader)
+    public void renderEntity(Entity entity, Shader shader)
     {
         if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
-        script.render(camera2DComponent, shader);
+        // FIXME:
+        // script.render(camera2DComponent, shader);
     }
 }

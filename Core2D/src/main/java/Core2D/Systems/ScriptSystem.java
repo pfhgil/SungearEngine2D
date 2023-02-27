@@ -79,7 +79,7 @@ public class ScriptSystem
             for(Layer layer : SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
                 for (Entity entity : layer.getEntities()) {
                     List<ScriptComponent> scriptComponents = entity.getAllComponents(ScriptComponent.class);
-                    List<ScriptableSystem> scriptableSystems = entity.getAllSystems(ScriptableSystem.class);
+                    //List<ScriptableSystem> scriptableSystems = entity.getAllSystems(ScriptableSystem.class);
 
                     for(ScriptComponent scriptComponent : scriptComponents) {
                         String lastScriptPath = scriptComponent.script.path;
@@ -91,6 +91,7 @@ public class ScriptSystem
                         scriptComponent.script.setFieldValue(scriptComponent.script.getField("entity"), scriptComponent.entity);
                     }
 
+                    /*
                     for(ScriptableSystem scriptableSystem : scriptableSystems) {
                         String lastScriptPath = scriptableSystem.script.path;
                         scriptableSystem.script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(),
@@ -100,6 +101,8 @@ public class ScriptSystem
 
                         scriptableSystem.script.setFieldValue(scriptableSystem.script.getField("entity"), scriptableSystem.entity);
                     }
+
+                     */
                 }
             }
         }
@@ -111,7 +114,7 @@ public class ScriptSystem
             for(Layer layer : SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
                 for (Entity entity : layer.getEntities()) {
                     List<ScriptComponent> scriptComponents = entity.getAllComponents(ScriptComponent.class);
-                    List<ScriptableSystem> scriptableSystems = entity.getAllSystems(ScriptableSystem.class);
+                    //List<ScriptableSystem> scriptableSystems = entity.getAllSystems(ScriptableSystem.class);
 
                     for(ScriptComponent scriptComponent : scriptComponents) {
                         String lastScriptPath = scriptComponent.script.path;
@@ -125,6 +128,7 @@ public class ScriptSystem
                         Log.Console.println("lastScriptPath: " + lastScriptPath);
                     }
 
+                    /*
                     for(ScriptableSystem scriptableSystem : scriptableSystems) {
                         String lastScriptPath = scriptableSystem.script.path;
                         scriptableSystem.script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(),
@@ -134,6 +138,8 @@ public class ScriptSystem
 
                         scriptableSystem.script.setFieldValue(scriptableSystem.script.getField("entity"), scriptableSystem.entity);
                     }
+
+                     */
                 }
             }
 

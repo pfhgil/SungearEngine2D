@@ -86,7 +86,7 @@ public class EntitiesDebugDraw
 
                     box.update();
 
-                    Graphics.getMainRenderer().render(box, Main.getMainCamera2DComponent());
+                    Graphics.getMainRenderer().render(box);
                 }
 
                 for (int i = 0; i < circleCollider2DComponents.size(); i++) {
@@ -119,7 +119,7 @@ public class EntitiesDebugDraw
 
                     circle.update();
 
-                    Graphics.getMainRenderer().render(circle, Main.getMainCamera2DComponent());
+                    Graphics.getMainRenderer().render(circle);
                 }
             }
         }
