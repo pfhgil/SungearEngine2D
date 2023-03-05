@@ -4,7 +4,7 @@ import Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent;
 import Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent;
 import Core2D.ECS.Component.Components.Primitives.BoxComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
-import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Physics.PhysicsWorld;
@@ -36,12 +36,8 @@ public class EntitiesDebugDraw
             List<CircleCollider2DComponent> circleCollider2DComponents = entity.getAllComponents(CircleCollider2DComponent.class);
 
             TransformComponent entityTransformComponent = entity.getComponent(TransformComponent.class);
-            Transform entityTransform = null;
-            if(entityTransformComponent != null) {
-                entityTransform = entityTransformComponent.getTransform();
-            }
 
-            if(entityTransform != null) {
+            if(entityTransformComponent != null) {
                 for (int i = 0; i < boxCollider2DComponents.size(); i++) {
                     BoxCollider2DComponent boxCollider2DComponent = boxCollider2DComponents.get(i);
 
@@ -86,7 +82,7 @@ public class EntitiesDebugDraw
 
                     box.update();
 
-                    Graphics.getMainRenderer().render(box);
+                    Graphics.getMainRenderer().render(box, Main.getMainCamera2DComponent());
                 }
 
                 for (int i = 0; i < circleCollider2DComponents.size(); i++) {
@@ -119,7 +115,7 @@ public class EntitiesDebugDraw
 
                     circle.update();
 
-                    Graphics.getMainRenderer().render(circle);
+                    Graphics.getMainRenderer().render(circle, Main.getMainCamera2DComponent());
                 }
             }
         }

@@ -3,7 +3,7 @@ package Core2D.Utils;
 import Core2D.AssetManager.Asset;
 import Core2D.Deserializers.*;
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
 import Core2D.Layering.Layer;
@@ -122,7 +122,7 @@ public class Utils
         String newLine = "";
 
 
-        try(InputStreamReader isr = new InputStreamReader(inputStream, "CP866");
+        try(InputStreamReader isr = new InputStreamReader(inputStream, "cp1251");
             BufferedReader bufferedReader = new BufferedReader(isr)) {
 
             while (true) {
@@ -202,11 +202,11 @@ public class Utils
     }
 
     public static boolean isPointInNoRotatedObject(Vector2f mousePosition, Entity entity) {
-        Transform objectTransform = entity.getComponent(TransformComponent.class).getTransform();
+        TransformComponent entityTransformComponent = entity.getComponent(TransformComponent.class);
 
-        return mousePosition.x >= objectTransform.getPosition().x &&
-                mousePosition.x <= objectTransform.getPosition().x + 100.0f * objectTransform.getScale().x &&
-                mousePosition.y >= objectTransform.getPosition().y &&
-                mousePosition.y <= objectTransform.getPosition().y + 100.0f * objectTransform.getScale().y;
+        return mousePosition.x >= entityTransformComponent.position.x &&
+                mousePosition.x <= entityTransformComponent.position.x + 100.0f * entityTransformComponent.scale.x &&
+                mousePosition.y >= entityTransformComponent.position.y &&
+                mousePosition.y <= entityTransformComponent.position.y + 100.0f * entityTransformComponent.scale.y;
     }
 }

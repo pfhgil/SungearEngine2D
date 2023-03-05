@@ -3,7 +3,8 @@ package Core2D.ECS.System.Systems;
 import Core2D.DataClasses.LineData;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.Primitives.PrimitiveComponent;
-import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
 import Core2D.Graphics.OpenGL.OpenGL;
@@ -16,10 +17,10 @@ import org.joml.Vector3f;
 
 import static org.lwjgl.opengl.GL11C.*;
 
-public class PrimitivesRenderer extends System
+public class PrimitivesRendererSystem extends System
 {
     @Override
-    public void renderEntity(Entity entity)
+    public void renderEntity(Entity entity, Camera2DComponent camera2DComponent)
     {
         /*
         if(entity != null) {
@@ -38,7 +39,7 @@ public class PrimitivesRenderer extends System
     }
 
     @Override
-    public void renderEntity(Entity entity, Shader shader)
+    public void renderEntity(Entity entity, Camera2DComponent camera2DComponent, Shader shader)
     {
         /*
         if(entity != null) {
@@ -67,11 +68,11 @@ public class PrimitivesRenderer extends System
             ShaderUtils.setUniform(
                     shader.getProgramHandler(),
                     "mvpMatrix",
-                    transformComponent.getMvpMatrix(camera2DComponent)
+                    ECSWorld.getCurrentECSWorld().transformationsSystem.getMVPMatrix(transformComponent, camera2DComponent)
             );
         } else {
-            Matrix4f resultMatrix = new Matrix4f(transformComponent.getMvpMatrix(camera2DComponent));
-            Vector2f scale = MatrixUtils.getScale(transformComponent.getTransform().getResultModelMatrix());
+            Matrix4f resultMatrix = new Matrix4f(ECSWorld.getCurrentECSWorld().transformationsSystem.getMVPMatrix(transformComponent, camera2DComponent));
+            Vector2f scale = MatrixUtils.getScale(transformComponent.modelMatrix);
             resultMatrix.scale(new Vector3f(1.0f / scale.x, 1.0f / scale.y, 1.0f));
             ShaderUtils.setUniform(
                     shader.getProgramHandler(),

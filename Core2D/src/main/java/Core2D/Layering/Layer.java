@@ -45,7 +45,7 @@ public class Layer
                     1.0f));
 
             // FIXME
-            Graphics.getMainRenderer().render(entity, pickingShader);
+            Graphics.getMainRenderer().render(entity, camera2DComponent, pickingShader);
 
             entity.setColor(lastColor);
         }

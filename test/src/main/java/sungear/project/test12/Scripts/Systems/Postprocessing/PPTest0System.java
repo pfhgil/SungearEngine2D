@@ -32,16 +32,4 @@ public class PPTest0System extends System
     {
 
     }
-
-    @Override
-    public void renderEntity(Camera2DComponent camera2DComponent)
-    {
-
-    }
-
-    @Override
-    public void renderEntity(Camera2DComponent camera2DComponent, Shader shader)
-    {
-
-    }
 }

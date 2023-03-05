@@ -5,7 +5,7 @@ import Core2D.CamerasManager.CamerasManager;
 import Core2D.Core2D.Core2D;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
-import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.RenderParts.Texture2D;
@@ -176,7 +176,7 @@ public class SceneView extends View
                     // нахожу позицию для превью относительно мыши, чтобы он за ней следовал
                     Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
                     // ставлю превью в эту позицию
-                    newEntityPreview.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);
+                    newEntityPreview.getComponent(TransformComponent.class).position.set(oglPosition);
 
                     Object droppedObject = ImGui.acceptDragDropPayload("File");
                     //ImGui.setMouseCursor(ImGuiMouseCursor.ResizeAll);
@@ -185,8 +185,8 @@ public class SceneView extends View
                         File file = (File) droppedObject;
                         Entity entity = createSceneEntity(file);
                         if(entity != null) {
-                            entity.getComponent(TransformComponent.class).getTransform().setPosition(
-                                    newEntityPreview.getComponent(TransformComponent.class).getTransform().getPosition()
+                            entity.getComponent(TransformComponent.class).position.set(
+                                    newEntityPreview.getComponent(TransformComponent.class).position
                             );
                         }
                         newEntityPreview.destroy();
@@ -333,11 +333,11 @@ public class SceneView extends View
             meshComponent.getTexture().path = relativePath;
 
             Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
-            newSceneEntity.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);
+            newSceneEntity.getComponent(TransformComponent.class).position.set(oglPosition);
 
             Vector2f newObject2DScale = new Vector2f(meshComponent.getTexture().getTexture2DData().getWidth() / 100.0f,
                     meshComponent.getTexture().getTexture2DData().getHeight() / 100.0f);
-            newSceneEntity.getComponent(TransformComponent.class).getTransform().setScale(newObject2DScale);
+            newSceneEntity.getComponent(TransformComponent.class).scale.set(newObject2DScale);
 
             // дефолтный layer
             newSceneEntity.setLayer(currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));

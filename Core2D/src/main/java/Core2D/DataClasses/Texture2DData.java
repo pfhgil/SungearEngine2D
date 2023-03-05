@@ -40,9 +40,10 @@ public class Texture2DData extends Data
     {
         this.path = path;
 
-        //Log.Console.println("texture data path: " + path);
+        Log.CurrentSession.println("texture data path: " + path, Log.MessageType.WARNING);
 
-        try (FileInputStream fis = new FileInputStream(path); BufferedInputStream bis = new BufferedInputStream(fis)) {
+        try (FileInputStream fis = new FileInputStream(path);
+             BufferedInputStream bis = new BufferedInputStream(fis)) {
             load(bis, path);
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
@@ -90,7 +91,7 @@ public class Texture2DData extends Data
                 format = GL_LUMINANCE;
             }
 
-            Log.CurrentSession.println("Loaded texture: " + path + ", width: " + width + ", height: " + height + ", internalFormat: " + internalFormat + ", format: " + format + ", channels: " + channels, Log.MessageType.SUCCESS);
+            //Log.CurrentSession.println("Loaded texture: " + path + ", width: " + width + ", height: " + height + ", internalFormat: " + internalFormat + ", format: " + format + ", channels: " + channels, Log.MessageType.SUCCESS);
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }

@@ -10,7 +10,8 @@ import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
-import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.RenderParts.Shader;
@@ -22,6 +23,7 @@ import Core2D.Project.ProjectsManager;
 import Core2D.Scripting.Script;
 import Core2D.Tasks.StoppableTask;
 import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.FileUtils;
 import SungearEngine2D.CameraController.CameraController;
 import SungearEngine2D.DebugDraw.CamerasDebugLines;
 import SungearEngine2D.DebugDraw.EntitiesDebugDraw;
@@ -29,6 +31,7 @@ import SungearEngine2D.DebugDraw.Gizmo;
 import SungearEngine2D.GUI.GUI;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
+import SungearEngine2D.Scripts.Components.MoveToComponent;
 import SungearEngine2D.Utils.AppData.AppDataManager;
 import imgui.ImGui;
 import org.apache.commons.io.FilenameUtils;
@@ -72,7 +75,17 @@ public class Main
                 //Debugger.init();
                 Resources.load();
 
+                /*
+                mainCamera2D = new Entity();
+                mainCamera2D.name = "EditorCamera2D";
+                mainCamera2D.addComponent(new TransformComponent());
+                mainCamera2D.addComponent(new Camera2DComponent());
+                mainCamera2D.addComponent(new MoveToComponent());
+
+                 */
                 mainCamera2D = Entity.createAsCamera2D();
+                mainCamera2D.addComponent(new MoveToComponent());
+
                 CamerasManager.mainCamera2D = mainCamera2D;
                 CameraController.controlledCamera2D = mainCamera2D;
 
@@ -81,6 +94,13 @@ public class Main
                 CameraController.init();
 
                 GUI.init();
+
+                /*
+                String path = "test.txt";
+                FileUtils.createFile(path);
+                FileUtils.writeToFile(path, "привет мир!\nhello world!", true);
+
+                 */
 
                 GraphicsRenderer.init();
 
@@ -220,29 +240,31 @@ public class Main
                             // первый проход рендера - отрисовывается объект в стенсил буфер и заполняется единицами
                             glStencilFunc(GL_ALWAYS, 1, 0xFF);
                             glStencilMask(0xFF);
-                            Graphics.getMainRenderer().render(inspectingEntity);
+                            Graphics.getMainRenderer().render(inspectingEntity, mainCamera2DComponent);
 
                             MeshComponent meshComponent = inspectingEntity.getComponent(MeshComponent.class);
                             TransformComponent transformComponent = inspectingEntity.getComponent(TransformComponent.class);
                             if(meshComponent != null && transformComponent != null) {
-                                Vector2f lastScale = new Vector2f(transformComponent.getTransform().getScale());
+                                Vector2f lastScale = new Vector2f(transformComponent.scale);
                                 Vector4f lastColor = new Vector4f(inspectingEntity.color);
 
-                                transformComponent.getTransform().setScale(new Vector2f(lastScale).add(new Vector2f(0.35f, 0.35f)));
-                                transformComponent.getTransform().updateModelMatrix();
+                                transformComponent.scale.set(new Vector2f(lastScale).add(new Vector2f(0.35f, 0.35f)));
+                                ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(transformComponent);
+                                //transformComponent.getTransform().updateModelMatrix();
                                 inspectingEntity.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 1.0f));
 
                                 // второй проход рендера - отрисовываю объект чуть побольше только одним цветом. все значения пикселей в стенсио буфере, которые не равняются 0xFF будут отрисованы
                                 glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
                                 glStencilMask(0x00);
-                                Graphics.getMainRenderer().render(inspectingEntity, onlyColorShader);
+                                Graphics.getMainRenderer().render(inspectingEntity, mainCamera2DComponent, onlyColorShader);
 
                                 // третяя обработка - все пиксели будут перезаписаны. включаю обработку стенсил буфера
                                 glStencilFunc(GL_ALWAYS, 0, 0xFF);
                                 glStencilMask(0xFF);
 
-                                transformComponent.getTransform().setScale(lastScale);
-                                transformComponent.getTransform().updateModelMatrix();
+                                transformComponent.scale.set(lastScale);
+                                ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(transformComponent);
+
                                 inspectingEntity.setColor(lastColor);
                             }
                         }
@@ -275,7 +297,7 @@ public class Main
                 TransformComponent cameraTransformComponent = mainCamera2D.getComponent(TransformComponent.class);
                 if(cameraTransformComponent != null) {
                     //System.out.println("ddd");
-                    cameraTransformComponent.getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
+                    cameraTransformComponent.scale.set(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
                 }
                 //cameraAnchor.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
                 CameraController.control();

@@ -5,7 +5,8 @@ import Core2D.Core2D.Core2DMode;
 import Core2D.Core2D.Settings;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
-import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
@@ -57,6 +58,8 @@ public class SceneManager
         if(currentScene2D != null) {
             currentScene2D.deltaUpdate(deltaTime);
         }
+
+        ECSWorld.getCurrentECSWorld().update();
     }
 
     public static void saveSceneManager()

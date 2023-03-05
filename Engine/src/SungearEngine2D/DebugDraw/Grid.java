@@ -1,9 +1,8 @@
 package SungearEngine2D.DebugDraw;
 
 import Core2D.ECS.Component.Components.MeshComponent;
-import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
-import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;
 import org.joml.Vector2f;
 
@@ -17,7 +16,7 @@ public class Grid
     {
         grid = Entity.createAsObject2D();
 
-        grid.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(1f, 1f));
+        grid.getComponent(TransformComponent.class).scale.set(new Vector2f(1f, 1f));
         MeshComponent c = grid.getComponent(MeshComponent.class);
         c.setUV(new float[] {
                 0.0f, 0.0f,
@@ -71,6 +70,6 @@ public class Grid
 
         //System.out.println(1.0f / Main.getMainCamera2D().getTransform().getScale().x + ", " + 1.0f / Main.getMainCamera2D().getTransform().getScale().y + ", " + newLevel);
         //Graphics.getMainRenderer().render(grid);
-        grid.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
+        //grid.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
     }
 }

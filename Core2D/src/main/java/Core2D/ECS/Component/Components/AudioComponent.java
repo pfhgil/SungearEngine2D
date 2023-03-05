@@ -2,6 +2,7 @@ package Core2D.ECS.Component.Components;
 
 import Core2D.Audio.Audio;
 import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
 
 public class AudioComponent extends Component
 {
@@ -17,9 +18,12 @@ public class AudioComponent extends Component
     @Override
     public void init()
     {
+        /*
         if(entity != null && !entity.isShouldDestroy()) {
             audio.getTransform().setParentTransform(entity.getComponent(TransformComponent.class).getTransform());
         }
+
+         */
     }
 
     @Override

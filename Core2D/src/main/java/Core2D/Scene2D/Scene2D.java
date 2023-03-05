@@ -4,7 +4,7 @@ import Core2D.Audio.AudioManager;
 import Core2D.CamerasManager.CamerasManager;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
-import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
@@ -100,10 +100,10 @@ public class Scene2D
                 Rigidbody2D rigidbody2D = physicsWorld.addRigidbody2D(entity, this);
                 TransformComponent transformComponent = entity.getComponent(TransformComponent.class);
                 if(transformComponent != null && rigidbody2D != null) {
-                    Vector2f position = transformComponent.getTransform().getPosition();
+                    Vector2f position = transformComponent.position;
                     rigidbody2D.getBody().setTransform(
                             new Vec2(position.x / PhysicsWorld.RATIO, position.y / PhysicsWorld.RATIO),
-                            (float) Math.toRadians(transformComponent.getTransform().getRotation())
+                            (float) Math.toRadians(transformComponent.rotation)
                     );
                 }
             }
@@ -113,7 +113,7 @@ public class Scene2D
     public void draw(Camera2DComponent camera2DComponent)
     {
         if(!shouldDestroy) {
-            Graphics.getMainRenderer().render(layering);
+            Graphics.getMainRenderer().render(layering, camera2DComponent);
 
             if (scene2DCallback != null) {
                 scene2DCallback.onDraw();
@@ -137,7 +137,6 @@ public class Scene2D
     public void deltaUpdate(float deltaTime)
     {
         // FIXME: сделать отдельный метод апдейта (без дельты)
-        ECSWorld.getCurrentECSWorld().update();
         physicsWorld.step(deltaTime, 6, 2);
 
         layering.deltaUpdate(deltaTime);

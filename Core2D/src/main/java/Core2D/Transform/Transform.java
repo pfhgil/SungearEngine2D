@@ -326,7 +326,7 @@ public class Transform implements Serializable
         modelMatrix.identity().mul(translationMatrix).mul(rotationMatrix).mul(scaleMatrix);
 
         if(parentTransform != null) {
-            resultModelMatrix.set(parentTransform.getModelMatrix()).mul(modelMatrix);
+            resultModelMatrix.set(parentTransform.getResultModelMatrix()).mul(modelMatrix);
         } else {
             resultModelMatrix.set(modelMatrix);
         }

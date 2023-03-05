@@ -3,7 +3,7 @@ package Core2D.Core2D;
 import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.OpenAL;
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.Core2DInputCallbacks;
 import Core2D.Input.Core2DUserInputCallback;
@@ -15,8 +15,6 @@ import Core2D.Utils.ExceptionsUtils;
 import Core2D.Window.Window;
 import org.joml.Vector2i;
 import org.lwjgl.Version;
-
-import java.util.Scanner;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -150,12 +148,20 @@ public class Core2D extends Graphics
                             core2DUserCallback.onDeltaUpdate(deltaTime);
                         }
 
+                        /*
                         if(CamerasManager.mainCamera2D != null) {
                             TransformComponent transformComponent = CamerasManager.mainCamera2D.getComponent(TransformComponent.class);
+
                             if(transformComponent != null) {
                                 transformComponent.getTransform().update(deltaTime);
                             }
+
+
+
+
                         }
+
+                         */
                         SceneManager.currentSceneManager.updateCurrentScene2D(deltaTime);
                     }
                     totalIterations++;

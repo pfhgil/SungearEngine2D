@@ -3,6 +3,7 @@ package Core2D.ECS.System.Systems;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Entity;
+import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Scene2D.SceneManager;
@@ -25,9 +26,9 @@ public class ScriptableSystem extends System
      * @see Script#update()
      */
     @Override
-    public void update()
+    public void update(ComponentsQuery componentsQuery)
     {
-        super.update();
+        super.update(componentsQuery);
         if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         script.update();
     }
@@ -38,7 +39,7 @@ public class ScriptableSystem extends System
      * @see Script#deltaUpdate(float)
      */
     @Override
-    public void deltaUpdate(float deltaTime)
+    public void deltaUpdate(ComponentsQuery componentsQuery, float deltaTime)
     {
         if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         script.deltaUpdate(deltaTime);
@@ -67,7 +68,7 @@ public class ScriptableSystem extends System
     }
 
     @Override
-    public void renderEntity(Entity entity)
+    public void renderEntity(Entity entity, Camera2DComponent camera2DComponent)
     {
         if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         // FIXME:
@@ -75,7 +76,7 @@ public class ScriptableSystem extends System
     }
 
     @Override
-    public void renderEntity(Entity entity, Shader shader)
+    public void renderEntity(Entity entity, Camera2DComponent camera2DComponent, Shader shader)
     {
         if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         // FIXME:

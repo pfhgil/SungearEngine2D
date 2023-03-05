@@ -112,7 +112,7 @@ public class ResourcesView extends View
             ImGui.setItemAllowOverlap();
 
             if(ImGui.beginDragDropTarget()) {
-                Object object = ImGui.acceptDragDropPayload("SceneGameObject");
+                Object object = ImGui.acceptDragDropPayload("Entity");
                 if(object instanceof Entity entity) {
                     Prefab prefab = new Prefab(entity);
                     prefab.save(currentDirectoryPath + "\\" + entity.name + ".sgopref");

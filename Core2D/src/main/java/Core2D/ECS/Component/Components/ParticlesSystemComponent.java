@@ -1,5 +1,6 @@
 package Core2D.ECS.Component.Components;
 
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Pooling.Pool;
 import Core2D.Scene2D.SceneManager;
@@ -48,7 +49,7 @@ public class ParticlesSystemComponent extends ScriptComponent
                 TransformComponent particleTransform = freeParticle.getComponent(TransformComponent.class);
                 TransformComponent systemTransform = entity.getComponent(TransformComponent.class);
                 if(particleTransform != null && systemTransform != null) {
-                    particleTransform.getTransform().setPosition(systemTransform.getTransform().getPosition());
+                    particleTransform.position.set(systemTransform.position);
                 }
 
                 //System.out.println(exampleGameObject);

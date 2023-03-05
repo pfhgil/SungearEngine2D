@@ -11,6 +11,7 @@ import Core2D.ECS.Component.Components.Primitives.BoxComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.Primitives.LineComponent;
 import Core2D.ECS.Component.Components.Shader.TextureComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.ECS.NonRemovable;
@@ -136,32 +137,32 @@ public class ComponentsView extends View
                     case "TransformComponent" -> {
                         TransformComponent transformComponent = ((TransformComponent) currentComponent);
                         float[] pos = new float[]{
-                                transformComponent.getTransform().getPosition().x,
-                                transformComponent.getTransform().getPosition().y
+                                transformComponent.position.x,
+                                transformComponent.position.y
                         };
                         float[] rotation = new float[]{
-                                transformComponent.getTransform().getRotation()
+                                transformComponent.rotation
                         };
                         float[] scale = new float[]{
-                                transformComponent.getTransform().getScale().x,
-                                transformComponent.getTransform().getScale().y
+                                transformComponent.scale.x,
+                                transformComponent.scale.y
                         };
                         float[] centre = new float[]{
-                                transformComponent.getTransform().getCentre().x,
-                                transformComponent.getTransform().getCentre().y
+                                transformComponent.centre.x,
+                                transformComponent.centre.y
                         };
 
                         if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Position", pos))) {
-                            transformComponent.getTransform().setPosition(new Vector2f(pos));
+                            transformComponent.position.set(new Vector2f(pos));
                         }
                         if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Rotation", rotation))) {
-                            transformComponent.getTransform().setRotation(rotation[0]);
+                            transformComponent.rotation = rotation[0];
                         }
                         if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Scale", scale, 0.01f))) {
-                            transformComponent.getTransform().setScale(new Vector2f(scale));
+                            transformComponent.scale.set(new Vector2f(scale));
                         }
                         if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Centre", centre, 0.01f))) {
-                            transformComponent.getTransform().setCentre(new Vector2f(centre));
+                            transformComponent.centre.set(new Vector2f(centre));
                         }
                     }
                     case "MeshComponent" -> {
@@ -546,7 +547,7 @@ public class ComponentsView extends View
                                     ImGui.popID();
 
                                     if (ImGui.beginDragDropTarget()) {
-                                        Object droppedObject = ImGui.acceptDragDropPayload("SceneGameObject");
+                                        Object droppedObject = ImGui.acceptDragDropPayload("Entity");
                                         if (droppedObject instanceof Entity entity) {
                                             Script.setFieldValue(scriptClsInstance, field, entity);
                                         }
@@ -722,7 +723,7 @@ public class ComponentsView extends View
                         Camera2DComponent camera2DComponent = (Camera2DComponent) currentComponent;
                         ImGui.pushID("Scene2DMainCamera_" + i);
                         if(ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Scene2D main camera", camera2DComponent.isScene2DMainCamera2D))) {
-                            ECSWorld.getCurrentECSWorld().componentsManager.setScene2DMainCamera2D(camera2DComponent, !camera2DComponent.isScene2DMainCamera2D);
+                            ECSWorld.getCurrentECSWorld().componentsInitializerSystem.setScene2DMainCamera2D(camera2DComponent, !camera2DComponent.isScene2DMainCamera2D);
                             //camera2DComponent.setScene2DMainCamera2D(!camera2DComponent.isScene2DMainCamera2D);
                         }
                         ImGui.popID();
@@ -734,7 +735,7 @@ public class ComponentsView extends View
                             ImGui.sameLine();
                             if(ImGuiUtils.imCallWBorder(func -> ImGui.beginListBox("", 150.0f, 75.0f))) {
                                 for (Layer layer : currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
-                                    if (!ECSWorld.getCurrentECSWorld().camerasManager.isPostprocessingLayerExists(camera2DComponent, layer)) {
+                                    if (!ECSWorld.getCurrentECSWorld().camerasManagerSystem.isPostprocessingLayerExists(camera2DComponent, layer)) {
                                         ImGui.pushID("PPLayerToAdd_" + k + "_" + i);
                                         if (ImGui.selectable(layer.getName())) {
                                             camera2DComponent.postprocessingLayers.add(new PostprocessingLayer(layer));

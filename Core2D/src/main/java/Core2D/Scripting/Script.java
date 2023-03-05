@@ -196,9 +196,13 @@ public class Script
             if(scriptClassInstance instanceof Component component) {
                 component.update();
             }
+            // FIXME
+            /*
             if(scriptClassInstance instanceof System system) {
                 system.update();
             }
+
+             */
         }
     }
 
@@ -238,9 +242,13 @@ public class Script
         if(scriptClassInstance instanceof Component component) {
             component.deltaUpdate(deltaTime);
         }
+        // FIXME
+        /*
         if(scriptClassInstance instanceof System system) {
             system.deltaUpdate(deltaTime);
         }
+
+         */
     }
 
     public void collider2DEnter(Entity otherObj)

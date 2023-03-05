@@ -1,12 +1,13 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
-import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Utils.MatrixUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;
+import SungearEngine2D.Scripts.Components.MoveToComponent;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiMouseButton;
@@ -98,7 +99,7 @@ public class SceneTreeView extends View
                     }*/
                     if(ImGui.treeNode("Scene entities")) {
                         if (ImGui.beginDragDropTarget()) {
-                            Object droppedObject = ImGui.acceptDragDropPayload("SceneGameObject");
+                            Object droppedObject = ImGui.acceptDragDropPayload("Entity");
                             if (droppedObject != null) {
                                 ((Entity) droppedObject).setParentEntity(null);
                             }
@@ -111,7 +112,7 @@ public class SceneTreeView extends View
                                 iterator++;
                                 Entity entity = currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(i).getEntities().get(k);
                                 if(!alreadyProcessedObjectsID.contains(entity.ID) && entity.getParentEntity() == null) {
-                                    ImGui.pushID("Scene2DWrappedObject_" + entity.ID);
+                                    ImGui.pushID("Scene2DEntity_" + entity.ID);
                                     boolean opened = ImGui.treeNode(entity.name + " | ID: " + entity.ID);
                                     if (ImGui.isItemHovered()) {
                                         isAnyTreeNodeHovered = true;
@@ -125,19 +126,25 @@ public class SceneTreeView extends View
                                             ViewsManager.getInspectorView().setCurrentInspectingObject(entity);
                                         }
                                         if (ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left)) {
+                                            MoveToComponent moveToComponent = Main.getMainCamera2D().getComponent(MoveToComponent.class);
+                                            moveToComponent.destinationPosition.set(MatrixUtils.getPosition(entity.getComponent(TransformComponent.class).modelMatrix));
+                                            moveToComponent.needMoveTo = true;
+                                            /*
                                             Main.getMainCamera2D().getComponent(TransformComponent.class).getTransform().lerpMoveTo(
                                                     MatrixUtils.getPosition(entity.getComponent(TransformComponent.class).getTransform().getResultModelMatrix()).negate(),
                                                     new Vector2f(10)
                                             );
+
+                                             */
                                         }
                                     }
                                     if (ImGui.beginDragDropSource()) {
-                                        ImGui.setDragDropPayload("SceneGameObject", entity);
+                                        ImGui.setDragDropPayload("Entity", entity);
                                         ImGui.image(Resources.Textures.Icons.object2DFileIcon.getTextureHandler(), 25.0f, 25.0f);
                                         ImGui.endDragDropSource();
                                     }
 
-                                    if(action.equals("DestroyObject2D") && objectToActionIterator == iterator) {
+                                    if(action.equals("DestroyEntity") && objectToActionIterator == iterator) {
                                         entity.destroy();
                                         ViewsManager.getInspectorView().setCurrentInspectingObject(null);
                                         action = "";
@@ -145,7 +152,7 @@ public class SceneTreeView extends View
                                     }
 
                                     if(ImGui.beginDragDropTarget()) {
-                                        Object droppedObject = ImGui.acceptDragDropPayload("SceneGameObject");
+                                        Object droppedObject = ImGui.acceptDragDropPayload("Entity");
 
                                         if(droppedObject != null) {
                                             Entity droppedEntity = (Entity) droppedObject;
@@ -177,7 +184,7 @@ public class SceneTreeView extends View
             if(mouseRightClicked && isAnyTreeNodeHovered) {
                 if(ImGui.beginPopupContextWindow("SceneObjectActions")) {
                     if(ImGui.menuItem("Destroy")) {
-                        action = "DestroyObject2D";
+                        action = "DestroyEntity";
                     }
                     ImVec2 rectMin = ImGui.getItemRectMin();
                     popupContextWindowRectMin.set(rectMin.x, rectMin.y);
@@ -209,19 +216,26 @@ public class SceneTreeView extends View
                         ViewsManager.getInspectorView().setCurrentInspectingObject(entity);
                     }
                     if (ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left)) {
+                        MoveToComponent moveToComponent = Main.getMainCamera2D().getComponent(MoveToComponent.class);
+                        moveToComponent.destinationPosition.set(MatrixUtils.getPosition(entity.getComponent(TransformComponent.class).modelMatrix));
+                        moveToComponent.needMoveTo = true;
+                        /*
                         Main.getMainCamera2D().getComponent(TransformComponent.class).getTransform().lerpMoveTo(
                                 MatrixUtils.getPosition(entity.getComponent(TransformComponent.class).getTransform().getResultModelMatrix()).negate(),
                                 new Vector2f(10));
+
+                         */
                     }
                 }
                 if (ImGui.beginDragDropSource()) {
-                    ImGui.setDragDropPayload("SceneGameObject", entity);
+                    //ImGui.acceptDragDropPayload()
+                    ImGui.setDragDropPayload("Entity", entity);
                     ImGui.image(Resources.Textures.Icons.object2DFileIcon.getTextureHandler(), 25.0f, 25.0f);
                     ImGui.endDragDropSource();
                 }
 
                 if (ImGui.beginDragDropTarget()) {
-                    Object droppedObject = ImGui.acceptDragDropPayload("SceneGameObject");
+                    Object droppedObject = ImGui.acceptDragDropPayload("Entity");
 
                     if (droppedObject != null) {
                         Entity droppedEntity = (Entity) droppedObject;
@@ -233,7 +247,7 @@ public class SceneTreeView extends View
                     ImGui.endDragDropTarget();
                 }
 
-                if(action.equals("DestroyObject2D") && objectToActionIterator == iterator) {
+                if(action.equals("DestroyEntity") && objectToActionIterator == iterator) {
                     entity.destroy();
                     action = "";
                     objectToActionIterator = -1;

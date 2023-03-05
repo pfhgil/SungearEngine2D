@@ -248,7 +248,12 @@ public class AssetManager implements Serializable
         if(assetObj == null) {
             if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
                 if(ProjectsManager.getCurrentProject() != null) {
-                    String fullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + path;
+                    String resPath = path;
+                    if(new File(path).exists()) {
+                        resPath = FileUtils.getRelativePath(path, ProjectsManager.getCurrentProject().getProjectPath());
+                    }
+
+                    String fullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + resPath;
                     Object objToCast = null;
                     if (assetObjectClass.getSuperclass().isAssignableFrom(Data.class)) {
                         try {

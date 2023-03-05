@@ -2,7 +2,8 @@ package Core2D.ECS.System.Systems;
 
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera2DComponent;
-import Core2D.ECS.Component.Test;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.ECSWorld;
 import Core2D.ECS.NonRemovable;
 import Core2D.ECS.System.System;
 import Core2D.Graphics.Graphics;
@@ -15,21 +16,12 @@ import org.joml.Vector2i;
 import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
 
 // система для инициализации компонентов
-public class ComponentsManager extends System implements NonRemovable
+public class ComponentsInitializerSystem extends System implements NonRemovable
 {
-    public ComponentsManager()
-    {
-        componentsClasses.add(Camera2DComponent.class);
-        componentsClasses.add(Test.class);
-    }
-
     // инициализирует компонент при добавлении на сущность
-    @Override
     public void initComponentOnAdd(Component component)
     {
         if(component instanceof Camera2DComponent camera2DComponent) {
-            camera2DComponent.accessLevelToQueries = Component.AccessLevelToQueries.GLOBAL;
-
             if(camera2DComponent.frameBuffer != null) {
                 camera2DComponent.frameBuffer.destroy();
                 camera2DComponent.frameBuffer = null;
@@ -45,26 +37,24 @@ public class ComponentsManager extends System implements NonRemovable
             Vector2i screenSize = Graphics.getScreenSize();
             camera2DComponent.frameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
             camera2DComponent.resultFrameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
-        } else if(component instanceof Test test) {
-            // initialize component
+        } else if(component instanceof TransformComponent transformComponent) {
+            ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(transformComponent);
         }
     }
 
     // вызывается при удалении с сущности компонента (система ComponentsManager)
-    @Override
     public void destroyComponent(Component component)
     {
         if(component instanceof Camera2DComponent camera2DComponent) {
+            setScene2DMainCamera2D(camera2DComponent, false);
             camera2DComponent.frameBuffer.destroy();
             camera2DComponent.ppQuadVertexArray.destroy();
             camera2DComponent.resultFrameBuffer.destroy();
-            camera2DComponent.postprocessingDefaultShader.destroy();
+            //camera2DComponent.postprocessingDefaultShader.destroy();
 
             for(PostprocessingLayer ppLayer : camera2DComponent.postprocessingLayers) {
                 ppLayer.destroy();
             }
-        } else if(component instanceof Test test) {
-            // initialize component
         }
     }
 

@@ -1,7 +1,7 @@
 package Core2D.ECS.Component.Components.Physics;
 
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.NonDuplicated;
 import Core2D.Physics.Rigidbody2D;
 import Core2D.Scene2D.SceneManager;
@@ -44,9 +44,12 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated
     public void destroy()
     {
         rigidbody2D.destroy();
+        /*
         if(entity.getComponent(TransformComponent.class) != null) {
             entity.getComponent(TransformComponent.class).getTransform().setRigidbody2D(null);
         }
+
+         */
     }
 
     /**
@@ -76,7 +79,7 @@ public class Rigidbody2DComponent extends Component implements NonDuplicated
         if(rigidbody2D.getScene2D() != null) {
             rigidbody2D.getScene2D().getPhysicsWorld().addRigidbody2D(entity, rigidbody2D.getScene2D());
         }
-        entity.getComponent(TransformComponent.class).getTransform().setRigidbody2D(rigidbody2D);
+        //entity.getComponent(TransformComponent.class).getTransform().setRigidbody2D(rigidbody2D);
     }
 
     public Rigidbody2D getRigidbody2D() { return rigidbody2D; }

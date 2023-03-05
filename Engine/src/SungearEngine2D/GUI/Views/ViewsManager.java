@@ -1,7 +1,11 @@
 package SungearEngine2D.GUI.Views;
 
 import Core2D.Core2D.Core2D;
+import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.ECSWorld;
+import Core2D.ECS.System.ComponentsQuery;
+import Core2D.ECS.System.System;
 import SungearEngine2D.GUI.Views.DebuggerView.DebuggerView;
 import SungearEngine2D.GUI.Views.EditorView.*;
 import SungearEngine2D.GUI.Views.Other.EngineSettingsView;
@@ -136,6 +140,21 @@ public class ViewsManager
             debuggerView.draw();
 
             shadersEditorView.draw();
+
+            /*
+            ImGui.begin("Systems");
+
+            for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().componentsManager.getComponentsQueries()) {
+                if(ImGui.collapsingHeader("Components query " + componentsQuery.entityID)) {
+                    for(Component component : componentsQuery.getComponents()) {
+                        ImGui.text("Component: " + component + ", entity ID: " + component.entity.ID);
+                    }
+                }
+            }
+
+            ImGui.end();
+
+             */
         }
         ImGui.end();
 

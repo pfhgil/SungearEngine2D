@@ -2,9 +2,11 @@ package Core2D.Utils;
 
 import Core2D.Log.Log;
 import org.apache.commons.io.ByteOrderMark;
+import org.apache.commons.io.Charsets;
 import org.apache.commons.io.input.BOMInputStream;
 
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
@@ -114,31 +116,50 @@ public class FileUtils
     public static String readAllFile(String path) { return readAllFile(new File(path)); }
     public static String readAllFile(File file)
     {
+        /*
         StringBuilder stringBuilder = new StringBuilder(); // для операций со строками
 
-        try(Scanner scanner = new Scanner(file).useDelimiter("\\A")) {
+        try(Scanner scanner = new Scanner(file, StandardCharsets.UTF_8).useDelimiter("\\n")) {
             stringBuilder = new StringBuilder();
 
             // выполняю пока есть следующая линия
             while(scanner.hasNext()) {
                 stringBuilder.append(scanner.next()); // соединяю fileText с scanner.next(). scanner.next - следующая линия
             }
+
+
+            Log.CurrentSession.println(stringBuilder.toString(), Log.MessageType.WARNING);
         } catch (Exception e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);;
         }
 
-        return stringBuilder.toString();
+        return stringBuilder.toString();\
+
+         */
+        try {
+            String all = org.apache.commons.io.FileUtils.readFileToString(file, "cp1251");
+            System.out.println(all);
+            return all;
+        } catch (IOException e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+        }
+
+        return "";
     }
 
     public static String readAllFile(InputStream inputStream)
     {
         StringBuilder stringBuilder = new StringBuilder(); // для операций со строками
-
         try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(new BOMInputStream(inputStream, false,
                 ByteOrderMark.UTF_8,
                 ByteOrderMark.UTF_16BE, ByteOrderMark.UTF_16LE,
                 ByteOrderMark.UTF_32BE, ByteOrderMark.UTF_32LE)));
             inputStream) {
+        /*
+        try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
+            inputStream) {
+
+         */
 
             String curLine = "";
 
@@ -158,9 +179,10 @@ public class FileUtils
     public static void writeToFile(File file, String data, boolean append)
     {
         try(PrintWriter pw = new PrintWriter(new OutputStreamWriter(new FileOutputStream(file, append), "cp1251"))) {
-            pw.println(data);
             pw.flush();
-        } catch (IOException e) {
+            pw.println(data);
+            //pw.flush();
+        } catch (FileNotFoundException | UnsupportedEncodingException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
@@ -169,6 +191,7 @@ public class FileUtils
     public static void writeToFile(File file, byte[] data, boolean append)
     {
         try(FileOutputStream outputStream = new FileOutputStream(file, append)) {
+            //outputStream.flush();
             outputStream.write(data);
             outputStream.flush();
         } catch (IOException e) {

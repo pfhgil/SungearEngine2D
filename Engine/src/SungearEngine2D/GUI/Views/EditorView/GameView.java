@@ -252,7 +252,7 @@ public class GameView extends View
         Component foundComponent = camera2DComponentHandler.getComponent();
         if(foundComponent == null) return;
         if(foundComponent instanceof Camera2DComponent camera2DComponent) {
-            postprocessingLayer = ECSWorld.getCurrentECSWorld().camerasManager.getPostprocessingLayerByName(camera2DComponent, postprocessingLayer.getEntitiesLayerToRenderName());
+            postprocessingLayer = ECSWorld.getCurrentECSWorld().camerasManagerSystem.getPostprocessingLayerByName(camera2DComponent, postprocessingLayer.getEntitiesLayerToRenderName());
         }
     }
 

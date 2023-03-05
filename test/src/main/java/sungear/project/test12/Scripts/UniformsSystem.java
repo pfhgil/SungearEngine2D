@@ -32,31 +32,4 @@ public class UniformsSystem extends System
     {
 
     }
-
-    @Override
-    public void renderEntity(Camera2DComponent camera2DComponent)
-    {
-        //float time = (float) glfwGetTime();
-        float time = 0.0f;
-
-        /*
-        MeshComponent meshComponent = entity.getComponent(MeshComponent.class);
-        if(meshComponent != null) {
-            meshComponent.shader.bind();
-
-            ShaderUtils.setUniform(
-                    meshComponent.shader.getProgramHandler(),
-                    "time",
-                    time
-            );
-        }
-
-         */
-    }
-
-    @Override
-    public void renderEntity(Camera2DComponent camera2DComponent, Shader shader)
-    {
-
-    }
 }

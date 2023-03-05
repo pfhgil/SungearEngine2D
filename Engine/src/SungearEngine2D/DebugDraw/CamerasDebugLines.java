@@ -3,10 +3,12 @@ package SungearEngine2D.DebugDraw;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Primitives.BoxComponent;
-import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Transform.Transform;
+import Core2D.Utils.MatrixUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;
@@ -28,11 +30,11 @@ public class CamerasDebugLines
         inspectorCamera2DIcon.getComponent(MeshComponent.class).getTexture().set(Resources.Textures.Icons.cameraIcon96);
         Vector2f cameraSize = new Vector2f(Resources.Textures.Icons.cameraIcon96.getTexture2DData().getWidth(),
                 Resources.Textures.Icons.cameraIcon96.getTexture2DData().getHeight());
-        inspectorCamera2DIcon.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(cameraSize.x / 100.0f, cameraSize.y / 100.0f));
+        inspectorCamera2DIcon.getComponent(TransformComponent.class).scale.set(new Vector2f(cameraSize.x / 100.0f, cameraSize.y / 100.0f));
         inspectorCamera2DIcon.setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.75f));
 
         mainCamera2DIcon.getComponent(MeshComponent.class).getTexture().set(Resources.Textures.Icons.cameraIcon96);
-        mainCamera2DIcon.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(cameraSize.x / 100.0f, cameraSize.y / 100.0f));
+        mainCamera2DIcon.getComponent(TransformComponent.class).scale.set(new Vector2f(cameraSize.x / 100.0f, cameraSize.y / 100.0f));
         mainCamera2DIcon.setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.75f));
 
         inspectorCamera2DBox.getComponent(BoxComponent.class).setColor(new Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
@@ -57,17 +59,18 @@ public class CamerasDebugLines
                 inspectorCamera2DIcon.active = true;
                 inspectorCamera2DBox.active = true;
 
-                float realRotation = cameraTransformComponent.getTransform().getRealRotation();
-                Vector2f realPosition = cameraTransformComponent.getTransform().getRealPosition();
+                Vector2f camera2DRealPosition = MatrixUtils.getPosition(cameraTransformComponent.modelMatrix);
+                float camera2DRealRotation = MatrixUtils.getRotation(cameraTransformComponent.modelMatrix);
+                Vector2f camera2DRealScale = MatrixUtils.getScale(cameraTransformComponent.modelMatrix);
 
-                inspectorCamera2DIcon.getComponent(TransformComponent.class).getTransform().setPosition(realPosition);
-                inspectorCamera2DIcon.getComponent(TransformComponent.class).getTransform().setRotation(realRotation);
+                inspectorCamera2DIcon.getComponent(TransformComponent.class).position.set(camera2DRealPosition);
+                inspectorCamera2DIcon.getComponent(TransformComponent.class).rotation = camera2DRealRotation;
 
-                Transform boxTransform = inspectorCamera2DBox.getComponent(TransformComponent.class).getTransform();
+                TransformComponent boxTransformComponent = inspectorCamera2DBox.getComponent(TransformComponent.class);
                 BoxComponent boxComponent = inspectorCamera2DBox.getComponent(BoxComponent.class);
-                Vector2f camera2DRealScale = cameraTransformComponent.getTransform().getRealScale();
-                boxTransform.setPosition(realPosition);
-                boxTransform.setRotation(realRotation);
+
+                boxTransformComponent.position.set(camera2DRealPosition);
+                boxTransformComponent.rotation = camera2DRealRotation;
                 boxComponent.setWidth(camera2DComponent.viewportSize.x * (1.0f / camera2DRealScale.x));
                 boxComponent.setHeight(camera2DComponent.viewportSize.y * (1.0f / camera2DRealScale.y));
             }
@@ -81,17 +84,18 @@ public class CamerasDebugLines
                 mainCamera2DIcon.active = true;
                 mainCamera2DBox.active = true;
 
-                float realRotation = cameraTransformComponent.getTransform().getRealRotation();
-                Vector2f realPosition = cameraTransformComponent.getTransform().getRealPosition();
+                Vector2f camera2DRealPosition = MatrixUtils.getPosition(cameraTransformComponent.modelMatrix);
+                float camera2DRealRotation = MatrixUtils.getRotation(cameraTransformComponent.modelMatrix);
+                Vector2f camera2DRealScale = MatrixUtils.getScale(cameraTransformComponent.modelMatrix);
 
-                mainCamera2DIcon.getComponent(TransformComponent.class).getTransform().setPosition(realPosition);
-                mainCamera2DIcon.getComponent(TransformComponent.class).getTransform().setRotation(realRotation);
+                mainCamera2DIcon.getComponent(TransformComponent.class).position.set(camera2DRealPosition);
+                mainCamera2DIcon.getComponent(TransformComponent.class).rotation = camera2DRealRotation;
 
-                Transform boxTransform = mainCamera2DBox.getComponent(TransformComponent.class).getTransform();
+                TransformComponent boxTransformComponent = mainCamera2DBox.getComponent(TransformComponent.class);
                 BoxComponent boxComponent = mainCamera2DBox.getComponent(BoxComponent.class);
-                Vector2f camera2DRealScale = cameraTransformComponent.getTransform().getRealScale();
-                boxTransform.setPosition(realPosition);
-                boxTransform.setRotation(realRotation);
+
+                boxTransformComponent.position.set(camera2DRealPosition);
+                boxTransformComponent.rotation = camera2DRealRotation;
                 boxComponent.setWidth(camera2DComponent.viewportSize.x * (1.0f / camera2DRealScale.x));
                 boxComponent.setHeight(camera2DComponent.viewportSize.y * (1.0f / camera2DRealScale.y));
             }
@@ -102,14 +106,21 @@ public class CamerasDebugLines
         mainCamera2DIcon.update();
         mainCamera2DBox.update();
 
+        ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(inspectorCamera2DIcon.getComponent(TransformComponent.class));
+        ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(inspectorCamera2DBox.getComponent(TransformComponent.class));
+        ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(mainCamera2DIcon.getComponent(TransformComponent.class));
+        ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(mainCamera2DBox.getComponent(TransformComponent.class));
+        /*
         inspectorCamera2DIcon.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
         inspectorCamera2DBox.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
         mainCamera2DIcon.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
         mainCamera2DBox.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
 
-        Graphics.getMainRenderer().render(inspectorCamera2DIcon);
-        Graphics.getMainRenderer().render(inspectorCamera2DBox);
-        Graphics.getMainRenderer().render(mainCamera2DIcon);
-        Graphics.getMainRenderer().render(mainCamera2DBox);
+         */
+
+        Graphics.getMainRenderer().render(inspectorCamera2DIcon, Main.getMainCamera2DComponent());
+        Graphics.getMainRenderer().render(inspectorCamera2DBox, Main.getMainCamera2DComponent());
+        Graphics.getMainRenderer().render(mainCamera2DIcon, Main.getMainCamera2DComponent());
+        Graphics.getMainRenderer().render(mainCamera2DBox, Main.getMainCamera2DComponent());
     }
 }

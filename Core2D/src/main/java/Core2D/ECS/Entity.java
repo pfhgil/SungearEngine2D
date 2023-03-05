@@ -7,7 +7,7 @@ import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Component.Components.Primitives.BoxComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.Primitives.LineComponent;
-import Core2D.ECS.System.System;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Pooling.PoolObject;
@@ -69,6 +69,7 @@ public class Entity implements Serializable, PoolObject
     // копировать объект
     public Entity(Entity entity)
     {
+        /*
         destroy();
 
         setColor(new Vector4f(entity.getColor().x, entity.getColor().y, entity.getColor().z, entity.getColor().w));
@@ -89,6 +90,8 @@ public class Entity implements Serializable, PoolObject
         pickColor.set(createPickColor());
 
         createNewID();
+
+         */
     }
 
     public void set(Entity entity)
@@ -243,6 +246,7 @@ public class Entity implements Serializable, PoolObject
         Iterator<Component> componentsIterator = components.iterator();
         while (componentsIterator.hasNext()) {
             Component component = componentsIterator.next();
+            ECSWorld.getCurrentECSWorld().removeComponent(component);
             component.destroy();
             componentsIterator.remove();
         }
@@ -284,15 +288,6 @@ public class Entity implements Serializable, PoolObject
                 return component;
             }
         }
-        /*
-        for(var currentComponent : components) {
-            if(currentComponent.getClass().equals(component.getClass()) && currentComponent instanceof NonDuplicated) {
-                Log.showErrorDialog("Component " + component.getClass().getName() + " already exists");
-                Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Component " + component.getClass().getName() + " already exists")), Log.MessageType.ERROR);
-            }
-        }
-
-         */
 
         if(components.size() > 0) {
             component.ID = components.stream().max(Comparator.comparingInt(c0 -> c0.ID)).get().ID + 1;
@@ -300,13 +295,14 @@ public class Entity implements Serializable, PoolObject
         components.add(component);
         component.entity = this;
 
-        // добавление компонента во все системы у ecs мира
+        // добавление компонента в ECS мир
         ECSWorld.getCurrentECSWorld().addComponent(component);
+        //Log.CurrentSession.println("попытался добавить компонент: " + component + ", " + component.entity.name, Log.MessageType.ERROR);
 
         if(component instanceof ScriptComponent scriptComponent) {
             if(scriptComponent.script.getScriptClassInstance() instanceof Component componentScriptInstance) {
                 componentScriptInstance.entity = this;
-                //scriptComponent.script.setFieldValue(scriptComponent.script.getField("entity"), this);
+                scriptComponent.script.setFieldValue(scriptComponent.script.getField("entity"), this);
             } // FIXME:
              /* else if(scriptComponent.script.getScriptClassInstance() instanceof System systemScriptInstance) {
                 systemScriptInstance.entity = this;
@@ -598,13 +594,14 @@ public class Entity implements Serializable, PoolObject
             // если у этого объекта больше нет родителя
             if(parentEntity == null) {
                 // выполняю некоторые преобразования, чтобы этот зависимый объект встал на свою глобальную позицию обратно
-                Transform transform = getComponent(TransformComponent.class).getTransform();
-                Transform parentTransform = this.parentEntity.getComponent(TransformComponent.class).getTransform();
-                transform.setParentTransform(null);
-                transform.setPosition(new Vector2f(transform.getPosition())
-                        .mul(MatrixUtils.getScale(parentTransform.getResultModelMatrix()))
-                        .add(MatrixUtils.getPosition(parentTransform.getResultModelMatrix())));
-                transform.setScale(new Vector2f(transform.getScale()).mul(MatrixUtils.getScale(parentTransform.getResultModelMatrix())));
+                TransformComponent transformComponent = getComponent(TransformComponent.class);
+                TransformComponent parentTransformComponent = this.parentEntity.getComponent(TransformComponent.class);
+
+                transformComponent.parentTransformComponent = parentTransformComponent;
+                transformComponent.position.set(new Vector2f(transformComponent.position)
+                        .mul(MatrixUtils.getScale(parentTransformComponent.modelMatrix))
+                        .add(MatrixUtils.getPosition(parentTransformComponent.modelMatrix)));
+                transformComponent.scale.set(new Vector2f(transformComponent.scale).mul(MatrixUtils.getScale(parentTransformComponent.modelMatrix)));
 
                 this.parentEntity.removeChildEntity(this);
             }
@@ -613,15 +610,15 @@ public class Entity implements Serializable, PoolObject
         if(parentEntity != null) {
             // выполняю некоторые преобразования, чтобы этот объект встал на нужную локальную позицию
             this.parentEntityID = parentEntity.ID;
-            Transform transform = getComponent(TransformComponent.class).getTransform();
-            Transform parentTransform = this.parentEntity.getComponent(TransformComponent.class).getTransform();
-            transform.setParentTransform(parentTransform);
-            java.lang.System.out.println("attached parent transform: " + parentTransform);
-            transform.setPosition(new Vector2f(transform.getPosition()).add(MatrixUtils.getPosition(parentTransform.getResultModelMatrix()).negate()));
-            transform.setScale(new Vector2f(transform.getScale()).div(MatrixUtils.getScale(parentTransform.getResultModelMatrix())));
+            TransformComponent transformComponent = getComponent(TransformComponent.class);
+            TransformComponent parentTransformComponent = this.parentEntity.getComponent(TransformComponent.class);
+            transformComponent.parentTransformComponent = parentTransformComponent;
+            java.lang.System.out.println("attached parent transformComponent: " + parentTransformComponent);
+            transformComponent.position.set(new Vector2f(transformComponent.position).add(MatrixUtils.getPosition(parentTransformComponent.modelMatrix).negate()));
+            transformComponent.scale.set(new Vector2f(transformComponent.scale).div(MatrixUtils.getScale(parentTransformComponent.modelMatrix)));
         } else {
             this.parentEntityID = -1;
-            getComponent(TransformComponent.class).getTransform().setParentTransform(null);
+            getComponent(TransformComponent.class).parentTransformComponent = null;
         }
     }
 

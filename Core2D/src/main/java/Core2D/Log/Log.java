@@ -80,51 +80,48 @@ public class Log
 
             if(!willPrintToFile) return;
 
-            if(new File(directoryPath + File.separator + currentSessionFileName).exists()) {
-                try(FileWriter fileWriter = new FileWriter(directoryPath + File.separator + currentSessionFileName, true)) {
+            File logFile = new File(directoryPath + File.separator + currentSessionFileName);
+            if (logFile.exists()) {
 
-                    DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                    Date date = new Date();
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date date = new Date();
 
-                    StringBuilder strBuilder = new StringBuilder("[#FFFFFF] ").append(dateFormat.format(date.getTime()));
-                    if(appendCallableMethodDescription) {
-                        StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+                StringBuilder strBuilder = new StringBuilder("[#FFFFFF] ").append(dateFormat.format(date.getTime()));
+                if (appendCallableMethodDescription) {
+                    StackTraceElement[] ste = Thread.currentThread().getStackTrace();
 
-                        int depth = ste[2].getMethodName().equals("println") ? 3 : 2;
+                    int depth = ste[2].getMethodName().equals("println") ? 3 : 2;
 
-                        strBuilder.append(" | [#9932CC] Called from: ")
-                                .append(ste[depth].getClassName())
-                                .append("::").append(ste[depth].getMethodName())
-                                .append(". Line: ")
-                                .append(ste[depth].getLineNumber())
-                                .append(" [#FFFFFF]");
-                    }
-
-                    switch(messageType) {
-                        case SUCCESS ->  {
-                            strBuilder.append(" | [#008000] ").append(obj).append("\n");
-                            successLog.append(strBuilder);
-                        } case INFO -> {
-                            strBuilder.append(" | [#FFFFFF] ").append(obj).append("\n");
-                            infoLog.append(strBuilder);
-                        } case WARNING -> {
-                            strBuilder.append(" | [#FFFF00] ").append(obj).append("\n");
-                            warningLog.append(strBuilder);
-                        } case ERROR -> {
-                            strBuilder.append(" | [#FF0000] ").append(obj).append("\n");
-                            errorLog.append(strBuilder);
-                        }
-                    }
-
-                    allLog.append(strBuilder);
-
-                    // записываю в файл лога информацию
-                    fileWriter.write(strBuilder.toString());
-
-                    fileWriter.flush();
-                } catch (Exception e) {
-                    Console.println(ExceptionsUtils.toString(e));
+                    strBuilder.append(" | [#9932CC] Called from: ")
+                            .append(ste[depth].getClassName())
+                            .append("::").append(ste[depth].getMethodName())
+                            .append(". Line: ")
+                            .append(ste[depth].getLineNumber())
+                            .append(" [#FFFFFF]");
                 }
+
+                switch (messageType) {
+                    case SUCCESS -> {
+                        strBuilder.append(" | [#008000] ").append(obj).append("\n");
+                        successLog.append(strBuilder);
+                    }
+                    case INFO -> {
+                        strBuilder.append(" | [#FFFFFF] ").append(obj).append("\n");
+                        infoLog.append(strBuilder);
+                    }
+                    case WARNING -> {
+                        strBuilder.append(" | [#FFFF00] ").append(obj).append("\n");
+                        warningLog.append(strBuilder);
+                    }
+                    case ERROR -> {
+                        strBuilder.append(" | [#FF0000] ").append(obj).append("\n");
+                        errorLog.append(strBuilder);
+                    }
+                }
+
+                allLog.append(strBuilder);
+
+                FileUtils.writeToFile(logFile, strBuilder.toString(), true);
             }
         }
 

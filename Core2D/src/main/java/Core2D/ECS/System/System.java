@@ -1,6 +1,7 @@
 package Core2D.ECS.System;
 
 import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.NonDuplicated;
 import Core2D.Graphics.RenderParts.Shader;
@@ -12,21 +13,16 @@ import java.util.Optional;
 
 public class System
 {
-    protected transient List<ComponentsQuery> componentsQueries = new ArrayList<>();
-
     protected boolean active = true;
-
-    // список классов компонентов, которые может принимать
-    protected List<Class<?>> componentsClasses = new ArrayList<>();
 
     public System() {}
 
-    public void update()
+    public void update(ComponentsQuery componentsQuery)
     {
 
     }
 
-    public void deltaUpdate(float deltaTime)
+    public void deltaUpdate(ComponentsQuery componentsQuery, float deltaTime)
     {
 
     }
@@ -53,73 +49,14 @@ public class System
 
     }
 
-    public void renderEntity(Entity entity)
+    public void renderEntity(Entity entity, Camera2DComponent camera2DComponent)
     {
 
     }
 
-    public void renderEntity(Entity entity, Shader shader)
+    public void renderEntity(Entity entity, Camera2DComponent camera2DComponent, Shader shader)
     {
 
-    }
-
-    // добавление компонента для обработки
-    public void addComponent(Component component)
-    {
-        if(!componentsClasses.contains(component.getClass())) return;
-
-        if(component.entity == null) {
-            Log.CurrentSession.println("Value of field 'entity' in component '" + component + "' is equals null", Log.MessageType.ERROR, true);
-            return;
-        }
-
-        //if(componentsClasses.)
-
-        boolean foundQuery = false;
-        for(ComponentsQuery componentsQuery : componentsQueries) {
-            if(componentsQuery.entityID == component.entity.ID || component.accessLevelToQueries == Component.AccessLevelToQueries.GLOBAL) {
-                if(component instanceof NonDuplicated) {
-                    Optional<Component> foundComponent = componentsQuery.getComponents().stream().filter(c -> c.getClass().equals(component.getClass())).findAny();
-                    if(foundComponent.isPresent()) {
-                        Log.CurrentSession.println("Component '" + component + "' already exists in ComponentsQuery with 'entityID' == "
-                                + componentsQuery.entityID + ". Component '" + component + "' is NonDuplicated", Log.MessageType.ERROR, true);
-                        return;
-                    }
-                } else {
-                    componentsQuery.getComponents().add(component);
-                    foundQuery = true;
-                    Log.CurrentSession.println("adding component: " + component + ". entity id: " + component.entity.ID + ". system: " + this, Log.MessageType.WARNING);
-                }
-            }
-        }
-
-        if(!foundQuery) {
-            ComponentsQuery componentsQuery = new ComponentsQuery(component.entity.ID);
-            if(componentsQuery.entityID == component.entity.ID || component.accessLevelToQueries == Component.AccessLevelToQueries.GLOBAL) {
-                componentsQuery.getComponents().add(component);
-            }
-            componentsQueries.add(componentsQuery);
-            Log.CurrentSession.println("created query. adding component: " + component + ". entity id: " + component.entity.ID + ". system: " + this, Log.MessageType.WARNING);
-        }
-
-        initComponentOnAdd(component);
-    }
-
-    // удаляет компонент из обработки
-    public void removeComponent(Component component)
-    {
-        componentsQueries.forEach(componentsQuery -> {
-            if(componentsQuery.entityID == component.entity.ID) {
-                componentsQuery.getComponents().remove(component);
-            }
-        });
-
-        destroyComponent(component);
-    }
-
-    public ComponentsQuery findComponentsQuery(int entityID)
-    {
-        return componentsQueries.stream().filter(componentsQuery -> componentsQuery.entityID == entityID).findAny().orElse(null);
     }
 
     //public void getComponent

@@ -223,7 +223,7 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
             } else if(component instanceof Camera2DComponent camera2DComponent) {
                 Shader defaultShader = new Shader(AssetManager.getInstance().getShaderData(camera2DComponent.postprocessingDefaultShader.path));
 
-                ECSWorld.getCurrentECSWorld().camerasManager.setPostprocessingDefaultShader(camera2DComponent, defaultShader);
+                ECSWorld.getCurrentECSWorld().camerasManagerSystem.setPostprocessingDefaultShader(camera2DComponent, defaultShader);
                 //camera2DComponent.setPostprocessingDefaultShader(defaultShader);
                 for(int i = 0; i < camera2DComponent.postprocessingLayers.size(); i++) {
                     PostprocessingLayer ppLayer = camera2DComponent.postprocessingLayers.get(i);
