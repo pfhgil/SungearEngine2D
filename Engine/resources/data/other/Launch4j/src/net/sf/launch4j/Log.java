@@ -36,8 +36,7 @@
  */
 package net.sf.launch4j;
 
-import javax.swing.JTextArea;
-import javax.swing.SwingUtilities;
+import javax.swing.*;
 
 /**
  * @author Copyright (C) 2005 Grzegorz Kowal

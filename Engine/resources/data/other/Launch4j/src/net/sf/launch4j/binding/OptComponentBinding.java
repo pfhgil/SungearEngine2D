@@ -36,13 +36,12 @@
  */
 package net.sf.launch4j.binding;
 
+import org.apache.commons.beanutils.PropertyUtils;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
-
-import javax.swing.JToggleButton;
-
-import org.apache.commons.beanutils.PropertyUtils;
 
 /**
  * @author Copyright (C) 2005 Grzegorz Kowal

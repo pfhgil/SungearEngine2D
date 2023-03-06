@@ -36,17 +36,12 @@
  */
 package net.sf.launch4j.ant;
 
+import net.sf.launch4j.config.*;
+import org.apache.tools.ant.BuildException;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.apache.tools.ant.BuildException;
-
-import net.sf.launch4j.config.Config;
-import net.sf.launch4j.config.Msg;
-import net.sf.launch4j.config.SingleInstance;
-import net.sf.launch4j.config.Splash;
-import net.sf.launch4j.config.VersionInfo;
 
 /**
  * @author Copyright (C) 2005 Grzegorz Kowal

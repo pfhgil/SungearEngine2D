@@ -36,22 +36,16 @@
  */
 package net.sf.launch4j.binding;
 
+import org.apache.commons.beanutils.PropertyUtils;
+
+import javax.swing.*;
+import javax.swing.text.JTextComponent;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.swing.JComboBox;
-import javax.swing.JComponent;
-import javax.swing.JList;
-import javax.swing.JRadioButton;
-import javax.swing.JTextArea;
-import javax.swing.JToggleButton;
-import javax.swing.text.JTextComponent;
-
-import org.apache.commons.beanutils.PropertyUtils;
 
 /**
  * Creates and handles bindings.

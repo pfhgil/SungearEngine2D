@@ -7,7 +7,6 @@ import Core2D.ECS.Entity;
 import Core2D.Input.Core2DUserInputCallback;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
-import Core2D.Log.Log;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;

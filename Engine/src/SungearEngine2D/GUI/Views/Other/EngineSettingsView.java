@@ -1,8 +1,6 @@
 package SungearEngine2D.GUI.Views.Other;
 
 import Core2D.Core2D.Core2D;
-import Core2D.Core2D.Settings;
-import Core2D.Project.ProjectsManager;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.Utils.AppData.AppDataManager;
 import imgui.ImGui;
@@ -14,7 +12,6 @@ import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.internal.flag.ImGuiDockNodeFlags;
 import imgui.type.ImBoolean;
-import imgui.type.ImFloat;
 import imgui.type.ImInt;
 import org.joml.Vector2f;
 import org.joml.Vector2i;

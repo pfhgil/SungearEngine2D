@@ -11,7 +11,6 @@ import Core2D.Layering.Layering;
 import Core2D.Log.Log;
 import Core2D.Prefab.Prefab;
 import Core2D.Scene2D.Scene2D;
-import Core2D.Transform.Transform;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import org.apache.commons.io.IOUtils;

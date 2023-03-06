@@ -5,7 +5,6 @@ import Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent;
 import Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent;
 import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Entity;
-import Core2D.ECS.System.System;
 import Core2D.Log.Log;
 import Core2D.Physics.Collider2D.BoxCollider2D;
 import Core2D.Physics.Collider2D.CircleCollider2D;

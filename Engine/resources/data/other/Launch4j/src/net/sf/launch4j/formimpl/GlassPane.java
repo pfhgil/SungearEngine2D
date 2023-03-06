@@ -1,17 +1,11 @@
 package net.sf.launch4j.formimpl;
 
-import java.awt.AWTEvent;
-import java.awt.Component;
-import java.awt.Cursor;
-import java.awt.Toolkit;
-import java.awt.Window;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.AWTEventListener;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
-
-import javax.swing.JComponent;
-import javax.swing.SwingUtilities;
 
 /**
  * This is the glass pane class that intercepts screen interactions during

@@ -36,10 +36,10 @@
  */
 package net.sf.launch4j.config;
 
-import java.util.List;
-
 import net.sf.launch4j.binding.IValidatable;
 import net.sf.launch4j.binding.Validator;
+
+import java.util.List;
 
 /**
  * @author Copyright (C) 2006 Grzegorz Kowal

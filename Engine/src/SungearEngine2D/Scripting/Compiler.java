@@ -4,10 +4,8 @@ import Core2D.AssetManager.Asset;
 import Core2D.AssetManager.AssetManager;
 import Core2D.DataClasses.ShaderData;
 import Core2D.Graphics.RenderParts.Shader;
-import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
-import Core2D.Tasks.StoppableTask;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.Utils;
 import SungearEngine2D.GUI.Views.ViewsManager;
@@ -15,7 +13,6 @@ import SungearEngine2D.Main.EngineSettings;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;

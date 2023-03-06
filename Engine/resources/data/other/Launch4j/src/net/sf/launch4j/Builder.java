@@ -36,6 +36,10 @@
  */
 package net.sf.launch4j;
 
+import net.sf.launch4j.binding.InvariantViolationException;
+import net.sf.launch4j.config.Config;
+import net.sf.launch4j.config.ConfigPersister;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -43,10 +47,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.StringTokenizer;
-
-import net.sf.launch4j.binding.InvariantViolationException;
-import net.sf.launch4j.config.Config;
-import net.sf.launch4j.config.ConfigPersister;
 
 /**
  * @author Copyright (C) 2005 Grzegorz Kowal

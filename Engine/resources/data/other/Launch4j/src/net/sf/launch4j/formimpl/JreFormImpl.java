@@ -36,17 +36,14 @@
  */
 package net.sf.launch4j.formimpl;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFileChooser;
-import javax.swing.JTextField;
-
 import net.sf.launch4j.binding.Bindings;
 import net.sf.launch4j.binding.Validator;
-import net.sf.launch4j.form.JreForm;
 import net.sf.launch4j.config.Jre;
+import net.sf.launch4j.form.JreForm;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author Copyright (C) 2006 Grzegorz Kowal

@@ -1,10 +1,8 @@
 package Core2D.ECS.Component.Components.Transform;
 
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.NonDuplicated;
 import Core2D.ECS.NonRemovable;
-import Core2D.Transform.Transform;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 
@@ -55,33 +53,6 @@ public class TransformComponent extends Component implements NonDuplicated
 
 
     // ---------------------------------------------------------------------------------------------------------------------------------
-
-    public TransformComponent() { }
-
-    public TransformComponent(TransformComponent component)
-    {
-        //set(component);
-    }
-
-    public TransformComponent(Transform transform)
-    {
-        //this.transform = new Transform(transform);
-    }
-
-    @Override
-    public void init()
-    {
-        //transform.init();
-    }
-
-    @Override
-    public void set(Component component)
-    {
-        if(component instanceof TransformComponent transformComponent) {
-            //this.transform.set(transformComponent.getTransform());
-        }
-    }
-
 
     @Override
     public void deltaUpdate(float deltaTime)

@@ -36,14 +36,12 @@
  */
 package net.sf.launch4j.formimpl;
 
+import net.sf.launch4j.FileChooserFilter;
+
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-
-import javax.swing.JFileChooser;
-import javax.swing.JTextField;
-
-import net.sf.launch4j.FileChooserFilter;
 
 /**
  * @author Copyright (C) 2006 Grzegorz Kowal

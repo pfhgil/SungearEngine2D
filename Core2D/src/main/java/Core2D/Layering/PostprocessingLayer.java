@@ -2,8 +2,8 @@ package Core2D.Layering;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Graphics.Graphics;
-import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.OpenGL.FrameBuffer;
+import Core2D.Graphics.RenderParts.Shader;
 
 import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
 

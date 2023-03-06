@@ -36,12 +36,12 @@
  */
 package net.sf.launch4j.formimpl;
 
-import javax.swing.JFileChooser;
-
 import net.sf.launch4j.FileChooserFilter;
 import net.sf.launch4j.binding.Bindings;
 import net.sf.launch4j.config.Splash;
 import net.sf.launch4j.form.SplashForm;
+
+import javax.swing.*;
 
 /**
  * @author Copyright (C) 2006 Grzegorz Kowal

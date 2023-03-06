@@ -1,17 +1,10 @@
 package sungear.project.test12.Scripts.Systems.Postprocessing;
 
-import Core2D.Core2D.Core2D;
-import Core2D.ECS.*;
-import Core2D.ECS.Component.Components.*;
+import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
-import Core2D.Graphics.RenderParts.Shader;
-import Core2D.Layering.PostprocessingLayer;
-import Core2D.Utils.ShaderUtils;
-import org.joml.*;
-
-import Core2D.Input.PC.Keyboard;
-import Core2D.Input.PC.Mouse;
-import org.lwjgl.glfw.GLFW;
+import org.joml.Random;
+import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 // Attention! Do not declare fields with the @InspectorView annotation in systems. They will not be processed and shown in the Inspector.
 public class PPTest1System extends System

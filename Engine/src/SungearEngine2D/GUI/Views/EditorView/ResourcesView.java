@@ -1,6 +1,5 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
-import Core2D.CamerasManager.CamerasManager;
 import Core2D.ECS.Entity;
 import Core2D.Log.Log;
 import Core2D.Prefab.Prefab;
@@ -13,9 +12,8 @@ import Core2D.Timer.TimerCallback;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import SungearEngine2D.GUI.ImGuiUtils;
-import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.View;
-import SungearEngine2D.Main.Main;
+import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.EngineSettings;
 import SungearEngine2D.Main.Resources;
 import imgui.ImGui;
@@ -26,8 +24,6 @@ import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
-import org.jbox2d.dynamics.Island;
-import org.jbox2d.dynamics.World;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
 

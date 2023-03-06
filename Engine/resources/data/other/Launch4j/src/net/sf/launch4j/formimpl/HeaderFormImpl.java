@@ -36,16 +36,15 @@
  */
 package net.sf.launch4j.formimpl;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-import javax.swing.JRadioButton;
-
 import net.sf.launch4j.binding.Binding;
 import net.sf.launch4j.binding.Bindings;
 import net.sf.launch4j.config.Config;
 import net.sf.launch4j.config.ConfigPersister;
 import net.sf.launch4j.form.HeaderForm;
+
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 /**
  * @author Copyright (C) 2006 Grzegorz Kowal

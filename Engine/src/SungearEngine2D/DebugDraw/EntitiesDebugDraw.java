@@ -8,7 +8,6 @@ import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Physics.PhysicsWorld;
-import Core2D.Transform.Transform;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
 import org.jbox2d.collision.shapes.CircleShape;

@@ -36,17 +36,15 @@
  */
 package net.sf.launch4j.binding;
 
-import java.awt.Color;
+import org.apache.commons.beanutils.BeanUtils;
+import org.apache.commons.beanutils.PropertyUtils;
+
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.JTextArea;
-import javax.swing.JToggleButton;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.beanutils.PropertyUtils;
 
 /**
  * @author Copyright (C) 2005 Grzegorz Kowal

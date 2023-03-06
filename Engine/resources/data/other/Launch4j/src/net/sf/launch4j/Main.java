@@ -36,11 +36,11 @@
  */
 package net.sf.launch4j;
 
-import java.io.File;
-import java.util.Properties;
-
 import net.sf.launch4j.config.ConfigPersister;
 import net.sf.launch4j.formimpl.MainFrame;
+
+import java.io.File;
+import java.util.Properties;
 
 /**
  * @author Copyright (C) 2005 Grzegorz Kowal

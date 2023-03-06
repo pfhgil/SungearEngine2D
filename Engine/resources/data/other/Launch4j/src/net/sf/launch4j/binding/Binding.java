@@ -36,7 +36,7 @@
  */
 package net.sf.launch4j.binding;
 
-import java.awt.Color;
+import java.awt.*;
 
 /**
  * @author Copyright (C) 2005 Grzegorz Kowal

@@ -1,10 +1,8 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.*;
+import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Entity;
-import Core2D.ECS.System.System;
-import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;
 import Core2D.Project.ProjectsManager;
@@ -21,7 +19,10 @@ import SungearEngine2D.Main.Resources;
 import SungearEngine2D.Scripting.Compiler;
 import imgui.ImGui;
 import imgui.ImVec2;
-import imgui.flag.*;
+import imgui.flag.ImGuiCond;
+import imgui.flag.ImGuiInputTextFlags;
+import imgui.flag.ImGuiStyleVar;
+import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector4f;

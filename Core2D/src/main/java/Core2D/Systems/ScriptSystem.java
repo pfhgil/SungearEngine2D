@@ -2,7 +2,6 @@ package Core2D.Systems;
 
 import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Entity;
-import Core2D.ECS.System.Systems.ScriptableSystem;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;

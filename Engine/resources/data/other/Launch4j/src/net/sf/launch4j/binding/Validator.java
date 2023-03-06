@@ -36,12 +36,12 @@
  */
 package net.sf.launch4j.binding;
 
+import net.sf.launch4j.Util;
+import net.sf.launch4j.config.ConfigPersister;
+
 import java.io.File;
 import java.util.Arrays;
 import java.util.List;
-
-import net.sf.launch4j.Util;
-import net.sf.launch4j.config.ConfigPersister;
 
 /**
  * @author Copyright (C) 2004 Grzegorz Kowal

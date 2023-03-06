@@ -36,10 +36,9 @@
  */
 package net.sf.launch4j.formimpl;
 
+import javax.swing.*;
 import java.io.File;
 import java.util.prefs.Preferences;
-
-import javax.swing.JFileChooser;
 
 /**
  * @author Copyright (C) 2006 Grzegorz Kowal

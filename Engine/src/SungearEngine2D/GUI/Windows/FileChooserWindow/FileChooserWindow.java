@@ -1,6 +1,5 @@
 package SungearEngine2D.GUI.Windows.FileChooserWindow;
 
-import Core2D.Log.Log;
 import SungearEngine2D.GUI.ImGuiUtils;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindow;
 import SungearEngine2D.GUI.Windows.DialogWindow.DialogWindowCallback;

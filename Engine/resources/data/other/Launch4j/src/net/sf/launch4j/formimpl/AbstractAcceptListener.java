@@ -36,12 +36,11 @@
  */
 package net.sf.launch4j.formimpl;
 
-import java.awt.Color;
-import java.awt.event.ActionListener;
-
-import javax.swing.JTextField;
-
 import net.sf.launch4j.binding.Binding;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionListener;
 
 /**
  * @author Copyright (C) 2006 Grzegorz Kowal

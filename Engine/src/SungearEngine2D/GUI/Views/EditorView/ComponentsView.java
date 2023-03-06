@@ -4,6 +4,7 @@ import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.Audio;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
+import Core2D.ECS.Component.Components.Audio.AudioComponent;
 import Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent;
 import Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent;
 import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;

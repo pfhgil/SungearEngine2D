@@ -45,6 +45,7 @@ public class OpenAL
         AL11.alDistanceModel(AL11.AL_INVERSE_DISTANCE_CLAMPED);
     }
 
+    /*
     public static void alCall(Consumer<Object[]> func, int idToCheck)
     {
         if (idToCheck != -1) {
@@ -56,11 +57,19 @@ public class OpenAL
         checkForALErrors();
     }
 
+     */
+
     public static void alCall(Consumer<Object[]> func)
     {
+        /*
         alCall(func, -1);
+
+         */
+        func.accept(null);
+        checkForALErrors();
     }
 
+    /*
     public static <T> T alCall(Function<Object[], ?> func, Class<T> toClass, int idToCheck)
     {
         if (idToCheck != -1) {
@@ -74,9 +83,14 @@ public class OpenAL
         return toClass.cast(obj);
     }
 
+
+     */
     public static <T> T alCall(Function<Object[], ?> func, Class<T> toClass)
     {
-        return alCall(func, toClass, -1);
+        Object obj = func.apply(null);
+        checkForALErrors();
+        return toClass.cast(obj);
+        //return alCall(func, toClass, -1);
     }
 
     public static void checkForALErrors()

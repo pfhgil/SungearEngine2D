@@ -2,7 +2,6 @@ package Core2D.Physics;
 
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
-import org.jbox2d.common.Transform;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyDef;
 import org.jbox2d.dynamics.BodyType;

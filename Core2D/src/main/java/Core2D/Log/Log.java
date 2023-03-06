@@ -1,11 +1,9 @@
 package Core2D.Log;
 
-import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.FileWriter;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;

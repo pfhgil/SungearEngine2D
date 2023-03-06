@@ -1,9 +1,7 @@
 package Core2D.Deserializers;
 
-import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Entity;
 import Core2D.Layering.Layer;
-import Core2D.Layering.PostprocessingLayer;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;

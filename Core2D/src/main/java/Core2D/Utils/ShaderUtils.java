@@ -1,8 +1,6 @@
 package Core2D.Utils;
 
 import Core2D.Graphics.OpenGL.OpenGL;
-import Core2D.Log.Log;
-import Core2D.Utils.MatrixUtils;
 import org.joml.*;
 
 import static org.lwjgl.opengl.GL40C.*;

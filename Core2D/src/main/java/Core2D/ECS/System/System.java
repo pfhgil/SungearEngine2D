@@ -3,13 +3,7 @@ package Core2D.ECS.System;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Entity;
-import Core2D.ECS.NonDuplicated;
 import Core2D.Graphics.RenderParts.Shader;
-import Core2D.Log.Log;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
 
 public class System
 {

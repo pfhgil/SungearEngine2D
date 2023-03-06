@@ -4,8 +4,8 @@ import Core2D.AssetManager.AssetManager;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Entity;
-import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.Graphics;
+import Core2D.Graphics.RenderParts.Shader;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;

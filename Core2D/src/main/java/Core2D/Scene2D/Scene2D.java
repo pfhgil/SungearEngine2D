@@ -289,7 +289,7 @@ public class Scene2D
 
         saveScriptsTempValues();
 
-        AudioManager.destroyScene2DAllSources(this);
+        //AudioManager.destroyScene2DAllSources(this);
 
         shouldDestroy = true;
 

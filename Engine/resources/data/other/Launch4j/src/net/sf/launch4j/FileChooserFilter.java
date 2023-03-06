@@ -36,9 +36,8 @@
  */
 package net.sf.launch4j;
 
-import java.io.File;
-
 import javax.swing.filechooser.FileFilter;
+import java.io.File;
 
 /**
  * @author Copyright (C) 2004 Grzegorz Kowal

@@ -36,11 +36,10 @@
  */
 package net.sf.launch4j.binding;
 
-import java.awt.Color;
-
-import javax.swing.JComboBox;
-
 import org.apache.commons.beanutils.PropertyUtils;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * @author Copyright (C) 2007 Ian Roberts

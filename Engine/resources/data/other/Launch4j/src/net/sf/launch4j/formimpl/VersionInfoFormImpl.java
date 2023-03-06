@@ -36,13 +36,12 @@
  */
 package net.sf.launch4j.formimpl;
 
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JFileChooser;
-
 import net.sf.launch4j.binding.Bindings;
 import net.sf.launch4j.config.LanguageID;
 import net.sf.launch4j.config.VersionInfo;
 import net.sf.launch4j.form.VersionInfoForm;
+
+import javax.swing.*;
 
 /**
  * @author Copyright (C) 2006 Grzegorz Kowal

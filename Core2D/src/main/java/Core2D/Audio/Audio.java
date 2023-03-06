@@ -1,8 +1,5 @@
 package Core2D.Audio;
 
-import Core2D.Transform.Transform;
-import Core2D.Utils.MatrixUtils;
-import org.joml.Vector2f;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.openal.AL11;
 
@@ -30,8 +27,6 @@ public class Audio
     public AudioInfo audioInfo;
 
     public int source;
-
-    private Transform transform = new Transform();
 
     public AudioType audioType = AudioType.BACKGROUND;
 
@@ -63,11 +58,11 @@ public class Audio
 
     public void setup()
     {
-        Vector2f position = MatrixUtils.getPosition(transform.getResultModelMatrix());
+        //Vector2f position = MatrixUtils.getPosition(transform.getResultModelMatrix());
 
         source = OpenAL.alCall((params) -> AL10.alGenSources(), Integer.class);
         OpenAL.alCall((params) -> AL10.alSourcei(source, AL10.AL_BUFFER, audioInfo.getBuffer()));
-        OpenAL.alCall((params) -> AL10.alSource3f(source, AL10.AL_POSITION, position.x, position.y, 0f));
+        //OpenAL.alCall((params) -> AL10.alSource3f(source, AL10.AL_POSITION, position.x, position.y, 0f));
         OpenAL.alCall((params) -> AL10.alSource3f(source, AL10.AL_VELOCITY, 0f, 0f, 0f));
 
         OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_PITCH, 1f));
@@ -82,7 +77,7 @@ public class Audio
 
         AudioManager.getAudioSources().add(source);
     }
-
+/*
     public void deltaUpdate(float deltaTime)
     {
         transform.update(deltaTime);
@@ -128,11 +123,13 @@ public class Audio
         }
     }
 
+ */
+
     public void destroy()
     {
         stop();
         //OpenAL.alCall((params) -> AL10.alDeleteBuffers(audioInfo.getBuffer()));
-        OpenAL.alCall((params) -> AL10.alDeleteSources(source), source);
+        OpenAL.alCall((params) -> AL10.alDeleteSources(source));
     }
 
     public void set(Audio audio)
@@ -142,7 +139,7 @@ public class Audio
 
         this.audioInfo.set(audio.audioInfo);
 
-        this.transform.set(audio.getTransform());
+        //this.transform.set(audio.getTransform());
 
         this.audioType = audio.audioType;
 
@@ -156,60 +153,60 @@ public class Audio
 
     public void updateBuffer()
     {
-        OpenAL.alCall((params) -> AL10.alSourcei(source, AL10.AL_BUFFER, audioInfo.getBuffer()), source);
+        OpenAL.alCall((params) -> AL10.alSourcei(source, AL10.AL_BUFFER, audioInfo.getBuffer()));
     }
 
     public void play()
     {
-        OpenAL.alCall((params) -> AL10.alSourcePlay(source), source);
+        OpenAL.alCall((params) -> AL10.alSourcePlay(source));
     }
 
     public void stop()
     {
-        OpenAL.alCall((params) -> AL10.alSourceStop(source), source);
+        OpenAL.alCall((params) -> AL10.alSourceStop(source));
     }
 
     public void pause()
     {
-        OpenAL.alCall((params) -> AL10.alSourcePause(source), source);
+        OpenAL.alCall((params) -> AL10.alSourcePause(source));
     }
 
     public void setCurrentSecond(float offset)
     {
         currentSecond = offset;
-        OpenAL.alCall((params) -> AL11.alSourcef(source, AL11.AL_SEC_OFFSET, offset), source);
+        OpenAL.alCall((params) -> AL11.alSourcef(source, AL11.AL_SEC_OFFSET, offset));
     }
 
     public float getCurrentSecond()
     {
         if(playing || paused) {
-            return OpenAL.alCall((params) -> AL11.alGetSourcef(source, AL11.AL_SEC_OFFSET), Float.class, source);
+            return OpenAL.alCall((params) -> AL11.alGetSourcef(source, AL11.AL_SEC_OFFSET), Float.class);
         } else {
             return currentSecond;
         }
     }
 
-    public Transform getTransform() { return transform; }
+    //public Transform getTransform() { return transform; }
 
     public float getMaxDistance() { return maxDistance; }
     public void setMaxDistance(float maxDistance)
     {
         this.maxDistance = maxDistance;
-        OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_MAX_DISTANCE, maxDistance), source);
+        OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_MAX_DISTANCE, maxDistance));
     }
 
     public float getReferenceDistance() { return referenceDistance; }
     public void setReferenceDistance(float referenceDistance)
     {
         this.referenceDistance = referenceDistance;
-        OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_REFERENCE_DISTANCE, referenceDistance), source);
+        OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_REFERENCE_DISTANCE, referenceDistance));
     }
 
     public float getRolloffFactor() { return rolloffFactor; }
     public void setRolloffFactor(float rolloffFactor)
     {
         this.rolloffFactor = rolloffFactor;
-        OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_ROLLOFF_FACTOR, rolloffFactor), source);
+        OpenAL.alCall((params) -> AL10.alSourcef(source, AL10.AL_ROLLOFF_FACTOR, rolloffFactor));
     }
 
     public boolean isPlaying() { return playing; }
@@ -221,6 +218,6 @@ public class Audio
     public void setCyclic(boolean cyclic)
     {
         this.cyclic = cyclic;
-        OpenAL.alCall((params) -> AL10.alSourcei(source, AL10.AL_LOOPING, cyclic ? AL10.AL_TRUE : AL10.AL_FALSE), source);
+        OpenAL.alCall((params) -> AL10.alSourcei(source, AL10.AL_LOOPING, cyclic ? AL10.AL_TRUE : AL10.AL_FALSE));
     }
 }

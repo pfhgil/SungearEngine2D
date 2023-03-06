@@ -1,7 +1,6 @@
-import Core2D.Core2D.*;
-import Core2D.Scene2D.*;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DUserCallback;
+import Core2D.Scene2D.SceneManager;
 import org.lwjgl.glfw.GLFW;
 
 // доделать, чтобы этот класс запускал игру и её главную сцену

@@ -2,7 +2,6 @@ package Core2D.Graphics.OpenGL;
 
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
-import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Log.Log;
 
 import java.io.Serializable;

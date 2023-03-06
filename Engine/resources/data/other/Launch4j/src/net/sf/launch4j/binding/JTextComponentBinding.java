@@ -36,11 +36,10 @@
  */
 package net.sf.launch4j.binding;
 
-import java.awt.Color;
+import org.apache.commons.beanutils.BeanUtils;
 
 import javax.swing.text.JTextComponent;
-
-import org.apache.commons.beanutils.BeanUtils;
+import java.awt.*;
 
 /**
  * Handles JEditorPane, JTextArea, JTextField

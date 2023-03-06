@@ -36,11 +36,11 @@
  */
 package net.sf.launch4j.config;
 
-import java.util.Arrays;
-import java.util.List;
-
 import net.sf.launch4j.binding.IValidatable;
 import net.sf.launch4j.binding.Validator;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * @author Copyright (C) 2005 Grzegorz Kowal

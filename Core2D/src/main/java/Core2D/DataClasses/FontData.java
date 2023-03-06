@@ -1,15 +1,5 @@
 package Core2D.DataClasses;
 
-import Core2D.Core2D.Settings;
-import Core2D.Log.Log;
-import Core2D.Utils.ExceptionsUtils;
-import Core2D.Utils.FileUtils;
-
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.InputStream;
-
 @Deprecated
 public class FontData
 {

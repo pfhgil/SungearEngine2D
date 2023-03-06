@@ -36,11 +36,10 @@
  */
 package net.sf.launch4j.binding;
 
-import java.awt.Color;
-
-import javax.swing.JToggleButton;
-
 import org.apache.commons.beanutils.PropertyUtils;
+
+import javax.swing.*;
+import java.awt.*;
 
 /**
  * Handles JToggleButton, JCheckBox 

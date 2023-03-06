@@ -1,11 +1,7 @@
 package SungearEngine2D.GUI.Views;
 
 import Core2D.Core2D.Core2D;
-import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera2DComponent;
-import Core2D.ECS.ECSWorld;
-import Core2D.ECS.System.ComponentsQuery;
-import Core2D.ECS.System.System;
 import SungearEngine2D.GUI.Views.DebuggerView.DebuggerView;
 import SungearEngine2D.GUI.Views.EditorView.*;
 import SungearEngine2D.GUI.Views.Other.EngineSettingsView;

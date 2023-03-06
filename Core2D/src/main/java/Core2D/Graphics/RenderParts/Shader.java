@@ -6,14 +6,16 @@ import Core2D.ECS.Component.Components.Shader.ShaderUniformFloatComponent;
 import Core2D.ECS.Component.Components.Shader.TextureComponent;
 import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Log.Log;
-import Core2D.Utils.ShaderUtils;
 import Core2D.Utils.ComponentHandler;
+import Core2D.Utils.ShaderUtils;
 import org.joml.*;
 import org.lwjgl.BufferUtils;
 
 import java.io.Serializable;
 import java.nio.IntBuffer;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import static org.lwjgl.opengl.GL46C.*;
 

@@ -1,7 +1,6 @@
 package Core2D.Input;
 
 import Core2D.Core2D.Core2D;
-import Core2D.Transform.Transform;
 import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;

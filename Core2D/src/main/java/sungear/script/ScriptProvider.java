@@ -1,8 +1,8 @@
 package sungear.script;
 
-import sungear.scene.object.Attribute;
 import sungear.exception.SungearEngineError;
 import sungear.exception.SungearEngineException;
+import sungear.scene.object.Attribute;
 
 import java.io.File;
 import java.io.IOException;

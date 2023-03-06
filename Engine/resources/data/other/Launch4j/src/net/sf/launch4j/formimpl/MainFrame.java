@@ -36,40 +36,23 @@
  */
 package net.sf.launch4j.formimpl;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
-import java.awt.Toolkit;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JToolBar;
-import javax.swing.UIManager;
-
 import com.formdev.flatlaf.FlatLightLaf;
-
 import foxtrot.Task;
 import foxtrot.Worker;
-import net.sf.launch4j.Builder;
-import net.sf.launch4j.BuilderException;
-import net.sf.launch4j.ExecException;
-import net.sf.launch4j.FileChooserFilter;
-import net.sf.launch4j.Log;
-import net.sf.launch4j.Main;
-import net.sf.launch4j.Util;
+import net.sf.launch4j.*;
 import net.sf.launch4j.binding.Binding;
 import net.sf.launch4j.binding.BindingException;
 import net.sf.launch4j.binding.InvariantViolationException;
 import net.sf.launch4j.config.ConfigPersister;
 import net.sf.launch4j.config.ConfigPersisterException;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
 
 /**
  * @author Copyright (C) 2005 Grzegorz Kowal

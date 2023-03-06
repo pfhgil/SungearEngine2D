@@ -32,8 +32,8 @@
  */
 package net.sf.launch4j;
 
-import java.io.OutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 
 /**
  * @author toshimm (2013)

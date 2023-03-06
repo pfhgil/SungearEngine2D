@@ -36,27 +36,23 @@
  */
 package net.sf.launch4j.formimpl;
 
+import net.sf.launch4j.FileChooserFilter;
+import net.sf.launch4j.binding.Bindings;
+import net.sf.launch4j.binding.Validator;
+import net.sf.launch4j.config.ClassPath;
+import net.sf.launch4j.form.ClassPathForm;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.jar.Attributes;
 import java.util.jar.JarFile;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JFileChooser;
-import javax.swing.JTextField;
-import javax.swing.ListSelectionModel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
-import net.sf.launch4j.FileChooserFilter;
-import net.sf.launch4j.binding.Bindings;
-import net.sf.launch4j.binding.Validator;
-import net.sf.launch4j.config.ClassPath;
-import net.sf.launch4j.form.ClassPathForm;
 
 /**
  * @author Copyright (C) 2006 Grzegorz Kowal

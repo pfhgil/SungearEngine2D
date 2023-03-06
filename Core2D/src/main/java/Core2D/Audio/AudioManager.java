@@ -1,7 +1,7 @@
 package Core2D.Audio;
 
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.AudioComponent;
+import Core2D.ECS.Component.Components.Audio.AudioComponent;
 import Core2D.ECS.Entity;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
@@ -22,7 +22,7 @@ public class AudioManager
         int length = audioSources.size();
         for(int i = 0; i < length; i++) {
             int id = audioSources.get(i);
-            OpenAL.alCall((params) -> AL10.alSourceStop(id), id);
+            OpenAL.alCall((params) -> AL10.alSourceStop(id));
         }
     }
 
@@ -32,7 +32,7 @@ public class AudioManager
             Iterator<Integer> iter = audioSources.iterator();
             while(iter.hasNext()) {
                 int id = iter.next();;
-                OpenAL.alCall((params) -> AL10.alDeleteSources(id), id);
+                OpenAL.alCall((params) -> AL10.alDeleteSources(id));
                 iter.remove();
             }
         }

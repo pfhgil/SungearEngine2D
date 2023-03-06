@@ -36,20 +36,10 @@
  */
 package net.sf.launch4j;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.util.List;
+import net.sf.launch4j.config.*;
 
-import net.sf.launch4j.config.CharsetID;
-import net.sf.launch4j.config.Config;
-import net.sf.launch4j.config.ConfigPersister;
-import net.sf.launch4j.config.Jre;
-import net.sf.launch4j.config.Msg;
-import net.sf.launch4j.config.Splash;
-import net.sf.launch4j.config.VersionInfo;
+import java.io.*;
+import java.util.List;
 
 /**
  * @author Copyright (C) 2005 Grzegorz Kowal

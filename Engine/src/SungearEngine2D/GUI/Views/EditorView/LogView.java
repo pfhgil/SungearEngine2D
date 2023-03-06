@@ -6,7 +6,6 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
-import org.jbox2d.common.Vec2;
 
 import java.awt.*;
 import java.util.Scanner;

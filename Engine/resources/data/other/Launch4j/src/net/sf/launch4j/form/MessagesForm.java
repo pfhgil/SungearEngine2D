@@ -2,16 +2,9 @@ package net.sf.launch4j.form;
 
 import com.jgoodies.forms.layout.CellConstraints;
 import com.jgoodies.forms.layout.FormLayout;
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import javax.swing.Box;
-import javax.swing.ImageIcon;
-import javax.swing.JCheckBox;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
+
+import javax.swing.*;
+import java.awt.*;
 
 public abstract class MessagesForm extends JPanel
 {

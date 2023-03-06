@@ -8,12 +8,14 @@ import Core2D.Log.Log;
 import org.joml.Math;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
-import org.joml.Vector2f;
 
 public class TransformationsSystem extends System
 {
+    @Override
     public void update(ComponentsQuery componentsQuery)
     {
+        if(!active) return;
+
         TransformComponent transformComponent = componentsQuery.getComponent(TransformComponent.class);
         //Rigidbody2DComponent rigidbody2DComponent = componentsQuery.getComponent(Rigidbody2DComponent.class);
 
@@ -53,9 +55,10 @@ public class TransformationsSystem extends System
         //Log.CurrentSession.println("sdfsdf", Log.MessageType.WARNING);
     }
 
+    @Override
     public void deltaUpdate(ComponentsQuery componentsQuery, float deltaTime)
     {
-
+        if(!active) return;
     }
 
     public boolean hasTransformComponentChanged(TransformComponent transformComponent)
@@ -93,7 +96,7 @@ public class TransformationsSystem extends System
 
     public void updateTranslationMatrix(TransformComponent transformComponent)
     {
-        if(!active) return;
+        if(!active || transformComponent.position.equals(transformComponent.lastPosition)) return;
 
         //transformComponent.translationMatrix.identity();
         transformComponent.translationMatrix.setTranslation(transformComponent.position.x, transformComponent.position.y, 0.0f);
@@ -101,7 +104,7 @@ public class TransformationsSystem extends System
 
     public void updateRotationMatrix(TransformComponent transformComponent)
     {
-        if(!active) return;
+        if(!active || transformComponent.rotation == transformComponent.lastRotation) return;
 
         transformComponent.rotationMatrix.identity();
         Quaternionf rotationQ = new Quaternionf();
@@ -115,7 +118,7 @@ public class TransformationsSystem extends System
 
     public void updateScaleMatrix(TransformComponent transformComponent)
     {
-        if(!active) return;
+        if(!active || transformComponent.scale.equals(transformComponent.lastScale)) return;
 
         transformComponent.scaleMatrix.identity();
         transformComponent.scaleMatrix.scale(transformComponent.scale.x, transformComponent.scale.y, 1.0f);

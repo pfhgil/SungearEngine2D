@@ -36,14 +36,12 @@
  */
 package net.sf.launch4j.formimpl;
 
-import javax.swing.BorderFactory;
-import javax.swing.JFileChooser;
-import javax.swing.JTextArea;
-
 import net.sf.launch4j.binding.Binding;
 import net.sf.launch4j.binding.Bindings;
 import net.sf.launch4j.binding.IValidatable;
 import net.sf.launch4j.form.ConfigForm;
+
+import javax.swing.*;
 
 /**
  * @author Copyright (C) 2005 Grzegorz Kowal

@@ -7,7 +7,6 @@ import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
-import Core2D.Transform.Transform;
 import Core2D.Utils.MatrixUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;

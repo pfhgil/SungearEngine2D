@@ -36,15 +36,14 @@
  */
 package net.sf.launch4j.formimpl;
 
-import javax.swing.JFileChooser;
-import javax.swing.JRadioButton;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
-
 import net.sf.launch4j.FileChooserFilter;
 import net.sf.launch4j.binding.Bindings;
 import net.sf.launch4j.config.Config;
 import net.sf.launch4j.form.BasicForm;
+
+import javax.swing.*;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
  * @author Copyright (C) 2006 Grzegorz Kowal

@@ -36,17 +36,16 @@
  */
 package net.sf.launch4j.ant;
 
-import java.io.File;
-
 import net.sf.launch4j.Builder;
 import net.sf.launch4j.BuilderException;
 import net.sf.launch4j.Log;
 import net.sf.launch4j.config.Config;
 import net.sf.launch4j.config.ConfigPersister;
 import net.sf.launch4j.config.ConfigPersisterException;
-
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
+
+import java.io.File;
 
 /**
  * @author Copyright (C) 2005 Grzegorz Kowal

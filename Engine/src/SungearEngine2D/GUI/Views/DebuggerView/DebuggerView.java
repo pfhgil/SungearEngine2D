@@ -4,7 +4,6 @@ import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.Utils.Debugger;
 import imgui.ImGui;
 import imgui.flag.ImGuiStyleVar;
-import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImBoolean;
 
 public class DebuggerView extends View

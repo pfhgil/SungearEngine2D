@@ -36,10 +36,10 @@
  */
 package net.sf.launch4j.ant;
 
+import net.sf.launch4j.config.ClassPath;
+
 import java.util.ArrayList;
 import java.util.List;
-
-import net.sf.launch4j.config.ClassPath;
 
 /**
  * @author Copyright (C) 2006 Grzegorz Kowal

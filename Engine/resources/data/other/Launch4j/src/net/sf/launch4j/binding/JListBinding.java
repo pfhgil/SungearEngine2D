@@ -36,14 +36,12 @@
  */
 package net.sf.launch4j.binding;
 
-import java.awt.Color;
+import org.apache.commons.beanutils.PropertyUtils;
+
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
-
-import javax.swing.DefaultListModel;
-import javax.swing.JList;
-
-import org.apache.commons.beanutils.PropertyUtils;
 
 /**
  * @author Copyright (C) 2006 Grzegorz Kowal

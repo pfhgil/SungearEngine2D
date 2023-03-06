@@ -1,11 +1,10 @@
-import Core2D.ECS.*;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.TransformComponent;
+import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
 import Core2D.ShaderUtils.ShaderUtils;
-import org.lwjgl.opengl.GL11C;
-import Core2D.Log.*;
 import org.joml.Vector4f;
+import org.lwjgl.opengl.GL11C;
 
 import static org.lwjgl.opengl.GL11.*;
 

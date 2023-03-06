@@ -3,6 +3,7 @@ package SungearEngine2D.DebugDraw;
 //import Core2D.Component.Components.TextureComponent;
 /*import Core2D.Drawable.Primitives.Circle2D;
 import Core2D.Drawable.Primitives.Line2D;*/
+
 import Core2D.AssetManager.AssetManager;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
@@ -11,21 +12,20 @@ import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
+import Core2D.Graphics.OpenGL.FrameBuffer;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Input.PC.Mouse;
-import Core2D.Graphics.OpenGL.FrameBuffer;
-import Core2D.Transform.Transform;
 import Core2D.Utils.MathUtils;
 import Core2D.Utils.MatrixUtils;
 import SungearEngine2D.CameraController.CameraController;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;
-import org.joml.*;
+import org.joml.Vector2f;
+import org.joml.Vector2i;
+import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.opengl.GL13;
-
-import java.lang.Math;
 
 public class Gizmo
 {

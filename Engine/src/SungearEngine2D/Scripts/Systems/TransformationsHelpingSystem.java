@@ -3,11 +3,8 @@ package SungearEngine2D.Scripts.Systems;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
-import Core2D.Log.Log;
 import SungearEngine2D.Scripts.Components.MoveToComponent;
 import org.joml.Vector2f;
-
-import java.util.Enumeration;
 
 public class TransformationsHelpingSystem extends System
 {
