@@ -13,6 +13,7 @@ import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
+import Core2D.ECS.System.Systems.TransformationsSystem;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Input.PC.Keyboard;
@@ -32,6 +33,7 @@ import SungearEngine2D.GUI.GUI;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Scripts.Components.MoveToComponent;
+import SungearEngine2D.Scripts.Systems.TransformationsHelpingSystem;
 import SungearEngine2D.Utils.AppData.AppDataManager;
 import imgui.ImGui;
 import org.apache.commons.io.FilenameUtils;
@@ -86,6 +88,7 @@ public class Main
                 mainCamera2D = Entity.createAsCamera2D();
                 mainCamera2D.addComponent(new MoveToComponent());
 
+
                 CamerasManager.mainCamera2D = mainCamera2D;
                 CameraController.controlledCamera2D = mainCamera2D;
 
@@ -103,6 +106,12 @@ public class Main
                  */
 
                 GraphicsRenderer.init();
+
+                // ------- systems add
+
+                ECSWorld.getCurrentECSWorld().addSystem(new TransformationsHelpingSystem());
+
+                // -------------------
 
                 helpThread = new Thread(new Runnable() {
                     @Override
@@ -289,7 +298,7 @@ public class Main
             }
 
             @Override
-            public void onDrawFrame() {
+            public void onUpdate() {
                 Core2D.getWindow().setName("Sungear Engine 2D. FPS: " + Core2D.getDeltaTimer().getFPS());
 
                 Compiler.compileAllShaders();
@@ -331,11 +340,6 @@ public class Main
 
             @Override
             public void onDeltaUpdate(float deltaTime) {
-                if(mainCamera2D != null) {
-                    mainCamera2D.deltaUpdate(deltaTime);
-                }
-                currentSceneManager.updateCurrentScene2D(deltaTime);
-
                 GraphicsRenderer.deltaUpdate(deltaTime);
             }
         };

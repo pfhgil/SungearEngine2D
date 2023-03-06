@@ -7,7 +7,7 @@ public class MoveToComponent extends Component
 {
     public boolean needMoveTo = false;
     public Vector2f destinationPosition = new Vector2f();
-    public float ration = 0.1f;
+    public float ration = 10f;
 
     public float errorRate = 0.01f;
 }

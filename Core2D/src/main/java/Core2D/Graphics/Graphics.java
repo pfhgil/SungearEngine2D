@@ -1,7 +1,6 @@
 package Core2D.Graphics;
 
 import Core2D.Audio.AudioListener;
-import Core2D.CamerasManager.CamerasManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
 import Core2D.ECS.Component.Components.Camera2DComponent;
@@ -89,8 +88,10 @@ public abstract class Graphics
 
                 OpenGL.glCall((params) -> glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
+                SceneManager.currentSceneManager.updateCurrentScene2D();
+
                 if (Core2D.core2DUserCallback != null) {
-                    Core2D.core2DUserCallback.onDrawFrame();
+                    Core2D.core2DUserCallback.onUpdate();
                 }
 
                 //physics.BodiesUpdate();

@@ -55,7 +55,6 @@ public class ECSWorld
         boolean foundQuery = false;
         for(ComponentsQuery componentsQuery : componentsQueries) {
             if(componentsQuery.entityID == component.entity.ID) {
-                //Log.CurrentSession.println("found query for component: " + component + ", ename: " + component.entity.name + ", eid: " + component.entity.ID, Log.MessageType.ERROR);
                 if(component instanceof NonDuplicated) {
                     Optional<Component> foundComponent = componentsQuery.getComponents().stream().filter(c -> c.getClass().equals(component.getClass())).findAny();
                     if(foundComponent.isPresent()) {
@@ -65,20 +64,10 @@ public class ECSWorld
                     } else {
                         componentsQuery.getComponents().add(component);
                         foundQuery = true;
-                        /*
-                        Log.CurrentSession.println("added non-duplicated component: " + component + ", entity: " + component.entity.name + ", eid: " + component.entity.ID,
-                                Log.MessageType.WARNING);
-
-                         */
                     }
                 } else {
                     componentsQuery.getComponents().add(component);
                     foundQuery = true;
-                    /*
-                    Log.CurrentSession.println("added simple component: " + component + ", entity: " + component.entity.name + ", eid: " + component.entity.ID,
-                            Log.MessageType.WARNING);
-
-                     */
                 }
             }
         }
@@ -87,17 +76,7 @@ public class ECSWorld
             ComponentsQuery componentsQuery = new ComponentsQuery(component.entity.ID);
             componentsQuery.getComponents().add(component);
             componentsQueries.add(componentsQuery);
-
-            /*
-            Log.CurrentSession.println("added component (and created query): " + component + ", entity: " + component.entity.name + ", eid: " + component.entity.ID,
-                    Log.MessageType.WARNING);
-
-             */
         }
-
-        //Log.CurrentSession.println("added component: " + component + ", entity: " + component.entity.name, Log.MessageType.WARNING);
-
-        //Log.CurrentSession.println("components queries num: " + componentsQueries.size() + ", component entity id: " + component.entity.ID, Log.MessageType.WARNING);
     }
 
     // удаляет компонент из обработки
@@ -117,6 +96,21 @@ public class ECSWorld
         }
 
         componentsInitializerSystem.destroyComponent(component);
+    }
+
+    public void addSystem(System system)
+    {
+        if(system instanceof NonDuplicated) {
+            Optional<System> foundSystem = systems.stream().filter(s -> s.getClass().equals(system.getClass())).findAny();
+
+            if(foundSystem.isPresent()) {
+                Log.CurrentSession.println("System '" + system + "' already exists in ECSWorld. System " + system + "' is NonDuplicated", Log.MessageType.ERROR, false);
+            } else {
+                systems.add(system);
+            }
+        } else {
+            systems.add(system);
+        }
     }
 
     public ComponentsQuery findComponentsQuery(int entityID)

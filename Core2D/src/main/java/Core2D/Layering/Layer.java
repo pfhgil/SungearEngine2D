@@ -66,12 +66,13 @@ public class Layer
         return null;
     }
 
-    public void deltaUpdate(float deltaTime)
+    // TODO: убрать данный метод, так как не будет update у entity
+    public void update()
     {
         Iterator<Entity> layerObjectIterator = entities.iterator();
         while(layerObjectIterator.hasNext()) {
             Entity entity = layerObjectIterator.next();
-            if(entity.isShouldDestroy()) {
+            if (entity.isShouldDestroy()) {
                 if (entity.getParentEntity() != null) {
                     entity.getParentEntity().removeChildEntity(entity);
                     entity.parentEntity = null;
@@ -93,9 +94,21 @@ public class Layer
                 entity.destroy();
                 layerObjectIterator.remove();
             } else {
-                // ТО gameObject.update() нужно перенести в отдельный метод update у слоя (его нужно реализовать)
                 entity.update();
-                entity.deltaUpdate(deltaTime);
+            }
+        }
+    }
+
+    // TODO: убрать данный метод, так как не будет deltaUpdate у entity
+    public void deltaUpdate(float deltaTime)
+    {
+        Iterator<Entity> layerObjectIterator = entities.iterator();
+        while(layerObjectIterator.hasNext()) {
+            Entity entity = layerObjectIterator.next();
+            if(!entity.isShouldDestroy()) {
+                if (entity.getParentEntity() != null) {
+                    entity.deltaUpdate(deltaTime);
+                }
             }
         }
     }

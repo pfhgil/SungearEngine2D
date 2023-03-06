@@ -114,10 +114,6 @@ public class Scene2D
     {
         if(!shouldDestroy) {
             Graphics.getMainRenderer().render(layering, camera2DComponent);
-
-            if (scene2DCallback != null) {
-                scene2DCallback.onDraw();
-            }
         }
     }
 
@@ -134,6 +130,15 @@ public class Scene2D
         return layering.getPickedEntity(pixelColor);
     }
 
+    public void update()
+    {
+        layering.update();
+
+        if (scene2DCallback != null) {
+            scene2DCallback.onUpdate();
+        }
+    }
+
     public void deltaUpdate(float deltaTime)
     {
         // FIXME: сделать отдельный метод апдейта (без дельты)
@@ -142,7 +147,7 @@ public class Scene2D
         layering.deltaUpdate(deltaTime);
 
         if(scene2DCallback != null) {
-            scene2DCallback.onUpdate(deltaTime);
+            scene2DCallback.onDeltaUpdate(deltaTime);
         }
     }
 

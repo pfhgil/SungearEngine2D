@@ -36,6 +36,13 @@ public class Layering {
         return null;
     }
 
+    public void update()
+    {
+        for(Layer layer : layers) {
+            layer.update();
+        }
+    }
+
     public void deltaUpdate(float deltaTime)
     {
         for(Layer layer : layers) {

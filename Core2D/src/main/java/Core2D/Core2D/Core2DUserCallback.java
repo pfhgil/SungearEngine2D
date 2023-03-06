@@ -18,7 +18,7 @@ public interface Core2DUserCallback
     /**
      * Called every time the frame is drawn.
      */
-    void onDrawFrame();
+    void onUpdate();
 
     /**
      * Called every time the frame is drawn, but it also takes the time difference between the last frame processing and the current one.

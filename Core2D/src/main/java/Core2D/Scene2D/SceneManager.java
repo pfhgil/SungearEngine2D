@@ -53,13 +53,22 @@ public class SceneManager
         return null;
     }
 
-    public void updateCurrentScene2D(float deltaTime)
+    public void updateCurrentScene2D()
+    {
+        if(currentScene2D != null) {
+            currentScene2D.update();
+        }
+
+        ECSWorld.getCurrentECSWorld().update();
+    }
+
+    public void deltaUpdateCurrentScene2D(float deltaTime)
     {
         if(currentScene2D != null) {
             currentScene2D.deltaUpdate(deltaTime);
         }
 
-        ECSWorld.getCurrentECSWorld().update();
+        ECSWorld.getCurrentECSWorld().deltaUpdate(deltaTime);
     }
 
     public static void saveSceneManager()
