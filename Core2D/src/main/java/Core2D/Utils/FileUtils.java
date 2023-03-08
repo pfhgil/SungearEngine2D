@@ -134,9 +134,9 @@ public class FileUtils
 
          */
         try {
-            String all = org.apache.commons.io.FileUtils.readFileToString(file, "cp1251");
-            System.out.println(all);
-            return all;
+            //String all = org.apache.commons.io.FileUtils.readFileToString(file, "cp1251");
+            //System.out.println(all);
+            return org.apache.commons.io.FileUtils.readFileToString(file, "cp1251");
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }

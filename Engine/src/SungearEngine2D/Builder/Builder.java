@@ -276,6 +276,7 @@ public class Builder {
                         scriptComponent.script.path = "/" + scriptComponent.script.path.replace("\\", "/");
                     }
 
+                    /*
                     // то же самое для аудио
                     List<AudioComponent> audioComponents = entity.getAllComponents(AudioComponent.class);
                     for (AudioComponent audioComponent : audioComponents) {
@@ -287,6 +288,8 @@ public class Builder {
                                 newFile.getPath(), false);
                         audioComponent.audio.path = "/" + audioComponent.audio.path.replace("\\", "/");
                     }
+
+                     */
                 }
             }
             // относительный путь сцены (относительно папки проекта)

@@ -6,12 +6,6 @@ import Core2D.ECS.NonRemovable;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
 
-/**
- * The TextureComponent. This component is NonDuplicated and NonDuplicated.
- * @see Transform
- * @see NonDuplicated
- * @see NonRemovable
- */
 public class TransformComponent extends Component implements NonDuplicated
 {
     // позиция
@@ -22,9 +16,9 @@ public class TransformComponent extends Component implements NonDuplicated
     public Vector2f scale = new Vector2f(1.0f, 1.0f);
 
     // ------------------------------------------------------ прошлые значения (на прошлом кадре)
-    public Vector2f lastPosition = new Vector2f();
-    public float lastRotation = 0.0f;
-    public Vector2f lastScale = new Vector2f(1.0f, 1.0f);
+    public transient Vector2f lastPosition = new Vector2f();
+    public transient float lastRotation = 0.0f;
+    public transient Vector2f lastScale = new Vector2f(1.0f, 1.0f);
     // ------------------------------------------------------
 
     // цент объекта (относительно позиции объекта)

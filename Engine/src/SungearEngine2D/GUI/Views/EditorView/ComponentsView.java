@@ -1,10 +1,12 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.AssetManager.AssetManager;
-import Core2D.Audio.Audio;
+import Core2D.Audio.OpenAL;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
 import Core2D.ECS.Component.Components.Audio.AudioComponent;
+import Core2D.ECS.Component.Components.Audio.AudioState;
+import Core2D.ECS.Component.Components.Audio.AudioType;
 import Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent;
 import Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent;
 import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
@@ -41,6 +43,7 @@ import org.jbox2d.dynamics.BodyType;
 import org.joml.Math;
 import org.joml.Vector2f;
 import org.joml.Vector4f;
+import org.lwjgl.openal.AL10;
 import org.lwjgl.opengl.GL46C;
 
 import java.io.File;
@@ -173,21 +176,18 @@ public class ComponentsView extends View
 
                         ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText("Texture", textureName, ImGuiInputTextFlags.ReadOnly));
 
-                        if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
-                            if (ImGui.beginDragDropTarget()) {
-                                Object imageFile = ImGui.acceptDragDropPayload("File");
-                                if (imageFile != null) {
-                                    textureName.set(ViewsManager.getResourcesView().getCurrentMovingFile().getName(), true);
-                                    String relativePath = FileUtils.getRelativePath(
-                                            new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
-                                            new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                                    meshComponent.setTexture(new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath)));
-                                    meshComponent.getTexture().path = relativePath;
-                                    ViewsManager.getResourcesView().setCurrentMovingFile(null);
-                                }
-
-                                ImGui.endDragDropTarget();
+                        if (ImGui.beginDragDropTarget()) {
+                            Object imageFile = ImGui.acceptDragDropPayload("File");
+                            if (imageFile instanceof File file) {
+                                textureName.set(file.getName(), true);
+                                String relativePath = FileUtils.getRelativePath(
+                                        file,
+                                        new File(ProjectsManager.getCurrentProject().getProjectPath()));
+                                meshComponent.setTexture(new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath)));
+                                meshComponent.getTexture().path = relativePath;
                             }
+
+                            ImGui.endDragDropTarget();
                         }
 
                         ImString shaderName = new ImString(new File(meshComponent.getShader().path).getName());
@@ -200,7 +200,7 @@ public class ComponentsView extends View
                         if (droppedObject[0] instanceof File file) {
                             shaderName.set(file.getName(), true);
                             String relativePath = FileUtils.getRelativePath(
-                                    new File(file.getPath()),
+                                    file,
                                     new File(ProjectsManager.getCurrentProject().getProjectPath()));
                             meshComponent.setShader(new Shader(AssetManager.getInstance().getShaderData(relativePath)));
                             meshComponent.getShader().path = relativePath;
@@ -224,7 +224,7 @@ public class ComponentsView extends View
                             if (imageFile instanceof File file) {
                                 textureName.set(file.getName(), true);
                                 String relativePath = FileUtils.getRelativePath(
-                                        new File(file.getPath()),
+                                        file,
                                         new File(ProjectsManager.getCurrentProject().getProjectPath()));
                                 textureComponent.setTexture(new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath)));
                                 textureComponent.getTexture().path = relativePath;
@@ -584,42 +584,41 @@ public class ComponentsView extends View
                     case "AudioComponent" -> {
                         AudioComponent audioComponent = (AudioComponent) currentComponent;
 
-                        ImString audioName = new ImString(new File(audioComponent.audio.path).getName());
+                        ImString audioName = new ImString(audioComponent.name);
 
-                        ImGui.text("Source ID: " + audioComponent.audio.source);
+                        ImGui.text("Source ID: " + audioComponent.sourceHandler);
 
                         ImGui.pushID("AudioPath_" + i);
                         ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText("Path", audioName, ImGuiInputTextFlags.ReadOnly));
                         ImGui.popID();
 
-                        if (ViewsManager.getResourcesView().getCurrentMovingFile() != null && ResourcesUtils.isFileImage(ViewsManager.getResourcesView().getCurrentMovingFile())) {
-                            if (ImGui.beginDragDropTarget()) {
-                                Object audioFile = ImGui.acceptDragDropPayload("File");
-                                if (audioFile != null) {
-                                    audioName.set(ViewsManager.getResourcesView().getCurrentMovingFile().getName(), true);
-                                    String relativePath = FileUtils.getRelativePath(
-                                            new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()),
-                                            new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                                    audioComponent.audio.loadAndSetup(ViewsManager.getResourcesView().getCurrentMovingFile().getPath());
-                                    audioComponent.audio.path = relativePath;
-                                    ViewsManager.getResourcesView().setCurrentMovingFile(null);
-                                }
+                        if (ImGui.beginDragDropTarget()) {
+                            Object audioFile = ImGui.acceptDragDropPayload("File");
+                            if (audioFile instanceof File file) {
+                                audioName.set(file.getName(), true);
+                                String relativePath = FileUtils.getRelativePath(
+                                        new File(file.getPath()),
+                                        new File(ProjectsManager.getCurrentProject().getProjectPath()));
 
-                                ImGui.endDragDropTarget();
+                                ECSWorld.getCurrentECSWorld().audioSystem.setAudioComponentData(audioComponent, AssetManager.getInstance().getAudioData(relativePath));
+                                //audioComponent.audio.loadAndSetup(ViewsManager.getResourcesView().getCurrentMovingFile().getPath());
+                                //audioComponent.audio.path = relativePath;
+                                audioComponent.name = new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()).getName();
                             }
+                            ImGui.endDragDropTarget();
                         }
 
                         ImGui.pushID("AudioType_" + i);
-                        if (ImGuiUtils.imCallWBorder(func -> ImGui.beginCombo("Type", audioComponent.audio.audioType.toString()))) {
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.beginCombo("Type", audioComponent.type.toString()))) {
                             ImGui.pushID("AudioTypeSelectable0_" + i);
                             if (ImGui.selectable("Background")) {
-                                audioComponent.audio.audioType = Audio.AudioType.BACKGROUND;
+                                audioComponent.type = AudioType.BACKGROUND;
                             }
                             ImGui.popID();
 
                             ImGui.pushID("AudioTypeSelectable1_" + i);
                             if (ImGui.selectable("Worldspace")) {
-                                audioComponent.audio.audioType = Audio.AudioType.WORLDSPACE;
+                                audioComponent.type =AudioType.WORLDSPACE;
                             }
                             ImGui.popID();
 
@@ -629,47 +628,47 @@ public class ComponentsView extends View
                         }
                         ImGui.popID();
 
-                        float[] maxDistance = new float[] { audioComponent.audio.getMaxDistance() };
+                        float[] maxDistance = new float[] { audioComponent.maxDistance };
                         ImGui.pushID("AudioMaxDistanceDragFloat_" + i);
                         if(ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Max distance", maxDistance))) {
-                            float res = Math.max(0, maxDistance[0]);
-                            audioComponent.audio.setMaxDistance(res);
+                            audioComponent.maxDistance = Math.max(0, maxDistance[0]);
                         }
                         ImGui.popID();
 
-                        float[] volumePercent = new float[] { audioComponent.audio.volumePercent };
+                        float[] volumePercent = new float[] { audioComponent.volumePercent };
                         ImGui.pushID("AudioVolumePercentDragFloat_" + i);
                         if(ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Volume percent", volumePercent))) {
-                            float res = Math.max(0, Math.min(volumePercent[0], 100.0f));
-                            audioComponent.audio.volumePercent = res;
+                            audioComponent.volumePercent = Math.max(0, Math.min(volumePercent[0], 100.0f));
                         }
                         ImGui.popID();
 
                         ImGui.pushID("AudioIsCyclicCheckbox_" + i);
-                        if(ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Cyclic", audioComponent.audio.isCyclic()))) {
-                            audioComponent.audio.setCyclic(!audioComponent.audio.isCyclic());
+                        if(ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Cyclic", audioComponent.cyclic))) {
+                            audioComponent.cyclic = !audioComponent.cyclic;
                         }
                         ImGui.popID();
 
-                        ImGui.newLine();
+                        if(!OpenAL.alCall(params -> AL10.alIsSource(audioComponent.sourceHandler), Boolean.class)) continue;
 
+                        ImGui.newLine();
                         //ImGui.progressBar((float) audioComponent.audio.getCurrentSecond() / (audioComponent.audio.audioInfo.getAudioLength() / 1000f), 120.0f, 5.0f, "");
-                        float[] second = { audioComponent.audio.getCurrentSecond() };
+                        float[] second = { audioComponent.currentSecond };
                         //System.out.println("cur: " + second[0]+ ", len: " + audioComponent.audio.audioInfo.getAudioLength() / 1000f);
 
-                        if(ImGuiUtils.sliderFloat(String.format("%.1f", audioComponent.audio.getCurrentSecond()),
+                        if(ImGuiUtils.sliderFloat(String.format("%.1f", audioComponent.currentSecond),
                                 second,
                                 0f,
-                                audioComponent.audio.audioInfo.getAudioLengthInSeconds(),
+                                audioComponent.audioLengthInSeconds,
                                 "AudioCurrentSecondSliderFloat_" + i,
                                 "",
-                                String.format("%.1f", audioComponent.audio.audioInfo.getAudioLengthInSeconds()))) {
-                            audioComponent.audio.setCurrentSecond(second[0]);
+                                String.format("%.1f", audioComponent.audioLengthInSeconds))) {
+                            audioComponent.currentSecond = second[0];
                         }
 
+                        AudioState lastAudioState = audioComponent.state;
+
                         Vector4f playButtonColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
-                        boolean playing = audioComponent.audio.isPlaying();
-                        if(playing) {
+                        if(lastAudioState == AudioState.PLAYING) {
                             ImGui.pushStyleColor(ImGuiCol.Button, 0, 0, 0, 0);
                             ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0, 0, 0, 0);
                             ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0, 0, 0, 0);
@@ -677,20 +676,20 @@ public class ComponentsView extends View
                         }
                         ImGui.pushID("AudioPlayButton_" + i);
                         if(ImGui.imageButton(Resources.Textures.Icons.playButtonIcon.getTextureHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, playButtonColor.x, playButtonColor.y, playButtonColor.z, playButtonColor.w)) {
-                            if(playing) {
-                                audioComponent.audio.stop();
+                            if(audioComponent.state == AudioState.PLAYING) {
+                                audioComponent.state = AudioState.STOPPED;
                             } else {
-                                audioComponent.audio.play();
+                                audioComponent.state = AudioState.PLAYING;
+                                //audioComponent.audio.play();
                             }
                         }
                         ImGui.popID();
-                        if(playing) {
+                        if(lastAudioState == AudioState.PLAYING) {
                             ImGui.popStyleColor(3);
                         }
 
                         Vector4f pauseButtonColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
-                        boolean paused = audioComponent.audio.isPaused();
-                        if(paused) {
+                        if(lastAudioState == AudioState.PAUSED) {
                             ImGui.pushStyleColor(ImGuiCol.Button, 0, 0, 0, 0);
                             ImGui.pushStyleColor(ImGuiCol.ButtonActive, 0, 0, 0, 0);
                             ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0, 0, 0, 0);
@@ -699,16 +698,14 @@ public class ComponentsView extends View
                         ImGui.sameLine();
                         ImGui.pushID("AudioPauseButton_" + i);
                         if(ImGui.imageButton(Resources.Textures.Icons.pauseButtonIcon.getTextureHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, pauseButtonColor.x, pauseButtonColor.y, pauseButtonColor.z, pauseButtonColor.w)) {
-                            if(playing) {
-                                if (paused) {
-                                    audioComponent.audio.play();
-                                } else {
-                                    audioComponent.audio.pause();
-                                }
+                            if (audioComponent.state == AudioState.PAUSED) {
+                                audioComponent.state = AudioState.PLAYING;
+                            } else {
+                                audioComponent.state = AudioState.PAUSED;
                             }
                         }
                         ImGui.popID();
-                        if(paused) {
+                        if(lastAudioState == AudioState.PAUSED) {
                             ImGui.popStyleColor(3);
                         }
 
@@ -716,7 +713,7 @@ public class ComponentsView extends View
 
                         ImGui.pushID("AudioStopButton_" + i);
                         if(ImGui.imageButton(Resources.Textures.Icons.stopButtonIcon.getTextureHandler(), 8, 10)) {
-                            audioComponent.audio.stop();
+                            audioComponent.state = AudioState.STOPPED;
                         }
                         ImGui.popID();
                     }
@@ -839,15 +836,16 @@ public class ComponentsView extends View
                     }
                 } else if(extension.equals("wav")) {
                     Object droppedFile = ImGui.acceptDragDropPayload("File");
-                    if(droppedFile instanceof File audioFile) {
-                        AudioComponent audioComponent = new AudioComponent();
-                        audioComponent.audio.loadAndSetup(audioFile.getPath());
-
+                    if(droppedFile instanceof File file) {
                         String relativePath = FileUtils.getRelativePath(
-                                new File(audioFile.getPath()),
+                                file,
                                 new File(ProjectsManager.getCurrentProject().getProjectPath())
                         );
-                        audioComponent.audio.path = relativePath;
+                        AudioComponent audioComponent = ECSWorld.getCurrentECSWorld().audioSystem.createAudioComponent(AssetManager.getInstance().getAudioData(relativePath));
+                        audioComponent.name = file.getName();
+
+                        //Log.CurrentSession.println("is source: " + audioComponent.sourceHandler, Log.MessageType.SUCCESS);
+                        //audioComponent.audio.path = relativePath;
 
                         inspectingEntity.addComponent(audioComponent);
                     }

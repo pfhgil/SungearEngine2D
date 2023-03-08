@@ -1,5 +1,6 @@
 package Core2D.DataClasses;
 
+import Core2D.Audio.OpenAL;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 import org.apache.commons.io.IOUtils;
@@ -22,7 +23,9 @@ public class AudioData extends Data
 
     //private Core2D.ECS.Component.Components.Audio.AudioFormat audioFormat = new Core2D.ECS.Component.Components.Audio.AudioFormat();
 
-    private transient ByteBuffer data;
+    private transient int bufferHandler = -1;
+
+    private transient ByteBuffer bufferData;
 
     private transient int format;
 
@@ -44,8 +47,8 @@ public class AudioData extends Data
 
     public void set(AudioData audioData)
     {
-        this.data.clear();
-        this.data = audioData.data;
+        this.bufferData.clear();
+        this.bufferData = audioData.bufferData;
 
         this.frameLength = audioData.frameLength;
         this.audioLength = audioData.audioLength;
@@ -65,7 +68,8 @@ public class AudioData extends Data
 
         File audioFile = new File(path);
         try(AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile)) {
-            return createAudioData(audioInputStream);
+            create(audioInputStream);
+            return this;
         } catch (UnsupportedAudioFileException | IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -78,8 +82,9 @@ public class AudioData extends Data
     {
         this.path = path;
 
-        try(AudioInputStream stream = AudioSystem.getAudioInputStream(new BufferedInputStream(inputStream)); inputStream) {
-            return createAudioData(stream);
+        try(AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(inputStream)); inputStream) {
+            create(audioInputStream);
+            return this;
         } catch (UnsupportedAudioFileException | IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -88,17 +93,15 @@ public class AudioData extends Data
     }
 
 
-    private AudioData createAudioData(AudioInputStream stream)
+    private void create(AudioInputStream stream)
     {
-        //int buf = AL10.alGenBuffers();
+        bufferHandler = AL10.alGenBuffers();
 
         final int MONO = 1, STEREO = 2;
 
-        AudioData audioData = new AudioData();
-
         try(stream) {
-            AudioFormat format = stream.getFormat();
-            if (format.isBigEndian()) try {
+            AudioFormat audioFormat = stream.getFormat();
+            if (audioFormat.isBigEndian()) try {
                 throw new UnsupportedAudioFileException("Can't handle Big Endian formats yet");
             } catch (UnsupportedAudioFileException e) {
                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
@@ -106,14 +109,14 @@ public class AudioData extends Data
 
             //load stream into byte buffer
             int[] openALFormat = { -1 };
-            switch (format.getChannels()) {
+            switch (audioFormat.getChannels()) {
                 case MONO -> {
-                    switch (format.getSampleSizeInBits()) {
+                    switch (audioFormat.getSampleSizeInBits()) {
                         case 8 -> openALFormat[0] = AL10.AL_FORMAT_MONO8;
                         case 16 -> openALFormat[0] = AL10.AL_FORMAT_MONO16;
                     }
                 }
-                case STEREO -> openALFormat[0] = switch (format.getSampleSizeInBits()) {
+                case STEREO -> openALFormat[0] = switch (audioFormat.getSampleSizeInBits()) {
                     case 8 -> AL10.AL_FORMAT_STEREO8;
                     case 16 -> AL10.AL_FORMAT_STEREO16;
                     default -> openALFormat[0];
@@ -126,30 +129,31 @@ public class AudioData extends Data
             } catch (IOException e) {
                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }
-            audioData.data = BufferUtils.createByteBuffer(b.length).put(b);
-            audioData.data.flip();
+            bufferData = BufferUtils.createByteBuffer(b.length).put(b);
+            bufferData.flip();
 
-            //OpenAL.alCall((params) -> AL10.alBufferData(buf, openALFormat[0], data, (int) format.getSampleRate()));
+            OpenAL.alCall((params) -> AL10.alBufferData(bufferHandler, openALFormat[0], bufferData, (int) audioFormat.getSampleRate()));
 
             //audioData.buffer = buf;
-            audioData.format = openALFormat[0];
-            audioData.sampleRate = format.getSampleRate();
-            audioData.sampleSizeInBits = format.getSampleSizeInBits();
-            audioData.channels = format.getChannels();
-            audioData.frameSize = format.getFrameSize();
-            audioData.frameRate = format.getFrameRate();
-            audioData.bigEndian = format.isBigEndian();
+            this.format = openALFormat[0];
+            this.sampleRate = audioFormat.getSampleRate();
+            this.sampleSizeInBits = audioFormat.getSampleSizeInBits();
+            this.channels = audioFormat.getChannels();
+            this.frameSize = audioFormat.getFrameSize();
+            this.frameRate = audioFormat.getFrameRate();
+            this.bigEndian = audioFormat.isBigEndian();
 
-            audioData.frameLength = stream.getFrameLength();
+            this.frameLength = stream.getFrameLength();
             //and return the rough notion of length for the audio stream!
-            audioData.audioLength = (long) (1000f * stream.getFrameLength() / format.getFrameRate());
+            this.audioLength = (long) (1000f * stream.getFrameLength() / audioFormat.getFrameRate());
         } catch (Exception e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
-        return audioData;
     }
 
-    public ByteBuffer getData() { return data; }
+    public int getBufferHandler() { return bufferHandler; }
+
+    public ByteBuffer getBufferData() { return bufferData; }
 
     public int getFormat() { return format; }
 

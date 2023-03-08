@@ -194,6 +194,7 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                     sc.ID = lastComponentID;
                 }
             } else if(component instanceof AudioComponent audioComponent) {
+                /*
                 // если режим работы ядра в движке
                 if (Core2D.core2DMode == Core2DMode.IN_ENGINE) {
                     String audioFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + audioComponent.audio.path;
@@ -223,6 +224,8 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                 entity.addComponent(audioComponent);
 
                 audioComponent.ID = lastComponentID;
+
+                 */
             } else if(component instanceof Camera2DComponent camera2DComponent) {
                 Shader defaultShader = new Shader(AssetManager.getInstance().getShaderData(camera2DComponent.postprocessingDefaultShader.path));
 

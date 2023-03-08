@@ -167,6 +167,7 @@ public class FrameBuffer implements Serializable
         // ЕСЛИ НУ  ЖЕН БУДЕТ DEPTH, ТО ПРИДЕТСЯ ДЕЛАТЬ ДОП. ПРОВЕРКУ И УСТАНОВКУ GL_DEPTH_STENCIL_ATTACHMENT
         OpenGL.glCall((params) -> glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBOHandler));
 
+        // я ебал
         unBindRBO();
     }
 

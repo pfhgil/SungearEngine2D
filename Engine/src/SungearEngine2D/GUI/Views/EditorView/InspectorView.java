@@ -421,7 +421,7 @@ public class InspectorView extends View
 
                 if(compiled) {
                     String relativePath = FileUtils.getRelativePath(
-                            new File(javaFile.getPath()),
+                            javaFile,
                             new File(ProjectsManager.getCurrentProject().getProjectPath())
                     );
                     String baseName = FilenameUtils.getBaseName(javaFile.getName());

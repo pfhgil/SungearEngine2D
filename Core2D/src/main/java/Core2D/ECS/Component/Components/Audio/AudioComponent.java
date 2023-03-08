@@ -1,36 +1,40 @@
 package Core2D.ECS.Component.Components.Audio;
 
-import Core2D.Audio.Audio;
 import Core2D.ECS.Component.Component;
-import org.lwjgl.openal.AL10;
 
 public class AudioComponent extends Component
 {
-    public int handler = -1;
+    // имя аудиозаписи
+    public String name = "";
+
+    public int sourceHandler = -1;
 
     // --------------------------------------------
     public AudioType type = AudioType.BACKGROUND;
 
-    public float maxDistance = 750.0f;
-    public float referenceDistance = 25.0f;
+    public float maxDistance = 750f;
+    public float referenceDistance = 25f;
     public float rolloffFactor = 0.1f;
-    public float volumePercent = 100.0f;
+    public float volumePercent = 100f;
 
-    public boolean playing = false;
-    public boolean paused = false;
+    public float pitch = 1f;
 
-    public int state = AL10.AL_STOPPED;
+    public AudioState lastState = AudioState.STOPPED;
+    public AudioState state = AudioState.STOPPED;
 
     // текущая секунда
-    public float currentSecond = 0.0f;
+    public float currentSecond = 0f;
+
+    public float audioLengthInSeconds = 0f;
+
     // прошлая секунда
-    public float lastSecond = 0.0f;
+    public float lastSecond = 0f;
 
     public boolean cyclic = false;
 
     // --------------------------------------------
 
-    public Audio audio = new Audio();
+    //public Audio audio = new Audio();
 
     /*
     public AudioComponent(AudioComponent component)

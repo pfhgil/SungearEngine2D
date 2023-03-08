@@ -2,6 +2,7 @@ package SungearEngine2D.CameraController;
 
 import Core2D.CamerasManager.CamerasManager;
 import Core2D.Core2D.Core2D;
+import Core2D.ECS.Component.Components.Audio.AudioState;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Input.Core2DUserInputCallback;
@@ -92,15 +93,6 @@ public class CameraController
                     }
                     if (Keyboard.keyReleased(GLFW.GLFW_KEY_L)) {
                         cameraTransformComponent.rotation = 0.0f;
-                    }
-                    if (Keyboard.keyReleased(GLFW.GLFW_KEY_F)) {
-                        Main.fuckYouAudio.play();
-                    }
-                    if (Keyboard.keyReleased(GLFW.GLFW_KEY_P)) {
-                        Main.fuckYouAudio.pause();
-                    }
-                    if (Keyboard.keyReleased(GLFW.GLFW_KEY_T)) {
-                        Main.fuckYouAudio.stop();
                     }
                 }
             }

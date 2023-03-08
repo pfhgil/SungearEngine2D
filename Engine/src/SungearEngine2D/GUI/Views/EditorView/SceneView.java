@@ -325,7 +325,7 @@ public class SceneView extends View
             Entity newSceneEntity = Entity.createAsObject2D();
 
             String relativePath = FileUtils.getRelativePath(
-                    new File(file.getPath()),
+                    file,
                     new File(ProjectsManager.getCurrentProject().getProjectPath()));
             MeshComponent meshComponent = newSceneEntity.getComponent(MeshComponent.class);
             Texture2D texture2D = new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath));

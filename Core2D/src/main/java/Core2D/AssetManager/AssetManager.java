@@ -130,7 +130,7 @@ public class AssetManager implements Serializable
     public AssetManager load(AssetManager assetManager)
     {
         for(Asset asset : assetManager.assets) {
-            Log.Console.println("asset obj: " + asset.getAssetObject().getClass());
+            //Log.Console.println("asset obj: " + asset.getAssetObject().getClass());
             Asset loadedAsset = getAsset(asset);
             if(loadedAsset != null && asset.getAssetObject() instanceof Data data) {
                 data.setNotTransientFields(data);
@@ -234,6 +234,41 @@ public class AssetManager implements Serializable
         return returnAsset;
     }
 
+    public Object tryGetAsset(String path, Class<?> assetObjectClass)
+    {
+        String projectPath = ProjectsManager.getCurrentProject() != null ?
+                ProjectsManager.getCurrentProject().getProjectPath() :
+                "";
+
+        String relativePath = path;
+        if(new File(path).exists()) {
+            relativePath = FileUtils.getRelativePath(path, projectPath);
+        }
+
+        String fullPath = projectPath + File.separator + relativePath;
+        Object objToCast = null;
+        if (assetObjectClass.getSuperclass().isAssignableFrom(Data.class)) {
+            try(InputStream resource = Core2D.class.getResourceAsStream(path)) {
+                if(new File(fullPath).exists()) {
+                    Log.CurrentSession.println("trying to load not from resources.... Path: " + path, Log.MessageType.WARNING);
+                    //System.out.println("assignable from: " + assetObjectClass.getName());
+                    objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(fullPath);
+                } else { // если файл не существует, то пробуем загрузить файл из ресурсов
+                    Log.CurrentSession.println("trying to load from resources.... Path: " + path, Log.MessageType.WARNING);
+                    objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(resource, path);
+                }
+            } catch (InstantiationException |
+                     IllegalAccessException |
+                     InvocationTargetException |
+                     IOException |
+                     NoSuchMethodException e) {
+                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+            }
+        }
+
+        return objToCast;
+    }
+
     public <T> T getAssetObject(String path, Class<?> assetObjectClass)
     {
         //Log.CurrentSession.println("path: " + path, Log.MessageType.WARNING);
@@ -246,22 +281,30 @@ public class AssetManager implements Serializable
         }
 
         if(assetObj == null) {
+            /*
             if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
                 if(ProjectsManager.getCurrentProject() != null) {
-                    String resPath = path;
+                    String relativePath = path;
                     if(new File(path).exists()) {
-                        resPath = FileUtils.getRelativePath(path, ProjectsManager.getCurrentProject().getProjectPath());
+                        relativePath = FileUtils.getRelativePath(path, ProjectsManager.getCurrentProject().getProjectPath());
                     }
 
-                    String fullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + resPath;
+                    String fullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + relativePath;
                     Object objToCast = null;
                     if (assetObjectClass.getSuperclass().isAssignableFrom(Data.class)) {
-                        try {
-                            //System.out.println("assignable from: " + assetObjectClass.getName());
-                            objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(fullPath);
+                        try(InputStream resource = Core2D.class.getResourceAsStream(path)) {
+                            if(new File(fullPath).exists()) {
+                                Log.CurrentSession.println("trying to load not from resources.... Path: " + path, Log.MessageType.WARNING);
+                                //System.out.println("assignable from: " + assetObjectClass.getName());
+                                objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(fullPath);
+                            } else { // если файл не существует, то пробуем загрузить файл из ресурсов
+                                Log.CurrentSession.println("trying to load from resources.... Path: " + path, Log.MessageType.WARNING);
+                                objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(resource, path);
+                            }
                         } catch (InstantiationException |
                                  IllegalAccessException |
                                  InvocationTargetException |
+                                 IOException |
                                  NoSuchMethodException e) {
                             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                         }
@@ -270,6 +313,8 @@ public class AssetManager implements Serializable
                     if(objToCast != null) {
                         assetObj = assetObjectClass.cast(objToCast);
                     }
+                } else {
+
                 }
             } else {
                 Object objToCast = null;
@@ -290,10 +335,18 @@ public class AssetManager implements Serializable
                 }
             }
 
+             */
+
+            Object foundAsset = tryGetAsset(path, assetObjectClass);
+
+            if(foundAsset != null) {
+                assetObj = assetObjectClass.cast(foundAsset);
+            }
+
             assets.add(new Asset(assetObj, path));
             if(assetObj != null) {
                 Log.Console.println("added new asset! data type: " + assetObj.getClass().getSimpleName() +
-                        ", path: " + path + ", asset class: " + assetObjectClass.getName());
+                        ", path: " + path + ", asset class: " + assetObjectClass.getName() + ", asset obj: " + assetObj);
             }
         }
 

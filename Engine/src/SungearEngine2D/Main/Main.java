@@ -1,12 +1,13 @@
 package SungearEngine2D.Main;
 
 import Core2D.AssetManager.AssetManager;
-import Core2D.Audio.Audio;
 import Core2D.CamerasManager.CamerasManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DUserCallback;
 import Core2D.Core2D.Settings;
 import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.Audio.AudioComponent;
+import Core2D.ECS.Component.Components.Audio.AudioState;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
@@ -55,7 +56,7 @@ public class Main
     public static Thread helpThread;
 
     // TODO: delete this
-    public static Audio fuckYouAudio = new Audio();
+    public static AudioComponent djArbuzAudio;
 
     private static Shader onlyColorShader;
 
@@ -217,8 +218,17 @@ public class Main
                  * OpenAL TEST
                  */
 
-                fuckYouAudio.loadAndSetup(Core2D.class.getResourceAsStream("/data/audio/audio_1.wav"));
+                djArbuzAudio = ECSWorld.getCurrentECSWorld().audioSystem.createAudioComponent(AssetManager.getInstance().getAudioData("/data/audio/dj-arbuz.wav"));
+                // блять забыл =)
+                // рот ебал
+                // .
+                ECSWorld.getCurrentECSWorld().addComponent(djArbuzAudio);
+                djArbuzAudio.state = AudioState.PLAYING;
+                // СЕЙЧАС ИГРАЕТ - DJ ARBUZ - DJ ARBUZ
+                //fuckYouAudio.loadAndSetup(Core2D.class.getResourceAsStream("/data/audio/audio_1.wav"));
 
+                //КААААЙФФ
+                // ИМБИЩ
                 /** -------------------- */
 
                 onlyColorShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/common/only_color_shader.glsl"));
@@ -301,6 +311,16 @@ public class Main
 
                 Compiler.compileAllShaders();
 
+                if (Keyboard.keyReleased(GLFW.GLFW_KEY_F)) {
+                    Main.djArbuzAudio.state = AudioState.PLAYING;
+                }
+                if (Keyboard.keyReleased(GLFW.GLFW_KEY_P)) {
+                    Main.djArbuzAudio.state = AudioState.PAUSED;
+                }
+                if (Keyboard.keyReleased(GLFW.GLFW_KEY_T)) {
+                    Main.djArbuzAudio.state = AudioState.STOPPED;
+                }
+
                 TransformComponent cameraTransformComponent = mainCamera2D.getComponent(TransformComponent.class);
                 if(cameraTransformComponent != null) {
                     //System.out.println("ddd");
@@ -344,7 +364,6 @@ public class Main
 
         Core2D.core2DUserCallback = core2DUserCallback;
         Core2D.start();
-        //Core2D.start("Sungear Engine 2D", new int[] { GLFW.GLFW_SAMPLES }, new int[] { 8 });
     }
 
     public static Entity getMainCamera2D() { return mainCamera2D; }

@@ -1,6 +1,8 @@
 package Core2D.ECS.System.Systems;
 
+import Core2D.Audio.OpenAL;
 import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.Audio.AudioComponent;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
@@ -12,6 +14,7 @@ import Core2D.Layering.PostprocessingLayer;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
 import org.joml.Vector2i;
+import org.lwjgl.openal.AL10;
 
 import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
 
@@ -55,6 +58,8 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
             for(PostprocessingLayer ppLayer : camera2DComponent.postprocessingLayers) {
                 ppLayer.destroy();
             }
+        } else if(component instanceof AudioComponent audioComponent) {
+            OpenAL.alCall(params -> AL10.alDeleteSources(audioComponent.sourceHandler));
         }
     }
 

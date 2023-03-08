@@ -27,6 +27,7 @@ public class ECSWorld
     public final PrimitivesRendererSystem primitivesRendererSystem = new PrimitivesRendererSystem();
     public final CamerasManagerSystem camerasManagerSystem = new CamerasManagerSystem();
     public final TransformationsSystem transformationsSystem = new TransformationsSystem();
+    public final AudioSystem audioSystem = new AudioSystem();
     // ----------------------------------
 
     public ECSWorld()
@@ -39,6 +40,9 @@ public class ECSWorld
         // transformations
         systems.add(transformationsSystem);
 
+        // audio
+        systems.add(audioSystem);
+
         Log.CurrentSession.println("ECSWorld created!", Log.MessageType.WARNING);
     }
 
@@ -46,7 +50,13 @@ public class ECSWorld
     public void addComponent(Component component)
     {
         if(component.entity == null) {
-            Log.CurrentSession.println("Value of field 'entity' in component '" + component + "' is equals null", Log.MessageType.ERROR, true);
+            Log.CurrentSession.println("Value of field 'entity' in component '" + component + "' is equals null. It will be added in блять забыл", Log.MessageType.WARNING, true);
+            // пук пуккк!!!!!!!
+            // общак с entityid = -1
+            // тут все компоненты безмамные (без entity) будут лежать
+            ComponentsQuery componentsQuery = new ComponentsQuery(-1);
+            componentsQuery.getComponents().add(component);
+            componentsQueries.add(componentsQuery);
             return;
         }
 

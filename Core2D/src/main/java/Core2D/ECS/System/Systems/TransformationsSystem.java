@@ -20,6 +20,7 @@ public class TransformationsSystem extends System
         //Rigidbody2DComponent rigidbody2DComponent = componentsQuery.getComponent(Rigidbody2DComponent.class);
 
         if(transformComponent != null) {
+            if(!transformComponent.active) return;
             if(hasTransformComponentChanged(transformComponent)) {
                 // устанавливаем позицию у rigidbody2d и обновляем матрицы
 
@@ -63,7 +64,7 @@ public class TransformationsSystem extends System
 
     public boolean hasTransformComponentChanged(TransformComponent transformComponent)
     {
-        if(!active) return false;
+        if(!active || !transformComponent.active) return false;
 
         return !transformComponent.position.equals(transformComponent.lastPosition) ||
                 transformComponent.rotation != transformComponent.lastRotation ||
@@ -72,7 +73,7 @@ public class TransformationsSystem extends System
 
     public void updateAllMatrices(TransformComponent transformComponent)
     {
-        if(!active) return;
+        if(!active || !transformComponent.active) return;
 
         updateTranslationMatrix(transformComponent);
         updateRotationMatrix(transformComponent);
@@ -83,7 +84,7 @@ public class TransformationsSystem extends System
 
     public void updateModelMatrix(TransformComponent transformComponent)
     {
-        if(!active) return;
+        if(!active || !transformComponent.active) return;
 
         Matrix4f intermediateMatrix = new Matrix4f().mul(transformComponent.translationMatrix).mul(transformComponent.rotationMatrix).mul(transformComponent.scaleMatrix);
 
@@ -96,7 +97,7 @@ public class TransformationsSystem extends System
 
     public void updateTranslationMatrix(TransformComponent transformComponent)
     {
-        if(!active || transformComponent.position.equals(transformComponent.lastPosition)) return;
+        if(!active || transformComponent.position.equals(transformComponent.lastPosition) || !transformComponent.active) return;
 
         //transformComponent.translationMatrix.identity();
         transformComponent.translationMatrix.setTranslation(transformComponent.position.x, transformComponent.position.y, 0.0f);
@@ -104,7 +105,7 @@ public class TransformationsSystem extends System
 
     public void updateRotationMatrix(TransformComponent transformComponent)
     {
-        if(!active || transformComponent.rotation == transformComponent.lastRotation) return;
+        if(!active || transformComponent.rotation == transformComponent.lastRotation || !transformComponent.active) return;
 
         transformComponent.rotationMatrix.identity();
         Quaternionf rotationQ = new Quaternionf();
@@ -118,7 +119,7 @@ public class TransformationsSystem extends System
 
     public void updateScaleMatrix(TransformComponent transformComponent)
     {
-        if(!active || transformComponent.scale.equals(transformComponent.lastScale)) return;
+        if(!active || transformComponent.scale.equals(transformComponent.lastScale) || !transformComponent.active) return;
 
         transformComponent.scaleMatrix.identity();
         transformComponent.scaleMatrix.scale(transformComponent.scale.x, transformComponent.scale.y, 1.0f);
