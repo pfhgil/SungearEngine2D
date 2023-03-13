@@ -1,0 +1,4 @@
+[#FFFFFF] 2023/02/11 21:27:34 | [#008000] Current session log file was created!
+[#FFFFFF] 2023/02/11 21:27:34 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2023/02/11 21:27:34 | [#008000] Core2D started!
+[#FFFFFF] 2023/02/11 21:27:34 | [#FFFFFF] LWJGL version is 3.2.3 SNAPSHOT

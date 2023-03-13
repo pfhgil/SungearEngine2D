@@ -32,7 +32,6 @@ import SungearEngine2D.GUI.ImGuiUtils;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Resources;
-import SungearEngine2D.Utils.ResourcesUtils;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.*;
@@ -203,7 +202,7 @@ public class ComponentsView extends View
                                     file,
                                     new File(ProjectsManager.getCurrentProject().getProjectPath()));
                             meshComponent.setShader(new Shader(AssetManager.getInstance().getShaderData(relativePath)));
-                            meshComponent.getShader().path = relativePath;
+                            //meshComponent.getShader().path = relativePath;
                         }
 
                         if(shaderEditButtonPressed[0]) {
@@ -584,7 +583,7 @@ public class ComponentsView extends View
                     case "AudioComponent" -> {
                         AudioComponent audioComponent = (AudioComponent) currentComponent;
 
-                        ImString audioName = new ImString(audioComponent.name);
+                        ImString audioName = new ImString(audioComponent.path);
 
                         ImGui.text("Source ID: " + audioComponent.sourceHandler);
 
@@ -603,7 +602,7 @@ public class ComponentsView extends View
                                 ECSWorld.getCurrentECSWorld().audioSystem.setAudioComponentData(audioComponent, AssetManager.getInstance().getAudioData(relativePath));
                                 //audioComponent.audio.loadAndSetup(ViewsManager.getResourcesView().getCurrentMovingFile().getPath());
                                 //audioComponent.audio.path = relativePath;
-                                audioComponent.name = new File(ViewsManager.getResourcesView().getCurrentMovingFile().getPath()).getName();
+                                audioComponent.path = relativePath;
                             }
                             ImGui.endDragDropTarget();
                         }
@@ -719,96 +718,181 @@ public class ComponentsView extends View
                     }
                     case "Camera2DComponent" -> {
                         Camera2DComponent camera2DComponent = (Camera2DComponent) currentComponent;
+
                         ImGui.pushID("Scene2DMainCamera_" + i);
-                        if(ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Scene2D main camera", camera2DComponent.isScene2DMainCamera2D))) {
-                            ECSWorld.getCurrentECSWorld().componentsInitializerSystem.setScene2DMainCamera2D(camera2DComponent, !camera2DComponent.isScene2DMainCamera2D);
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Scene2D main camera", camera2DComponent.scene2DMainCamera2D))) {
+                            ECSWorld.getCurrentECSWorld().componentsInitializerSystem.setScene2DMainCamera2D(camera2DComponent, !camera2DComponent.scene2DMainCamera2D);
                             //camera2DComponent.setScene2DMainCamera2D(!camera2DComponent.isScene2DMainCamera2D);
                         }
                         ImGui.popID();
 
-                        int k = 0;
+                        ImGui.separator();
 
-                        if(ImGuiUtils.arrowButton("Add PP layer...", "AddPPLayerButton_" + i, true)) {
-                            ImGui.pushID("PPLayersToAddListBox_" + i);
-                            ImGui.sameLine();
-                            if(ImGuiUtils.imCallWBorder(func -> ImGui.beginListBox("", 150.0f, 75.0f))) {
-                                for (Layer layer : currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
-                                    if (!ECSWorld.getCurrentECSWorld().camerasManagerSystem.isPostprocessingLayerExists(camera2DComponent, layer)) {
-                                        ImGui.pushID("PPLayerToAdd_" + k + "_" + i);
-                                        if (ImGui.selectable(layer.getName())) {
-                                            camera2DComponent.postprocessingLayers.add(new PostprocessingLayer(layer));
-                                            ImGuiUtils.setArrowButtonRetention("AddPPLayerButton_" + i, false);
-                                        }
-                                        ImGui.popID();
-                                    }
-                                    k++;
-                                }
-                                ImGui.endListBox();
+                        ImGui.pushID("CameraTransformations_" + i);
+                        if (ImGui.treeNode("Transformations")) {
+                            ImGui.pushID("CameraFollowTranslation_" + i);
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Follow translation", camera2DComponent.followTranslation))) {
+                                camera2DComponent.followTranslation = !camera2DComponent.followTranslation;
                             }
                             ImGui.popID();
+
+                            ImGui.pushID("CameraFollowRotation_" + i);
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Follow rotation", camera2DComponent.followRotation))) {
+                                camera2DComponent.followRotation = !camera2DComponent.followRotation;
+                            }
+                            ImGui.popID();
+
+                            ImGui.pushID("CameraFollowScale_" + i);
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Follow scale", camera2DComponent.followScale))) {
+                                camera2DComponent.followScale = !camera2DComponent.followScale;
+                            }
+                            ImGui.popID();
+
+                            ImGui.newLine();
+
+                            float[] pos = new float[]{
+                                    camera2DComponent.position.x,
+                                    camera2DComponent.position.y
+                            };
+                            float[] rotation = new float[]{
+                                    camera2DComponent.rotation
+                            };
+                            float[] scale = new float[]{
+                                    camera2DComponent.scale.x,
+                                    camera2DComponent.scale.y
+                            };
+
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Position", pos))) {
+                                camera2DComponent.position.set(new Vector2f(pos));
+                            }
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Rotation", rotation))) {
+                                camera2DComponent.rotation = rotation[0];
+                            }
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Scale", scale, 0.01f))) {
+                                camera2DComponent.scale.set(new Vector2f(scale));
+                            }
+
+                            ImGui.treePop();
                         }
+                        ImGui.popID();
 
-                        k = 0;
-                        Iterator<PostprocessingLayer> ppCamLayersIterator = camera2DComponent.postprocessingLayers.listIterator();
-                        while(ppCamLayersIterator.hasNext()) {
-                            PostprocessingLayer ppLayer = ppCamLayersIterator.next();
-                            ImGui.pushID("PPLayer_" + k + "_" + i);
-                            if (ImGui.treeNode("Postprocessing layer \"" + (ppLayer.getEntitiesLayerToRender() != null ? ppLayer.getEntitiesLayerToRender().getName() + "\"" : "unknown\""))) {
-                                ImString shaderName = new ImString(new File(ppLayer.getShader().path).getName());
+                        ImGui.pushID("CameraRendering_" + i);
+                        if (ImGui.treeNode("Rendering")) {
 
-                                boolean[] shaderEditButtonPressed = new boolean[1];
-                                Object[] droppedObject = new Object[1];
-                                ImGuiUtils.imCallWBorder(func -> ImGuiUtils.inputTextWithRightButton("Shader", shaderName, ImGuiInputTextFlags.ReadOnly,
-                                        Resources.Textures.Icons.editIcon24.getTextureHandler(), shaderEditButtonPressed, "Edit shader", true, droppedObject, "File"));
-
-                                if (droppedObject[0] instanceof File file) {
-                                    shaderName.set(file.getName(), true);
-                                    String relativePath = FileUtils.getRelativePath(
-                                            new File(file.getPath()),
-                                            new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                                    ppLayer.setShader(new Shader(AssetManager.getInstance().getShaderData(relativePath)));
-                                    ppLayer.getShader().path = relativePath;
-                                }
-
-                                if(shaderEditButtonPressed[0]) {
-                                    ShadersEditorView.ShaderEditorWindow newShaderEditorWindow = new ShadersEditorView.ShaderEditorWindow(
-                                            ppLayer.getShader(),
-                                            new ComponentHandler(camera2DComponent.entity.getLayer().getID(),
-                                                    camera2DComponent.entity.ID, camera2DComponent.ID));
-                                    newShaderEditorWindow.ppLayerName =  ppLayer.getEntitiesLayerToRenderName();
-                                    ViewsManager.getShadersEditorView().addEditingShader(newShaderEditorWindow);
-                                }
+                            ImGui.pushID("CameraRender_" + i);
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Render", camera2DComponent.render))) {
+                                camera2DComponent.render = !camera2DComponent.render;
+                            }
+                            ImGui.popID();
 
 
-                                if(ImGui.button("View...")) {
-                                    if(!ViewsManager.isFBOViewExists("PPLayerView_" + i + "_" + k)) {
-                                        ViewsManager.getFBOViews().add(new GameView("PPLayer \"" + ppLayer.getEntitiesLayerToRenderName() + "\"", "PPLayerView_" + i + "_" + k,
-                                                ppLayer.getFrameBuffer().getTextureHandler(), true, ppLayer, new ComponentHandler(camera2DComponent.entity.getLayer().getID(), camera2DComponent.entity.ID, camera2DComponent.ID)));
-                                    } else {
-                                        GameView gameView = ViewsManager.getFBOView("PPLayerView_" + i + "_" + k);
-                                        gameView.setPostprocessingLayer(ppLayer, new ComponentHandler(camera2DComponent.entity.getLayer().getID(), camera2DComponent.entity.ID, camera2DComponent.ID));
+                            int k = 0;
+
+                            ImGui.pushID("CameraPP_" + i);
+                            if (ImGui.treeNode("Postprocessing")) {
+                                if (ImGuiUtils.arrowButton("Add PP layer...", "AddPPLayerButton_" + i, true)) {
+                                    ImGui.pushID("PPLayersToAddListBox_" + i);
+                                    ImGui.sameLine();
+                                    if (ImGuiUtils.imCallWBorder(func -> ImGui.beginListBox("", 150.0f, 75.0f))) {
+                                        for (Layer layer : currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
+                                            if (!ECSWorld.getCurrentECSWorld().camerasManagerSystem.isPostprocessingLayerExists(camera2DComponent, layer)) {
+                                                ImGui.pushID("PPLayerToAdd_" + k + "_" + i);
+                                                if (ImGui.selectable(layer.getName())) {
+                                                    camera2DComponent.postprocessingLayers.add(new PostprocessingLayer(layer));
+                                                    ImGuiUtils.setArrowButtonRetention("AddPPLayerButton_" + i, false);
+                                                }
+                                                ImGui.popID();
+                                            }
+                                            k++;
+                                        }
+                                        ImGui.endListBox();
                                     }
+                                    ImGui.popID();
                                 }
 
-                                ImGui.newLine();
+                                k = 0;
+                                Iterator<PostprocessingLayer> ppCamLayersIterator = camera2DComponent.postprocessingLayers.listIterator();
+                                while (ppCamLayersIterator.hasNext()) {
+                                    PostprocessingLayer ppLayer = ppCamLayersIterator.next();
+                                    ImGui.pushID("PPLayer_" + k + "_" + i);
+                                    if (ImGui.treeNode("Postprocessing layer \"" + (ppLayer.getEntitiesLayerToRender() != null ? ppLayer.getEntitiesLayerToRender().getName() + "\"" : "unknown\""))) {
 
-                                ImGui.pushID("RemovePPLayer" + k + "_" + i);
-                                if (ImGui.button("Remove")) {
-                                    ppLayer.destroy();
-                                    ppCamLayersIterator.remove();
+                                        ImGui.pushID("CameraPPLayerRender_" + k + "_" + i);
+                                        if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Render", ppLayer.render))) {
+                                            ppLayer.render = !ppLayer.render;
+                                        }
+                                        ImGui.popID();
+
+                                        ImGui.pushID("CameraPPLayerOverlay_" + k + "_" + i);
+                                        if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Overlay", ppLayer.overlay))) {
+                                            ppLayer.overlay = !ppLayer.overlay;
+                                        }
+                                        ImGui.popID();
+
+                                        ImGui.newLine();
+
+                                        ImString shaderName = new ImString(new File(ppLayer.getShader().path).getName());
+
+                                        boolean[] shaderEditButtonPressed = new boolean[1];
+                                        Object[] droppedObject = new Object[1];
+                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.inputTextWithRightButton("Shader", shaderName, ImGuiInputTextFlags.ReadOnly,
+                                                Resources.Textures.Icons.editIcon24.getTextureHandler(), shaderEditButtonPressed, "Edit shader", true, droppedObject, "File"));
+
+                                        if (droppedObject[0] instanceof File file) {
+                                            shaderName.set(file.getName(), true);
+                                            String relativePath = FileUtils.getRelativePath(
+                                                    new File(file.getPath()),
+                                                    new File(ProjectsManager.getCurrentProject().getProjectPath()));
+                                            ppLayer.setShader(new Shader(AssetManager.getInstance().getShaderData(relativePath)));
+                                            //ppLayer.getShader().path = relativePath;
+                                        }
+
+                                        if (shaderEditButtonPressed[0]) {
+                                            ShadersEditorView.ShaderEditorWindow newShaderEditorWindow = new ShadersEditorView.ShaderEditorWindow(
+                                                    ppLayer.getShader(),
+                                                    new ComponentHandler(camera2DComponent.entity.getLayer().getID(),
+                                                            camera2DComponent.entity.ID, camera2DComponent.ID));
+                                            newShaderEditorWindow.ppLayerName = ppLayer.getEntitiesLayerToRenderName();
+                                            ViewsManager.getShadersEditorView().addEditingShader(newShaderEditorWindow);
+                                        }
+
+
+                                        if (ImGui.button("View...")) {
+                                            if (!ViewsManager.isFBOViewExists("PPLayerView_" + i + "_" + k)) {
+                                                ViewsManager.getFBOViews().add(new GameView("PPLayer \"" + ppLayer.getEntitiesLayerToRenderName() + "\"", "PPLayerView_" + i + "_" + k,
+                                                        ppLayer.getFrameBuffer().getTextureHandler(), true, ppLayer, new ComponentHandler(camera2DComponent.entity.getLayer().getID(), camera2DComponent.entity.ID, camera2DComponent.ID)));
+                                            } else {
+                                                GameView gameView = ViewsManager.getFBOView("PPLayerView_" + i + "_" + k);
+                                                gameView.setPostprocessingLayer(ppLayer, new ComponentHandler(camera2DComponent.entity.getLayer().getID(), camera2DComponent.entity.ID, camera2DComponent.ID));
+                                            }
+                                        }
+
+                                        ImGui.newLine();
+
+                                        ImGui.pushID("RemovePPLayer" + k + "_" + i);
+                                        if (ImGui.button("Remove")) {
+                                            ppLayer.destroy();
+                                            ppCamLayersIterator.remove();
+                                        }
+                                        ImGui.popID();
+
+                                        if (camera2DComponent.postprocessingLayers.size() > 1 && k != camera2DComponent.postprocessingLayers.size() - 1) {
+                                            ImGui.separator();
+                                        }
+
+                                        ImGui.treePop();
+                                    }
+                                    ImGui.popID();
+
+                                    k++;
                                 }
-                                ImGui.popID();
-
-                                if(camera2DComponent.postprocessingLayers.size() > 1 && k != camera2DComponent.postprocessingLayers.size() - 1) {
-                                    ImGui.separator();
-                                }
-
                                 ImGui.treePop();
                             }
                             ImGui.popID();
 
-                            k++;
+                            ImGui.treePop();
                         }
+                        ImGui.popID();
                     }
                 }
             }
@@ -842,7 +926,7 @@ public class ComponentsView extends View
                                 new File(ProjectsManager.getCurrentProject().getProjectPath())
                         );
                         AudioComponent audioComponent = ECSWorld.getCurrentECSWorld().audioSystem.createAudioComponent(AssetManager.getInstance().getAudioData(relativePath));
-                        audioComponent.name = file.getName();
+                        audioComponent.path = relativePath;
 
                         //Log.CurrentSession.println("is source: " + audioComponent.sourceHandler, Log.MessageType.SUCCESS);
                         //audioComponent.audio.path = relativePath;

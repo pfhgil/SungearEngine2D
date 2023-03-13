@@ -4,10 +4,10 @@ import Core2D.ECS.Component.Component;
 
 public class AudioComponent extends Component
 {
-    // имя аудиозаписи
-    public String name = "";
+    // путь аудиозаписи (относительный)
+    public String path = "";
 
-    public int sourceHandler = -1;
+    public transient int sourceHandler = -1;
 
     // --------------------------------------------
     public AudioType type = AudioType.BACKGROUND;

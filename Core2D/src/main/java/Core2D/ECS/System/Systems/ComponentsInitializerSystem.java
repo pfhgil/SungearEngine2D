@@ -1,5 +1,6 @@
 package Core2D.ECS.System.Systems;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.OpenAL;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Audio.AudioComponent;
@@ -36,12 +37,16 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
 
             loadCameraVAO(camera2DComponent);
 
-            setScene2DMainCamera2D(camera2DComponent, camera2DComponent.isScene2DMainCamera2D);
+            setScene2DMainCamera2D(camera2DComponent, camera2DComponent.scene2DMainCamera2D);
             Vector2i screenSize = Graphics.getScreenSize();
             camera2DComponent.frameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
             camera2DComponent.resultFrameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
         } else if(component instanceof TransformComponent transformComponent) {
-            ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(transformComponent);
+            ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(transformComponent);
+        } else if(component instanceof AudioComponent audioComponent) {
+            ECSWorld.getCurrentECSWorld().audioSystem.setAudioComponentData(audioComponent,
+                    AssetManager.getInstance().getAudioData(audioComponent.path));
+            //Log.CurrentSession.println("audio initialized: " + audioComponent.path, Log.MessageType.SUCCESS);
         }
     }
 
@@ -60,6 +65,7 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
             }
         } else if(component instanceof AudioComponent audioComponent) {
             OpenAL.alCall(params -> AL10.alDeleteSources(audioComponent.sourceHandler));
+            //Log.CurrentSession.println("audio destroyed: " + audioComponent.path, Log.MessageType.SUCCESS);
         }
     }
 
@@ -98,13 +104,13 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
                 scene2DMainCamera2D && scene2D.getSceneMainCamera2D() != null) {
             Camera2DComponent foundComponent = scene2D.getSceneMainCamera2D().getComponent(Camera2DComponent.class);
             if(foundComponent != null) {
-                foundComponent.isScene2DMainCamera2D = false;
+                foundComponent.scene2DMainCamera2D = false;
                 scene2D.setSceneMainCamera2D(null);
             }
         }
-        camera2DComponent.isScene2DMainCamera2D = scene2DMainCamera2D;
+        camera2DComponent.scene2DMainCamera2D = scene2DMainCamera2D;
         if(scene2D != null) {
-            scene2D.setSceneMainCamera2D(camera2DComponent.isScene2DMainCamera2D ? camera2DComponent.entity : scene2D.getSceneMainCamera2D());
+            scene2D.setSceneMainCamera2D(camera2DComponent.scene2DMainCamera2D ? camera2DComponent.entity : scene2D.getSceneMainCamera2D());
         }
     }
 

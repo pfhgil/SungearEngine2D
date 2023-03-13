@@ -1,7 +1,9 @@
 package Core2D.Scripting;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
+import Core2D.DataClasses.ScriptData;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.Entity;
@@ -33,8 +35,6 @@ public class Script
     private transient Class<?> scriptClass;
     private transient Object scriptClassInstance;
 
-    private long lastModified = -1;
-
     private List<ScriptTempValue> scriptTempValues = new ArrayList<>();
 
     public void set(Script script)
@@ -65,38 +65,47 @@ public class Script
         loadClass(scriptsDirPath, fullPath, baseName, new FlexibleURLClassLoader(new URL[] { }));
     }
 
-    public void loadClass(String scriptsDirPath, String fullPath, String baseName, FlexibleURLClassLoader flexibleURLClassLoader)
+    public void loadClass(String scriptsDirPath, String path, String baseName, FlexibleURLClassLoader flexibleURLClassLoader)
     {
         scriptsDirPath = scriptsDirPath.replace("\\", "/");
-        fullPath = fullPath.replace(".java", "") + ".java";
-        //String fullPath = scriptsDirPath + "/" + baseName;
 
-        //System.out.println("loadClass in: " + scriptsDirPath + "\n\t" + fullPath + "\n\t" + baseName);
+        // fixes
+        path = path.replaceAll(".java", "");
+        path = path.replaceAll(".class", "") + ".class";
+
         try {
             // если режим работы - в движке
             if (Core2D.core2DMode == Core2DMode.IN_ENGINE) {
                 File file = new File(scriptsDirPath);
 
-                 URL scriptDirURL = file.toURI().toURL();
+                URL scriptDirURL = file.toURI().toURL();
                 flexibleURLClassLoader.addURL(scriptDirURL);
-                // ЕСЛИ БУДУТ БАГИ, ТО РАСКОММЕНТИРОВАТЬ
-                //ScriptSystem.loadAllChildURLs(flexibleURLClassLoader, scriptsDirPath);
-                //System.out.println(scriptDirURL);
 
-                scriptClass = flexibleURLClassLoader.loadNewClass(fullPath.replace(".java", ".class"));
-                // если в in-build
-            } else {
-                ByteClassLoader byteClassLoader = new ByteClassLoader();
-                scriptClass = byteClassLoader.loadClass(Core2D.class.getResourceAsStream(scriptsDirPath + "/" + baseName + ".class"),
-                        baseName);
+                Log.CurrentSession.println("script path: " + path, Log.MessageType.SUCCESS);
+
+                ScriptData scriptData = AssetManager.getInstance().getScriptData(path);
+
+                scriptClass = flexibleURLClassLoader.loadNewClass(path, scriptData.data);
+
+                this.path = scriptData.getPath();
+            } else {  // если в in-build
+                ScriptData scriptData = AssetManager.getInstance().getScriptData(scriptsDirPath + "/" + baseName + ".class");
+
+                try(ByteClassLoader byteClassLoader = new ByteClassLoader()) {
+                    scriptClass = byteClassLoader.loadClass(scriptData.data,
+                            baseName);
+                } catch (Exception e) {
+                    Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                }
+
+                this.path = scriptData.getPath();
             }
 
             scriptClassInstance = scriptClass.getConstructor().newInstance();
 
-            path = fullPath;
             name = baseName;
 
-            lastModified = new File(fullPath).lastModified();
+            //lastModified = new File(fullPath).lastModified();
         } catch (InstantiationException | IllegalAccessException | IOException | InvocationTargetException | NoSuchMethodException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -320,18 +329,12 @@ public class Script
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
 
-    public String getPath() { return path; }
-    public void setPath(String path) { this.path = path; }
-
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
     public Class<?> getScriptClass() { return scriptClass; }
 
     public Object getScriptClassInstance() { return scriptClassInstance; }
-
-    public long getLastModified() { return lastModified; }
-    public void setLastModified(long lastModified) { this.lastModified = lastModified; }
 
     public List<ScriptTempValue> getScriptTempValues() { return scriptTempValues; }
 }

@@ -29,7 +29,7 @@ public class Utils
 {
     private static Random random = new Random();
 
-    public static Gson gson = new GsonBuilder()
+    public static final Gson gson = new GsonBuilder()
             .setPrettyPrinting()
             .registerTypeAdapter(Prefab.class, new PrefabDeserializer())
             .registerTypeAdapter(Entity.class, new EntityDeserializer())
@@ -198,14 +198,5 @@ public class Utils
     public static double getRandom(double min, double max)
     {
         return min + Math.random() * (max - min);
-    }
-
-    public static boolean isPointInNoRotatedObject(Vector2f mousePosition, Entity entity) {
-        TransformComponent entityTransformComponent = entity.getComponent(TransformComponent.class);
-
-        return mousePosition.x >= entityTransformComponent.position.x &&
-                mousePosition.x <= entityTransformComponent.position.x + 100.0f * entityTransformComponent.scale.x &&
-                mousePosition.y >= entityTransformComponent.position.y &&
-                mousePosition.y <= entityTransformComponent.position.y + 100.0f * entityTransformComponent.scale.y;
     }
 }

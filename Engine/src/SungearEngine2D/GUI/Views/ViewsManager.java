@@ -1,7 +1,12 @@
 package SungearEngine2D.GUI.Views;
 
 import Core2D.Core2D.Core2D;
+import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
+import Core2D.ECS.ECSWorld;
+import Core2D.ECS.System.ComponentsQuery;
+import Core2D.Physics.PhysicsWorld;
 import SungearEngine2D.GUI.Views.DebuggerView.DebuggerView;
 import SungearEngine2D.GUI.Views.EditorView.*;
 import SungearEngine2D.GUI.Views.Other.EngineSettingsView;
@@ -11,6 +16,8 @@ import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImBoolean;
+import org.jbox2d.common.Vec2;
+import org.joml.Math;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -114,6 +121,21 @@ public class ViewsManager
             projectTreeView.draw();
 
             resourcesView.draw();
+
+            for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
+                for(Component component : componentsQuery.getComponents()) {
+                    if(component instanceof Rigidbody2DComponent rigidbody2DComponent) {
+                        Vec2 linearVelocity = new Vec2(rigidbody2DComponent.getRigidbody2D().getBody().getLinearVelocity());
+                        float rotation = rigidbody2DComponent.getRigidbody2D().getBody().getAngularVelocity();
+
+                        ImGui.begin("velocitites");
+
+                        ImGui.text("velocity: " + linearVelocity.x + ", " + linearVelocity.y + ", rotation: " + rotation);
+
+                        ImGui.end();
+                    }
+                }
+            }
 
             inspectorView.draw();
             componentsView.draw();

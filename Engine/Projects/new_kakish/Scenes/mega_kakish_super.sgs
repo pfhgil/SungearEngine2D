@@ -1,0 +1,806 @@
+{
+  "name": "mega_kakish",
+  "scenePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scenes\\mega_kakish_super.sgs",
+  "layering": {
+    "layers": [
+      {
+        "entities": [],
+        "ID": 4,
+        "name": "sceneCopyLayer"
+      },
+      {
+        "entities": [],
+        "ID": 3,
+        "name": "spaceDeformationObjectsLayer"
+      },
+      {
+        "entities": [
+          {
+            "name": "kakish_city",
+            "active": true,
+            "layerName": "kakish_city_layer",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 8,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 0.0,
+                    "y": 74.8052
+                  },
+                  "rotation": 0.0,
+                  "scale": {
+                    "x": 25.6,
+                    "y": 14.4
+                  },
+                  "centre": {
+                    "x": -6.53442,
+                    "y": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\kakish_city.jpg",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "properties": {
+                  "rigidbody2D": {
+                    "bodyType": "STATIC",
+                    "density": 1.0,
+                    "restitution": 0.0,
+                    "friction": 0.1,
+                    "isSensor": false,
+                    "isFixedRotation": false
+                  },
+                  "ID": 2,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "properties": {
+                  "boxCollider2D": {
+                    "scale": {
+                      "x": 25.6,
+                      "y": 1.0
+                    },
+                    "offset": {
+                      "x": 3.0,
+                      "y": -685.0
+                    },
+                    "angle": 0.0
+                  },
+                  "ID": 3,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "properties": {
+                  "boxCollider2D": {
+                    "scale": {
+                      "x": 1.0,
+                      "y": 25.6
+                    },
+                    "offset": {
+                      "x": -1239.0,
+                      "y": 0.0
+                    },
+                    "angle": 0.0
+                  },
+                  "ID": 4,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "properties": {
+                  "boxCollider2D": {
+                    "scale": {
+                      "x": 25.6,
+                      "y": 1.0
+                    },
+                    "offset": {
+                      "x": 0.0,
+                      "y": 691.0
+                    },
+                    "angle": 0.0
+                  },
+                  "ID": 5,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "properties": {
+                  "boxCollider2D": {
+                    "scale": {
+                      "x": 1.0,
+                      "y": 25.6
+                    },
+                    "offset": {
+                      "x": 1237.0,
+                      "y": 0.0
+                    },
+                    "angle": 0.0
+                  },
+                  "ID": 6,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          }
+        ],
+        "ID": 2,
+        "name": "kakish_city_layer"
+      },
+      {
+        "entities": [
+          {
+            "name": "vlad",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 3,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": -68.50412,
+                    "y": 80.74982
+                  },
+                  "rotation": 0.0,
+                  "scale": {
+                    "x": 0.75,
+                    "y": 0.75
+                  },
+                  "centre": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\vlad.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "shaders\\Sample.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Camera2DComponent",
+                "properties": {
+                  "followTranslation": true,
+                  "followRotation": false,
+                  "followScale": false,
+                  "position": {
+                    "x": -68.50412,
+                    "y": 80.74982
+                  },
+                  "rotation": 0.0,
+                  "scale": {
+                    "x": 0.75,
+                    "y": 0.75
+                  },
+                  "viewportSize": {
+                    "x": 2560.0,
+                    "y": 1377.0
+                  },
+                  "scene2DMainCamera2D": true,
+                  "render": true,
+                  "postprocessingDefaultShader": {
+                    "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": []
+                  },
+                  "postprocessingLayers": [
+                    {
+                      "entitiesLayerToRenderName": "slaysLayer",
+                      "render": true,
+                      "overlay": true,
+                      "frameBuffer": {
+                        "handler": 11,
+                        "RBOHandler": 8,
+                        "textureHandler": 50,
+                        "type": 2,
+                        "width": 2560,
+                        "height": 1440,
+                        "viewportWidth": 2560,
+                        "viewportHeight": 1440,
+                        "textureBlock": 33984,
+                        "complete": true
+                      },
+                      "shader": {
+                        "path": "shaders\\SlaysPPShader.glsl",
+                        "lastModified": -1,
+                        "shaderUniforms": [
+                          {
+                            "name": "color",
+                            "size": 1,
+                            "type": 35666,
+                            "value": {
+                              "x": 0.0,
+                              "y": 0.0,
+                              "z": 0.0,
+                              "w": 1.0
+                            },
+                            "attachedComponentHandler": {
+                              "layerID": -1,
+                              "entityID": -1,
+                              "componentID": -1
+                            }
+                          },
+                          {
+                            "name": "sampler",
+                            "size": 1,
+                            "type": 35678,
+                            "value": 0,
+                            "attachedComponentHandler": {
+                              "layerID": -1,
+                              "entityID": -1,
+                              "componentID": -1
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "entitiesLayerToRenderName": "spaceDeformationObjectsLayer",
+                      "render": true,
+                      "overlay": false,
+                      "frameBuffer": {
+                        "handler": 12,
+                        "RBOHandler": 9,
+                        "textureHandler": 51,
+                        "type": 2,
+                        "width": 2560,
+                        "height": 1440,
+                        "viewportWidth": 2560,
+                        "viewportHeight": 1440,
+                        "textureBlock": 33984,
+                        "complete": true
+                      },
+                      "shader": {
+                        "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
+                        "lastModified": -1,
+                        "shaderUniforms": [
+                          {
+                            "name": "color",
+                            "size": 1,
+                            "type": 35666,
+                            "value": {
+                              "x": 0.0,
+                              "y": 0.0,
+                              "z": 0.0,
+                              "w": 1.0
+                            },
+                            "attachedComponentHandler": {
+                              "layerID": -1,
+                              "entityID": -1,
+                              "componentID": -1
+                            }
+                          },
+                          {
+                            "name": "sampler",
+                            "size": 1,
+                            "type": 35678,
+                            "value": 0,
+                            "attachedComponentHandler": {
+                              "layerID": -1,
+                              "entityID": -1,
+                              "componentID": -1
+                            }
+                          }
+                        ]
+                      }
+                    },
+                    {
+                      "entitiesLayerToRenderName": "sceneCopyLayer",
+                      "render": false,
+                      "overlay": true,
+                      "frameBuffer": {
+                        "handler": 13,
+                        "RBOHandler": 10,
+                        "textureHandler": 52,
+                        "type": 2,
+                        "width": 2560,
+                        "height": 1440,
+                        "viewportWidth": 2560,
+                        "viewportHeight": 1440,
+                        "textureBlock": 33984,
+                        "complete": true
+                      },
+                      "shader": {
+                        "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
+                        "lastModified": -1,
+                        "shaderUniforms": [
+                          {
+                            "name": "color",
+                            "size": 1,
+                            "type": 35666,
+                            "value": {
+                              "x": 0.0,
+                              "y": 0.0,
+                              "z": 0.0,
+                              "w": 1.0
+                            },
+                            "attachedComponentHandler": {
+                              "layerID": -1,
+                              "entityID": -1,
+                              "componentID": -1
+                            }
+                          },
+                          {
+                            "name": "sampler",
+                            "size": 1,
+                            "type": 35678,
+                            "value": 0,
+                            "attachedComponentHandler": {
+                              "layerID": -1,
+                              "entityID": -1,
+                              "componentID": -1
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  ],
+                  "ID": 5,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ScriptComponent",
+                "properties": {
+                  "script": {
+                    "path": "Scripts\\HoholMegaSuperComponent.class",
+                    "name": "HoholMegaSuperComponent",
+                    "active": true,
+                    "scriptTempValues": []
+                  },
+                  "ID": 6,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Audio.AudioComponent",
+                "properties": {
+                  "path": "kakish_audio\\norm_kakish.wav",
+                  "type": "BACKGROUND",
+                  "maxDistance": 750.0,
+                  "referenceDistance": 25.0,
+                  "rolloffFactor": 0.1,
+                  "volumePercent": 0.0,
+                  "pitch": 1.0,
+                  "lastState": "STOPPED",
+                  "state": "STOPPED",
+                  "currentSecond": 0.0,
+                  "audioLengthInSeconds": 259.984,
+                  "lastSecond": 0.0,
+                  "cyclic": false,
+                  "ID": 7,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "properties": {
+                  "rigidbody2D": {
+                    "bodyType": "DYNAMIC",
+                    "density": 1.0,
+                    "restitution": 0.0,
+                    "friction": 0.1,
+                    "isSensor": false,
+                    "isFixedRotation": false
+                  },
+                  "ID": 8,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "properties": {
+                  "boxCollider2D": {
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "offset": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "angle": 0.0
+                  },
+                  "ID": 9,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Audio.AudioComponent",
+                "properties": {
+                  "path": "kakish_audio\\judgement-cut-sfx.wav",
+                  "type": "BACKGROUND",
+                  "maxDistance": 750.0,
+                  "referenceDistance": 25.0,
+                  "rolloffFactor": 0.1,
+                  "volumePercent": 100.0,
+                  "pitch": 1.0,
+                  "lastState": "STOPPED",
+                  "state": "STOPPED",
+                  "currentSecond": 0.0,
+                  "audioLengthInSeconds": 1.718,
+                  "lastSecond": 0.0,
+                  "cyclic": false,
+                  "ID": 10,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ScriptComponent",
+                "properties": {
+                  "script": {
+                    "path": "Scripts\\SpaceDeformationComponent.class",
+                    "name": "SpaceDeformationComponent",
+                    "active": true,
+                    "scriptTempValues": []
+                  },
+                  "ID": 11,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "ferapont",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 23,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 691.6518,
+                    "y": 0.0
+                  },
+                  "rotation": 0.0,
+                  "scale": {
+                    "x": 1.0,
+                    "y": 1.0
+                  },
+                  "centre": {
+                    "x": 0.0,
+                    "y": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\ferapont.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "properties": {
+                  "rigidbody2D": {
+                    "bodyType": "DYNAMIC",
+                    "density": 1.0,
+                    "restitution": 0.0,
+                    "friction": 0.1,
+                    "isSensor": false,
+                    "isFixedRotation": false
+                  },
+                  "ID": 2,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "properties": {
+                  "boxCollider2D": {
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "offset": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "angle": 0.0
+                  },
+                  "ID": 3,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ScriptComponent",
+                "properties": {
+                  "script": {
+                    "path": "Scripts\\PickableComponent.class",
+                    "name": "PickableComponent",
+                    "active": true,
+                    "scriptTempValues": []
+                  },
+                  "ID": 4,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          }
+        ],
+        "ID": 1,
+        "name": "default"
+      },
+      {
+        "entities": [],
+        "ID": 0,
+        "name": "slaysLayer"
+      }
+    ]
+  },
+  "screenClearColor": {
+    "x": 1.0,
+    "y": 1.0,
+    "z": 1.0,
+    "w": 1.0
+  },
+  "tags": [
+    {
+      "name": "default"
+    }
+  ],
+  "scriptSystem": {},
+  "maxObjectID": 137,
+  "inBuild": false,
+  "isMainScene2D": false
+}

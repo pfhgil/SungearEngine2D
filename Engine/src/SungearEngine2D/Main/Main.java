@@ -1,10 +1,14 @@
 package SungearEngine2D.Main;
 
+import Core2D.AssetManager.Asset;
 import Core2D.AssetManager.AssetManager;
 import Core2D.CamerasManager.CamerasManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DUserCallback;
 import Core2D.Core2D.Settings;
+import Core2D.DataClasses.ScriptData;
+import Core2D.DataClasses.ShaderData;
+import Core2D.Debug.DebugDraw;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Audio.AudioComponent;
 import Core2D.ECS.Component.Components.Audio.AudioState;
@@ -14,16 +18,16 @@ import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
+import Core2D.ECS.System.ComponentsQuery;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Input.PC.Keyboard;
-import Core2D.Layering.Layer;
 import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
-import Core2D.Scripting.Script;
 import Core2D.Tasks.StoppableTask;
 import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.FileUtils;
 import SungearEngine2D.CameraController.CameraController;
 import SungearEngine2D.DebugDraw.CamerasDebugLines;
 import SungearEngine2D.DebugDraw.EntitiesDebugDraw;
@@ -41,8 +45,6 @@ import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
 import static org.lwjgl.opengl.GL46C.*;
@@ -92,17 +94,19 @@ public class Main
                 CameraController.controlledCamera2D = mainCamera2D;
 
                 mainCamera2DComponent = mainCamera2D.getComponent(Camera2DComponent.class);
+                mainCamera2DComponent.followScale = true;
 
                 CameraController.init();
 
                 GUI.init();
 
-                /*
+
                 String path = "test.txt";
                 FileUtils.createFile(path);
                 FileUtils.writeToFile(path, "привет мир!\nhello world!", true);
+                System.out.println(FileUtils.readAllFile("test.txt"));
 
-                 */
+
 
                 GraphicsRenderer.init();
 
@@ -129,84 +133,62 @@ public class Main
                                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                             }
 
-                            if(currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().isSceneLoaded() && !EngineSettings.Playmode.active) {
-                                try {
-                                    List<String> compiledScripts = new ArrayList<>();
+                            if(EngineSettings.Playmode.active) continue;
 
-                                    int layersNum = currentSceneManager.getCurrentScene2D().getLayering().getLayers().size();
-                                    layersCycle: for (int p = 0; p < layersNum; p++) {
-                                        Layer layer = currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(p);
-                                        if (layer == null || layer.isShouldDestroy()) continue;
+                            for(Asset asset : AssetManager.getInstance().getAssets()) {
+                                if(asset.getAssetObject() instanceof ScriptData scriptData) {
+                                    if(scriptData.lastModified != scriptData.getScriptFileLastModified()) {
+                                        scriptData.lastModified = scriptData.getScriptFileLastModified();
 
-                                        int renderingObjectsNum = layer.getEntities().size();
-                                        for (int i = 0; i < renderingObjectsNum; i++) {
-                                            if (layer.isShouldDestroy()) continue layersCycle;
-                                            if (!layer.getEntities().get(i).isShouldDestroy()) {
-                                                List<ScriptComponent> scriptComponents = layer.getEntities().get(i).getAllComponents(ScriptComponent.class);
-                                                // FIXME
-                                                //List<ScriptableSystem> scriptableSystems = layer.getEntities().get(i).getAllSystems(ScriptableSystem.class);
-                                                List<Script> allScripts = new ArrayList<>();
-                                                scriptComponents.forEach(scriptComponent -> allScripts.add(scriptComponent.script));
+                                        EngineSettings.Playmode.canEnterPlaymode = false;
 
-                                                //scriptableSystems.forEach(scriptableSystem -> allScripts.add(scriptableSystem.script));
+                                        String scriptPath = scriptData.getPath();
 
-                                                for(Component component : layer.getEntities().get(i).getComponents()) {
-                                                    if(component instanceof MeshComponent meshComponent) {
-                                                        Shader shader = meshComponent.getShader();
+                                        for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
+                                            for(Component component : componentsQuery.getComponents()) {
+                                                if(!(component instanceof ScriptComponent scriptComponent) ||
+                                                        !(scriptComponent.script.path.equals(scriptPath))) continue;
 
-                                                        Compiler.checkShaderToCompile(shader);
-                                                    }
+                                                ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
+                                                    public void run() {
+                                                        if (currentSceneManager.getCurrentScene2D() == null) return;
+                                                        scriptComponent.script.saveTempValues();
 
-                                                    if(component instanceof Camera2DComponent camera2DComponent) {
-                                                        for(int k = 0; k < camera2DComponent.postprocessingLayers.size(); k++) {
-                                                            PostprocessingLayer ppLayer = camera2DComponent.postprocessingLayers.get(k);
+                                                        boolean compiled = Compiler.compileScript(scriptData.getAbsolutePath().replace(".class", ".java"));
 
-                                                            Shader shader = ppLayer.getShader();
+                                                        AssetManager.getInstance().reloadAsset(scriptData.getPath(), ScriptData.class);
 
-                                                            Compiler.checkShaderToCompile(shader);
+                                                        if (compiled) {
+                                                            scriptComponent.script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(), scriptPath, FilenameUtils.getBaseName(new File(scriptPath).getName()).replace("\\\\/", "."));
                                                         }
+
+                                                        scriptComponent.script.applyTempValues();
                                                     }
+                                                });
+                                            }
+                                        }
+                                    }
+                                } else if(asset.getAssetObject() instanceof ShaderData shaderData) {
+                                    if(shaderData.lastModified != shaderData.getScriptFileLastModified()) {
+                                        shaderData.lastModified = shaderData.getScriptFileLastModified();
+
+                                        String shaderPath = shaderData.getPath();
+
+                                        for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
+                                            for (Component component : componentsQuery.getComponents()) {
+                                                if(component instanceof MeshComponent meshComponent && meshComponent.getShader().path.equals(shaderPath)) {
+                                                    Compiler.addShaderToCompile(meshComponent.getShader());
                                                 }
-
-                                                for (int k = 0; k < allScripts.size(); k++) {
-                                                    // был ли уже скомпилирован скрипт
-                                                    boolean alreadyCompiled = compiledScripts.contains(allScripts.get(k).getPath());
-                                                    if (alreadyCompiled) {
-                                                        continue;
-                                                    }
-
-                                                    String scriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + allScripts.get(k).path;
-                                                    long lastModified = new File(scriptPath.replace(".java", "") + ".java").lastModified();
-                                                    if (lastModified != allScripts.get(k).getLastModified()) {
-                                                        EngineSettings.Playmode.canEnterPlaymode = false;
-                                                        allScripts.get(k).setLastModified(lastModified);
-
-                                                        int finalK = k;
-                                                        String lastScriptPath = allScripts.get(finalK).path;
-                                                        ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
-                                                            public void run() {
-                                                                if (currentSceneManager.getCurrentScene2D() != null) {
-                                                                    allScripts.get(finalK).saveTempValues();
-
-                                                                    String newScriptPath = scriptPath.replace(".java", "");
-                                                                    boolean compiled = Compiler.compileScript(newScriptPath + ".java");
-                                                                    if (compiled) {
-                                                                        allScripts.get(finalK).loadClass(ProjectsManager.getCurrentProject().getScriptsPath(), scriptPath, FilenameUtils.getBaseName(new File(scriptPath).getName()).replace("\\\\/", "."));
-                                                                        allScripts.get(finalK).path = lastScriptPath;
-                                                                    }
-                                                                    compiledScripts.add(allScripts.get(finalK).getPath());
-
-                                                                    allScripts.get(finalK).applyTempValues();
-                                                                }
-                                                            }
-                                                        });
+                                                if(component instanceof Camera2DComponent camera2DComponent) {
+                                                    for(PostprocessingLayer postprocessingLayer : camera2DComponent.postprocessingLayers) {
+                                                        if(postprocessingLayer.getShader().path.equals(shaderPath)) {
+                                                            Compiler.addShaderToCompile(postprocessingLayer.getShader());
+                                                        }
                                                     }
                                                 }
                                             }
                                         }
                                     }
-                                } catch(Exception e) {
-                                    Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                                 }
                             }
                         }
@@ -219,23 +201,16 @@ public class Main
                  */
 
                 djArbuzAudio = ECSWorld.getCurrentECSWorld().audioSystem.createAudioComponent(AssetManager.getInstance().getAudioData("/data/audio/dj-arbuz.wav"));
-                // блять забыл =)
-                // рот ебал
-                // .
                 ECSWorld.getCurrentECSWorld().addComponent(djArbuzAudio);
                 djArbuzAudio.state = AudioState.PLAYING;
                 // СЕЙЧАС ИГРАЕТ - DJ ARBUZ - DJ ARBUZ
-                //fuckYouAudio.loadAndSetup(Core2D.class.getResourceAsStream("/data/audio/audio_1.wav"));
-
-                //КААААЙФФ
-                // ИМБИЩ
                 /** -------------------- */
 
                 onlyColorShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/common/only_color_shader.glsl"));
 
                 glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
                 glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
-                mainCamera2D.getComponent(Camera2DComponent.class).camera2DCallback = new Camera2DComponent.Camera2DCallback() {
+                mainCamera2D.getComponent(Camera2DComponent.class).camera2DCallbacks.add(new Camera2DComponent.Camera2DCallback() {
                     @Override
                     public void preRender()
                     {
@@ -266,8 +241,11 @@ public class Main
                                 Vector4f lastColor = new Vector4f(inspectingEntity.color);
 
                                 transformComponent.scale.set(new Vector2f(lastScale).add(new Vector2f(0.35f, 0.35f)));
-                                ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(transformComponent);
-                                //transformComponent.getTransform().updateModelMatrix();
+
+                                ECSWorld.getCurrentECSWorld().transformationsSystem.updateScaleMatrix(transformComponent);
+                                ECSWorld.getCurrentECSWorld().transformationsSystem.updateModelMatrix(transformComponent);
+                                transformComponent.lastScale.set(transformComponent.scale);
+
                                 inspectingEntity.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 1.0f));
 
                                 // второй проход рендера - отрисовываю объект чуть побольше только одним цветом. все значения пикселей в стенсио буфере, которые не равняются 0xFF будут отрисованы
@@ -280,7 +258,10 @@ public class Main
                                 glStencilMask(0xFF);
 
                                 transformComponent.scale.set(lastScale);
-                                ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(transformComponent);
+
+                                ECSWorld.getCurrentECSWorld().transformationsSystem.updateScaleMatrix(transformComponent);
+                                ECSWorld.getCurrentECSWorld().transformationsSystem.updateModelMatrix(transformComponent);
+                                transformComponent.lastScale.set(transformComponent.scale);
 
                                 inspectingEntity.setColor(lastColor);
                             }
@@ -290,7 +271,7 @@ public class Main
                         EntitiesDebugDraw.draw();
                         Gizmo.draw();
                     }
-                };
+                });
 
 
                 System.gc();
@@ -352,6 +333,8 @@ public class Main
                 if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) GUI.draw();
 
                 GraphicsRenderer.draw();
+
+                DebugDraw.drawLine2D("test_" + 0, new Vector2f(0), new Vector2f(1000));
 
                 //Core2D.getWindow().setName("Sungear Engine 2D. FPS: " + Core2D.getDeltaTimer().getFPS());
             }

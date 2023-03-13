@@ -1,0 +1,156 @@
+[#FFFFFF] 2023/03/14 00:50:23 | [#008000] Current session log file was created!
+
+[#FFFFFF] 2023/03/14 00:50:23 | [#FFFFFF] Starting Core2D...
+
+[#FFFFFF] 2023/03/14 00:50:23 | [#008000] Core2D started!
+
+[#FFFFFF] 2023/03/14 00:50:23 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+
+[#FFFFFF] 2023/03/14 00:50:23 | [#FFFF00] ECSWorld created!
+
+[#FFFFFF] 2023/03/14 00:50:23 | [#FF0000] File by path 'test.txt' already exists
+
+[#FFFFFF] 2023/03/14 00:50:23 | [#FFFFFF] Initializing compiler...  
+
+[#FFFFFF] 2023/03/14 00:50:23 | [#9932CC] Called from: Core2D.ECS.ECSWorld::addComponent. Line: 53 [#FFFFFF] | [#FFFF00] Value of field 'entity' in component 'Core2D.ECS.Component.Components.Audio.AudioComponent@96def03' is equals null. It will be added in блять забыл
+
+[#FFFFFF] 2023/03/14 00:50:23 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: PLAYING
+
+[#FFFFFF] 2023/03/14 00:50:28 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: STOPPED
+
+[#FFFFFF] 2023/03/14 00:50:52 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\kakish_city.jpg
+
+[#FFFFFF] 2023/03/14 00:50:52 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\vlad.png
+
+[#FFFFFF] 2023/03/14 00:50:52 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\facts_files.png
+
+[#FFFFFF] 2023/03/14 00:50:52 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\ferapont.png
+
+[#FFFFFF] 2023/03/14 00:50:52 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources/slay.png
+
+[#FFFFFF] 2023/03/14 00:50:54 | [#FFFFFF] Log cleared! See log directory in the engine directory.
+
+[#FFFFFF] 2023/03/14 00:50:58 | [#008000] script path: Scripts\HoholMegaSuperComponent.class
+
+[#FFFFFF] 2023/03/14 00:50:58 | [#008000] script path: Scripts\SpaceDeformationComponent.class
+
+[#FFFFFF] 2023/03/14 00:50:58 | [#008000] script path: Scripts\PickableComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:06 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Scenes\mega_kakish_super.sgs' already exists
+
+[#FFFFFF] 2023/03/14 00:51:06 | [#008000] script path: Scripts\HoholMegaSuperComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:06 | [#008000] script path: Scripts\SpaceDeformationComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:06 | [#008000] script path: Scripts\PickableComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:09 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: PLAYING
+
+[#FFFFFF] 2023/03/14 00:51:09 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: PLAYING
+
+[#FFFFFF] 2023/03/14 00:51:10 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: STOPPED
+
+[#FFFFFF] 2023/03/14 00:51:12 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: PLAYING
+
+[#FFFFFF] 2023/03/14 00:51:14 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: STOPPED
+
+[#FFFFFF] 2023/03/14 00:51:15 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: PLAYING
+
+[#FFFFFF] 2023/03/14 00:51:17 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: STOPPED
+
+[#FFFFFF] 2023/03/14 00:51:19 | [#FF0000] java.util.ConcurrentModificationException
+	at java.base/java.util.ArrayList$Itr.checkForComodification(ArrayList.java:1013)
+	at java.base/java.util.ArrayList$Itr.next(ArrayList.java:967)
+	at Core2D.ECS.ECSWorld.update(ECSWorld.java:142)
+	at Core2D.Scene2D.SceneManager.updateCurrentScene2D(SceneManager.java:62)
+	at Core2D.Graphics.Graphics.draw(Graphics.java:91)
+	at Core2D.Core2D.Core2D.run(Core2D.java:117)
+	at Core2D.Core2D.Core2D.create(Core2D.java:104)
+	at Core2D.Core2D.Core2D.start(Core2D.java:55)
+	at SungearEngine2D.Main.Main.main(Main.java:349)
+
+
+[#FFFFFF] 2023/03/14 00:51:26 | [#008000] script path: Scripts\HoholMegaSuperComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:26 | [#008000] script path: Scripts\SpaceDeformationComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:26 | [#008000] script path: Scripts\PickableComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:26 | [#008000] scene destroyed: mega_kakish
+
+[#FFFFFF] 2023/03/14 00:51:26 | [#008000] script path: Scripts\HoholMegaSuperComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:26 | [#008000] script path: Scripts\SpaceDeformationComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:26 | [#008000] script path: Scripts\PickableComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:26 | [#FF0000] java.lang.RuntimeException: OpenGL error: GL_INVALID_VALUE: value parameter is not a legal value for that function. (code: 1281). 
+	at Core2D.Graphics.OpenGL.OpenGL.checkForGLErrors(OpenGL.java:65)
+	at Core2D.Graphics.OpenGL.OpenGL.glCall(OpenGL.java:34)
+	at Core2D.Graphics.Graphics.draw(Graphics.java:85)
+	at Core2D.Core2D.Core2D.run(Core2D.java:117)
+	at Core2D.Core2D.Core2D.create(Core2D.java:104)
+	at Core2D.Core2D.Core2D.start(Core2D.java:55)
+	at SungearEngine2D.Main.Main.main(Main.java:349)
+
+
+[#FFFFFF] 2023/03/14 00:51:26 | [#FF0000] java.util.ConcurrentModificationException
+	at java.base/java.util.ArrayList$Itr.checkForComodification(ArrayList.java:1013)
+	at java.base/java.util.ArrayList$Itr.next(ArrayList.java:967)
+	at Core2D.ECS.ECSWorld.update(ECSWorld.java:142)
+	at Core2D.Scene2D.SceneManager.updateCurrentScene2D(SceneManager.java:62)
+	at Core2D.Graphics.Graphics.draw(Graphics.java:91)
+	at Core2D.Core2D.Core2D.run(Core2D.java:117)
+	at Core2D.Core2D.Core2D.create(Core2D.java:104)
+	at Core2D.Core2D.Core2D.start(Core2D.java:55)
+	at SungearEngine2D.Main.Main.main(Main.java:349)
+
+
+[#FFFFFF] 2023/03/14 00:51:29 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Scenes\mega_kakish_super.sgs' already exists
+
+[#FFFFFF] 2023/03/14 00:51:29 | [#008000] script path: Scripts\HoholMegaSuperComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:29 | [#008000] script path: Scripts\SpaceDeformationComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:29 | [#008000] script path: Scripts\PickableComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:30 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: PLAYING
+
+[#FFFFFF] 2023/03/14 00:51:30 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: PLAYING
+
+[#FFFFFF] 2023/03/14 00:51:32 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: STOPPED
+
+[#FFFFFF] 2023/03/14 00:51:36 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: PLAYING
+
+[#FFFFFF] 2023/03/14 00:51:38 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: STOPPED
+
+[#FFFFFF] 2023/03/14 00:51:40 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: PLAYING
+
+[#FFFFFF] 2023/03/14 00:51:41 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: STOPPED
+
+[#FFFFFF] 2023/03/14 00:51:43 | [#008000] script path: Scripts\HoholMegaSuperComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:43 | [#008000] script path: Scripts\SpaceDeformationComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:43 | [#008000] script path: Scripts\PickableComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:43 | [#008000] scene destroyed: mega_kakish
+
+[#FFFFFF] 2023/03/14 00:51:43 | [#008000] script path: Scripts\HoholMegaSuperComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:43 | [#008000] script path: Scripts\SpaceDeformationComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:43 | [#008000] script path: Scripts\PickableComponent.class
+
+[#FFFFFF] 2023/03/14 00:51:43 | [#FF0000] java.lang.RuntimeException: OpenGL error: GL_INVALID_VALUE: value parameter is not a legal value for that function. (code: 1281). 
+	at Core2D.Graphics.OpenGL.OpenGL.checkForGLErrors(OpenGL.java:65)
+	at Core2D.Graphics.OpenGL.OpenGL.glCall(OpenGL.java:34)
+	at Core2D.Graphics.Graphics.draw(Graphics.java:85)
+	at Core2D.Core2D.Core2D.run(Core2D.java:117)
+	at Core2D.Core2D.Core2D.create(Core2D.java:104)
+	at Core2D.Core2D.Core2D.start(Core2D.java:55)
+	at SungearEngine2D.Main.Main.main(Main.java:349)
+
+
+[#FFFFFF] 2023/03/14 00:51:47 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\SceneManager.sm' already exists
+

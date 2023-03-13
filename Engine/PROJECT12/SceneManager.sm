@@ -1,0 +1,20 @@
+{
+  "scene2DStoredValues": [
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\PROJECT12\\Scenes\\test02.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\PROJECT12\\Scenes\\test03.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\PROJECT12\\Scenes\\test03_stable.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    }
+  ],
+  "mainScene2DPath": ""
+}

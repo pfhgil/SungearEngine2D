@@ -3,6 +3,7 @@ package Core2D.Graphics;
 import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
+import Core2D.ECS.System.ComponentsQuery;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
@@ -10,68 +11,41 @@ import Core2D.Scene2D.SceneManager;
 
 public class Renderer
 {
+    // рендерит во все камеры на сцене
+    public void render(Entity entity)
+    {
+        render(entity, (Shader) null);
+    }
+
+    // рендерит во все камеры на сцене
+    public void render(Entity entity, Shader shader)
+    {
+        if(!entity.active || entity.isShouldDestroy()) return;
+
+        for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
+            Camera2DComponent camera2DComponent = componentsQuery.getComponent(Camera2DComponent.class);
+
+            if(camera2DComponent != null) {
+                ECSWorld.getCurrentECSWorld().meshesRendererSystem.renderEntity(entity, camera2DComponent, shader);
+                ECSWorld.getCurrentECSWorld().primitivesRendererSystem.renderEntity(entity, camera2DComponent, shader);
+            }
+        }
+    }
+
     public void render(Entity entity, Camera2DComponent camera2DComponent, Shader shader)
     {
         if(!entity.active || entity.isShouldDestroy()) return;
 
-        boolean runScripts = SceneManager.currentSceneManager != null &&
-                SceneManager.currentSceneManager.getCurrentScene2D() != null &&
-                SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts;
-
         ECSWorld.getCurrentECSWorld().meshesRendererSystem.renderEntity(entity, camera2DComponent, shader);
-        /*
-        for (Component component : entity.getComponents()) {
-            //component.render(camera2DComponent, shader);
-            if(component instanceof ScriptComponent scriptComponent && runScripts) {
-                callRenderMethods(scriptComponent.script.getScriptClass(), scriptComponent.script.getScriptClassInstance(), shader);
-            } else {
-                callRenderMethods(component.getClass(), component, shader);
-            }
-
-
-        }
-
-         */
-
-        // FIXME
-        /*
-        for (System system : entity.getSystems()) {
-            system.render(camera2DComponent, shader);
-            if(system instanceof ScriptableSystem scriptableSystem && runScripts) {
-                callRenderMethods(scriptableSystem.script.getScriptClass(), scriptableSystem.script.getScriptClassInstance(), shader);
-            } else {
-                callRenderMethods(system.getClass(), system, shader);
-            }
-
-
-        }
-
-         */
+        ECSWorld.getCurrentECSWorld().primitivesRendererSystem.renderEntity(entity, camera2DComponent, shader);
     }
 
     public void render(Entity entity, Camera2DComponent camera2DComponent)
     {
         if(!entity.active || entity.isShouldDestroy()) return;
 
-        boolean runScripts = SceneManager.currentSceneManager != null &&
-                SceneManager.currentSceneManager.getCurrentScene2D() != null &&
-                SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts;
-
         ECSWorld.getCurrentECSWorld().meshesRendererSystem.renderEntity(entity, camera2DComponent);
-        /*
-        for (Component component : entity.getComponents()) {
-            component.render(camera2DComponent);
-        }
-
-         */
-
-        // FIXME
-        /*
-        for (System system : entity.getSystems()) {
-            system.render(camera2DComponent);
-        }
-
-         */
+        ECSWorld.getCurrentECSWorld().primitivesRendererSystem.renderEntity(entity, camera2DComponent);
     }
 
     public void render(Layering layering, Camera2DComponent camera2DComponent)

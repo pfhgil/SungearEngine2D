@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: :slf4j-api-2.0.0-alpha5:">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/slf4j-api-2.0.0-alpha5.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -155,34 +155,7 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                 rigidbody2DComponent.ID = lastComponentID;
             } else if(component instanceof ScriptComponent scriptComponent) {
                 if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                    scriptComponent.script.path = scriptComponent.script.path.replaceAll(".java", "");
-
-                    String fullScriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptComponent.script.path + ".java";
-                    String lastScriptPath = scriptComponent.script.path;
-
-                    String scriptToLoadPath = "";
-                    String scriptToAddPath = "";
-
-                    if(new File(fullScriptPath).exists()) {
-                        scriptToLoadPath = fullScriptPath;
-                        scriptToAddPath = lastScriptPath;
-                    } else {// для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
-                        // чтобы это исправить загружаем по этому пути скрипт, находим относительный путь и присваиваем его path для того,
-                        // чтобы в следующий раз выполнился блок кода вышe
-                        if(new File(scriptComponent.script.path + ".java").exists()) {
-                            String relativePath = FileUtils.getRelativePath(
-                                    new File(scriptComponent.script.path + ".java"),
-                                    new File(ProjectsManager.getCurrentProject().getProjectPath())
-                            );
-                            scriptToLoadPath = scriptComponent.script.path + ".java";
-                            scriptToAddPath = relativePath.replace(".java", "");
-                        }
-                    }
-
-                    scriptComponent.script.path = scriptToLoadPath;
-                    // load the script component class
                     scriptComponent.set(scriptComponent);
-                    scriptComponent.script.path = scriptToAddPath;
                     entity.addComponent(scriptComponent);
 
                     scriptComponent.ID = lastComponentID;
@@ -194,38 +167,9 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                     sc.ID = lastComponentID;
                 }
             } else if(component instanceof AudioComponent audioComponent) {
-                /*
-                // если режим работы ядра в движке
-                if (Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                    String audioFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + audioComponent.audio.path;
-                    String audioLastPath = audioComponent.audio.path;
-
-                    if (new File(audioFullPath).exists()) {
-                        audioComponent.audio.loadAndSetup(audioFullPath);
-                        audioComponent.audio.path = audioLastPath;
-                    } else { // для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
-                        // чтобы это исправить загружаем по этому пути текстуру, находим относительный путь и присваиваем его source для того,
-                        // чтобы в следующий раз выполнился блок кода выше
-                        if (new File(audioComponent.audio.path).exists()) {
-                            String relativePath = FileUtils.getRelativePath(
-                                    new File(audioComponent.audio.path),
-                                    new File(ProjectsManager.getCurrentProject().getProjectPath())
-                            );
-
-                            audioComponent.audio.loadAndSetup(audioComponent.audio.path);
-                            audioComponent.audio.path = relativePath;
-                        }
-                    }
-                    // если режим работы в билде
-                } else {
-                    audioComponent.audio.loadAndSetup(Core2D.class.getResourceAsStream(audioComponent.audio.path));
-                }
-
                 entity.addComponent(audioComponent);
 
                 audioComponent.ID = lastComponentID;
-
-                 */
             } else if(component instanceof Camera2DComponent camera2DComponent) {
                 Shader defaultShader = new Shader(AssetManager.getInstance().getShaderData(camera2DComponent.postprocessingDefaultShader.path));
 

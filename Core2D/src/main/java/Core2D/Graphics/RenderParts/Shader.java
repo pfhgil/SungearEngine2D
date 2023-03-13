@@ -170,7 +170,7 @@ public class Shader implements Serializable
         Shader shader = new Shader();
 
         shader.shaderData = new ShaderData();
-        shader.shaderData.setSourceCode(sourceCode);
+        shader.shaderData.code = sourceCode;
         shader.compile(shader.shaderData);
 
         return shader;
@@ -286,8 +286,8 @@ public class Shader implements Serializable
 
         compiled = true;
 
-        createShaderPart(GL_VERTEX_SHADER, shaderData.getSourceCode());
-        createShaderPart(GL_FRAGMENT_SHADER, shaderData.getSourceCode());
+        createShaderPart(GL_VERTEX_SHADER, shaderData.code);
+        createShaderPart(GL_FRAGMENT_SHADER, shaderData.code);
 
         createProgram();
 

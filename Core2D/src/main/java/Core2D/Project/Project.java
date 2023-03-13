@@ -30,7 +30,7 @@ public class Project implements Serializable
         resourcesPath = this.projectPath + File.separator + "Resources";
         scriptsPath = this.projectPath + File.separator + "Scripts";
         scenesPath = this.projectPath + File.separator + "Scenes";
-        projectSettingsPath = this.projectPath + File.separator + "ProjectSettings.txt";
+        projectSettingsPath = this.projectPath + File.separator + "ProjectSettings.sgps";
 
         projectSettings = new ProjectSettings();
     }
@@ -61,7 +61,7 @@ public class Project implements Serializable
         resourcesPath = projectPath + File.separator + "Resources";
         scriptsPath = projectPath + File.separator + "Scripts";
         scenesPath = projectPath + File.separator + "Scenes";
-        projectSettingsPath = projectPath + File.separator + "ProjectSettings.txt";
+        projectSettingsPath = projectPath + File.separator + "ProjectSettings.sgps";
         projectParentPath = new File(projectParentPath).getParent();
     }
 

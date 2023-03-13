@@ -19,18 +19,6 @@ public class PPTest1System extends System
     private transient Vector2f mousePosition = new Vector2f();
 
     @Override
-    public void update()
-    {
-
-    }
-
-    @Override
-    public void deltaUpdate(float deltaTime)
-    {
-
-    }
-
-    @Override
     public void collider2DEnter(Entity otherObj)
     {
 

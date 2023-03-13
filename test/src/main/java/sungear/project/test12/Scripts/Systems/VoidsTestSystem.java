@@ -7,17 +7,6 @@ import Core2D.Log.Log;
 // Attention! Do not declare fields with the @InspectorView annotation in systems. They will not be processed and shown in the Inspector.
 public class VoidsTestSystem extends System
 {
-    @Override
-    public void update()
-    {
-        //Log.CurrentSession.println("df", Log.MessageType.SUCCESS);
-    }
-    
-    @Override
-    public void deltaUpdate(float deltaTime)
-    {
-        
-    }
 
     @Override
     public void collider2DEnter(Entity otherObj)

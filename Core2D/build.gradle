@@ -68,7 +68,9 @@ dependencies {
     implementation name: 'slf4j-simple-2.0.0-alpha5'
     implementation name: 'slick'
     implementation name: 'slick-util'
-    //mplementation files('../Engine/build/libs/common.jar')
+    implementation name: 'imgui-app-1.86.4'
+
+        //mplementation files('../Engine/build/libs/common.jar')
     //implementation files('../common/build/libs/common.jar')
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
@@ -78,8 +80,4 @@ dependencies {
 
 test {
     useJUnitPlatform()
-}
-
-task prepareKotlinBuildScriptModel {
-
 }

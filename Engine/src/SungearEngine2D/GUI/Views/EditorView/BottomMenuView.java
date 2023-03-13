@@ -35,29 +35,6 @@ public class BottomMenuView
 
     public void draw()
     {
-        if(Keyboard.keyReleased(GLFW.GLFW_KEY_H)) {
-            addTaskToList(new StoppableTask("new " + Utils.getRandom(0, 100000000), 5.0f, 0.0f) {
-                @Override
-                public void run()
-                {
-                    try {
-                        current++;
-                        Thread.sleep(1000);
-                        current++;
-                        Thread.sleep(1000);
-                        current++;
-                        Thread.sleep(1000);
-                        current++;
-                        Thread.sleep(1000);
-                        current++;
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            });
-        }
-
         ImGuiWindowClass windowClass = new ImGuiWindowClass();
         windowClass.addDockNodeFlagsOverrideSet(ImGuiDockNodeFlags.NoTabBar);
         windowClass.addDockNodeFlagsOverrideSet(ImGuiDockNodeFlags.NoResize);

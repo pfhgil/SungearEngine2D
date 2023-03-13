@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: :lwjgl-glfw-sources:">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-glfw-sources.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

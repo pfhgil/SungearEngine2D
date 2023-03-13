@@ -204,8 +204,9 @@ public class Entity implements Serializable, PoolObject
     public void update()
     {
         if(active && !shouldDestroy) {
-            for(Component component : components) {
-                component.update();
+            int sz = components.size();
+            for(int i = 0; i < sz; i++) {
+                components.get(i).update();
             }
 
             /*
@@ -221,8 +222,9 @@ public class Entity implements Serializable, PoolObject
     public void deltaUpdate(float deltaTime)
     {
         if(active && !shouldDestroy) {
-            for(Component component : components) {
-                component.deltaUpdate(deltaTime);
+            int sz = components.size();
+            for(int i = 0; i < sz; i++) {
+                components.get(i).deltaUpdate(deltaTime);
             }
 
             /*

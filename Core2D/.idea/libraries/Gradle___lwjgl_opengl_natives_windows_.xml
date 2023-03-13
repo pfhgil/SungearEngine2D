@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: :lwjgl-opengl-natives-windows:">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-opengl-natives-windows.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

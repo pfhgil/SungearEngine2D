@@ -1,0 +1,200 @@
+{
+  "assets": [
+    {
+      "assetObject": {
+        "lastModified": -1,
+        "path": "/data/shaders/mesh/default_shader.glsl"
+      },
+      "path": "/data/shaders/mesh/default_shader.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "lastModified": -1,
+        "path": "/data/shaders/mesh/instancing_shader.glsl"
+      },
+      "path": "/data/shaders/mesh/instancing_shader.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "lastModified": -1,
+        "path": "/data/shaders/mesh/picking_shader.glsl"
+      },
+      "path": "/data/shaders/mesh/picking_shader.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "lastModified": -1,
+        "path": "/data/shaders/primitives/line2D/shader.glsl"
+      },
+      "path": "/data/shaders/primitives/line2D/shader.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "lastModified": -1,
+        "path": "/data/shaders/primitives/line2D/instancing/shader.glsl"
+      },
+      "path": "/data/shaders/primitives/line2D/instancing/shader.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "lastModified": -1,
+        "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl"
+      },
+      "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "lastModified": -1,
+        "path": "/data/shaders/postprocessing/postprocessing_test0_shader.glsl"
+      },
+      "path": "/data/shaders/postprocessing/postprocessing_test0_shader.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "lastModified": -1,
+        "path": "/data/shaders/postprocessing/postprocessing_test1_shader.glsl"
+      },
+      "path": "/data/shaders/postprocessing/postprocessing_test1_shader.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "filterParam": 9729,
+        "wrapParam": 33071,
+        "path": "/data/textures/white_texture.png"
+      },
+      "path": "/data/textures/white_texture.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "filterParam": 9729,
+        "wrapParam": 33071,
+        "path": "/data/textures/ui/progressBar/progress_bar.png"
+      },
+      "path": "/data/textures/ui/progressBar/progress_bar.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "lastModified": -1,
+        "path": "/data/shaders/common/only_color_shader.glsl"
+      },
+      "path": "/data/shaders/common/only_color_shader.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "path": "/data/audio/dj-arbuz.wav"
+      },
+      "path": "/data/audio/dj-arbuz.wav",
+      "assetObjectClassName": "Core2D.DataClasses.AudioData"
+    },
+    {
+      "assetObject": {
+        "filterParam": 9729,
+        "wrapParam": 33071,
+        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\kakish_city.jpg"
+      },
+      "path": "Resources\\kakish_city.jpg",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "filterParam": 9729,
+        "wrapParam": 33071,
+        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\vlad.png"
+      },
+      "path": "Resources\\vlad.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\kakish_audio\\norm_kakish.wav"
+      },
+      "path": "kakish_audio\\norm_kakish.wav",
+      "assetObjectClassName": "Core2D.DataClasses.AudioData"
+    },
+    {
+      "assetObject": {
+        "filterParam": 9729,
+        "wrapParam": 33071,
+        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\facts_files.png"
+      },
+      "path": "Resources\\facts_files.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "filterParam": 9729,
+        "wrapParam": 33071,
+        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ferapont.png"
+      },
+      "path": "Resources\\ferapont.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "filterParam": 9729,
+        "wrapParam": 33071,
+        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources/slay.png"
+      },
+      "path": "Resources/slay.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\kakish_audio\\judgement-cut-sfx.wav"
+      },
+      "path": "kakish_audio\\judgement-cut-sfx.wav",
+      "assetObjectClassName": "Core2D.DataClasses.AudioData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1678532506119,
+        "path": "Scripts\\PickableComponent.class"
+      },
+      "path": "Scripts\\PickableComponent.class",
+      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1678639308291,
+        "path": "shaders\\Sample.glsl"
+      },
+      "path": "shaders\\Sample.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1678727574938,
+        "path": "shaders\\SlaysPPShader.glsl"
+      },
+      "path": "shaders\\SlaysPPShader.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1678737109513,
+        "path": "Scripts\\HoholMegaSuperComponent.class"
+      },
+      "path": "Scripts\\HoholMegaSuperComponent.class",
+      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1678743323774,
+        "path": "Scripts\\SpaceDeformationComponent.class"
+      },
+      "path": "Scripts\\SpaceDeformationComponent.class",
+      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
+    }
+  ]
+}

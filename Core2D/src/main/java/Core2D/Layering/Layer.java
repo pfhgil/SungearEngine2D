@@ -106,9 +106,9 @@ public class Layer
         while(layerObjectIterator.hasNext()) {
             Entity entity = layerObjectIterator.next();
             if(!entity.isShouldDestroy()) {
-                if (entity.getParentEntity() != null) {
+                //if (entity.getParentEntity() != null) {
                     entity.deltaUpdate(deltaTime);
-                }
+                //}
             }
         }
     }

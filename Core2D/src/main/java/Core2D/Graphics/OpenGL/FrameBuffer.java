@@ -3,6 +3,7 @@ package Core2D.Graphics.OpenGL;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
 import Core2D.Log.Log;
+import org.joml.Vector4f;
 
 import java.io.Serializable;
 import java.nio.ByteBuffer;
@@ -86,6 +87,25 @@ public class FrameBuffer implements Serializable
         OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, 0));
     }
 
+    public void copyData(FrameBuffer out)
+    {
+        copyData(out, 0, 0, 0, 0, width, height);
+    }
+
+    public void copyData(FrameBuffer out, int xoffset, int yoffset, int x, int y, int width, int height)
+    {
+        bind();
+        OpenGL.glCall(params -> glReadBuffer(GL_COLOR_ATTACHMENT0));
+
+        out.bindTexture();
+
+        OpenGL.glCall(params -> glCopyTexSubImage2D(GL_TEXTURE_2D, 0, xoffset, yoffset, x, y, width, height));
+
+        out.unBindTexture();
+        OpenGL.glCall(params -> glReadBuffer(0));
+        unBind();
+    }
+
     // активирует FBO
     public void bind()
     {
@@ -97,7 +117,15 @@ public class FrameBuffer implements Serializable
     public void clear()
     {
         int toClear = type == BuffersTypes.RENDERING_BUFFER ? GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT : GL_COLOR_BUFFER_BIT;
-        OpenGL.glCall((params) -> glClear(toClear));
+        OpenGL.glCall(params -> glClear(toClear));
+        //OpenGL.glCall(params -> glClearColor(color.x, color.y, color.z, color.w));
+    }
+
+    public void clear(Vector4f color)
+    {
+        int toClear = type == BuffersTypes.RENDERING_BUFFER ? GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT : GL_COLOR_BUFFER_BIT;
+        OpenGL.glCall(params -> glClear(toClear));
+        OpenGL.glCall(params -> glClearColor(color.x, color.y, color.z, color.w));
     }
 
     // отключает FBO
@@ -164,7 +192,7 @@ public class FrameBuffer implements Serializable
         OpenGL.glCall((params) -> glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height));
         OpenGL.glCall((params) -> glStencilFunc(GL_ALWAYS, 1, 0xFF));
 
-        // ЕСЛИ НУ  ЖЕН БУДЕТ DEPTH, ТО ПРИДЕТСЯ ДЕЛАТЬ ДОП. ПРОВЕРКУ И УСТАНОВКУ GL_DEPTH_STENCIL_ATTACHMENT
+        // ЕСЛИ НУЖЕН БУДЕТ DEPTH, ТО ПРИДЕТСЯ ДЕЛАТЬ ДОП. ПРОВЕРКУ И УСТАНОВКУ GL_DEPTH_STENCIL_ATTACHMENT
         OpenGL.glCall((params) -> glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBOHandler));
 
         // я ебал
@@ -196,6 +224,7 @@ public class FrameBuffer implements Serializable
         } else if(Settings.Graphics.TexturesQuality.TexturesFiltrationQuality.quality == Settings.QualityType.MEDIUM) {
             OpenGL.glCall((params) -> glGenerateMipmap(GL_TEXTURE_2D));
 
+            // что за какиш с кодировками бля
             OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_NEAREST));
             OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR_MIPMAP_NEAREST));
 
@@ -209,8 +238,8 @@ public class FrameBuffer implements Serializable
             OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE));
         }
 
-        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT));
-        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT));
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
     }
 
     // создает прикрепление глубины к fbo

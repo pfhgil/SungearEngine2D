@@ -105,10 +105,13 @@ public class CamerasDebugLines
         mainCamera2DIcon.update();
         mainCamera2DBox.update();
 
-        ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(inspectorCamera2DIcon.getComponent(TransformComponent.class));
-        ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(inspectorCamera2DBox.getComponent(TransformComponent.class));
-        ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(mainCamera2DIcon.getComponent(TransformComponent.class));
-        ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(mainCamera2DBox.getComponent(TransformComponent.class));
+        /*
+        ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(inspectorCamera2DIcon.getComponent(TransformComponent.class));
+        ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(inspectorCamera2DBox.getComponent(TransformComponent.class));
+        ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(mainCamera2DIcon.getComponent(TransformComponent.class));
+        ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(mainCamera2DBox.getComponent(TransformComponent.class));
+
+         */
         /*
         inspectorCamera2DIcon.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
         inspectorCamera2DBox.getComponent(TransformComponent.class).getTransform().updateModelMatrix();

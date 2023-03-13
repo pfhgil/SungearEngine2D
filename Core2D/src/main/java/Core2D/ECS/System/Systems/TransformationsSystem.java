@@ -1,13 +1,24 @@
 package Core2D.ECS.System.Systems;
 
+import Core2D.Debug.DebugDraw;
 import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import Core2D.Log.Log;
+import Core2D.Physics.PhysicsWorld;
+import Core2D.Scene2D.SceneManager;
+import imgui.ImGui;
+import org.jbox2d.callbacks.RayCastCallback;
+import org.jbox2d.common.Vec2;
+import org.jbox2d.dynamics.Fixture;
 import org.joml.Math;
 import org.joml.Matrix4f;
 import org.joml.Quaternionf;
+import org.joml.Vector2f;
+
+import javax.swing.*;
 
 public class TransformationsSystem extends System
 {
@@ -17,43 +28,38 @@ public class TransformationsSystem extends System
         if(!active) return;
 
         TransformComponent transformComponent = componentsQuery.getComponent(TransformComponent.class);
-        //Rigidbody2DComponent rigidbody2DComponent = componentsQuery.getComponent(Rigidbody2DComponent.class);
+        Rigidbody2DComponent rigidbody2DComponent = componentsQuery.getComponent(Rigidbody2DComponent.class);
 
         if(transformComponent != null) {
             if(!transformComponent.active) return;
+
+            // если TransformComponent был изменен, то сначала обновляется трансформ rigidbody2d
+            // высчитывается разница между прошлым TransformComponent и текущим и разница добавляется к трансформу тела
+            if(rigidbody2DComponent != null) {
+                Vector2f posDif = new Vector2f(transformComponent.position).add(new Vector2f(transformComponent.lastPosition).negate());
+                float rotDif = transformComponent.rotation - transformComponent.lastRotation;
+
+                Vec2 bodyPos = rigidbody2DComponent.getRigidbody2D().getBody().getPosition();
+                float bodyRot = rigidbody2DComponent.getRigidbody2D().getBody().getAngle();
+
+                rigidbody2DComponent.getRigidbody2D().getBody().setTransform(bodyPos.add(new Vec2(posDif.x / PhysicsWorld.RATIO, posDif.y / PhysicsWorld.RATIO)),
+                        bodyRot + Math.toRadians(rotDif));
+
+                bodyPos = rigidbody2DComponent.getRigidbody2D().getBody().getPosition();
+                bodyRot = rigidbody2DComponent.getRigidbody2D().getBody().getAngle();
+
+                Vector2f dif = new Vector2f(bodyPos.x * PhysicsWorld.RATIO - transformComponent.position.x,
+                        bodyPos.y * PhysicsWorld.RATIO - transformComponent.position.y);
+                float rDif = (float) Math.toDegrees(bodyRot) - transformComponent.rotation;
+
+                transformComponent.position.add(dif);
+                transformComponent.rotation += rDif;
+            }
+
             if(hasTransformComponentChanged(transformComponent)) {
-                // устанавливаем позицию у rigidbody2d и обновляем матрицы
-
-                updateAllMatrices(transformComponent);
-
-                transformComponent.lastPosition.set(transformComponent.position);
-                transformComponent.lastRotation = transformComponent.rotation;
-                transformComponent.lastScale.set(transformComponent.scale);
-
-                Log.CurrentSession.println("transform has changed: " + transformComponent.entity.name, Log.MessageType.WARNING);
+                updateTransformComponent(transformComponent);
             }
-            //Log.CurrentSession.println("transform exists", Log.MessageType.WARNING);
-            /*
-            if(transformComponent.isDirty()) {
-                // устанавливаем позицию у rigidbody2d и обновляем матрицы
-
-                updateTranslationMatrix(transformComponent);
-                updateRotationMatrix(transformComponent);
-                updateScaleMatrix(transformComponent);
-
-                updateModelMatrix(transformComponent);
-            } else if(!transformComponent.isDirty() && rigidbody2DComponent != null) {
-                // устанавливаю позицию трансформа как у rigidbody2d
-
-                Transform bodyTransform = rigidbody2DComponent.getRigidbody2D().getBody().getTransform();
-                transformComponent.setPosition(bodyTransform.position.x, bodyTransform.position.y);
-                transformComponent.setRotation((float) Math.toDegrees(bodyTransform.getAngle()));
-            }
-
-             */
         }
-
-        //Log.CurrentSession.println("sdfsdf", Log.MessageType.WARNING);
     }
 
     @Override
@@ -71,7 +77,12 @@ public class TransformationsSystem extends System
                 !transformComponent.scale.equals(transformComponent.lastScale);
     }
 
-    public void updateAllMatrices(TransformComponent transformComponent)
+    public void updateTransformComponent(TransformComponent transformComponent)
+    {
+        updateTransformComponent(transformComponent, true);
+    }
+
+    public void updateTransformComponent(TransformComponent transformComponent, boolean updateLastTransformations)
     {
         if(!active || !transformComponent.active) return;
 
@@ -80,6 +91,12 @@ public class TransformationsSystem extends System
         updateScaleMatrix(transformComponent);
 
         updateModelMatrix(transformComponent);
+
+        if(!updateLastTransformations) return;
+
+        transformComponent.lastPosition.set(transformComponent.position);
+        transformComponent.lastRotation = transformComponent.rotation;
+        transformComponent.lastScale.set(transformComponent.scale);
     }
 
     public void updateModelMatrix(TransformComponent transformComponent)

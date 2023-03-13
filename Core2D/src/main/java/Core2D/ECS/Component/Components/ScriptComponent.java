@@ -55,6 +55,7 @@ public class ScriptComponent extends Component
     @Override
     public void deltaUpdate(float deltaTime)
     {
+        //s
         if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         script.deltaUpdate(deltaTime);
     }

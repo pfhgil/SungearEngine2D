@@ -83,7 +83,7 @@ public class ScriptSystem
                     for(ScriptComponent scriptComponent : scriptComponents) {
                         String lastScriptPath = scriptComponent.script.path;
                         scriptComponent.script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(),
-                                ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptComponent.script.path),
+                                scriptComponent.script.path,
                                 FilenameUtils.getBaseName(new File(scriptComponent.script.path).getName()), globalFlexibleURLClassLoader);
                         scriptComponent.script.path = lastScriptPath;
 
@@ -118,7 +118,7 @@ public class ScriptSystem
                     for(ScriptComponent scriptComponent : scriptComponents) {
                         String lastScriptPath = scriptComponent.script.path;
                         scriptComponent.script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(),
-                                ProjectsManager.getCurrentProject().getProjectPath() + File.separator + new File(scriptComponent.script.path),
+                                scriptComponent.script.path,
                                 FilenameUtils.getBaseName(new File(scriptComponent.script.path).getName()));
                         scriptComponent.script.path = lastScriptPath;
 

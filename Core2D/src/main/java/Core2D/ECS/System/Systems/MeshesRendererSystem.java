@@ -6,6 +6,7 @@ import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.ECS.NonRemovable;
+import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Graphics.RenderParts.Shader;
@@ -18,58 +19,13 @@ public class MeshesRendererSystem extends System implements NonRemovable
     @Override
     public void renderEntity(Entity entity, Camera2DComponent camera2DComponent)
     {
-        //renderMeshComponent(ECSWorld.getCurrentECSWorld().componentsManager.findComponentsQuery(entity.ID),  camera2DComponent,null);
         renderMeshComponent(entity,  camera2DComponent,null);
-        /*
-        if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
-            for(Layer layer : SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
-                for(Entity entity : layer.getEntities()) {
-                    if(entity.isShouldDestroy()) return;
-
-
-                }
-            }
-        }
-
-         */
-
-        /*
-        if(entity != null) {
-            if (entity.isShouldDestroy()) return;
-
-            TransformComponent transformComponent = entity.getComponent(TransformComponent.class);
-            if (transformComponent == null) return;
-
-            List<MeshComponent> meshComponents = entity.getAllComponents(MeshComponent.class);
-            for(MeshComponent meshComponent : meshComponents) {
-                renderMeshComponent(camera2DComponent, transformComponent, meshComponent, meshComponent.getShader());
-            }
-        }
-
-         */
     }
 
     @Override
     public void renderEntity(Entity entity, Camera2DComponent camera2DComponent, Shader shader)
     {
-        //renderMeshComponent(ECSWorld.getCurrentECSWorld().componentsManager.findComponentsQuery(entity.ID), camera2DComponent, shader);
         renderMeshComponent(entity, camera2DComponent, shader);
-        /*
-        if(entity != null) {
-            if (entity.isShouldDestroy()) return;
-
-            TransformComponent transformComponent = entity.getComponent(TransformComponent.class);
-            if (transformComponent == null) return;
-
-            List<MeshComponent> meshComponents = entity.getAllComponents(MeshComponent.class);
-            for(MeshComponent meshComponent : meshComponents) {
-                renderMeshComponent(camera2DComponent, transformComponent, meshComponent, shader);
-            }
-        }
-
-         */
-
-
     }
 
     //private void renderMeshComponent(Camera2DComponent camera2DComponent, TransformComponent transformComponent, MeshComponent meshComponent, Shader shader)
@@ -80,7 +36,8 @@ public class MeshesRendererSystem extends System implements NonRemovable
         TransformComponent transformComponent = entity.getComponent(TransformComponent.class);
         //Camera2DComponent camera2DComponent = componentsQuery.getComponent(Camera2DComponent.class);
         //Log.CurrentSession.println("2 passed: " + componentsQuery.entityID + ", mesh: " + meshComponent + ", transform: " + transformComponent + ", cam: " + camera2DComponent, Log.MessageType.ERROR);
-        if(meshComponent == null || transformComponent == null || camera2DComponent == null) return;
+        if(meshComponent == null || transformComponent == null || camera2DComponent == null ||
+        !meshComponent.active || !transformComponent.active || !camera2DComponent.active) return;
 
         if(shader == null) {
             shader = meshComponent.getShader();

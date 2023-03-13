@@ -9,21 +9,25 @@ import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
 
 public class PostprocessingLayer
 {
-    // указатель на слой, который нужно отрендерить
+    // ссылка на слой, который нужно отрендерить
     private transient Layer entitiesLayerToRender;
 
+    // имя слоя, который нужно отрендерить
     private String entitiesLayerToRenderName = "";
+
+    // render -----------------------------------------------
+    // будет ли рендериться слой
+    public boolean render = true;
+    // будет ли накладываться слой
+    public boolean overlay = true;
 
     private FrameBuffer frameBuffer;
 
     private Shader shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/postprocessing/postprocessing_default_shader.glsl"));
+    // ------------------------------------------------------
 
+    // TODO: сделать flip y для pp слоев и для результативнго fbo камеры
     public PostprocessingLayer(Layer entitiesLayerToRender)
-    {
-        create(entitiesLayerToRender);
-    }
-
-    private void create(Layer entitiesLayerToRender)
     {
         this.entitiesLayerToRender = entitiesLayerToRender;
         entitiesLayerToRenderName = entitiesLayerToRender.getName();

@@ -23,24 +23,18 @@ public class FlexibleURLClassLoader extends URLClassLoader
         super(urls);
     }
 
-    public Class<?> loadNewClass(String path)
+    public Class<?> loadNewClass(String path, byte[] classBytes)
     {
         if(definedClassesPath.containsKey(path)) {
             return definedClassesPath.get(path);
         }
 
         //Log.Console.println("path: " + path);
-        if(!(new File(path).exists())) return null;
-        try {
-            byte[] classBytes = Files.readAllBytes(Path.of(path));
-            Class<?> definedClass = this.defineClass(null, classBytes, 0, classBytes.length);
-            definedClassesPath.put(path, definedClass);
-            return definedClass;
-        } catch (IOException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-        }
+        //if(!(new File(path).exists())) return null;
 
-        return null;
+        Class<?> definedClass = this.defineClass(null, classBytes, 0, classBytes.length);
+        definedClassesPath.put(path, definedClass);
+        return definedClass;
     }
 
     @Override

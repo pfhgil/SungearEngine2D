@@ -27,6 +27,7 @@ public class LineData
         this.vertices[1].set(end);
         this.lineWidth = lineWidth;
 
+
         this.color.set(color);
     }
 

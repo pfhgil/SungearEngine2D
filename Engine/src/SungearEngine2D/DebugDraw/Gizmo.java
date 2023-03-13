@@ -15,6 +15,7 @@ import Core2D.Graphics.Graphics;
 import Core2D.Graphics.OpenGL.FrameBuffer;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Input.PC.Mouse;
+import Core2D.Log.Log;
 import Core2D.Utils.MathUtils;
 import Core2D.Utils.MatrixUtils;
 import SungearEngine2D.CameraController.CameraController;
@@ -245,16 +246,16 @@ public class Gizmo
                 xScaleHandler.update();
                 xScaleLine.update();
 
-                ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(yArrow.getComponent(TransformComponent.class));
-                ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(xArrow.getComponent(TransformComponent.class));
-                ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(centrePoint.getComponent(TransformComponent.class));
-                ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(centrePointToEditCentre.getComponent(TransformComponent.class));
-                ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(rotationCircle.getComponent(TransformComponent.class));
-                ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(rotationHandler.getComponent(TransformComponent.class));
-                ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(yScaleHandler.getComponent(TransformComponent.class));
-                ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(yScaleLine.getComponent(TransformComponent.class));
-                ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(xScaleHandler.getComponent(TransformComponent.class));
-                ECSWorld.getCurrentECSWorld().transformationsSystem.updateAllMatrices(xScaleLine.getComponent(TransformComponent.class));
+                ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(yArrow.getComponent(TransformComponent.class));
+                ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(xArrow.getComponent(TransformComponent.class));
+                ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(centrePoint.getComponent(TransformComponent.class));
+                ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(centrePointToEditCentre.getComponent(TransformComponent.class));
+                ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(rotationCircle.getComponent(TransformComponent.class));
+                ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(rotationHandler.getComponent(TransformComponent.class));
+                ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(yScaleHandler.getComponent(TransformComponent.class));
+                ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(yScaleLine.getComponent(TransformComponent.class));
+                ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(xScaleHandler.getComponent(TransformComponent.class));
+                ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(xScaleLine.getComponent(TransformComponent.class));
 
                 if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_1)) {
                     gizmoPickingTarget.bind();
@@ -365,6 +366,8 @@ public class Gizmo
                             selectedGizmoTool.getColor().w));
                     selectedGizmoTool = null;
                     CameraController.allowMove = true;
+
+
                 }
 
                 if (Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_1) && selectedGizmoTool != null) {
@@ -377,10 +380,11 @@ public class Gizmo
                         MathUtils.rotate(offset, -MatrixUtils.getRotation(entityTransformComponent.parentTransformComponent.modelMatrix),
                                 new Vector2f(0.0f, 0.0f));
                     }
+
                     switch (selectedGizmoTool.name) {
                         case "gizmo.yArrow" -> entityTransformComponent.position.add(new Vector2f(0.0f, -offset.y));
                         case "gizmo.xArrow" -> entityTransformComponent.position.add(new Vector2f(-offset.x, 0.0f));
-                        case "gizmo.centrePoint" -> entityTransformComponent.position.add(new Vector2f(-offset.x, -offset.y));
+                        case "gizmo.centrePoint" -> entityTransformComponent.position.set(new Vector2f(mouseOGLPosition.x, mouseOGLPosition.y));
                         case "gizmo.rotationHandler" -> {
                             Vector2f p = new Vector2f(object2DCentrePosition);
                             if(entityTransformComponent.parentTransformComponent != null) {

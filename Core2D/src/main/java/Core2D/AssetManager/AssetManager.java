@@ -2,10 +2,7 @@ package Core2D.AssetManager;
 
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
-import Core2D.DataClasses.AudioData;
-import Core2D.DataClasses.Data;
-import Core2D.DataClasses.ShaderData;
-import Core2D.DataClasses.Texture2DData;
+import Core2D.DataClasses.*;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Utils.ExceptionsUtils;
@@ -96,7 +93,7 @@ public class AssetManager implements Serializable
     public void save()
     {
         if(ProjectsManager.getCurrentProject() != null && Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-            save(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + "AssetManager.txt");
+            save(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + "AssetManager.am");
         }
     }
 
@@ -112,7 +109,7 @@ public class AssetManager implements Serializable
     public AssetManager load()
     {
         if(ProjectsManager.getCurrentProject() != null && Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-            return load(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + "AssetManager.txt");
+            return load(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + "AssetManager.am");
         }
         return this;
     }
@@ -179,6 +176,11 @@ public class AssetManager implements Serializable
         return getAssetObject(path, AudioData.class);
     }
 
+    public ScriptData getScriptData(String path)
+    {
+        return getAssetObject(path, ScriptData.class);
+    }
+
     /**
      * @param path Relative path of asset.
      * @return Null if the asset is not found and asset if the asset is found.
@@ -234,28 +236,29 @@ public class AssetManager implements Serializable
         return returnAsset;
     }
 
-    public Object tryGetAsset(String path, Class<?> assetObjectClass)
+    public Object loadAsset(String path, Class<?> assetObjectClass)
     {
         String projectPath = ProjectsManager.getCurrentProject() != null ?
                 ProjectsManager.getCurrentProject().getProjectPath() :
                 "";
 
         String relativePath = path;
-        if(new File(path).exists()) {
+        if (new File(path).exists()) {
             relativePath = FileUtils.getRelativePath(path, projectPath);
         }
 
         String fullPath = projectPath + File.separator + relativePath;
         Object objToCast = null;
         if (assetObjectClass.getSuperclass().isAssignableFrom(Data.class)) {
-            try(InputStream resource = Core2D.class.getResourceAsStream(path)) {
-                if(new File(fullPath).exists()) {
-                    Log.CurrentSession.println("trying to load not from resources.... Path: " + path, Log.MessageType.WARNING);
-                    //System.out.println("assignable from: " + assetObjectClass.getName());
+            try {
+                if (new File(fullPath).exists()) {
+                    //Log.CurrentSession.println("trying to load not from resources.... Path: " + fullPath, Log.MessageType.WARNING);
                     objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(fullPath);
                 } else { // если файл не существует, то пробуем загрузить файл из ресурсов
-                    Log.CurrentSession.println("trying to load from resources.... Path: " + path, Log.MessageType.WARNING);
-                    objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(resource, path);
+                    try (InputStream resource = Core2D.class.getResourceAsStream(path)) {
+                        //Log.CurrentSession.println("trying to load from resources.... Path: " + fullPath, Log.MessageType.WARNING);
+                        objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(resource, path);
+                    }
                 }
             } catch (InstantiationException |
                      IllegalAccessException |
@@ -271,8 +274,6 @@ public class AssetManager implements Serializable
 
     public <T> T getAssetObject(String path, Class<?> assetObjectClass)
     {
-        //Log.CurrentSession.println("path: " + path, Log.MessageType.WARNING);
-
         Object assetObj = null;
         for(Asset asset : assets) {
             if(asset.path.equals(path) && assetObjectClass.isAssignableFrom(asset.getAssetObject().getClass())) {
@@ -281,69 +282,23 @@ public class AssetManager implements Serializable
         }
 
         if(assetObj == null) {
-            /*
-            if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                if(ProjectsManager.getCurrentProject() != null) {
-                    String relativePath = path;
-                    if(new File(path).exists()) {
-                        relativePath = FileUtils.getRelativePath(path, ProjectsManager.getCurrentProject().getProjectPath());
-                    }
-
-                    String fullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + relativePath;
-                    Object objToCast = null;
-                    if (assetObjectClass.getSuperclass().isAssignableFrom(Data.class)) {
-                        try(InputStream resource = Core2D.class.getResourceAsStream(path)) {
-                            if(new File(fullPath).exists()) {
-                                Log.CurrentSession.println("trying to load not from resources.... Path: " + path, Log.MessageType.WARNING);
-                                //System.out.println("assignable from: " + assetObjectClass.getName());
-                                objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(fullPath);
-                            } else { // если файл не существует, то пробуем загрузить файл из ресурсов
-                                Log.CurrentSession.println("trying to load from resources.... Path: " + path, Log.MessageType.WARNING);
-                                objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(resource, path);
-                            }
-                        } catch (InstantiationException |
-                                 IllegalAccessException |
-                                 InvocationTargetException |
-                                 IOException |
-                                 NoSuchMethodException e) {
-                            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-                        }
-                    }
-
-                    if(objToCast != null) {
-                        assetObj = assetObjectClass.cast(objToCast);
-                    }
-                } else {
-
-                }
-            } else {
-                Object objToCast = null;
-                if (assetObjectClass.getSuperclass().isAssignableFrom(Data.class)) {
-                    try(InputStream resource = Core2D.class.getResourceAsStream(path)) {
-                        objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(resource, path);
-                    } catch (InstantiationException |
-                             IllegalAccessException |
-                             InvocationTargetException |
-                             NoSuchMethodException |
-                             IOException e) {
-                        Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-                    }
-                }
-
-                if(objToCast != null) {
-                    assetObj = assetObjectClass.cast(objToCast);
-                }
-            }
-
-             */
-
-            Object foundAsset = tryGetAsset(path, assetObjectClass);
+            Object foundAsset = loadAsset(path, assetObjectClass);
 
             if(foundAsset != null) {
                 assetObj = assetObjectClass.cast(foundAsset);
             }
 
-            assets.add(new Asset(assetObj, path));
+            String projectPath = ProjectsManager.getCurrentProject() != null ?
+                    ProjectsManager.getCurrentProject().getProjectPath() :
+                    "";
+
+            String relativePath = path;
+            if (new File(path).exists()) {
+                relativePath = FileUtils.getRelativePath(path, projectPath);
+            }
+
+            assets.add(new Asset(assetObj, relativePath));
+
             if(assetObj != null) {
                 Log.Console.println("added new asset! data type: " + assetObj.getClass().getSimpleName() +
                         ", path: " + path + ", asset class: " + assetObjectClass.getName() + ", asset obj: " + assetObj);
@@ -383,6 +338,8 @@ public class AssetManager implements Serializable
         removeAsset(path);
         return getAsset(path, assetObjectClass);
     }
+
+    public List<Asset> getAssets() { return assets; }
 
     public static AssetManager getInstance()
     {

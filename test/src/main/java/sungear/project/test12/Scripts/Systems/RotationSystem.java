@@ -8,19 +8,6 @@ import Core2D.ECS.System.System;
 public class RotationSystem extends System
 {
     @Override
-    public void update()
-    {
-        
-    }
-    
-    @Override
-    public void deltaUpdate(float deltaTime)
-    {
-        entity.getComponent(Rigidbody2DComponent.class).getRigidbody2D().getBody().setAngularVelocity(-1.0f);
-        //entity.getComponent(TransformComponent.class).getTransform().rotate(0.1f);
-    }
-    
-    @Override
     public void collider2DEnter(Entity otherObj)
     {
         

@@ -113,29 +113,7 @@ public class FileUtils
     public static String readAllFile(String path) { return readAllFile(new File(path)); }
     public static String readAllFile(File file)
     {
-        /*
-        StringBuilder stringBuilder = new StringBuilder(); // для операций со строками
-
-        try(Scanner scanner = new Scanner(file, StandardCharsets.UTF_8).useDelimiter("\\n")) {
-            stringBuilder = new StringBuilder();
-
-            // выполняю пока есть следующая линия
-            while(scanner.hasNext()) {
-                stringBuilder.append(scanner.next()); // соединяю fileText с scanner.next(). scanner.next - следующая линия
-            }
-
-
-            Log.CurrentSession.println(stringBuilder.toString(), Log.MessageType.WARNING);
-        } catch (Exception e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);;
-        }
-
-        return stringBuilder.toString();\
-
-         */
         try {
-            //String all = org.apache.commons.io.FileUtils.readFileToString(file, "cp1251");
-            //System.out.println(all);
             return org.apache.commons.io.FileUtils.readFileToString(file, "cp1251");
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
@@ -152,11 +130,6 @@ public class FileUtils
                 ByteOrderMark.UTF_16BE, ByteOrderMark.UTF_16LE,
                 ByteOrderMark.UTF_32BE, ByteOrderMark.UTF_32LE)));
             inputStream) {
-        /*
-        try(BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-            inputStream) {
-
-         */
 
             String curLine = "";
 

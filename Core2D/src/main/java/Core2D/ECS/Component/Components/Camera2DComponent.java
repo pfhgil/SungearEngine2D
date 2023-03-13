@@ -20,13 +20,25 @@ public class Camera2DComponent extends Component {
         void postRender();
     }
 
+    // transformations ------------------
+
+    public boolean followTranslation = true;
+    public boolean followRotation= false;
+    public boolean followScale = false;
+
+    public Vector2f position = new Vector2f();
+    public float rotation = 0f;
+    public Vector2f scale = new Vector2f(0.5f);
+
     public Vector2f viewportSize = new Vector2f(Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y);
 
     public transient Matrix4f projectionMatrix = new Matrix4f().ortho2D(-viewportSize.x / 2.0f, viewportSize.x / 2.0f, -viewportSize.y / 2.0f, viewportSize.y / 2.0f);
 
     public transient Matrix4f viewMatrix = new Matrix4f();
 
-    public boolean isScene2DMainCamera2D = false;
+    // ----------------------------------
+
+    public boolean scene2DMainCamera2D = false;
 
     // промежуточный фрейм буфер без пост процессинга
     public transient FrameBuffer frameBuffer;
@@ -34,15 +46,18 @@ public class Camera2DComponent extends Component {
     // результативный фрейм буфер с пост процессингом
     public transient FrameBuffer resultFrameBuffer;
 
-    public transient Camera2DCallback camera2DCallback;
+    public transient List<Camera2DCallback> camera2DCallbacks = new ArrayList<>();
 
 
-    // post processing quad -----------------------------------------------------
+    // render --------------------------------------------------------------
+    // будет ли камера рендерить сцену. если выключено, то камера не рендерит, но обновление трансформаций происходит
+    public boolean render = true;
+
+    // post processing -----------------------------------------------------
     public transient short[] ppQuadIndices = new short[] { 0, 1, 2, 0, 2, 3 };
 
     // массив данных о вершинах
     // первые строки - позиции вершин, вторые строки - текстурные координаты
-    //private transient Vector2f ppQuadSize = new Vector2f(100.0f, 100.0f);
     public transient float[] ppQuadData = new float[] {
             -1, -1,
             0, 0,

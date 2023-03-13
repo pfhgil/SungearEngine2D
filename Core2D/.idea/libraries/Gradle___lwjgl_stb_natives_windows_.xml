@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: :lwjgl-stb-natives-windows:">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/lwjgl-stb-natives-windows.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -1,0 +1,43 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SungearRoot:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SungearRoot_jar</output-path>
+    <root id="archive" name="SungearRoot.jar">
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/Engine/src/SungearEngine2D/META-INF/MANIFEST.MF" />
+      </element>
+      <element id="module-output" name="SungearRoot.common.main" />
+      <element id="module-output" name="SungearRoot.Core2D.main" />
+      <element id="module-output" name="SungearRoot.Engine.main" />
+      <element id="module-output" name="SungearRoot.test.main" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter-engine/5.8.1/21b86e08aae2720bbf017703669948be96d1388c/junit-jupiter-engine-5.8.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/lwjgl-openal.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Engine/libs/imgui-app-1.84.1.3.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/slf4j-simple-2.0.0-alpha5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.joml/joml/1.10.5/22566d58af70ad3d72308bab63b8339906deb649/joml-1.10.5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.opentest4j/opentest4j/1.2.0/28c11eb91f9b6d8e200631d46e20a7f407f2a046/opentest4j-1.2.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/lwjgl-stb.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/lwjgl-opengl-natives-windows.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/lwjgl-stb-natives-windows.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/lwjgl-opengl.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.jupiter/junit-jupiter-api/5.8.1/6538b88eb8bf8811bc7b6efb5246f835c15e0bfe/junit-jupiter-api-5.8.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/lwjgl-glfw-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/lwjgl-glfw.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-engine/1.8.1/e6c63bf990dc88a6527b4ed617b23e47048f07e0/junit-platform-engine-1.8.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/slick-util.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.junit.platform/junit-platform-commons/1.8.1/1e362cbe6d0f225b066757865e233972557484/junit-platform-commons-1.8.1.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/jbox2d-library-2.1.2.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/lwjgl-stb-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/lwjgl-openal-natives-windows.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/lwjgl-opengl-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/lwjgl-glfw-natives-windows.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/lwjgl-openal-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/lwjgl.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/lwjgl-sources.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/slf4j-api-2.0.0-alpha5.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/commons-io-2.11.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/lwjgl-natives-windows.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/gson-2.9.0.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$PROJECT_DIR$/Core2D/libs/slick.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

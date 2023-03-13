@@ -28,29 +28,23 @@ public class Compiler
         while(shadersIterator.hasNext()) {
             Shader shader = shadersIterator.next();
 
-            String shaderFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + shader.path;
-            long lastModified = new File(shaderFullPath).lastModified();
+            //System.out.println("asset reloaded: " + shader.path);
+            Asset reloadedShaderData = AssetManager.getInstance().reloadAsset(shader.path, ShaderData.class);
 
-            if(shader.lastModified != lastModified) {
-                System.out.println("asset reloaded: " + shader.path);
-                Asset reloadedShaderData = AssetManager.getInstance().reloadAsset(shader.path, ShaderData.class);
+            boolean compiled = shader.compile((ShaderData) reloadedShaderData.getAssetObject());
+            //boolean compiled = shader.compile(AssetManager.getInstance().getShaderData(shader.path));
 
-                boolean compiled = shader.compile((ShaderData) reloadedShaderData.getAssetObject());
+            if (compiled) {
+                ViewsManager.getBottomMenuView().leftSideInfo = "Shader " + shader.path + " was successfully compiled!";
+                ViewsManager.getBottomMenuView().leftSideInfoColor.set(0.0f, 1.0f, 0.0f, 1.0f);
 
-                if (compiled) {
-                    shadersIterator.remove();
-
-                    ViewsManager.getBottomMenuView().leftSideInfo = "Shader " + shader.path + " was successfully compiled!";
-                    ViewsManager.getBottomMenuView().leftSideInfoColor.set(0.0f, 1.0f, 0.0f, 1.0f);
-
-                    Log.CurrentSession.println("Shader " + shader.path + " was successfully compiled!", Log.MessageType.SUCCESS);
-                } else {
-                    ViewsManager.getBottomMenuView().leftSideInfo = "Shader " + shader.path + " was not compiled. See the log for details";
-                    ViewsManager.getBottomMenuView().leftSideInfoColor.set(1.0f, 0.0f, 0.0f, 1.0f);
-                }
-
-                shader.lastModified = lastModified;
+                Log.CurrentSession.println("Shader " + shader.path + " was successfully compiled!", Log.MessageType.SUCCESS);
+            } else {
+                ViewsManager.getBottomMenuView().leftSideInfo = "Shader " + shader.path + " was not compiled. See the log for details";
+                ViewsManager.getBottomMenuView().leftSideInfoColor.set(1.0f, 0.0f, 0.0f, 1.0f);
             }
+
+            shadersIterator.remove();
         }
     }
 
@@ -69,19 +63,22 @@ public class Compiler
         }
     }
 
-    public static void checkShaderToCompile(Shader shader)
+    public static void checkShaderDataModified(ShaderData shaderData)
     {
+        /*
         if (shader != null) {
             String shaderFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + shader.path;
             File file = new File(shaderFullPath);
 
             if (file.exists()) {
                 long lastModified = file.lastModified();
-                if (lastModified != shader.lastModified) {
+                //if (lastModified != shader.lastModified) {
                     Compiler.addShaderToCompile(shader);
-                }
+                //}
             }
         }
+        \
+         */
     }
 
     /*

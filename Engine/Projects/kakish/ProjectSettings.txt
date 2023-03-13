@@ -1,0 +1,4 @@
+{
+  "jdkPath": "C:\\Users\\Vlad\\.gradle\\jdks\\adoptium-17-x64-hotspot-windows",
+  "currentPath": "D:\\Pixelfield\\SungearEngine2D_cm\\refactored\\Engine\\Projects\\kakish\\ProjectSettings.txt"
+}

@@ -51,7 +51,6 @@ public class ECSWorld
     {
         if(component.entity == null) {
             Log.CurrentSession.println("Value of field 'entity' in component '" + component + "' is equals null. It will be added in блять забыл", Log.MessageType.WARNING, true);
-            // пук пуккк!!!!!!!
             // общак с entityid = -1
             // тут все компоненты безмамные (без entity) будут лежать
             ComponentsQuery componentsQuery = new ComponentsQuery(-1);
@@ -65,6 +64,7 @@ public class ECSWorld
         boolean foundQuery = false;
         for(ComponentsQuery componentsQuery : componentsQueries) {
             if(componentsQuery.entityID == component.entity.ID) {
+                /*
                 if(component instanceof NonDuplicated) {
                     Optional<Component> foundComponent = componentsQuery.getComponents().stream().filter(c -> c.getClass().equals(component.getClass())).findAny();
                     if(foundComponent.isPresent()) {
@@ -79,6 +79,10 @@ public class ECSWorld
                     componentsQuery.getComponents().add(component);
                     foundQuery = true;
                 }
+
+                 */
+                componentsQuery.getComponents().add(component);
+                foundQuery = true;
             }
         }
 
@@ -87,6 +91,8 @@ public class ECSWorld
             componentsQuery.getComponents().add(component);
             componentsQueries.add(componentsQuery);
         }
+
+        //Log.CurrentSession.println("added component: " + component + ", entity id: " + component.entity.ID, Log.MessageType.SUCCESS);
     }
 
     // удаляет компонент из обработки
@@ -96,13 +102,15 @@ public class ECSWorld
         while(componentsQueryIterator.hasNext()) {
             ComponentsQuery componentsQuery = componentsQueryIterator.next();
 
-            if(componentsQuery.entityID == component.entity.ID) {
+            //if(componentsQuery == component) {
                 componentsQuery.getComponents().remove(component);
+
+                //Log.CurrentSession.println("removed component: " + component + ", entity id: " + component.entity.ID, Log.MessageType.ERROR);
 
                 if(componentsQuery.getComponents().size() == 0) {
                     componentsQueryIterator.remove();
                 }
-            }
+            //}
         }
 
         componentsInitializerSystem.destroyComponent(component);

@@ -76,11 +76,14 @@ public class ScriptTempValue
                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }
 
+            /*
             if(ProjectsManager.getCurrentProject() != null) {
                 long lastModified = new File(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + script.path + ".java").lastModified();
                 // установка времени  последней  модификации на скрипт
                 script.setLastModified(lastModified);
             }
+
+             */
         }
     }
 
