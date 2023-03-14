@@ -111,6 +111,12 @@
                           "componentID": -1
                         }
                       }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
                     ]
                   },
                   "drawingMode": 4,
@@ -318,6 +324,12 @@
                           "componentID": -1
                         }
                       }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
                     ]
                   },
                   "drawingMode": 4,
@@ -341,15 +353,16 @@
                     "y": 0.75
                   },
                   "viewportSize": {
-                    "x": 2560.0,
-                    "y": 1377.0
+                    "x": 1080.0,
+                    "y": 720.0
                   },
                   "scene2DMainCamera2D": true,
                   "render": true,
                   "postprocessingDefaultShader": {
                     "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
                     "lastModified": -1,
-                    "shaderUniforms": []
+                    "shaderUniforms": [],
+                    "shaderDefines": []
                   },
                   "postprocessingLayers": [
                     {
@@ -357,9 +370,9 @@
                       "render": true,
                       "overlay": true,
                       "frameBuffer": {
-                        "handler": 11,
-                        "RBOHandler": 8,
-                        "textureHandler": 50,
+                        "handler": 6,
+                        "RBOHandler": 3,
+                        "textureHandler": 38,
                         "type": 2,
                         "width": 2560,
                         "height": 1440,
@@ -399,6 +412,12 @@
                               "componentID": -1
                             }
                           }
+                        ],
+                        "shaderDefines": [
+                          {
+                            "name": "FLIP_TEXTURES_Y",
+                            "value": 1
+                          }
                         ]
                       }
                     },
@@ -407,9 +426,9 @@
                       "render": true,
                       "overlay": false,
                       "frameBuffer": {
-                        "handler": 12,
-                        "RBOHandler": 9,
-                        "textureHandler": 51,
+                        "handler": 7,
+                        "RBOHandler": 4,
+                        "textureHandler": 39,
                         "type": 2,
                         "width": 2560,
                         "height": 1440,
@@ -449,6 +468,12 @@
                               "componentID": -1
                             }
                           }
+                        ],
+                        "shaderDefines": [
+                          {
+                            "name": "FLIP_TEXTURES_Y",
+                            "value": 1
+                          }
                         ]
                       }
                     },
@@ -457,9 +482,9 @@
                       "render": false,
                       "overlay": true,
                       "frameBuffer": {
-                        "handler": 13,
-                        "RBOHandler": 10,
-                        "textureHandler": 52,
+                        "handler": 8,
+                        "RBOHandler": 5,
+                        "textureHandler": 40,
                         "type": 2,
                         "width": 2560,
                         "height": 1440,
@@ -498,6 +523,12 @@
                               "entityID": -1,
                               "componentID": -1
                             }
+                          }
+                        ],
+                        "shaderDefines": [
+                          {
+                            "name": "FLIP_TEXTURES_Y",
+                            "value": 1
                           }
                         ]
                       }
@@ -713,6 +744,12 @@
                           "componentID": -1
                         }
                       }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
                     ]
                   },
                   "drawingMode": 4,
@@ -800,7 +837,7 @@
     }
   ],
   "scriptSystem": {},
-  "maxObjectID": 137,
+  "maxObjectID": 138,
   "inBuild": false,
   "isMainScene2D": false
 }

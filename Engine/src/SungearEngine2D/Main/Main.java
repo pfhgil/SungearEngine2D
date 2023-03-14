@@ -204,6 +204,7 @@ public class Main
                 ECSWorld.getCurrentECSWorld().addComponent(djArbuzAudio);
                 djArbuzAudio.state = AudioState.PLAYING;
                 // СЕЙЧАС ИГРАЕТ - DJ ARBUZ - DJ ARBUZ
+                // эт щас dj arbuz играет
                 /** -------------------- */
 
                 onlyColorShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/common/only_color_shader.glsl"));

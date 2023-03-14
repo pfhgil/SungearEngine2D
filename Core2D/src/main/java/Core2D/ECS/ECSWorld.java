@@ -139,7 +139,7 @@ public class ECSWorld
     public void update()
     {
         for(System system : systems) {
-            for (ComponentsQuery componentsQuery : componentsQueries) {
+                for (ComponentsQuery componentsQuery : componentsQueries) {
                 system.update(componentsQuery);
             }
         }

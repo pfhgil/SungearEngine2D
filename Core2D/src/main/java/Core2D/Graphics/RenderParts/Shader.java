@@ -138,6 +138,20 @@ public class Shader implements Serializable
         }
     }
 
+    public static class ShaderDefine
+    {
+        public String name = "";
+        public int value = -1;
+
+        public ShaderDefine() { }
+
+        public ShaderDefine(String name, int value)
+        {
+            this.name = name;
+            this.value = value;
+        }
+    }
+
     private transient int programHandler;
     private transient HashMap<Integer, Integer> shaderPartsHandlers = new HashMap<>();
 
@@ -151,7 +165,12 @@ public class Shader implements Serializable
 
     private List<ShaderUniform> shaderUniforms = new ArrayList<>();
 
-    public Shader() { }
+    private List<ShaderDefine> shaderDefines = new ArrayList<>();
+
+    public Shader()
+    {
+        shaderDefines.add(new ShaderDefine("FLIP_TEXTURES_Y", 1));
+    }
 
     public Shader(ShaderData shaderData)
     {
@@ -181,9 +200,21 @@ public class Shader implements Serializable
         int shaderPartHandler = OpenGL.glCall((params) -> glCreateShader(shaderType), Integer.class);
         shaderPartsHandlers.put(shaderType, shaderPartHandler);
 
-        String shaderDefine = shaderType == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT";
+        // добавляем все дефайны
+        StringBuilder shaderDefinesStringBuilder = new StringBuilder("#define ").append(shaderType == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT").append("\n");
+
+        for(ShaderDefine shaderDefine : shaderDefines) {
+            shaderDefinesStringBuilder.append("#define ")
+                    .append(shaderDefine.name)
+                    .append(" ")
+                    .append(shaderDefine.value)
+                    .append("\n");
+        }
+
+        Log.CurrentSession.println("defines: " + shaderDefinesStringBuilder, Log.MessageType.SUCCESS);
+
         // сделать легкое изменения версии шейдера
-        OpenGL.glCall((params) -> glShaderSource(shaderPartHandler, "#version 400\n" + "#define " + shaderDefine + "\n" + shaderSourceCode));
+        OpenGL.glCall((params) -> glShaderSource(shaderPartHandler, "#version 400\n" + shaderDefinesStringBuilder + shaderSourceCode));
 
         OpenGL.glCall((params) -> glCompileShader(shaderPartHandler));
 
@@ -374,6 +405,8 @@ public class Shader implements Serializable
     public HashMap<Integer, Integer> getShaderPartsHandlers() { return shaderPartsHandlers; }
 
     public List<ShaderUniform> getShaderUniforms() { return shaderUniforms; }
+
+    public List<ShaderDefine> getShaderDefines() { return shaderDefines; }
 
     public ShaderData getShaderData() { return shaderData; }
 

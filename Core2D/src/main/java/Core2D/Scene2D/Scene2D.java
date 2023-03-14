@@ -210,7 +210,7 @@ public class Scene2D
     {
         for(int i = 0; i < layering.getLayers().size(); i++) {
             for(int k = 0; k < layering.getLayers().get(i).getEntities().size(); k++) {
-                Entity entity = layering.getLayers().get(k).getEntities().get(k);
+                Entity entity = layering.getLayers().get(i).getEntities().get(k);
                 if(tag.getName().equals(entity.tag.getName())) {
                     entity.tag.setName("default");
                 }

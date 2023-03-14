@@ -46,10 +46,6 @@ public class InspectorView extends View
     // имя нового чего-то
     private ImString newName = new ImString();
 
-    // имя текущего изменяемого чего-то
-    private ImString currentEditingName = new ImString();
-    // имя текущего чего-то
-    private ImString currentName = new ImString();
     // id изменяемого чего-то
     private int currentEditingID = -1;
 
@@ -90,14 +86,8 @@ public class InspectorView extends View
             ImGui.image(Resources.Textures.Icons.object2DFileIcon.getTextureHandler(), 27.0f, 27.0f);
 
             ImGui.sameLine();
-            ImGui.pushID("Object2DName");
-            {
-                ImString name = new ImString(inspectingEntity.name, 256);
-                if (ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", name))) {
-                    inspectingEntity.name = name.get();
-                }
-            }
-            ImGui.popID();
+
+            inspectingEntity.name = ImGuiUtils.inputText("", inspectingEntity.name, "EntityName");
 
             ImGui.text("Layer");
             ImGui.sameLine();
@@ -192,36 +182,27 @@ public class InspectorView extends View
                                 {
                                     for (int i = 0; i < currentSceneManager.getCurrentScene2D().getLayering().getLayers().size(); i++) {
                                         Layer currentLayer = currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(i);
-                                        if (currentLayer.getName().equals(currentEditingName.get())) {
+                                        if (currentEditingID == i) {
                                             ImGui.setNextItemOpen(true, ImGuiCond.Once);
                                         }
                                         boolean opened = ImGui.collapsingHeader("Layer \"" + currentLayer.getName() + "\"");
 
-                                        if (opened) {
+                                        if(opened) {
                                             ImGui.text("ID: " + currentLayer.getID());
 
-                                            if (!currentLayer.getName().equals("default")) {
-                                                ImGui.pushID("Layer_" + currentLayer.getName() + "_InputText");
-                                                {
-                                                    if (currentEditingID != i) {
-                                                        currentName.set(currentLayer.getName(), true);
+                                            int flags = currentLayer.getName().equals("default") ? ImGuiInputTextFlags.ReadOnly : ImGuiInputTextFlags.None;
 
-                                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText("", currentName, ImGuiInputTextFlags.ReadOnly));
+                                            currentLayer.setName(ImGuiUtils.inputText("", currentLayer.getName(), "Layer_" + i + "_InputText", flags));
 
-                                                        if (ImGui.isItemClicked()) {
-                                                            currentEditingID = i;
-                                                            currentEditingName.set(currentLayer.getName(), true);
-                                                        }
-                                                    } else {
-                                                        ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", currentEditingName));
-                                                        if (ImGui.isItemDeactivatedAfterEdit()) {
-                                                            currentLayer.setName(currentEditingName.get());
-                                                            currentEditingID = -1;
-                                                        }
-                                                    }
-                                                }
-                                                ImGui.popID();
+                                            if(ImGui.isItemClicked()) {
+                                                currentEditingID = i;
+                                            }
 
+                                            if(ImGui.isItemDeactivatedAfterEdit()) {
+                                                currentEditingID = -1;
+                                            }
+
+                                            if(!currentLayer.getName().equals("default")) {
                                                 if (ImGui.button("Remove")) {
                                                     currentSceneManager.getCurrentScene2D().getLayering().deleteLayer(currentLayer);
                                                 }
@@ -235,7 +216,6 @@ public class InspectorView extends View
                             @Override
                             public void onMiddleButtonClicked() {
                                 dialogWindow.setActive(false);
-                                currentEditingName.set("", true);
                             }
 
                             @Override
@@ -323,34 +303,25 @@ public class InspectorView extends View
                                 {
                                     for (int i = 0; i < currentSceneManager.getCurrentScene2D().getTags().size(); i++) {
                                         Tag currentTag = currentSceneManager.getCurrentScene2D().getTags().get(i);
-                                        if (currentTag.getName().equals(currentEditingName.get())) {
+                                        if (currentEditingID == i) {
                                             ImGui.setNextItemOpen(true, ImGuiCond.Once);
                                         }
                                         boolean opened = ImGui.collapsingHeader("Tag \"" + currentTag.getName() + "\"");
 
-                                        if (opened) {
-                                            if (!currentTag.getName().equals("default")) {
-                                                ImGui.pushID("Tag_" + currentTag.getName() + "_InputText");
-                                                {
-                                                    if (currentEditingID != i) {
-                                                        currentName.set(currentTag.getName(), true);
+                                        if(opened) {
+                                            int flags = currentTag.getName().equals("default") ? ImGuiInputTextFlags.ReadOnly : ImGuiInputTextFlags.None;
 
-                                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText("", currentName, ImGuiInputTextFlags.ReadOnly));
+                                            currentTag.setName(ImGuiUtils.inputText("", currentTag.getName(), "Tag_" + i + "_InputText", flags));
 
-                                                        if (ImGui.isItemClicked()) {
-                                                            currentEditingID = i;
-                                                            currentEditingName.set(currentTag.getName(), true);
-                                                        }
-                                                    } else {
-                                                        ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", currentEditingName));
-                                                        if (ImGui.isItemDeactivatedAfterEdit()) {
-                                                            currentTag.setName(currentEditingName.get());
-                                                            currentEditingID = -1;
-                                                        }
-                                                    }
-                                                }
-                                                ImGui.popID();
+                                            if(ImGui.isItemClicked()) {
+                                                currentEditingID = i;
+                                            }
 
+                                            if(ImGui.isItemDeactivatedAfterEdit()) {
+                                                currentEditingID = -1;
+                                            }
+
+                                            if(!currentTag.getName().equals("default")) {
                                                 if (ImGui.button("Remove")) {
                                                     currentSceneManager.getCurrentScene2D().deleteTag(currentTag);
                                                 }
@@ -364,7 +335,6 @@ public class InspectorView extends View
                             @Override
                             public void onMiddleButtonClicked() {
                                 dialogWindow.setActive(false);
-                                currentEditingName.set("", true);
                             }
 
                             @Override

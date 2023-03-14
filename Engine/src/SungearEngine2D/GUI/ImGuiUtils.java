@@ -5,6 +5,7 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.ImVec4;
 import imgui.flag.ImGuiCol;
+import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiStyleVar;
 import imgui.type.ImString;
 import org.lwjgl.opengl.GL46C;
@@ -156,20 +157,6 @@ public class ImGuiUtils
         arrowButtonFound.ifPresent(entryStringEntry -> entryStringEntry.getValue().setValue(retention));
     }
 
-    public static boolean inputText(String label, ImString text, int flags)
-    {
-        ImGui.pushStyleColor(ImGuiCol.Border, 10.0f / 255.0f, 10 / 255.0f, 10.0f / 255.0f, 1.0f);
-        ImGui.pushStyleColor(ImGuiCol.BorderShadow, 10.0f / 255.0f, 10 / 255.0f, 10.0f / 255.0f, 0.0f);
-        ImGui.pushStyleVar(ImGuiStyleVar.FrameBorderSize, 2);
-
-        boolean edited = ImGui.inputText(label, text, flags);
-
-        ImGui.popStyleVar();
-        ImGui.popStyleColor(2);
-
-        return edited;
-    }
-
     public static boolean imCallWBorder(Function<Object[], ?> func)
     {
         ImGui.pushStyleColor(ImGuiCol.Border, 10.0f / 255.0f, 10 / 255.0f, 10.0f / 255.0f, 1.0f);
@@ -298,20 +285,6 @@ public class ImGuiUtils
         return beginMenuWithImage(text, text, textureID, iWidth, iHeight);
     }
 
-    public static boolean defaultInputText(String text, String ID, ImString str, int flags)
-    {
-        ImGui.pushID(ID);
-        boolean edited = ImGui.inputText(text, str, flags);
-        ImGui.popID();
-
-        return edited;
-    }
-
-    public static boolean defaultInputText(String text, ImString str, int flags)
-    {
-        return defaultInputText(text, text, str, flags);
-    }
-
     public static boolean inputTextWithRightButton(String text, String ID, ImString str, int flags, int buttonTexHandler, boolean[] buttonPressed, String buttonTooltip, boolean enableDragDrop, Object[] droppedObj, String dragDropDataType)
     {
         ImGui.pushID(ID);
@@ -358,5 +331,52 @@ public class ImGuiUtils
             ImGui.text(tip);
             ImGui.endTooltip();
         }
+    }
+
+    public static int dragInt(String label, int i, float v, String ID)
+    {
+        int[] ints = new int[] { i };
+
+        ImGui.pushID(ID);
+        imCallWBorder(params -> ImGui.dragInt(label, ints, v));
+        ImGui.popID();
+
+        return ints[0];
+    }
+
+    public static int dragInt(String label, int i, String ID)
+    {
+        return dragInt(label, i, 1, ID);
+    }
+
+    public static String inputText(String label, String text, String ID, int stringLength, int flags)
+    {
+        ImString imString = new ImString(text, stringLength);
+
+        ImGui.pushID(ID);
+        imCallWBorder(params -> ImGui.inputText(label, imString, flags));
+        ImGui.popID();
+
+        return imString.toString();
+    }
+
+    public static String inputText(String label, String text, String ID, int flags)
+    {
+        return inputText(label, text, ID, 256, flags);
+    }
+
+    public static String inputText(String label, String text, String ID)
+    {
+        return inputText(label, text, ID, 256, ImGuiInputTextFlags.None);
+    }
+
+    public static String inputText(String label, String text, int flags)
+    {
+        return inputText(label, text, label, 256, flags);
+    }
+
+    public static String inputText(String label, String text)
+    {
+        return inputText(label, text, label, 256, ImGuiInputTextFlags.None);
     }
 }

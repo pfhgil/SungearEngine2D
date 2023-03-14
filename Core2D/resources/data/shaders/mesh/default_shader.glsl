@@ -27,7 +27,11 @@
 
     void main()
     {
-        vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y));
+        #if defined(FLIP_TEXTURES_Y) && FLIP_TEXTURES_Y == 1
+            vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y));
+        #else
+            vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, vs_textureCoords.y));
+        #endif
 
         fragColor = color * textureColor;
     }

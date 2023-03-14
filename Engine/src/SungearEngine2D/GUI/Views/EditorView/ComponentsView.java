@@ -171,14 +171,11 @@ public class ComponentsView extends View
                     case "MeshComponent" -> {
                         MeshComponent meshComponent = (MeshComponent) currentComponent;
 
-                        ImString textureName = new ImString(new File(meshComponent.getTexture().path).getName());
-
-                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText("Texture", textureName, ImGuiInputTextFlags.ReadOnly));
+                        ImGuiUtils.inputText("Texture", new File(meshComponent.getTexture().path).getName(), ImGuiInputTextFlags.ReadOnly);
 
                         if (ImGui.beginDragDropTarget()) {
                             Object imageFile = ImGui.acceptDragDropPayload("File");
                             if (imageFile instanceof File file) {
-                                textureName.set(file.getName(), true);
                                 String relativePath = FileUtils.getRelativePath(
                                         file,
                                         new File(ProjectsManager.getCurrentProject().getProjectPath()));
@@ -214,14 +211,11 @@ public class ComponentsView extends View
                     case "TextureComponent" -> {
                         TextureComponent textureComponent = (TextureComponent) currentComponent;
 
-                        ImString textureName = new ImString(new File(textureComponent.getTexture().path).getName());
-
-                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText("Texture", textureName, ImGuiInputTextFlags.ReadOnly));
+                        ImGuiUtils.inputText("Texture", new File(textureComponent.getTexture().path).getName(), ImGuiInputTextFlags.ReadOnly);
 
                         if (ImGui.beginDragDropTarget()) {
                             Object imageFile = ImGui.acceptDragDropPayload("File");
                             if (imageFile instanceof File file) {
-                                textureName.set(file.getName(), true);
                                 String relativePath = FileUtils.getRelativePath(
                                         file,
                                         new File(ProjectsManager.getCurrentProject().getProjectPath()));
@@ -526,25 +520,23 @@ public class ComponentsView extends View
                                     ImString string = new ImString((String) Script.getFieldValue(scriptClsInstance, field), 128);
 
                                     ImGui.pushID(field.getName() + "_" + i);
-                                    ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
+                                    ImGuiUtils.inputText(field.getName(), (String) Script.getFieldValue(scriptClsInstance, field), field.getName() + "_" + i, 128, ImGuiInputTextFlags.ReadOnly);
                                     ImGui.popID();
 
                                     Script.setFieldValue(scriptClsInstance, field, string.get());
                                 } else if (cs.isAssignableFrom(Entity.class)) {
-                                    ImString string = new ImString(cs.getSimpleName());
+                                    String string = cs.getSimpleName();
                                     if (Script.getFieldValue(scriptClsInstance, field) != null) {
-                                        string.set(((Entity) Script.getFieldValue(scriptClsInstance, field)).name, true);
+                                        string = ((Entity) Script.getFieldValue(scriptClsInstance, field)).name;
                                     }
 
-                                    ImGui.pushID(field.getName() + "_" + i);
                                     if(Script.getFieldValue(scriptClsInstance, field) != null) {
-                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
+                                        ImGuiUtils.inputText(field.getName(), string, field.getName() + "_" + i, ImGuiInputTextFlags.ReadOnly);
                                     } else {
                                         ImGui.pushStyleColor(ImGuiCol.Text, 0.65f, 0.65f, 0.65f, 1.0f);
-                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
+                                        ImGuiUtils.inputText(field.getName(), string, field.getName() + "_" + i, ImGuiInputTextFlags.ReadOnly);
                                         ImGui.popStyleColor();
                                     }
-                                    ImGui.popID();
 
                                     if (ImGui.beginDragDropTarget()) {
                                         Object droppedObject = ImGui.acceptDragDropPayload("Entity");
@@ -554,20 +546,18 @@ public class ComponentsView extends View
                                         ImGui.endDragDropTarget();
                                     }
                                 } else if(cs.getSuperclass().isAssignableFrom(Component.class)) {
-                                    ImString string = new ImString(cs.getSimpleName());
+                                    String string = cs.getSimpleName();
                                     if (Script.getFieldValue(scriptClsInstance, field) != null) {
-                                        string.set(((Component) Script.getFieldValue(scriptClsInstance, field)).getClass().getSimpleName(), true);
+                                        string = ((Component) Script.getFieldValue(scriptClsInstance, field)).getClass().getSimpleName();
                                     }
 
-                                    ImGui.pushID(field.getName() + "_" + i);
                                     if(Script.getFieldValue(scriptClsInstance, field) != null) {
-                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
+                                        ImGuiUtils.inputText(field.getName(), string, field.getName() + "_" + i, ImGuiInputTextFlags.ReadOnly);
                                     } else {
                                         ImGui.pushStyleColor(ImGuiCol.Text, 0.65f, 0.65f, 0.65f, 1.0f);
-                                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText(field.getName(), string, ImGuiInputTextFlags.ReadOnly));
+                                        ImGuiUtils.inputText(field.getName(), string, field.getName() + "_" + i, ImGuiInputTextFlags.ReadOnly);
                                         ImGui.popStyleColor();
                                     }
-                                    ImGui.popID();
 
                                     if (ImGui.beginDragDropTarget()) {
                                         Object droppedObject = ImGui.acceptDragDropPayload("Component");
@@ -583,25 +573,20 @@ public class ComponentsView extends View
                     case "AudioComponent" -> {
                         AudioComponent audioComponent = (AudioComponent) currentComponent;
 
-                        ImString audioName = new ImString(audioComponent.path);
-
                         ImGui.text("Source ID: " + audioComponent.sourceHandler);
 
                         ImGui.pushID("AudioPath_" + i);
-                        ImGuiUtils.imCallWBorder(func -> ImGuiUtils.defaultInputText("Path", audioName, ImGuiInputTextFlags.ReadOnly));
+                        ImGuiUtils.inputText("Path", audioComponent.path, "AudioPath_" + i, ImGuiInputTextFlags.ReadOnly);
                         ImGui.popID();
 
                         if (ImGui.beginDragDropTarget()) {
                             Object audioFile = ImGui.acceptDragDropPayload("File");
                             if (audioFile instanceof File file) {
-                                audioName.set(file.getName(), true);
                                 String relativePath = FileUtils.getRelativePath(
                                         new File(file.getPath()),
                                         new File(ProjectsManager.getCurrentProject().getProjectPath()));
 
                                 ECSWorld.getCurrentECSWorld().audioSystem.setAudioComponentData(audioComponent, AssetManager.getInstance().getAudioData(relativePath));
-                                //audioComponent.audio.loadAndSetup(ViewsManager.getResourcesView().getCurrentMovingFile().getPath());
-                                //audioComponent.audio.path = relativePath;
                                 audioComponent.path = relativePath;
                             }
                             ImGui.endDragDropTarget();
@@ -617,7 +602,7 @@ public class ComponentsView extends View
 
                             ImGui.pushID("AudioTypeSelectable1_" + i);
                             if (ImGui.selectable("Worldspace")) {
-                                audioComponent.type =AudioType.WORLDSPACE;
+                                audioComponent.type = AudioType.WORLDSPACE;
                             }
                             ImGui.popID();
 
