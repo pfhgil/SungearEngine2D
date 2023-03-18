@@ -1,6 +1,6 @@
 package Core2D.Prefab;
 
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Entity;
 import Core2D.Layering.Layer;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.FileUtils;
@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Prefab
 {
-    private GameObject prefabObject;
+    private Entity prefabObject;
     private List<Prefab> childrenObjects = new ArrayList<>();
 
     public Prefab()
@@ -19,7 +19,7 @@ public class Prefab
 
     }
 
-    public Prefab(GameObject prefabObject)
+    public Prefab(Entity prefabObject)
     {
         setPrefabObject(prefabObject);
     }
@@ -46,7 +46,7 @@ public class Prefab
             SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID++;
             prefabObject.ID = SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID;
             prefabObject.setLayer(layer);
-            prefabObject.getChildrenObjectsID().clear();
+            prefabObject.getChildrenEntitiesID().clear();
             for (Prefab prefab : childrenObjects) {
                 layer = SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer(prefab.getPrefabObject().layerName);
                 if (layer == null) {
@@ -56,7 +56,7 @@ public class Prefab
 
                 prefab.getPrefabObject().ID = SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID;
                 prefab.getPrefabObject().setLayer(layer);
-                prefabObject.getChildrenObjectsID().add(prefab.getPrefabObject().ID);
+                prefabObject.getChildrenEntitiesID().add(prefab.getPrefabObject().ID);
                 applyChildPrefabToScene(prefab);
             }
         }
@@ -73,18 +73,18 @@ public class Prefab
 
             childPrefab.getPrefabObject().ID = SceneManager.currentSceneManager.getCurrentScene2D().maxObjectID;
             childPrefab.getPrefabObject().setLayer(layer);
-            parentPrefab.getPrefabObject().getChildrenObjectsID().add(childPrefab.getPrefabObject().ID);
+            parentPrefab.getPrefabObject().getChildrenEntitiesID().add(childPrefab.getPrefabObject().ID);
             applyChildPrefabToScene(childPrefab);
         }
     }
 
-    public GameObject getPrefabObject() { return prefabObject; }
-    public void setPrefabObject(GameObject prefabObject)
+    public Entity getPrefabObject() { return prefabObject; }
+    public void setPrefabObject(Entity prefabObject)
     {
         this.prefabObject = prefabObject;
 
         childrenObjects.clear();
-        for (GameObject childObject : prefabObject.getChildrenObjects()) {
+        for (Entity childObject : prefabObject.getChildrenEntities()) {
             childrenObjects.add(new Prefab(childObject));
         }
     }

@@ -1,7 +1,8 @@
 package Core2D.Deserializers;
 
-import Core2D.Component.Components.Camera2DComponent;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.ECSWorld;
+import Core2D.ECS.Entity;
 import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
 import Core2D.Scene2D.Scene2D;
@@ -9,7 +10,6 @@ import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.Tag;
 import com.google.gson.*;
 import org.joml.Vector4f;
-import org.newdawn.slick.Game;
 
 import java.lang.reflect.Type;
 
@@ -49,11 +49,11 @@ public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
         scene2D.setScenePath(scenePath);
 
         for(Layer layer : layering.getLayers()) {
-            for(GameObject gameObject : layer.getGameObjects()) {
-                Camera2DComponent camera2DComponent = gameObject.getComponent(Camera2DComponent.class);
+            for(Entity entity : layer.getEntities()) {
+                Camera2DComponent camera2DComponent = entity.getComponent(Camera2DComponent.class);
 
                 if(camera2DComponent != null) {
-                    camera2DComponent.setScene2DMainCamera2D(camera2DComponent.isScene2DMainCamera2D(), scene2D);
+                    ECSWorld.getCurrentECSWorld().componentsInitializerSystem.setScene2DMainCamera2D(camera2DComponent, camera2DComponent.scene2DMainCamera2D, scene2D);
                 }
             }
         }

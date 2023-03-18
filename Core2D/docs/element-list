@@ -3,8 +3,8 @@ Core2D.AssetManager
 Core2D.AtlasDrawing
 Core2D.CamerasManager
 Core2D.GameObject
-Core2D.Component
-Core2D.Component.Components
+Core2D.ECS.Component
+Core2D.ECS.Component.Components
 Core2D.Input.PC
 Core2D.Core2D
 Core2D.Deserializers

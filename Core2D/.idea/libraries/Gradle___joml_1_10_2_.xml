@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="Gradle: :joml-1.10.2:">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/libs/joml-1.10.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

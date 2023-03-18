@@ -3,8 +3,8 @@ package SungearEngine2D.GUI;
 import Core2D.Core2D.Core2D;
 import Core2D.Project.ProjectsManager;
 import Core2D.Utils.FileUtils;
-import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.EditorView.ResourcesView;
+import SungearEngine2D.GUI.Views.ViewsManager;
 import org.apache.commons.io.FilenameUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWDropCallback;
@@ -53,6 +53,8 @@ public class GUI
         renderer.startFrame();
 
         ViewsManager.draw();
+        //ImGui.showDemoWindow();
+        //ImGui.showMetricsWindow();
 
         renderer.endFrame();
     }

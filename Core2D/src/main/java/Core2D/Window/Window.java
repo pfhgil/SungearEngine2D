@@ -1,19 +1,19 @@
 package Core2D.Window;
 
+import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
-import Core2D.Graphics.Graphics;
+import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 import org.joml.Vector2i;
 import org.lwjgl.glfw.GLFWErrorCallback;
 import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.glfw.GLFWWindowIconifyCallbackI;
-import org.lwjgl.opengl.GL11C;
 import org.lwjgl.system.MemoryStack;
 
 import java.nio.IntBuffer;
 
 import static org.lwjgl.glfw.GLFW.*;
+import static org.lwjgl.opengl.GL11C.glViewport;
 import static org.lwjgl.system.MemoryStack.stackPush;
 import static org.lwjgl.system.MemoryUtil.NULL;
 
@@ -72,7 +72,7 @@ public class Window
     {
         try {
             Log.CurrentSession.println("Starting Core2D...", Log.MessageType.INFO);
-            System.out.println("начало инициализации окна");
+            Log.Console.println("starting window initialization...");
 
             GLFWErrorCallback.createPrint(System.err).set();
 
@@ -101,19 +101,28 @@ public class Window
                 throw new RuntimeException("Failed to create GLFW window!"); // если окно не создалось, выдать исключение
 
             // добавление обработчика на нажатие клавиш
-            glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
+            try(AutoCloseable ac = glfwSetKeyCallback(window, (window, key, scancode, action, mods) -> {
                 // если нажатая кнопка == escape, то окно закрывается
                 if (key == GLFW_KEY_ESCAPE && action == GLFW_RELEASE) {
                     glfwSetWindowShouldClose(window, true);
                 }
-            });
+            })) {
 
-            glfwSetWindowIconifyCallback(window, new GLFWWindowIconifyCallbackI() {
-                @Override
-                public void invoke(long window, boolean iconified) {
-                    Settings.Core2D.sleepCore2D = iconified;
-                }
-            });
+            } catch (Exception e){
+                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+            }
+
+            try(AutoCloseable ac = glfwSetWindowIconifyCallback(window, (window, iconified) -> Settings.Core2D.sleepCore2D = iconified)) {
+
+            } catch(Exception e) {
+                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+            }
+
+            try(AutoCloseable ac = glfwSetWindowCloseCallback(window, (l) -> Core2D.stopCore2D())) {
+
+            } catch (Exception e) {
+                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+            }
 
             // проталкивается стак для следующего кадра
             try (MemoryStack stack = stackPush()) {
@@ -149,10 +158,11 @@ public class Window
                 size.y = height;
 
                 // сделать настройки более гибкими
-                Graphics.setViewMode(Graphics.getViewMode());
-                GL11C.glViewport(0, 0, size.x, size.y);
+                //Graphics.setViewMode(Graphics.getViewMode());
+                OpenGL.glCall((params) -> glViewport(0, 0, size.x, size.y));
             });
 
+            Log.Console.println("Core2D started!");
             Log.CurrentSession.println("Core2D started!", Log.MessageType.SUCCESS);
         } catch(Exception e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);

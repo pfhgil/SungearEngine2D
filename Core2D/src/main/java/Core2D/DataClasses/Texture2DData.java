@@ -4,7 +4,10 @@ import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 import org.lwjgl.BufferUtils;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.nio.ByteBuffer;
 import java.nio.IntBuffer;
 
@@ -28,25 +31,32 @@ public class Texture2DData extends Data
     // сколько бит будет занимать каждый из каналов
     private transient int internalFormat;
 
-    private int filterParam = GL_NEAREST;
+    private int filterParam = GL_LINEAR;
 
     private int wrapParam = GL_CLAMP_TO_EDGE;
 
     @Override
     public Texture2DData load(String path)
     {
-        try {
-            load(new BufferedInputStream(new FileInputStream(path)));
-        } catch (FileNotFoundException e) {
-            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException(e)), Log.MessageType.ERROR);
+        this.path = path;
+
+        Log.CurrentSession.println("texture data path: " + path, Log.MessageType.WARNING);
+
+        try (FileInputStream fis = new FileInputStream(path);
+             BufferedInputStream bis = new BufferedInputStream(fis)) {
+            load(bis, path);
+        } catch (IOException e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
         return this;
     }
 
     @Override
-    public Texture2DData load(InputStream inputStream)
+    public Texture2DData load(InputStream inputStream, String path)
     {
+        this.path = path;
+
         // буфер для ширины текстуры
         IntBuffer widthBuffer = BufferUtils.createIntBuffer(1);
         // буфер для высоты текстуры
@@ -54,10 +64,8 @@ public class Texture2DData extends Data
         // буфер для каналов текстуры
         IntBuffer channelsBuffer = BufferUtils.createIntBuffer(1);
 
-        try {
+        try(inputStream) {
             pixelsData = stbi_load_from_memory(Core2D.Utils.Utils.resourceToByteBuffer(inputStream), widthBuffer, heightBuffer, channelsBuffer, 0);
-
-            inputStream.close();
 
             // получаю из буферов размер и каналы загруженной текстуры
             width = widthBuffer.get(0);
@@ -75,10 +83,22 @@ public class Texture2DData extends Data
                 internalFormat = GL_RGB8;
                 // текстура будет поддерживать GL_RGB
                 format = GL_RGB;
+            } else if (channels == 2) {
+                internalFormat = GL_RG8;
+                format = GL_RG;
+            } else if (channels == 1) {
+                internalFormat = GL_LUMINANCE8;
+                format = GL_LUMINANCE;
             }
+
+            //Log.CurrentSession.println("Loaded texture: " + path + ", width: " + width + ", height: " + height + ", internalFormat: " + internalFormat + ", format: " + format + ", channels: " + channels, Log.MessageType.SUCCESS);
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
+
+        widthBuffer.clear();
+        heightBuffer.clear();
+        channelsBuffer.clear();
 
         return this;
     }

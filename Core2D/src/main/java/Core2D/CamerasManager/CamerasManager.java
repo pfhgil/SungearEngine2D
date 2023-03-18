@@ -1,11 +1,11 @@
 package Core2D.CamerasManager;
 
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Entity;
 
 /**
  * Cameras manager.
  */
 public class CamerasManager
 {
-    public static GameObject mainCamera2D;
+    public static Entity mainCamera2D;
 }

@@ -17,7 +17,7 @@ public class ResourcesUtils
             return switch (fileExtension) {
                 case "png", "jpg" -> Resources.Textures.Icons.imageFileIcon.getTextureHandler();
                 case "java" -> Resources.Textures.Icons.javaFileIcon.getTextureHandler();
-                case "txt" -> Resources.Textures.Icons.textFileIcon.getTextureHandler();
+                case "txt" -> Resources.Textures.Icons.textFileIcon96.getTextureHandler();
                 default -> Resources.Textures.Icons.unknownFileIcon.getTextureHandler();
             };
         } else {
@@ -39,6 +39,15 @@ public class ResourcesUtils
         String fileExtension = FilenameUtils.getExtension(file.getPath());
         return switch (fileExtension) {
             case "sgopref", "sgcpref" -> true;
+            default -> false;
+        };
+    }
+
+    public static boolean isFileShader(File file)
+    {
+        String fileExtension = FilenameUtils.getExtension(file.getPath());
+        return switch (fileExtension) {
+            case "glsl", "vert", "frag" -> true;
             default -> false;
         };
     }

@@ -1,8 +1,8 @@
 package Core2D.Input.PC;
 
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.Camera2DComponent;
 import Core2D.Core2D.Core2D;
+import Core2D.ECS.Component.Components.Camera2DComponent;
 import Core2D.Graphics.Graphics;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -12,7 +12,7 @@ import org.joml.Vector4f;
 import static org.lwjgl.glfw.GLFW.*;
 
 /**
- * Mouse class. If you want to track mouse buttons, then import GLFW and pass GLFW constants to the methods.
+ * Mouse class. If you want to track cursor buttons, then import GLFW and pass GLFW constants to the methods.
  */
 public class Mouse
 {
@@ -70,8 +70,8 @@ public class Mouse
     }
 
     /**
-     * Processes mouse input. Checks each button alternately whether it is clamped.
-     * Calculates the mouse position relative to the screen and relative to viewportSize and viewportPosition.
+     * Processes cursor input. Checks each button alternately whether it is clamped.
+     * Calculates the cursor position relative to the screen and relative to viewportSize and viewportPosition.
      */
     // Удерживает весь ввод с мышки
     public static void handleMouseInput()
@@ -138,7 +138,7 @@ public class Mouse
 
     /**
      * @param mousePosition Mouse position.
-     * @return The position of the mouse in the world space.
+     * @return The position of the cursor in the world space.
      */
     public static Vector2f getMouseOGLPosition(Vector2f mousePosition)
     {
@@ -152,8 +152,8 @@ public class Mouse
 
             Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
             if(camera2DComponent != null) {
-                camera2DComponent.getViewMatrix().invert(inverseView);
-                camera2DComponent.getProjectionMatrix().invert(inverseProjection);
+                camera2DComponent.viewMatrix.invert(inverseView);
+                camera2DComponent.projectionMatrix.invert(inverseProjection);
             }
 
             inverseView.mul(inverseProjection, viewProjection);

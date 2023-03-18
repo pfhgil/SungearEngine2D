@@ -1,0 +1,2 @@
+rootProject.name = 'SungearRoot'
+include('common', 'Core2D', 'Engine', 'test')

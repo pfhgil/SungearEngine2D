@@ -1,12 +1,13 @@
 package Core2D.Deserializers;
 
+import Core2D.Log.Log;
+import Core2D.Utils.ExceptionsUtils;
 import com.google.gson.*;
 
 import java.lang.reflect.Type;
 
 public class CommonDeserializer<T> implements JsonDeserializer<T>, JsonSerializer<T>
 {
-
     @Override
     public T deserialize(JsonElement jsonElement, Type typeOfT, JsonDeserializationContext context) throws JsonParseException
     {
@@ -17,16 +18,18 @@ public class CommonDeserializer<T> implements JsonDeserializer<T>, JsonSerialize
         try {
             return context.deserialize(properties, Class.forName(type));
         } catch(ClassNotFoundException e) {
-            throw new JsonParseException("Unknown element type: " + type, e);
+            Log.CurrentSession.println(ExceptionsUtils.toString(new JsonParseException("Unknown element type: " + type, e)), Log.MessageType.ERROR);
+            return null;
         }
     }
 
     @Override
     public JsonElement serialize(T t, Type type, JsonSerializationContext context)
     {
+        Gson gson = new Gson();
         JsonObject result = new JsonObject();
         result.add("type", new JsonPrimitive(t.getClass().getCanonicalName()));
-        result.add("properties", context.serialize(t, t.getClass()));
+        result.add("properties", gson.toJsonTree(t));
         return result;
     }
 }

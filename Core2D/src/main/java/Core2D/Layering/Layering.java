@@ -1,6 +1,7 @@
 package Core2D.Layering;
 
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Entity;
 import Core2D.Log.Log;
 import org.joml.Vector4f;
 
@@ -15,24 +16,31 @@ public class Layering {
     private transient boolean shouldDestroy = false;
 
     // рисует все объекты разными цветами при выборке объектов
-    public void drawPicking()
+    public void drawPicking(Camera2DComponent camera2DComponent)
     {
         for(Layer layer : layers) {
-            layer.drawPicking();
+            layer.drawPicking(camera2DComponent);
         }
     }
 
-    public GameObject getPickedObject2D(Vector4f pixelColor)
+    public Entity getPickedEntity(Vector4f pixelColor)
     {
-        GameObject pickedGameObject = null;
+        Entity pickedEntity = null;
         for(Layer layer : layers) {
-            pickedGameObject = layer.getPickedObject2D(pixelColor);
-            if(pickedGameObject != null) {
-                return pickedGameObject;
+            pickedEntity = layer.getPickedEntity(pixelColor);
+            if(pickedEntity != null) {
+                return pickedEntity;
             }
         }
 
         return null;
+    }
+
+    public void update()
+    {
+        for(Layer layer : layers) {
+            layer.update();
+        }
     }
 
     public void deltaUpdate(float deltaTime)
@@ -65,12 +73,35 @@ public class Layering {
 
         if(foundLayer == null) {
             layers.add(layer);
+            /*
+            for(Layer layerToAddPP : layers) {
+                for(Entity entity : layerToAddPP.getEntities()) {
+                    List<Camera2DComponent> camera2DComponents = entity.getAllComponents(Camera2DComponent.class);
+                    for(Camera2DComponent camera2DComponent : camera2DComponents) {
+                        camera2DComponent.addPostprocessingLayer(new PostprocessingLayer(layerToAddPP));
+                        Log.Console.println("added layer: " + layer.getName());
+                    }
+                }
+            }
+
+             */
 
             sort();
         } else {
             Log.CurrentSession.println("Layer with name '" + foundLayer.getName() + "' already exists", Log.MessageType.ERROR);
             Log.showErrorDialog("Layer with name '" + foundLayer.getName() + "' already exists");
         }
+    }
+
+    public int getLayersMaxID()
+    {
+        int maxID = 0;
+        for(Layer layer : layers) {
+            if(layer.getID() > maxID) {
+                maxID = layer.getID();
+            }
+        }
+        return maxID;
     }
 
     public Layer getLayer(int id)
@@ -93,8 +124,8 @@ public class Layering {
 
     public void deleteLayer(Layer layer)
     {
-        for(int i = 0; i < layer.getGameObjects().size(); i++) {
-            layer.getGameObjects().get(i).setLayer(getLayer("default"));
+        for(int i = 0; i < layer.getEntities().size(); i++) {
+            layer.getEntities().get(i).setLayer(getLayer("default"));
         }
 
         layers.remove(layer);

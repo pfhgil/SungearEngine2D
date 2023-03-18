@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="Core2D:test" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="GRADLE" external.system.module.group="org.example" external.system.module.type="sourceSet" external.system.module.version="" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <output-test url="file://$MODULE_DIR$/../../build/classes/java/test" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../../other/test">
+      <sourceFolder url="file://$MODULE_DIR$/../../other/test/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/../../other/test/resources" type="java-test-resource" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="Core2D.main" />
+    <orderEntry type="library" name="Gradle: :commons-io-2.11.0:" level="project" />
+    <orderEntry type="library" name="Gradle: :gson-2.9.0:" level="project" />
+    <orderEntry type="library" name="Gradle: :jbox2d-library-2.1.2.2:" level="project" />
+    <orderEntry type="library" name="Gradle: :joml-1.10.2:" level="project" />
+    <orderEntry type="library" name="Gradle: :lwjgl:" level="project" />
+    <orderEntry type="library" name="Gradle: :lwjgl-glfw:" level="project" />
+    <orderEntry type="library" name="Gradle: :lwjgl-glfw-natives-windows:" level="project" />
+    <orderEntry type="library" name="Gradle: :lwjgl-glfw-sources:" level="project" />
+    <orderEntry type="library" name="Gradle: :lwjgl-natives-windows:" level="project" />
+    <orderEntry type="library" name="Gradle: :lwjgl-openal:" level="project" />
+    <orderEntry type="library" name="Gradle: :lwjgl-openal-natives-windows:" level="project" />
+    <orderEntry type="library" name="Gradle: :lwjgl-openal-sources:" level="project" />
+    <orderEntry type="library" name="Gradle: :lwjgl-opengl:" level="project" />
+    <orderEntry type="library" name="Gradle: :lwjgl-opengl-natives-windows:" level="project" />
+    <orderEntry type="library" name="Gradle: :lwjgl-opengl-sources:" level="project" />
+    <orderEntry type="library" name="Gradle: :lwjgl-sources:" level="project" />
+    <orderEntry type="library" name="Gradle: :lwjgl-stb:" level="project" />
+    <orderEntry type="library" name="Gradle: :lwjgl-stb-natives-windows:" level="project" />
+    <orderEntry type="library" name="Gradle: :lwjgl-stb-sources:" level="project" />
+    <orderEntry type="library" name="Gradle: :slf4j-api-2.0.0-alpha5:" level="project" />
+    <orderEntry type="library" name="Gradle: :slf4j-simple-2.0.0-alpha5:" level="project" />
+    <orderEntry type="library" name="Gradle: :slick:" level="project" />
+    <orderEntry type="library" name="Gradle: :slick-util:" level="project" />
+  </component>
+</module>

@@ -1,10 +1,11 @@
 package Core2D.Layering;
 
-import Core2D.Component.Component;
-import Core2D.Component.Components.MeshRendererComponent;
-import Core2D.GameObject.GameObject;
-import Core2D.GameObject.RenderParts.Texture2D;
+import Core2D.AssetManager.AssetManager;
+import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
+import Core2D.Graphics.RenderParts.Shader;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
@@ -13,12 +14,14 @@ import java.util.List;
 
 public class Layer
 {
-    private List<GameObject> gameObjects = new ArrayList<>();
+    private List<Entity> entities = new ArrayList<>();
 
     private int ID;
     private String name;
 
     private transient boolean shouldDestroy;
+
+    private transient Shader pickingShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/mesh/picking_shader.glsl"));
 
     public Layer(int ID, String name)
     {
@@ -29,71 +32,83 @@ public class Layer
     // рисует все объекты разными цветами при выборке объектов
     // тут я ставлю цвет объекта для pick и отключаю текстуру
     // TODO: сделать не только для объектов отрисовку
-    public void drawPicking()
+    public void drawPicking(Camera2DComponent camera2DComponent)
     {
-        for(int i = 0; i < gameObjects.size(); i++) {
-            Core2D.GameObject.GameObject gameObject = gameObjects.get(i);
+        for(int i = 0; i < entities.size(); i++) {
+            Entity entity = entities.get(i);
 
-            Vector4f lastColor = new Vector4f(gameObject.getColor());
+            Vector4f lastColor = new Vector4f(entity.getColor());
 
-            gameObject.setColor(new Vector4f(gameObject.getPickColor().x / 255.0f,
-                    gameObject.getPickColor().y / 255.0f,
-                    gameObject.getPickColor().z / 255.0f,
+            entity.setColor(new Vector4f(entity.getPickColor().x / 255.0f,
+                    entity.getPickColor().y / 255.0f,
+                    entity.getPickColor().z / 255.0f,
                     1.0f));
 
-            MeshRendererComponent meshRendererComponent = gameObject.getComponent(MeshRendererComponent.class);
-            if(meshRendererComponent != null) {
-                meshRendererComponent.textureDrawMode = Texture2D.TextureDrawModes.ONLY_ALPHA;
-                Graphics.getMainRenderer().render(gameObject);
-                gameObject.setColor(lastColor);
-                meshRendererComponent.textureDrawMode = Texture2D.TextureDrawModes.DEFAULT;
-            }
+            // FIXME
+            Graphics.getMainRenderer().render(entity, camera2DComponent, pickingShader);
+
+            entity.setColor(lastColor);
         }
     }
 
-    public Core2D.GameObject.GameObject getPickedObject2D(Vector4f pixelColor)
+    public Entity getPickedEntity(Vector4f pixelColor)
     {
-        for(int i = 0; i < gameObjects.size(); i++) {
-            Core2D.GameObject.GameObject gameObject = gameObjects.get(i);
-            if (gameObject.getPickColor().x == pixelColor.x &&
-                    gameObject.getPickColor().y == pixelColor.y &&
-                    gameObject.getPickColor().z == pixelColor.z &&
+        for(int i = 0; i < entities.size(); i++) {
+            Entity entity = entities.get(i);
+            if (entity.getPickColor().x == pixelColor.x &&
+                    entity.getPickColor().y == pixelColor.y &&
+                    entity.getPickColor().z == pixelColor.z &&
                     pixelColor.w != 0.0f) {
-                return gameObject;
+                return entity;
             }
         }
 
         return null;
     }
 
-    public void deltaUpdate(float deltaTime)
+    // TODO: убрать данный метод, так как не будет update у entity
+    public void update()
     {
-        Iterator<Core2D.GameObject.GameObject> layerObjectIterator = gameObjects.iterator();
+        Iterator<Entity> layerObjectIterator = entities.iterator();
         while(layerObjectIterator.hasNext()) {
-            Core2D.GameObject.GameObject gameObject = layerObjectIterator.next();
-            if(gameObject.isShouldDestroy()) {
-                if (gameObject.getParentObject2D() != null) {
-                    gameObject.getParentObject2D().removeChild(gameObject);
-                    gameObject.parentGameObject = null;
+            Entity entity = layerObjectIterator.next();
+            if (entity.isShouldDestroy()) {
+                if (entity.getParentEntity() != null) {
+                    entity.getParentEntity().removeChildEntity(entity);
+                    entity.parentEntity = null;
                 }
 
-                Iterator<Component> componentsIterator = gameObject.getComponents().iterator();
+                Iterator<Component> componentsIterator = entity.getComponents().iterator();
                 while (componentsIterator.hasNext()) {
                     Component component = componentsIterator.next();
                     component.destroy();
                     componentsIterator.remove();
                 }
 
-                Iterator<Core2D.GameObject.GameObject> childrenIterator = gameObject.getChildrenObjects().iterator();
+                Iterator<Entity> childrenIterator = entity.getChildrenEntities().iterator();
                 while (childrenIterator.hasNext()) {
-                    Core2D.GameObject.GameObject child = childrenIterator.next();
+                    Entity child = childrenIterator.next();
                     child.destroy();
                     childrenIterator.remove();
                 }
-                gameObject.destroy();
+                entity.destroy();
                 layerObjectIterator.remove();
             } else {
-                gameObject.deltaUpdate(deltaTime);
+                entity.update();
+            }
+        }
+    }
+
+    // TODO: убрать данный метод, так как не будет deltaUpdate у entity
+    public void deltaUpdate(float deltaTime)
+    {
+        Iterator<Entity> layerObjectIterator = entities.iterator();
+        while(layerObjectIterator.hasNext()) {
+            Entity entity = layerObjectIterator.next();
+            if(!entity.isShouldDestroy()) {
+                //if (entity.getParentEntity() != null) {
+                    entity.deltaUpdate(deltaTime);
+                //}
             }
         }
     }
@@ -102,17 +117,21 @@ public class Layer
     {
         shouldDestroy = true;
 
-        Iterator<Core2D.GameObject.GameObject> layerObjectIterator = gameObjects.iterator();
+        Iterator<Entity> layerObjectIterator = entities.iterator();
         while(layerObjectIterator.hasNext()) {
-            Core2D.GameObject.GameObject gameObject = layerObjectIterator.next();
-            gameObject.destroy();
+            Entity entity = layerObjectIterator.next();
+            entity.destroy();
             layerObjectIterator.remove();
         }
-
-        gameObjects = null;
+        entities = null;
     }
 
-    public List<Core2D.GameObject.GameObject> getGameObjects() { return gameObjects; }
+    public Entity getEntity(int entityID)
+    {
+        return entities.stream().filter(entity -> entity.ID == entityID).findFirst().orElse(null);
+    }
+
+    public List<Entity> getEntities() { return entities; }
 
     public int getID() { return ID; }
     public void setID(int ID) { this.ID = ID; }

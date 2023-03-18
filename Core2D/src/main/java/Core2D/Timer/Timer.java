@@ -64,6 +64,7 @@ public class Timer
     {
         active = true;
         startTime = System.nanoTime();
+        deltaTime = 0.0f;
     }
 
     public void stop()
@@ -76,6 +77,7 @@ public class Timer
         if(active) {
             if(firstTime) {
                 startTime = System.nanoTime();
+                lastTime = startTime;
                 firstTime = false;
             }
 

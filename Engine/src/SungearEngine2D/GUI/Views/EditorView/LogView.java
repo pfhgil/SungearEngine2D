@@ -6,7 +6,6 @@ import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImString;
-import org.jbox2d.common.Vec2;
 
 import java.awt.*;
 import java.util.Scanner;
@@ -17,8 +16,7 @@ public class LogView extends View
 
     public void draw()
     {
-        ImGui.begin("Log", ImGuiWindowFlags.NoMove);
-        {
+        if(ImGui.begin("Log", ImGuiWindowFlags.NoMove)) {
             ImVec2 windowSize = ImGui.getWindowSize();
             ImGui.beginChild("LogChild", windowSize.x - 17.0f, windowSize.y - 50.0f, true);
             {

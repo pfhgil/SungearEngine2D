@@ -1,0 +1,26 @@
+plugins {
+    id 'distribution'
+}
+
+subprojects {
+    group 'sungear'
+    version '1.0-SNAPSHOT'
+    version = ''
+}
+
+//ext {
+//    group = 'see'
+//    version = '1.0-SNAPSHOT'
+//    javaVersion = 17
+//    nanohttpdVersion = '2.3.1'
+//    jacksonVersion = '2.13.4.2'
+//    jsonschema2pojoVersion = '1.1.2'
+//    lombokVersion = '1.18.24'
+//    embeddedPostgresqlVersion = '2.10'
+//    postgresqlVersion = '42.4.1'
+//    commonsLangVersion = '3.12.0'
+//}
+
+//repositories {
+//    mavenCentral()
+//}

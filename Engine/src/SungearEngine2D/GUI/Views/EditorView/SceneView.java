@@ -2,29 +2,29 @@ package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.Camera2DComponent;
-import Core2D.Component.Components.MeshRendererComponent;
-import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
-import Core2D.GameObject.GameObject;
-import Core2D.GameObject.RenderParts.Texture2D;
+import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.MeshComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
+import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Input.PC.Mouse;
 import Core2D.Prefab.Prefab;
 import Core2D.Project.ProjectsManager;
+import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.FileUtils;
-import Core2D.Utils.MathUtils;
-import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.View;
-import SungearEngine2D.Main.GraphicsRenderer;
+import SungearEngine2D.GUI.Views.ViewsManager;
+import SungearEngine2D.Main.EngineSettings;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;
-import SungearEngine2D.Main.EngineSettings;
 import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Utils.ResourcesUtils;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiCol;
+import imgui.flag.ImGuiMouseButton;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
 import org.apache.commons.io.FilenameUtils;
@@ -49,7 +49,9 @@ public class SceneView extends View
     private Vector2f ratioCameraScale = new Vector2f();
 
     // превью нового объекта на сцене
-    private GameObject newObject2DPreview;
+    private Entity newEntityPreview;
+
+    private boolean isWindowFocused = false;
 
     public SceneView()
     {
@@ -68,7 +70,10 @@ public class SceneView extends View
     {
         ImGui.pushStyleColor(ImGuiCol.ChildBg, 0.65f, 0.65f, 0.65f, 1.0f);
         ImGui.pushStyleVar(ImGuiStyleVar.WindowPadding, 0.0f, 0.0f);
+
         boolean windowOpened = ImGui.begin("Scene2D view", ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.MenuBar);
+
+        isWindowFocused = (ImGui.isMouseClicked(ImGuiMouseButton.Left) || ImGui.isMouseClicked(ImGuiMouseButton.Right)) && ImGui.isWindowHovered();
         if(windowOpened) {
             CamerasManager.mainCamera2D = Main.getMainCamera2D();
 
@@ -120,11 +125,16 @@ public class SceneView extends View
                     }
                 }
             }
-            boolean hovered = ImGui.isAnyItemHovered();
+
+            boolean hovered = ImGui.isWindowHovered();
 
             ImGui.endMenuBar();
 
-            ViewsManager.isSomeViewFocusedExceptSceneView = !ImGui.isWindowFocused() || hovered;
+            if(isWindowFocused || hovered) {
+                ViewsManager.isSceneViewFocused = true;
+            } else {
+                ViewsManager.isSceneViewFocused = false;
+            }
 
             //ImGui.popStyleColor(1);
 
@@ -152,7 +162,7 @@ public class SceneView extends View
             Mouse.setViewportPosition(sceneViewWindowScreenPosition);
             Mouse.setViewportSize(new Vector2f(sceneViewWindowSize.x, sceneViewWindowSize.y));
 
-            ImGui.image(GraphicsRenderer.getSceneRenderTarget().getTextureHandler(), windowSize.x, windowSize.y, 0, 1, 1, 0);
+            ImGui.image(Main.getMainCamera2DComponent().resultFrameBuffer.getTextureHandler(), windowSize.x, windowSize.y);
 
             if(ImGui.beginDragDropTarget()) {
                 if(ViewsManager.getResourcesView().getCurrentMovingFile() != null &&
@@ -160,27 +170,27 @@ public class SceneView extends View
                                 ResourcesUtils.isFilePrefab(ViewsManager.getResourcesView().getCurrentMovingFile())) &&
                         currentSceneManager.getCurrentScene2D() != null) {
                     // если превью не существует, то создаю его
-                    if(newObject2DPreview == null) {
-                        newObject2DPreview = createSceneObject2D(ViewsManager.getResourcesView().getCurrentMovingFile());
+                    if(newEntityPreview == null) {
+                        newEntityPreview = createSceneEntity(ViewsManager.getResourcesView().getCurrentMovingFile());
                     }
                     // нахожу позицию для превью относительно мыши, чтобы он за ней следовал
                     Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
                     // ставлю превью в эту позицию
-                    newObject2DPreview.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);
+                    newEntityPreview.getComponent(TransformComponent.class).position.set(oglPosition);
 
                     Object droppedObject = ImGui.acceptDragDropPayload("File");
                     //ImGui.setMouseCursor(ImGuiMouseCursor.ResizeAll);
                     // если мышка отжата, то есть droppedFile != null, то создаю объект на сцене по координатам мышки, а превью удаляю
                     if(droppedObject instanceof File) {
                         File file = (File) droppedObject;
-                        GameObject newSceneObject2D = createSceneObject2D(file);
-                        if(newSceneObject2D != null) {
-                            newSceneObject2D.getComponent(TransformComponent.class).getTransform().setPosition(
-                                    newObject2DPreview.getComponent(TransformComponent.class).getTransform().getPosition()
+                        Entity entity = createSceneEntity(file);
+                        if(entity != null) {
+                            entity.getComponent(TransformComponent.class).position.set(
+                                    newEntityPreview.getComponent(TransformComponent.class).position
                             );
                         }
-                        newObject2DPreview.destroy();
-                        newObject2DPreview = null;
+                        newEntityPreview.destroy();
+                        newEntityPreview = null;
                     }
                 } else {
                     //System.out.println("dsds");
@@ -191,9 +201,9 @@ public class SceneView extends View
             }
 
             // если мышка не находится в окне и объект превью существует, то удаляю его
-            if(!isHovered() && newObject2DPreview != null) {
-                newObject2DPreview.destroy();
-                newObject2DPreview = null;
+            if(!isHovered() && newEntityPreview != null) {
+                newEntityPreview.destroy();
+                newEntityPreview = null;
             }
 
             update();
@@ -214,19 +224,29 @@ public class SceneView extends View
             if (currentSceneManager.getCurrentScene2D() != null && EngineSettings.Playmode.canEnterPlaymode) {
                 EngineSettings.Playmode.active = true;
                 EngineSettings.Playmode.paused = false;
+
                 currentSceneManager.saveScene(currentSceneManager.getCurrentScene2D(), currentSceneManager.getCurrentScene2D().getScenePath());
+
+                ScriptSystem.reloadAllSceneScriptsWithGlobalClassLoader();
+
                 CamerasManager.mainCamera2D = currentSceneManager.getCurrentScene2D().getSceneMainCamera2D();
                 currentSceneManager.getCurrentScene2D().setRunning(true);
+                currentSceneManager.getCurrentScene2D().applyScriptsTempValues();
             }
         }
     }
 
     public void stopPlayMode()
     {
+        // вот уже все плохо =(
         if(currentSceneManager.getCurrentScene2D() != null && EngineSettings.Playmode.active) {
+            currentSceneManager.loadSceneAsCurrent(currentSceneManager.getCurrentScene2D().getScenePath());
+
+            ScriptSystem.reloadAllSceneScriptsWithUniqueClassLoader();
+
             EngineSettings.Playmode.active = false;
             EngineSettings.Playmode.paused = false;
-            currentSceneManager.loadSceneAsCurrent(currentSceneManager.getCurrentScene2D().getScenePath());
+
             ViewsManager.getInspectorView().setCurrentInspectingObject(null);
             currentSceneManager.getCurrentScene2D().setRunning(false);
         }
@@ -235,10 +255,9 @@ public class SceneView extends View
     public void pausePlayMode()
     {
         if(currentSceneManager.getCurrentScene2D() != null && EngineSettings.Playmode.active) {
+            System.out.println("paused!!");
             EngineSettings.Playmode.paused = !EngineSettings.Playmode.paused;
-            currentSceneManager.getCurrentScene2D().setRunning(currentSceneManager.getCurrentScene2D().isRunning());
-            currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = !currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics;
-            currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts = !currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts;
+            currentSceneManager.getCurrentScene2D().setRunning(!currentSceneManager.getCurrentScene2D().isRunning());
         }
     }
 
@@ -299,37 +318,37 @@ public class SceneView extends View
     }
 
     // создает объект на сцене
-    private GameObject createSceneObject2D(File file)
+    private Entity createSceneEntity(File file)
     {
         String extension = FilenameUtils.getExtension(file.getName());
         if(extension.equals("png") || extension.equals("jpg")) {
-            GameObject newSceneObject2D = GameObject.createObject2D();
+            Entity newSceneEntity = Entity.createAsObject2D();
 
             String relativePath = FileUtils.getRelativePath(
-                    new File(file.getPath()),
+                    file,
                     new File(ProjectsManager.getCurrentProject().getProjectPath()));
-            MeshRendererComponent textureComponent = newSceneObject2D.getComponent(MeshRendererComponent.class);
+            MeshComponent meshComponent = newSceneEntity.getComponent(MeshComponent.class);
             Texture2D texture2D = new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath));
-            textureComponent.texture.set(texture2D);
-            textureComponent.texture.path = relativePath;
+            meshComponent.setTexture(texture2D);
+            meshComponent.getTexture().path = relativePath;
 
             Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
-            newSceneObject2D.getComponent(TransformComponent.class).getTransform().setPosition(oglPosition);
+            newSceneEntity.getComponent(TransformComponent.class).position.set(oglPosition);
 
-            Vector2f newObject2DScale = new Vector2f(textureComponent.texture.getTexture2DData().getWidth() / 100.0f,
-                    textureComponent.texture.getTexture2DData().getHeight() / 100.0f);
-            newSceneObject2D.getComponent(TransformComponent.class).getTransform().setScale(newObject2DScale);
+            Vector2f newObject2DScale = new Vector2f(meshComponent.getTexture().getTexture2DData().getWidth() / 100.0f,
+                    meshComponent.getTexture().getTexture2DData().getHeight() / 100.0f);
+            newSceneEntity.getComponent(TransformComponent.class).scale.set(newObject2DScale);
 
             // дефолтный layer
-            newSceneObject2D.setLayer(currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
-            newSceneObject2D.name = FilenameUtils.getBaseName(file.getName());
+            newSceneEntity.setLayer(currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
+            newSceneEntity.name = FilenameUtils.getBaseName(file.getName());
 
             ViewsManager.getResourcesView().setCurrentMovingFile(null);
 
             System.gc();
             System.out.println("added obj!");
 
-            return newSceneObject2D;
+            return newSceneEntity;
         } else if(extension.equals("sgopref")) {
             Prefab prefab = Prefab.load(file.getPath());
 
@@ -355,8 +374,8 @@ public class SceneView extends View
 
         Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
         if(camera2DComponent != null) {
-            camera2DComponent.getViewMatrix().invert(inverseView);
-            camera2DComponent.getProjectionMatrix().invert(inverseProjection);
+            camera2DComponent.viewMatrix.invert(inverseView);
+            camera2DComponent.projectionMatrix.invert(inverseProjection);
         }
 
         inverseView.mul(inverseProjection, viewProjection);

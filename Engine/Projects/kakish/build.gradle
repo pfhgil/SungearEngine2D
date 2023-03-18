@@ -1,0 +1,29 @@
+plugins {
+    id 'java'
+}
+
+group 'kakish'
+version '1.0-SNAPSHOT'
+
+sourceSets {
+    main {
+        java {
+            srcDir 'Scripts'
+        }
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'Libs'
+    }
+    mavenCentral()
+}
+
+dependencies {
+    implementation name: 'Core2D'
+}
+
+test {
+    useJUnitPlatform()
+}

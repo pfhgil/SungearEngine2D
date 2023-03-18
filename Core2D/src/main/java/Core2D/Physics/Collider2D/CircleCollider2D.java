@@ -27,7 +27,7 @@ public class CircleCollider2D
         if(fixture != null && rigidbody2D != null) {
             CircleShape shape = (CircleShape) fixture.getShape();
             shape.m_radius = radius / PhysicsWorld.RATIO;
-            shape.m_p.set(0.0f, 0.0f);
+            shape.m_p.set(offset.x / PhysicsWorld.RATIO, offset.y / PhysicsWorld.RATIO);
 
             Fixture newFixture = rigidbody2D.getBody().createFixture(shape, fixture.getDensity());
             newFixture.setFriction(rigidbody2D.getFriction());

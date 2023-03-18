@@ -2,7 +2,7 @@ package SungearEngine2D.Utils.JavaUtils;
 
 import SungearEngine2D.Utils.WinRegistry;
 
-import java.io.*;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 

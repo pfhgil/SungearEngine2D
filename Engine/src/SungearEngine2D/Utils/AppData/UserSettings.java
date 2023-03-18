@@ -5,9 +5,10 @@ import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 
-import java.io.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 public class UserSettings implements Serializable {

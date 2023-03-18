@@ -2,20 +2,16 @@ plugins {
     id 'java'
 }
 
-group 'org.example'
+group 'sungear'
 version '1.0-SNAPSHOT'
-version = ''
-
-repositories {
-    mavenCentral()
-}
+version ''
 
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
     }
 }
-
+//
 sourceSets {
     main {
         java {
@@ -44,14 +40,15 @@ repositories {
     flatDir {
         dirs 'libs'
     }
+    mavenCentral()
 }
 
 dependencies {
-//    implementation files('libs/something_local.jar')
+    //implementation files('libs/joml-1.10.2.jar')
     implementation name: 'commons-io-2.11.0'
     implementation name: 'gson-2.9.0'
     implementation name: 'jbox2d-library-2.1.2.2'
-    implementation name: 'joml-1.10.2'
+    implementation 'org.joml:joml:1.10.5'
     implementation name: 'lwjgl'
     implementation name: 'lwjgl-glfw'
     implementation name: 'lwjgl-glfw-natives-windows'
@@ -71,4 +68,16 @@ dependencies {
     implementation name: 'slf4j-simple-2.0.0-alpha5'
     implementation name: 'slick'
     implementation name: 'slick-util'
+    implementation name: 'imgui-app-1.86.4'
+
+        //mplementation files('../Engine/build/libs/common.jar')
+    //implementation files('../common/build/libs/common.jar')
+    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.8.1'
+    implementation project(':common')
+    //implementation project('Engine')
+}
+
+test {
+    useJUnitPlatform()
 }

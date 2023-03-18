@@ -1,10 +1,10 @@
 package Core2D.Utils;
 
 import Core2D.Core2D.Core2D;
+import Core2D.Graphics.OpenGL.OpenGL;
 import org.joml.Math;
 import org.joml.Vector3f;
 import org.lwjgl.opengl.GL11C;
-import org.lwjgl.opengl.GL46C;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -18,6 +18,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import static org.lwjgl.opengl.GL11C.glReadPixels;
+
 public class Screenshot
 {
     // сделать скрин и сохранить по пути toPath
@@ -27,7 +29,7 @@ public class Screenshot
         int bindex = 0;
         ByteBuffer bb = ByteBuffer.allocateDirect(Core2D.getWindow().getSize().x * Core2D.getWindow().getSize().y * 3);
 
-        GL46C.glReadPixels(0,0, Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y, GL11C.GL_RGB, GL11C.GL_UNSIGNED_BYTE, bb);
+        OpenGL.glCall((params) -> glReadPixels(0,0, Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y, GL11C.GL_RGB, GL11C.GL_UNSIGNED_BYTE, bb));
 
         BufferedImage imageIn = new BufferedImage(Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y,BufferedImage.TYPE_INT_RGB);
         // convert RGB data in ByteBuffer to integer array
@@ -65,7 +67,7 @@ public class Screenshot
         int bindex = 0;
         ByteBuffer bb = ByteBuffer.allocateDirect(Core2D.getWindow().getSize().x * Core2D.getWindow().getSize().y * 3);
 
-        GL46C.glReadPixels(0,0, Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y, GL11C.GL_RGB, GL11C.GL_UNSIGNED_BYTE, bb);
+        OpenGL.glCall((params) -> glReadPixels(0,0, Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y, GL11C.GL_RGB, GL11C.GL_UNSIGNED_BYTE, bb));
 
         BufferedImage imageIn = new BufferedImage(Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y,BufferedImage.TYPE_INT_RGB);
         // convert RGB data in ByteBuffer to integer array

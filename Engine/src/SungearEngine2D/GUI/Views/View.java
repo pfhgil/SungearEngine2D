@@ -31,6 +31,8 @@ public abstract class View
         hovered = ImGui.isWindowHovered();
     }
 
+    public void draw() { }
+
     public boolean isHovered()
     {
         Vector2f mousePosition = new Vector2f(Mouse.getScreenMousePosition());

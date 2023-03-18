@@ -1,0 +1,346 @@
+{
+  "name": "govn01",
+  "scenePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\PROJECT12\\Scenes\\govn01.sgs",
+  "layering": {
+    "layers": [
+      {
+        "entities": [
+          {
+            "name": "default",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 312460939,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 312460939,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "/data/textures/white_texture.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 312460939,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentObject2DID": -1,
+            "childrenObjectsID": []
+          },
+          {
+            "name": "ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 2,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": 500.80392,
+                      "y": -12.487757
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 2,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "Resources\\shaders\\test01.glsl",
+                    "lastModified": 1676483713590,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler0",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler1",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 2,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Shader.TextureComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\ferapont.png",
+                    "textureBlock": 33984
+                  },
+                  "object2DID": 2,
+                  "ID": 2,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Shader.TextureComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\tanks\\ussr\\is7.png",
+                    "textureBlock": 33984
+                  },
+                  "object2DID": 2,
+                  "ID": 3,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Camera2DComponent",
+                "properties": {
+                  "viewportSize": {
+                    "x": 2560.0,
+                    "y": 1377.0
+                  },
+                  "isScene2DMainCamera2D": true,
+                  "postprocessingDefaultShader": {
+                    "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": []
+                  },
+                  "postprocessingLayers": [],
+                  "object2DID": -1,
+                  "ID": 4,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentObject2DID": -1,
+            "childrenObjectsID": []
+          }
+        ],
+        "ID": 0,
+        "name": "default"
+      }
+    ]
+  },
+  "screenClearColor": {
+    "x": 1.0,
+    "y": 1.0,
+    "z": 1.0,
+    "w": 1.0
+  },
+  "tags": [
+    {
+      "name": "default"
+    }
+  ],
+  "scriptSystem": {},
+  "maxObjectID": 6,
+  "inBuild": false,
+  "isMainScene2D": false
+}

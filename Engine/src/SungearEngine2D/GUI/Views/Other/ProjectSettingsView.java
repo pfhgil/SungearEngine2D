@@ -2,6 +2,7 @@ package SungearEngine2D.GUI.Views.Other;
 
 import Core2D.Core2D.Core2D;
 import Core2D.Project.ProjectsManager;
+import SungearEngine2D.GUI.ImGuiUtils;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindow;
 import SungearEngine2D.GUI.Windows.FileChooserWindow.FileChooserWindowCallback;
@@ -129,7 +130,7 @@ public class ProjectSettingsView extends View
 
                 ImString input = new ImString(ProjectsManager.getCurrentProject().getProjectSettings().getJdkPath(), 256);
                 ImGui.pushID("JDKPathInput");
-                if (ImGui.inputText("", input)) {
+                if (ImGuiUtils.imCallWBorder(func -> ImGui.inputText("", input))) {
                     ProjectsManager.getCurrentProject().getProjectSettings().setJdkPath(input.get());
                 }
                 ImGui.popID();

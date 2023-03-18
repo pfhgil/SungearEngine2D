@@ -1,13 +1,14 @@
 package Core2D.Scene2D;
 
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.BoxCollider2DComponent;
-import Core2D.Component.Components.CircleCollider2DComponent;
-import Core2D.Component.Components.TransformComponent;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.MeshComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
+import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
 import Core2D.Physics.PhysicsWorld;
 import Core2D.Physics.Rigidbody2D;
@@ -27,7 +28,7 @@ public class Scene2D
 
     private Layering layering = new Layering();
 
-    private transient GameObject sceneMainCamera2D;
+    private transient Entity sceneMainCamera2D;
 
     private transient Scene2DCallback scene2DCallback;
 
@@ -37,6 +38,9 @@ public class Scene2D
     private List<Tag> tags = new ArrayList<>();
 
     private transient PhysicsWorld physicsWorld = new PhysicsWorld();
+
+    // пока что transient
+    //private transient ECSWorld ecsWorld = new ECSWorld();
 
     private ScriptSystem scriptSystem = new ScriptSystem();
 
@@ -90,52 +94,58 @@ public class Scene2D
     public void initPhysicsWorld()
     {
         for(Layer layer : layering.getLayers()) {
-            for(GameObject gameObject : layer.getGameObjects()) {
-                Rigidbody2D rigidbody2D = physicsWorld.addRigidbody2D(gameObject, this);
-                TransformComponent transformComponent = gameObject.getComponent(TransformComponent.class);
+            for(Entity entity : layer.getEntities()) {
+                Rigidbody2D rigidbody2D = physicsWorld.addRigidbody2D(entity, this);
+                TransformComponent transformComponent = entity.getComponent(TransformComponent.class);
                 if(transformComponent != null && rigidbody2D != null) {
-                    Vector2f position = transformComponent.getTransform().getPosition();
+                    Vector2f position = transformComponent.position;
                     rigidbody2D.getBody().setTransform(
                             new Vec2(position.x / PhysicsWorld.RATIO, position.y / PhysicsWorld.RATIO),
-                            (float) Math.toRadians(transformComponent.getTransform().getRotation())
+                            (float) Math.toRadians(transformComponent.rotation)
                     );
                 }
             }
         }
     }
 
-    public void draw()
+    public void draw(Camera2DComponent camera2DComponent)
     {
         if(!shouldDestroy) {
-            Graphics.getMainRenderer().render(layering);
-
-            if (scene2DCallback != null) {
-                scene2DCallback.onDraw();
-            }
+            Graphics.getMainRenderer().render(layering, camera2DComponent);
         }
     }
 
     // рисует все объекты разными цветами при выборке объектов
-    public void drawPicking()
+    public void drawPicking(Camera2DComponent camera2DComponent)
     {
         if(!shouldDestroy) {
-            layering.drawPicking();
+            layering.drawPicking(camera2DComponent);
         }
     }
 
-    public GameObject getPickedObject2D(Vector4f pixelColor)
+    public Entity getPickedEntity(Vector4f pixelColor)
     {
-        return layering.getPickedObject2D(pixelColor);
+        return layering.getPickedEntity(pixelColor);
+    }
+
+    public void update()
+    {
+        layering.update();
+
+        if (scene2DCallback != null) {
+            scene2DCallback.onUpdate();
+        }
     }
 
     public void deltaUpdate(float deltaTime)
     {
+        // FIXME: сделать отдельный метод апдейта (без дельты)
         physicsWorld.step(deltaTime, 6, 2);
 
         layering.deltaUpdate(deltaTime);
 
         if(scene2DCallback != null) {
-            scene2DCallback.onUpdate(deltaTime);
+            scene2DCallback.onDeltaUpdate(deltaTime);
         }
     }
 
@@ -153,9 +163,24 @@ public class Scene2D
             CamerasManager.mainCamera2D = sceneMainCamera2D;
         }
 
-        physicsWorld.simulatePhysics = true;
+        setRunning(false);
 
         sceneLoaded = true;
+
+        // init shaders
+        for(Layer layer : layering.getLayers()) {
+            for(Entity entity : layer.getEntities()) {
+                for(MeshComponent meshComponent : entity.getAllComponents(MeshComponent.class)) {
+                    meshComponent.getShader().initUniforms();
+                }
+                for(Camera2DComponent camera2DComponent : entity.getAllComponents(Camera2DComponent.class)) {
+                    for(int i = 0; i < camera2DComponent.postprocessingLayers.size(); i++) {
+                        PostprocessingLayer ppLayer = camera2DComponent.postprocessingLayers.get(i);
+                        ppLayer.getShader().initUniforms();
+                    }
+                }
+            }
+        }
     }
 
     public void addTag(Tag tag)
@@ -184,10 +209,10 @@ public class Scene2D
     public void deleteTag(Tag tag)
     {
         for(int i = 0; i < layering.getLayers().size(); i++) {
-            for(int k = 0; k < layering.getLayers().get(i).getGameObjects().size(); k++) {
-                GameObject gameObject = layering.getLayers().get(k).getGameObjects().get(k);
-                if(tag.getName().equals(gameObject.tag.getName())) {
-                    gameObject.tag.setName("default");
+            for(int k = 0; k < layering.getLayers().get(i).getEntities().size(); k++) {
+                Entity entity = layering.getLayers().get(i).getEntities().get(k);
+                if(tag.getName().equals(entity.tag.getName())) {
+                    entity.tag.setName("default");
                 }
             }
         }
@@ -195,12 +220,12 @@ public class Scene2D
         tags.remove(tag);
     }
 
-    public GameObject findObject2DByName(String name)
+    public Entity findEntityByName(String name)
     {
         for(Layer layer : layering.getLayers()) {
-            for(GameObject go : layer.getGameObjects()) {
-                if(go.name.equals(name)) {
-                    return go;
+            for(Entity e : layer.getEntities()) {
+                if(e.name.equals(name)) {
+                    return e;
                 }
             }
         }
@@ -208,12 +233,12 @@ public class Scene2D
         return null;
     }
 
-    public GameObject findObject2DByTag(String tag)
+    public Entity findEntityByTag(String tag)
     {
         for(Layer layer : layering.getLayers()) {
-            for(GameObject go : layer.getGameObjects()) {
-                if(go.tag.getName().equals(tag)) {
-                    return go;
+            for(Entity e : layer.getEntities()) {
+                if(e.tag.getName().equals(tag)) {
+                    return e;
                 }
             }
         }
@@ -221,12 +246,12 @@ public class Scene2D
         return null;
     }
 
-    public GameObject findGameObjectByID(int ID)
+    public Entity findEntityByID(int ID)
     {
         for(Layer layer : layering.getLayers()) {
-            for(GameObject go : layer.getGameObjects()) {
-                if(go.ID == ID) {
-                    return go;
+            for(Entity e : layer.getEntities()) {
+                if(e.ID == ID) {
+                    return e;
                 }
             }
         }
@@ -245,8 +270,25 @@ public class Scene2D
         ScriptSystem.applyScriptsTempValues(this);
     }
 
+    // применить все зависимости к объектам
+    public void applyEntityDependencies()
+    {
+        for(int i = 0; i < layering.getLayers().size(); i++) {
+            for (int k = 0; k < layering.getLayers().get(i).getEntities().size(); k++) {
+                Entity entity = layering.getLayers().get(i).getEntities().get(k);
+                entity.applyChildrenEntitiesID(this);
+            }
+        }
+    }
+
     public void destroy()
     {
+        sceneLoaded = false;
+
+        saveScriptsTempValues();
+
+        //AudioManager.destroyScene2DAllSources(this);
+
         shouldDestroy = true;
 
         layering.destroy();
@@ -258,6 +300,10 @@ public class Scene2D
         tags = null;
 
         sceneMainCamera2D = null;
+
+        Log.CurrentSession.println("scene destroyed: " + name, Log.MessageType.SUCCESS);
+
+        System.gc();
     }
 
     public String getName() { return name; }
@@ -273,8 +319,8 @@ public class Scene2D
     public Layering getLayering() { return layering; }
     public void setLayering(Layering layering) { this.layering = layering; }
 
-    public GameObject getSceneMainCamera2D() { return sceneMainCamera2D; }
-    public void setSceneMainCamera2D(GameObject sceneMainCamera2D)
+    public Entity getSceneMainCamera2D() { return sceneMainCamera2D; }
+    public void setSceneMainCamera2D(Entity sceneMainCamera2D)
     {
         this.sceneMainCamera2D = sceneMainCamera2D;
     }

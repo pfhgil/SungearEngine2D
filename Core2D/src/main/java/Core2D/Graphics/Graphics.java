@@ -1,16 +1,16 @@
 package Core2D.Graphics;
 
 import Core2D.Audio.AudioListener;
-import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.Camera2DComponent;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Entity;
+import Core2D.Graphics.OpenGL.FrameBuffer;
+import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
 import Core2D.Log.Log;
 import Core2D.Scene2D.SceneManager;
-import Core2D.ShaderUtils.FrameBuffer;
 import Core2D.Utils.ExceptionsUtils;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
@@ -18,8 +18,6 @@ import org.joml.Vector4f;
 import org.lwjgl.BufferUtils;
 import org.lwjgl.glfw.GLFW;
 import org.lwjgl.glfw.GLFWVidMode;
-import org.lwjgl.opengl.GL;
-import org.lwjgl.opengl.GL11C;
 
 import java.nio.ByteBuffer;
 
@@ -50,10 +48,7 @@ public abstract class Graphics
     protected static void init()
     {
         // использовать возможности opengl
-        GL.createCapabilities();
-
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        OpenGL.init();
 
         Vector2i pickingRenderTargetSize = getScreenSize();
 
@@ -72,46 +67,31 @@ public abstract class Graphics
         long capDiff = System.currentTimeMillis();
         long capInit = System.currentTimeMillis();
 
+        Log.Console.println("first");
+
         while (!glfwWindowShouldClose(Core2D.getWindow().getWindow())) {
             try {
                 if(Settings.Core2D.sleepCore2D) {
                     Thread.sleep(1000);
                 }
+
                 //System.out.println("delay: " + delay + ", delta: " + Core2D.getDeltaTimer().getDeltaTime());
 
                 Core2D.getDeltaTimer().startFrame();
 
                 AudioListener.update();
 
-                Vector2i windowSize = Core2D.getWindow().getSize();
-                if (CamerasManager.mainCamera2D != null) {
-                    Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
-                    if(camera2DComponent != null) {
-                        camera2DComponent.setViewportSize(new Vector2f(windowSize.x, windowSize.y));
-                    }
-                }
-
-                if (SceneManager.currentSceneManager != null &&
-                        SceneManager.currentSceneManager.getCurrentScene2D() != null &&
-                        SceneManager.currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
-                    Camera2DComponent camera2DComponent = SceneManager
-                            .currentSceneManager.getCurrentScene2D()
-                            .getSceneMainCamera2D()
-                            .getComponent(Camera2DComponent.class);
-                    if(camera2DComponent == null) {
-                        camera2DComponent.setViewportSize(new Vector2f(windowSize.x, windowSize.y));
-                    }
-                }
-
                 if (!screenCleared) {
-                    GL11C.glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, screenClearColor.w);
+                    OpenGL.glCall((params) -> glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, 0.0f));
                     screenCleared = true;
                 }
 
-                GL11C.glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+                OpenGL.glCall((params) -> glClear(GL_COLOR_BUFFER_BIT));
+
+                SceneManager.currentSceneManager.updateCurrentScene2D();
 
                 if (Core2D.core2DUserCallback != null) {
-                    Core2D.core2DUserCallback.onDrawFrame();
+                    Core2D.core2DUserCallback.onUpdate();
                 }
 
                 //physics.BodiesUpdate();
@@ -153,47 +133,40 @@ public abstract class Graphics
         Vector4f selectedPixelColor = new Vector4f(pixelBuffer.get(0), pixelBuffer.get(1), pixelBuffer.get(2), pixelBuffer.get(3));
         pixelBuffer.clear();
 
-        /*
-        FloatBuffer pixelBuffer = BufferUtils.createFloatBuffer(3);
-        glReadPixels((int) oglPosition.x, (int) oglPosition.y, 1, 1, GL_RGB, GL_FLOAT, pixelBuffer);
-
-        Vector3f selectedPixelColor = new Vector3f(pixelBuffer.get(0), pixelBuffer.get(1), pixelBuffer.get(2));
-        pixelBuffer.clear();
-        pixelBuffer = null;
-
-         */
-
         return selectedPixelColor;
     }
 
     // полуячить выбранный мышкой объект
-    public static GameObject getPickedObject2D(Vector2f oglPosition)
+    public static Entity getPickedObject2D(Camera2DComponent camera2DComponent, Vector2f oglPosition)
     {
         pickingRenderTarget.bind();
-        glClear(GL_COLOR_BUFFER_BIT);
+        pickingRenderTarget.clear();
 
         if(!screenCleared) {
-            GL11C.glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, screenClearColor.w);
+            OpenGL.glCall((params) -> glClearColor(screenClearColor.x, screenClearColor.y, screenClearColor.z, screenClearColor.w));
             screenCleared = true;
         }
 
-        glDisable(GL_BLEND);
+        OpenGL.glCall((params) -> glDisable(GL_BLEND));
 
-        SceneManager.currentSceneManager.drawCurrentScene2DPicking();
+        SceneManager.currentSceneManager.drawCurrentScene2DPicking(camera2DComponent);
 
         Vector4f selectedPixelColor = getPixelColor(oglPosition);
 
-        System.out.println("selectedPixelColor: " + selectedPixelColor.x + ", " + selectedPixelColor.y + ", " + selectedPixelColor.z + ", " + selectedPixelColor.w);
+        Log.Console.println("selectedPixelColor: " + selectedPixelColor.x + ", " + selectedPixelColor.y + ", " + selectedPixelColor.z + ", " + selectedPixelColor.w);
 
-        glEnable(GL_BLEND);
+        OpenGL.glCall((params) -> glEnable(GL_BLEND));
         pickingRenderTarget.unBind();
 
         return SceneManager.currentSceneManager.getPickedObject2D(selectedPixelColor);
     }
 
     public static ViewMode getViewMode() { return viewMode; }
+    @Deprecated
+    // TODO: delete this
     public static void setViewMode(ViewMode newViewMode)
     {
+        /*
         viewMode = newViewMode;
         if(CamerasManager.mainCamera2D != null) {
             Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
@@ -211,6 +184,8 @@ public abstract class Graphics
                 );
             }
         }
+
+         */
     }
 
     public static FrameBuffer getPickingRenderTarget() { return pickingRenderTarget; }

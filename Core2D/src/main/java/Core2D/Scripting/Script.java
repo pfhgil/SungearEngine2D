@@ -1,20 +1,27 @@
 package Core2D.Scripting;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
-import Core2D.GameObject.GameObject;
+import Core2D.DataClasses.ScriptData;
+import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Entity;
+import Core2D.ECS.System.System;
+import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Log.Log;
+import Core2D.Project.ProjectsManager;
 import Core2D.Utils.ByteClassLoader;
 import Core2D.Utils.ExceptionsUtils;
+import Core2D.Utils.FlexibleURLClassLoader;
 import org.apache.commons.io.FilenameUtils;
 
 import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.net.URLClassLoader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,88 +30,91 @@ public class Script
     public String path = "";
     private String name = "";
 
-    private transient Method updateMethod;
-    private transient Method deltaUpdateMethod;
-    private transient Method collider2DEnterMethod;
-    private transient Method collider2DExitMethod;
-
     private boolean active = true;
 
     private transient Class<?> scriptClass;
     private transient Object scriptClassInstance;
 
-    private long lastModified = -1;
-
     private List<ScriptTempValue> scriptTempValues = new ArrayList<>();
 
     public void set(Script script)
     {
-        scriptClass = null;
-        scriptClassInstance = null;
+        File scriptFile = new File(script.path);
 
-        path = null;
-        name = null;
+        String name = FilenameUtils.getBaseName(scriptFile.getName()).replace("\\\\/", ".");
+        //System.out.println("name: " + name);
+        this.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(), scriptFile.getPath(), name);
 
-        deltaUpdateMethod = null;
-        updateMethod = null;
-        collider2DEnterMethod = null;
-        collider2DExitMethod = null;
-
-        loadClass(new File(script.path).getParent(), FilenameUtils.getBaseName(script.getName()));
-
-        destroyTempValues();
-        scriptTempValues.addAll(script.getScriptTempValues());
+        if(script != this) {
+            destroyTempValues();
+            scriptTempValues.addAll(script.getScriptTempValues());
+        }
     }
 
     public void loadClass(Class<?> cls, Object scriptClassInstance)
     {
+        //Thread.currentThread().setContextClassLoader(Utils.core2DClassLoader);
+
         scriptClass = cls;
 
         this.scriptClassInstance = scriptClassInstance;
-
-        deltaUpdateMethod = getMethod("deltaUpdate", float.class);
-        updateMethod = getMethod("update");
-        collider2DEnterMethod = getMethod("collider2DEnter", GameObject.class);
-        collider2DExitMethod = getMethod("collider2DExit", GameObject.class);
     }
 
-    public void loadClass(String dirPath, String baseName) {
-        dirPath = dirPath.replace("\\", "/");
+    public void loadClass(String scriptsDirPath, String fullPath, String baseName)
+    {
+        loadClass(scriptsDirPath, fullPath, baseName, new FlexibleURLClassLoader(new URL[] { }));
+    }
 
-        URLClassLoader urlClassLoader = null;
+    public void loadClass(String scriptsDirPath, String path, String baseName, FlexibleURLClassLoader flexibleURLClassLoader)
+    {
+        scriptsDirPath = scriptsDirPath.replace("\\", "/");
+
+        // fixes
+        path = path.replaceAll(".java", "");
+        path = path.replaceAll(".class", "") + ".class";
+
         try {
             // если режим работы - в движке
-            if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                File file = new File(dirPath);
+            if (Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+                File file = new File(scriptsDirPath);
 
-                urlClassLoader = URLClassLoader.newInstance(new URL[]{
-                        file.toURI().toURL()
-                });
+                URL scriptDirURL = file.toURI().toURL();
+                flexibleURLClassLoader.addURL(scriptDirURL);
 
-                scriptClass = urlClassLoader.loadClass(baseName);
-            // если в in-build
-            } else {
-                ByteClassLoader byteClassLoader = new ByteClassLoader();
-                scriptClass = byteClassLoader.loadClass(Core2D.class.getResourceAsStream(dirPath + "/" + baseName + ".class"),
-                        baseName);
+                Log.CurrentSession.println("script path: " + path, Log.MessageType.SUCCESS);
+
+                ScriptData scriptData = AssetManager.getInstance().getScriptData(path);
+
+                scriptClass = flexibleURLClassLoader.loadNewClass(path, scriptData.data);
+
+                this.path = scriptData.getPath();
+            } else {  // если в in-build
+                ScriptData scriptData = AssetManager.getInstance().getScriptData(scriptsDirPath + "/" + baseName + ".class");
+
+                try(ByteClassLoader byteClassLoader = new ByteClassLoader()) {
+                    scriptClass = byteClassLoader.loadClass(scriptData.data,
+                            baseName);
+                } catch (Exception e) {
+                    Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                }
+
+                this.path = scriptData.getPath();
             }
 
-            scriptClassInstance = scriptClass.newInstance();
+            scriptClassInstance = scriptClass.getConstructor().newInstance();
 
-            path = dirPath + "\\" + baseName;
             name = baseName;
 
-            deltaUpdateMethod = getMethod("deltaUpdate", float.class);
-            updateMethod = getMethod("update");
-            collider2DEnterMethod = getMethod("collider2DEnter", GameObject.class);
-            collider2DExitMethod = getMethod("collider2DExit", GameObject.class);
-        } catch (MalformedURLException | ClassNotFoundException | InstantiationException | IllegalAccessException e) {
+            //lastModified = new File(fullPath).lastModified();
+        } catch (InstantiationException | IllegalAccessException | IOException | InvocationTargetException | NoSuchMethodException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
     }
 
     public Field getField(String name)
     {
+        if(scriptClass == null) return null;
+
         try {
             return scriptClass.getField(name);
         } catch (NoSuchFieldException e) {
@@ -114,12 +124,18 @@ public class Script
         return null;
     }
 
+
     public List<Field> getInspectorViewFields()
+    {
+        return getInspectorViewFields(scriptClass);
+    }
+
+    public static List<Field> getInspectorViewFields(Class<?> cls)
     {
         List<Field> fields = new ArrayList<>();
 
-        for(Field field : scriptClass.getFields()) {
-            if(field.isAnnotationPresent(InspectorView.class)) {
+        for (Field field : cls.getFields()) {
+            if (field.isAnnotationPresent(InspectorView.class)) {
                 fields.add(field);
             }
         }
@@ -128,8 +144,13 @@ public class Script
 
     public Object getFieldValue(Field field)
     {
+        return getFieldValue(scriptClassInstance, field);
+    }
+
+    public static Object getFieldValue(Object clsInstance, Field field)
+    {
         try {
-            return field.get(scriptClassInstance);
+            return field.get(clsInstance);
         } catch (IllegalAccessException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -139,8 +160,13 @@ public class Script
 
     public void setFieldValue(Field field, Object obj)
     {
+        setFieldValue(scriptClassInstance, field, obj);
+    }
+
+    public static void setFieldValue(Object clsInstance, Field field, Object obj)
+    {
         try {
-            field.set(scriptClassInstance, obj);
+            field.set(clsInstance, obj);
         } catch (IllegalAccessException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -148,8 +174,13 @@ public class Script
 
     public Method getMethod(String name, Class<?>... parameterTypes)
     {
+        return getMethod(scriptClass, name, parameterTypes);
+    }
+
+    public static Method getMethod(Class<?> cls, String name, Class<?>... parameterTypes)
+    {
         try {
-            return scriptClass.getMethod(name, parameterTypes);
+            return cls.getMethod(name, parameterTypes);
         } catch (NoSuchMethodException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -170,29 +201,82 @@ public class Script
 
     public void update()
     {
-        if(active && updateMethod != null) {
-            invokeMethod(updateMethod);
+        if(active) {
+            if(scriptClassInstance instanceof Component component) {
+                component.update();
+            }
+            // FIXME
+            /*
+            if(scriptClassInstance instanceof System system) {
+                system.update();
+            }
+
+             */
+        }
+    }
+
+    public void render(Camera2DComponent camera2DComponent)
+    {
+        if(active) {
+            if(scriptClassInstance instanceof Component component) {
+                component.render(camera2DComponent);
+            }
+            /*
+            if(scriptClassInstance instanceof System system) {
+                system.renderEntity(camera2DComponent);
+            }
+
+             */
+        }
+    }
+
+    public void render(Camera2DComponent camera2DComponent, Shader shader)
+    {
+        if(active) {
+            if(scriptClassInstance instanceof Component component) {
+                component.render(camera2DComponent, shader);
+            }
+            // FIXME:
+            /*
+            if(scriptClassInstance instanceof System system) {
+                system.renderEntity(camera2DComponent, shader);
+            }
+
+             */
         }
     }
 
     public void deltaUpdate(float deltaTime)
     {
-        if(active && deltaUpdateMethod != null) {
-            invokeMethod(deltaUpdateMethod, deltaTime);
+        if(scriptClassInstance instanceof Component component) {
+            component.deltaUpdate(deltaTime);
+        }
+        // FIXME
+        /*
+        if(scriptClassInstance instanceof System system) {
+            system.deltaUpdate(deltaTime);
+        }
+
+         */
+    }
+
+    public void collider2DEnter(Entity otherObj)
+    {
+        if(scriptClassInstance instanceof Component component) {
+            component.collider2DEnter(otherObj);
+        }
+        if(scriptClassInstance instanceof System system) {
+            system.collider2DEnter(otherObj);
         }
     }
 
-    public void collider2DEnter(GameObject otherObj)
+    public void collider2DExit(Entity otherObj)
     {
-        if(active && collider2DEnterMethod != null) {
-            invokeMethod(collider2DEnterMethod, otherObj);
+        if(scriptClassInstance instanceof Component component) {
+            component.collider2DExit(otherObj);
         }
-    }
-
-    public void collider2DExit(GameObject otherObj)
-    {
-        if(active && collider2DExitMethod != null) {
-            invokeMethod(collider2DExitMethod, otherObj);
+        if(scriptClassInstance instanceof System system) {
+            system.collider2DExit(otherObj);
         }
     }
 
@@ -212,33 +296,23 @@ public class Script
 
         if(scriptClass != null) {
             for (Field field : scriptClass.getFields()) {
-                ScriptTempValue scriptTempValue = new ScriptTempValue();
+                if (field.isAnnotationPresent(InspectorView.class)) {
+                    ScriptTempValue scriptTempValue = new ScriptTempValue();
 
-                Object value = getFieldValue(field);
-                if (value instanceof GameObject gameObject) {
-                    scriptTempValue.setValue(new ScriptValue(gameObject.ID, gameObject.name, ScriptValueType.TYPE_GAME_OBJECT));
-                } else {
-                    scriptTempValue.setValue(value);
+                    Object value = getFieldValue(field);
+                    if (value instanceof Entity entity) {
+                        scriptTempValue.setValue(new ScriptValue(entity.ID, entity.name, ScriptValueType.TYPE_ENTITY));
+                    } else if(value instanceof Component component) {
+                        scriptTempValue.setValue(new ScriptValue(component.entity.ID, component.ID, component.entity.name, ScriptValueType.TYPE_COMPONENT));
+                    } else {
+                        scriptTempValue.setValue(value);
+                    }
+                    scriptTempValue.setFieldName(field.getName());
+
+                    scriptTempValues.add(scriptTempValue);
                 }
-                scriptTempValue.setFieldName(field.getName());
-
-                scriptTempValues.add(scriptTempValue);
             }
         }
-    }
-
-    public void destroy()
-    {
-        path = null;
-        name = null;
-
-        updateMethod = null;
-        deltaUpdateMethod = null;
-        collider2DEnterMethod = null;
-        collider2DExitMethod = null;
-
-        scriptClass = null;
-        scriptClassInstance = null;
     }
 
     public void destroyTempValues()
@@ -255,9 +329,6 @@ public class Script
     public boolean isActive() { return active; }
     public void setActive(boolean active) { this.active = active; }
 
-    public String getPath() { return path; }
-    public void setPath(String path) { this.path = path; }
-
     public String getName() { return name; }
     public void setName(String name) { this.name = name; }
 
@@ -265,16 +336,5 @@ public class Script
 
     public Object getScriptClassInstance() { return scriptClassInstance; }
 
-    public long getLastModified() { return lastModified; }
-    public void setLastModified(long lastModified) { this.lastModified = lastModified; }
-
     public List<ScriptTempValue> getScriptTempValues() { return scriptTempValues; }
-
-    public Method getUpdateMethod() { return updateMethod; }
-
-    public Method getDeltaUpdateMethod() { return deltaUpdateMethod; }
-
-    public Method getCollider2DEnterMethod() { return collider2DEnterMethod; }
-
-    public Method getCollider2DExitMethod() { return collider2DExitMethod; }
 }

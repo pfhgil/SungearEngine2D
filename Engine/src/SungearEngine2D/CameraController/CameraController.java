@@ -1,22 +1,25 @@
 package SungearEngine2D.CameraController;
 
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.Camera2DComponent;
-import Core2D.Component.Components.TransformComponent;
 import Core2D.Core2D.Core2D;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Components.Audio.AudioState;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.Entity;
 import Core2D.Input.Core2DUserInputCallback;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
-import Core2D.Transform.Transform;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
+import SungearEngine2D.Main.Resources;
+import SungearEngine2D.Scripts.Components.MoveToComponent;
+import imgui.ImGui;
+import imgui.flag.ImGuiConfigFlags;
 import org.joml.Vector2f;
 import org.lwjgl.glfw.GLFW;
 
 public class CameraController
 {
-    public static GameObject controlledCamera2D;
+    public static Entity controlledCamera2D;
 
     private static Vector2f lastCursorPosition = new Vector2f();
 
@@ -35,7 +38,7 @@ public class CameraController
 
             @Override
             public void onScroll(double xoffset, double yoffset) {
-                if(controlledCamera2D != null && !ViewsManager.isSomeViewFocusedExceptSceneView && controlledCamera2D.ID == CamerasManager.mainCamera2D.ID) {
+                if(controlledCamera2D != null && ViewsManager.isSceneViewFocused && controlledCamera2D.ID == CamerasManager.mainCamera2D.ID) {
                     Vector2f scale = new Vector2f((float) yoffset / 5.0f * mouseCameraScale.x, (float) yoffset / 5.0f * mouseCameraScale.y);
                     mouseCameraScale.x += scale.x;
                     mouseCameraScale.y += scale.y;
@@ -49,46 +52,47 @@ public class CameraController
     public static void control()
     {
         if(CamerasManager.mainCamera2D != null && controlledCamera2D.ID == CamerasManager.mainCamera2D.ID && allowMove) {
-            if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
+            if (Mouse.buttonPressed(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
                 lastCursorPosition = new Vector2f(Mouse.getMousePosition());
+
+                ImGui.getIO().addConfigFlags(ImGuiConfigFlags.NoMouseCursorChange);
+                GLFW.glfwSetCursor(Core2D.getWindow().getWindow(), Resources.Cursors.getCursorResizeAll());
             }
-            if (Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
+            if (Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
                 lastCursorPosition = new Vector2f(Mouse.getMousePosition());
+
+                ImGui.getIO().removeConfigFlags(ImGuiConfigFlags.NoMouseCursorChange);
+                GLFW.glfwSetCursor(Core2D.getWindow().getWindow(), Resources.Cursors.getCursorArrow());
             }
-            if (controlledCamera2D != null && !ViewsManager.isSomeViewFocusedExceptSceneView) {
+            if (controlledCamera2D != null && ViewsManager.isSceneViewFocused) {
                 TransformComponent cameraTransformComponent = controlledCamera2D.getComponent(TransformComponent.class);
 
                 if(cameraTransformComponent != null) {
-                    if (Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_LEFT)) {
-                        controlledCamera2D.getComponent(TransformComponent.class).getTransform().setNeedToMoveToDestination(false);
+                    if (Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_RIGHT)) {
+                        controlledCamera2D.getComponent(MoveToComponent.class).needMoveTo = false;
+
                         Vector2f currentPosition = new Vector2f(Mouse.getMousePosition());
                         Vector2f difference = new Vector2f(currentPosition.x - lastCursorPosition.x, currentPosition.y - lastCursorPosition.y);
-                        cameraTransformComponent.getTransform().translate(
-                                new Vector2f(difference.x * (1.0f / mouseCameraScale.x), difference.y * (1.0f / mouseCameraScale.y))
+                        cameraTransformComponent.position.add(
+                                new Vector2f(-difference.x * (1.0f / mouseCameraScale.x), -difference.y * (1.0f / mouseCameraScale.y))
                         );
+
                         lastCursorPosition = currentPosition;
+
+                        //Log.CurrentSession.println("translated: " + difference.x + ", " + difference.y, Log.MessageType.WARNING);
                     }
 
                     if (Keyboard.keyDown(GLFW.GLFW_KEY_K)) {
-                        cameraTransformComponent.getTransform().rotate(1.0f);
+                        cameraTransformComponent.rotation += 1.0f;
                     }
                     if (Keyboard.keyDown(GLFW.GLFW_KEY_J)) {
-                        cameraTransformComponent.getTransform().rotate(-1.0f);
+                        cameraTransformComponent.rotation -= 1.0f;
                     }
                     if (Keyboard.keyReleased(GLFW.GLFW_KEY_R)) {
-                        cameraTransformComponent.getTransform().setPosition(new Vector2f(0.0f, 0.0f));
+                        cameraTransformComponent.position.set(new Vector2f(0.0f, 0.0f));
                     }
                     if (Keyboard.keyReleased(GLFW.GLFW_KEY_L)) {
-                        cameraTransformComponent.getTransform().setRotation(0.0f);
-                    }
-                    if (Keyboard.keyReleased(GLFW.GLFW_KEY_F)) {
-                        Main.fuckYouAudio.play();
-                    }
-                    if (Keyboard.keyReleased(GLFW.GLFW_KEY_P)) {
-                        Main.fuckYouAudio.pause();
-                    }
-                    if (Keyboard.keyReleased(GLFW.GLFW_KEY_T)) {
-                        Main.fuckYouAudio.stop();
+                        cameraTransformComponent.rotation = 0.0f;
                     }
                 }
             }

@@ -1,6 +1,5 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
-import Core2D.Input.Core2DUserInputCallback;
 import Core2D.Input.PC.Keyboard;
 import SungearEngine2D.DebugDraw.Gizmo;
 import SungearEngine2D.GUI.Views.View;

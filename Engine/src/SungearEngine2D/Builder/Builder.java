@@ -1,11 +1,10 @@
 package SungearEngine2D.Builder;
 
-import Core2D.Audio.AudioInfo;
-import Core2D.Component.Components.AudioComponent;
-import Core2D.Component.Components.MeshRendererComponent;
-import Core2D.Component.Components.ScriptComponent;
 import Core2D.Core2D.Core2D;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Components.Audio.AudioComponent;
+import Core2D.ECS.Component.Components.MeshComponent;
+import Core2D.ECS.Component.Components.ScriptComponent;
+import Core2D.ECS.Entity;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
@@ -20,8 +19,8 @@ import Core2D.Utils.Utils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Utils.AppData.AppDataManager;
-import SungearEngine2D.exception.SungearEngineError;
-import SungearEngine2D.exception.SungearEngineException;
+import sungear.exception.SungearEngineError;
+import sungear.exception.SungearEngineException;
 
 import java.io.File;
 import java.io.IOException;
@@ -249,36 +248,37 @@ public class Builder {
         // далее пробегаюсь по всем сценам и изменяю путь ресурсов у кажого объекта на относительный
         for (Scene2D scene2D : scenes2DToSaveInBuild) {
             for (Layer layer : scene2D.getLayering().getLayers()) {
-                for (GameObject gameObject : layer.getGameObjects()) {
-                    MeshRendererComponent textureComponent = gameObject.getComponent(MeshRendererComponent.class);
+                for (Entity entity : layer.getEntities()) {
+                    MeshComponent textureComponent = entity.getComponent(MeshComponent.class);
                     if (textureComponent != null) {
                         // новый путь до текстуры
-                        File newFile = new File(toDir + "\\" + textureComponent.texture.path);
+                        File newFile = new File(toDir + "\\" + textureComponent.getTexture().path);
                         // создаю все папки, которых нет
                         newFile.getParentFile().mkdirs();
                         // копирую файл в эти папки
                         FileUtils.copyFile(ProjectsManager.getCurrentProject().getProjectPath() +
                                         File.separator +
-                                        textureComponent.texture.path,
+                                        textureComponent.getTexture().path,
                                 newFile.getPath(), false);
                         // устанавливаю для текстурного компонента путь в билде (относительный)
-                        textureComponent.texture.path = "/" + textureComponent.texture.path.replace("\\", "/");
+                        textureComponent.getTexture().path = "/" + textureComponent.getTexture().path.replace("\\", "/");
                     }
 
                     // то же самое для скриптов
-                    List<ScriptComponent> scriptComponents = gameObject.getAllComponents(ScriptComponent.class);
+                    List<ScriptComponent> scriptComponents = entity.getAllComponents(ScriptComponent.class);
                     for (ScriptComponent scriptComponent : scriptComponents) {
-                        File newFile = new File(toDir + "\\" + scriptComponent.getScript().path);
+                        File newFile = new File(toDir + "\\" + scriptComponent.script.path);
                         newFile.getParentFile().mkdirs();
                         FileUtils.copyFile(ProjectsManager.getCurrentProject().getProjectPath() +
                                         File.separator +
-                                        scriptComponent.getScript().path + ".class",
+                                        scriptComponent.script.path + ".class",
                                 newFile.getPath() + ".class", false);
-                        scriptComponent.getScript().path = "/" + scriptComponent.getScript().path.replace("\\", "/");
+                        scriptComponent.script.path = "/" + scriptComponent.script.path.replace("\\", "/");
                     }
 
+                    /*
                     // то же самое для аудио
-                    List<AudioComponent> audioComponents = gameObject.getAllComponents(AudioComponent.class);
+                    List<AudioComponent> audioComponents = entity.getAllComponents(AudioComponent.class);
                     for (AudioComponent audioComponent : audioComponents) {
                         File newFile = new File(toDir + "\\" + audioComponent.audio.path);
                         newFile.getParentFile().mkdirs();
@@ -288,6 +288,8 @@ public class Builder {
                                 newFile.getPath(), false);
                         audioComponent.audio.path = "/" + audioComponent.audio.path.replace("\\", "/");
                     }
+
+                     */
                 }
             }
             // относительный путь сцены (относительно папки проекта)

@@ -2,8 +2,6 @@ package Core2D.Core2D;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.OpenAL;
-import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.TransformComponent;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.Core2DInputCallbacks;
 import Core2D.Input.Core2DUserInputCallback;
@@ -125,13 +123,19 @@ public class Core2D extends Graphics
     private void initCore() {
         try {
             Graphics.init();
+            Log.Console.println("graphics initialized");
             OpenAL.init();
+            Log.Console.println("al initialized");
+            Settings.init();
+            Log.Console.println("settings initialized");
 
             core2DInputCallbacks = new Core2DInputCallbacks();
 
             /** инициализация **/
 
             AssetManager.getInstance().init();
+
+            Log.Console.println("asset manager initialized");
 
             deltaTimer.getTimerCallbacks().add(new TimerCallback() {
                 @Override
@@ -141,14 +145,7 @@ public class Core2D extends Graphics
                         if (core2DUserCallback != null) {
                             core2DUserCallback.onDeltaUpdate(deltaTime);
                         }
-
-                        if(CamerasManager.mainCamera2D != null) {
-                            TransformComponent transformComponent = CamerasManager.mainCamera2D.getComponent(TransformComponent.class);
-                            if(transformComponent != null) {
-                                transformComponent.getTransform().update(deltaTime);
-                            }
-                        }
-                        SceneManager.currentSceneManager.updateCurrentScene2D(deltaTime);
+                        SceneManager.currentSceneManager.deltaUpdateCurrentScene2D(deltaTime);
                     }
                     totalIterations++;
                 }
@@ -185,7 +182,7 @@ public class Core2D extends Graphics
             Core2D.core2DUserCallback.onExit();
         }
 
-        System.exit(130);
+        System.exit(0);
     }
 
     public static Window getWindow() {

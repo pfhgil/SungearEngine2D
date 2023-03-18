@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArtifactsWorkspaceSettings">
+    <artifacts-to-build>
+      <artifact name="Engine:jar" />
+    </artifacts-to-build>
+  </component>
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="9d1d3ac9-8433-494f-a59a-22993127b583" name="Changes" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ExternalProjectsData">
+    <projectState path="$PROJECT_DIR$">
+      <ProjectState />
+    </projectState>
+  </component>
+  <component name="ExternalProjectsManager">
+    <system id="GRADLE">
+      <state>
+        <task path="$PROJECT_DIR$">
+          <activation />
+        </task>
+        <projects_view>
+          <tree_state>
+            <expand>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Engine" type="f1a62948:ProjectNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Engine" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+              </path>
+              <path>
+                <item name="" type="6a2764b6:ExternalProjectsStructure$RootNode" />
+                <item name="Engine" type="f1a62948:ProjectNode" />
+                <item name="Tasks" type="e4a08cd1:TasksNode" />
+                <item name="build" type="c8890929:TasksNode$1" />
+              </path>
+            </expand>
+            <select />
+          </tree_state>
+        </projects_view>
+      </state>
+    </system>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2IV8dxSU4WAjK3fQLsYps12F9uk" />
+  <component name="ProjectViewState">
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Pixelfield/SungearEngine2D&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.171875&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;File.Encoding&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Pixelfield\SungearEngine2D\Engine\resources\data\imgui" />
+      <recent name="D:\Pixelfield\SungearEngine2D\Engine\resources\data\other" />
+      <recent name="D:\Pixelfield\SungearEngine2D\Engine\libs" />
+      <recent name="D:\Pixelfield\SungearEngine2D\Engine\compiler" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Pixelfield\SungearEngine2D\Engine\resources\data\icons" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Gradle.Engine [build]">
+    <configuration name="SungearEngine2D" type="Application" factoryName="Application">
+      <option name="ALTERNATIVE_JRE_PATH" value="17" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="SungearEngine2D.Main.Main" />
+      <module name="Engine.main" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Engine [build]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value="build" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <ExternalSystemDebugServerProcess>true</ExternalSystemDebugServerProcess>
+      <ExternalSystemReattachDebugProcess>true</ExternalSystemReattachDebugProcess>
+      <DebugAllEnabled>false</DebugAllEnabled>
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Gradle.Engine [build]" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="9d1d3ac9-8433-494f-a59a-22993127b583" name="Changes" comment="" />
+      <created>1670255480672</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1670255480672</updated>
+      <workItem from="1670255481792" duration="8384000" />
+      <workItem from="1670355000541" duration="604000" />
+      <workItem from="1670621739050" duration="369000" />
+      <workItem from="1670692222665" duration="16344000" />
+      <workItem from="1670757990125" duration="9947000" />
+      <workItem from="1670855953088" duration="1873000" />
+      <workItem from="1670858580448" duration="14862000" />
+      <workItem from="1670959290229" duration="1385000" />
+      <workItem from="1671293977751" duration="18100000" />
+      <workItem from="1671357922020" duration="2725000" />
+      <workItem from="1671825108104" duration="4469000" />
+      <workItem from="1671895096235" duration="9250000" />
+      <workItem from="1671917265315" duration="1712000" />
+      <workItem from="1671974393365" duration="122000" />
+      <workItem from="1671983844439" duration="6508000" />
+      <workItem from="1672066706272" duration="602000" />
+      <workItem from="1672068522749" duration="15622000" />
+      <workItem from="1672173235230" duration="1207000" />
+      <workItem from="1672247171572" duration="16513000" />
+      <workItem from="1672324690252" duration="5360000" />
+      <workItem from="1672330102805" duration="1036000" />
+      <workItem from="1672344603052" duration="3570000" />
+      <workItem from="1672349267339" duration="5134000" />
+      <workItem from="1672396536731" duration="5987000" />
+      <workItem from="1673096440005" duration="5312000" />
+      <workItem from="1673282541199" duration="1783000" />
+      <workItem from="1673292964896" duration="3550000" />
+      <workItem from="1673296756090" duration="20000" />
+      <workItem from="1673346325398" duration="3153000" />
+      <workItem from="1673362143025" duration="10060000" />
+      <workItem from="1673375089295" duration="131000" />
+      <workItem from="1673447360054" duration="1194000" />
+      <workItem from="1673450228830" duration="15254000" />
+      <workItem from="1673534008493" duration="955000" />
+      <workItem from="1673534976360" duration="2859000" />
+      <workItem from="1673551247931" duration="7208000" />
+      <workItem from="1673625651201" duration="5812000" />
+      <workItem from="1673704823125" duration="9055000" />
+      <workItem from="1673726506774" duration="6671000" />
+      <workItem from="1673734962925" duration="2147000" />
+      <workItem from="1673774984236" duration="6363000" />
+      <workItem from="1673800470150" duration="2307000" />
+      <workItem from="1673805070313" duration="11357000" />
+      <workItem from="1673981034648" duration="1198000" />
+      <workItem from="1673983227380" duration="4000" />
+      <workItem from="1673983241766" duration="3000" />
+      <workItem from="1673984472718" duration="43000" />
+      <workItem from="1673984531853" duration="1000" />
+      <workItem from="1674069218362" duration="4315000" />
+      <workItem from="1674147515443" duration="9793000" />
+      <workItem from="1674221047712" duration="4851000" />
+      <workItem from="1674395097875" duration="3300000" />
+      <workItem from="1674415280763" duration="10469000" />
+      <workItem from="1674480504367" duration="19382000" />
+      <workItem from="1674577873491" duration="4252000" />
+      <workItem from="1674588926809" duration="1126000" />
+      <workItem from="1674667680528" duration="2861000" />
+      <workItem from="1674744088865" duration="4206000" />
+      <workItem from="1674754281278" duration="6166000" />
+      <workItem from="1674832582288" duration="2436000" />
+      <workItem from="1674851102831" duration="1040000" />
+      <workItem from="1674852237584" duration="3491000" />
+      <workItem from="1674930956391" duration="9644000" />
+      <workItem from="1674990105157" duration="4446000" />
+      <workItem from="1675003016937" duration="1304000" />
+      <workItem from="1675022032384" duration="5406000" />
+      <workItem from="1675086748668" duration="10925000" />
+      <workItem from="1675169882357" duration="21440000" />
+      <workItem from="1675257975629" duration="19480000" />
+      <workItem from="1675344041410" duration="2469000" />
+      <workItem from="1675346522292" duration="19555000" />
+      <workItem from="1675431535591" duration="5881000" />
+      <workItem from="1675536062123" duration="19281000" />
+      <workItem from="1675590080231" duration="15141000" />
+      <workItem from="1675615460713" duration="17743000" />
+      <workItem from="1675689414450" duration="604000" />
+      <workItem from="1675690032385" duration="5368000" />
+      <workItem from="1675720668599" duration="332000" />
+      <workItem from="1675785893540" duration="1327000" />
+      <workItem from="1675877085056" duration="2134000" />
+      <workItem from="1675952442801" duration="1156000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>

@@ -2,8 +2,8 @@ package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.Project.Project;
 import Core2D.Project.ProjectsManager;
-import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.View;
+import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Resources;
 import imgui.ImGui;
 import imgui.flag.ImGuiCond;

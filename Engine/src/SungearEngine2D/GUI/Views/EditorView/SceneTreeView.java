@@ -1,16 +1,16 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
-import Core2D.Component.Components.TransformComponent;
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.Entity;
 import Core2D.Utils.MatrixUtils;
-import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.GUI.Views.View;
+import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;
+import SungearEngine2D.Scripts.Components.MoveToComponent;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiMouseButton;
-import imgui.flag.ImGuiTreeNodeFlags;
 import imgui.flag.ImGuiWindowFlags;
 import org.joml.Vector2f;
 
@@ -22,9 +22,9 @@ import static Core2D.Scene2D.SceneManager.currentSceneManager;
 public class SceneTreeView extends View
 {
     // зависимости, у которых нужно убрать родителя
-    private static List<GameObject> childrenNeedFree = new ArrayList<>();
+    private static List<Entity> childrenNeedFree = new ArrayList<>();
     // новые родители, которых нужно поставить
-    private static List<GameObject> parentsToSet = new ArrayList<>();
+    private static List<Entity> parentsToSet = new ArrayList<>();
 
     private static boolean mouseRightClicked = false;
     private static String action = "";
@@ -42,13 +42,13 @@ public class SceneTreeView extends View
 
             update();
 
-            for(GameObject child : childrenNeedFree) {
-                child.setParentObject2D(null);
+            for(Entity child : childrenNeedFree) {
+                child.setParentEntity(null);
             }
 
             for(int i = 0; i < parentsToSet.size(); i++) {
-                parentsToSet.get(i).addChildObject(childrenNeedFree.get(i));
-                childrenNeedFree.get(i).setParentObject2D(parentsToSet.get(i));
+                parentsToSet.get(i).addChildEntity(childrenNeedFree.get(i));
+                childrenNeedFree.get(i).setParentEntity(parentsToSet.get(i));
             }
 
             if(childrenNeedFree.size() != 0) {
@@ -97,24 +97,23 @@ public class SceneTreeView extends View
                         }
                         ImGui.treePop();
                     }*/
-                    if(ImGui.treeNode("Scene objects")) {
+                    if(ImGui.treeNode("Scene entities")) {
                         if (ImGui.beginDragDropTarget()) {
-                            Object droppedObject = ImGui.acceptDragDropPayload("SceneGameObject");
+                            Object droppedObject = ImGui.acceptDragDropPayload("Entity");
                             if (droppedObject != null) {
-                                ((GameObject) droppedObject).setParentObject2D(null);
+                                ((Entity) droppedObject).setParentEntity(null);
                             }
                             ImGui.endDragDropTarget();
                         }
 
                         List<Integer> alreadyProcessedObjectsID = new ArrayList<>();
                         for (int i = 0; i < currentSceneManager.getCurrentScene2D().getLayering().getLayers().size(); i++) {
-                            for (int k = 0; k < currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(i).getGameObjects().size(); k++) {
+                            for (int k = 0; k < currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(i).getEntities().size(); k++) {
                                 iterator++;
-                                GameObject gameObject = currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(i).getGameObjects().get(k);
-                                if(!alreadyProcessedObjectsID.contains(gameObject.ID) && gameObject.getParentObject2D() == null) {
-                                    ImGui.pushID("Scene2DWrappedObject_" + gameObject.ID);
-                                    boolean opened = false;
-                                    opened = ImGui.treeNode(gameObject.name);
+                                Entity entity = currentSceneManager.getCurrentScene2D().getLayering().getLayers().get(i).getEntities().get(k);
+                                if(!alreadyProcessedObjectsID.contains(entity.ID) && entity.getParentEntity() == null) {
+                                    ImGui.pushID("Scene2DEntity_" + entity.ID);
+                                    boolean opened = ImGui.treeNode(entity.name + " | ID: " + entity.ID);
                                     if (ImGui.isItemHovered()) {
                                         isAnyTreeNodeHovered = true;
                                     }
@@ -124,43 +123,50 @@ public class SceneTreeView extends View
 
                                     if (ImGui.isItemHovered()) {
                                         if (ImGui.isMouseClicked(ImGuiMouseButton.Right)) {
-                                            ViewsManager.getInspectorView().setCurrentInspectingObject(gameObject);
+                                            ViewsManager.getInspectorView().setCurrentInspectingObject(entity);
                                         }
                                         if (ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left)) {
+                                            MoveToComponent moveToComponent = Main.getMainCamera2D().getComponent(MoveToComponent.class);
+                                            moveToComponent.destinationPosition.set(MatrixUtils.getPosition(entity.getComponent(TransformComponent.class).modelMatrix));
+                                            moveToComponent.needMoveTo = true;
+                                            /*
                                             Main.getMainCamera2D().getComponent(TransformComponent.class).getTransform().lerpMoveTo(
-                                                    MatrixUtils.getPosition(gameObject.getComponent(TransformComponent.class).getTransform().getResultModelMatrix()).negate(),
+                                                    MatrixUtils.getPosition(entity.getComponent(TransformComponent.class).getTransform().getResultModelMatrix()).negate(),
                                                     new Vector2f(10)
                                             );
+
+                                             */
                                         }
                                     }
                                     if (ImGui.beginDragDropSource()) {
-                                        ImGui.setDragDropPayload("SceneGameObject", gameObject);
+                                        ImGui.setDragDropPayload("Entity", entity);
                                         ImGui.image(Resources.Textures.Icons.object2DFileIcon.getTextureHandler(), 25.0f, 25.0f);
                                         ImGui.endDragDropSource();
                                     }
 
-                                    if(action.equals("DestroyObject2D") && objectToActionIterator == iterator) {
-                                        gameObject.destroy();
+                                    if(action.equals("DestroyEntity") && objectToActionIterator == iterator) {
+                                        entity.destroy();
+                                        ViewsManager.getInspectorView().setCurrentInspectingObject(null);
                                         action = "";
                                         objectToActionIterator = -1;
                                     }
 
                                     if(ImGui.beginDragDropTarget()) {
-                                        Object droppedObject = ImGui.acceptDragDropPayload("SceneGameObject");
+                                        Object droppedObject = ImGui.acceptDragDropPayload("Entity");
 
                                         if(droppedObject != null) {
-                                            GameObject droppedGameObject = (GameObject) droppedObject;
-                                            if (droppedGameObject.ID != gameObject.ID) {
-                                                childrenNeedFree.add(droppedGameObject);
-                                                parentsToSet.add(gameObject);
+                                            Entity droppedEntity = (Entity) droppedObject;
+                                            if (droppedEntity.ID != entity.ID) {
+                                                childrenNeedFree.add(droppedEntity);
+                                                parentsToSet.add(entity);
                                             }
                                         }
                                         ImGui.endDragDropTarget();
                                     }
 
-                                    alreadyProcessedObjectsID.add(gameObject.ID);
+                                    alreadyProcessedObjectsID.add(entity.ID);
 
-                                    showParent(alreadyProcessedObjectsID, gameObject, opened);
+                                    showParent(alreadyProcessedObjectsID, entity, opened);
 
                                     if (opened) {
                                         ImGui.treePop();
@@ -178,7 +184,7 @@ public class SceneTreeView extends View
             if(mouseRightClicked && isAnyTreeNodeHovered) {
                 if(ImGui.beginPopupContextWindow("SceneObjectActions")) {
                     if(ImGui.menuItem("Destroy")) {
-                        action = "DestroyObject2D";
+                        action = "DestroyEntity";
                     }
                     ImVec2 rectMin = ImGui.getItemRectMin();
                     popupContextWindowRectMin.set(rectMin.x, rectMin.y);
@@ -191,12 +197,12 @@ public class SceneTreeView extends View
         ImGui.end();
     }
 
-    private static void showParent(List<Integer> alreadyProcessedObjectsID, GameObject parentObject2D, boolean parentOpened)
+    private static void showParent(List<Integer> alreadyProcessedObjectsID, Entity parentObject2D, boolean parentOpened)
     {
-        for(GameObject gameObject : parentObject2D.getChildrenObjects()) {
+        for(Entity entity : parentObject2D.getChildrenEntities()) {
             iterator++;
             if(parentOpened) {
-                boolean opened = ImGui.treeNode(gameObject.name);
+                boolean opened = ImGui.treeNode(entity.name + " | ID: " + entity.ID);
                 if(ImGui.isItemHovered()) {
                     isAnyTreeNodeHovered = true;
                 }
@@ -204,52 +210,59 @@ public class SceneTreeView extends View
                     objectToActionIterator = iterator;
                 }
 
-                ImGui.pushID("Scene2DGameObject_" + gameObject.ID);
+                ImGui.pushID("Scene2DGameObject_" + entity.ID);
                 if (ImGui.isItemHovered()) {
                     if (ImGui.isMouseClicked(ImGuiMouseButton.Right)) {
-                        ViewsManager.getInspectorView().setCurrentInspectingObject(gameObject);
+                        ViewsManager.getInspectorView().setCurrentInspectingObject(entity);
                     }
                     if (ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left)) {
+                        MoveToComponent moveToComponent = Main.getMainCamera2D().getComponent(MoveToComponent.class);
+                        moveToComponent.destinationPosition.set(MatrixUtils.getPosition(entity.getComponent(TransformComponent.class).modelMatrix));
+                        moveToComponent.needMoveTo = true;
+                        /*
                         Main.getMainCamera2D().getComponent(TransformComponent.class).getTransform().lerpMoveTo(
-                                MatrixUtils.getPosition(gameObject.getComponent(TransformComponent.class).getTransform().getResultModelMatrix()).negate(),
+                                MatrixUtils.getPosition(entity.getComponent(TransformComponent.class).getTransform().getResultModelMatrix()).negate(),
                                 new Vector2f(10));
+
+                         */
                     }
                 }
                 if (ImGui.beginDragDropSource()) {
-                    ImGui.setDragDropPayload("SceneGameObject", gameObject);
+                    //ImGui.acceptDragDropPayload()
+                    ImGui.setDragDropPayload("Entity", entity);
                     ImGui.image(Resources.Textures.Icons.object2DFileIcon.getTextureHandler(), 25.0f, 25.0f);
                     ImGui.endDragDropSource();
                 }
 
                 if (ImGui.beginDragDropTarget()) {
-                    Object droppedObject = ImGui.acceptDragDropPayload("SceneGameObject");
+                    Object droppedObject = ImGui.acceptDragDropPayload("Entity");
 
                     if (droppedObject != null) {
-                        GameObject droppedGameObject = (GameObject) droppedObject;
-                        if (droppedGameObject.ID != gameObject.ID) {
-                            childrenNeedFree.add(droppedGameObject);
-                            parentsToSet.add(gameObject);
+                        Entity droppedEntity = (Entity) droppedObject;
+                        if (droppedEntity.ID != entity.ID) {
+                            childrenNeedFree.add(droppedEntity);
+                            parentsToSet.add(entity);
                         }
                     }
                     ImGui.endDragDropTarget();
                 }
 
-                if(action.equals("DestroyObject2D") && objectToActionIterator == iterator) {
-                    gameObject.destroy();
+                if(action.equals("DestroyEntity") && objectToActionIterator == iterator) {
+                    entity.destroy();
                     action = "";
                     objectToActionIterator = -1;
                 }
 
-                showParent(alreadyProcessedObjectsID, gameObject, opened);
+                showParent(alreadyProcessedObjectsID, entity, opened);
 
                 if (opened) {
                     ImGui.treePop();
                 }
                 ImGui.popID();
             } else {
-                showParent(alreadyProcessedObjectsID, gameObject, false);
+                showParent(alreadyProcessedObjectsID, entity, false);
             }
-            alreadyProcessedObjectsID.add(gameObject.ID);
+            alreadyProcessedObjectsID.add(entity.ID);
         }
     }
 }

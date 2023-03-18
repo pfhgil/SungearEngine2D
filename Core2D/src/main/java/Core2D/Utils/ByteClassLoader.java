@@ -14,22 +14,11 @@ public class ByteClassLoader extends URLClassLoader
         super(new URL[]{});
     }
 
-    public Class<?> loadClass(InputStream resource, String className)
+    public Class<?> loadClass(byte[] bytes, String className)
     {
-        Class<?> cls = null;
-        try {
-            byte[] bytes = Utils.getByteBufferBytes(Utils.resourceToByteBuffer(resource));
-            Log.CurrentSession.println("bytes length: " + bytes.length, Log.MessageType.ERROR);
-            cls = defineClass(className, bytes, 0, bytes.length);
-        } catch (IOException e) {
-            try {
-                resource.close();
-            } catch (IOException ex) {
-                Log.CurrentSession.println(ExceptionsUtils.toString(ex), Log.MessageType.ERROR);
-            }
-            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-        }
+        //byte[] bytes = Utils.getByteBufferBytes(Utils.resourceToByteBuffer(resource));
+        Log.CurrentSession.println("bytes length: " + bytes.length, Log.MessageType.ERROR);
 
-        return cls;
+        return defineClass(className, bytes, 0, bytes.length);
     }
 }

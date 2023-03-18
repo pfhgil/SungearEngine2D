@@ -1,6 +1,6 @@
 package Core2D.Deserializers;
 
-import Core2D.GameObject.GameObject;
+import Core2D.ECS.Entity;
 import Core2D.Layering.Layer;
 import com.google.gson.*;
 
@@ -15,13 +15,13 @@ public class LayerDeserializer implements JsonDeserializer<Layer>
 
         String name = jsonObject.get("name").getAsString();
         int ID = jsonObject.get("ID").getAsInt();
-        JsonArray gameObjects = jsonObject.getAsJsonArray("gameObjects");
+        JsonArray gameObjects = jsonObject.getAsJsonArray("entities");
 
         Layer layer = new Layer(ID, name);
 
         for(JsonElement element : gameObjects) {
-            GameObject gameObject = context.deserialize(element, GameObject.class);
-            gameObject.setLayer(layer);
+            Entity entity = context.deserialize(element, Entity.class);
+            entity.setLayer(layer);
         }
         return layer;
     }

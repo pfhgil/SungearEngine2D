@@ -4,8 +4,6 @@ import Core2D.Utils.FileUtils;
 
 import javax.swing.*;
 import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -18,6 +16,42 @@ public class Log
         INFO,
         WARNING,
         ERROR
+    }
+
+    public static class Console
+    {
+        public static boolean willPrint = true;
+
+        public static void println(Object obj, boolean appendCallableMethodDescription)
+        {
+            if(!willPrint) return;
+
+            DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            Date date = new Date();
+
+            StringBuilder strBuilder = new StringBuilder(dateFormat.format(date));
+            if(appendCallableMethodDescription) {
+                StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+
+                int depth = ste[2].getMethodName().equals("println") ? 3 : 2;
+
+                strBuilder.append(" | Called from: ")
+                        .append(ste[depth].getClassName())
+                        .append("::").append(ste[depth].getMethodName())
+                        .append(". Line: ")
+                        .append(ste[depth].getLineNumber())
+                        .append(" [#FFFFFF]");
+            }
+
+            strBuilder.append(" | ").append(obj);
+
+            System.out.println(strBuilder);
+        }
+
+        public static void println(Object obj)
+        {
+            println(obj, false);
+        }
     }
 
     public static class CurrentSession {
@@ -34,58 +68,63 @@ public class Log
         private static StringBuilder errorLog = new StringBuilder();
         private static StringBuilder allLog = new StringBuilder();
 
+        public static boolean willPrintToFile = true;
+
 
         // записывает в файл лога информацию (новая строка)
-        public static void println(String string, MessageType messageType) {
-            if(new File(directoryPath + File.separator + currentSessionFileName).exists()) {
-                FileWriter fileWriter = null;
-                try {
-                    fileWriter = new FileWriter(new File(directoryPath + File.separator + currentSessionFileName), true);
-                } catch (IOException e) {
-                    e.printStackTrace();
+        // appendCallableMethodDescription - к строке будет присоединена строка описание метода, откуда был вызван метод println
+        public static void println(Object obj, MessageType messageType, boolean appendCallableMethodDescription) {
+            Console.println(obj, appendCallableMethodDescription);
+
+            if(!willPrintToFile) return;
+
+            File logFile = new File(directoryPath + File.separator + currentSessionFileName);
+            if (logFile.exists()) {
+
+                DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+                Date date = new Date();
+
+                StringBuilder strBuilder = new StringBuilder("[#FFFFFF] ").append(dateFormat.format(date.getTime()));
+                if (appendCallableMethodDescription) {
+                    StackTraceElement[] ste = Thread.currentThread().getStackTrace();
+
+                    int depth = ste[2].getMethodName().equals("println") ? 3 : 2;
+
+                    strBuilder.append(" | [#9932CC] Called from: ")
+                            .append(ste[depth].getClassName())
+                            .append("::").append(ste[depth].getMethodName())
+                            .append(". Line: ")
+                            .append(ste[depth].getLineNumber())
+                            .append(" [#FFFFFF]");
                 }
 
-                if (fileWriter != null) {
-                    try {
-                        // получаю текущую дату, час, минуту, секунду
-                        DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-                        Date date = new Date();
-
-                        String str = "";
-                        if (messageType == MessageType.SUCCESS) {
-                            str = "[#FFFFFF] " + dateFormat.format(date) + " | [#008000] " + string + "\n";
-                            successLog.append(str);
-                        } else if (messageType == MessageType.INFO) {
-                            str = "[#FFFFFF] " + dateFormat.format(date) + " | [#FFFFFF] " + string + "\n";
-                            infoLog.append(str);
-                        } else if (messageType == MessageType.WARNING) {
-                            str = "[#FFFFFF] " + dateFormat.format(date) + " | [#FFFF00] " + string + "\n";
-                            warningLog.append(str);
-                        } else if (messageType == MessageType.ERROR) {
-                            str = "[#FFFFFF] " + dateFormat.format(date) + " | [#FF0000] " + string + "\n";
-                            errorLog.append(str);
-                        }
-                        allLog.append(str);
-                        // записываю в файл лога информацию
-                        fileWriter.write(str);
-
-                        fileWriter.flush();
-                        fileWriter.close();
-                    } catch (IOException e) {
-                        showWarningDialog("LOG: String was not logged!");
+                switch (messageType) {
+                    case SUCCESS -> {
+                        strBuilder.append(" | [#008000] ").append(obj).append("\n");
+                        successLog.append(strBuilder);
                     }
-                } else {
-                    showWarningDialog("LOG: String was not logged!");
-                }
-
-                if (fileWriter != null) {
-                    try {
-                        fileWriter.close();
-                    } catch (IOException e) {
-                        showWarningDialog("LOG: File writer thread was not closed!");
+                    case INFO -> {
+                        strBuilder.append(" | [#FFFFFF] ").append(obj).append("\n");
+                        infoLog.append(strBuilder);
+                    }
+                    case WARNING -> {
+                        strBuilder.append(" | [#FFFF00] ").append(obj).append("\n");
+                        warningLog.append(strBuilder);
+                    }
+                    case ERROR -> {
+                        strBuilder.append(" | [#FF0000] ").append(obj).append("\n");
+                        errorLog.append(strBuilder);
                     }
                 }
+
+                allLog.append(strBuilder);
+
+                FileUtils.writeToFile(logFile, strBuilder.toString(), true);
             }
+        }
+
+        public static void println(Object obj, MessageType messageType) {
+            println(obj, messageType, false);
         }
 
         // создает файл лога для текущей сессии
@@ -97,6 +136,7 @@ public class Log
             currentSessionFile = FileUtils.reCreateFile(currentSessionFile);
 
             if(currentSessionFile.exists()) {
+                Console.println("Current session log file was created!");
                 println("Current session log file was created!", MessageType.SUCCESS);
             }
         }

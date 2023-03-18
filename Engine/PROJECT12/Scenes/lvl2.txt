@@ -1,0 +1,265 @@
+{
+  "name": "lvl2",
+  "scenePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\PROJECT12\\Scenes\\lvl2.sgs",
+  "layering": {
+    "layers": [
+      {
+        "entities": [
+          {
+            "name": "default",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 913399188,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": 0.0,
+                      "y": 0.0
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 1.0,
+                      "y": 1.0
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 913399188,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Camera2DComponent",
+                "properties": {
+                  "viewportSize": {
+                    "x": 1080.0,
+                    "y": 720.0
+                  },
+                  "isScene2DMainCamera2D": false,
+                  "postprocessingDefaultShader": {
+                    "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": []
+                  },
+                  "postprocessingLayers": [],
+                  "object2DID": -1,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [],
+            "isUIElement": false,
+            "color": {
+              "x": 0.003921569,
+              "y": 0.0,
+              "z": 0.0,
+              "w": 1.0
+            },
+            "parentObject2DID": -1,
+            "childrenObjectsID": []
+          },
+          {
+            "name": "ferapont",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 4,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "transform": {
+                    "position": {
+                      "x": 54.748653,
+                      "y": -30.737543
+                    },
+                    "rotation": 0.0,
+                    "scale": {
+                      "x": 4.17,
+                      "y": 4.52
+                    },
+                    "centre": {
+                      "x": 0.0,
+                      "y": 0.0
+                    }
+                  },
+                  "object2DID": 4,
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\textures\\ferapont.png",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "object2DID": 4,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Camera2DComponent",
+                "properties": {
+                  "viewportSize": {
+                    "x": 1080.0,
+                    "y": 720.0
+                  },
+                  "isScene2DMainCamera2D": true,
+                  "postprocessingDefaultShader": {
+                    "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
+                    "lastModified": -1,
+                    "shaderUniforms": []
+                  },
+                  "postprocessingLayers": [],
+                  "object2DID": -1,
+                  "ID": 2,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ScriptComponent",
+                "properties": {
+                  "script": {
+                    "path": "Scripts\\Components\\SomeSuperComponent",
+                    "name": "SomeSuperComponent",
+                    "active": true,
+                    "lastModified": 1676062718528,
+                    "scriptTempValues": []
+                  },
+                  "object2DID": 4,
+                  "ID": 3,
+                  "active": true
+                }
+              }
+            ],
+            "systems": [
+              {
+                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "properties": {
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.System.Systems.ScriptableSystem",
+                "properties": {
+                  "script": {
+                    "path": "Scripts\\Systems\\SuperSystem",
+                    "name": "SuperSystem",
+                    "active": true,
+                    "lastModified": 1676062718631,
+                    "scriptTempValues": []
+                  },
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentObject2DID": -1,
+            "childrenObjectsID": []
+          }
+        ],
+        "ID": 0,
+        "name": "default"
+      }
+    ]
+  },
+  "screenClearColor": {
+    "x": 1.0,
+    "y": 1.0,
+    "z": 1.0,
+    "w": 1.0
+  },
+  "tags": [
+    {
+      "name": "default"
+    }
+  ],
+  "scriptSystem": {},
+  "maxObjectID": 6,
+  "inBuild": false,
+  "isMainScene2D": false
+}

@@ -1,7 +1,7 @@
 package Core2D.Audio;
 
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.Component.Components.TransformComponent;
+import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.Utils.MatrixUtils;
 import org.joml.Vector2f;
 import org.lwjgl.openal.AL10;
@@ -15,7 +15,7 @@ public class AudioListener
         if(CamerasManager.mainCamera2D != null) {
             TransformComponent cameraTransformComponent = CamerasManager.mainCamera2D.getComponent(TransformComponent.class);
             if(cameraTransformComponent == null) return;
-            Vector2f pos = MatrixUtils.getPosition(cameraTransformComponent.getTransform().getResultModelMatrix()).negate();
+            Vector2f pos = MatrixUtils.getPosition(cameraTransformComponent.modelMatrix).negate();
 
             if(Float.isNaN(pos.x) || Float.isInfinite(pos.x)) {
                 pos.x = 0.0f;
