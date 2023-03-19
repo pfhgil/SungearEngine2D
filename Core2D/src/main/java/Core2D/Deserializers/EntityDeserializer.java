@@ -3,6 +3,7 @@ package Core2D.Deserializers;
 import Core2D.AssetManager.AssetManager;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
+import Core2D.DataClasses.ShaderData;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Audio.AudioComponent;
 import Core2D.ECS.Component.Components.Camera2DComponent;
@@ -118,7 +119,13 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
             int lastComponentID = component.ID;
             if(component instanceof MeshComponent meshComponent) {
                 meshComponent.getShader().fixUniforms();
+
                 Shader shader = new Shader();
+
+                for(Shader.ShaderDefine shaderDefine : meshComponent.getShader().getShaderDefines()) {
+                    shader.getShaderDefine(shaderDefine.name).value = shaderDefine.value;
+                }
+
                 shader.getShaderUniforms().addAll(meshComponent.getShader().getShaderUniforms());
                 shader.compile(AssetManager.getInstance().getShaderData(meshComponent.getShader().path));
 
@@ -173,13 +180,25 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
             } else if(component instanceof Camera2DComponent camera2DComponent) {
                 Shader defaultShader = new Shader(AssetManager.getInstance().getShaderData(camera2DComponent.postprocessingDefaultShader.path));
 
+                for(Shader.ShaderDefine shaderDefine : camera2DComponent.postprocessingDefaultShader.getShaderDefines()) {
+                    defaultShader.getShaderDefine(shaderDefine.name).value = shaderDefine.value;
+                }
+
+                defaultShader.compile((ShaderData) AssetManager.getInstance().reloadAsset(defaultShader.path, ShaderData.class).getAssetObject());
+
                 ECSWorld.getCurrentECSWorld().camerasManagerSystem.setPostprocessingDefaultShader(camera2DComponent, defaultShader);
                 //camera2DComponent.setPostprocessingDefaultShader(defaultShader);
                 for(int i = 0; i < camera2DComponent.postprocessingLayers.size(); i++) {
                     PostprocessingLayer ppLayer = camera2DComponent.postprocessingLayers.get(i);
 
                     ppLayer.getShader().fixUniforms();
+
                     Shader layerShader = new Shader();
+
+                    for(Shader.ShaderDefine shaderDefine : ppLayer.getShader().getShaderDefines()) {
+                        layerShader.getShaderDefine(shaderDefine.name).value = shaderDefine.value;
+                    }
+
                     layerShader.getShaderUniforms().addAll(ppLayer.getShader().getShaderUniforms());
                     layerShader.compile(AssetManager.getInstance().getShaderData(ppLayer.getShader().path));
 

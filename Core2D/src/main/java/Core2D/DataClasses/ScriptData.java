@@ -59,7 +59,7 @@ public class ScriptData extends Data
 
     public long getScriptFileLastModified()
     {
-        File file = new File(getAbsolutePath().replace(".class", ".java"));
+        File file = new File(getAbsolutePath().replaceAll(".class", ".java"));
         if(file.exists()) {
             return file.lastModified();
         }
@@ -75,7 +75,6 @@ public class ScriptData extends Data
         } else {
             if(ProjectsManager.getCurrentProject() != null) {
                 file = new File(ProjectsManager.getCurrentProject().getProjectPath() + "/" + path);
-                //Log.CurrentSession.println("script path: " + file.getPath(), Log.MessageType.INFO);
 
                 return file.exists() ? file.getPath() : "";
             }

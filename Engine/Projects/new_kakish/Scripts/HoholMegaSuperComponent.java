@@ -48,6 +48,7 @@ public class HoholMegaSuperComponent extends Component
                 audioComponents.get(0).state = AudioState.PLAYING;
             }
 
+            //
             controlsActive = true;
         }
     }, 1.5f);
@@ -67,6 +68,7 @@ public class HoholMegaSuperComponent extends Component
 
         if(Keyboard.keyReleased(GLFW.GLFW_KEY_G) && controlsActive) {
             controlsActive = false;
+            //
 
             Entity nearestDamagableEntity = getNearestDamagableEntity(entityTransform.position);
 

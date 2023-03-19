@@ -161,26 +161,27 @@ public class Shader implements Serializable
 
     private transient boolean compiled = false;
 
-    public long lastModified = -1;
-
     private List<ShaderUniform> shaderUniforms = new ArrayList<>();
 
     private List<ShaderDefine> shaderDefines = new ArrayList<>();
 
     public Shader()
     {
-        shaderDefines.add(new ShaderDefine("FLIP_TEXTURES_Y", 1));
+        addShaderDefine(new ShaderDefine("FLIP_TEXTURES_Y", 1));
     }
 
     public Shader(ShaderData shaderData)
     {
+        addShaderDefine(new ShaderDefine("FLIP_TEXTURES_Y", 1));
         set(create(shaderData));
     }
 
     public static Shader create(ShaderData shaderData)
     {
         Shader shader = new Shader();
+
         shader.compile(shaderData);
+
         return shader;
     }
 
@@ -190,6 +191,7 @@ public class Shader implements Serializable
 
         shader.shaderData = new ShaderData();
         shader.shaderData.code = sourceCode;
+
         shader.compile(shader.shaderData);
 
         return shader;
@@ -211,7 +213,7 @@ public class Shader implements Serializable
                     .append("\n");
         }
 
-        Log.CurrentSession.println("defines: " + shaderDefinesStringBuilder, Log.MessageType.SUCCESS);
+        //Log.CurrentSession.println("defines: " + shaderDefinesStringBuilder, Log.MessageType.SUCCESS);
 
         // сделать легкое изменения версии шейдера
         OpenGL.glCall((params) -> glShaderSource(shaderPartHandler, "#version 400\n" + shaderDefinesStringBuilder + shaderSourceCode));
@@ -382,7 +384,15 @@ public class Shader implements Serializable
         destroy();
 
         programHandler = shader.programHandler;
+
+        shaderUniforms.addAll(shader.shaderUniforms);
         shaderPartsHandlers.putAll(shader.shaderPartsHandlers);
+
+        for(ShaderDefine shaderDefine : shader.shaderDefines) {
+            addShaderDefine(shaderDefine);
+        }
+        //shaderDefines.addAll(shader.shaderDefines);
+
         path = shader.path;
         shaderData = shader.shaderData;
     }
@@ -396,6 +406,20 @@ public class Shader implements Serializable
                 shaderUniform.apply(programHandler);
             }
         }
+    }
+
+    public ShaderDefine getShaderDefine(String name)
+    {
+        return shaderDefines.stream().filter(shaderDefine -> shaderDefine.name.equals(name)).findFirst().orElse(null);
+    }
+
+    public void addShaderDefine(ShaderDefine shaderDefine)
+    {
+        ShaderDefine foundDefine = getShaderDefine(shaderDefine.name);
+
+        if(foundDefine != null) return;
+
+        shaderDefines.add(shaderDefine);
     }
 
     public int getShaderPartHandler(int shaderTypePart) { return shaderPartsHandlers.get(shaderTypePart); }

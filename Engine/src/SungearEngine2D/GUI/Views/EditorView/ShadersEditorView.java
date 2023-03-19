@@ -15,6 +15,7 @@ import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
 import imgui.ImGui;
+import imgui.ImVec2;
 import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiStyleVar;
 import imgui.type.ImBoolean;
@@ -111,6 +112,7 @@ public class ShadersEditorView extends View
 
                 ImGui.pushStyleVar(ImGuiStyleVar.WindowPadding, 0f, 0f);
                 ImGui.begin(new File(shader.path).getName(), opened);
+
                 ImGui.popStyleVar();
 
                 ImGui.dockSpace(dockspaceID);
@@ -122,6 +124,14 @@ public class ShadersEditorView extends View
 
                 ImGui.setNextWindowDockID(dockspaceID);
                 if(ImGui.begin("Uniforms")) {
+                    ImVec2 uniformsWindowSizeAvail = ImGui.getContentRegionAvail();
+
+                    if(ImGui.button("Compile")) {
+                        Compiler.addShaderToCompile(shader);
+                    }
+
+                    ImGui.beginChild("UniformsChild", uniformsWindowSizeAvail.x, uniformsWindowSizeAvail.y - 23f, true);
+
                     for (Shader.ShaderUniform shaderUniform : shader.getShaderUniforms()) {
                         boolean isSampler = shaderUniform.getType() == GL46C.GL_SAMPLER_1D ||
                                 shaderUniform.getType() == GL46C.GL_SAMPLER_2D ||
@@ -162,32 +172,45 @@ public class ShadersEditorView extends View
                                     ShaderUniformFloatComponent.class);
                         }
                     }
+
+                    ImGui.endChild();
                 }
 
                 ImGui.end();
 
                 ImGui.setNextWindowDockID(dockspaceID);
                 if(ImGui.begin("Defines")) {
+                    ImVec2 definesWindowSizeAvail = ImGui.getContentRegionAvail();
+
+                    if(ImGui.button("Compile")) {
+                        Compiler.addShaderToCompile(shader);
+                    }
+
+                    ImGui.beginChild("DefinesChild", definesWindowSizeAvail.x, definesWindowSizeAvail.y - 23f, true);
+
+                    ImVec2 definesWindowChildSizeAvail = ImGui.getContentRegionAvail();
+
                     Iterator<Shader.ShaderDefine> shaderDefinesIterator = shader.getShaderDefines().iterator();
                     while (shaderDefinesIterator.hasNext()) {
                         Shader.ShaderDefine shaderDefine = shaderDefinesIterator.next();
+
+                        // 45%
+                        ImGui.setNextItemWidth(definesWindowChildSizeAvail.x * 45f / 100f);
 
                         shaderDefine.name = ImGuiUtils.inputText("", shaderDefine.name, "ShaderDefine_" + shaderDefine);
 
                         ImGui.sameLine();
 
-                        //ImGui.dragInt()
+                        // 45%
+                        ImGui.setNextItemWidth(definesWindowChildSizeAvail.x * 45f / 100f);
 
                         shaderDefine.value = ImGuiUtils.dragInt("", shaderDefine.value, "ShaderDefine_" + shaderDefine + "_Value");
                     }
+
+                    ImGui.endChild();
                 }
 
                 ImGui.end();
-
-                if(ImGui.button("Compile")) {
-                    Compiler.addShaderToCompile(shader);
-                    //shader.compile(shader.getShaderData());
-                }
 
                 ImGui.end();
             }

@@ -28,8 +28,8 @@
                 "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
                 "properties": {
                   "position": {
-                    "x": 0.0,
-                    "y": 74.8052
+                    "x": -12.104033,
+                    "y": 43.120598
                   },
                   "rotation": 0.0,
                   "scale": {
@@ -37,7 +37,7 @@
                     "y": 14.4
                   },
                   "centre": {
-                    "x": -6.53442,
+                    "x": 0.0,
                     "y": 0.0
                   },
                   "ID": 0,
@@ -53,7 +53,6 @@
                   },
                   "shader": {
                     "path": "/data/shaders/mesh/default_shader.glsl",
-                    "lastModified": -1,
                     "shaderUniforms": [
                       {
                         "name": "mvpMatrix",
@@ -266,7 +265,6 @@
                   },
                   "shader": {
                     "path": "shaders\\Sample.glsl",
-                    "lastModified": -1,
                     "shaderUniforms": [
                       {
                         "name": "mvpMatrix",
@@ -328,7 +326,7 @@
                     "shaderDefines": [
                       {
                         "name": "FLIP_TEXTURES_Y",
-                        "value": 1
+                        "value": 0
                       }
                     ]
                   },
@@ -360,9 +358,41 @@
                   "render": true,
                   "postprocessingDefaultShader": {
                     "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
-                    "lastModified": -1,
-                    "shaderUniforms": [],
-                    "shaderDefines": []
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 0
+                      }
+                    ]
                   },
                   "postprocessingLayers": [
                     {
@@ -370,9 +400,9 @@
                       "render": true,
                       "overlay": true,
                       "frameBuffer": {
-                        "handler": 6,
-                        "RBOHandler": 3,
-                        "textureHandler": 38,
+                        "handler": 11,
+                        "RBOHandler": 8,
+                        "textureHandler": 50,
                         "type": 2,
                         "width": 2560,
                         "height": 1440,
@@ -383,7 +413,6 @@
                       },
                       "shader": {
                         "path": "shaders\\SlaysPPShader.glsl",
-                        "lastModified": -1,
                         "shaderUniforms": [
                           {
                             "name": "color",
@@ -426,9 +455,9 @@
                       "render": true,
                       "overlay": false,
                       "frameBuffer": {
-                        "handler": 7,
-                        "RBOHandler": 4,
-                        "textureHandler": 39,
+                        "handler": 12,
+                        "RBOHandler": 9,
+                        "textureHandler": 51,
                         "type": 2,
                         "width": 2560,
                         "height": 1440,
@@ -439,7 +468,6 @@
                       },
                       "shader": {
                         "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
-                        "lastModified": -1,
                         "shaderUniforms": [
                           {
                             "name": "color",
@@ -482,9 +510,9 @@
                       "render": false,
                       "overlay": true,
                       "frameBuffer": {
-                        "handler": 8,
-                        "RBOHandler": 5,
-                        "textureHandler": 40,
+                        "handler": 13,
+                        "RBOHandler": 10,
+                        "textureHandler": 52,
                         "type": 2,
                         "width": 2560,
                         "height": 1440,
@@ -495,7 +523,6 @@
                       },
                       "shader": {
                         "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
-                        "lastModified": -1,
                         "shaderUniforms": [
                           {
                             "name": "color",
@@ -686,7 +713,6 @@
                   },
                   "shader": {
                     "path": "/data/shaders/mesh/default_shader.glsl",
-                    "lastModified": -1,
                     "shaderUniforms": [
                       {
                         "name": "mvpMatrix",
@@ -837,7 +863,7 @@
     }
   ],
   "scriptSystem": {},
-  "maxObjectID": 138,
+  "maxObjectID": 180,
   "inBuild": false,
   "isMainScene2D": false
 }

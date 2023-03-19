@@ -20,6 +20,7 @@ import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.Graphics.Graphics;
+import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.PostprocessingLayer;
@@ -137,36 +138,38 @@ public class Main
 
                             for(Asset asset : AssetManager.getInstance().getAssets()) {
                                 if(asset.getAssetObject() instanceof ScriptData scriptData) {
-                                    if(scriptData.lastModified != scriptData.getScriptFileLastModified()) {
-                                        scriptData.lastModified = scriptData.getScriptFileLastModified();
+                                    long fileLastModified = scriptData.getScriptFileLastModified();
+                                    if(scriptData.lastModified != fileLastModified) {
+                                        scriptData.lastModified = fileLastModified;
 
                                         EngineSettings.Playmode.canEnterPlaymode = false;
 
                                         String scriptPath = scriptData.getPath();
 
-                                        for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
-                                            for(Component component : componentsQuery.getComponents()) {
-                                                if(!(component instanceof ScriptComponent scriptComponent) ||
-                                                        !(scriptComponent.script.path.equals(scriptPath))) continue;
+                                        ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
+                                            public void run() {
+                                                if (currentSceneManager.getCurrentScene2D() == null) return;
+                                                boolean compiled = Compiler.compileScript(scriptData.getAbsolutePath().replace(".class", ".java"));
 
-                                                ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
-                                                    public void run() {
-                                                        if (currentSceneManager.getCurrentScene2D() == null) return;
+                                                AssetManager.getInstance().reloadAsset(scriptData.getPath(), ScriptData.class);
+
+                                                for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
+                                                    for (Component component : componentsQuery.getComponents()) {
+                                                        if (!(component instanceof ScriptComponent scriptComponent) ||
+                                                                !(scriptComponent.script.path.equals(scriptPath))) continue;
+
                                                         scriptComponent.script.saveTempValues();
 
-                                                        boolean compiled = Compiler.compileScript(scriptData.getAbsolutePath().replace(".class", ".java"));
+                                                        if (!compiled) continue;
 
-                                                        AssetManager.getInstance().reloadAsset(scriptData.getPath(), ScriptData.class);
-
-                                                        if (compiled) {
-                                                            scriptComponent.script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(), scriptPath, FilenameUtils.getBaseName(new File(scriptPath).getName()).replace("\\\\/", "."));
-                                                        }
+                                                        scriptComponent.script.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(), scriptPath,
+                                                                FilenameUtils.getBaseName(new File(scriptPath).getName()).replace("\\\\/", "."));
 
                                                         scriptComponent.script.applyTempValues();
                                                     }
-                                                });
+                                                }
                                             }
-                                        }
+                                        });
                                     }
                                 } else if(asset.getAssetObject() instanceof ShaderData shaderData) {
                                     if(shaderData.lastModified != shaderData.getScriptFileLastModified()) {
@@ -209,15 +212,15 @@ public class Main
 
                 onlyColorShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/common/only_color_shader.glsl"));
 
-                glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-                glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE);
+                OpenGL.glCall(func -> glStencilFunc(GL_NOTEQUAL, 1, 0xFF));
+                OpenGL.glCall(func -> glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE));
                 mainCamera2D.getComponent(Camera2DComponent.class).camera2DCallbacks.add(new Camera2DComponent.Camera2DCallback() {
                     @Override
                     public void preRender()
                     {
                         if(ViewsManager.getInspectorView().getCurrentInspectingObject() != null) {
                             // обработка стенсил буфера отключена
-                            glStencilMask(0x00);
+                            OpenGL.glCall(func -> glStencilMask(0x00));
 
                             ((Entity) ViewsManager.getInspectorView().getCurrentInspectingObject()).active = false;
                         }
@@ -231,8 +234,8 @@ public class Main
                             inspectingEntity.active = true;
 
                             // первый проход рендера - отрисовывается объект в стенсил буфер и заполняется единицами
-                            glStencilFunc(GL_ALWAYS, 1, 0xFF);
-                            glStencilMask(0xFF);
+                            OpenGL.glCall(func -> glStencilFunc(GL_ALWAYS, 1, 0xFF));
+                            OpenGL.glCall(func -> glStencilMask(0xFF));
                             Graphics.getMainRenderer().render(inspectingEntity, mainCamera2DComponent);
 
                             MeshComponent meshComponent = inspectingEntity.getComponent(MeshComponent.class);
@@ -250,13 +253,13 @@ public class Main
                                 inspectingEntity.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 1.0f));
 
                                 // второй проход рендера - отрисовываю объект чуть побольше только одним цветом. все значения пикселей в стенсио буфере, которые не равняются 0xFF будут отрисованы
-                                glStencilFunc(GL_NOTEQUAL, 1, 0xFF);
-                                glStencilMask(0x00);
+                                OpenGL.glCall(func -> glStencilFunc(GL_NOTEQUAL, 1, 0xFF));
+                                OpenGL.glCall(func -> glStencilMask(0x00));
                                 Graphics.getMainRenderer().render(inspectingEntity, mainCamera2DComponent, onlyColorShader);
 
                                 // третяя обработка - все пиксели будут перезаписаны. включаю обработку стенсил буфера
-                                glStencilFunc(GL_ALWAYS, 0, 0xFF);
-                                glStencilMask(0xFF);
+                                OpenGL.glCall(func -> glStencilFunc(GL_ALWAYS, 0, 0xFF));
+                                OpenGL.glCall(func -> glStencilMask(0xFF));
 
                                 transformComponent.scale.set(lastScale);
 

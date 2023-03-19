@@ -32,6 +32,7 @@ import SungearEngine2D.GUI.ImGuiUtils;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Resources;
+import SungearEngine2D.Scripting.Compiler;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.*;
@@ -52,6 +53,7 @@ import java.util.List;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
 
+// топчик
 public class ComponentsView extends View
 {
     private boolean showPopupWindow = false;
@@ -207,6 +209,8 @@ public class ComponentsView extends View
                                     new ShadersEditorView.ShaderEditorWindow(meshComponent.getShader(), new ComponentHandler(meshComponent.entity.getLayer().getID(), meshComponent.entity.ID, meshComponent.ID))
                             );
                         }
+
+                        drawShaderDefaultBooleanDefines(meshComponent.getShader());
                     }
                     case "TextureComponent" -> {
                         TextureComponent textureComponent = (TextureComponent) currentComponent;
@@ -770,6 +774,7 @@ public class ComponentsView extends View
                             }
                             ImGui.popID();
 
+                            drawShaderDefaultBooleanDefines(camera2DComponent.postprocessingDefaultShader);
 
                             int k = 0;
 
@@ -852,7 +857,11 @@ public class ComponentsView extends View
                                             }
                                         }
 
-                                        ImGui.newLine();
+                                        //ImGui.newLine();
+
+                                        drawShaderDefaultBooleanDefines(ppLayer.getShader());
+
+                                        ImGui.separator();
 
                                         ImGui.pushID("RemovePPLayer" + k + "_" + i);
                                         if (ImGui.button("Remove")) {
@@ -1013,6 +1022,24 @@ public class ComponentsView extends View
                     ImGui.endListBox();
                 }
             }
+            ImGui.popID();
+        }
+    }
+
+    private void drawShaderDefaultBooleanDefines(Shader shader)
+    {
+        Shader.ShaderDefine flipTexturesYDefine = shader.getShaderDefine("FLIP_TEXTURES_Y");
+        if(flipTexturesYDefine != null) {
+            ImGui.newLine();
+
+            ImGui.pushID(shader.toString());
+
+            if (ImGui.checkbox("Flip textures Y", flipTexturesYDefine.value == 1)) {
+                flipTexturesYDefine.value = flipTexturesYDefine.value == 0 ? 1 : 0;
+
+                Compiler.addShaderToCompile(shader);
+            }
+
             ImGui.popID();
         }
     }

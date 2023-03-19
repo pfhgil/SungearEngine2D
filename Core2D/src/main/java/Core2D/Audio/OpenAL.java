@@ -45,52 +45,17 @@ public class OpenAL
         AL11.alDistanceModel(AL11.AL_INVERSE_DISTANCE_CLAMPED);
     }
 
-    /*
-    public static void alCall(Consumer<Object[]> func, int idToCheck)
-    {
-        if (idToCheck != -1) {
-            if (!AL10.alIsSource(idToCheck) || !AL10.alIsBuffer(idToCheck)) {
-                return;
-            }
-        }
-        func.accept(null);
-        checkForALErrors();
-    }
-
-     */
-
     public static void alCall(Consumer<Object[]> func)
     {
-        /*
-        alCall(func, -1);
-
-         */
         func.accept(null);
         checkForALErrors();
     }
 
-    /*
-    public static <T> T alCall(Function<Object[], ?> func, Class<T> toClass, int idToCheck)
-    {
-        if (idToCheck != -1) {
-            if (!AL10.alIsSource(idToCheck) || !AL10.alIsBuffer(idToCheck)) {
-                return toClass.cast(-1);
-            }
-        }
-
-        Object obj = func.apply(null);
-        checkForALErrors();
-        return toClass.cast(obj);
-    }
-
-
-     */
     public static <T> T alCall(Function<Object[], ?> func, Class<T> toClass)
     {
         Object obj = func.apply(null);
         checkForALErrors();
         return toClass.cast(obj);
-        //return alCall(func, toClass, -1);
     }
 
     public static void checkForALErrors()
@@ -106,7 +71,7 @@ public class OpenAL
                 default -> "Unknown error.";
             };
 
-            //Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("OpenAL error: " + stringErr + " (code: " + errCode + "). ")), Log.MessageType.ERROR);
+            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("OpenAL error: " + stringErr + " (code: " + errCode + "). ")), Log.MessageType.ERROR);
         }
     }
 }

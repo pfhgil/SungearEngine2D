@@ -1,5 +1,6 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
+import Core2D.AssetManager.AssetManager;
 import Core2D.ECS.Entity;
 import Core2D.Log.Log;
 import Core2D.Prefab.Prefab;
@@ -112,18 +113,6 @@ public class ResourcesView extends View
                 if(object instanceof Entity entity) {
                     Prefab prefab = new Prefab(entity);
                     prefab.save(currentDirectoryPath + "\\" + entity.name + ".sgopref");
-
-                    /*
-                    Gson gson = new GsonBuilder()
-                            .setPrettyPrinting()
-                            .registerTypeAdapter(WrappedObject.class, new WrappedObjectDeserializer())
-                            .registerTypeAdapter(Component.class, new ComponentDeserializer())
-                            .registerTypeAdapter(Object2D.class, new Object2DDeserializer())
-                            .create();
-                    String serializedObject2D = gson.toJson(object2D);
-                    FileUtils.serializeObject(currentDirectoryPath + "\\" + object2D.getName() + ".sgopref", serializedObject2D);
-
-                     */
                 }
                 ImGui.endDragDropTarget();
             }
@@ -425,6 +414,7 @@ public class ResourcesView extends View
                         import Core2D.ECS.System.Systems.*;
                         import Core2D.Scripting.*;
                         import Core2D.Log.*;
+                        import Core2D.Graphics.RenderParts.*;
                         
                         // Attention! We do not recommend writing logic in components. Try to declare only fields in components.
                         public class %s extends Component
@@ -480,6 +470,7 @@ public class ResourcesView extends View
                         import Core2D.ECS.System.Systems.*;
                         import Core2D.Scripting.*;
                         import Core2D.Log.*;
+                        import Core2D.Graphics.RenderParts.*;
                         
                         // Attention! Do not declare fields with the @InspectorView annotation in systems. They will not be processed and shown in the Inspector.
                         public class %s extends System
@@ -530,77 +521,85 @@ public class ResourcesView extends View
             } else if(fileType.equals("GLSL.MeshComplexShader")) {
                 fileString =
                         """
-                        // ATTENTION: do not write the shader version!
-                        #ifdef VERTEX
-                            layout (location = 0) in vec2 positionAttribute;
-                            layout (location = 1) in vec2 textureCoordsAttribute;
-    
-                            uniform mat4 mvpMatrix;
-    
-                            out vec2 vs_textureCoords;
-    
-                            void main()
-                            {
-                                vs_textureCoords = textureCoordsAttribute;
-                            
-                                gl_Position = mvpMatrix * vec4(positionAttribute, 0.0, 1.0);
-                            }
-                        #endif
+                                // ATTENTION: do not write the shader version!
+                                #ifdef VERTEX
+                                    layout (location = 0) in vec2 positionAttribute;
+                                    layout (location = 1) in vec2 textureCoordsAttribute;
+                                    
+                                    uniform mat4 mvpMatrix;
+                                    
+                                    out vec2 vs_textureCoords;
+                                    
+                                    void main()
+                                    {
+                                        vs_textureCoords = textureCoordsAttribute;
+                                    
+                                        gl_Position = mvpMatrix * vec4(positionAttribute, 0.0, 1.0);
+                                    }
+                                #endif
 
-                        #ifdef FRAGMENT
-                            out vec4 fragColor;
+                                #ifdef FRAGMENT
+                                    out vec4 fragColor;
 
-                            uniform sampler2D sampler;
+                                    uniform sampler2D sampler;
 
-                            uniform vec4 color;
+                                    uniform vec4 color;
 
-                            in vec2 vs_textureCoords;
+                                    in vec2 vs_textureCoords;
 
-                            void main()
-                            {
-                                vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y));
+                                    void main()
+                                    {
+                                        #if defined(FLIP_TEXTURES_Y) && FLIP_TEXTURES_Y == 1
+                                            vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y));
+                                        #else
+                                            vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, vs_textureCoords.y));
+                                        #endif
 
-                                fragColor = color * textureColor;
-                            }
-                        #endif
-                        """;
+                                        fragColor = color * textureColor;
+                                    }
+                                #endif
+                                """;
             } else if(fileType.equals("GLSL.PostprocessingComplexShader")) {
                 fileString =
                         """
-                        // ATTENTION: do not write the shader version!
-                        #ifdef VERTEX
-                            layout (location = 0) in vec2 positionAttribute;
-                            layout (location = 1) in vec2 textureCoordsAttribute;
-    
-                            uniform mat4 mvpMatrix;
-    
-                            out vec2 vs_textureCoords;
-    
-                            void main()
-                            {
-                                vs_textureCoords = textureCoordsAttribute;
-                            
-                                gl_Position = vec4(positionAttribute, 0.0, 1.0);
-                            }
-                        #endif
+                                // ATTENTION: do not write the shader version!
+                                #ifdef VERTEX
+                                    layout (location = 0) in vec2 positionAttribute;
+                                    layout (location = 1) in vec2 textureCoordsAttribute;
+                                    
+                                    uniform mat4 mvpMatrix;
+                                    
+                                    out vec2 vs_textureCoords;
+                                    
+                                    void main()
+                                    {
+                                        vs_textureCoords = textureCoordsAttribute;
+                                    
+                                        gl_Position = vec4(positionAttribute, 0.0, 1.0);
+                                    }
+                                #endif
 
-                        #ifdef FRAGMENT
-                            out vec4 fragColor;
+                                #ifdef FRAGMENT
+                                    out vec4 fragColor;
 
-                            uniform sampler2D sampler;
+                                    uniform sampler2D sampler;
 
-                            uniform vec4 color;
+                                    uniform vec4 color;
 
-                            in vec2 vs_textureCoords;
+                                    in vec2 vs_textureCoords;
 
-                            void main()
-                            {
-                                vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y));
-
-                                fragColor = color * textureColor;
-                            }
-                        #endif
-                        """;
+                                    void main()
+                                    {
+                                        #if defined(FLIP_TEXTURES_Y) && FLIP_TEXTURES_Y == 1
+                                            vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, 1.0 - vs_textureCoords.y));
+                                        #else
+                                            vec4 textureColor = texture(sampler, vec2(vs_textureCoords.x, vs_textureCoords.y));
+                                        #endif
+                                                
+                                        fragColor = color * textureColor;
+                                    }
+                                #endif
+                                """;
             }
 
             if(newFile.exists() && newFile.isFile()) {
@@ -610,6 +609,10 @@ public class ResourcesView extends View
                         fileString,
                         false
                 );
+
+                if(fileType.contains("Java")) {
+                    AssetManager.getInstance().getScriptData(newFile.getPath());
+                }
             }
         }
     }

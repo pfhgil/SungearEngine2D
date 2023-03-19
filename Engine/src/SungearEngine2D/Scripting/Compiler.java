@@ -16,12 +16,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Stack;
 
 public class Compiler
 {
     private static List<String> notCompiledScripts = new ArrayList<>();
 
-    private static List<Shader> shadersToCompile = new ArrayList<>();
+    private static Stack<Shader> shadersToCompile = new Stack<>();
     public static void compileAllShaders()
     {
         Iterator<Shader> shadersIterator = shadersToCompile.iterator();
@@ -59,57 +60,9 @@ public class Compiler
         });
 
         if(!shaderExists[0]) {
-            shadersToCompile.add(shader);
+            shadersToCompile.push(shader);
         }
     }
-
-    public static void checkShaderDataModified(ShaderData shaderData)
-    {
-        /*
-        if (shader != null) {
-            String shaderFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + shader.path;
-            File file = new File(shaderFullPath);
-
-            if (file.exists()) {
-                long lastModified = file.lastModified();
-                //if (lastModified != shader.lastModified) {
-                    Compiler.addShaderToCompile(shader);
-                //}
-            }
-        }
-        \
-         */
-    }
-
-    /*
-    public static void findAllShadersInClassAndCompile(Class<?> cls, Object clsInstance)
-    {
-        for(Field field : cls.getFields()) {
-            try {
-                field.setAccessible(true);
-                //System.out.println("field type: " + field.getType());
-                if (field.getType().isAssignableFrom(Shader.class)) {
-                    Shader shader = (Shader) field.get(clsInstance);
-
-                    if (shader != null) {
-                        String shaderFullPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + shader.path;
-                        File file = new File(shaderFullPath);
-
-                        if (file.exists()) {
-                            long lastModified = file.lastModified();
-                            if (lastModified != shader.lastModified) {
-                                Compiler.addShaderToCompile(shader);
-                            }
-                        }
-                    }
-                }
-            } catch (IllegalAccessException e) {
-                Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-            }
-        }
-    }
-
-     */
 
     public static boolean compileScript(String path)
     {

@@ -81,7 +81,7 @@ public class Script
                 URL scriptDirURL = file.toURI().toURL();
                 flexibleURLClassLoader.addURL(scriptDirURL);
 
-                Log.CurrentSession.println("script path: " + path, Log.MessageType.SUCCESS);
+                //Log.CurrentSession.println("script path: " + path, Log.MessageType.SUCCESS);
 
                 ScriptData scriptData = AssetManager.getInstance().getScriptData(path);
 
