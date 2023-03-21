@@ -1,18 +1,46 @@
-[#FFFFFF] 2023/03/20 01:38:01 | [#008000] Current session log file was created!
+[#FFFFFF] 2023/03/22 02:21:40 | [#008000] Current session log file was created!
 
-[#FFFFFF] 2023/03/20 01:38:01 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2023/03/22 02:21:40 | [#FFFFFF] Starting Core2D...
 
-[#FFFFFF] 2023/03/20 01:38:01 | [#008000] Core2D started!
+[#FFFFFF] 2023/03/22 02:21:40 | [#008000] Core2D started!
 
-[#FFFFFF] 2023/03/20 01:38:01 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2023/03/22 02:21:40 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
 
-[#FFFFFF] 2023/03/20 01:38:01 | [#FFFF00] ECSWorld created!
+[#FFFFFF] 2023/03/22 02:21:40 | [#FFFF00] ECSWorld created!
 
-[#FFFFFF] 2023/03/20 01:38:01 | [#FF0000] File by path 'test.txt' already exists
+[#FFFFFF] 2023/03/22 02:21:40 | [#FF0000] File by path 'test.txt' already exists
 
-[#FFFFFF] 2023/03/20 01:38:01 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2023/03/22 02:21:40 | [#FFFFFF] Initializing compiler...  
 
-[#FFFFFF] 2023/03/20 01:38:03 | [#9932CC] Called from: Core2D.ECS.ECSWorld::addComponent. Line: 53 [#FFFFFF] | [#FFFF00] Value of field 'entity' in component 'Core2D.ECS.Component.Components.Audio.AudioComponent@4b5a5ed1' is equals null. It will be added in блять забыл
+[#FFFFFF] 2023/03/22 02:21:42 | [#9932CC] Called from: Core2D.ECS.ECSWorld::addComponent. Line: 53 [#FFFFFF] | [#FFFF00] Value of field 'entity' in component 'Core2D.ECS.Component.Components.Audio.AudioComponent@48aaecc3' is equals null. It will be added in блять забыл
 
-[#FFFFFF] 2023/03/20 01:38:04 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 71 [#FFFFFF] | [#008000] vlad zhoshe: PLAYING
+[#FFFFFF] 2023/03/22 02:21:42 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 72 [#FFFFFF] | [#008000] vlad zhoshe: PLAYING
+
+[#FFFFFF] 2023/03/22 02:21:44 | [#FFFFFF] Log cleared! See log directory in the engine directory.
+
+[#FFFFFF] 2023/03/22 02:21:46 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\kakish_city.jpg
+
+[#FFFFFF] 2023/03/22 02:21:46 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\vlad.png
+
+[#FFFFFF] 2023/03/22 02:21:46 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\facts_files.png
+
+[#FFFFFF] 2023/03/22 02:21:46 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\ferapont.png
+
+[#FFFFFF] 2023/03/22 02:21:46 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources/slay.png
+
+[#FFFFFF] 2023/03/22 02:21:46 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\test.png
+
+[#FFFFFF] 2023/03/22 02:21:46 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg
+
+[#FFFFFF] 2023/03/22 02:21:47 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 72 [#FFFFFF] | [#008000] vlad zhoshe: STOPPED
+
+[#FFFFFF] 2023/03/22 02:21:53 | [#008000] scrolling
+
+[#FFFFFF] 2023/03/22 02:21:53 | [#008000] scrolling
+
+[#FFFFFF] 2023/03/22 02:21:53 | [#008000] scrolling
+
+[#FFFFFF] 2023/03/22 02:21:53 | [#008000] scrolling
+
+[#FFFFFF] 2023/03/22 02:21:57 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\SceneManager.sm' already exists
 

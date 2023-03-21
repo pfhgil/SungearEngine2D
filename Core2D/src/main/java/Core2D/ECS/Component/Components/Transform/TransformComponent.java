@@ -2,27 +2,26 @@ package Core2D.ECS.Component.Components.Transform;
 
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.NonDuplicated;
-import Core2D.ECS.NonRemovable;
 import org.joml.Matrix4f;
-import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 public class TransformComponent extends Component implements NonDuplicated
 {
     // позиция
-    public Vector2f position = new Vector2f();
+    public Vector3f position = new Vector3f();
     // поворот (по оси z)
-    public float rotation = 0.0f;
+    public Vector3f rotation = new Vector3f();
     // масштаб
-    public Vector2f scale = new Vector2f(1.0f, 1.0f);
+    public Vector3f scale = new Vector3f(1.0f);
 
     // ------------------------------------------------------ прошлые значения (на прошлом кадре)
-    public transient Vector2f lastPosition = new Vector2f();
-    public transient float lastRotation = 0.0f;
-    public transient Vector2f lastScale = new Vector2f(1.0f, 1.0f);
+    public transient Vector3f lastPosition = new Vector3f();
+    public transient Vector3f lastRotation = new Vector3f();
+    public transient Vector3f lastScale = new Vector3f(1.0f);
     // ------------------------------------------------------
 
     // цент объекта (относительно позиции объекта)
-    public Vector2f centre = new Vector2f();
+    public Vector3f center = new Vector3f();
 
     // матрица перемещения объекта
     public transient Matrix4f translationMatrix = new Matrix4f();
@@ -43,16 +42,4 @@ public class TransformComponent extends Component implements NonDuplicated
     //public transient TransformCallback transformCallback = null;
 
     public transient TransformComponent parentTransformComponent;
-
-
-
-    // ---------------------------------------------------------------------------------------------------------------------------------
-
-    @Override
-    public void deltaUpdate(float deltaTime)
-    {
-        //transform.update(deltaTime);
-    }
-
-    // ---------------------------------------------------------------------
 }

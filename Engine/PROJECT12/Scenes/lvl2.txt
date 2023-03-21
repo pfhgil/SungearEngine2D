@@ -38,7 +38,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Camera2DComponent",
+                "type": "Core2D.ECS.Component.Components.CameraComponent",
                 "properties": {
                   "viewportSize": {
                     "x": 1080.0,
@@ -176,7 +176,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Camera2DComponent",
+                "type": "Core2D.ECS.Component.Components.CameraComponent",
                 "properties": {
                   "viewportSize": {
                     "x": 1080.0,

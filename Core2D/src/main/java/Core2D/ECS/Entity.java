@@ -2,7 +2,7 @@ package Core2D.ECS;
 
 import Core2D.Core2D.Settings;
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Primitives.BoxComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
@@ -18,12 +18,10 @@ import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.MatrixUtils;
 import Core2D.Utils.Tag;
 import Core2D.Utils.Utils;
-import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.util.*;
 
 public class Entity implements Serializable, PoolObject
@@ -94,6 +92,7 @@ public class Entity implements Serializable, PoolObject
          */
     }
 
+    /*
     public void set(Entity entity)
     {
         for(var component : entity.getComponents()) {
@@ -123,12 +122,13 @@ public class Entity implements Serializable, PoolObject
         addChildrenEntities(entity.getChildrenEntities());
     }
 
+     */
+
     public static Entity createAsObject2D()
     {
         Entity entity = new Entity();
         entity.addComponent(new TransformComponent());
         entity.addComponent(new MeshComponent());
-        //entity.addSystem(new MeshRendererSystem());
 
         return entity;
     }
@@ -136,8 +136,7 @@ public class Entity implements Serializable, PoolObject
     public static Entity createAsCamera2D()
     {
         Entity entity = new Entity();
-        entity.addComponent(new TransformComponent());
-        entity.addComponent(new Camera2DComponent());
+        entity.addComponent(new CameraComponent());
 
         return entity;
     }
@@ -147,7 +146,6 @@ public class Entity implements Serializable, PoolObject
         Entity entity = new Entity();
         entity.addComponent(new TransformComponent());
         entity.addComponent(new LineComponent());
-        //entity.addSystem(new PrimitivesRendererSystem());
 
         return entity;
     }
@@ -157,7 +155,6 @@ public class Entity implements Serializable, PoolObject
         Entity entity = new Entity();
         entity.addComponent(new TransformComponent());
         entity.addComponent(new BoxComponent());
-        //entity.addSystem(new PrimitivesRendererSystem());
 
         return entity;
     }
@@ -167,7 +164,6 @@ public class Entity implements Serializable, PoolObject
         Entity entity = new Entity();
         entity.addComponent(new TransformComponent());
         entity.addComponent(new CircleComponent());
-        //entity.addSystem(new PrimitivesRendererSystem());
 
         return entity;
     }
@@ -600,10 +596,10 @@ public class Entity implements Serializable, PoolObject
                 TransformComponent parentTransformComponent = this.parentEntity.getComponent(TransformComponent.class);
 
                 transformComponent.parentTransformComponent = parentTransformComponent;
-                transformComponent.position.set(new Vector2f(transformComponent.position)
+                transformComponent.position.set(new Vector3f(transformComponent.position)
                         .mul(MatrixUtils.getScale(parentTransformComponent.modelMatrix))
                         .add(MatrixUtils.getPosition(parentTransformComponent.modelMatrix)));
-                transformComponent.scale.set(new Vector2f(transformComponent.scale).mul(MatrixUtils.getScale(parentTransformComponent.modelMatrix)));
+                transformComponent.scale.set(new Vector3f(transformComponent.scale).mul(MatrixUtils.getScale(parentTransformComponent.modelMatrix)));
 
                 this.parentEntity.removeChildEntity(this);
             }
@@ -616,8 +612,8 @@ public class Entity implements Serializable, PoolObject
             TransformComponent parentTransformComponent = this.parentEntity.getComponent(TransformComponent.class);
             transformComponent.parentTransformComponent = parentTransformComponent;
             java.lang.System.out.println("attached parent transformComponent: " + parentTransformComponent);
-            transformComponent.position.set(new Vector2f(transformComponent.position).add(MatrixUtils.getPosition(parentTransformComponent.modelMatrix).negate()));
-            transformComponent.scale.set(new Vector2f(transformComponent.scale).div(MatrixUtils.getScale(parentTransformComponent.modelMatrix)));
+            transformComponent.position.set(new Vector3f(transformComponent.position).add(MatrixUtils.getPosition(parentTransformComponent.modelMatrix).negate()));
+            transformComponent.scale.set(new Vector3f(transformComponent.scale).div(MatrixUtils.getScale(parentTransformComponent.modelMatrix)));
         } else {
             this.parentEntityID = -1;
             getComponent(TransformComponent.class).parentTransformComponent = null;

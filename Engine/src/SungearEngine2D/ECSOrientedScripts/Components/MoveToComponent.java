@@ -1,4 +1,4 @@
-package SungearEngine2D.Scripts.Components;
+package SungearEngine2D.ECSOrientedScripts.Components;
 
 import Core2D.ECS.Component.Component;
 import org.joml.Vector2f;
@@ -9,5 +9,6 @@ public class MoveToComponent extends Component
     public Vector2f destinationPosition = new Vector2f();
     public float ration = 10f;
 
+    // погрешность
     public float errorRate = 0.01f;
 }

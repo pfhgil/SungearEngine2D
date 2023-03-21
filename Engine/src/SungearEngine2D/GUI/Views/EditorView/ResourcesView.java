@@ -445,16 +445,16 @@ public class ResourcesView extends View
                             
                             }
                             
-                            // camera2DComponent - the camera that renders this entity.
+                            // cameraComponent - the camera that renders this entity.
                             @Override
-                            public void render(Camera2DComponent camera2DComponent)
+                            public void render(Camera2DComponent cameraComponent)
                             {
                             
                             }
                             
                             // Use the "shader" parameter to render this entity.
                             @Override
-                            public void render(Camera2DComponent camera2DComponent, Shader shader)
+                            public void render(Camera2DComponent cameraComponent, Shader shader)
                             {
                             
                             }
@@ -501,16 +501,16 @@ public class ResourcesView extends View
                             
                             }
                             
-                            // camera2DComponent - the camera that renders this entity.
+                            // cameraComponent - the camera that renders this entity.
                             @Override
-                            public void render(Camera2DComponent camera2DComponent)
+                            public void render(Camera2DComponent cameraComponent)
                             {
                             
                             }
                             
                             // Use the "shader" parameter to render this entity.
                             @Override
-                            public void render(Camera2DComponent camera2DComponent, Shader shader)
+                            public void render(Camera2DComponent cameraComponent, Shader shader)
                             {
                             
                             }

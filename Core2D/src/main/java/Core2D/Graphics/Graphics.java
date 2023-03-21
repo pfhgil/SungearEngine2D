@@ -3,7 +3,7 @@ package Core2D.Graphics;
 import Core2D.Audio.AudioListener;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.OpenGL.FrameBuffer;
 import Core2D.Graphics.OpenGL.OpenGL;
@@ -27,14 +27,7 @@ import static org.lwjgl.opengl.GL13.GL_TEXTURE0;
 
 public abstract class Graphics
 {
-    public enum ViewMode
-    {
-        VIEW_MODE_2D,
-        VIEW_MODE_3D
-    }
     protected static int totalIterations = 0;
-
-    private static ViewMode viewMode = ViewMode.VIEW_MODE_2D;
 
     private static FrameBuffer pickingRenderTarget;
 
@@ -137,7 +130,7 @@ public abstract class Graphics
     }
 
     // полуячить выбранный мышкой объект
-    public static Entity getPickedObject2D(Camera2DComponent camera2DComponent, Vector2f oglPosition)
+    public static Entity getPickedEntity(CameraComponent cameraComponent, Vector2f oglPosition)
     {
         pickingRenderTarget.bind();
         pickingRenderTarget.clear();
@@ -149,7 +142,7 @@ public abstract class Graphics
 
         OpenGL.glCall((params) -> glDisable(GL_BLEND));
 
-        SceneManager.currentSceneManager.drawCurrentScene2DPicking(camera2DComponent);
+        SceneManager.currentSceneManager.drawCurrentScene2DPicking(cameraComponent);
 
         Vector4f selectedPixelColor = getPixelColor(oglPosition);
 
@@ -159,33 +152,6 @@ public abstract class Graphics
         pickingRenderTarget.unBind();
 
         return SceneManager.currentSceneManager.getPickedObject2D(selectedPixelColor);
-    }
-
-    public static ViewMode getViewMode() { return viewMode; }
-    @Deprecated
-    // TODO: delete this
-    public static void setViewMode(ViewMode newViewMode)
-    {
-        /*
-        viewMode = newViewMode;
-        if(CamerasManager.mainCamera2D != null) {
-            Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
-            if(camera2DComponent == null) return;
-            if (viewMode == ViewMode.VIEW_MODE_2D) {
-                camera2DComponent.setViewportSize(new Vector2f(Core2D.getWindow().getSize().x, Core2D.getWindow().getSize().y));
-                //projectionMatrix = new Matrix4f().ortho2D(0, Core2D.getWindow().getSize().x, 0, Core2D.getWindow().getSize().y);
-            } else if (viewMode == ViewMode.VIEW_MODE_3D) {
-                // сделать настройки более гибкими
-                camera2DComponent.getProjectionMatrix().perspective(
-                        (float) Math.toRadians(90.0f),
-                        (float) Core2D.getWindow().getSize().x / Core2D.getWindow().getSize().y,
-                        0.1f,
-                        250.0f
-                );
-            }
-        }
-
-         */
     }
 
     public static FrameBuffer getPickingRenderTarget() { return pickingRenderTarget; }

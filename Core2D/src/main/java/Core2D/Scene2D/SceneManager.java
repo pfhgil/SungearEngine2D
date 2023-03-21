@@ -3,7 +3,7 @@ package Core2D.Scene2D;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.Core2D.Settings;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
@@ -39,9 +39,9 @@ public class SceneManager
     public static SceneManager currentSceneManager = new SceneManager();
 
     // рисует все объекты разными цветами при выборке объектов
-    public void drawCurrentScene2DPicking(Camera2DComponent camera2DComponent)
+    public void drawCurrentScene2DPicking(CameraComponent cameraComponent)
     {
-        if(currentScene2D != null) currentScene2D.drawPicking(camera2DComponent);
+        if(currentScene2D != null) currentScene2D.drawPicking(cameraComponent);
     }
 
     public Entity getPickedObject2D(Vector4f pixelColor)

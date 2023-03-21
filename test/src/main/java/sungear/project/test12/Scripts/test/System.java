@@ -1,6 +1,6 @@
 package sungear.project.test12.Scripts.test;
 
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.RenderParts.Shader;
 
@@ -52,7 +52,7 @@ public class System<T extends Component>
         }
     }
 
-    public void render(Camera2DComponent camera2DComponent)
+    public void render(CameraComponent cameraComponent)
     {
         for(Component component : componentsToProcess) {
             //if(typeOfComponentsToProcess.isAssignableFrom(component.getClass())) {
@@ -61,7 +61,7 @@ public class System<T extends Component>
         }
     }
 
-    public void render(Camera2DComponent camera2DComponent, Shader shader)
+    public void render(CameraComponent cameraComponent, Shader shader)
     {
         for(Component component : componentsToProcess) {
             //if(typeOfComponentsToProcess.isAssignableFrom(component.getClass())) {

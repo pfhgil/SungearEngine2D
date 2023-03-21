@@ -13,6 +13,7 @@ import Core2D.ECS.System.System;
 import Core2D.Log.Log;
 import Core2D.Utils.MatrixUtils;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.openal.AL11;
 
@@ -45,11 +46,11 @@ public class AudioSystem extends System
 
                 // если аудио звучит в мировом пространстве
                 if (audioComponent.type == AudioType.WORLDSPACE && transformComponent != null) {
-                    Vector2f position = MatrixUtils.getPosition(transformComponent.modelMatrix);
+                    Vector3f position = MatrixUtils.getPosition(transformComponent.modelMatrix);
 
-                    OpenAL.alCall((params) -> AL10.alSource3f(audioComponent.sourceHandler, AL10.AL_POSITION, position.x, position.y, 0f));
+                    OpenAL.alCall((params) -> AL10.alSource3f(audioComponent.sourceHandler, AL10.AL_POSITION, position.x, position.y, position.z));
 
-                    float distance = position.distance(new Vector2f(AudioListener.getPosition().x, AudioListener.getPosition().y));
+                    float distance = position.distance(AudioListener.getPosition());
 
                     float[] gain = {Math.max(0.0f, 1.0f - distance / audioComponent.maxDistance) * (audioComponent.volumePercent / 100.0f)};
 
@@ -89,6 +90,11 @@ public class AudioSystem extends System
                 }
             }
         }
+    }
+
+    @Override
+    public void deltaUpdate(ComponentsQuery componentsQuery, float deltaTime) {
+
     }
 
     public AudioComponent createAudioComponent(AudioData audioData)

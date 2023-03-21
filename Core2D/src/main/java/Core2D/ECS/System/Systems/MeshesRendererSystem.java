@@ -1,6 +1,6 @@
 package Core2D.ECS.System.Systems;
 
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
@@ -17,33 +17,39 @@ import static org.lwjgl.opengl.GL11C.*;
 public class MeshesRendererSystem extends System implements NonRemovable
 {
     @Override
-    public void renderEntity(Entity entity, Camera2DComponent camera2DComponent)
-    {
-        renderMeshComponent(entity,  camera2DComponent,null);
+    public void update(ComponentsQuery componentsQuery) {
+
     }
 
     @Override
-    public void renderEntity(Entity entity, Camera2DComponent camera2DComponent, Shader shader)
+    public void deltaUpdate(ComponentsQuery componentsQuery, float deltaTime) {
+
+    }
+
+    @Override
+    public void renderEntity(Entity entity, CameraComponent cameraComponent)
     {
-        renderMeshComponent(entity, camera2DComponent, shader);
+        renderMeshComponent(entity, cameraComponent,null);
+    }
+
+    @Override
+    public void renderEntity(Entity entity, CameraComponent cameraComponent, Shader shader)
+    {
+        renderMeshComponent(entity, cameraComponent, shader);
     }
 
     //private void renderMeshComponent(Camera2DComponent camera2DComponent, TransformComponent transformComponent, MeshComponent meshComponent, Shader shader)
-    private void renderMeshComponent(Entity entity, Camera2DComponent camera2DComponent, Shader shader)
+    private void renderMeshComponent(Entity entity, CameraComponent cameraComponent, Shader shader)
     {
         if(entity == null) return;
         MeshComponent meshComponent = entity.getComponent(MeshComponent.class);
         TransformComponent transformComponent = entity.getComponent(TransformComponent.class);
-        //Camera2DComponent camera2DComponent = componentsQuery.getComponent(Camera2DComponent.class);
-        //Log.CurrentSession.println("2 passed: " + componentsQuery.entityID + ", mesh: " + meshComponent + ", transform: " + transformComponent + ", cam: " + camera2DComponent, Log.MessageType.ERROR);
-        if(meshComponent == null || transformComponent == null || camera2DComponent == null ||
-        !meshComponent.active || !transformComponent.active || !camera2DComponent.active) return;
+        if(meshComponent == null || transformComponent == null || cameraComponent == null ||
+        !meshComponent.active || !transformComponent.active || !cameraComponent.active) return;
 
         if(shader == null) {
             shader = meshComponent.getShader();
         }
-
-        //Log.CurrentSession.println("3 passed: " + componentsQuery.entityID, Log.MessageType.ERROR);
 
         // использую VAO, текстуру и шейдер
         meshComponent.getVertexArrayObject().bind();
@@ -56,7 +62,7 @@ public class MeshesRendererSystem extends System implements NonRemovable
         ShaderUtils.setUniform(
                 shader.getProgramHandler(),
                 "mvpMatrix",
-                ECSWorld.getCurrentECSWorld().transformationsSystem.getMVPMatrix(transformComponent, camera2DComponent)
+                ECSWorld.getCurrentECSWorld().transformationsSystem.getMVPMatrix(transformComponent, cameraComponent)
         );
         ShaderUtils.setUniform(
                 shader.getProgramHandler(),

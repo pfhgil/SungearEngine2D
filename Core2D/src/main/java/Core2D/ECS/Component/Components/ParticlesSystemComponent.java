@@ -54,7 +54,7 @@ public class ParticlesSystemComponent extends ScriptComponent
 
                 //System.out.println(exampleGameObject);
                 if(exampleEntity != null) {
-                    freeParticle.set(exampleEntity);
+                    //freeParticle.set(exampleEntity);
                 }
 
                 freeParticle.setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));

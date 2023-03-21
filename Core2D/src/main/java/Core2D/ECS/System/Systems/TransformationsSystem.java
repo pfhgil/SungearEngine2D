@@ -1,24 +1,14 @@
 package Core2D.ECS.System.Systems;
 
-import Core2D.Debug.DebugDraw;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
-import Core2D.Log.Log;
 import Core2D.Physics.PhysicsWorld;
-import Core2D.Scene2D.SceneManager;
-import imgui.ImGui;
-import org.jbox2d.callbacks.RayCastCallback;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.Fixture;
+import org.joml.*;
 import org.joml.Math;
-import org.joml.Matrix4f;
-import org.joml.Quaternionf;
-import org.joml.Vector2f;
-
-import javax.swing.*;
 
 public class TransformationsSystem extends System
 {
@@ -36,30 +26,36 @@ public class TransformationsSystem extends System
             // если TransformComponent был изменен, то сначала обновляется трансформ rigidbody2d
             // высчитывается разница между прошлым TransformComponent и текущим и разница добавляется к трансформу тела
             if(rigidbody2DComponent != null) {
-                Vector2f posDif = new Vector2f(transformComponent.position).add(new Vector2f(transformComponent.lastPosition).negate());
-                float rotDif = transformComponent.rotation - transformComponent.lastRotation;
-
-                Vec2 bodyPos = rigidbody2DComponent.getRigidbody2D().getBody().getPosition();
-                float bodyRot = rigidbody2DComponent.getRigidbody2D().getBody().getAngle();
-
-                rigidbody2DComponent.getRigidbody2D().getBody().setTransform(bodyPos.add(new Vec2(posDif.x / PhysicsWorld.RATIO, posDif.y / PhysicsWorld.RATIO)),
-                        bodyRot + Math.toRadians(rotDif));
-
-                bodyPos = rigidbody2DComponent.getRigidbody2D().getBody().getPosition();
-                bodyRot = rigidbody2DComponent.getRigidbody2D().getBody().getAngle();
-
-                Vector2f dif = new Vector2f(bodyPos.x * PhysicsWorld.RATIO - transformComponent.position.x,
-                        bodyPos.y * PhysicsWorld.RATIO - transformComponent.position.y);
-                float rDif = (float) Math.toDegrees(bodyRot) - transformComponent.rotation;
-
-                transformComponent.position.add(dif);
-                transformComponent.rotation += rDif;
+                updateRigidbody2D(transformComponent, rigidbody2DComponent);
             }
 
             if(hasTransformComponentChanged(transformComponent)) {
                 updateTransformComponent(transformComponent);
             }
         }
+    }
+
+    // for 2d (box2d)
+    public void updateRigidbody2D(TransformComponent transformComponent, Rigidbody2DComponent rigidbody2DComponent)
+    {
+        Vector3f posDif = new Vector3f(transformComponent.position).add(new Vector3f(transformComponent.lastPosition).negate());
+        float rotDifZ = transformComponent.rotation.z - transformComponent.lastRotation.z;
+
+        Vec2 bodyPos = rigidbody2DComponent.getRigidbody2D().getBody().getPosition();
+        float bodyRot = rigidbody2DComponent.getRigidbody2D().getBody().getAngle();
+
+        rigidbody2DComponent.getRigidbody2D().getBody().setTransform(bodyPos.add(new Vec2(posDif.x / PhysicsWorld.RATIO, posDif.y / PhysicsWorld.RATIO)),
+                bodyRot + Math.toRadians(rotDifZ));
+
+        bodyPos = rigidbody2DComponent.getRigidbody2D().getBody().getPosition();
+        bodyRot = rigidbody2DComponent.getRigidbody2D().getBody().getAngle();
+
+        Vector2f dif = new Vector2f(bodyPos.x * PhysicsWorld.RATIO - transformComponent.position.x,
+                bodyPos.y * PhysicsWorld.RATIO - transformComponent.position.y);
+        float box2DRotDifZ = (float) Math.toDegrees(bodyRot) - transformComponent.rotation.z;
+
+        transformComponent.position.add(new Vector3f(dif.x, dif.y, 0f));
+        transformComponent.rotation.z += box2DRotDifZ;
     }
 
     @Override
@@ -73,7 +69,7 @@ public class TransformationsSystem extends System
         if(!active || !transformComponent.active) return false;
 
         return !transformComponent.position.equals(transformComponent.lastPosition) ||
-                transformComponent.rotation != transformComponent.lastRotation ||
+                !transformComponent.rotation.equals(transformComponent.lastRotation) ||
                 !transformComponent.scale.equals(transformComponent.lastScale);
     }
 
@@ -95,7 +91,7 @@ public class TransformationsSystem extends System
         if(!updateLastTransformations) return;
 
         transformComponent.lastPosition.set(transformComponent.position);
-        transformComponent.lastRotation = transformComponent.rotation;
+        transformComponent.lastRotation.set(transformComponent.rotation);
         transformComponent.lastScale.set(transformComponent.scale);
     }
 
@@ -117,21 +113,21 @@ public class TransformationsSystem extends System
         if(!active || transformComponent.position.equals(transformComponent.lastPosition) || !transformComponent.active) return;
 
         //transformComponent.translationMatrix.identity();
-        transformComponent.translationMatrix.setTranslation(transformComponent.position.x, transformComponent.position.y, 0.0f);
+        transformComponent.translationMatrix.setTranslation(transformComponent.position.x, transformComponent.position.y, transformComponent.position.z);
     }
 
     public void updateRotationMatrix(TransformComponent transformComponent)
     {
-        if(!active || transformComponent.rotation == transformComponent.lastRotation || !transformComponent.active) return;
+        if(!active || transformComponent.rotation.equals(transformComponent.lastRotation) || !transformComponent.active) return;
 
         transformComponent.rotationMatrix.identity();
         Quaternionf rotationQ = new Quaternionf();
 
-        rotationQ.rotateLocalX(Math.toRadians(0));
-        rotationQ.rotateLocalY(Math.toRadians(0));
-        rotationQ.rotateLocalZ(Math.toRadians(transformComponent.rotation));
+        rotationQ.rotateLocalX(Math.toRadians(transformComponent.rotation.x));
+        rotationQ.rotateLocalY(Math.toRadians(transformComponent.rotation.y));
+        rotationQ.rotateLocalZ(Math.toRadians(transformComponent.rotation.z));
 
-        transformComponent.rotationMatrix.rotateAround(rotationQ, transformComponent.centre.x, transformComponent.centre.y, 0.0f);
+        transformComponent.rotationMatrix.rotateAround(rotationQ, transformComponent.center.x, transformComponent.center.y, transformComponent.center.z);
     }
 
     public void updateScaleMatrix(TransformComponent transformComponent)
@@ -139,12 +135,12 @@ public class TransformationsSystem extends System
         if(!active || transformComponent.scale.equals(transformComponent.lastScale) || !transformComponent.active) return;
 
         transformComponent.scaleMatrix.identity();
-        transformComponent.scaleMatrix.scale(transformComponent.scale.x, transformComponent.scale.y, 1.0f);
+        transformComponent.scaleMatrix.scale(transformComponent.scale.x, transformComponent.scale.y, transformComponent.scale.z);
     }
 
-    public Matrix4f getMVPMatrix(TransformComponent transformComponent, Camera2DComponent camera2DComponent)
+    public Matrix4f getMVPMatrix(TransformComponent transformComponent, CameraComponent cameraComponent)
     {
-        return new Matrix4f(camera2DComponent.projectionMatrix).mul(camera2DComponent.viewMatrix)
+        return new Matrix4f(cameraComponent.projectionMatrix).mul(cameraComponent.viewMatrix)
                 .mul(transformComponent.modelMatrix);
     }
 

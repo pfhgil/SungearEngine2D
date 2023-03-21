@@ -12,7 +12,7 @@ import Core2D.Debug.DebugDraw;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Audio.AudioComponent;
 import Core2D.ECS.Component.Components.Audio.AudioState;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
@@ -29,19 +29,21 @@ import Core2D.Project.ProjectsManager;
 import Core2D.Tasks.StoppableTask;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
-import SungearEngine2D.CameraController.CameraController;
 import SungearEngine2D.DebugDraw.CamerasDebugLines;
 import SungearEngine2D.DebugDraw.EntitiesDebugDraw;
 import SungearEngine2D.DebugDraw.Gizmo;
 import SungearEngine2D.GUI.GUI;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
-import SungearEngine2D.Scripts.Components.MoveToComponent;
-import SungearEngine2D.Scripts.Systems.TransformationsHelpingSystem;
+import SungearEngine2D.ECSOrientedScripts.Components.CameraController2DComponent;
+import SungearEngine2D.ECSOrientedScripts.Components.MoveToComponent;
+import SungearEngine2D.ECSOrientedScripts.Systems.Camera2DControllerSystem;
+import SungearEngine2D.ECSOrientedScripts.Systems.TransformationsHelpingSystem;
 import SungearEngine2D.Utils.AppData.AppDataManager;
 import imgui.ImGui;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
@@ -63,7 +65,7 @@ public class Main
 
     private static Shader onlyColorShader;
 
-    private static Camera2DComponent mainCamera2DComponent;
+    private static CameraComponent mainCameraComponent;
 
     public static void main(String[] main)
     {
@@ -87,17 +89,23 @@ public class Main
                 mainCamera2D.addComponent(new MoveToComponent());
 
                  */
+                // ------- systems add
+
+                ECSWorld.getCurrentECSWorld().addSystem(new TransformationsHelpingSystem());
+                ECSWorld.getCurrentECSWorld().addSystem(new Camera2DControllerSystem());
+
+                // -------------------
+
                 mainCamera2D = Entity.createAsCamera2D();
                 mainCamera2D.addComponent(new MoveToComponent());
+                mainCamera2D.addComponent(new CameraController2DComponent());
 
 
                 CamerasManager.mainCamera2D = mainCamera2D;
-                CameraController.controlledCamera2D = mainCamera2D;
 
-                mainCamera2DComponent = mainCamera2D.getComponent(Camera2DComponent.class);
-                mainCamera2DComponent.followScale = true;
-
-                CameraController.init();
+                mainCameraComponent = mainCamera2D.getComponent(CameraComponent.class);
+                //mainCameraComponent.followScale = true;
+                mainCameraComponent.viewMode = CameraComponent.ViewMode.VIEW_MODE_2D;
 
                 GUI.init();
 
@@ -110,12 +118,6 @@ public class Main
 
 
                 GraphicsRenderer.init();
-
-                // ------- systems add
-
-                ECSWorld.getCurrentECSWorld().addSystem(new TransformationsHelpingSystem());
-
-                // -------------------
 
                 helpThread = new Thread(new Runnable() {
                     @Override
@@ -182,8 +184,8 @@ public class Main
                                                 if(component instanceof MeshComponent meshComponent && meshComponent.getShader().path.equals(shaderPath)) {
                                                     Compiler.addShaderToCompile(meshComponent.getShader());
                                                 }
-                                                if(component instanceof Camera2DComponent camera2DComponent) {
-                                                    for(PostprocessingLayer postprocessingLayer : camera2DComponent.postprocessingLayers) {
+                                                if(component instanceof CameraComponent cameraComponent) {
+                                                    for(PostprocessingLayer postprocessingLayer : cameraComponent.postprocessingLayers) {
                                                         if(postprocessingLayer.getShader().path.equals(shaderPath)) {
                                                             Compiler.addShaderToCompile(postprocessingLayer.getShader());
                                                         }
@@ -214,7 +216,7 @@ public class Main
 
                 OpenGL.glCall(func -> glStencilFunc(GL_NOTEQUAL, 1, 0xFF));
                 OpenGL.glCall(func -> glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE));
-                mainCamera2D.getComponent(Camera2DComponent.class).camera2DCallbacks.add(new Camera2DComponent.Camera2DCallback() {
+                mainCamera2D.getComponent(CameraComponent.class).cameraCallbacks.add(new CameraComponent.CameraCallback() {
                     @Override
                     public void preRender()
                     {
@@ -236,15 +238,15 @@ public class Main
                             // первый проход рендера - отрисовывается объект в стенсил буфер и заполняется единицами
                             OpenGL.glCall(func -> glStencilFunc(GL_ALWAYS, 1, 0xFF));
                             OpenGL.glCall(func -> glStencilMask(0xFF));
-                            Graphics.getMainRenderer().render(inspectingEntity, mainCamera2DComponent);
+                            Graphics.getMainRenderer().render(inspectingEntity, mainCameraComponent);
 
                             MeshComponent meshComponent = inspectingEntity.getComponent(MeshComponent.class);
                             TransformComponent transformComponent = inspectingEntity.getComponent(TransformComponent.class);
                             if(meshComponent != null && transformComponent != null) {
-                                Vector2f lastScale = new Vector2f(transformComponent.scale);
+                                Vector3f lastScale = new Vector3f(transformComponent.scale);
                                 Vector4f lastColor = new Vector4f(inspectingEntity.color);
 
-                                transformComponent.scale.set(new Vector2f(lastScale).add(new Vector2f(0.35f, 0.35f)));
+                                transformComponent.scale.set(new Vector3f(lastScale).add(new Vector3f(0.35f)));
 
                                 ECSWorld.getCurrentECSWorld().transformationsSystem.updateScaleMatrix(transformComponent);
                                 ECSWorld.getCurrentECSWorld().transformationsSystem.updateModelMatrix(transformComponent);
@@ -255,7 +257,7 @@ public class Main
                                 // второй проход рендера - отрисовываю объект чуть побольше только одним цветом. все значения пикселей в стенсио буфере, которые не равняются 0xFF будут отрисованы
                                 OpenGL.glCall(func -> glStencilFunc(GL_NOTEQUAL, 1, 0xFF));
                                 OpenGL.glCall(func -> glStencilMask(0x00));
-                                Graphics.getMainRenderer().render(inspectingEntity, mainCamera2DComponent, onlyColorShader);
+                                Graphics.getMainRenderer().render(inspectingEntity, mainCameraComponent, onlyColorShader);
 
                                 // третяя обработка - все пиксели будут перезаписаны. включаю обработку стенсил буфера
                                 OpenGL.glCall(func -> glStencilFunc(GL_ALWAYS, 0, 0xFF));
@@ -306,13 +308,15 @@ public class Main
                     Main.djArbuzAudio.state = AudioState.STOPPED;
                 }
 
-                TransformComponent cameraTransformComponent = mainCamera2D.getComponent(TransformComponent.class);
-                if(cameraTransformComponent != null) {
+                CameraComponent cameraComponent = mainCamera2D.getComponent(CameraComponent.class);
+                CameraController2DComponent cameraController2DComponent = mainCamera2D.getComponent(CameraController2DComponent.class);
+                if(cameraComponent != null && cameraController2DComponent != null) {
                     //System.out.println("ddd");
-                    cameraTransformComponent.scale.set(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
+                    cameraComponent.scale.set(new Vector3f(ViewsManager.getSceneView().getRatioCameraScale().x, ViewsManager.getSceneView().getRatioCameraScale().y, 1f)
+                            .mul(cameraController2DComponent.scale.x, cameraController2DComponent.scale.y, 1f));
                 }
                 //cameraAnchor.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
-                CameraController.control();
+                //CameraController.control();
 
                 // чтобы пофиксить id компонентов
                 /*
@@ -355,5 +359,5 @@ public class Main
 
     public static Entity getMainCamera2D() { return mainCamera2D; }
 
-    public static Camera2DComponent getMainCamera2DComponent() { return mainCamera2DComponent; }
+    public static CameraComponent getMainCamera2DComponent() { return mainCameraComponent; }
 }

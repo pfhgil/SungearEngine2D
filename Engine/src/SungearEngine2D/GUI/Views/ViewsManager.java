@@ -2,11 +2,10 @@ package SungearEngine2D.GUI.Views;
 
 import Core2D.Core2D.Core2D;
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.System.ComponentsQuery;
-import Core2D.Physics.PhysicsWorld;
 import SungearEngine2D.GUI.Views.DebuggerView.DebuggerView;
 import SungearEngine2D.GUI.Views.EditorView.*;
 import SungearEngine2D.GUI.Views.Other.EngineSettingsView;
@@ -17,7 +16,6 @@ import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImBoolean;
 import org.jbox2d.common.Vec2;
-import org.joml.Math;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,9 +100,9 @@ public class ViewsManager
         ImGui.pushStyleVar(ImGuiStyleVar.WindowPadding, 0.0f, 0.0f);
 
         if(currentSceneManager != null && currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
-            Camera2DComponent camera2DComponent = currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().getComponent(Camera2DComponent.class);
-            if(camera2DComponent != null) {
-                mainCameraResultView.setViewTextureHandler(camera2DComponent.resultFrameBuffer.getTextureHandler());
+            CameraComponent cameraComponent = currentSceneManager.getCurrentScene2D().getSceneMainCamera2D().getComponent(CameraComponent.class);
+            if(cameraComponent != null) {
+                mainCameraResultView.setViewTextureHandler(cameraComponent.resultFrameBuffer.getTextureHandler());
             }
         }
 

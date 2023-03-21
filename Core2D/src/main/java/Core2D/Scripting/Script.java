@@ -5,7 +5,7 @@ import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.DataClasses.ScriptData;
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
 import Core2D.Graphics.RenderParts.Shader;
@@ -215,11 +215,11 @@ public class Script
         }
     }
 
-    public void render(Camera2DComponent camera2DComponent)
+    public void render(CameraComponent cameraComponent)
     {
         if(active) {
             if(scriptClassInstance instanceof Component component) {
-                component.render(camera2DComponent);
+                component.render(cameraComponent);
             }
             /*
             if(scriptClassInstance instanceof System system) {
@@ -230,11 +230,11 @@ public class Script
         }
     }
 
-    public void render(Camera2DComponent camera2DComponent, Shader shader)
+    public void render(CameraComponent cameraComponent, Shader shader)
     {
         if(active) {
             if(scriptClassInstance instanceof Component component) {
-                component.render(camera2DComponent, shader);
+                component.render(cameraComponent, shader);
             }
             // FIXME:
             /*

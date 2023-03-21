@@ -1,6 +1,6 @@
 package Core2D.Deserializers;
 
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.Layering.Layer;
@@ -50,10 +50,10 @@ public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
 
         for(Layer layer : layering.getLayers()) {
             for(Entity entity : layer.getEntities()) {
-                Camera2DComponent camera2DComponent = entity.getComponent(Camera2DComponent.class);
+                CameraComponent cameraComponent = entity.getComponent(CameraComponent.class);
 
-                if(camera2DComponent != null) {
-                    ECSWorld.getCurrentECSWorld().componentsInitializerSystem.setScene2DMainCamera2D(camera2DComponent, camera2DComponent.scene2DMainCamera2D, scene2D);
+                if(cameraComponent != null) {
+                    ECSWorld.getCurrentECSWorld().componentsInitializerSystem.setScene2DMainCamera2D(cameraComponent, cameraComponent.scene2DMainCamera2D, scene2D);
                 }
             }
         }

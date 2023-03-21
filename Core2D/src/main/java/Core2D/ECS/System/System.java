@@ -1,25 +1,17 @@
 package Core2D.ECS.System;
 
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.RenderParts.Shader;
 
-public class System
+public abstract class System
 {
-    protected boolean active = true;
+    public boolean active = true;
 
-    public System() {}
+    public abstract void update(ComponentsQuery componentsQuery);
 
-    public void update(ComponentsQuery componentsQuery)
-    {
-
-    }
-
-    public void deltaUpdate(ComponentsQuery componentsQuery, float deltaTime)
-    {
-
-    }
+    public abstract void deltaUpdate(ComponentsQuery componentsQuery, float deltaTime);
 
     // срабатывает при добавлении компонента в систему
     public void initComponentOnAdd(Component component)
@@ -43,19 +35,20 @@ public class System
 
     }
 
-    public void renderEntity(Entity entity, Camera2DComponent camera2DComponent)
+    public void renderEntity(Entity entity, CameraComponent cameraComponent)
     {
 
     }
 
-    public void renderEntity(Entity entity, Camera2DComponent camera2DComponent, Shader shader)
+    public void renderEntity(Entity entity, CameraComponent cameraComponent, Shader shader)
     {
 
     }
 
-    //public void getComponent
+    // other events ------------------------------------------------
 
-    public boolean isActive() { return active; }
+    public void onMouseScroll(ComponentsQuery componentsQuery, double xOffset, double yOffset)
+    {
 
-    public void setActive(boolean active) { this.active = active; }
+    }
 }

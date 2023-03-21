@@ -134,7 +134,7 @@
             ]
           },
           {
-            "name": "влад2",
+            "name": "пїЅпїЅпїЅпїЅ2",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -169,7 +169,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -284,7 +284,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2",
+            "name": "пїЅпїЅпїЅпїЅ2",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -319,7 +319,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -446,7 +446,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2",
+            "name": "пїЅпїЅпїЅпїЅ2",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -481,7 +481,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -608,7 +608,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2",
+            "name": "пїЅпїЅпїЅпїЅ2",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -643,7 +643,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -770,7 +770,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2",
+            "name": "пїЅпїЅпїЅпїЅ2",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -805,7 +805,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -932,7 +932,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2",
+            "name": "пїЅпїЅпїЅпїЅ2",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -967,7 +967,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -1129,7 +1129,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -1256,7 +1256,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2",
+            "name": "пїЅпїЅпїЅпїЅ2",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -1291,7 +1291,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -1418,7 +1418,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2",
+            "name": "пїЅпїЅпїЅпїЅ2",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -1453,7 +1453,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -1580,7 +1580,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2_CAMERA",
+            "name": "пїЅпїЅпїЅпїЅ2_CAMERA",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -1615,7 +1615,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -1789,7 +1789,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Camera2DComponent",
+                "type": "Core2D.ECS.Component.Components.CameraComponent",
                 "properties": {
                   "viewportSize": {
                     "x": 1080.0,
@@ -2009,7 +2009,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2_child",
+            "name": "пїЅпїЅпїЅпїЅ2_child",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -2044,7 +2044,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -2127,7 +2127,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад",
+            "name": "пїЅпїЅпїЅпїЅ",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -2162,7 +2162,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -2245,7 +2245,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2_0",
+            "name": "пїЅпїЅпїЅпїЅ2_0",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -2280,7 +2280,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -2363,7 +2363,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2_1",
+            "name": "пїЅпїЅпїЅпїЅ2_1",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -2398,7 +2398,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -2481,7 +2481,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2_2",
+            "name": "пїЅпїЅпїЅпїЅ2_2",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -2516,7 +2516,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -2599,7 +2599,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2_3",
+            "name": "пїЅпїЅпїЅпїЅ2_3",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -2634,7 +2634,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -2717,7 +2717,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2_4",
+            "name": "пїЅпїЅпїЅпїЅ2_4",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -2752,7 +2752,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -2835,7 +2835,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2_5",
+            "name": "пїЅпїЅпїЅпїЅ2_5",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -2870,7 +2870,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -2953,7 +2953,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2_7",
+            "name": "пїЅпїЅпїЅпїЅ2_7",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -2988,7 +2988,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -3071,7 +3071,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2_8",
+            "name": "пїЅпїЅпїЅпїЅ2_8",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -3106,7 +3106,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {
@@ -3189,7 +3189,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "влад2_6",
+            "name": "пїЅпїЅпїЅпїЅ2_6",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -3224,7 +3224,7 @@
                 "type": "Core2D.ECS.Component.Components.MeshComponent",
                 "properties": {
                   "texture": {
-                    "source": "Resources\\textures\\влад2.png",
+                    "source": "Resources\\textures\\пїЅпїЅпїЅпїЅ2.png",
                     "textureBlock": 33984
                   },
                   "shader": {

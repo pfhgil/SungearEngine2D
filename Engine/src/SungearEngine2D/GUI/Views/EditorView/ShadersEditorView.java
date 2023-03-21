@@ -1,7 +1,7 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.ProgramTimeComponent;
 import Core2D.ECS.Component.Components.Shader.ShaderUniformFloatComponent;
@@ -19,7 +19,6 @@ import imgui.ImVec2;
 import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiStyleVar;
 import imgui.type.ImBoolean;
-import imgui.type.ImString;
 import org.lwjgl.opengl.GL46C;
 
 import java.io.File;
@@ -234,8 +233,8 @@ public class ShadersEditorView extends View
             Shader foundShader = null;
             if (foundComponent instanceof MeshComponent meshComponent) {
                 foundShader = meshComponent.getShader();
-            } else if(foundComponent instanceof Camera2DComponent camera2DComponent) {
-                PostprocessingLayer ppLayer = ECSWorld.getCurrentECSWorld().camerasManagerSystem.getPostprocessingLayerByName(camera2DComponent, ppLayerName);
+            } else if(foundComponent instanceof CameraComponent cameraComponent) {
+                PostprocessingLayer ppLayer = ECSWorld.getCurrentECSWorld().camerasManagerSystem.getPostprocessingLayerByName(cameraComponent, ppLayerName);
                 if(ppLayer != null) {
                     foundShader = ppLayer.getShader();
                 }

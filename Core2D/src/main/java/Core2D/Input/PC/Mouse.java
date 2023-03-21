@@ -2,7 +2,7 @@ package Core2D.Input.PC;
 
 import Core2D.CamerasManager.CamerasManager;
 import Core2D.Core2D.Core2D;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.Graphics.Graphics;
 import org.joml.Matrix4f;
 import org.joml.Vector2f;
@@ -20,6 +20,8 @@ public class Mouse
 
     //Массив всех доступных кнопок в ASCII таблице / кодировке.
     private static boolean[] buttons = new boolean[GLFW_MOUSE_BUTTON_LAST];
+
+    private static Vector2f lastMousePosition = new Vector2f();
 
     private static Vector2f mousePosition = new Vector2f();
 
@@ -103,8 +105,9 @@ public class Mouse
         float currentY = screenMousePosition.y - viewportPosition.y;
         currentY = (currentY / viewportSize.y) * targetSize.y;
 
-        mousePosition.x = currentX;
-        mousePosition.y = currentY;
+        lastMousePosition.set(mousePosition);
+
+        mousePosition.set(currentX, currentY);
     }
 
     public static void setMousePosition(Vector2f mousePosition)
@@ -133,6 +136,8 @@ public class Mouse
         Mouse.viewportPosition = viewportPosition;
     }
 
+    public static Vector2f getLastMousePosition() { return lastMousePosition; }
+
     // получаю позицию курсора
     public static Vector2f getMousePosition() { return mousePosition; }
 
@@ -150,10 +155,10 @@ public class Mouse
             Matrix4f inverseView = new Matrix4f();
             Matrix4f inverseProjection = new Matrix4f();
 
-            Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
-            if(camera2DComponent != null) {
-                camera2DComponent.viewMatrix.invert(inverseView);
-                camera2DComponent.projectionMatrix.invert(inverseProjection);
+            CameraComponent cameraComponent = CamerasManager.mainCamera2D.getComponent(CameraComponent.class);
+            if(cameraComponent != null) {
+                cameraComponent.viewMatrix.invert(inverseView);
+                cameraComponent.projectionMatrix.invert(inverseProjection);
             }
 
             inverseView.mul(inverseProjection, viewProjection);

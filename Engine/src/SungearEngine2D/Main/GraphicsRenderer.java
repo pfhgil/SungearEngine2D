@@ -30,7 +30,7 @@ public class GraphicsRenderer
         if(Mouse.buttonReleased(GLFW.GLFW_MOUSE_BUTTON_LEFT) && ViewsManager.isSceneViewFocused) {
             Vector2f mousePosition = Mouse.getMousePosition();
 
-            Entity pickedObject2D = Graphics.getPickedObject2D(Main.getMainCamera2DComponent(), mousePosition);
+            Entity pickedObject2D = Graphics.getPickedEntity(Main.getMainCamera2DComponent(), mousePosition);
 
             if(pickedObject2D != null) {
                 ViewsManager.getInspectorView().setCurrentInspectingObject(pickedObject2D);

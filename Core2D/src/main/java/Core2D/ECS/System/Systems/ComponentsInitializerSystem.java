@@ -2,12 +2,15 @@ package Core2D.ECS.System.Systems;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.OpenAL;
+import Core2D.Debug.DebugDraw;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Audio.AudioComponent;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
+import Core2D.ECS.Entity;
 import Core2D.ECS.NonRemovable;
+import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.OpenGL.*;
@@ -22,25 +25,50 @@ import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
 // система для инициализации компонентов
 public class ComponentsInitializerSystem extends System implements NonRemovable
 {
+    @Override
+    public void update(ComponentsQuery componentsQuery) {
+
+    }
+
+    @Override
+    public void deltaUpdate(ComponentsQuery componentsQuery, float deltaTime) {
+
+    }
+
     // инициализирует компонент при добавлении на сущность
     public void initComponentOnAdd(Component component)
     {
-        if(component instanceof Camera2DComponent camera2DComponent) {
-            if(camera2DComponent.frameBuffer != null) {
-                camera2DComponent.frameBuffer.destroy();
-                camera2DComponent.frameBuffer = null;
+        if(component instanceof CameraComponent cameraComponent) {
+            if(cameraComponent.frameBuffer != null) {
+                cameraComponent.frameBuffer.destroy();
+                cameraComponent.frameBuffer = null;
             }
-            if(camera2DComponent.resultFrameBuffer != null) {
-                camera2DComponent.resultFrameBuffer.destroy();
-                camera2DComponent.resultFrameBuffer = null;
+            if(cameraComponent.resultFrameBuffer != null) {
+                cameraComponent.resultFrameBuffer.destroy();
+                cameraComponent.resultFrameBuffer = null;
             }
 
-            loadCameraVAO(camera2DComponent);
+            loadCameraVAO(cameraComponent);
 
-            setScene2DMainCamera2D(camera2DComponent, camera2DComponent.scene2DMainCamera2D);
+            setScene2DMainCamera2D(cameraComponent, cameraComponent.scene2DMainCamera2D);
+
             Vector2i screenSize = Graphics.getScreenSize();
-            camera2DComponent.frameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
-            camera2DComponent.resultFrameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
+            cameraComponent.frameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
+            cameraComponent.resultFrameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
+
+            cameraComponent.cameraCallbacks.add(new CameraComponent.CameraCallback() {
+                @Override
+                public void preRender() {
+
+                }
+
+                @Override
+                public void postRender() {
+                    for(Entity debugEntity : DebugDraw.getDebugPrimitives().values()) {
+                        Graphics.getMainRenderer().render(debugEntity, cameraComponent);
+                    }
+                }
+            });
         } else if(component instanceof TransformComponent transformComponent) {
             ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(transformComponent);
         } else if(component instanceof AudioComponent audioComponent) {
@@ -53,14 +81,14 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
     // вызывается при удалении с сущности компонента (система ComponentsManager)
     public void destroyComponent(Component component)
     {
-        if(component instanceof Camera2DComponent camera2DComponent) {
-            setScene2DMainCamera2D(camera2DComponent, false);
-            camera2DComponent.frameBuffer.destroy();
-            camera2DComponent.ppQuadVertexArray.destroy();
-            camera2DComponent.resultFrameBuffer.destroy();
+        if(component instanceof CameraComponent cameraComponent) {
+            setScene2DMainCamera2D(cameraComponent, false);
+            cameraComponent.frameBuffer.destroy();
+            cameraComponent.ppQuadVertexArray.destroy();
+            cameraComponent.resultFrameBuffer.destroy();
             //camera2DComponent.postprocessingDefaultShader.destroy();
 
-            for(PostprocessingLayer ppLayer : camera2DComponent.postprocessingLayers) {
+            for(PostprocessingLayer ppLayer : cameraComponent.postprocessingLayers) {
                 ppLayer.destroy();
             }
         } else if(component instanceof AudioComponent audioComponent) {
@@ -69,18 +97,18 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
         }
     }
 
-    private void loadCameraVAO(Camera2DComponent camera2DComponent)
+    private void loadCameraVAO(CameraComponent cameraComponent)
     {
-        if (camera2DComponent.ppQuadVertexArray != null) {
-            camera2DComponent.ppQuadVertexArray.destroy();
-            camera2DComponent.ppQuadVertexArray = null;
+        if (cameraComponent.ppQuadVertexArray != null) {
+            cameraComponent.ppQuadVertexArray.destroy();
+            cameraComponent.ppQuadVertexArray = null;
         }
 
-        camera2DComponent.ppQuadVertexArray = new VertexArray();
+        cameraComponent.ppQuadVertexArray = new VertexArray();
         // VBO вершин (VBO - Vertex Buffer Object. Может хранить в себе цвета, позиции вершин и т.д.)
-        VertexBuffer vertexBuffer = new VertexBuffer(camera2DComponent.ppQuadData);
+        VertexBuffer vertexBuffer = new VertexBuffer(cameraComponent.ppQuadData);
         // IBO вершин (IBO - Index Buffer Object. IBO хранит в себе индексы вершин, по которым будут соединяться вершины)
-        IndexBuffer indexBuffer = new IndexBuffer(camera2DComponent.ppQuadIndices);
+        IndexBuffer indexBuffer = new IndexBuffer(cameraComponent.ppQuadIndices);
 
         // создаю описание аттрибутов в шейдерной программе
         BufferLayout attributesLayout = new BufferLayout(
@@ -89,35 +117,35 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
         );
 
         vertexBuffer.setLayout(attributesLayout);
-        camera2DComponent.ppQuadVertexArray.putVBO(vertexBuffer, false);
-        camera2DComponent.ppQuadVertexArray.putIBO(indexBuffer);
+        cameraComponent.ppQuadVertexArray.putVBO(vertexBuffer, false);
+        cameraComponent.ppQuadVertexArray.putIBO(indexBuffer);
 
-        camera2DComponent.ppQuadIndices = null;
+        cameraComponent.ppQuadIndices = null;
 
         // отвязываю vao
-        camera2DComponent.ppQuadVertexArray.unBind();
+        cameraComponent.ppQuadVertexArray.unBind();
     }
 
-    public void setScene2DMainCamera2D(Camera2DComponent camera2DComponent, boolean scene2DMainCamera2D, Scene2D scene2D)
+    public void setScene2DMainCamera2D(CameraComponent cameraComponent, boolean scene2DMainCamera2D, Scene2D scene2D)
     {
         if(scene2D != null &&
                 scene2DMainCamera2D && scene2D.getSceneMainCamera2D() != null) {
-            Camera2DComponent foundComponent = scene2D.getSceneMainCamera2D().getComponent(Camera2DComponent.class);
+            CameraComponent foundComponent = scene2D.getSceneMainCamera2D().getComponent(CameraComponent.class);
             if(foundComponent != null) {
                 foundComponent.scene2DMainCamera2D = false;
                 scene2D.setSceneMainCamera2D(null);
             }
         }
-        camera2DComponent.scene2DMainCamera2D = scene2DMainCamera2D;
+        cameraComponent.scene2DMainCamera2D = scene2DMainCamera2D;
         if(scene2D != null) {
-            scene2D.setSceneMainCamera2D(camera2DComponent.scene2DMainCamera2D ? camera2DComponent.entity : scene2D.getSceneMainCamera2D());
+            scene2D.setSceneMainCamera2D(cameraComponent.scene2DMainCamera2D ? cameraComponent.entity : scene2D.getSceneMainCamera2D());
         }
     }
 
-    public void setScene2DMainCamera2D(Camera2DComponent camera2DComponent, boolean scene2DMainCamera2D)
+    public void setScene2DMainCamera2D(CameraComponent cameraComponent, boolean scene2DMainCamera2D)
     {
         if(SceneManager.currentSceneManager != null) {
-            setScene2DMainCamera2D(camera2DComponent, scene2DMainCamera2D, SceneManager.currentSceneManager.getCurrentScene2D());
+            setScene2DMainCamera2D(cameraComponent, scene2DMainCamera2D, SceneManager.currentSceneManager.getCurrentScene2D());
         }
     }
 }

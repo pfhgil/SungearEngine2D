@@ -2,8 +2,10 @@ package Core2D.Core2D;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.OpenAL;
+import Core2D.ECS.ECSWorld;
+import Core2D.ECS.System.ComponentsQuery;
+import Core2D.ECS.System.System;
 import Core2D.Graphics.Graphics;
-import Core2D.Input.Core2DInputCallbacks;
 import Core2D.Input.Core2DUserInputCallback;
 import Core2D.Log.Log;
 import Core2D.Scene2D.SceneManager;
@@ -13,6 +15,10 @@ import Core2D.Utils.ExceptionsUtils;
 import Core2D.Window.Window;
 import org.joml.Vector2i;
 import org.lwjgl.Version;
+import org.lwjgl.glfw.GLFW;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.lwjgl.glfw.Callbacks.glfwFreeCallbacks;
 import static org.lwjgl.glfw.GLFW.*;
@@ -29,10 +35,9 @@ public class Core2D extends Graphics
 
     /**
      * Core2D input callbacks. You can add your input callback using Core2D.getCore2DInputCallbacks().getUserInputCallbacks().add(...)
-     * @see Core2DInputCallbacks#getCore2DUserInputCallbacks()
      * @see Core2DUserInputCallback
      */
-    private static Core2DInputCallbacks core2DInputCallbacks;
+    private List<Core2DUserInputCallback> core2DUserInputCallbacks = new ArrayList<>();
 
     /**
      * Core2D use callback. Defines the methods onInit(), onExit(), onDrawFrame(), onDeltaUpdate(...).
@@ -129,9 +134,39 @@ public class Core2D extends Graphics
             Settings.init();
             Log.Console.println("settings initialized");
 
-            core2DInputCallbacks = new Core2DInputCallbacks();
-
             /** инициализация **/
+
+            // initializing input callbacks (before initializing user callback!) ----------------------------------------
+            org.lwjgl.glfw.GLFW.glfwSetKeyCallback(Core2D.getWindow().getWindow(), (window, key, scancode, action, mods) -> {
+                for (Core2DUserInputCallback core2DUserInputCallback : core2DUserInputCallbacks) {
+                    core2DUserInputCallback.onInput(key, GLFW.glfwGetKeyName(key, scancode), mods);
+                }
+            });
+
+            GLFW.glfwSetScrollCallback(Core2D.getWindow().getWindow(), (window, xoffset, yoffset) -> {
+                for (Core2DUserInputCallback core2DUserInputCallback : core2DUserInputCallbacks) {
+                    core2DUserInputCallback.onScroll(xoffset, yoffset);
+                }
+            });
+
+            core2DUserInputCallbacks.add(new Core2DUserInputCallback() {
+                @Override
+                public void onInput(int key, String keyName, int mods)
+                {
+
+                }
+
+                @Override
+                public void onScroll(double xOffset, double yOffset)
+                {
+                    for (System system : ECSWorld.getCurrentECSWorld().getSystems()) {
+                        for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
+                            system.onMouseScroll(componentsQuery, xOffset, yOffset);
+                        }
+                    }
+                }
+            });
+            // -----------------------------------------------
 
             AssetManager.getInstance().init();
 
@@ -182,16 +217,14 @@ public class Core2D extends Graphics
             Core2D.core2DUserCallback.onExit();
         }
 
-        System.exit(0);
+        java.lang.System.exit(0);
     }
 
     public static Window getWindow() {
         return window;
     }
 
-    public static Core2DInputCallbacks getCore2DInputCallback() {
-        return core2DInputCallbacks;
-    }
+    public List<Core2DUserInputCallback> getCore2DUserInputCallbacks() { return core2DUserInputCallbacks; }
 
     /**
      * @return Cyclic timer.

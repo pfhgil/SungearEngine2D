@@ -1,6 +1,6 @@
 package sungear.project.test12.Scripts.test;
 
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Entity;
 
 public class SomeSystem extends System<SomeComponent>
@@ -44,7 +44,7 @@ public class SomeSystem extends System<SomeComponent>
         }
     }
 
-    public void render(Camera2DComponent camera2DComponent)
+    public void render(CameraComponent cameraComponent)
     {
         for(SomeComponent component : componentsToProcess) {
             // что то сделать с компонентом

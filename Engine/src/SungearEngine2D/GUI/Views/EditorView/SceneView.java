@@ -3,7 +3,7 @@ package SungearEngine2D.GUI.Views.EditorView;
 import Core2D.AssetManager.AssetManager;
 import Core2D.CamerasManager.CamerasManager;
 import Core2D.Core2D.Core2D;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
@@ -173,10 +173,14 @@ public class SceneView extends View
                     if(newEntityPreview == null) {
                         newEntityPreview = createSceneEntity(ViewsManager.getResourcesView().getCurrentMovingFile());
                     }
+                    if(newEntityPreview == null) return;
+
+                    TransformComponent previewEntityTransformComponent = newEntityPreview.getComponent(TransformComponent.class);
+
                     // нахожу позицию для превью относительно мыши, чтобы он за ней следовал
-                    Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
+                    Vector2f oglPosition = Mouse.getMouseOGLPosition(Mouse.getMousePosition());
                     // ставлю превью в эту позицию
-                    newEntityPreview.getComponent(TransformComponent.class).position.set(oglPosition);
+                    previewEntityTransformComponent.position.set(oglPosition.x, oglPosition.y, previewEntityTransformComponent.position.z);
 
                     Object droppedObject = ImGui.acceptDragDropPayload("File");
                     //ImGui.setMouseCursor(ImGuiMouseCursor.ResizeAll);
@@ -332,12 +336,14 @@ public class SceneView extends View
             meshComponent.setTexture(texture2D);
             meshComponent.getTexture().path = relativePath;
 
-            Vector2f oglPosition = getMouseOGLPosition(Mouse.getMousePosition());
-            newSceneEntity.getComponent(TransformComponent.class).position.set(oglPosition);
+            TransformComponent newSceneEntityTransform = newSceneEntity.getComponent(TransformComponent.class);
 
-            Vector2f newObject2DScale = new Vector2f(meshComponent.getTexture().getTexture2DData().getWidth() / 100.0f,
+            Vector2f oglPosition = Mouse.getMouseOGLPosition(Mouse.getMousePosition());
+            newSceneEntityTransform.position.set(oglPosition.x, oglPosition.y, newSceneEntityTransform.position.z);
+
+            Vector2f newEntityScale = new Vector2f(meshComponent.getTexture().getTexture2DData().getWidth() / 100.0f,
                     meshComponent.getTexture().getTexture2DData().getHeight() / 100.0f);
-            newSceneEntity.getComponent(TransformComponent.class).scale.set(newObject2DScale);
+            newSceneEntityTransform.scale.set(newEntityScale.x, newEntityScale.y, newSceneEntityTransform.scale.z);
 
             // дефолтный layer
             newSceneEntity.setLayer(currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
@@ -372,10 +378,10 @@ public class SceneView extends View
         Matrix4f inverseView = new Matrix4f();
         Matrix4f inverseProjection = new Matrix4f();
 
-        Camera2DComponent camera2DComponent = CamerasManager.mainCamera2D.getComponent(Camera2DComponent.class);
-        if(camera2DComponent != null) {
-            camera2DComponent.viewMatrix.invert(inverseView);
-            camera2DComponent.projectionMatrix.invert(inverseProjection);
+        CameraComponent cameraComponent = CamerasManager.mainCamera2D.getComponent(CameraComponent.class);
+        if(cameraComponent != null) {
+            cameraComponent.viewMatrix.invert(inverseView);
+            cameraComponent.projectionMatrix.invert(inverseProjection);
         }
 
         inverseView.mul(inverseProjection, viewProjection);

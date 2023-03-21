@@ -3,6 +3,14 @@
     {
       "assetObject": {
         "lastModified": -1,
+        "path": "/data/shaders/mesh/default_shader.glsl"
+      },
+      "path": "/data/shaders/mesh/default_shader.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "lastModified": -1,
         "path": "/data/shaders/mesh/instancing_shader.glsl"
       },
       "path": "/data/shaders/mesh/instancing_shader.glsl",
@@ -190,11 +198,21 @@
     },
     {
       "assetObject": {
-        "lastModified": -1,
-        "path": "/data/shaders/mesh/default_shader.glsl"
+        "filterParam": 9729,
+        "wrapParam": 33071,
+        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\test.png"
       },
-      "path": "/data/shaders/mesh/default_shader.glsl",
-      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+      "path": "Resources\\test.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "filterParam": 9729,
+        "wrapParam": 33071,
+        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+      },
+      "path": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
     },
     {
       "assetObject": {

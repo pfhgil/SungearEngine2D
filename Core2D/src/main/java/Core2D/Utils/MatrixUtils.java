@@ -97,49 +97,49 @@ public class MatrixUtils
     }
 
 
-    public static Vector2f getPosition(Matrix4f matrix4f)
+    public static Vector3f getPosition(Matrix4f matrix4f)
     {
         Vector3f tmp = new Vector3f();
         matrix4f.getTranslation(tmp);
-        return new Vector2f(tmp.x, tmp.y);
+        return tmp;
     }
 
-    public static float getRotation(Matrix4f matrix4f)
+    public static Vector3f getEulerRotation(Matrix4f matrix4f)
     {
         Vector3f eulerRotation = new Vector3f();
         matrix4f.getEulerAnglesZYX(eulerRotation);
-        return (float) Math.toDegrees(eulerRotation.z);
+        return eulerRotation;
     }
 
-    public static Vector2f getScale(Matrix4f matrix4f)
+    public static Vector3f getScale(Matrix4f matrix4f)
     {
         Vector3f tmp = new Vector3f();
         matrix4f.getScale(tmp);
-        return new Vector2f(tmp.x, tmp.y);
+        return tmp;
     }
 
     public static Matrix4f getTranslationMatrix(Matrix4f from)
     {
-        Vector2f position = getPosition(from);
-        return new Matrix4f().translate(new Vector3f(position.x, position.y, 0.0f));
+        Vector3f position = getPosition(from);
+        return new Matrix4f().translate(position);
     }
 
     public static Matrix4f getRotationMatrix(Matrix4f from)
     {
-        float rotation = getRotation(from);
+        Vector3f rotation = getEulerRotation(from);
 
         Quaternionf rotationQ = new Quaternionf();
 
-        rotationQ.rotateX((float) Math.toRadians(0));
-        rotationQ.rotateY((float) Math.toRadians(0));
-        rotationQ.rotateZ((float) Math.toRadians(rotation));
+        rotationQ.rotateX((float) Math.toRadians(rotation.x));
+        rotationQ.rotateY((float) Math.toRadians(rotation.y));
+        rotationQ.rotateZ((float) Math.toRadians(rotation.z));
 
-        return new Matrix4f().rotateAround(rotationQ, 0, 0, 0.0f);
+        return new Matrix4f().rotate(rotationQ);
     }
 
     public static Matrix4f getScaleMatrix(Matrix4f from)
     {
-        Vector2f scale = getScale(from);
-        return new Matrix4f().scale(new Vector3f(scale.x, scale.y, 1));
+        Vector3f scale = getScale(from);
+        return new Matrix4f().scale(scale);
     }
 }

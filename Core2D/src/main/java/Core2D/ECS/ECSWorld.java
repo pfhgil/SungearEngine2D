@@ -157,4 +157,6 @@ public class ECSWorld
     public static ECSWorld getCurrentECSWorld() { return currentECSWorld; }
 
     public List<ComponentsQuery> getComponentsQueries() { return componentsQueries; }
+
+    public List<System> getSystems() { return systems; }
 }

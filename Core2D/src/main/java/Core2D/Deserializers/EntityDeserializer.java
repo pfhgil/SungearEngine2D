@@ -6,7 +6,7 @@ import Core2D.Core2D.Core2DMode;
 import Core2D.DataClasses.ShaderData;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Audio.AudioComponent;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
@@ -16,13 +16,10 @@ import Core2D.ECS.Entity;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Layering.PostprocessingLayer;
-import Core2D.Project.ProjectsManager;
-import Core2D.Utils.FileUtils;
 import Core2D.Utils.Tag;
 import com.google.gson.*;
 import org.joml.Vector4f;
 
-import java.io.File;
 import java.lang.reflect.Type;
 
 public class EntityDeserializer implements JsonDeserializer<Entity>
@@ -37,11 +34,8 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
         String name = jsonObject.get("name").getAsString();
         Tag tag = context.deserialize(jsonObject.get("tag"), Tag.class);
         Vector4f color = context.deserialize(jsonObject.get("color"), Vector4f.class);
-        //int drawingMode = jsonObject.get("drawingMode").getAsInt();
-        //boolean isUIElement = context.deserialize(jsonObject.get("isUIElement"), boolean.class);
         boolean active = context.deserialize(jsonObject.get("active"), boolean.class);
         JsonArray components = jsonObject.getAsJsonArray("components");
-        JsonArray systems = jsonObject.getAsJsonArray("systems");
         int ID = jsonObject.get("ID").getAsInt();
         JsonElement layerNameJElement = jsonObject.get("layerName");
         String layerName = "default";
@@ -55,6 +49,8 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
             }
         }
 
+
+
         entity.name = name;
         entity.tag.set(tag);
         tag.destroy();
@@ -62,54 +58,6 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
         entity.active = active;
         entity.ID = ID;
         entity.layerName = layerName;
-
-        /*
-        for(JsonElement element : systems) {
-            System system = context.deserialize(element, System.class);
-            if(system instanceof ScriptableSystem scriptableSystem) {
-                if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
-                    scriptableSystem.script.path = scriptableSystem.script.path.replaceAll(".java", "");
-
-                    String fullScriptPath = ProjectsManager.getCurrentProject().getProjectPath() + File.separator + scriptableSystem.script.path + ".java";
-                    String lastScriptPath = scriptableSystem.script.path;
-
-                    String scriptToLoadPath = "";
-                    String scriptToAddPath = "";
-
-                    if(new File(fullScriptPath).exists()) {
-                        scriptToLoadPath = fullScriptPath;
-                        scriptToAddPath = lastScriptPath;
-                    } else {// для исправления текущих сцен, т.к. у их ресурсов стоит полный путь.
-                        // чтобы это исправить загружаем по этому пути скрипт, находим относительный путь и присваиваем его path для того,
-                        // чтобы в следующий раз выполнился блок кода вышe
-                        if(new File(scriptableSystem.script.path + ".java").exists()) {
-                            String relativePath = FileUtils.getRelativePath(
-                                    new File(scriptableSystem.script.path + ".java"),
-                                    new File(ProjectsManager.getCurrentProject().getProjectPath())
-                            );
-                            scriptToLoadPath = scriptableSystem.script.path + ".java";
-                            scriptToAddPath = relativePath.replace(".java", "");
-                        }
-                    }
-
-                    scriptableSystem.script.path = scriptToLoadPath;
-                    // load the script component class
-                    scriptableSystem.set(scriptableSystem);
-                    scriptableSystem.script.path = scriptToAddPath;
-                    entity.addSystem(scriptableSystem);
-                } else {
-                    ScriptableSystem sc = new ScriptableSystem();
-                    entity.addSystem(sc);
-                    sc.set(scriptableSystem);
-                }
-            } else {
-                if(system == null) continue;
-                entity.addSystem(system);
-            }
-        }
-
-         */
-        //System.out.println("\u001B[32m size of game object " + gameObject.name + " list of components: " + gameObject.getComponents().size() + " \u001B[32m");
 
         for(JsonElement element : components) {
             Component component = context.deserialize(element, Component.class);
@@ -177,19 +125,19 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                 entity.addComponent(audioComponent);
 
                 audioComponent.ID = lastComponentID;
-            } else if(component instanceof Camera2DComponent camera2DComponent) {
-                Shader defaultShader = new Shader(AssetManager.getInstance().getShaderData(camera2DComponent.postprocessingDefaultShader.path));
+            } else if(component instanceof CameraComponent cameraComponent) {
+                Shader defaultShader = new Shader(AssetManager.getInstance().getShaderData(cameraComponent.postprocessingDefaultShader.path));
 
-                for(Shader.ShaderDefine shaderDefine : camera2DComponent.postprocessingDefaultShader.getShaderDefines()) {
+                for(Shader.ShaderDefine shaderDefine : cameraComponent.postprocessingDefaultShader.getShaderDefines()) {
                     defaultShader.getShaderDefine(shaderDefine.name).value = shaderDefine.value;
                 }
 
                 defaultShader.compile((ShaderData) AssetManager.getInstance().reloadAsset(defaultShader.path, ShaderData.class).getAssetObject());
 
-                ECSWorld.getCurrentECSWorld().camerasManagerSystem.setPostprocessingDefaultShader(camera2DComponent, defaultShader);
+                ECSWorld.getCurrentECSWorld().camerasManagerSystem.setPostprocessingDefaultShader(cameraComponent, defaultShader);
                 //camera2DComponent.setPostprocessingDefaultShader(defaultShader);
-                for(int i = 0; i < camera2DComponent.postprocessingLayers.size(); i++) {
-                    PostprocessingLayer ppLayer = camera2DComponent.postprocessingLayers.get(i);
+                for(int i = 0; i < cameraComponent.postprocessingLayers.size(); i++) {
+                    PostprocessingLayer ppLayer = cameraComponent.postprocessingLayers.get(i);
 
                     ppLayer.getShader().fixUniforms();
 
@@ -205,9 +153,9 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                     ppLayer.setShader(layerShader);
                     ppLayer.init();
                 }
-                entity.addComponent(camera2DComponent);
+                entity.addComponent(cameraComponent);
 
-                camera2DComponent.ID = lastComponentID;
+                cameraComponent.ID = lastComponentID;
             } else {
                 entity.addComponent(component);
             }

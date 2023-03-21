@@ -2,7 +2,7 @@ package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.Core2D.Core2D;
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.OpenGL.*;
@@ -251,8 +251,8 @@ public class GameView extends View
     {
         Component foundComponent = camera2DComponentHandler.getComponent();
         if(foundComponent == null) return;
-        if(foundComponent instanceof Camera2DComponent camera2DComponent && postprocessingLayer != null) {
-            postprocessingLayer = ECSWorld.getCurrentECSWorld().camerasManagerSystem.getPostprocessingLayerByName(camera2DComponent, postprocessingLayer.getEntitiesLayerToRenderName());
+        if(foundComponent instanceof CameraComponent cameraComponent && postprocessingLayer != null) {
+            postprocessingLayer = ECSWorld.getCurrentECSWorld().camerasManagerSystem.getPostprocessingLayerByName(cameraComponent, postprocessingLayer.getEntitiesLayerToRenderName());
         }
     }
 

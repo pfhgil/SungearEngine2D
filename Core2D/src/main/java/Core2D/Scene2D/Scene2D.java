@@ -1,7 +1,7 @@
 package Core2D.Scene2D;
 
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
@@ -15,7 +15,7 @@ import Core2D.Physics.Rigidbody2D;
 import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.Tag;
 import org.jbox2d.common.Vec2;
-import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
@@ -98,28 +98,28 @@ public class Scene2D
                 Rigidbody2D rigidbody2D = physicsWorld.addRigidbody2D(entity, this);
                 TransformComponent transformComponent = entity.getComponent(TransformComponent.class);
                 if(transformComponent != null && rigidbody2D != null) {
-                    Vector2f position = transformComponent.position;
+                    Vector3f position = transformComponent.position;
                     rigidbody2D.getBody().setTransform(
                             new Vec2(position.x / PhysicsWorld.RATIO, position.y / PhysicsWorld.RATIO),
-                            (float) Math.toRadians(transformComponent.rotation)
+                            (float) Math.toRadians(transformComponent.rotation.z)
                     );
                 }
             }
         }
     }
 
-    public void draw(Camera2DComponent camera2DComponent)
+    public void draw(CameraComponent cameraComponent)
     {
         if(!shouldDestroy) {
-            Graphics.getMainRenderer().render(layering, camera2DComponent);
+            Graphics.getMainRenderer().render(layering, cameraComponent);
         }
     }
 
     // рисует все объекты разными цветами при выборке объектов
-    public void drawPicking(Camera2DComponent camera2DComponent)
+    public void drawPicking(CameraComponent cameraComponent)
     {
         if(!shouldDestroy) {
-            layering.drawPicking(camera2DComponent);
+            layering.drawPicking(cameraComponent);
         }
     }
 
@@ -173,9 +173,9 @@ public class Scene2D
                 for(MeshComponent meshComponent : entity.getAllComponents(MeshComponent.class)) {
                     meshComponent.getShader().initUniforms();
                 }
-                for(Camera2DComponent camera2DComponent : entity.getAllComponents(Camera2DComponent.class)) {
-                    for(int i = 0; i < camera2DComponent.postprocessingLayers.size(); i++) {
-                        PostprocessingLayer ppLayer = camera2DComponent.postprocessingLayers.get(i);
+                for(CameraComponent cameraComponent : entity.getAllComponents(CameraComponent.class)) {
+                    for(int i = 0; i < cameraComponent.postprocessingLayers.size(); i++) {
+                        PostprocessingLayer ppLayer = cameraComponent.postprocessingLayers.get(i);
                         ppLayer.getShader().initUniforms();
                     }
                 }

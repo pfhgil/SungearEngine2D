@@ -2,7 +2,7 @@ package Core2D.Layering;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.RenderParts.Shader;
@@ -32,7 +32,7 @@ public class Layer
     // рисует все объекты разными цветами при выборке объектов
     // тут я ставлю цвет объекта для pick и отключаю текстуру
     // TODO: сделать не только для объектов отрисовку
-    public void drawPicking(Camera2DComponent camera2DComponent)
+    public void drawPicking(CameraComponent cameraComponent)
     {
         for(int i = 0; i < entities.size(); i++) {
             Entity entity = entities.get(i);
@@ -45,7 +45,7 @@ public class Layer
                     1.0f));
 
             // FIXME
-            Graphics.getMainRenderer().render(entity, camera2DComponent, pickingShader);
+            Graphics.getMainRenderer().render(entity, cameraComponent, pickingShader);
 
             entity.setColor(lastColor);
         }

@@ -29,16 +29,23 @@
                 "properties": {
                   "position": {
                     "x": -12.104033,
-                    "y": 43.120598
+                    "y": 81.60586,
+                    "z": 0.0
                   },
-                  "rotation": 0.0,
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
                   "scale": {
                     "x": 25.6,
-                    "y": 14.4
+                    "y": 14.4,
+                    "z": 1.0
                   },
-                  "centre": {
+                  "center": {
                     "x": 0.0,
-                    "y": 0.0
+                    "y": 0.0,
+                    "z": 0.0
                   },
                   "ID": 0,
                   "active": true
@@ -241,16 +248,23 @@
                 "properties": {
                   "position": {
                     "x": -68.50412,
-                    "y": 80.74982
+                    "y": 80.74982,
+                    "z": 0.0
                   },
-                  "rotation": 0.0,
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
                   "scale": {
                     "x": 0.75,
-                    "y": 0.75
+                    "y": 0.75,
+                    "z": 1.0
                   },
-                  "centre": {
+                  "center": {
                     "x": 0.0,
-                    "y": 0.0
+                    "y": 0.0,
+                    "z": 0.0
                   },
                   "ID": 0,
                   "active": true
@@ -336,24 +350,35 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Camera2DComponent",
+                "type": "Core2D.ECS.Component.Components.CameraComponent",
                 "properties": {
                   "followTranslation": true,
                   "followRotation": false,
                   "followScale": false,
                   "position": {
                     "x": -68.50412,
-                    "y": 80.74982
+                    "y": 80.74982,
+                    "z": 0.0
                   },
-                  "rotation": 0.0,
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
                   "scale": {
                     "x": 0.75,
-                    "y": 0.75
+                    "y": 0.75,
+                    "z": 1.0
                   },
+                  "zoom": 1.0,
                   "viewportSize": {
-                    "x": 1080.0,
-                    "y": 720.0
+                    "x": 2560.0,
+                    "y": 1377.0
                   },
+                  "viewMode": "VIEW_MODE_3D",
+                  "FOV": 75.0,
+                  "nearPlane": 1.0,
+                  "farPlane": 1000.0,
                   "scene2DMainCamera2D": true,
                   "render": true,
                   "postprocessingDefaultShader": {
@@ -390,7 +415,7 @@
                     "shaderDefines": [
                       {
                         "name": "FLIP_TEXTURES_Y",
-                        "value": 0
+                        "value": 1
                       }
                     ]
                   },
@@ -400,9 +425,9 @@
                       "render": true,
                       "overlay": true,
                       "frameBuffer": {
-                        "handler": 11,
-                        "RBOHandler": 8,
-                        "textureHandler": 50,
+                        "handler": 6,
+                        "RBOHandler": 3,
+                        "textureHandler": 38,
                         "type": 2,
                         "width": 2560,
                         "height": 1440,
@@ -455,9 +480,9 @@
                       "render": true,
                       "overlay": false,
                       "frameBuffer": {
-                        "handler": 12,
-                        "RBOHandler": 9,
-                        "textureHandler": 51,
+                        "handler": 7,
+                        "RBOHandler": 4,
+                        "textureHandler": 39,
                         "type": 2,
                         "width": 2560,
                         "height": 1440,
@@ -510,9 +535,9 @@
                       "render": false,
                       "overlay": true,
                       "frameBuffer": {
-                        "handler": 13,
-                        "RBOHandler": 10,
-                        "textureHandler": 52,
+                        "handler": 8,
+                        "RBOHandler": 5,
+                        "textureHandler": 40,
                         "type": 2,
                         "width": 2560,
                         "height": 1440,
@@ -688,17 +713,24 @@
                 "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
                 "properties": {
                   "position": {
-                    "x": 691.6518,
-                    "y": 0.0
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": -561.0
                   },
-                  "rotation": 0.0,
+                  "rotation": {
+                    "x": 0.0,
+                    "y": -1124.0,
+                    "z": 0.0
+                  },
                   "scale": {
                     "x": 1.0,
-                    "y": 1.0
+                    "y": 1.0,
+                    "z": 1.0
                   },
-                  "centre": {
+                  "center": {
                     "x": 0.0,
-                    "y": 0.0
+                    "y": 0.0,
+                    "z": 0.0
                   },
                   "ID": 0,
                   "active": true
@@ -839,6 +871,132 @@
             },
             "parentEntityID": -1,
             "childrenEntitiesID": []
+          },
+          {
+            "name": "ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 191,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": -2076.0645,
+                    "y": -495.8205,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture": {
+                    "source": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "textureBlock": 33984
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "drawingMode": 4,
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
           }
         ],
         "ID": 1,
@@ -863,7 +1021,7 @@
     }
   ],
   "scriptSystem": {},
-  "maxObjectID": 180,
+  "maxObjectID": 192,
   "inBuild": false,
   "isMainScene2D": false
 }

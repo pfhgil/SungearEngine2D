@@ -1,7 +1,7 @@
 package Core2D.ECS.System.Systems;
 
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.Camera2DComponent;
+import Core2D.ECS.Component.Components.CameraComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
@@ -28,7 +28,7 @@ public class ScriptableSystem extends System
     @Override
     public void update(ComponentsQuery componentsQuery)
     {
-        super.update(componentsQuery);
+        //super.update(componentsQuery);
         if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         script.update();
     }
@@ -68,7 +68,7 @@ public class ScriptableSystem extends System
     }
 
     @Override
-    public void renderEntity(Entity entity, Camera2DComponent camera2DComponent)
+    public void renderEntity(Entity entity, CameraComponent cameraComponent)
     {
         if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         // FIXME:
@@ -76,7 +76,7 @@ public class ScriptableSystem extends System
     }
 
     @Override
-    public void renderEntity(Entity entity, Camera2DComponent camera2DComponent, Shader shader)
+    public void renderEntity(Entity entity, CameraComponent cameraComponent, Shader shader)
     {
         if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         // FIXME:

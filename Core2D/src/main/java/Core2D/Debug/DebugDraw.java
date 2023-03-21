@@ -1,18 +1,10 @@
 package Core2D.Debug;
 
-import Core2D.CamerasManager.CamerasManager;
-import Core2D.ECS.Component.Components.Camera2DComponent;
-import Core2D.ECS.Component.Components.Primitives.LineComponent;
 import Core2D.ECS.Component.Components.Primitives.PrimitiveComponent;
-import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
-import Core2D.Graphics.Graphics;
-import Core2D.Log.Log;
 import org.joml.Vector2f;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class DebugDraw
@@ -54,8 +46,8 @@ public class DebugDraw
             primitiveComponent.getLinesData()[0].getVertices()[1].set(end);
         }
 
-
-        //ECSWorld.getCurrentECSWorld().camerasManagerSystem.renderEntity(foundEntity);
         foundEntity.update();
     }
+
+    public static Map<String, Entity> getDebugPrimitives() { return debugPrimitives; }
 }
