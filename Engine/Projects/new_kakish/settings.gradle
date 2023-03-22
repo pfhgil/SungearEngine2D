@@ -1,2 +1,1 @@
-rootProject.name = 'SungearRoot'
-include('new_kakish')
+rootProject.name = 'new_kakish'

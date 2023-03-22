@@ -1,5 +1,6 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
+import Core2D.ECS.Component.Components.Transform.MoveToComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Utils.MatrixUtils;
@@ -7,7 +8,6 @@ import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;
-import SungearEngine2D.ECSOrientedScripts.Components.MoveToComponent;
 import imgui.ImGui;
 import imgui.ImVec2;
 import imgui.flag.ImGuiMouseButton;
@@ -127,7 +127,7 @@ public class SceneTreeView extends View
                                             ViewsManager.getInspectorView().setCurrentInspectingObject(entity);
                                         }
                                         if (ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left)) {
-                                            MoveToComponent moveToComponent = Main.getMainCamera2D().getComponent(MoveToComponent.class);
+                                            MoveToComponent moveToComponent = Main.getMainCamera().getComponent(MoveToComponent.class);
                                             Vector3f destinationPosition = MatrixUtils.getPosition(entity.getComponent(TransformComponent.class).modelMatrix);
                                             moveToComponent.destinationPosition.set(destinationPosition.x, destinationPosition.y);
                                             moveToComponent.needMoveTo = true;
@@ -218,7 +218,7 @@ public class SceneTreeView extends View
                         ViewsManager.getInspectorView().setCurrentInspectingObject(entity);
                     }
                     if (ImGui.isMouseDoubleClicked(ImGuiMouseButton.Left)) {
-                        MoveToComponent moveToComponent = Main.getMainCamera2D().getComponent(MoveToComponent.class);
+                        MoveToComponent moveToComponent = Main.getMainCamera().getComponent(MoveToComponent.class);
                         Vector3f destinationPosition = MatrixUtils.getPosition(entity.getComponent(TransformComponent.class).modelMatrix);
                         moveToComponent.destinationPosition.set(destinationPosition.x, destinationPosition.y);
                         moveToComponent.needMoveTo = true;

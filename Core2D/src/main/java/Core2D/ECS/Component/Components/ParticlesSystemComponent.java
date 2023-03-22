@@ -52,7 +52,7 @@ public class ParticlesSystemComponent extends ScriptComponent
                     particleTransform.position.set(systemTransform.position);
                 }
 
-                //System.out.println(exampleGameObject);
+                //Systems.out.println(exampleGameObject);
                 if(exampleEntity != null) {
                     //freeParticle.set(exampleEntity);
                 }

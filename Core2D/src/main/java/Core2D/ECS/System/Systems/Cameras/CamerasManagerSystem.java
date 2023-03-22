@@ -1,8 +1,9 @@
-package Core2D.ECS.System.Systems;
+package Core2D.ECS.System.Systems.Cameras;
 
 import Core2D.Core2D.Core2D;
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.NonDuplicated;
 import Core2D.ECS.NonRemovable;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
@@ -23,7 +24,7 @@ import static org.lwjgl.opengl.GL11C.*;
 import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
 
 // система для рендера и управления камерами
-public class CamerasManagerSystem extends System implements NonRemovable
+public class CamerasManagerSystem extends System implements NonRemovable, NonDuplicated
 {
     // обновление всех связок компонентов
     @Override
@@ -32,16 +33,12 @@ public class CamerasManagerSystem extends System implements NonRemovable
         CameraComponent cameraComponent = componentsQuery.getComponent(CameraComponent.class);
 
         if (cameraComponent != null) {
-            //Log.CurrentSession.println("camera rendering", Log.MessageType.SUCCESS);
-
-                //Log.CurrentSession.println("camera name: " + camera2DComponent.entity.name, Log.MessageType.INFO);
             Vector2i windowSize = Core2D.getWindow().getSize();
             cameraComponent.viewportSize.set(windowSize);
 
             if(cameraComponent.viewMode == CameraComponent.ViewMode.VIEW_MODE_2D) {
-                cameraComponent.projectionMatrix.identity().ortho2D(-cameraComponent.viewportSize.x / 2.0f, cameraComponent.viewportSize.x / 2.0f,
-                        -cameraComponent.viewportSize.y / 2.0f, cameraComponent.viewportSize.y / 2.0f);
-                //Log.CurrentSession.println("dfdsfs", Log.MessageType.SUCCESS);
+                cameraComponent.projectionMatrix.identity().ortho(-cameraComponent.viewportSize.x / 2.0f, cameraComponent.viewportSize.x / 2.0f,
+                        -cameraComponent.viewportSize.y / 2.0f, cameraComponent.viewportSize.y / 2.0f, 1f, 200f);
             } else {
                 cameraComponent.projectionMatrix.identity().perspective(
                         cameraComponent.FOV,
@@ -50,8 +47,6 @@ public class CamerasManagerSystem extends System implements NonRemovable
                         cameraComponent.farPlane
                         );
             }
-
-            //camera2DComponent.projectionMatrix.scale(camera2DComponent.zoom);
 
             updateViewMatrix(cameraComponent);
 
@@ -165,12 +160,12 @@ public class CamerasManagerSystem extends System implements NonRemovable
         cameraComponent.viewMatrix.scale(new Vector3f(cameraComponent.scale.x, cameraComponent.scale.y, cameraComponent.scale.z));
 
         Quaternionf rotationQuaternionf = new Quaternionf();
-        rotationQuaternionf.rotateLocalX(org.joml.Math.toRadians(-cameraComponent.rotation.x));
-        rotationQuaternionf.rotateLocalY(org.joml.Math.toRadians(-cameraComponent.rotation.x));
-        rotationQuaternionf.rotateLocalZ(org.joml.Math.toRadians(-cameraComponent.rotation.x));
+        rotationQuaternionf.rotateX(org.joml.Math.toRadians(-cameraComponent.rotation.x));
+        rotationQuaternionf.rotateZ(org.joml.Math.toRadians(-cameraComponent.rotation.z));
+        rotationQuaternionf.rotateY(org.joml.Math.toRadians(-cameraComponent.rotation.y));
         cameraComponent.viewMatrix.rotate(rotationQuaternionf);
 
-        cameraComponent.viewMatrix.translate(new Vector3f(-cameraComponent.position.x, -cameraComponent.position.y, 1f));
+        cameraComponent.viewMatrix.translate(-cameraComponent.position.x, -cameraComponent.position.y, -cameraComponent.position.z);
 
         //cameraComponent.viewMatrix.m00(cameraComponent.viewMatrix.m00() + cameraComponent.zoom);
         //cameraComponent.viewMatrix.m11(cameraComponent.viewMatrix.m11() + cameraComponent.zoom);

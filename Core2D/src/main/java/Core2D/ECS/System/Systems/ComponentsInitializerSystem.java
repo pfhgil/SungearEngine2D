@@ -5,7 +5,7 @@ import Core2D.Audio.OpenAL;
 import Core2D.Debug.DebugDraw;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Audio.AudioComponent;
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
@@ -53,8 +53,8 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
             setScene2DMainCamera2D(cameraComponent, cameraComponent.scene2DMainCamera2D);
 
             Vector2i screenSize = Graphics.getScreenSize();
-            cameraComponent.frameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
-            cameraComponent.resultFrameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
+            cameraComponent.frameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.ALL_BUFFER, GL_TEXTURE0);
+            cameraComponent.resultFrameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.ALL_BUFFER, GL_TEXTURE0);
 
             cameraComponent.cameraCallbacks.add(new CameraComponent.CameraCallback() {
                 @Override

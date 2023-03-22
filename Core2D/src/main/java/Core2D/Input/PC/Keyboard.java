@@ -2,8 +2,7 @@ package Core2D.Input.PC;
 
 import Core2D.Core2D.Core2D;
 
-import static org.lwjgl.glfw.GLFW.GLFW_KEY_LAST;
-import static org.lwjgl.glfw.GLFW.glfwGetKey;
+import static org.lwjgl.glfw.GLFW.*;
 
 /**
  * Keyboard class. If you want to track keystrokes on the keyboard, then import GLFW and pass GLFW constants to the methods.
@@ -24,7 +23,7 @@ public class Keyboard
         boolean keyDown = false;
 
         // клавиш в диапазоне 0-31 не существует
-        if(keyId > 31) keyDown = glfwGetKey(Core2D.getWindow().getWindow(), keyId) == 1;
+        if(keyId > 31) keyDown = glfwGetKey(Core2D.getWindow().getWindow(), keyId) == GLFW_PRESS;
 
         return keyDown;
     }

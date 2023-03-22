@@ -1,9 +1,11 @@
 package Core2D.ECS;
 
 import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.*;
+import Core2D.ECS.System.Systems.Cameras.CamerasManagerSystem;
 import Core2D.Log.Log;
 
 import java.util.ArrayList;
@@ -64,23 +66,6 @@ public class ECSWorld
         boolean foundQuery = false;
         for(ComponentsQuery componentsQuery : componentsQueries) {
             if(componentsQuery.entityID == component.entity.ID) {
-                /*
-                if(component instanceof NonDuplicated) {
-                    Optional<Component> foundComponent = componentsQuery.getComponents().stream().filter(c -> c.getClass().equals(component.getClass())).findAny();
-                    if(foundComponent.isPresent()) {
-                        Log.CurrentSession.println("Component '" + component + "' already exists in ComponentsQuery with 'entityID' == "
-                                + componentsQuery.entityID + ". Component '" + component + "' is NonDuplicated", Log.MessageType.ERROR, true);
-                        return;
-                    } else {
-                        componentsQuery.getComponents().add(component);
-                        foundQuery = true;
-                    }
-                } else {
-                    componentsQuery.getComponents().add(component);
-                    foundQuery = true;
-                }
-
-                 */
                 componentsQuery.getComponents().add(component);
                 foundQuery = true;
             }
@@ -91,26 +76,19 @@ public class ECSWorld
             componentsQuery.getComponents().add(component);
             componentsQueries.add(componentsQuery);
         }
-
-        //Log.CurrentSession.println("added component: " + component + ", entity id: " + component.entity.ID, Log.MessageType.SUCCESS);
     }
 
     // удаляет компонент из обработки
     public void removeComponent(Component component)
     {
         Iterator<ComponentsQuery> componentsQueryIterator = componentsQueries.iterator();
-        while(componentsQueryIterator.hasNext()) {
+        while (componentsQueryIterator.hasNext()) {
             ComponentsQuery componentsQuery = componentsQueryIterator.next();
 
-            //if(componentsQuery == component) {
-                componentsQuery.getComponents().remove(component);
-
-                //Log.CurrentSession.println("removed component: " + component + ", entity id: " + component.entity.ID, Log.MessageType.ERROR);
-
-                if(componentsQuery.getComponents().size() == 0) {
-                    componentsQueryIterator.remove();
-                }
-            //}
+            componentsQuery.getComponents().remove(component);
+            if (componentsQuery.getComponents().size() == 0) {
+                componentsQueryIterator.remove();
+            }
         }
 
         componentsInitializerSystem.destroyComponent(component);
@@ -122,7 +100,7 @@ public class ECSWorld
             Optional<System> foundSystem = systems.stream().filter(s -> s.getClass().equals(system.getClass())).findAny();
 
             if(foundSystem.isPresent()) {
-                Log.CurrentSession.println("System '" + system + "' already exists in ECSWorld. System " + system + "' is NonDuplicated", Log.MessageType.ERROR, false);
+                Log.CurrentSession.println("Systems '" + system + "' already exists in ECSWorld. Systems " + system + "' is NonDuplicated", Log.MessageType.ERROR, false);
             } else {
                 systems.add(system);
             }
@@ -139,7 +117,9 @@ public class ECSWorld
     public void update()
     {
         for(System system : systems) {
-                for (ComponentsQuery componentsQuery : componentsQueries) {
+            if(!system.active) continue;
+
+            for (ComponentsQuery componentsQuery : componentsQueries) {
                 system.update(componentsQuery);
             }
         }
@@ -148,10 +128,27 @@ public class ECSWorld
     public void deltaUpdate(float deltaTime)
     {
         for(System system : systems) {
+            if(!system.active) continue;
+
             for (ComponentsQuery componentsQuery : componentsQueries) {
                 system.deltaUpdate(componentsQuery, deltaTime);
             }
         }
+    }
+
+    public <T extends System> T getSystem(Class<T> systemCls)
+    {
+        for(var system : systems) {
+            if(systemCls.isAssignableFrom(system.getClass())) {
+                return systemCls.cast(system);
+            }
+            // FIXME: сделать скриптинговые системы
+            /*else if(ScriptComponent.class.isAssignableFrom(system.getClass()) && componentClass.isAssignableFrom(((ScriptComponent) system).script.getScriptClass())) {
+                return componentClass.cast(((ScriptComponent) system).script.getScriptClassInstance());
+            }*/
+        }
+
+        return null;
     }
 
     public static ECSWorld getCurrentECSWorld() { return currentECSWorld; }

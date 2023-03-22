@@ -7,6 +7,7 @@ import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import Core2D.Graphics.Graphics;
 import Core2D.Input.Core2DUserInputCallback;
+import Core2D.Input.PC.Mouse;
 import Core2D.Log.Log;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Timer.Timer;
@@ -139,7 +140,7 @@ public class Core2D extends Graphics
             // initializing input callbacks (before initializing user callback!) ----------------------------------------
             org.lwjgl.glfw.GLFW.glfwSetKeyCallback(Core2D.getWindow().getWindow(), (window, key, scancode, action, mods) -> {
                 for (Core2DUserInputCallback core2DUserInputCallback : core2DUserInputCallbacks) {
-                    core2DUserInputCallback.onInput(key, GLFW.glfwGetKeyName(key, scancode), mods);
+                    core2DUserInputCallback.onKeyboardInput(key, GLFW.glfwGetKeyName(key, scancode), mods);
                 }
             });
 
@@ -151,7 +152,7 @@ public class Core2D extends Graphics
 
             core2DUserInputCallbacks.add(new Core2DUserInputCallback() {
                 @Override
-                public void onInput(int key, String keyName, int mods)
+                public void onKeyboardInput(int key, String keyName, int mods)
                 {
 
                 }
@@ -160,12 +161,27 @@ public class Core2D extends Graphics
                 public void onScroll(double xOffset, double yOffset)
                 {
                     for (System system : ECSWorld.getCurrentECSWorld().getSystems()) {
+                        if(!system.active) continue;
+
                         for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
                             system.onMouseScroll(componentsQuery, xOffset, yOffset);
                         }
                     }
                 }
+
+                @Override
+                public void onMousePositionChanged(long window, double posX, double posY) {
+                    for (System system : ECSWorld.getCurrentECSWorld().getSystems()) {
+                        if(!system.active) continue;
+
+                        for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
+                            system.onMousePositionChanged(componentsQuery, posX, posY);
+                        }
+                    }
+                }
             });
+
+            Mouse.init();
             // -----------------------------------------------
 
             AssetManager.getInstance().init();

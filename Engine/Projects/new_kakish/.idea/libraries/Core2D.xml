@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Core2D">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/Libs/Core2D.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

@@ -150,30 +150,6 @@
     },
     {
       "assetObject": {
-        "lastModified": 1678532506119,
-        "path": "Scripts\\PickableComponent.class"
-      },
-      "path": "Scripts\\PickableComponent.class",
-      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
-    },
-    {
-      "assetObject": {
-        "lastModified": 1678743323774,
-        "path": "Scripts\\SpaceDeformationComponent.class"
-      },
-      "path": "Scripts\\SpaceDeformationComponent.class",
-      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
-    },
-    {
-      "assetObject": {
-        "lastModified": 1679258949776,
-        "path": "Scripts\\test\\dfdf.java"
-      },
-      "path": "Scripts\\test\\dfdf.java",
-      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
-    },
-    {
-      "assetObject": {
         "lastModified": 1678727574938,
         "path": "shaders\\SlaysPPShader.glsl"
       },
@@ -187,14 +163,6 @@
       },
       "path": "shaders\\Sample.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
-    },
-    {
-      "assetObject": {
-        "lastModified": 1679264882598,
-        "path": "Scripts\\HoholMegaSuperComponent.class"
-      },
-      "path": "Scripts\\HoholMegaSuperComponent.class",
-      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
     },
     {
       "assetObject": {
@@ -213,6 +181,64 @@
       },
       "path": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
       "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "filterParam": 9729,
+        "wrapParam": 33071,
+        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\map.png"
+      },
+      "path": "Resources\\map.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "filterParam": 9729,
+        "wrapParam": 33071,
+        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\perlin_noise.png"
+      },
+      "path": "Resources\\perlin_noise.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1679509950330,
+        "path": "Scripts\\PickableComponent.class"
+      },
+      "path": "Scripts\\PickableComponent.class",
+      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1679509950411,
+        "path": "Scripts\\SetActiveComponent.class"
+      },
+      "path": "Scripts\\SetActiveComponent.class",
+      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1679509950352,
+        "path": "Scripts\\SpaceDeformationComponent.class"
+      },
+      "path": "Scripts\\SpaceDeformationComponent.class",
+      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1679510103768,
+        "path": "Scripts\\test\\dfdf.java"
+      },
+      "path": "Scripts\\test\\dfdf.java",
+      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1679511219750,
+        "path": "Scripts\\HoholMegaSuperComponent.class"
+      },
+      "path": "Scripts\\HoholMegaSuperComponent.class",
+      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
     },
     {
       "assetObject": {

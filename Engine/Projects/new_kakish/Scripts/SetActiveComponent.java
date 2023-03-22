@@ -33,7 +33,7 @@ public class SetActiveComponent extends Component
             //transformComponent.scale.x = 6.0f;
             transformComponent.scale.y = 0.25f;
 
-            transformComponent.rotation = (float) Utils.getRandom(0d, 360d);
+            transformComponent.rotation.z = (float) Utils.getRandom(0d, 360d);
 
             ECSWorld.getCurrentECSWorld().transformationsSystem.updateTransformComponent(transformComponent);
 
@@ -75,14 +75,14 @@ public class SetActiveComponent extends Component
 
     // camera2DComponent - the camera that renders this entity.
     @Override
-    public void render(Camera2DComponent camera2DComponent)
+    public void render(CameraComponent camera2DComponent)
     {
 
     }
 
     // Use the "shader" parameter to render this entity.
     @Override
-    public void render(Camera2DComponent camera2DComponent, Shader shader)
+    public void render(CameraComponent camera2DComponent, Shader shader)
     {
 
     }

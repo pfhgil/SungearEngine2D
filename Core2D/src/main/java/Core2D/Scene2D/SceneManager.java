@@ -3,7 +3,7 @@ package Core2D.Scene2D;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.Core2D.Settings;
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;

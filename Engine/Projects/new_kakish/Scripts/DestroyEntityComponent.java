@@ -52,14 +52,14 @@ public class DestroyEntityComponent extends Component
 
     // camera2DComponent - the camera that renders this entity.
     @Override
-    public void render(Camera2DComponent camera2DComponent)
+    public void render(CameraComponent camera2DComponent)
     {
 
     }
 
     // Use the "shader" parameter to render this entity.
     @Override
-    public void render(Camera2DComponent camera2DComponent, Shader shader)
+    public void render(CameraComponent camera2DComponent, Shader shader)
     {
 
     }

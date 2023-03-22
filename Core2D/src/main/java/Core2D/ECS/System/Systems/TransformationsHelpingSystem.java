@@ -1,9 +1,9 @@
-package SungearEngine2D.ECSOrientedScripts.Systems;
+package Core2D.ECS.System.Systems;
 
+import Core2D.ECS.Component.Components.Transform.MoveToComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
-import SungearEngine2D.ECSOrientedScripts.Components.MoveToComponent;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 

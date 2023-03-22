@@ -113,7 +113,7 @@ public class PPTest1System extends System
 
             Vector2f rnd0 = new Vector2f(random.nextFloat() * 999.0f, random.nextFloat() * 999.0f);
             Vector2f rnd1 = new Vector2f(random.nextFloat() * 999.0f, random.nextFloat() * 999.0f);
-            //System.out.println("x: " + rnd.x + ", " + rnd.y);
+            //Systems.out.println("x: " + rnd.x + ", " + rnd.y);
 
             ShaderUtils.setUniform(
                     shaderToBind.getProgramHandler(),
@@ -126,7 +126,7 @@ public class PPTest1System extends System
                     rnd1);
 
             float samplerPart = 1.0f / totalFrames;
-            //System.out.println(samplerPart);
+            //Systems.out.println(samplerPart);
 
             ShaderUtils.setUniform(
                     shaderToBind.getProgramHandler(),

@@ -1,6 +1,6 @@
 package Core2D.ECS.System.Systems;
 
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;

@@ -2,7 +2,7 @@ package Core2D.Layering;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.RenderParts.Shader;

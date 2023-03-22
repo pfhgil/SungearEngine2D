@@ -1,6 +1,6 @@
 package sungear.project.test12.Scripts.test;
 
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Entity;
 
 public class SomeSystem extends System<SomeComponent>

@@ -45,7 +45,7 @@ public class Shader implements Serializable
         public void init()
         {
             attachedComponent = attachedComponentHandler.getComponent();
-            //System.out.println("found component: " + attachedComponent);
+            //Systems.out.println("found component: " + attachedComponent);
         }
 
         public void setDefaultValue()

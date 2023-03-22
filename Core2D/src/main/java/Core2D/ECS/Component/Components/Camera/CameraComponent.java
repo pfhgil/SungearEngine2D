@@ -1,4 +1,4 @@
-package Core2D.ECS.Component.Components;
+package Core2D.ECS.Component.Components.Camera;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Core2D.Core2D;
@@ -44,7 +44,7 @@ public class CameraComponent extends Component {
 
     public Vector3f position = new Vector3f();
     public Vector3f rotation = new Vector3f();
-    public Vector3f scale = new Vector3f(0.5f);
+    public Vector3f scale = new Vector3f(1f);
 
     public float zoom = 1f;
 
@@ -60,7 +60,7 @@ public class CameraComponent extends Component {
     public ViewMode viewMode = ViewMode.VIEW_MODE_2D;
     public float FOV = 75f;
     public float nearPlane = 1f;
-    public float farPlane = 10000f;
+    public float farPlane = 9000f;
 
     // ----------------------------------
 

@@ -28,7 +28,7 @@ public class Project implements Serializable
         this.projectPath = projectParentPath + File.separator + projectName;
 
         resourcesPath = this.projectPath + File.separator + "Resources";
-        scriptsPath = this.projectPath + File.separator + "ECSOrientedScripts";
+        scriptsPath = this.projectPath + File.separator + "Scripts";
         scenesPath = this.projectPath + File.separator + "Scenes";
         projectSettingsPath = this.projectPath + File.separator + "ProjectSettings.sgps";
 
@@ -59,7 +59,7 @@ public class Project implements Serializable
     {
         this.projectPath = projectPath;
         resourcesPath = projectPath + File.separator + "Resources";
-        scriptsPath = projectPath + File.separator + "ECSOrientedScripts";
+        scriptsPath = projectPath + File.separator + "Scripts";
         scenesPath = projectPath + File.separator + "Scenes";
         projectSettingsPath = projectPath + File.separator + "ProjectSettings.sgps";
         projectParentPath = new File(projectParentPath).getParent();

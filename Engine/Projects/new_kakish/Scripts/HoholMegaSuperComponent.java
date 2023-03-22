@@ -63,26 +63,27 @@ public class HoholMegaSuperComponent extends Component
         }
 
         if(controlsActive) {
-            entityTransform.rotation = lookAt(entityTransform.position, Mouse.getMouseOGLPosition(Mouse.getMousePosition()));
+            entityTransform.rotation.z = lookAt(new Vector2f(entityTransform.position.x, entityTransform.position.y), Mouse.getMouseOGLPosition(Mouse.getMousePosition()));
         }
 
         if(Keyboard.keyReleased(GLFW.GLFW_KEY_G) && controlsActive) {
             controlsActive = false;
             //
 
-            Entity nearestDamagableEntity = getNearestDamagableEntity(entityTransform.position);
+            Entity nearestDamagableEntity = getNearestDamagableEntity(new Vector2f(entityTransform.position.x, entityTransform.position.y));
 
             if(nearestDamagableEntity != null) {
-                entityTransform.rotation = lookAt(entityTransform.position, nearestDamagableEntity.getComponent(TransformComponent.class).position);
-            }
-            entityTransform.position.add(translateInRotationDirection(entityTransform.rotation, -100f));
+                TransformComponent nearestTransformComponent = nearestDamagableEntity.getComponent(TransformComponent.class);
 
-            if(nearestDamagableEntity != null) {
+                entityTransform.rotation.z = lookAt(new Vector2f(entityTransform.position.x, entityTransform.position.y),
+                        new Vector2f(nearestTransformComponent.position.x, nearestTransformComponent.position.y));
+
+                entityTransform.position.add(new Vector3f(translateInRotationDirection(entityTransform.rotation.z, -100f), 0f));
+
                 int slays = Utils.getRandom(5, 8);
 
-                TransformComponent nearestTransformComponent = nearestDamagableEntity.getComponent(TransformComponent.class);
                 for(int i = 0; i < slays; i++) {
-                    createSlayEntity(nearestTransformComponent.position);
+                    createSlayEntity(new Vector2f(nearestTransformComponent.position.x, nearestTransformComponent.position.y));
                 }
             }
 
@@ -91,6 +92,8 @@ public class HoholMegaSuperComponent extends Component
 
         slayActiveTimer.startFrame();
     }
+
+    //public void deltaUpdate(ComponentsQuery)
 
     private Entity createSlayEntity(Vector2f onPosition)
     {
@@ -127,7 +130,7 @@ public class HoholMegaSuperComponent extends Component
                 if(pickableComponent != null) {
                     TransformComponent transformComponent = e.getComponent(TransformComponent.class);
 
-                    Vector2f dif = new Vector2f(fromPosition).add(new Vector2f(transformComponent.position).negate());
+                    Vector2f dif = new Vector2f(fromPosition).add(new Vector2f(transformComponent.position.x, transformComponent.position.y).negate());
 
                     if(dif.x < nearest.x || dif.y < nearest.y) {
                         nearestEntity = e;
@@ -143,6 +146,8 @@ public class HoholMegaSuperComponent extends Component
     {
         float dx = position.x - mousePos.x;
         float dy = position.y - mousePos.y;
+
+        //dfdfdf
 
         return (float) (Math.atan2(dy, dx) * 180.0f / Math.PI);
     }
@@ -160,8 +165,10 @@ public class HoholMegaSuperComponent extends Component
     {
         TransformComponent transformComponent = entity.getComponent(TransformComponent.class);
         if(Keyboard.keyDown(GLFW.GLFW_KEY_W) && controlsActive) {
-            transformComponent.position.add(translateInRotationDirection(transformComponent.rotation, 1000f * deltaTime));
+            Vector2f dir = translateInRotationDirection(transformComponent.rotation.z, 1000f * deltaTime);
+            transformComponent.position.add(dir.x, dir.y, 0f);
         }
+        //fdfc
     }
 
     // otherEntity - an entity, one of whose colliders entered one of the colliders of this entity.
@@ -183,14 +190,14 @@ public class HoholMegaSuperComponent extends Component
 
     // camera2DComponent - the camera that renders this entity.
     @Override
-    public void render(Camera2DComponent camera2DComponent)
+    public void render(CameraComponent camera2DComponent)
     {
 
     }
 
     // Use the "shader" parameter to render this entity.
     @Override
-    public void render(Camera2DComponent camera2DComponent, Shader shader)
+    public void render(CameraComponent camera2DComponent, Shader shader)
     {
 
     }

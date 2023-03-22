@@ -3,7 +3,7 @@ package Core2D.Graphics;
 import Core2D.Audio.AudioListener;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.OpenGL.FrameBuffer;
 import Core2D.Graphics.OpenGL.OpenGL;
@@ -68,7 +68,7 @@ public abstract class Graphics
                     Thread.sleep(1000);
                 }
 
-                //System.out.println("delay: " + delay + ", delta: " + Core2D.getDeltaTimer().getDeltaTime());
+                //Systems.out.println("delay: " + delay + ", delta: " + Core2D.getDeltaTimer().getDeltaTime());
 
                 Core2D.getDeltaTimer().startFrame();
 
@@ -79,7 +79,7 @@ public abstract class Graphics
                     screenCleared = true;
                 }
 
-                OpenGL.glCall((params) -> glClear(GL_COLOR_BUFFER_BIT));
+                OpenGL.glCall((params) -> glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 
                 SceneManager.currentSceneManager.updateCurrentScene2D();
 

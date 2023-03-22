@@ -139,8 +139,8 @@ public class ResourcesView extends View
                             if(ImGuiUtils.menuItemWithImage("Component", 0, 14, 14)) {
                                 ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Java.Component");
                             }
-                            if(ImGuiUtils.menuItemWithImage("System", 0, 14, 14)) {
-                                ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Java.System");
+                            if(ImGuiUtils.menuItemWithImage("Systems", 0, 14, 14)) {
+                                ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Java.Systems");
                             }
                             ImGui.endMenu();
                         }
@@ -394,7 +394,7 @@ public class ResourcesView extends View
     {
         if(ProjectsManager.getCurrentProject() != null) {
             File newFile = switch (fileType) {
-                case "Java.Component", "Java.System" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".java");
+                case "Java.Component", "Java.Systems" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".java");
                 case "Text" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".txt");
                 case "Directory" -> FileUtils.createFolder(ResourcesView.currentDirectoryPath + "\\" + name);
                 case "GLSL.MeshComplexShader", "GLSL.PostprocessingComplexShader" -> FileUtils.createFile(ResourcesView.currentDirectoryPath + "\\" + name + ".glsl");
@@ -410,8 +410,8 @@ public class ResourcesView extends View
                         import Core2D.ECS.*;
                         import Core2D.ECS.Component.Component;
                         import Core2D.ECS.Component.Components.*;
-                        import Core2D.ECS.System.System;
-                        import Core2D.ECS.System.Systems.*;
+                        import Core2D.ECS.Systems.Systems;
+                        import Core2D.ECS.Systems.Systems.*;
                         import Core2D.Scripting.*;
                         import Core2D.Log.*;
                         import Core2D.Graphics.RenderParts.*;
@@ -460,20 +460,20 @@ public class ResourcesView extends View
                             }
                         }
                         """.formatted(name);
-            } else if(fileType.equals("Java.System")) {
+            } else if(fileType.equals("Java.Systems")) {
                 fileString =
                         """
                         import Core2D.ECS.*;
                         import Core2D.ECS.Component.Component;
                         import Core2D.ECS.Component.Components.*;
-                        import Core2D.ECS.System.System;
-                        import Core2D.ECS.System.Systems.*;
+                        import Core2D.ECS.Systems.Systems;
+                        import Core2D.ECS.Systems.Systems.*;
                         import Core2D.Scripting.*;
                         import Core2D.Log.*;
                         import Core2D.Graphics.RenderParts.*;
                         
                         // Attention! Do not declare fields with the @InspectorView annotation in systems. They will not be processed and shown in the Inspector.
-                        public class %s extends System
+                        public class %s extends Systems
                         {
                             @Override
                             public void update()

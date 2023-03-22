@@ -7,6 +7,7 @@ import Core2D.ECS.Component.Components.*;
 import Core2D.ECS.Component.Components.Audio.AudioComponent;
 import Core2D.ECS.Component.Components.Audio.AudioState;
 import Core2D.ECS.Component.Components.Audio.AudioType;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent;
 import Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent;
 import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
@@ -615,7 +616,7 @@ public class ComponentsView extends View
                             }
                             ImGui.popID();
 
-                            //System.out.println("x: " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.x + ", " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.y);
+                            //Systems.out.println("x: " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.x + ", " + rigidbody2DComponent.getRigidbody2D().getBody().getTransform().position.y);
 
                             ImGui.endCombo();
                         }
@@ -646,7 +647,7 @@ public class ComponentsView extends View
                         ImGui.newLine();
                         //ImGui.progressBar((float) audioComponent.audio.getCurrentSecond() / (audioComponent.audio.audioInfo.getAudioLength() / 1000f), 120.0f, 5.0f, "");
                         float[] second = { audioComponent.currentSecond };
-                        //System.out.println("cur: " + second[0]+ ", len: " + audioComponent.audio.audioInfo.getAudioLength() / 1000f);
+                        //Systems.out.println("cur: " + second[0]+ ", len: " + audioComponent.audio.audioInfo.getAudioLength() / 1000f);
 
                         if(ImGuiUtils.sliderFloat(String.format("%.1f", audioComponent.currentSecond),
                                 second,

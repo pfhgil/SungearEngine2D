@@ -5,6 +5,7 @@ package SungearEngine2D.DebugDraw;
 import Core2D.Drawable.Primitives.Line2D;*/
 
 import Core2D.AssetManager.AssetManager;
+import Core2D.ECS.Component.Components.Camera.CameraController2DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.Primitives.LineComponent;
@@ -20,7 +21,6 @@ import Core2D.Utils.MatrixUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
 import SungearEngine2D.Main.Resources;
-import SungearEngine2D.ECSOrientedScripts.Components.CameraController2DComponent;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector3f;
@@ -357,7 +357,7 @@ public class Gizmo
                                 selectedGizmoTool.getColor().y * 0.75f,
                                 selectedGizmoTool.getColor().z * 0.75f,
                                 selectedGizmoTool.getColor().w));
-                        Main.getMainCamera2D().getComponent(CameraController2DComponent.class).active = false;
+                        Main.getMainCamera().getComponent(CameraController2DComponent.class).active = false;
                         lastMousePosition.set(Mouse.getMouseOGLPosition(Mouse.getMousePosition()));
                     }
                 }
@@ -368,7 +368,7 @@ public class Gizmo
                             selectedGizmoTool.getColor().z / 0.75f,
                             selectedGizmoTool.getColor().w));
                     selectedGizmoTool = null;
-                    Main.getMainCamera2D().getComponent(CameraController2DComponent.class).active = true;
+                    Main.getMainCamera().getComponent(CameraController2DComponent.class).active = true;
                 }
 
                 if (Mouse.buttonDown(GLFW.GLFW_MOUSE_BUTTON_1) && selectedGizmoTool != null) {

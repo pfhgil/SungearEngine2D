@@ -40,7 +40,7 @@ public class Grid
         if(newLevel < 1) newLevel = 1;
         level = newLevel;
 
-        //System.out.println("lvl: " + level + ", " + newLevel);
+        //Systems.out.println("lvl: " + level + ", " + newLevel);
 
         Vector2f cameraScale = Main.getMainCamera2D().getTransform().getScale();
         grid.getComponent(MeshRendererComponent.class).setUV(new float[] {
@@ -69,7 +69,7 @@ public class Grid
 
          */
 
-        //System.out.println(1.0f / Main.getMainCamera2D().getTransform().getScale().x + ", " + 1.0f / Main.getMainCamera2D().getTransform().getScale().y + ", " + newLevel);
+        //Systems.out.println(1.0f / Main.getMainCamera2D().getTransform().getScale().x + ", " + 1.0f / Main.getMainCamera2D().getTransform().getScale().y + ", " + newLevel);
         //Graphics.getMainRenderer().render(grid);
         //grid.getComponent(TransformComponent.class).getTransform().updateModelMatrix();
     }

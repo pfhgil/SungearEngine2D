@@ -27,7 +27,7 @@ public class ScriptTempValue
                 JsonObject jsonObject = Utils.gson.toJsonTree(value).getAsJsonObject();
                 val = Utils.gson.fromJson(jsonObject.toString(), GameObject.class);
             } else {
-                System.out.println(value.getClass().getName());
+                Systems.out.println(value.getClass().getName());
             }
         }
 

@@ -131,8 +131,8 @@ public class TopToolbarView
                             currentFileTypeNeedCreate = "Java.Component";
                             showFileCreateDialog();
                         }
-                        if(ImGuiUtils.menuItemWithImage("System", 0, 14, 14)) {
-                            currentFileTypeNeedCreate = "Java.System";
+                        if(ImGuiUtils.menuItemWithImage("Systems", 0, 14, 14)) {
+                            currentFileTypeNeedCreate = "Java.Systems";
                             showFileCreateDialog();
                         }
                         ImGui.endMenu();

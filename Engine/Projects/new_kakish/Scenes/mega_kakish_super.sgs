@@ -28,8 +28,8 @@
                 "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
                 "properties": {
                   "position": {
-                    "x": -12.104033,
-                    "y": 81.60586,
+                    "x": -0.17324813,
+                    "y": 0.06475575,
                     "z": 0.0
                   },
                   "rotation": {
@@ -350,7 +350,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.CameraComponent",
+                "type": "Core2D.ECS.Component.Components.Camera.CameraComponent",
                 "properties": {
                   "followTranslation": true,
                   "followRotation": false,
@@ -375,7 +375,7 @@
                     "x": 2560.0,
                     "y": 1377.0
                   },
-                  "viewMode": "VIEW_MODE_3D",
+                  "viewMode": "VIEW_MODE_2D",
                   "FOV": 75.0,
                   "nearPlane": 1.0,
                   "farPlane": 1000.0,
@@ -591,19 +591,6 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.ScriptComponent",
-                "properties": {
-                  "script": {
-                    "path": "Scripts\\HoholMegaSuperComponent.class",
-                    "name": "HoholMegaSuperComponent",
-                    "active": true,
-                    "scriptTempValues": []
-                  },
-                  "ID": 6,
-                  "active": true
-                }
-              },
-              {
                 "type": "Core2D.ECS.Component.Components.Audio.AudioComponent",
                 "properties": {
                   "path": "kakish_audio\\norm_kakish.wav",
@@ -688,6 +675,19 @@
                   "ID": 11,
                   "active": true
                 }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.ScriptComponent",
+                "properties": {
+                  "script": {
+                    "path": "Scripts\\HoholMegaSuperComponent.class",
+                    "name": "HoholMegaSuperComponent",
+                    "active": true,
+                    "scriptTempValues": []
+                  },
+                  "ID": 12,
+                  "active": true
+                }
               }
             ],
             "isUIElement": false,
@@ -713,13 +713,13 @@
                 "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
                 "properties": {
                   "position": {
-                    "x": 0.0,
-                    "y": 0.0,
-                    "z": -561.0
+                    "x": -448.5813,
+                    "y": -541.866,
+                    "z": 0.0
                   },
                   "rotation": {
                     "x": 0.0,
-                    "y": -1124.0,
+                    "y": 0.0,
                     "z": 0.0
                   },
                   "scale": {
@@ -1021,7 +1021,7 @@
     }
   ],
   "scriptSystem": {},
-  "maxObjectID": 192,
+  "maxObjectID": 197,
   "inBuild": false,
   "isMainScene2D": false
 }

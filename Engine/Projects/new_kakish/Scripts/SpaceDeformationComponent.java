@@ -54,10 +54,10 @@ public class SpaceDeformationComponent extends Component
          */
 
         //
-        Camera2DComponent camera2DComponent = entity.getComponent(Camera2DComponent.class);
+        CameraComponent camera2DComponent = entity.getComponent(CameraComponent.class);
         if(camera2DComponent == null) return;
 
-        PostprocessingLayer postprocessingLayer = entity.getComponent(Camera2DComponent.class).postprocessingLayers
+        PostprocessingLayer postprocessingLayer = entity.getComponent(CameraComponent.class).postprocessingLayers
                 .stream().filter(ppLayer -> ppLayer.getEntitiesLayerToRenderName().equals("sceneCopyLayer")).findFirst().orElse(null);
 
         if(postprocessingLayer != null) {
@@ -88,14 +88,14 @@ public class SpaceDeformationComponent extends Component
 
     // camera2DComponent - the camera that renders this entity.
     @Override
-    public void render(Camera2DComponent camera2DComponent)
+    public void render(CameraComponent cameraComponent)
     {
 
     }
 
     // Use the "shader" parameter to render this entity.
     @Override
-    public void render(Camera2DComponent camera2DComponent, Shader shader)
+    public void render(CameraComponent cameraComponent, Shader shader)
     {
 
     }

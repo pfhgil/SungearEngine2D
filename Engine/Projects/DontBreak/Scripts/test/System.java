@@ -13,7 +13,7 @@ public class System<T extends Component>
     /*
     private Class<?> typeOfComponentsToProcess;
 
-    public System(Class<?> typeOfComponentsToProcess)
+    public Systems(Class<?> typeOfComponentsToProcess)
     {
         this.typeOfComponentsToProcess = typeOfComponentsToProcess;
     }

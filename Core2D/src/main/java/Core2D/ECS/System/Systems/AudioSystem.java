@@ -22,8 +22,6 @@ public class AudioSystem extends System
     @Override
     public void update(ComponentsQuery componentsQuery)
     {
-        if(!active) return;
-
         TransformComponent transformComponent = componentsQuery.getComponent(TransformComponent.class);
 
         for(Component component : componentsQuery.getComponents()) {

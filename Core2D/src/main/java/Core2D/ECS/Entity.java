@@ -2,7 +2,7 @@ package Core2D.ECS;
 
 import Core2D.Core2D.Settings;
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Primitives.BoxComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
@@ -42,7 +42,7 @@ public class Entity implements Serializable, PoolObject
 
     // лист компонентов
     protected List<Component> components = new ArrayList<>();
-    //protected List<System> systems = new ArrayList<>();
+    //protected List<Systems> systems = new ArrayList<>();
 
     public boolean isUIElement = false;
 
@@ -206,7 +206,7 @@ public class Entity implements Serializable, PoolObject
             }
 
             /*
-            for(System system : systems) {
+            for(Systems system : systems) {
                 system.update();
             }
 
@@ -224,7 +224,7 @@ public class Entity implements Serializable, PoolObject
             }
 
             /*
-            for(System system : systems) {
+            for(Systems system : systems) {
                 system.deltaUpdate(deltaTime);
             }
 
@@ -302,7 +302,7 @@ public class Entity implements Serializable, PoolObject
                 componentScriptInstance.entity = this;
                 scriptComponent.script.setFieldValue(scriptComponent.script.getField("entity"), this);
             } // FIXME:
-             /* else if(scriptComponent.script.getScriptClassInstance() instanceof System systemScriptInstance) {
+             /* else if(scriptComponent.script.getScriptClassInstance() instanceof Systems systemScriptInstance) {
                 systemScriptInstance.entity = this;
             }
             */
@@ -440,12 +440,12 @@ public class Entity implements Serializable, PoolObject
 
     // Systems
     /*
-    public <T extends System> T addSystem(T system)
+    public <T extends Systems> T addSystem(T system)
     {
         for(var currentSystem : systems) {
             if(currentSystem.getClass().equals(system.getClass()) && currentSystem instanceof NonDuplicated) {
-                Log.showErrorDialog("System " + system.getClass().getName() + " already exists");
-                Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("System " + system.getClass().getName() + " already exists")), Log.MessageType.ERROR);
+                Log.showErrorDialog("Systems " + system.getClass().getName() + " already exists");
+                Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Systems " + system.getClass().getName() + " already exists")), Log.MessageType.ERROR);
             }
         }
 
@@ -458,15 +458,15 @@ public class Entity implements Serializable, PoolObject
         return system;
     }
 
-    public void addAllSystems(List<? extends System> systems)
+    public void addAllSystems(List<? extends Systems> systems)
     {
-        for(System system : systems) {
+        for(Systems system : systems) {
             addSystem(system);
         }
     }
 
 
-    public <T extends System> T getSystem(Class<T> systemClass)
+    public <T extends Systems> T getSystem(Class<T> systemClass)
     {
         for(var system : systems) {
             if(systemClass.isAssignableFrom(system.getClass())) {
@@ -479,7 +479,7 @@ public class Entity implements Serializable, PoolObject
         return null;
     }
 
-    public <T extends System> List<T> getAllSystems(Class<T> systemClass)
+    public <T extends Systems> List<T> getAllSystems(Class<T> systemClass)
     {
         List<T> systemsFound = new ArrayList<>();
         for(var system : systems) {
@@ -493,12 +493,12 @@ public class Entity implements Serializable, PoolObject
         return systemsFound;
     }
 
-    public void removeSystem(System system)
+    public void removeSystem(Systems system)
     {
         if(system instanceof NonRemovable) {
-            Log.showErrorDialog("System " + system.getClass().getName() + " is non-removable");
+            Log.showErrorDialog("Systems " + system.getClass().getName() + " is non-removable");
 
-            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("System " + system.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
+            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Systems " + system.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
         } else {
             boolean removed = systems.remove(system);
             if (removed) {
@@ -511,7 +511,7 @@ public class Entity implements Serializable, PoolObject
                         if(removed) {
                             system.destroy();
                         } else {
-                            Log.CurrentSession.println("System " + system + " was not found for deletion!", Log.MessageType.ERROR);
+                            Log.CurrentSession.println("Systems " + system + " was not found for deletion!", Log.MessageType.ERROR);
                         }
 
                         return;
@@ -521,14 +521,14 @@ public class Entity implements Serializable, PoolObject
         }
     }
 
-    public void removeFirstSystem(Class<? extends System> systemClass)
+    public void removeFirstSystem(Class<? extends Systems> systemClass)
     {
-        System system = getSystem(systemClass);
+        Systems system = getSystem(systemClass);
 
         if(system instanceof NonRemovable) {
-            Log.showErrorDialog("System " + system.getClass().getName() + " is non-removable");
+            Log.showErrorDialog("Systems " + system.getClass().getName() + " is non-removable");
 
-            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("System " + system.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
+            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Systems " + system.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
         } else {
             if(system != null) {
                 boolean removed = systems.remove(system);
@@ -542,7 +542,7 @@ public class Entity implements Serializable, PoolObject
                             if (removed) {
                                 scriptableSystem.destroy();
                             } else {
-                                Log.CurrentSession.println("System " + systemClass + " was not found for deletion!", Log.MessageType.ERROR);
+                                Log.CurrentSession.println("Systems " + systemClass + " was not found for deletion!", Log.MessageType.ERROR);
                             }
                             return;
                         }
@@ -552,19 +552,19 @@ public class Entity implements Serializable, PoolObject
         }
     }
 
-    public void removeAllSystems(Class<? extends System> systemClass)
+    public void removeAllSystems(Class<? extends Systems> systemClass)
     {
-        Iterator<? extends System> systemsIterator = systems.listIterator();
+        Iterator<? extends Systems> systemsIterator = systems.listIterator();
 
         while(systemsIterator.hasNext()) {
-            System system = systemsIterator.next();
+            Systems system = systemsIterator.next();
 
             boolean assignable = systemClass.isAssignableFrom(system.getClass()) ||
                     (ScriptableSystem.class.isAssignableFrom(system.getClass()) && systemClass.isAssignableFrom(((ScriptableSystem) system).script.getScriptClass()));
             if(assignable && system instanceof NonRemovable) {
-                Log.showErrorDialog("System " + system.getClass().getName() + " is non-removable");
+                Log.showErrorDialog("Systems " + system.getClass().getName() + " is non-removable");
 
-                Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("System " + system.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
+                Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Systems " + system.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
             } else if(assignable) {
                 system.destroy();
                 systemsIterator.remove();
@@ -578,7 +578,7 @@ public class Entity implements Serializable, PoolObject
 
     public List<Component> getComponents() { return components; }
 
-    //public List<System> getSystems() { return systems; }
+    //public List<Systems> getSystems() { return systems; }
 
     public Vector4f getColor() { return color; }
     public void setColor(Vector4f color) { this.color = new Vector4f(color); }
@@ -704,5 +704,10 @@ public class Entity implements Serializable, PoolObject
 
         this.layer.getEntities().remove(this);
         this.layer.getEntities().add(this);
+
+        TransformComponent transformComponent = getComponent(TransformComponent.class);
+        if(transformComponent != null) {
+            transformComponent.position.z = -layer.getID();
+        }
     }
 }

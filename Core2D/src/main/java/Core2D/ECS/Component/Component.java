@@ -1,6 +1,6 @@
 package Core2D.ECS.Component;
 
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.RenderParts.Shader;
 

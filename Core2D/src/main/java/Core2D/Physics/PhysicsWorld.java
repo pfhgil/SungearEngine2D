@@ -105,7 +105,7 @@ public class PhysicsWorld extends World
                         component.collider2DEnter(entityBEnter);
                     }
                     /*
-                    for(System system : entityAEnter.getSystems()) {
+                    for(Systems system : entityAEnter.getSystems()) {
                         system.collider2DEnter(entityBEnter);
                     }
 
@@ -117,7 +117,7 @@ public class PhysicsWorld extends World
                         component.collider2DEnter(entityAEnter);
                     }
                     /*
-                    for(System system : entityBEnter.getSystems()) {
+                    for(Systems system : entityBEnter.getSystems()) {
                         system.collider2DEnter(entityAEnter);
                     }
 
@@ -133,7 +133,7 @@ public class PhysicsWorld extends World
                         component.collider2DEnter(entityBExit);
                     }
                     /*
-                    for(System system : entityAExit.getSystems()) {
+                    for(Systems system : entityAExit.getSystems()) {
                         system.collider2DEnter(entityBExit);
                     }
 
@@ -145,7 +145,7 @@ public class PhysicsWorld extends World
                         component.collider2DEnter(entityAExit);
                     }
                     /*
-                    for(System system : entityBExit.getSystems()) {
+                    for(Systems system : entityBExit.getSystems()) {
                         system.collider2DEnter(entityAExit);
                     }
 

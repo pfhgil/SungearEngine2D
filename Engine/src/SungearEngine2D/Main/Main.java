@@ -12,13 +12,19 @@ import Core2D.Debug.DebugDraw;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Audio.AudioComponent;
 import Core2D.ECS.Component.Components.Audio.AudioState;
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraController2DComponent;
+import Core2D.ECS.Component.Components.Camera.CameraController3DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
+import Core2D.ECS.Component.Components.Transform.MoveToComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.ComponentsQuery;
+import Core2D.ECS.System.Systems.Cameras.CamerasController2DSystem;
+import Core2D.ECS.System.Systems.Cameras.CamerasController3DSystem;
+import Core2D.ECS.System.Systems.TransformationsHelpingSystem;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Graphics.RenderParts.Shader;
@@ -32,13 +38,10 @@ import Core2D.Utils.FileUtils;
 import SungearEngine2D.DebugDraw.CamerasDebugLines;
 import SungearEngine2D.DebugDraw.EntitiesDebugDraw;
 import SungearEngine2D.DebugDraw.Gizmo;
+import SungearEngine2D.ECSOrientedScripts.Systems.SceneViewFixSystem;
 import SungearEngine2D.GUI.GUI;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
-import SungearEngine2D.ECSOrientedScripts.Components.CameraController2DComponent;
-import SungearEngine2D.ECSOrientedScripts.Components.MoveToComponent;
-import SungearEngine2D.ECSOrientedScripts.Systems.Camera2DControllerSystem;
-import SungearEngine2D.ECSOrientedScripts.Systems.TransformationsHelpingSystem;
 import SungearEngine2D.Utils.AppData.AppDataManager;
 import imgui.ImGui;
 import org.apache.commons.io.FilenameUtils;
@@ -56,7 +59,7 @@ public class Main
 {
     private static Core2DUserCallback core2DUserCallback;
 
-    private static Entity mainCamera2D;
+    private static Entity mainCamera;
 
     public static Thread helpThread;
 
@@ -92,18 +95,20 @@ public class Main
                 // ------- systems add
 
                 ECSWorld.getCurrentECSWorld().addSystem(new TransformationsHelpingSystem());
-                ECSWorld.getCurrentECSWorld().addSystem(new Camera2DControllerSystem());
+                ECSWorld.getCurrentECSWorld().addSystem(new CamerasController2DSystem());
+                ECSWorld.getCurrentECSWorld().addSystem(new CamerasController3DSystem());
+                ECSWorld.getCurrentECSWorld().addSystem(new SceneViewFixSystem());
 
                 // -------------------
 
-                mainCamera2D = Entity.createAsCamera2D();
-                mainCamera2D.addComponent(new MoveToComponent());
-                mainCamera2D.addComponent(new CameraController2DComponent());
+                mainCamera = Entity.createAsCamera2D();
+                mainCamera.addComponent(new MoveToComponent());
+                mainCamera.addComponent(new CameraController2DComponent());
+                mainCamera.addComponent(new CameraController3DComponent());
 
+                CamerasManager.mainCamera2D = mainCamera;
 
-                CamerasManager.mainCamera2D = mainCamera2D;
-
-                mainCameraComponent = mainCamera2D.getComponent(CameraComponent.class);
+                mainCameraComponent = mainCamera.getComponent(CameraComponent.class);
                 //mainCameraComponent.followScale = true;
                 mainCameraComponent.viewMode = CameraComponent.ViewMode.VIEW_MODE_2D;
 
@@ -113,7 +118,7 @@ public class Main
                 String path = "test.txt";
                 FileUtils.createFile(path);
                 FileUtils.writeToFile(path, "привет мир!\nhello world!", true);
-                System.out.println(FileUtils.readAllFile("test.txt"));
+                java.lang.System.out.println(FileUtils.readAllFile("test.txt"));
 
 
 
@@ -216,7 +221,7 @@ public class Main
 
                 OpenGL.glCall(func -> glStencilFunc(GL_NOTEQUAL, 1, 0xFF));
                 OpenGL.glCall(func -> glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE));
-                mainCamera2D.getComponent(CameraComponent.class).cameraCallbacks.add(new CameraComponent.CameraCallback() {
+                mainCamera.getComponent(CameraComponent.class).cameraCallbacks.add(new CameraComponent.CameraCallback() {
                     @Override
                     public void preRender()
                     {
@@ -280,7 +285,7 @@ public class Main
                 });
 
 
-                System.gc();
+                java.lang.System.gc();
             }
 
             @Override
@@ -308,43 +313,13 @@ public class Main
                     Main.djArbuzAudio.state = AudioState.STOPPED;
                 }
 
-                CameraComponent cameraComponent = mainCamera2D.getComponent(CameraComponent.class);
-                CameraController2DComponent cameraController2DComponent = mainCamera2D.getComponent(CameraController2DComponent.class);
-                if(cameraComponent != null && cameraController2DComponent != null) {
-                    //System.out.println("ddd");
-                    cameraComponent.scale.set(new Vector3f(ViewsManager.getSceneView().getRatioCameraScale().x, ViewsManager.getSceneView().getRatioCameraScale().y, 1f)
-                            .mul(cameraController2DComponent.scale.x, cameraController2DComponent.scale.y, 1f));
-                }
-                //cameraAnchor.getComponent(TransformComponent.class).getTransform().setScale(new Vector2f(ViewsManager.getSceneView().getRatioCameraScale()).mul(CameraController.getMouseCameraScale()));
-                //CameraController.control();
-
-                // чтобы пофиксить id компонентов
-                /*
-                if(Keyboard.keyReleased(GLFW.GLFW_KEY_T)) {
-                    if(currentSceneManager != null && currentSceneManager.getCurrentScene2D() != null) {
-                        for(Layer layer : currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
-                            for(Entity entity : layer.getEntities()) {
-                                int curId = 0;
-                                for(Component component : entity.getComponents()) {
-                                    component.ID = curId;
-                                    curId++;
-                                }
-                            }
-                        }
-                    }
-                }
-
-                 */
-
-                mainCamera2D.update();
+                mainCamera.update();
 
                 if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) GUI.draw();
 
                 GraphicsRenderer.draw();
 
                 DebugDraw.drawLine2D("test_" + 0, new Vector2f(0), new Vector2f(1000));
-
-                //Core2D.getWindow().setName("Sungear Engine 2D. FPS: " + Core2D.getDeltaTimer().getFPS());
             }
 
             @Override
@@ -357,7 +332,7 @@ public class Main
         Core2D.start();
     }
 
-    public static Entity getMainCamera2D() { return mainCamera2D; }
+    public static Entity getMainCamera() { return mainCamera; }
 
     public static CameraComponent getMainCamera2DComponent() { return mainCameraComponent; }
 }

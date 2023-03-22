@@ -1,6 +1,6 @@
 package sungear.project.test12.Scripts.test;
 
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.RenderParts.Shader;
 
@@ -13,7 +13,7 @@ public class System<T extends Component>
     /*
     private Class<?> typeOfComponentsToProcess;
 
-    public System(Class<?> typeOfComponentsToProcess)
+    public Systems(Class<?> typeOfComponentsToProcess)
     {
         this.typeOfComponentsToProcess = typeOfComponentsToProcess;
     }

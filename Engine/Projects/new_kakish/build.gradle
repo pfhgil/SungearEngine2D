@@ -2,26 +2,33 @@ plugins {
     id 'java'
 }
 
-group 'new_kakish'
+group 'sungear'
 version '1.0-SNAPSHOT'
+version ''
 
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+//
 sourceSets {
     main {
         java {
-            srcDir 'ECSOrientedScripts'
+            srcDir 'Scripts'
         }
     }
 }
 
 repositories {
     flatDir {
-        dirs 'Libs'
+        dirs 'libs'
     }
     mavenCentral()
 }
 
 dependencies {
-    implementation name: 'Core2D'
+    implementation name: "Core2D"
 }
 
 test {

@@ -2,7 +2,7 @@ package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.Core2D.Core2D;
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.OpenGL.*;

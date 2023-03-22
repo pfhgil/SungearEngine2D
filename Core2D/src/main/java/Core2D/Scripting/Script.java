@@ -5,7 +5,7 @@ import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Core2DMode;
 import Core2D.DataClasses.ScriptData;
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;
 import Core2D.Graphics.RenderParts.Shader;
@@ -42,7 +42,7 @@ public class Script
         File scriptFile = new File(script.path);
 
         String name = FilenameUtils.getBaseName(scriptFile.getName()).replace("\\\\/", ".");
-        //System.out.println("name: " + name);
+        //Systems.out.println("name: " + name);
         this.loadClass(ProjectsManager.getCurrentProject().getScriptsPath(), scriptFile.getPath(), name);
 
         if(script != this) {
@@ -207,7 +207,7 @@ public class Script
             }
             // FIXME
             /*
-            if(scriptClassInstance instanceof System system) {
+            if(scriptClassInstance instanceof Systems system) {
                 system.update();
             }
 
@@ -222,7 +222,7 @@ public class Script
                 component.render(cameraComponent);
             }
             /*
-            if(scriptClassInstance instanceof System system) {
+            if(scriptClassInstance instanceof Systems system) {
                 system.renderEntity(camera2DComponent);
             }
 
@@ -238,7 +238,7 @@ public class Script
             }
             // FIXME:
             /*
-            if(scriptClassInstance instanceof System system) {
+            if(scriptClassInstance instanceof Systems system) {
                 system.renderEntity(camera2DComponent, shader);
             }
 
@@ -253,7 +253,7 @@ public class Script
         }
         // FIXME
         /*
-        if(scriptClassInstance instanceof System system) {
+        if(scriptClassInstance instanceof Systems system) {
             system.deltaUpdate(deltaTime);
         }
 

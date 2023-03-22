@@ -1,7 +1,7 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.ProgramTimeComponent;
 import Core2D.ECS.Component.Components.Shader.ShaderUniformFloatComponent;

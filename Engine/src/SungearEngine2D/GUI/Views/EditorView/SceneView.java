@@ -3,7 +3,9 @@ package SungearEngine2D.GUI.Views.EditorView;
 import Core2D.AssetManager.AssetManager;
 import Core2D.CamerasManager.CamerasManager;
 import Core2D.Core2D.Core2D;
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraController2DComponent;
+import Core2D.ECS.Component.Components.Camera.CameraController3DComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
@@ -73,9 +75,21 @@ public class SceneView extends View
 
         boolean windowOpened = ImGui.begin("Scene2D view", ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoScrollbar | ImGuiWindowFlags.NoScrollWithMouse | ImGuiWindowFlags.MenuBar);
 
+        CameraController2DComponent cameraController2D = Main.getMainCamera().getComponent(CameraController2DComponent.class);
+        CameraController3DComponent cameraController3D = Main.getMainCamera().getComponent(CameraController3DComponent.class);
+
+        if(!windowOpened) {
+            if(cameraController2D != null) {
+                cameraController2D.active = false;
+            }
+            if(cameraController3D != null) {
+                cameraController3D.active = false;
+            }
+        }
+
         isWindowFocused = (ImGui.isMouseClicked(ImGuiMouseButton.Left) || ImGui.isMouseClicked(ImGuiMouseButton.Right)) && ImGui.isWindowHovered();
         if(windowOpened) {
-            CamerasManager.mainCamera2D = Main.getMainCamera2D();
+            CamerasManager.mainCamera2D = Main.getMainCamera();
 
             ImGui.popStyleVar(1);
             ImGui.popStyleColor(1);
@@ -130,10 +144,13 @@ public class SceneView extends View
 
             ImGui.endMenuBar();
 
-            if(isWindowFocused || hovered) {
-                ViewsManager.isSceneViewFocused = true;
-            } else {
-                ViewsManager.isSceneViewFocused = false;
+            boolean focused = ViewsManager.isSceneViewFocused = isWindowFocused || hovered;
+
+            if(cameraController2D != null) {
+                cameraController2D.active = focused;
+            }
+            if(cameraController3D != null) {
+                cameraController3D.active = focused;
             }
 
             //ImGui.popStyleColor(1);
@@ -197,7 +214,7 @@ public class SceneView extends View
                         newEntityPreview = null;
                     }
                 } else {
-                    //System.out.println("dsds");
+                    //Systems.out.println("dsds");
                     //ImGui.setMouseCursor(ImGuiMouseCursor.NotAllowed);
                 }
 

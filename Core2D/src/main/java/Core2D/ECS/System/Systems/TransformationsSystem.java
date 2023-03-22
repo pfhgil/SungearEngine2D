@@ -1,6 +1,6 @@
 package Core2D.ECS.System.Systems;
 
-import Core2D.ECS.Component.Components.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.System.ComponentsQuery;
@@ -15,8 +15,6 @@ public class TransformationsSystem extends System
     @Override
     public void update(ComponentsQuery componentsQuery)
     {
-        if(!active) return;
-
         TransformComponent transformComponent = componentsQuery.getComponent(TransformComponent.class);
         Rigidbody2DComponent rigidbody2DComponent = componentsQuery.getComponent(Rigidbody2DComponent.class);
 
@@ -61,7 +59,7 @@ public class TransformationsSystem extends System
     @Override
     public void deltaUpdate(ComponentsQuery componentsQuery, float deltaTime)
     {
-        if(!active) return;
+
     }
 
     public boolean hasTransformComponentChanged(TransformComponent transformComponent)

@@ -36,7 +36,7 @@ public class PostprocessingLayer
 
     public void init()
     {
-        frameBuffer = new FrameBuffer(Graphics.getScreenSize().x, Graphics.getScreenSize().y, FrameBuffer.BuffersTypes.RENDERING_BUFFER, GL_TEXTURE0);
+        frameBuffer = new FrameBuffer(Graphics.getScreenSize().x, Graphics.getScreenSize().y, FrameBuffer.BuffersTypes.ALL_BUFFER, GL_TEXTURE0);
     }
 
     public void updateName()

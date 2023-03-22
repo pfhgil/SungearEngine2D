@@ -10,7 +10,7 @@ public class SystemsView extends View
 
     private boolean someButtonInPopupWindowHovered = false;
 
-    private System currentEditingSystem;
+    private Systems currentEditingSystem;
 
     private String action = "";
 
@@ -51,7 +51,7 @@ public class SystemsView extends View
         }
 
         for (int i = 0; i < inspectingEntity.getSystems().size(); i++) {
-            System currentSystem = inspectingEntity.getSystems().get(i);
+            Systems currentSystem = inspectingEntity.getSystems().get(i);
             String systemName = currentSystem.getClass().getSimpleName();
 
             if(i == 0) {
@@ -69,7 +69,7 @@ public class SystemsView extends View
             ImVec2 maxRect = ImGui.getItemRectMax();
 
             if (ImGui.beginDragDropSource()) {
-                ImGui.setDragDropPayload("System", currentSystem);
+                ImGui.setDragDropPayload("Systems", currentSystem);
                 ImGui.text(systemName);
                 ImGui.endDragDropSource();
             }

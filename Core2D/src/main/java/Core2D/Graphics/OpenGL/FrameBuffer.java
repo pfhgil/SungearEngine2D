@@ -12,31 +12,27 @@ import static org.lwjgl.opengl.GL11C.GL_ALWAYS;
 import static org.lwjgl.opengl.GL11C.glStencilFunc;
 import static org.lwjgl.opengl.GL46.*;
 
-public class FrameBuffer implements Serializable
+public class FrameBuffer
 {
-    private static final long serialVersionUID = 810L;
-
-
     // типы буферов
-    public static class BuffersTypes implements Serializable
+    public static class BuffersTypes
     {
-        private static final long serialVersionUID = 810L;
-
-
         // буфер глубины
         public static final int DEPTH_BUFFER = 0;
         // буфер цвета
         public static final int COLOR_BUFFER = 1;
+
+        public static final int DEPTH_COLOR_BUFFER = 2;
         // буфер для рендеринга
-        public static final int RENDERING_BUFFER = 2;
+        public static final int ALL_BUFFER = 3;
     }
 
     // id FBO
-    private int handler;
+    private transient int handler;
     // id render buffer object, прикреленного у этому fbo
-    private int RBOHandler;
+    private transient int RBOHandler;
     // текстура FBO
-    private int textureHandler;
+    private transient int textureHandler;
     // тип fbo
     private int type;
 
@@ -73,7 +69,10 @@ public class FrameBuffer implements Serializable
             createTextureAttachment(width, height);
         } else if(type == BuffersTypes.DEPTH_BUFFER) {
             createDepthTextureAttachment(width, height);
-        } else if(type == BuffersTypes.RENDERING_BUFFER) {
+        } else if(type == BuffersTypes.DEPTH_COLOR_BUFFER) {
+            createTextureAttachment(width, height);
+            createDepthTextureAttachment(width, height);
+        } else if(type == BuffersTypes.ALL_BUFFER) {
             createTextureAttachment(width, height);
             createRBOAttachment(width, height);
         }
@@ -116,14 +115,26 @@ public class FrameBuffer implements Serializable
 
     public void clear()
     {
-        int toClear = type == BuffersTypes.RENDERING_BUFFER ? GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT : GL_COLOR_BUFFER_BIT;
+        int toClear = switch(type) {
+            case BuffersTypes.DEPTH_BUFFER -> GL_DEPTH_BUFFER_BIT;
+            case BuffersTypes.COLOR_BUFFER -> GL_COLOR_BUFFER_BIT;
+            case BuffersTypes.DEPTH_COLOR_BUFFER -> GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT;
+            case BuffersTypes.ALL_BUFFER -> GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT;
+            default -> 0;
+        };
         OpenGL.glCall(params -> glClear(toClear));
         //OpenGL.glCall(params -> glClearColor(color.x, color.y, color.z, color.w));
     }
 
     public void clear(Vector4f color)
     {
-        int toClear = type == BuffersTypes.RENDERING_BUFFER ? GL_COLOR_BUFFER_BIT | GL_STENCIL_BUFFER_BIT | GL_DEPTH_BUFFER_BIT : GL_COLOR_BUFFER_BIT;
+        int toClear = switch(type) {
+            case BuffersTypes.DEPTH_BUFFER -> GL_DEPTH_BUFFER_BIT;
+            case BuffersTypes.COLOR_BUFFER -> GL_COLOR_BUFFER_BIT;
+            case BuffersTypes.DEPTH_COLOR_BUFFER -> GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT;
+            case BuffersTypes.ALL_BUFFER -> GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT;
+            default -> 0;
+        };
         OpenGL.glCall(params -> glClear(toClear));
         OpenGL.glCall(params -> glClearColor(color.x, color.y, color.z, color.w));
     }
@@ -167,7 +178,7 @@ public class FrameBuffer implements Serializable
             createTextureAttachment(width, height);
         } else if(type == BuffersTypes.DEPTH_BUFFER) {
             createDepthTextureAttachment(width, height);
-        } else if(type == BuffersTypes.RENDERING_BUFFER) {
+        } else if(type == BuffersTypes.ALL_BUFFER) {
             createTextureAttachment(width, height);
             createRBOAttachment(width, height);
         }
@@ -192,11 +203,13 @@ public class FrameBuffer implements Serializable
         OpenGL.glCall((params) -> glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width, height));
         OpenGL.glCall((params) -> glStencilFunc(GL_ALWAYS, 1, 0xFF));
 
-        // ЕСЛИ НУЖЕН БУДЕТ DEPTH, ТО ПРИДЕТСЯ ДЕЛАТЬ ДОП. ПРОВЕРКУ И УСТАНОВКУ GL_DEPTH_STENCIL_ATTACHMENT
-        OpenGL.glCall((params) -> glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBOHandler));
+        // ЕСЛИ НУCЖЕН БУДЕТ DEPTH, ТО ПРИДЕТСЯ ДЕЛАТЬ ДОП. ПРОВЕРКУ И УСТАНОВКУ GL_DEPTH_STENCIL_ATTACHMENT
+        OpenGL.glCall((params) -> glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBOHandler));
 
         // я ебал
         unBindRBO();
+        //glDisable();
+        //glEnable();
     }
 
     // создает текстурное прикрепление к fbo

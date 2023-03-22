@@ -29,7 +29,7 @@ public class Compiler
         while(shadersIterator.hasNext()) {
             Shader shader = shadersIterator.next();
 
-            //System.out.println("asset reloaded: " + shader.path);
+            //Systems.out.println("asset reloaded: " + shader.path);
             Asset reloadedShaderData = AssetManager.getInstance().reloadAsset(shader.path, ShaderData.class);
 
             boolean compiled = shader.compile((ShaderData) reloadedShaderData.getAssetObject());

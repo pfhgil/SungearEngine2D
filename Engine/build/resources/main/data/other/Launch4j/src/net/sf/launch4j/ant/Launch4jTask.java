@@ -54,7 +54,7 @@ public class Launch4jTask extends Task {
 	private File _configFile;
 	private AntConfig _config;
 
-	// System properties
+	// Systems properties
 	private File tmpdir;		// launch4j.tmpdir
 	private File bindir;		// launch4j.bindir
 

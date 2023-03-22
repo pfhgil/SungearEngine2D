@@ -1,4 +1,5 @@
-package SungearEngine2D.ECSOrientedScripts.Components;
+
+package Core2D.ECS.Component.Components.Transform;
 
 import Core2D.ECS.Component.Component;
 import org.joml.Vector2f;
