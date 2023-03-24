@@ -47,19 +47,19 @@ public class Gizmo
 
     public static Vector2f scaleSensitivity = new Vector2f(0.1f, 0.1f);
 
-    public static final Entity yArrow = Entity.createAsObject2D();
-    public static final Entity xArrow = Entity.createAsObject2D();
+    public static final Entity yArrow = Entity.createAsObject();
+    public static final Entity xArrow = Entity.createAsObject();
 
-    public static final Entity centrePoint = Entity.createAsObject2D();
+    public static final Entity centrePoint = Entity.createAsObject();
 
-    public static final Entity centrePointToEditCenter = Entity.createAsObject2D();
+    public static final Entity centrePointToEditCenter = Entity.createAsObject();
 
     public static final Entity rotationCircle = Entity.createAsCircle(); //new Circle2D(300.0f, 1, new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
-    public static final Entity rotationHandler = Entity.createAsObject2D();
+    public static final Entity rotationHandler = Entity.createAsObject();
 
-    public static final Entity yScaleHandler = Entity.createAsObject2D();
+    public static final Entity yScaleHandler = Entity.createAsObject();
     public static final Entity yScaleLine = Entity.createAsLine();
-    public static final Entity xScaleHandler = Entity.createAsObject2D();
+    public static final Entity xScaleHandler = Entity.createAsObject();
     public static final Entity xScaleLine = Entity.createAsLine();
 
     private static Entity selectedGizmoTool;
@@ -72,10 +72,14 @@ public class Gizmo
 
     private static Shader pickingShader;
 
+    private static final float LAYER2 = 6f;
+    private static final float LAYER1 = 4f;
+    private static final float LAYER0 = 2f;
+
     public static void init()
     {
         Vector2i size = Graphics.getScreenSize();
-        gizmoPickingTarget = new FrameBuffer(size.x, size.y, FrameBuffer.BuffersTypes.COLOR_BUFFER, GL13.GL_TEXTURE0);
+        gizmoPickingTarget = new FrameBuffer(size.x, size.y, FrameBuffer.BuffersTypes.ALL_BUFFER, GL13.GL_TEXTURE0);
 
         yArrow.name = "gizmo.yArrow";
         xArrow.name = "gizmo.xArrow";
@@ -175,16 +179,16 @@ public class Gizmo
                 TransformComponent yScaleHandlerTransform = yScaleHandler.getComponent(TransformComponent.class);
                 TransformComponent xScaleHandlerTransform = xScaleHandler.getComponent(TransformComponent.class);
 
-                yArrowTransform.position.set(new Vector3f(entityPosition).add(new Vector3f(0.0f, yArrowTransform.scale.y * 100.0f / 2.0f, 0f)));
-                xArrowTransform.position.set(new Vector3f(entityPosition));
+                yArrowTransform.position.set(new Vector3f(entityPosition).add(0.0f, yArrowTransform.scale.y * 100.0f / 2.0f, 0f).add(0f, 0f, LAYER0));
+                xArrowTransform.position.set(new Vector3f(entityPosition).add(0f, 0f, LAYER0));
 
-                centrePoint.getComponent(TransformComponent.class).position.set(entityPosition);
+                centrePoint.getComponent(TransformComponent.class).position.set(entityPosition).add(0f, 0f, LAYER1);
 
-                TransformComponent centerPointToEditCenterTransform =  centrePointToEditCenter.getComponent(TransformComponent.class);
-                centerPointToEditCenterTransform.position.set(entityCentrePos.x, entityCentrePos.y, centerPointToEditCenterTransform.position.z);
+                TransformComponent centerPointToEditCenterTransform = centrePointToEditCenter.getComponent(TransformComponent.class);
+                centerPointToEditCenterTransform.position.set(entityCentrePos.x, entityCentrePos.y, centerPointToEditCenterTransform.position.z + LAYER2);
 
                 rotationCircleTransform.position.set(entityCentrePos.x, entityCentrePos.y, rotationCircleTransform.position.z);
-                rotationHandlerTransform.position.set(rotationCircleTransform.position).add(0f, rotationCircle.getComponent(CircleComponent.class).getRadius(), 0f);
+                rotationHandlerTransform.position.set(rotationCircleTransform.position).add(0f, rotationCircle.getComponent(CircleComponent.class).getRadius(), LAYER1);
                 Vector2f rotationOffset = new Vector2f(entityCentrePos).add(new Vector2f(rotationHandlerTransform.position.x, rotationHandlerTransform.position.y).negate());
                 rotationHandlerTransform.rotation = entityRotation;
                 rotationHandlerTransform.center.set(rotationOffset.x, rotationOffset.y, rotationHandlerTransform.center.z);
@@ -215,8 +219,8 @@ public class Gizmo
                 yScaleLine.getComponent(LineComponent.class).getLinesData()[0].getVertices()[1].set(new Vector2f(entityPosition.x, entityPosition.y).add(yScaleLineEnd.x, yScaleLineEnd.y));
                 xScaleLine.getComponent(LineComponent.class).getLinesData()[0].getVertices()[0].set(entityPosition.x, entityPosition.y);
                 xScaleLine.getComponent(LineComponent.class).getLinesData()[0].getVertices()[1].set(new Vector2f(entityPosition.x, entityPosition.y).add(xScaleLineEnd));
-                yScaleHandlerTransform.position.set(new Vector3f(entityPosition).add(yScaleLineEnd.x, yScaleLineEnd.y, 0f));
-                xScaleHandlerTransform.position.set(new Vector3f(entityPosition).add(xScaleLineEnd.x, xScaleLineEnd.y, 0f));
+                yScaleHandlerTransform.position.set(new Vector3f(entityPosition).add(yScaleLineEnd.x, yScaleLineEnd.y, LAYER1));
+                xScaleHandlerTransform.position.set(new Vector3f(entityPosition).add(xScaleLineEnd.x, xScaleLineEnd.y, LAYER1));
 
                 // TODO: сделать через логические флаги
                 if (gizmoMode == GizmoMode.SCALE || gizmoMode == GizmoMode.TRANSLATION_SCALE || gizmoMode == GizmoMode.ROTATION_SCALE || gizmoMode == GizmoMode.TRANSLATION_ROTATION_SCALE) {
@@ -264,9 +268,9 @@ public class Gizmo
                     gizmoPickingTarget.bind();
                     gizmoPickingTarget.clear();
 
-                    GL13.glClear(GL13.GL_COLOR_BUFFER_BIT);
+                    //GL13.glClear(GL13.GL_COLOR_BUFFER_BIT);
 
-                    GL13.glDisable(GL13.GL_BLEND);
+                    //GL13.glDisable(GL13.GL_BLEND);
 
                     Vector4f yArrowLastColor = new Vector4f(yArrow.getColor());
                     yArrow.setColor(new Vector4f(yArrow.getPickColor().x / 255.0f, yArrow.getPickColor().y / 255.0f, yArrow.getPickColor().z / 255.0f, 1.0f));
@@ -311,7 +315,7 @@ public class Gizmo
                     yScaleHandler.setColor(yScaleHandlerLastColor);
                     xScaleHandler.setColor(xScaleHandlerLastColor);
 
-                    GL13.glEnable(GL13.GL_BLEND);
+                    //GL13.glEnable(GL13.GL_BLEND);
 
                     gizmoPickingTarget.unBind();
 

@@ -45,7 +45,7 @@ public abstract class Graphics
 
         Vector2i pickingRenderTargetSize = getScreenSize();
 
-        pickingRenderTarget = new FrameBuffer(pickingRenderTargetSize.x, pickingRenderTargetSize.y, FrameBuffer.BuffersTypes.COLOR_BUFFER, GL_TEXTURE0);
+        pickingRenderTarget = new FrameBuffer(pickingRenderTargetSize.x, pickingRenderTargetSize.y, FrameBuffer.BuffersTypes.ALL_BUFFER, GL_TEXTURE0);
 
         mainRenderer = new Renderer();
     }
@@ -140,7 +140,7 @@ public abstract class Graphics
             screenCleared = true;
         }
 
-        OpenGL.glCall((params) -> glDisable(GL_BLEND));
+        //OpenGL.glCall((params) -> glDisable(GL_BLEND));
 
         SceneManager.currentSceneManager.drawCurrentScene2DPicking(cameraComponent);
 
@@ -148,7 +148,7 @@ public abstract class Graphics
 
         Log.Console.println("selectedPixelColor: " + selectedPixelColor.x + ", " + selectedPixelColor.y + ", " + selectedPixelColor.z + ", " + selectedPixelColor.w);
 
-        OpenGL.glCall((params) -> glEnable(GL_BLEND));
+        //OpenGL.glCall((params) -> glEnable(GL_BLEND));
         pickingRenderTarget.unBind();
 
         return SceneManager.currentSceneManager.getPickedObject2D(selectedPixelColor);

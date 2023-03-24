@@ -343,7 +343,7 @@ public class SceneView extends View
     {
         String extension = FilenameUtils.getExtension(file.getName());
         if(extension.equals("png") || extension.equals("jpg")) {
-            Entity newSceneEntity = Entity.createAsObject2D();
+            Entity newSceneEntity = Entity.createAsObject();
 
             String relativePath = FileUtils.getRelativePath(
                     file,

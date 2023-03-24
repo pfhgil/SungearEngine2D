@@ -124,27 +124,70 @@ public class Entity implements Serializable, PoolObject
 
      */
 
-    public static Entity createAsObject2D()
+    public static Entity createAsObject()
+    {
+        return createAsObject(new Vector3f(), new Vector3f(), new Vector3f(1f));
+    }
+
+    public static Entity createAsObject(Vector3f position, Vector3f rotation, Vector3f scale)
     {
         Entity entity = new Entity();
-        entity.addComponent(new TransformComponent());
+
+        TransformComponent transformComponent = new TransformComponent();
+
+        transformComponent.position.set(position);
+        transformComponent.rotation.set(rotation);
+        transformComponent.scale.set(scale);
+
+        entity.addComponent(transformComponent);
         entity.addComponent(new MeshComponent());
+
+        return entity;
+    }
+
+    public static Entity createAsCamera(Vector3f position, Vector3f rotation, Vector3f scale, CameraComponent.ViewMode viewMode)
+    {
+        Entity entity = new Entity();
+
+        CameraComponent cameraComponent = new CameraComponent();
+
+        cameraComponent.position.set(position);
+        cameraComponent.rotation.set(rotation);
+        cameraComponent.scale.set(scale);
+
+        cameraComponent.viewMode = viewMode;
+
+        entity.addComponent(cameraComponent);
 
         return entity;
     }
 
     public static Entity createAsCamera2D()
     {
-        Entity entity = new Entity();
-        entity.addComponent(new CameraComponent());
+        return createAsCamera(new Vector3f(), new Vector3f(), new Vector3f(1f), CameraComponent.ViewMode.VIEW_MODE_2D);
+    }
 
-        return entity;
+    public static Entity createAsCamera3D()
+    {
+        return createAsCamera(new Vector3f(), new Vector3f(), new Vector3f(1f), CameraComponent.ViewMode.VIEW_MODE_3D);
     }
 
     public static Entity createAsLine()
     {
+        return createAsLine(new Vector3f(), new Vector3f(), new Vector3f(1f));
+    }
+
+    public static Entity createAsLine(Vector3f position, Vector3f rotation, Vector3f scale)
+    {
         Entity entity = new Entity();
-        entity.addComponent(new TransformComponent());
+
+        TransformComponent transformComponent = new TransformComponent();
+
+        transformComponent.position.set(position);
+        transformComponent.rotation.set(rotation);
+        transformComponent.scale.set(scale);
+
+        entity.addComponent(transformComponent);
         entity.addComponent(new LineComponent());
 
         return entity;
@@ -152,8 +195,20 @@ public class Entity implements Serializable, PoolObject
 
     public static Entity createAsBox()
     {
+        return createAsBox(new Vector3f(), new Vector3f(), new Vector3f(1f));
+    }
+
+    public static Entity createAsBox(Vector3f position, Vector3f rotation, Vector3f scale)
+    {
         Entity entity = new Entity();
-        entity.addComponent(new TransformComponent());
+
+        TransformComponent transformComponent = new TransformComponent();
+
+        transformComponent.position.set(position);
+        transformComponent.rotation.set(rotation);
+        transformComponent.scale.set(scale);
+
+        entity.addComponent(transformComponent);
         entity.addComponent(new BoxComponent());
 
         return entity;
@@ -161,8 +216,21 @@ public class Entity implements Serializable, PoolObject
 
     public static Entity createAsCircle()
     {
+        return createAsCircle(new Vector3f(), new Vector3f(), new Vector3f(1f));
+    }
+
+    public static Entity createAsCircle(Vector3f position, Vector3f rotation, Vector3f scale)
+    {
         Entity entity = new Entity();
-        entity.addComponent(new TransformComponent());
+
+        TransformComponent transformComponent = new TransformComponent();
+
+        transformComponent.position.set(position);
+        transformComponent.rotation.set(rotation);
+        transformComponent.scale.set(scale);
+
+        entity.addComponent(transformComponent);
+
         entity.addComponent(new CircleComponent());
 
         return entity;

@@ -534,7 +534,7 @@ public class TopToolbarView
 
                         String scenePath = ResourcesView.currentDirectoryPath + "\\" + scene2D.getName() + ".sgs";
 
-                        Entity camera2D = Entity.createAsObject2D();
+                        Entity camera2D = Entity.createAsObject();
                         camera2D.setLayer(scene2D.getLayering().getLayer("default"));
                         scene2D.setSceneMainCamera2D(camera2D);
 

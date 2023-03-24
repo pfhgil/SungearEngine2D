@@ -219,6 +219,7 @@ public class Main
 
                 onlyColorShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/common/only_color_shader.glsl"));
 
+                // FIXME: исправить отрисовку
                 OpenGL.glCall(func -> glStencilFunc(GL_NOTEQUAL, 1, 0xFF));
                 OpenGL.glCall(func -> glStencilOp(GL_KEEP, GL_KEEP, GL_REPLACE));
                 mainCamera.getComponent(CameraComponent.class).cameraCallbacks.add(new CameraComponent.CameraCallback() {
@@ -251,7 +252,7 @@ public class Main
                                 Vector3f lastScale = new Vector3f(transformComponent.scale);
                                 Vector4f lastColor = new Vector4f(inspectingEntity.color);
 
-                                transformComponent.scale.set(new Vector3f(lastScale).add(new Vector3f(0.35f)));
+                                transformComponent.scale.set(new Vector3f(lastScale).add(new Vector3f(0.35f, 0.35f, 0f)));
 
                                 ECSWorld.getCurrentECSWorld().transformationsSystem.updateScaleMatrix(transformComponent);
                                 ECSWorld.getCurrentECSWorld().transformationsSystem.updateModelMatrix(transformComponent);

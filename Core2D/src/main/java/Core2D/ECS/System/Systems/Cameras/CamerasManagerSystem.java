@@ -38,7 +38,7 @@ public class CamerasManagerSystem extends System implements NonRemovable, NonDup
 
             if(cameraComponent.viewMode == CameraComponent.ViewMode.VIEW_MODE_2D) {
                 cameraComponent.projectionMatrix.identity().ortho(-cameraComponent.viewportSize.x / 2.0f, cameraComponent.viewportSize.x / 2.0f,
-                        -cameraComponent.viewportSize.y / 2.0f, cameraComponent.viewportSize.y / 2.0f, 1f, 200f);
+                        -cameraComponent.viewportSize.y / 2.0f, cameraComponent.viewportSize.y / 2.0f, -200f, 200f);
             } else {
                 cameraComponent.projectionMatrix.identity().perspective(
                         cameraComponent.FOV,

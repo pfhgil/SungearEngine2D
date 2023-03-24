@@ -21,8 +21,8 @@ public class CamerasDebugLines
     private static Entity inspectorCamera2DBox = Entity.createAsBox();
     private static Entity mainCamera2DBox = Entity.createAsBox();
 
-    private static Entity inspectorCamera2DIcon = Entity.createAsObject2D();
-    private static Entity mainCamera2DIcon = Entity.createAsObject2D();
+    private static Entity inspectorCamera2DIcon = Entity.createAsObject();
+    private static Entity mainCamera2DIcon = Entity.createAsObject();
 
     public static void init()
     {
@@ -62,13 +62,13 @@ public class CamerasDebugLines
                 Vector3f camera2DRealRotation = MatrixUtils.getEulerRotation(cameraTransformComponent.modelMatrix);
                 Vector3f camera2DRealScale = MatrixUtils.getScale(cameraTransformComponent.modelMatrix);
 
-                inspectorCamera2DIcon.getComponent(TransformComponent.class).position.set(camera2DRealPosition);
+                inspectorCamera2DIcon.getComponent(TransformComponent.class).position.set(camera2DRealPosition.x, camera2DRealPosition.y, camera2DRealPosition.z + 2f);
                 inspectorCamera2DIcon.getComponent(TransformComponent.class).rotation.set(camera2DRealRotation);
 
                 TransformComponent boxTransformComponent = inspectorCamera2DBox.getComponent(TransformComponent.class);
                 BoxComponent boxComponent = inspectorCamera2DBox.getComponent(BoxComponent.class);
 
-                boxTransformComponent.position.set(camera2DRealPosition);
+                boxTransformComponent.position.set(camera2DRealPosition.x, camera2DRealPosition.y, camera2DRealPosition.z + 2f);
                 boxTransformComponent.rotation.set(camera2DRealRotation);
                 boxComponent.setWidth(cameraComponent.viewportSize.x * (1.0f / camera2DRealScale.x));
                 boxComponent.setHeight(cameraComponent.viewportSize.y * (1.0f / camera2DRealScale.y));
@@ -87,13 +87,13 @@ public class CamerasDebugLines
                 Vector3f camera2DRealRotation = MatrixUtils.getEulerRotation(cameraTransformComponent.modelMatrix);
                 Vector3f camera2DRealScale = MatrixUtils.getScale(cameraTransformComponent.modelMatrix);
 
-                mainCamera2DIcon.getComponent(TransformComponent.class).position.set(camera2DRealPosition);
+                mainCamera2DIcon.getComponent(TransformComponent.class).position.set(camera2DRealPosition.x, camera2DRealPosition.y, camera2DRealPosition.z + 2f);
                 mainCamera2DIcon.getComponent(TransformComponent.class).rotation.set(camera2DRealRotation);
 
                 TransformComponent boxTransformComponent = mainCamera2DBox.getComponent(TransformComponent.class);
                 BoxComponent boxComponent = mainCamera2DBox.getComponent(BoxComponent.class);
 
-                boxTransformComponent.position.set(camera2DRealPosition);
+                boxTransformComponent.position.set(camera2DRealPosition.x, camera2DRealPosition.y, camera2DRealPosition.z + 2f);
                 boxTransformComponent.rotation.set(camera2DRealRotation);
                 boxComponent.setWidth(cameraComponent.viewportSize.x * (1.0f / camera2DRealScale.x));
                 boxComponent.setHeight(cameraComponent.viewportSize.y * (1.0f / camera2DRealScale.y));

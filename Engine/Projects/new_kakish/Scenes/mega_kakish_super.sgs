@@ -30,7 +30,7 @@
                   "position": {
                     "x": -0.17324813,
                     "y": 0.06475575,
-                    "z": 0.0
+                    "z": -2.0
                   },
                   "rotation": {
                     "x": 0.0,
@@ -248,8 +248,8 @@
                 "properties": {
                   "position": {
                     "x": -68.50412,
-                    "y": 80.74982,
-                    "z": 0.0
+                    "y": 80.739555,
+                    "z": 1.0
                   },
                   "rotation": {
                     "x": 0.0,
@@ -357,8 +357,8 @@
                   "followScale": false,
                   "position": {
                     "x": -68.50412,
-                    "y": 80.74982,
-                    "z": 0.0
+                    "y": 80.739555,
+                    "z": 1.0
                   },
                   "rotation": {
                     "x": 0.0,
@@ -425,10 +425,7 @@
                       "render": true,
                       "overlay": true,
                       "frameBuffer": {
-                        "handler": 6,
-                        "RBOHandler": 3,
-                        "textureHandler": 38,
-                        "type": 2,
+                        "type": 3,
                         "width": 2560,
                         "height": 1440,
                         "viewportWidth": 2560,
@@ -480,10 +477,7 @@
                       "render": true,
                       "overlay": false,
                       "frameBuffer": {
-                        "handler": 7,
-                        "RBOHandler": 4,
-                        "textureHandler": 39,
-                        "type": 2,
+                        "type": 3,
                         "width": 2560,
                         "height": 1440,
                         "viewportWidth": 2560,
@@ -535,10 +529,7 @@
                       "render": false,
                       "overlay": true,
                       "frameBuffer": {
-                        "handler": 8,
-                        "RBOHandler": 5,
-                        "textureHandler": 40,
-                        "type": 2,
+                        "type": 3,
                         "width": 2560,
                         "height": 1440,
                         "viewportWidth": 2560,
@@ -715,7 +706,7 @@
                   "position": {
                     "x": -448.5813,
                     "y": -541.866,
-                    "z": 0.0
+                    "z": -1.0
                   },
                   "rotation": {
                     "x": 0.0,
@@ -887,7 +878,7 @@
                   "position": {
                     "x": -2076.0645,
                     "y": -495.8205,
-                    "z": 0.0
+                    "z": -1.0
                   },
                   "rotation": {
                     "x": 0.0,
@@ -1021,7 +1012,7 @@
     }
   ],
   "scriptSystem": {},
-  "maxObjectID": 197,
+  "maxObjectID": 201,
   "inBuild": false,
   "isMainScene2D": false
 }

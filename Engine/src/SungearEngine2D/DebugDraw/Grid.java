@@ -5,7 +5,6 @@ import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import SungearEngine2D.Main.Resources;
 import org.joml.Vector2f;
-import org.joml.Vector3f;
 
 public class Grid
 {
@@ -15,7 +14,7 @@ public class Grid
 
     public static void init(Vector2f scale)
     {
-        grid = Entity.createAsObject2D();
+        grid = Entity.createAsObject();
 
         grid.getComponent(TransformComponent.class).scale.set(1f);
         MeshComponent c = grid.getComponent(MeshComponent.class);
