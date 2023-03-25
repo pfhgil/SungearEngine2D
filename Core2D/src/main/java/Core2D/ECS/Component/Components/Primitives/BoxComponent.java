@@ -4,6 +4,7 @@ import Core2D.DataClasses.LineData;
 import Core2D.ECS.Component.Component;
 import Core2D.Graphics.OpenGL.VertexArray;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 
 public class BoxComponent extends PrimitiveComponent
 {
@@ -26,10 +27,10 @@ public class BoxComponent extends PrimitiveComponent
         };
 
         linesData = new LineData[]{
-                new LineData(new Vector2f(), new Vector2f(-size.x / 2.0f, -size.y / 2.0f), new Vector2f(-size.x / 2.0f, size.y / 2.0f)),
-                new LineData(new Vector2f(), new Vector2f(-size.x / 2.0f, size.y / 2.0f), new Vector2f(size.x / 2.0f, size.y / 2.0f)),
-                new LineData(new Vector2f(), new Vector2f(size.x / 2.0f, size.y / 2.0f), new Vector2f(size.x / 2.0f, -size.y / 2.0f)),
-                new LineData(new Vector2f(), new Vector2f(size.x / 2.0f, -size.y / 2.0f), new Vector2f(-size.x / 2.0f, -size.y / 2.0f))
+                new LineData(new Vector3f(), new Vector3f(-size.x / 2.0f, -size.y / 2.0f, 0f), new Vector3f(-size.x / 2.0f, size.y / 2.0f, 0f)),
+                new LineData(new Vector3f(), new Vector3f(-size.x / 2.0f, size.y / 2.0f, 0f), new Vector3f(size.x / 2.0f, size.y / 2.0f, 0f)),
+                new LineData(new Vector3f(), new Vector3f(size.x / 2.0f, size.y / 2.0f, 0f), new Vector3f(size.x / 2.0f, -size.y / 2.0f, 0f)),
+                new LineData(new Vector3f(), new Vector3f(size.x / 2.0f, -size.y / 2.0f, 0f), new Vector3f(-size.x / 2.0f, -size.y / 2.0f, 0f))
         };
     }
 
@@ -51,17 +52,17 @@ public class BoxComponent extends PrimitiveComponent
     {
         this.size = size;
 
-        linesData[0].getVertices()[0].set(-size.x / 2.0f, -size.y / 2.0f);
-        linesData[0].getVertices()[1].set(-size.x / 2.0f, size.y / 2.0f);
+        linesData[0].getVertices()[0].set(-size.x / 2.0f, -size.y / 2.0f, linesData[0].getVertices()[0].z);
+        linesData[0].getVertices()[1].set(-size.x / 2.0f, size.y / 2.0f, linesData[0].getVertices()[0].z);
 
-        linesData[1].getVertices()[0].set(-size.x / 2.0f, size.y / 2.0f);
-        linesData[1].getVertices()[1].set(size.x / 2.0f, size.y / 2.0f);
+        linesData[1].getVertices()[0].set(-size.x / 2.0f, size.y / 2.0f, linesData[1].getVertices()[0].z);
+        linesData[1].getVertices()[1].set(size.x / 2.0f, size.y / 2.0f, linesData[1].getVertices()[1].z);
 
-        linesData[2].getVertices()[0].set(size.x / 2.0f, size.y / 2.0f);
-        linesData[2].getVertices()[1].set(size.x / 2.0f, -size.y / 2.0f);
+        linesData[2].getVertices()[0].set(size.x / 2.0f, size.y / 2.0f, linesData[2].getVertices()[0].z);
+        linesData[2].getVertices()[1].set(size.x / 2.0f, -size.y / 2.0f, linesData[2].getVertices()[1].z);
 
-        linesData[3].getVertices()[0].set(size.x / 2.0f, -size.y / 2.0f);
-        linesData[3].getVertices()[1].set(-size.x / 2.0f, -size.y / 2.0f);
+        linesData[3].getVertices()[0].set(size.x / 2.0f, -size.y / 2.0f, linesData[3].getVertices()[0].z);
+        linesData[3].getVertices()[1].set(-size.x / 2.0f, -size.y / 2.0f, linesData[3].getVertices()[1].z);
     }
     public void setWidth(float width)
     {

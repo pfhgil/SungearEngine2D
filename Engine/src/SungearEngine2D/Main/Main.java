@@ -45,6 +45,7 @@ import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Utils.AppData.AppDataManager;
 import imgui.ImGui;
 import org.apache.commons.io.FilenameUtils;
+import org.joml.Math;
 import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
@@ -279,9 +280,13 @@ public class Main
                             }
                         }
 
+                        OpenGL.glCall(func -> glDisable(GL_DEPTH_TEST));
+
                         CamerasDebugLines.draw();
                         EntitiesDebugDraw.draw();
                         Gizmo.draw();
+
+                        OpenGL.glCall(func -> glEnable(GL_DEPTH_TEST));
                     }
                 });
 
@@ -320,7 +325,18 @@ public class Main
 
                 GraphicsRenderer.draw();
 
-                DebugDraw.drawLine2D("test_" + 0, new Vector2f(0), new Vector2f(1000));
+                DebugDraw.drawLine("test_" + 0,
+                        new Vector3f(0f),
+                        new Vector3f(Math.sin(Math.toRadians((float) GLFW.glfwGetTime() * 100f)) * 1000f, Math.cos(Math.toRadians((float) GLFW.glfwGetTime() * 100f)) * 1000f, 1000f),
+                        new Vector4f(1f, 0.7f, 0.5f, 1f));
+
+                DebugDraw.drawBox("test_" + 1, new Vector3f(-250f, 0f, 500f), new Vector3f((float) GLFW.glfwGetTime() * 50f, 0f, 0f), new Vector2f(250f), new Vector4f(1f, 0f, 0f, 1f));
+                DebugDraw.drawBox("test_" + 2, new Vector3f(0f, 0f, 500f), new Vector3f(0f, (float) GLFW.glfwGetTime() * 50f, 0f), new Vector2f(250f), new Vector4f(0f, 1f, 0f, 1f));
+                DebugDraw.drawBox("test_" + 3, new Vector3f(250f, 0f, 500f), new Vector3f(0f, 0f, (float) GLFW.glfwGetTime() * 50f), new Vector2f(250f), new Vector4f(0f, 0f, 1f, 1f));
+
+                DebugDraw.drawCircle("test_" + 4, new Vector3f(-250f, 0f, 500f), new Vector3f((float) GLFW.glfwGetTime() * 50f, 0f, 0f), 250f, new Vector4f(1f, 0f, 0f, 1f));
+                DebugDraw.drawCircle("test_" + 5, new Vector3f(0f, 0f, 500f), new Vector3f(0f, (float) GLFW.glfwGetTime() * 50f, 0f), 250f, new Vector4f(0f, 1f, 0f, 1f));
+                DebugDraw.drawCircle("test_" + 6, new Vector3f(250f, 0f, 500f), new Vector3f(0f, 0f, (float) GLFW.glfwGetTime() * 50f), 250f, new Vector4f(0f, 0f, 1f, 1f));
             }
 
             @Override

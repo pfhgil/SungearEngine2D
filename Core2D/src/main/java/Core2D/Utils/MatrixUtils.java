@@ -108,6 +108,11 @@ public class MatrixUtils
     {
         Vector3f eulerRotation = new Vector3f();
         matrix4f.getEulerAnglesZYX(eulerRotation);
+
+        eulerRotation.x = (float) Math.toDegrees(eulerRotation.x);
+        eulerRotation.y = (float) Math.toDegrees(eulerRotation.y);
+        eulerRotation.z = (float) Math.toDegrees(eulerRotation.z);
+
         return eulerRotation;
     }
 

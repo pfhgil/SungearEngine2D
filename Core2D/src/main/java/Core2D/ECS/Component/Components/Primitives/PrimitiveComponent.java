@@ -8,7 +8,7 @@ import Core2D.Graphics.OpenGL.VertexArray;
 import Core2D.Graphics.OpenGL.VertexAttribute;
 import Core2D.Graphics.OpenGL.VertexBuffer;
 import Core2D.Graphics.RenderParts.Shader;
-import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 public class PrimitiveComponent extends Component
@@ -23,7 +23,7 @@ public class PrimitiveComponent extends Component
 
     public boolean scaleWithEntity = false;
 
-    protected Vector2f offset = new Vector2f();
+    protected Vector3f offset = new Vector3f();
 
     protected Vector4f color = new Vector4f(0.0f, 0.0f, 0.0f, 1.0f);
 
@@ -56,7 +56,7 @@ public class PrimitiveComponent extends Component
     {
         destroy();
 
-        shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/primitives/line2D/shader.glsl"));
+        shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/primitives/line/shader.glsl"));
 
         loadVAO();
     }
@@ -108,10 +108,10 @@ public class PrimitiveComponent extends Component
         }
     }
 
-    public Vector2f getOffset() { return offset; }
-    public void setOffset(Vector2f offset)
+    public Vector3f getOffset() { return offset; }
+    public void setOffset(Vector3f offset)
     {
-        this.offset = offset;
+        this.offset.set(offset);
 
         for(LineData lineData : linesData) {
             lineData.offset.set(offset);

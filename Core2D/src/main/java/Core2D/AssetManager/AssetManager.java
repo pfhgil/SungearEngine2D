@@ -1,7 +1,7 @@
 package Core2D.AssetManager;
 
 import Core2D.Core2D.Core2D;
-import Core2D.Core2D.Core2DMode;
+import Core2D.Core2D.Core2DWorkMode;
 import Core2D.DataClasses.*;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
@@ -44,8 +44,8 @@ public class AssetManager implements Serializable
         String entitiesInstancingShaderPath = "/data/shaders/mesh/instancing_shader.glsl";
         String entityPickingShader = "/data/shaders/mesh/picking_shader.glsl";
 
-        String line2DShaderPath = "/data/shaders/primitives/line2D/shader.glsl";
-        String lines2DInstancingShaderPath = "/data/shaders/primitives/line2D/instancing/shader.glsl";
+        String line2DShaderPath = "/data/shaders/primitives/line/shader.glsl";
+        String lines2DInstancingShaderPath = "/data/shaders/primitives/line/instancing/shader.glsl";
 
         String postprocessingDefaultShaderPath = "/data/shaders/postprocessing/postprocessing_default_shader.glsl";
         String postprocessingTest0ShaderPath = "/data/shaders/postprocessing/postprocessing_test0_shader.glsl";
@@ -92,14 +92,14 @@ public class AssetManager implements Serializable
 
     public void save()
     {
-        if(ProjectsManager.getCurrentProject() != null && Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+        if(ProjectsManager.getCurrentProject() != null && Core2D.core2DWorkMode == Core2DWorkMode.IN_ENGINE) {
             save(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + "AssetManager.am");
         }
     }
 
     public void save(String path)
     {
-        if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+        if(Core2D.core2DWorkMode == Core2DWorkMode.IN_ENGINE) {
             String gsonObj = Utils.gson.toJson(this);
             FileUtils.reCreateFile(path);
             FileUtils.writeToFile(path, gsonObj, false);
@@ -108,7 +108,7 @@ public class AssetManager implements Serializable
 
     public AssetManager load()
     {
-        if(ProjectsManager.getCurrentProject() != null && Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+        if(ProjectsManager.getCurrentProject() != null && Core2D.core2DWorkMode == Core2DWorkMode.IN_ENGINE) {
             return load(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + "AssetManager.am");
         }
         return this;
@@ -116,7 +116,7 @@ public class AssetManager implements Serializable
 
     public AssetManager load(String path)
     {
-        if(Core2D.core2DMode == Core2DMode.IN_ENGINE && new File(path).exists()) {
+        if(Core2D.core2DWorkMode == Core2DWorkMode.IN_ENGINE && new File(path).exists()) {
             String fileText = FileUtils.readAllFile(path);
             AssetManager assetManager = Utils.gson.fromJson(fileText, AssetManager.class);
             load(assetManager);

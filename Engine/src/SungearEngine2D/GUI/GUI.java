@@ -14,7 +14,7 @@ import java.io.File;
 public class GUI
 {
     private static Renderer renderer;
-    //private static Line2D line2D;
+    //private static Line2D line;
     //private static Object2D object2D;
 
     public static void init()

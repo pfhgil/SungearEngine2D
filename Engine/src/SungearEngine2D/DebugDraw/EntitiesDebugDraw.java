@@ -15,6 +15,7 @@ import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
@@ -67,17 +68,17 @@ public class EntitiesDebugDraw
                     Vec2 wp2 = body.getWorldPoint(verticesPos[2]);
                     Vec2 wp3 = body.getWorldPoint(verticesPos[3]);
 
-                    boxComponent.getLinesData()[0].getVertices()[0].set(wp0.x * PhysicsWorld.RATIO, wp0.y * PhysicsWorld.RATIO);
-                    boxComponent.getLinesData()[0].getVertices()[1].set(wp1.x * PhysicsWorld.RATIO, wp1.y * PhysicsWorld.RATIO);
+                    boxComponent.getLinesData()[0].getVertices()[0].set(wp0.x * PhysicsWorld.RATIO, wp0.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[0].getVertices()[0].z);
+                    boxComponent.getLinesData()[0].getVertices()[1].set(wp1.x * PhysicsWorld.RATIO, wp1.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[0].getVertices()[1].z);
 
-                    boxComponent.getLinesData()[1].getVertices()[0].set(wp1.x * PhysicsWorld.RATIO, wp1.y * PhysicsWorld.RATIO);
-                    boxComponent.getLinesData()[1].getVertices()[1].set(wp2.x * PhysicsWorld.RATIO, wp2.y * PhysicsWorld.RATIO);
+                    boxComponent.getLinesData()[1].getVertices()[0].set(wp1.x * PhysicsWorld.RATIO, wp1.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[1].getVertices()[0].z);
+                    boxComponent.getLinesData()[1].getVertices()[1].set(wp2.x * PhysicsWorld.RATIO, wp2.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[1].getVertices()[1].z);
 
-                    boxComponent.getLinesData()[2].getVertices()[0].set(wp2.x * PhysicsWorld.RATIO, wp2.y * PhysicsWorld.RATIO);
-                    boxComponent.getLinesData()[2].getVertices()[1].set(wp3.x * PhysicsWorld.RATIO, wp3.y * PhysicsWorld.RATIO);
+                    boxComponent.getLinesData()[2].getVertices()[0].set(wp2.x * PhysicsWorld.RATIO, wp2.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[2].getVertices()[0].z);
+                    boxComponent.getLinesData()[2].getVertices()[1].set(wp3.x * PhysicsWorld.RATIO, wp3.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[2].getVertices()[1].z);
 
-                    boxComponent.getLinesData()[3].getVertices()[0].set(wp3.x * PhysicsWorld.RATIO, wp3.y * PhysicsWorld.RATIO);
-                    boxComponent.getLinesData()[3].getVertices()[1].set(wp0.x * PhysicsWorld.RATIO, wp0.y * PhysicsWorld.RATIO);
+                    boxComponent.getLinesData()[3].getVertices()[0].set(wp3.x * PhysicsWorld.RATIO, wp3.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[3].getVertices()[0].z);
+                    boxComponent.getLinesData()[3].getVertices()[1].set(wp0.x * PhysicsWorld.RATIO, wp0.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[3].getVertices()[1].z);
 
                     box.update();
 
@@ -109,7 +110,7 @@ public class EntitiesDebugDraw
                     Vec2 circlePos = circleCollider2DComponent.getCircleCollider2D().getRigidbody2D().getBody().getWorldPoint(circleShape.m_p);
                     float circleRadius = circleShape.m_radius * PhysicsWorld.RATIO;
 
-                    circleComponent.setOffset(new Vector2f(circlePos.x * PhysicsWorld.RATIO, circlePos.y * PhysicsWorld.RATIO));
+                    circleComponent.setOffset(new Vector3f(circlePos.x * PhysicsWorld.RATIO, circlePos.y * PhysicsWorld.RATIO, circleComponent.getOffset().z));
                     circleComponent.setRadius(circleRadius);
 
                     circle.update();

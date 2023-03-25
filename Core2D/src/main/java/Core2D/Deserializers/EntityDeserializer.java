@@ -2,7 +2,7 @@ package Core2D.Deserializers;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Core2D.Core2D;
-import Core2D.Core2D.Core2DMode;
+import Core2D.Core2D.Core2DWorkMode;
 import Core2D.DataClasses.ShaderData;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Audio.AudioComponent;
@@ -109,7 +109,7 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
 
                 rigidbody2DComponent.ID = lastComponentID;
             } else if(component instanceof ScriptComponent scriptComponent) {
-                if(Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+                if(Core2D.core2DWorkMode == Core2DWorkMode.IN_ENGINE) {
                     scriptComponent.set(scriptComponent);
                     entity.addComponent(scriptComponent);
 

@@ -27,17 +27,17 @@
     {
       "assetObject": {
         "lastModified": -1,
-        "path": "/data/shaders/primitives/line2D/shader.glsl"
+        "path": "/data/shaders/primitives/line/shader.glsl"
       },
-      "path": "/data/shaders/primitives/line2D/shader.glsl",
+      "path": "/data/shaders/primitives/line/shader.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
     },
     {
       "assetObject": {
         "lastModified": -1,
-        "path": "/data/shaders/primitives/line2D/instancing/shader.glsl"
+        "path": "/data/shaders/primitives/line/instancing/shader.glsl"
       },
-      "path": "/data/shaders/primitives/line2D/instancing/shader.glsl",
+      "path": "/data/shaders/primitives/line/instancing/shader.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
     },
     {
@@ -88,6 +88,22 @@
       },
       "path": "/data/audio/dj-arbuz.wav",
       "assetObjectClassName": "Core2D.DataClasses.AudioData"
+    },
+    {
+      "assetObject": {
+        "lastModified": -1,
+        "path": "/data/shaders/primitives/line2D/shader.glsl"
+      },
+      "path": "/data/shaders/primitives/line2D/shader.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "lastModified": -1,
+        "path": "/data/shaders/primitives/line2D/instancing/shader.glsl"
+      },
+      "path": "/data/shaders/primitives/line2D/instancing/shader.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
     },
     {
       "assetObject": {

@@ -43,6 +43,7 @@ import org.apache.commons.io.FilenameUtils;
 import org.jbox2d.dynamics.BodyType;
 import org.joml.Math;
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.opengl.GL46C;
@@ -348,27 +349,39 @@ public class ComponentsView extends View
 
                         ImGui.pushID("LineOffsetDragFloat_" + i);
                         {
-                            float[] offset = new float[] { lineComponent.getLinesData()[0].offset.x, lineComponent.getLinesData()[0].offset.y };
+                            float[] offset = new float[] {
+                                    lineComponent.getLinesData()[0].offset.x,
+                                    lineComponent.getLinesData()[0].offset.y,
+                                    lineComponent.getLinesData()[0].offset.z
+                            };
                             if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Offset", offset))) {
-                                lineComponent.getLinesData()[0].offset.set(offset[0], offset[1]);
+                                lineComponent.getLinesData()[0].offset.set(offset[0], offset[1], offset[2]);
                             }
                         }
                         ImGui.popID();
 
                         ImGui.pushID("LineStartDragFloat_" + i);
                         {
-                            float[] start = new float[] { lineComponent.getLinesData()[0].getVertices()[0].x, lineComponent.getLinesData()[0].getVertices()[0].y };
-                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Start", start))) {
-                                lineComponent.getLinesData()[0].getVertices()[0].set(start[0], start[1]);
+                            float[] start = new float[] {
+                                    lineComponent.getLinesData()[0].getVertices()[0].x,
+                                    lineComponent.getLinesData()[0].getVertices()[0].y,
+                                    lineComponent.getLinesData()[0].getVertices()[0].z
+                            };
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat3("Start", start))) {
+                                lineComponent.getLinesData()[0].getVertices()[0].set(start[0], start[1], start[2]);
                             }
                         }
                         ImGui.popID();
 
                         ImGui.pushID("LineEndDragFloat_" + i);
                         {
-                            float[] end = new float[] { lineComponent.getLinesData()[0].getVertices()[1].x, lineComponent.getLinesData()[0].getVertices()[1].y };
+                            float[] end = new float[] {
+                                    lineComponent.getLinesData()[0].getVertices()[1].x,
+                                    lineComponent.getLinesData()[0].getVertices()[1].y,
+                                    lineComponent.getLinesData()[0].getVertices()[1].z
+                            };
                             if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("End", end))) {
-                                lineComponent.getLinesData()[0].getVertices()[1].set(end[0], end[1]);
+                                lineComponent.getLinesData()[0].getVertices()[1].set(end[0], end[1], end[2]);
                             }
                         }
                         ImGui.popID();
@@ -406,9 +419,13 @@ public class ComponentsView extends View
 
                         ImGui.pushID("BoxOffsetDragFloat_" + i);
                         {
-                            float[] offset = new float[] { boxComponent.getOffset().x, boxComponent.getOffset().y };
+                            float[] offset = new float[] {
+                                    boxComponent.getOffset().x,
+                                    boxComponent.getOffset().y,
+                                    boxComponent.getOffset().z
+                            };
                             if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Offset", offset))) {
-                                boxComponent.setOffset(new Vector2f(offset[0], offset[1]));
+                                boxComponent.setOffset(new Vector3f(offset[0], offset[1], offset[2]));
                             }
                         }
                         ImGui.popID();
@@ -455,9 +472,13 @@ public class ComponentsView extends View
 
                         ImGui.pushID("CircleOffsetDragFloat_" + i);
                         {
-                            float[] offset = new float[] { circleComponent.getOffset().x, circleComponent.getOffset().y };
+                            float[] offset = new float[] {
+                                    circleComponent.getOffset().x,
+                                    circleComponent.getOffset().y,
+                                    circleComponent.getOffset().z
+                            };
                             if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Offset", offset))) {
-                                circleComponent.setOffset(new Vector2f(offset[0], offset[1]));
+                                circleComponent.setOffset(new Vector3f(offset[0], offset[1], offset[2]));
                             }
                         }
                         ImGui.popID();

@@ -1,13 +1,14 @@
 package Core2D.DataClasses;
 
 import org.joml.Vector2f;
+import org.joml.Vector3f;
 import org.joml.Vector4f;
 public class LineData
 {
-    public Vector2f offset = new Vector2f();
-    private Vector2f[] vertices = new Vector2f[] {
-            new Vector2f(),
-            new Vector2f()
+    public Vector3f offset = new Vector3f();
+    private Vector3f[] vertices = new Vector3f[] {
+            new Vector3f(),
+            new Vector3f()
     };
     public float lineWidth = 3.0f;
 
@@ -20,7 +21,7 @@ public class LineData
         set(lineData);
     }
 
-    public LineData(Vector2f offset, Vector2f start, Vector2f end, float lineWidth, Vector4f color)
+    public LineData(Vector3f offset, Vector3f start, Vector3f end, float lineWidth, Vector4f color)
     {
         this.offset.set(offset);
         this.vertices[0].set(start);
@@ -31,7 +32,7 @@ public class LineData
         this.color.set(color);
     }
 
-    public LineData(Vector2f offset, Vector2f start, Vector2f end)
+    public LineData(Vector3f offset, Vector3f start, Vector3f end)
     {
         this.offset.set(offset);
         this.vertices[0].set(start);
@@ -50,5 +51,5 @@ public class LineData
         color.set(lineData.color);
     }
 
-    public Vector2f[] getVertices() { return vertices; }
+    public Vector3f[] getVertices() { return vertices; }
 }

@@ -46,8 +46,8 @@ public class CircleComponent extends PrimitiveComponent
             lastPoint.set(currentPoint);
             currentPoint.set(tmp);
 
-            linesData[i].getVertices()[0].set(lastPoint);
-            linesData[i].getVertices()[1].set(currentPoint);
+            linesData[i].getVertices()[0].set(lastPoint, linesData[i].getVertices()[0].z);
+            linesData[i].getVertices()[1].set(currentPoint, linesData[i].getVertices()[1].z);
 
             currentAngle += angleIncrement;
         }

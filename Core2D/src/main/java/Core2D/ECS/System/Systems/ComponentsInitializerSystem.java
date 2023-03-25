@@ -66,6 +66,7 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
                 public void postRender() {
                     for(Entity debugEntity : DebugDraw.getDebugPrimitives().values()) {
                         Graphics.getMainRenderer().render(debugEntity, cameraComponent);
+                        debugEntity.active = false;
                     }
                 }
             });

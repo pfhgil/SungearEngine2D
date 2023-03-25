@@ -206,10 +206,7 @@ public class FrameBuffer
         // ЕСЛИ НУCЖЕН БУДЕТ DEPTH, ТО ПРИДЕТСЯ ДЕЛАТЬ ДОП. ПРОВЕРКУ И УСТАНОВКУ GL_DEPTH_STENCIL_ATTACHMENT
         OpenGL.glCall((params) -> glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBOHandler));
 
-        // я ебал
         unBindRBO();
-        //glDisable();
-        //glEnable();
     }
 
     // создает текстурное прикрепление к fbo

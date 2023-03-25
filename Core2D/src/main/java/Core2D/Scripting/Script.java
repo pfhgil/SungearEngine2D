@@ -2,7 +2,7 @@ package Core2D.Scripting;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Core2D.Core2D;
-import Core2D.Core2D.Core2DMode;
+import Core2D.Core2D.Core2DWorkMode;
 import Core2D.DataClasses.ScriptData;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera.CameraComponent;
@@ -75,7 +75,7 @@ public class Script
 
         try {
             // если режим работы - в движке
-            if (Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+            if (Core2D.core2DWorkMode == Core2DWorkMode.IN_ENGINE) {
                 File file = new File(scriptsDirPath);
 
                 URL scriptDirURL = file.toURI().toURL();

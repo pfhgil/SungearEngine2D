@@ -1,7 +1,7 @@
 package Core2D.Scene2D;
 
 import Core2D.Core2D.Core2D;
-import Core2D.Core2D.Core2DMode;
+import Core2D.Core2D.Core2DWorkMode;
 import Core2D.Core2D.Settings;
 import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
@@ -73,7 +73,7 @@ public class SceneManager
 
     public static void saveSceneManager()
     {
-        if(ProjectsManager.getCurrentProject() != null && Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+        if(ProjectsManager.getCurrentProject() != null && Core2D.core2DWorkMode == Core2DWorkMode.IN_ENGINE) {
             saveSceneManager(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + "SceneManager.sm");
         }
     }
@@ -94,7 +94,7 @@ public class SceneManager
 
     public static void loadSceneManagerAsCurrent()
     {
-        if(ProjectsManager.getCurrentProject() != null && Core2D.core2DMode == Core2DMode.IN_ENGINE) {
+        if(ProjectsManager.getCurrentProject() != null && Core2D.core2DWorkMode == Core2DWorkMode.IN_ENGINE) {
             loadSceneManagerAsCurrent(ProjectsManager.getCurrentProject().getProjectPath() + File.separator + "SceneManager.sm");
         }
     }

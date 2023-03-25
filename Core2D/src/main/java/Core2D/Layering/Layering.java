@@ -15,6 +15,49 @@ public class Layering {
 
     private transient boolean shouldDestroy = false;
 
+    // набор констант z индексов (так сказать слоев ОТРИСОВКИ)
+    public static final float Z_INDEX_M40 = -40f;
+    public static final float Z_INDEX_M38 = -38f;
+    public static final float Z_INDEX_M36 = -36f;
+    public static final float Z_INDEX_M34 = -34f;
+    public static final float Z_INDEX_M32 = -32f;
+    public static final float Z_INDEX_M30 = -30f;
+    public static final float Z_INDEX_M28 = -28f;
+    public static final float Z_INDEX_M26 = -26f;
+    public static final float Z_INDEX_M24 = -24f;
+    public static final float Z_INDEX_M22 = -22f;
+    public static final float Z_INDEX_M20 = -20f;
+    public static final float Z_INDEX_M18 = -18f;
+    public static final float Z_INDEX_M16 = -16f;
+    public static final float Z_INDEX_M14 = -14f;
+    public static final float Z_INDEX_M12 = -12f;
+    public static final float Z_INDEX_M10 = -10f;
+    public static final float Z_INDEX_M8 = -8f;
+    public static final float Z_INDEX_M6 = -6f;
+    public static final float Z_INDEX_M4 = -4f;
+    public static final float Z_INDEX_M2 = -2f;
+    public static final float Z_INDEX_0 = 0f;
+    public static final float Z_INDEX_P2 = 2f;
+    public static final float Z_INDEX_P4 = 4f;
+    public static final float Z_INDEX_P6 = 6f;
+    public static final float Z_INDEX_P8 = 8f;
+    public static final float Z_INDEX_P10 = 10f;
+    public static final float Z_INDEX_P12 = 12f;
+    public static final float Z_INDEX_P14 = 14f;
+    public static final float Z_INDEX_P16 = 16f;
+    public static final float Z_INDEX_P18 = 18f;
+    public static final float Z_INDEX_P20 = 20f;
+    public static final float Z_INDEX_P22 = 22f;
+    public static final float Z_INDEX_P24 = 24f;
+    public static final float Z_INDEX_P26 = 26f;
+    public static final float Z_INDEX_P28 = 28f;
+    public static final float Z_INDEX_P30 = 30f;
+    public static final float Z_INDEX_P32 = 32f;
+    public static final float Z_INDEX_P34 = 34f;
+    public static final float Z_INDEX_P36 = 36f;
+    public static final float Z_INDEX_P38 = 38f;
+    public static final float Z_INDEX_P40 = 40f;
+
     // рисует все объекты разными цветами при выборке объектов
     public void drawPicking(CameraComponent cameraComponent)
     {

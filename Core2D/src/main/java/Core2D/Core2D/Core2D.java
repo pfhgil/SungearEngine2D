@@ -50,9 +50,9 @@ public class Core2D extends Graphics
 
     /**
      * Current operating mode of the Core2D.
-     * @see Core2DMode
+     * @see Core2DWorkMode
      */
-    public static Core2DMode core2DMode = Core2DMode.IN_ENGINE;
+    public static Core2DWorkMode core2DWorkMode = Core2DWorkMode.IN_ENGINE;
 
     /**
      * Starts Core2D.

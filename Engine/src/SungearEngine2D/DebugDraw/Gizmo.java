@@ -16,6 +16,7 @@ import Core2D.Graphics.Graphics;
 import Core2D.Graphics.OpenGL.FrameBuffer;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Input.PC.Mouse;
+import Core2D.Layering.Layering;
 import Core2D.Utils.MathUtils;
 import Core2D.Utils.MatrixUtils;
 import SungearEngine2D.GUI.Views.ViewsManager;
@@ -71,10 +72,6 @@ public class Gizmo
     private static FrameBuffer gizmoPickingTarget;
 
     private static Shader pickingShader;
-
-    private static final float LAYER2 = 6f;
-    private static final float LAYER1 = 4f;
-    private static final float LAYER0 = 2f;
 
     public static void init()
     {
@@ -159,17 +156,17 @@ public class Gizmo
                 Vector3f entityPosition = MatrixUtils.getPosition(entityTransformComponent.modelMatrix);
                 Vector3f entityRotation = MatrixUtils.getEulerRotation(entityTransformComponent.modelMatrix);
 
-                Vector2f entityCentrePos = new Vector2f();
+                Vector3f entityCentrePos = new Vector3f();
                 if(entityTransformComponent.parentTransformComponent != null) {
                     Vector3f parentPosition = MatrixUtils.getPosition(entityTransformComponent.parentTransformComponent.modelMatrix);
                     Vector3f resEntityPos = new Vector3f(entityTransformComponent.position)
                             .mul(MatrixUtils.getScale(entityTransformComponent.parentTransformComponent.modelMatrix));
-                    entityCentrePos.set(resEntityPos.x, resEntityPos.y).add(entityTransformComponent.center.x, entityTransformComponent.center.y);
-                    entityCentrePos.add(parentPosition.x, parentPosition.y);
+                    entityCentrePos.set(resEntityPos).add(entityTransformComponent.center);
+                    entityCentrePos.add(parentPosition);
 
-                    MathUtils.rotate(entityCentrePos, MatrixUtils.getEulerRotation(entityTransformComponent.parentTransformComponent.modelMatrix).z, new Vector2f(parentPosition.x, parentPosition.y));
+                    MathUtils.rotate(new Vector2f(entityCentrePos.x, entityCentrePos.y), MatrixUtils.getEulerRotation(entityTransformComponent.parentTransformComponent.modelMatrix).z, new Vector2f(parentPosition.x, parentPosition.y));
                 } else {
-                    entityCentrePos.set(entityTransformComponent.position.x, entityTransformComponent.position.y).add(entityTransformComponent.center.x, entityTransformComponent.center.y);
+                    entityCentrePos.set(entityTransformComponent.position).add(entityTransformComponent.center);
                 }
 
                 TransformComponent yArrowTransform = yArrow.getComponent(TransformComponent.class);
@@ -179,18 +176,18 @@ public class Gizmo
                 TransformComponent yScaleHandlerTransform = yScaleHandler.getComponent(TransformComponent.class);
                 TransformComponent xScaleHandlerTransform = xScaleHandler.getComponent(TransformComponent.class);
 
-                yArrowTransform.position.set(new Vector3f(entityPosition).add(0.0f, yArrowTransform.scale.y * 100.0f / 2.0f, 0f).add(0f, 0f, LAYER0));
-                xArrowTransform.position.set(new Vector3f(entityPosition).add(0f, 0f, LAYER0));
+                yArrowTransform.position.set(new Vector3f(entityPosition).add(0.0f, yArrowTransform.scale.y * 100.0f / 2.0f, 0f).add(0f, 0f, Layering.Z_INDEX_P4));
+                xArrowTransform.position.set(new Vector3f(entityPosition).add(0f, 0f, Layering.Z_INDEX_P4));
 
-                centrePoint.getComponent(TransformComponent.class).position.set(entityPosition).add(0f, 0f, LAYER1);
+                centrePoint.getComponent(TransformComponent.class).position.set(entityPosition).add(0f, 0f, Layering.Z_INDEX_P6);
 
                 TransformComponent centerPointToEditCenterTransform = centrePointToEditCenter.getComponent(TransformComponent.class);
-                centerPointToEditCenterTransform.position.set(entityCentrePos.x, entityCentrePos.y, centerPointToEditCenterTransform.position.z + LAYER2);
+                centerPointToEditCenterTransform.position.set(entityCentrePos.x, entityCentrePos.y, entityPosition.z + Layering.Z_INDEX_P8);
 
-                rotationCircleTransform.position.set(entityCentrePos.x, entityCentrePos.y, rotationCircleTransform.position.z);
-                rotationHandlerTransform.position.set(rotationCircleTransform.position).add(0f, rotationCircle.getComponent(CircleComponent.class).getRadius(), LAYER1);
-                Vector2f rotationOffset = new Vector2f(entityCentrePos).add(new Vector2f(rotationHandlerTransform.position.x, rotationHandlerTransform.position.y).negate());
-                rotationHandlerTransform.rotation = entityRotation;
+                rotationCircleTransform.position.set(entityCentrePos.x, entityCentrePos.y, entityCentrePos.z);
+                rotationHandlerTransform.position.set(rotationCircleTransform.position).add(0f, rotationCircle.getComponent(CircleComponent.class).getRadius(), Layering.Z_INDEX_P4);
+                Vector2f rotationOffset = new Vector2f(entityCentrePos.x, entityCentrePos.y).add(new Vector2f(rotationHandlerTransform.position.x, rotationHandlerTransform.position.y).negate());
+                rotationHandlerTransform.rotation.set(entityRotation);
                 rotationHandlerTransform.center.set(rotationOffset.x, rotationOffset.y, rotationHandlerTransform.center.z);
 
                 Vector3f parentRotation;
@@ -215,12 +212,17 @@ public class Gizmo
                     xArrowTransform.rotation.z = -90.0f;
                 }
 
-                yScaleLine.getComponent(LineComponent.class).getLinesData()[0].getVertices()[0].set(entityPosition.x, entityPosition.y);
-                yScaleLine.getComponent(LineComponent.class).getLinesData()[0].getVertices()[1].set(new Vector2f(entityPosition.x, entityPosition.y).add(yScaleLineEnd.x, yScaleLineEnd.y));
-                xScaleLine.getComponent(LineComponent.class).getLinesData()[0].getVertices()[0].set(entityPosition.x, entityPosition.y);
-                xScaleLine.getComponent(LineComponent.class).getLinesData()[0].getVertices()[1].set(new Vector2f(entityPosition.x, entityPosition.y).add(xScaleLineEnd));
-                yScaleHandlerTransform.position.set(new Vector3f(entityPosition).add(yScaleLineEnd.x, yScaleLineEnd.y, LAYER1));
-                xScaleHandlerTransform.position.set(new Vector3f(entityPosition).add(xScaleLineEnd.x, xScaleLineEnd.y, LAYER1));
+                LineComponent yScaleLineComponent = yScaleLine.getComponent(LineComponent.class);
+                LineComponent xScaleLineComponent = xScaleLine.getComponent(LineComponent.class);
+
+                yScaleLineComponent.getLinesData()[0].getVertices()[0].set(entityPosition.x, entityPosition.y, entityPosition.z + Layering.Z_INDEX_P2);
+                yScaleLineComponent.getLinesData()[0].getVertices()[1].set(new Vector3f(entityPosition.x, entityPosition.y, entityPosition.z).add(yScaleLineEnd.x, yScaleLineEnd.y, Layering.Z_INDEX_P2));
+
+                xScaleLineComponent.getLinesData()[0].getVertices()[0].set(entityPosition.x, entityPosition.y, entityPosition.z + Layering.Z_INDEX_P2);
+                xScaleLineComponent.getLinesData()[0].getVertices()[1].set(new Vector3f(entityPosition.x, entityPosition.y, entityPosition.z).add(xScaleLineEnd.x, xScaleLineEnd.y, Layering.Z_INDEX_P2));
+
+                yScaleHandlerTransform.position.set(new Vector3f(entityPosition).add(yScaleLineEnd.x, yScaleLineEnd.y, Layering.Z_INDEX_P4));
+                xScaleHandlerTransform.position.set(new Vector3f(entityPosition).add(xScaleLineEnd.x, xScaleLineEnd.y, Layering.Z_INDEX_P4));
 
                 // TODO: сделать через логические флаги
                 if (gizmoMode == GizmoMode.SCALE || gizmoMode == GizmoMode.TRANSLATION_SCALE || gizmoMode == GizmoMode.ROTATION_SCALE || gizmoMode == GizmoMode.TRANSLATION_ROTATION_SCALE) {
@@ -391,7 +393,7 @@ public class Gizmo
                         case "gizmo.xArrow" -> entityTransformComponent.position.add(-offset.x, 0f, 0f);
                         case "gizmo.centrePoint" -> entityTransformComponent.position.set(mouseOGLPosition.x, mouseOGLPosition.y, entityTransformComponent.position.z);
                         case "gizmo.rotationHandler" -> {
-                            Vector2f p = new Vector2f(entityCentrePos);
+                            Vector2f p = new Vector2f(entityCentrePos.x, entityCentrePos.y);
                             if(entityTransformComponent.parentTransformComponent != null) {
                                 Vector3f parentPosition = MatrixUtils.getPosition(entityTransformComponent.parentTransformComponent.modelMatrix);
                                 MathUtils.rotate(mouseOGLPosition, -MatrixUtils.getEulerRotation(entityTransformComponent.parentTransformComponent.modelMatrix).z, new Vector2f(parentPosition.x, parentPosition.y));
