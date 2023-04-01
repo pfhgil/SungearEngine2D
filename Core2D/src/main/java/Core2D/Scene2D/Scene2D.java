@@ -3,19 +3,15 @@ package Core2D.Scene2D;
 import Core2D.CamerasManager.CamerasManager;
 import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
-import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;
 import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
-import Core2D.Physics.PhysicsWorld;
-import Core2D.Physics.Rigidbody2D;
 import Core2D.Systems.ScriptSystem;
 import Core2D.Utils.Tag;
-import org.jbox2d.common.Vec2;
-import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import java.util.ArrayList;
@@ -36,8 +32,6 @@ public class Scene2D
     private Vector4f screenClearColor = new Vector4f(1.0f, 1.0f, 1.0f, 1.0f);
 
     private List<Tag> tags = new ArrayList<>();
-
-    private transient PhysicsWorld physicsWorld = new PhysicsWorld();
 
     // пока что transient
     //private transient ECSWorld ecsWorld = new ECSWorld();
@@ -95,15 +89,18 @@ public class Scene2D
     {
         for(Layer layer : layering.getLayers()) {
             for(Entity entity : layer.getEntities()) {
-                Rigidbody2D rigidbody2D = physicsWorld.addRigidbody2D(entity, this);
+                /*
+                Rigidbody2D rigidbody2D = ECSWorld.getCurrentECSWorld().physicsSystem.addRigidbody2D(entity);
                 TransformComponent transformComponent = entity.getComponent(TransformComponent.class);
                 if(transformComponent != null && rigidbody2D != null) {
                     Vector3f position = transformComponent.position;
                     rigidbody2D.getBody().setTransform(
-                            new Vec2(position.x / PhysicsWorld.RATIO, position.y / PhysicsWorld.RATIO),
+                            new Vec2(position.x / PhysicsSettings.ratio, position.y / PhysicsSettings.ratio),
                             (float) Math.toRadians(transformComponent.rotation.z)
                     );
                 }
+
+                 */
             }
         }
     }
@@ -139,9 +136,6 @@ public class Scene2D
 
     public void deltaUpdate(float deltaTime)
     {
-        // FIXME: сделать отдельный метод апдейта (без дельты)
-        physicsWorld.step(deltaTime, 6, 2);
-
         layering.deltaUpdate(deltaTime);
 
         if(scene2DCallback != null) {
@@ -293,7 +287,6 @@ public class Scene2D
 
         layering.destroy();
         layering = null;
-        physicsWorld = null;
 
         tags.clear();
 
@@ -345,9 +338,6 @@ public class Scene2D
 
     public List<Tag> getTags() { return tags; }
 
-    public PhysicsWorld getPhysicsWorld() { return physicsWorld; }
-    public void setPhysicsWorld(PhysicsWorld physicsWorld) { this.physicsWorld = physicsWorld; }
-
     public ScriptSystem getScriptSystem() { return scriptSystem; }
     public void setScriptSystem(ScriptSystem scriptSystem) { this.scriptSystem = scriptSystem; }
 
@@ -376,7 +366,7 @@ public class Scene2D
     {
         this.running = running;
 
-        physicsWorld.simulatePhysics = running;
+        ECSWorld.getCurrentECSWorld().physicsSystem.simulatePhysics = running;
         scriptSystem.runScripts = running;
     }
 }

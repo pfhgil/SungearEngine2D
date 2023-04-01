@@ -90,7 +90,8 @@ public class ComponentsView extends View
                         try {
                             inspectingEntity.removeComponent(currentEditingComponent);
                         } catch (Exception e) {
-                            ImGui.endPopup();
+                            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
+                            //ImGui.endPopup();
                         }
                         showPopupWindow = false;
                     }
@@ -254,42 +255,42 @@ public class ComponentsView extends View
                         Rigidbody2DComponent rigidbody2DComponent = (Rigidbody2DComponent) currentComponent;
 
                         ImGui.pushID("Rigidbody2DType");
-                        if (ImGuiUtils.imCallWBorder(func -> ImGui.beginCombo("Type", rigidbody2DComponent.getRigidbody2D().typeToString()))) {
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.beginCombo("Type", rigidbody2DComponent.bodyType.toString()))) {
 
                             if (ImGui.selectable("Dynamic")) {
-                                rigidbody2DComponent.getRigidbody2D().setType(BodyType.DYNAMIC);
+                                rigidbody2DComponent.bodyType = BodyType.DYNAMIC;
                             }
 
                             if (ImGui.selectable("Static")) {
-                                rigidbody2DComponent.getRigidbody2D().setType(BodyType.STATIC);
+                                rigidbody2DComponent.bodyType = BodyType.STATIC;
                             }
 
                             if (ImGui.selectable("Kinematic")) {
-                                rigidbody2DComponent.getRigidbody2D().setType(BodyType.KINEMATIC);
+                                rigidbody2DComponent.bodyType = BodyType.KINEMATIC;
                             }
 
                             ImGui.endCombo();
                         }
                         ImGui.popID();
 
-                        float[] density = new float[] { rigidbody2DComponent.getRigidbody2D().getDensity() };
+                        float[] density = new float[] { rigidbody2DComponent.density };
                         if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Density", density, 0.01f))) {
-                            rigidbody2DComponent.getRigidbody2D().setDensity(density[0]);
+                            rigidbody2DComponent.density = density[0];
                         }
-                        float[] restitution = new float[] { rigidbody2DComponent.getRigidbody2D().getRestitution() };
+                        float[] restitution = new float[] { rigidbody2DComponent.restitution };
                         if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Restitution", restitution, 0.01f))) {
-                            rigidbody2DComponent.getRigidbody2D().setRestitution(restitution[0]);
+                            rigidbody2DComponent.restitution = restitution[0];
                         }
-                        float[] friction = new float[] { rigidbody2DComponent.getRigidbody2D().getFriction() };
+                        float[] friction = new float[] { rigidbody2DComponent.friction };
                         if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Friction", friction, 0.01f))) {
-                            rigidbody2DComponent.getRigidbody2D().setFriction(friction[0]);
+                            rigidbody2DComponent.friction = friction[0];
                         }
                         ImGui.separator();
-                        if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Sensor", rigidbody2DComponent.getRigidbody2D().isSensor()))) {
-                            rigidbody2DComponent.getRigidbody2D().setSensor(!rigidbody2DComponent.getRigidbody2D().isSensor());
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Sensor", rigidbody2DComponent.sensor))) {
+                            rigidbody2DComponent.sensor = !rigidbody2DComponent.sensor;
                         }
-                        if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Fixed rotation", rigidbody2DComponent.getRigidbody2D().isFixedRotation()))) {
-                            rigidbody2DComponent.getRigidbody2D().setFixedRotation(!rigidbody2DComponent.getRigidbody2D().isFixedRotation());
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Fixed rotation", rigidbody2DComponent.fixedRotation))) {
+                            rigidbody2DComponent.fixedRotation = !rigidbody2DComponent.fixedRotation;
                         }
                         ImGui.separator();
                     }
@@ -298,27 +299,27 @@ public class ComponentsView extends View
 
                         ImGui.pushID("BoxCollider2DOffsetDragFloat_" + i);
                         {
-                            float[] offset = new float[] { boxCollider2DComponent.getBoxCollider2D().getOffset().x, boxCollider2DComponent.getBoxCollider2D().getOffset().y };
+                            float[] offset = new float[] { boxCollider2DComponent.offset.x, boxCollider2DComponent.offset.y };
                             if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Offset", offset))) {
-                                boxCollider2DComponent.getBoxCollider2D().setOffset(new Vector2f(offset[0], offset[1]));
+                                boxCollider2DComponent.offset.set(new Vector2f(offset[0], offset[1]));
                             }
                         }
                         ImGui.popID();
 
                         ImGui.pushID("BoxCollider2DScaleDragFloat_" + i);
                         {
-                            float[] scale = new float[] { boxCollider2DComponent.getBoxCollider2D().getScale().x, boxCollider2DComponent.getBoxCollider2D().getScale().y };
+                            float[] scale = new float[] { boxCollider2DComponent.scale.x, boxCollider2DComponent.scale.y };
                             if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Scale", scale, 0.01f))) {
-                                boxCollider2DComponent.getBoxCollider2D().setScale(new Vector2f(scale[0], scale[1]));
+                                boxCollider2DComponent.scale.set(new Vector2f(scale[0], scale[1]));
                             }
                         }
                         ImGui.popID();
 
                         ImGui.pushID("BoxCollider2DRotationDragFloat_" + i);
                         {
-                            float[] angle = new float[] { boxCollider2DComponent.getBoxCollider2D().getAngle() };
+                            float[] angle = new float[] { boxCollider2DComponent.angle };
                             if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Rotation", angle))) {
-                                boxCollider2DComponent.getBoxCollider2D().setAngle(angle[0]);
+                                boxCollider2DComponent.angle = angle[0];
                             }
                         }
                         ImGui.popID();
@@ -328,18 +329,18 @@ public class ComponentsView extends View
 
                         ImGui.pushID("CircleCollider2DOffsetDragFloat_" + i);
                         {
-                            float[] offset = new float[] { circleCollider2DComponent.getCircleCollider2D().getOffset().x, circleCollider2DComponent.getCircleCollider2D().getOffset().y };
+                            float[] offset = new float[] { circleCollider2DComponent.offset.x, circleCollider2DComponent.offset.y };
                             if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Offset", offset))) {
-                                circleCollider2DComponent.getCircleCollider2D().setOffset(new Vector2f(offset[0], offset[1]));
+                                circleCollider2DComponent.offset.set(new Vector2f(offset[0], offset[1]));
                             }
                         }
                         ImGui.popID();
 
-                        float[] radius = new float[] { circleCollider2DComponent.getCircleCollider2D().getRadius() };
+                        float[] radius = new float[] { circleCollider2DComponent.radius };
                         ImGui.pushID("CircleCollider2DRadiusDragFloat_" + i);
                         {
                             if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat("Radius", radius, 0.01f))) {
-                                circleCollider2DComponent.getCircleCollider2D().setRadius(radius[0]);
+                                circleCollider2DComponent.radius = radius[0];
                             }
                         }
                         ImGui.popID();
@@ -380,7 +381,7 @@ public class ComponentsView extends View
                                     lineComponent.getLinesData()[0].getVertices()[1].y,
                                     lineComponent.getLinesData()[0].getVertices()[1].z
                             };
-                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("End", end))) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat3("End", end))) {
                                 lineComponent.getLinesData()[0].getVertices()[1].set(end[0], end[1], end[2]);
                             }
                         }
@@ -424,7 +425,7 @@ public class ComponentsView extends View
                                     boxComponent.getOffset().y,
                                     boxComponent.getOffset().z
                             };
-                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Offset", offset))) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat3("Offset", offset))) {
                                 boxComponent.setOffset(new Vector3f(offset[0], offset[1], offset[2]));
                             }
                         }
@@ -477,7 +478,7 @@ public class ComponentsView extends View
                                     circleComponent.getOffset().y,
                                     circleComponent.getOffset().z
                             };
-                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat2("Offset", offset))) {
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.dragFloat3("Offset", offset))) {
                                 circleComponent.setOffset(new Vector3f(offset[0], offset[1], offset[2]));
                             }
                         }
@@ -747,20 +748,20 @@ public class ComponentsView extends View
                         ImGui.pushID("CameraTransformations_" + i);
                         if (ImGui.treeNode("Transformations")) {
                             ImGui.pushID("CameraFollowTranslation_" + i);
-                            if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Follow translation", cameraComponent.followTranslation))) {
-                                cameraComponent.followTranslation = !cameraComponent.followTranslation;
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Follow translation", cameraComponent.followTransformTranslation))) {
+                                cameraComponent.followTransformTranslation = !cameraComponent.followTransformTranslation;
                             }
                             ImGui.popID();
 
                             ImGui.pushID("CameraFollowRotation_" + i);
-                            if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Follow rotation", cameraComponent.followRotation))) {
-                                cameraComponent.followRotation = !cameraComponent.followRotation;
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Follow rotation", cameraComponent.followTransformRotation))) {
+                                cameraComponent.followTransformRotation = !cameraComponent.followTransformRotation;
                             }
                             ImGui.popID();
 
                             ImGui.pushID("CameraFollowScale_" + i);
-                            if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Follow scale", cameraComponent.followScale))) {
-                                cameraComponent.followScale = !cameraComponent.followScale;
+                            if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Follow scale", cameraComponent.followTransformScale))) {
+                                cameraComponent.followTransformScale = !cameraComponent.followTransformScale;
                             }
                             ImGui.popID();
 
@@ -1006,7 +1007,7 @@ public class ComponentsView extends View
                         if (ImGui.selectable("Rigidbody2DComponent")) {
                             Rigidbody2DComponent rigidbody2DComponent = new Rigidbody2DComponent();
                             inspectingEntity.addComponent(rigidbody2DComponent);
-                            rigidbody2DComponent.getRigidbody2D().setType(BodyType.STATIC);
+                            rigidbody2DComponent.bodyType = BodyType.STATIC;
                             action = "";
                         }
                         if (ImGui.selectable("BoxCollider2DComponent")) {

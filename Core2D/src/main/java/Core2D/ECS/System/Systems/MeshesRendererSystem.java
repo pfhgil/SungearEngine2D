@@ -11,6 +11,9 @@ import Core2D.ECS.System.System;
 import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Utils.ShaderUtils;
+import org.joml.Matrix4f;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 
 import static org.lwjgl.opengl.GL11C.*;
 
@@ -64,6 +67,7 @@ public class MeshesRendererSystem extends System implements NonRemovable
                 "mvpMatrix",
                 ECSWorld.getCurrentECSWorld().transformationsSystem.getMVPMatrix(transformComponent, cameraComponent)
         );
+
         ShaderUtils.setUniform(
                 shader.getProgramHandler(),
                 "color",
@@ -78,7 +82,7 @@ public class MeshesRendererSystem extends System implements NonRemovable
         );
 
         // нарисовать два треугольника
-        OpenGL.glCall((params) -> glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0));
+        OpenGL.glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
         // прекращаю использование шейдера, текстуры и VAO
         meshComponent.getTexture().unBind();

@@ -4,6 +4,7 @@ import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
 import Core2D.Log.Log;
 import org.joml.Vector4f;
+import org.lwjgl.system.MemoryUtil;
 
 import java.io.Serializable;
 import java.nio.ByteBuffer;
@@ -212,6 +213,7 @@ public class FrameBuffer
     // создает текстурное прикрепление к fbo
     public void createTextureAttachment(int width, int height)
     {
+
         textureHandler = OpenGL.glCall((params) -> glGenTextures(), Integer.class);
 
         OpenGL.glCall((params) -> glActiveTexture(textureBlock));

@@ -2,6 +2,7 @@ import Core2D.Core2D.Core2D;
 import Core2D.ECS.*;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.*;
@@ -77,7 +78,7 @@ public class UpScaleComponent extends Component
     @Override
     public void render(CameraComponent cameraComponent, Shader shader)
     {
-        //f
+        //fв
     }
 }
 

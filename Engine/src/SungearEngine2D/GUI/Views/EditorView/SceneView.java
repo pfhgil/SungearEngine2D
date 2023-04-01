@@ -259,7 +259,6 @@ public class SceneView extends View
 
     public void stopPlayMode()
     {
-        // вот уже все плохо =(
         if(currentSceneManager.getCurrentScene2D() != null && EngineSettings.Playmode.active) {
             currentSceneManager.loadSceneAsCurrent(currentSceneManager.getCurrentScene2D().getScenePath());
 

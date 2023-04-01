@@ -35,11 +35,5 @@ public class TransformComponent extends Component implements NonDuplicated
 
     public transient Matrix4f mvpMatrix = new Matrix4f();
 
-    // прикрепленный rigibody2d
-    //public transient Rigidbody2D rigidbody2D;
-
-    // колбэк
-    //public transient TransformCallback transformCallback = null;
-
     public transient TransformComponent parentTransformComponent;
 }

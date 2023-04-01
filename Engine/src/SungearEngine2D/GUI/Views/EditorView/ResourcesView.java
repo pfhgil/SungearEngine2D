@@ -1,6 +1,7 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.AssetManager.AssetManager;
+import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.Log.Log;
 import Core2D.Prefab.Prefab;
@@ -281,8 +282,8 @@ public class ResourcesView extends View
                         EngineSettings.Playmode.active = false;
                         EngineSettings.Playmode.paused = false;
                         ViewsManager.getInspectorView().setCurrentInspectingObject(null);
+                        ECSWorld.getCurrentECSWorld().physicsSystem.simulatePhysics = false;
                         if (currentSceneManager != null && currentSceneManager.getCurrentScene2D() != null) {
-                            currentSceneManager.getCurrentScene2D().getPhysicsWorld().simulatePhysics = false;
                             currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts = false;
                         }
                         if (!currentSceneManager.isScene2DExists(scene2D.getName())) {
@@ -313,7 +314,7 @@ public class ResourcesView extends View
                         //currentSceneManager.setCurrentScene2D(scene2D.getName());
                         currentSceneManager.getCurrentScene2D().setScenePath(files[id].getPath());
 
-                        scene2D.getPhysicsWorld().simulatePhysics = false;
+                        ECSWorld.getCurrentECSWorld().physicsSystem.simulatePhysics = false;
                         scene2D.getScriptSystem().runScripts = false;
                     }
                 }

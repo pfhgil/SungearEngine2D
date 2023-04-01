@@ -120,21 +120,6 @@ public class ViewsManager
 
             resourcesView.draw();
 
-            for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
-                for(Component component : componentsQuery.getComponents()) {
-                    if(component instanceof Rigidbody2DComponent rigidbody2DComponent) {
-                        Vec2 linearVelocity = new Vec2(rigidbody2DComponent.getRigidbody2D().getBody().getLinearVelocity());
-                        float rotation = rigidbody2DComponent.getRigidbody2D().getBody().getAngularVelocity();
-
-                        ImGui.begin("velocitites");
-
-                        ImGui.text("velocity: " + linearVelocity.x + ", " + linearVelocity.y + ", rotation: " + rotation);
-
-                        ImGui.end();
-                    }
-                }
-            }
-
             inspectorView.draw();
             componentsView.draw();
             systemsView.draw();

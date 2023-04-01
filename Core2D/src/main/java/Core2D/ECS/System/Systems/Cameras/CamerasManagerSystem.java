@@ -18,6 +18,7 @@ import Core2D.Utils.MatrixUtils;
 import Core2D.Utils.ShaderUtils;
 import org.joml.*;
 
+import java.lang.Math;
 import java.util.Optional;
 
 import static org.lwjgl.opengl.GL11C.*;
@@ -41,7 +42,7 @@ public class CamerasManagerSystem extends System implements NonRemovable, NonDup
                         -cameraComponent.viewportSize.y / 2.0f, cameraComponent.viewportSize.y / 2.0f, -200f, 200f);
             } else {
                 cameraComponent.projectionMatrix.identity().perspective(
-                        cameraComponent.FOV,
+                        (float)Math.toRadians(cameraComponent.FOV),
                         windowSize.x / (float) windowSize.y,
                         cameraComponent.nearPlane,
                         cameraComponent.farPlane
@@ -122,7 +123,7 @@ public class CamerasManagerSystem extends System implements NonRemovable, NonDup
                     );
 
                     // нарисовать два треугольника
-                    OpenGL.glCall((params) -> glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0));
+                    OpenGL.glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
                     frameBufferToBind.unBindTexture();
                 }
@@ -143,13 +144,13 @@ public class CamerasManagerSystem extends System implements NonRemovable, NonDup
             TransformComponent transformComponent = cameraComponent.entity.getComponent(TransformComponent.class);
 
             if(transformComponent != null) {
-                if (cameraComponent.followTranslation) {
+                if (cameraComponent.followTransformTranslation) {
                     cameraComponent.position.set(MatrixUtils.getPosition(transformComponent.modelMatrix));
                 }
-                if (cameraComponent.followRotation) {
+                if (cameraComponent.followTransformRotation) {
                     cameraComponent.rotation.set(MatrixUtils.getEulerRotation(transformComponent.modelMatrix));
                 }
-                if (cameraComponent.followScale) {
+                if (cameraComponent.followTransformScale) {
                     cameraComponent.scale.set(MatrixUtils.getScale(transformComponent.modelMatrix));
                 }
             }
@@ -166,14 +167,6 @@ public class CamerasManagerSystem extends System implements NonRemovable, NonDup
         cameraComponent.viewMatrix.rotate(rotationQuaternionf);
 
         cameraComponent.viewMatrix.translate(-cameraComponent.position.x, -cameraComponent.position.y, -cameraComponent.position.z);
-
-        //cameraComponent.viewMatrix.m00(cameraComponent.viewMatrix.m00() + cameraComponent.zoom);
-        //cameraComponent.viewMatrix.m11(cameraComponent.viewMatrix.m11() + cameraComponent.zoom);
-        //cameraComponent.viewMatrix.m22(cameraComponent.viewMatrix.m22() + cameraComponent.zoom);
-
-        //camera2DComponent.viewMatrix.m03(camera2DComponent.viewMatrix.m03() + camera2DComponent.zoom);
-        //camera2DComponent.viewMatrix.m13(camera2DComponent.viewMatrix.m13() + camera2DComponent.zoom);
-        //camera2DComponent.viewMatrix.m23(camera2DComponent.viewMatrix.m23() + camera2DComponent.zoom);
     }
 
     public void setPostprocessingDefaultShader(CameraComponent cameraComponent, Shader postprocessingDefaultShader)

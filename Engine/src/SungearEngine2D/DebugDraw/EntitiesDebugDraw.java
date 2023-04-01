@@ -2,19 +2,19 @@ package SungearEngine2D.DebugDraw;
 
 import Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent;
 import Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent;
+import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Component.Components.Primitives.BoxComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
-import Core2D.Physics.PhysicsWorld;
+import Core2D.Settings.PhysicsSettings;
 import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Main.Main;
 import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Vec2;
 import org.jbox2d.dynamics.Body;
-import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
@@ -34,10 +34,11 @@ public class EntitiesDebugDraw
         if(ViewsManager.getInspectorView().getCurrentInspectingObject() instanceof Entity entity) {
             List<BoxCollider2DComponent> boxCollider2DComponents = entity.getAllComponents(BoxCollider2DComponent.class);
             List<CircleCollider2DComponent> circleCollider2DComponents = entity.getAllComponents(CircleCollider2DComponent.class);
+            Rigidbody2DComponent rigidbody2DComponent = entity.getComponent(Rigidbody2DComponent.class);
 
             TransformComponent entityTransformComponent = entity.getComponent(TransformComponent.class);
 
-            if(entityTransformComponent != null) {
+            if(entityTransformComponent != null && rigidbody2DComponent != null) {
                 for (int i = 0; i < boxCollider2DComponents.size(); i++) {
                     BoxCollider2DComponent boxCollider2DComponent = boxCollider2DComponents.get(i);
 
@@ -49,7 +50,7 @@ public class EntitiesDebugDraw
                         boxes.add(newBox);
                     }
 
-                    if(boxCollider2DComponent.getBoxCollider2D().getFixture() == null) continue;
+                    if(boxCollider2DComponent.fixture == null) continue;
 
                     Entity box = boxes.get(i);
 
@@ -57,28 +58,28 @@ public class EntitiesDebugDraw
 
                     BoxComponent boxComponent = box.getComponent(BoxComponent.class);
 
-                    PolygonShape polygonShape = (PolygonShape) boxCollider2DComponent.getBoxCollider2D().getFixture().getShape();
+                    PolygonShape polygonShape = (PolygonShape) boxCollider2DComponent.fixture.getShape();
                     if(polygonShape == null) return;
 
                     Vec2[] verticesPos = polygonShape.getVertices();
-                    Body body = boxCollider2DComponent.getBoxCollider2D().getRigidbody2D().getBody();
+                    Body body = rigidbody2DComponent.body;
 
                     Vec2 wp0 = body.getWorldPoint(verticesPos[0]);
                     Vec2 wp1 = body.getWorldPoint(verticesPos[1]);
                     Vec2 wp2 = body.getWorldPoint(verticesPos[2]);
                     Vec2 wp3 = body.getWorldPoint(verticesPos[3]);
 
-                    boxComponent.getLinesData()[0].getVertices()[0].set(wp0.x * PhysicsWorld.RATIO, wp0.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[0].getVertices()[0].z);
-                    boxComponent.getLinesData()[0].getVertices()[1].set(wp1.x * PhysicsWorld.RATIO, wp1.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[0].getVertices()[1].z);
+                    boxComponent.getLinesData()[0].getVertices()[0].set(wp0.x * PhysicsSettings.ratio, wp0.y * PhysicsSettings.ratio, boxComponent.getLinesData()[0].getVertices()[0].z);
+                    boxComponent.getLinesData()[0].getVertices()[1].set(wp1.x * PhysicsSettings.ratio, wp1.y * PhysicsSettings.ratio, boxComponent.getLinesData()[0].getVertices()[1].z);
 
-                    boxComponent.getLinesData()[1].getVertices()[0].set(wp1.x * PhysicsWorld.RATIO, wp1.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[1].getVertices()[0].z);
-                    boxComponent.getLinesData()[1].getVertices()[1].set(wp2.x * PhysicsWorld.RATIO, wp2.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[1].getVertices()[1].z);
+                    boxComponent.getLinesData()[1].getVertices()[0].set(wp1.x * PhysicsSettings.ratio, wp1.y * PhysicsSettings.ratio, boxComponent.getLinesData()[1].getVertices()[0].z);
+                    boxComponent.getLinesData()[1].getVertices()[1].set(wp2.x * PhysicsSettings.ratio, wp2.y * PhysicsSettings.ratio, boxComponent.getLinesData()[1].getVertices()[1].z);
 
-                    boxComponent.getLinesData()[2].getVertices()[0].set(wp2.x * PhysicsWorld.RATIO, wp2.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[2].getVertices()[0].z);
-                    boxComponent.getLinesData()[2].getVertices()[1].set(wp3.x * PhysicsWorld.RATIO, wp3.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[2].getVertices()[1].z);
+                    boxComponent.getLinesData()[2].getVertices()[0].set(wp2.x * PhysicsSettings.ratio, wp2.y * PhysicsSettings.ratio, boxComponent.getLinesData()[2].getVertices()[0].z);
+                    boxComponent.getLinesData()[2].getVertices()[1].set(wp3.x * PhysicsSettings.ratio, wp3.y * PhysicsSettings.ratio, boxComponent.getLinesData()[2].getVertices()[1].z);
 
-                    boxComponent.getLinesData()[3].getVertices()[0].set(wp3.x * PhysicsWorld.RATIO, wp3.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[3].getVertices()[0].z);
-                    boxComponent.getLinesData()[3].getVertices()[1].set(wp0.x * PhysicsWorld.RATIO, wp0.y * PhysicsWorld.RATIO, boxComponent.getLinesData()[3].getVertices()[1].z);
+                    boxComponent.getLinesData()[3].getVertices()[0].set(wp3.x * PhysicsSettings.ratio, wp3.y * PhysicsSettings.ratio, boxComponent.getLinesData()[3].getVertices()[0].z);
+                    boxComponent.getLinesData()[3].getVertices()[1].set(wp0.x * PhysicsSettings.ratio, wp0.y * PhysicsSettings.ratio, boxComponent.getLinesData()[3].getVertices()[1].z);
 
                     box.update();
 
@@ -96,7 +97,7 @@ public class EntitiesDebugDraw
                         circles.add(newCircle);
                     }
 
-                    if(circleCollider2DComponent.getCircleCollider2D().getFixture() == null) continue;
+                    if(circleCollider2DComponent.fixture == null) continue;
 
                     Entity circle = circles.get(i);
 
@@ -104,13 +105,13 @@ public class EntitiesDebugDraw
 
                     CircleComponent circleComponent = circle.getComponent(CircleComponent.class);
 
-                    CircleShape circleShape = (CircleShape) circleCollider2DComponent.getCircleCollider2D().getFixture().getShape();
+                    CircleShape circleShape = (CircleShape) circleCollider2DComponent.fixture.getShape();
                     if(circleShape == null) return;
 
-                    Vec2 circlePos = circleCollider2DComponent.getCircleCollider2D().getRigidbody2D().getBody().getWorldPoint(circleShape.m_p);
-                    float circleRadius = circleShape.m_radius * PhysicsWorld.RATIO;
+                    Vec2 circlePos = rigidbody2DComponent.body.getWorldPoint(circleShape.m_p);
+                    float circleRadius = circleShape.m_radius * PhysicsSettings.ratio;
 
-                    circleComponent.setOffset(new Vector3f(circlePos.x * PhysicsWorld.RATIO, circlePos.y * PhysicsWorld.RATIO, circleComponent.getOffset().z));
+                    circleComponent.setOffset(new Vector3f(circlePos.x * PhysicsSettings.ratio, circlePos.y * PhysicsSettings.ratio, circleComponent.getOffset().z));
                     circleComponent.setRadius(circleRadius);
 
                     circle.update();

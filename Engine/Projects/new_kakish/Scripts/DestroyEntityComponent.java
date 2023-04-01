@@ -1,6 +1,7 @@
 import Core2D.ECS.*;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.*;
 import Core2D.Graphics.RenderParts.Shader;
@@ -36,7 +37,7 @@ public class DestroyEntityComponent extends Component
 
     }
 
-    // otherEntity - an entity, one of whose colliders entered one of the colliders of this entity.
+    // otherEntity - an entity, one of whose colliders entered one of the colliders of this entity.в
     @Override
     public void collider2DEnter(Entity otherEntity)
     {

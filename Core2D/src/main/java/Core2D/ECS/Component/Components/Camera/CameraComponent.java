@@ -38,9 +38,9 @@ public class CameraComponent extends Component {
 
     // transformations ------------------
 
-    public boolean followTranslation = true;
-    public boolean followRotation= false;
-    public boolean followScale = false;
+    public boolean followTransformTranslation = true;
+    public boolean followTransformRotation = false;
+    public boolean followTransformScale = false;
 
     public Vector3f position = new Vector3f();
     public Vector3f rotation = new Vector3f();
@@ -60,7 +60,7 @@ public class CameraComponent extends Component {
     public ViewMode viewMode = ViewMode.VIEW_MODE_2D;
     public float FOV = 75f;
     public float nearPlane = 1f;
-    public float farPlane = 9000f;
+    public float farPlane = 9999f;
 
     // ----------------------------------
 
@@ -80,22 +80,26 @@ public class CameraComponent extends Component {
     public boolean render = true;
 
     // post processing -----------------------------------------------------
-    public transient short[] ppQuadIndices = new short[] { 0, 1, 2, 0, 2, 3 };
+    public transient int[] ppQuadIndices = new int[] { 0, 1, 2, 0, 2, 3 };
 
     // массив данных о вершинах
     // первые строки - позиции вершин, вторые строки - текстурные координаты
     public transient float[] ppQuadData = new float[] {
-            -1, -1,
-            0, 0,
+            -1, -1, 0,
+            0, 0, 0,
+            0, 0, 0,
 
-            -1, 1,
-            0, 1,
+            -1, 1, 0,
+            0, 1, 0,
+            0, 0, 0,
 
-            1, 1,
-            1, 1,
+            1, 1, 0,
+            1, 1, 0,
+            0, 0, 0,
 
-            1, -1,
-            1, 0,
+            1, -1, 0,
+            1, 0, 0,
+            0, 0, 0
     };
 
     public transient VertexArray ppQuadVertexArray;

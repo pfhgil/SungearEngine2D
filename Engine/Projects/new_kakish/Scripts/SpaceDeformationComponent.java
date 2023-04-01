@@ -1,6 +1,7 @@
 import Core2D.ECS.*;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.*;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.*;
@@ -86,7 +87,7 @@ public class SpaceDeformationComponent extends Component
 
     }
 
-    // camera2DComponent - the camera that renders this entity.
+    // camera2DComponent - the camera that renders this entity.в
     @Override
     public void render(CameraComponent cameraComponent)
     {

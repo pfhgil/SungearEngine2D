@@ -99,7 +99,7 @@ public class PrimitivesRendererSystem extends System
                 }
 
                 OpenGL.glCall((params) -> glLineWidth(lineData.lineWidth));
-                OpenGL.glCall((params) -> glDrawArrays(GL_LINES, 0, 2));
+                OpenGL.glDrawArrays(GL_LINES, 0, 2);
                 OpenGL.glCall((params) -> glLineWidth(1.0f));
             }
 

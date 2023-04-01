@@ -3,6 +3,7 @@ package Core2D.Graphics.RenderParts;
 import Core2D.DataClasses.Texture2DData;
 import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Project.ProjectsManager;
+import Core2D.Utils.Debugger;
 import Core2D.Utils.FileUtils;
 import com.google.gson.annotations.SerializedName;
 
@@ -107,6 +108,8 @@ public class Texture2D
         // активирую нулевой текстурный блок
         OpenGL.glCall((params) -> glActiveTexture(textureBlock));
         OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, textureHandler));
+
+        Debugger.textureBindCallsNum++;
         //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }

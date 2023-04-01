@@ -83,20 +83,24 @@ public class MeshComponent extends Component
     private void loadVAO()
     {
         float[] data = new float[] {
-                -size.x / 2.0f, -size.y / 2.0f,
-                0, 0,
+                -size.x / 2.0f, -size.y / 2.0f, 0f,
+                0, 0, 0f,
+                0, 0, 0f,
 
-                -size.x / 2.0f, size.y / 2.0f,
-                0, 1,
+                -size.x / 2.0f, size.y / 2.0f, 0f,
+                0, 1, 0f,
+                0, 0, 0f,
 
-                size.x / 2.0f, size.y / 2.0f,
-                1, 1,
+                size.x / 2.0f, size.y / 2.0f, 0f,
+                1, 1, 0f,
+                0, 0, 0f,
 
-                size.x / 2.0f, -size.y / 2.0f,
-                1, 0,
+                size.x / 2.0f, -size.y / 2.0f, 0f,
+                1, 0, 0f,
+                0, 0, 0f
         };
 
-        short[] indices = new short[] { 0, 1, 2, 0, 2, 3 };
+        int[] indices = new int[] { 0, 1, 2, 0, 2, 3 };
 
         if (vertexArray != null) {
             vertexArray.destroy();
@@ -111,8 +115,9 @@ public class MeshComponent extends Component
 
         // создаю описание аттрибутов в шейдерной программе
         BufferLayout attributesLayout = new BufferLayout(
-                new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2),
-                new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2)
+                new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3),
+                new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3),
+                new VertexAttribute(2, "normalPositionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3)
         );
 
         vertexBuffer.setLayout(attributesLayout);

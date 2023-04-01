@@ -44,32 +44,53 @@ repositories {
 }
 
 dependencies {
-    //implementation files('libs/joml-1.10.2.jar')
+    /*
+    implementation name: 'joml-1.10.5'
+    implementation name: 'joml-1.10.5-sources'
+
     implementation name: 'commons-io-2.11.0'
+
     implementation name: 'gson-2.9.0'
+
     implementation name: 'jbox2d-library-2.1.2.2'
-    implementation 'org.joml:joml:1.10.5'
+
+    implementation name: 'lwjgl-assimp'
+    implementation name: 'lwjgl-assimp-natives-windows'
+    implementation name: 'lwjgl-assimp-sources'
+
     implementation name: 'lwjgl'
+
     implementation name: 'lwjgl-glfw'
     implementation name: 'lwjgl-glfw-natives-windows'
     implementation name: 'lwjgl-glfw-sources'
+
     implementation name: 'lwjgl-natives-windows'
+
     implementation name: 'lwjgl-openal'
     implementation name: 'lwjgl-openal-natives-windows'
     implementation name: 'lwjgl-openal-sources'
+
     implementation name: 'lwjgl-opengl'
     implementation name: 'lwjgl-opengl-natives-windows'
     implementation name: 'lwjgl-opengl-sources'
+
     implementation name: 'lwjgl-sources'
+
     implementation name: 'lwjgl-stb'
     implementation name: 'lwjgl-stb-natives-windows'
     implementation name: 'lwjgl-stb-sources'
+
     implementation name: 'slf4j-api-2.0.0-alpha5'
     implementation name: 'slf4j-simple-2.0.0-alpha5'
+
     implementation name: 'slick'
     implementation name: 'slick-util'
+
     implementation name: 'imgui-app-1.86.4'
 
+     */
+    implementation 'org.joml:joml:1.10.5'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
         //mplementation files('../Engine/build/libs/common.jar')
     //implementation files('../common/build/libs/common.jar')
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.8.1'

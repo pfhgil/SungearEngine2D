@@ -1,5 +1,6 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
+import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Log.Log;
@@ -538,7 +539,7 @@ public class TopToolbarView
                         camera2D.setLayer(scene2D.getLayering().getLayer("default"));
                         scene2D.setSceneMainCamera2D(camera2D);
 
-                        scene2D.getPhysicsWorld().simulatePhysics = false;
+                        ECSWorld.getCurrentECSWorld().physicsSystem.simulatePhysics = false;
                         scene2D.getScriptSystem().runScripts = false;
                         scene2D.setScenePath(scenePath);
                         if (SceneManager.currentSceneManager.getScene2DStoredValues().size() == 0) {

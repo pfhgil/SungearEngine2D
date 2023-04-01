@@ -1,5 +1,7 @@
 package Core2D.Graphics.OpenGL;
 
+import Core2D.Utils.Debugger;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -56,6 +58,8 @@ public class VertexArray
     public void bind()
     {
         OpenGL.glCall((params) -> glBindVertexArray(handler));
+
+        Debugger.VAOBindCallsNum++;
     }
     // развязывание
     public void unBind()

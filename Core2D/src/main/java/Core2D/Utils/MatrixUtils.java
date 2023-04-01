@@ -7,14 +7,6 @@ import java.nio.FloatBuffer;
 
 public class MatrixUtils
 {
-    public static FloatBuffer getMatrix4fAsFloatBuffer(Matrix4f matrix4f)
-    {
-        FloatBuffer floatBuffer = FloatBuffer.allocate(16);
-        matrix4f.get(floatBuffer);
-
-        return floatBuffer;
-    }
-
     public static float[] matrixToArray(Matrix4f matrix)
     {
         float[] arr = new float[16];

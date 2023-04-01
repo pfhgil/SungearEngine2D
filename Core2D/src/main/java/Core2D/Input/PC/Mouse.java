@@ -38,7 +38,7 @@ public class Mouse
     private static Vector2f viewportPosition = new Vector2f();
 
     public static final long DEFAULT_ARROW_CURSOR = org.lwjgl.glfw.GLFW.glfwCreateStandardCursor(GLFW_ARROW_CURSOR);
-    public static final long DEFAULT_RESIZE_ALL_CURSOR = org.lwjgl.glfw.GLFW.glfwCreateStandardCursor(GLFW.GLFW_RESIZE_ALL_CURSOR);
+    public static final long DEFAULT_RESIZE_ALL_CURSOR = org.lwjgl.glfw.GLFW.glfwCreateStandardCursor(GLFW_HAND_CURSOR);
 
     public static void init()
     {

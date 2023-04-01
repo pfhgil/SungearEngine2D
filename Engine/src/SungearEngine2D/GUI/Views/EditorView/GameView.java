@@ -68,20 +68,24 @@ public class GameView extends View
         }
 
         if(ppQuadVertexArray == null) {
-            short[] ppQuadIndices = new short[] { 0, 1, 2, 0, 2, 3 };
+            int[] ppQuadIndices = new int[] { 0, 1, 2, 0, 2, 3 };
 
             float[] ppQuadData = new float[] {
-                    -1, -1,
-                    0, 0,
+                    -1, -1, 0,
+                    0, 0, 0,
+                    0, 0, 0,
 
-                    -1, 1,
-                    0, 1,
+                    -1, 1, 0,
+                    0, 1, 0,
+                    0, 0, 0,
 
-                    1, 1,
-                    1, 1,
+                    1, 1, 0,
+                    1, 1, 0,
+                    0, 0, 0,
 
-                    1, -1,
-                    1, 0,
+                    1, -1, 0,
+                    1, 0, 0,
+                    0, 0, 0,
             };
 
             ppQuadVertexArray = new VertexArray();
@@ -92,8 +96,9 @@ public class GameView extends View
 
             // создаю описание аттрибутов в шейдерной программе
             BufferLayout attributesLayout = new BufferLayout(
-                    new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2),
-                    new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2)
+                    new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3),
+                    new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3),
+                    new VertexAttribute(2, "normalPositionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3)
             );
 
             vertexBuffer.setLayout(attributesLayout);
@@ -222,7 +227,7 @@ public class GameView extends View
                 );
 
                 // нарисовать два треугольника
-                OpenGL.glCall((params) -> glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_SHORT, 0));
+                OpenGL.glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
                 frameBufferToBind.unBindTexture();
             }

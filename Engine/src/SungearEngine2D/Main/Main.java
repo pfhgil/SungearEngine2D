@@ -24,11 +24,9 @@ import Core2D.ECS.Entity;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.Systems.Cameras.CamerasController2DSystem;
 import Core2D.ECS.System.Systems.Cameras.CamerasController3DSystem;
-import Core2D.ECS.System.Systems.TransformationsHelpingSystem;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Graphics.RenderParts.Shader;
-import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
@@ -79,23 +77,10 @@ public class Main
         core2DUserCallback = new Core2DUserCallback() {
             @Override
             public void onInit() {
-                //Log.CurrentSession.willPrintToFile = false;
-                //Log.Console.willPrint = false;
-
-                //Debugger.init();
                 Resources.load();
 
-                /*
-                mainCamera2D = new Entity();
-                mainCamera2D.name = "EditorCamera2D";
-                mainCamera2D.addComponent(new TransformComponent());
-                mainCamera2D.addComponent(new Camera2DComponent());
-                mainCamera2D.addComponent(new MoveToComponent());
-
-                 */
                 // ------- systems add
 
-                ECSWorld.getCurrentECSWorld().addSystem(new TransformationsHelpingSystem());
                 ECSWorld.getCurrentECSWorld().addSystem(new CamerasController2DSystem());
                 ECSWorld.getCurrentECSWorld().addSystem(new CamerasController3DSystem());
                 ECSWorld.getCurrentECSWorld().addSystem(new SceneViewFixSystem());
@@ -110,18 +95,9 @@ public class Main
                 CamerasManager.mainCamera2D = mainCamera;
 
                 mainCameraComponent = mainCamera.getComponent(CameraComponent.class);
-                //mainCameraComponent.followScale = true;
                 mainCameraComponent.viewMode = CameraComponent.ViewMode.VIEW_MODE_2D;
 
                 GUI.init();
-
-
-                String path = "test.txt";
-                FileUtils.createFile(path);
-                FileUtils.writeToFile(path, "привет мир!\nhello world!", true);
-                java.lang.System.out.println(FileUtils.readAllFile("test.txt"));
-
-
 
                 GraphicsRenderer.init();
 
@@ -309,19 +285,9 @@ public class Main
 
                 Compiler.compileAllShaders();
 
-                if (Keyboard.keyReleased(GLFW.GLFW_KEY_F)) {
-                    Main.djArbuzAudio.state = AudioState.PLAYING;
-                }
-                if (Keyboard.keyReleased(GLFW.GLFW_KEY_P)) {
-                    Main.djArbuzAudio.state = AudioState.PAUSED;
-                }
-                if (Keyboard.keyReleased(GLFW.GLFW_KEY_T)) {
-                    Main.djArbuzAudio.state = AudioState.STOPPED;
-                }
-
                 mainCamera.update();
 
-                if(!Keyboard.keyDown(GLFW.GLFW_KEY_F)) GUI.draw();
+                GUI.draw();
 
                 GraphicsRenderer.draw();
 
@@ -330,6 +296,7 @@ public class Main
                         new Vector3f(Math.sin(Math.toRadians((float) GLFW.glfwGetTime() * 100f)) * 1000f, Math.cos(Math.toRadians((float) GLFW.glfwGetTime() * 100f)) * 1000f, 1000f),
                         new Vector4f(1f, 0.7f, 0.5f, 1f));
 
+                /*
                 DebugDraw.drawBox("test_" + 1, new Vector3f(-250f, 0f, 500f), new Vector3f((float) GLFW.glfwGetTime() * 50f, 0f, 0f), new Vector2f(250f), new Vector4f(1f, 0f, 0f, 1f));
                 DebugDraw.drawBox("test_" + 2, new Vector3f(0f, 0f, 500f), new Vector3f(0f, (float) GLFW.glfwGetTime() * 50f, 0f), new Vector2f(250f), new Vector4f(0f, 1f, 0f, 1f));
                 DebugDraw.drawBox("test_" + 3, new Vector3f(250f, 0f, 500f), new Vector3f(0f, 0f, (float) GLFW.glfwGetTime() * 50f), new Vector2f(250f), new Vector4f(0f, 0f, 1f, 1f));
@@ -337,6 +304,8 @@ public class Main
                 DebugDraw.drawCircle("test_" + 4, new Vector3f(-250f, 0f, 500f), new Vector3f((float) GLFW.glfwGetTime() * 50f, 0f, 0f), 250f, new Vector4f(1f, 0f, 0f, 1f));
                 DebugDraw.drawCircle("test_" + 5, new Vector3f(0f, 0f, 500f), new Vector3f(0f, (float) GLFW.glfwGetTime() * 50f, 0f), 250f, new Vector4f(0f, 1f, 0f, 1f));
                 DebugDraw.drawCircle("test_" + 6, new Vector3f(250f, 0f, 500f), new Vector3f(0f, 0f, (float) GLFW.glfwGetTime() * 50f), 250f, new Vector4f(0f, 0f, 1f, 1f));
+
+                 */
             }
 
             @Override

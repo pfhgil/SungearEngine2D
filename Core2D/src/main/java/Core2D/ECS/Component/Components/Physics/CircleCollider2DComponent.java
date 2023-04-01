@@ -1,57 +1,7 @@
 package Core2D.ECS.Component.Components.Physics;
 
-import Core2D.ECS.Component.Component;
-import Core2D.Physics.Collider2D.CircleCollider2D;
-
-/**
- * The CircleCollider2D component.
- * @see Core2D.Physics.PhysicsWorld
- * @see CircleCollider2D
- * @see Rigidbody2DComponent
- * @see Core2D.Physics.Rigidbody2D
- * @see Component
- */
-public class CircleCollider2DComponent extends Component
+public class CircleCollider2DComponent extends Collider2DComponent
 {
-    private CircleCollider2D circleCollider2D = new CircleCollider2D();
-
-    /**
-     * Removes CircleCollider2D from the physical world.
-     * @see Component#destroy()
-     */
-    @Override
-    public void destroy()
-    {
-        circleCollider2D.destroy();
-    }
-
-    /**
-     * Applies component parameters to this component.
-     * @see Component#set(Component)
-     * @param component CircleCollider2DComponent.
-     */
-    @Override
-    public void set(Component component)
-    {
-        if(component instanceof CircleCollider2DComponent) {
-            circleCollider2D.set(((CircleCollider2DComponent) component).getCircleCollider2D());
-        }
-    }
-
-    /**
-     * Initializes the component.
-     * Adds CircleCollider2D to the physical world if the Object2D to which this component is bound has a Rigidbody2DComponent,
-     * and the current scene is not null (set).
-     * @see Component#init()
-     */
-    @Override
-    public void init()
-    {
-        Rigidbody2DComponent rigidbody2DComponent = entity.getComponent(Rigidbody2DComponent.class);
-        if(rigidbody2DComponent != null && rigidbody2DComponent.getRigidbody2D().getScene2D() != null) {
-            rigidbody2DComponent.getRigidbody2D().getScene2D().getPhysicsWorld().addCircleCollider2D(rigidbody2DComponent.getRigidbody2D(), circleCollider2D);
-        }
-    }
-
-    public CircleCollider2D getCircleCollider2D() { return circleCollider2D; }
+    public float radius = 50f;
+    public transient float lastRadius = 50f;
 }

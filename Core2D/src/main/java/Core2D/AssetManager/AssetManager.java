@@ -8,6 +8,7 @@ import Core2D.Project.ProjectsManager;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Utils;
+import org.lwjgl.opengl.GL;
 
 import java.io.File;
 import java.io.IOException;
@@ -54,6 +55,10 @@ public class AssetManager implements Serializable
         String whiteTexturePath = "/data/textures/white_texture.png";
         String defaultProgressBarTexturePath = "/data/textures/ui/progressBar/progress_bar.png";
 
+        // models ------------------------------
+        String planeObjectPath = "/data/models/plane.obj";
+        // -------------------------------------
+
         ShaderData entityDefaultShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(entityDefaultShaderPath), entityDefaultShaderPath);
         ShaderData entitiesInstancingShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(entitiesInstancingShaderPath), entitiesInstancingShaderPath);
         ShaderData entityPickingShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(entityPickingShader), entityPickingShader);
@@ -68,6 +73,8 @@ public class AssetManager implements Serializable
         Texture2DData whiteTextureData = new Texture2DData().load(Core2D.class.getResourceAsStream(whiteTexturePath), whiteTexturePath);
         Texture2DData defaultProgressBarTextureData = new Texture2DData().load(Core2D.class.getResourceAsStream(defaultProgressBarTexturePath), defaultProgressBarTexturePath);
 
+        ModelData planeModelData = new ModelData().load(Core2D.class.getResourceAsStream(planeObjectPath), planeObjectPath);
+
         addAsset(new Asset(entityDefaultShaderData, entityDefaultShaderPath));
         addAsset(new Asset(entitiesInstancingShaderData, entitiesInstancingShaderPath));
         addAsset(new Asset(entityPickingShaderData, entityPickingShader));
@@ -81,6 +88,8 @@ public class AssetManager implements Serializable
 
         addAsset(new Asset(whiteTextureData, whiteTexturePath));
         addAsset(new Asset(defaultProgressBarTextureData, defaultProgressBarTexturePath));
+
+        addAsset(new Asset(planeModelData, planeObjectPath));
 
         // ---------------- other graphics shaders
         String onlyColorShaderPath = "/data/shaders/common/only_color_shader.glsl";
@@ -179,6 +188,11 @@ public class AssetManager implements Serializable
     public ScriptData getScriptData(String path)
     {
         return getAssetObject(path, ScriptData.class);
+    }
+
+    public ModelData getModelData(String path)
+    {
+        return getAssetObject(path, ModelData.class);
     }
 
     /**

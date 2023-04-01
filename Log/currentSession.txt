@@ -1,24 +1,24 @@
-[#FFFFFF] 2023/03/26 01:52:43 | [#008000] Current session log file was created!
+[#FFFFFF] 2023/04/02 01:40:10 | [#008000] Current session log file was created!
 
-[#FFFFFF] 2023/03/26 01:52:43 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2023/04/02 01:40:10 | [#FFFFFF] Starting Core2D...
 
-[#FFFFFF] 2023/03/26 01:52:43 | [#008000] Core2D started!
+[#FFFFFF] 2023/04/02 01:40:10 | [#008000] Core2D started!
 
-[#FFFFFF] 2023/03/26 01:52:43 | [#FFFFFF] LWJGL version is 3.3.1 SNAPSHOT
+[#FFFFFF] 2023/04/02 01:40:10 | [#FFFFFF] LWJGL version is 3.3.2-snapshot
 
-[#FFFFFF] 2023/03/26 01:52:43 | [#FFFF00] ECSWorld created!
+[#FFFFFF] 2023/04/02 01:40:11 | [#FFFF00] ECSWorld created!
 
-[#FFFFFF] 2023/03/26 01:52:43 | [#FF0000] File by path 'test.txt' already exists
+[#FFFFFF] 2023/04/02 01:40:11 | [#FFFFFF] Initializing compiler...  
 
-[#FFFFFF] 2023/03/26 01:52:43 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2023/04/02 01:40:13 | [#9932CC] Called from: Core2D.ECS.ECSWorld::addComponent. Line: 58 [#FFFFFF] | [#FFFF00] Value of field 'entity' in component 'Core2D.ECS.Component.Components.Audio.AudioComponent@3a52dba3' is equals null. It will be added in блять забыл
 
-[#FFFFFF] 2023/03/26 01:52:46 | [#9932CC] Called from: Core2D.ECS.ECSWorld::addComponent. Line: 55 [#FFFFFF] | [#FFFF00] Value of field 'entity' in component 'Core2D.ECS.Component.Components.Audio.AudioComponent@5be6e01c' is equals null. It will be added in блять забыл
+[#FFFFFF] 2023/04/02 01:40:13 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 70 [#FFFFFF] | [#008000] vlad zhoshe: PLAYING
 
-[#FFFFFF] 2023/03/26 01:52:46 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 70 [#FFFFFF] | [#008000] vlad zhoshe: PLAYING
+[#FFFFFF] 2023/04/02 01:40:17 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 70 [#FFFFFF] | [#008000] vlad zhoshe: STOPPED
 
-[#FFFFFF] 2023/03/26 01:52:47 | [#FFFFFF] Log cleared! See log directory in the engine directory.
+[#FFFFFF] 2023/04/02 01:40:31 | [#FFFFFF] Log cleared! See log directory in the engine directory.
 
-[#FFFFFF] 2023/03/26 01:52:49 | [#FF0000] java.lang.NullPointerException: Cannot invoke "java.io.InputStream.read()" because "this.in" is null
+[#FFFFFF] 2023/04/02 01:40:35 | [#FF0000] java.lang.NullPointerException: Cannot invoke "java.io.InputStream.read()" because "this.in" is null
 	at org.apache.commons.io.input.BOMInputStream.getBOM(BOMInputStream.java:213)
 	at org.apache.commons.io.input.BOMInputStream.readFirstBytes(BOMInputStream.java:255)
 	at org.apache.commons.io.input.BOMInputStream.read(BOMInputStream.java:328)
@@ -32,26 +32,26 @@
 	at Core2D.Utils.FileUtils.readAllFile(FileUtils.java:137)
 	at Core2D.DataClasses.ShaderData.load(ShaderData.java:35)
 	at Core2D.DataClasses.ShaderData.load(ShaderData.java:9)
-	at Core2D.AssetManager.AssetManager.loadAsset(AssetManager.java:260)
-	at Core2D.AssetManager.AssetManager.getAssetObject(AssetManager.java:285)
-	at Core2D.AssetManager.AssetManager.getAsset(AssetManager.java:232)
+	at Core2D.AssetManager.AssetManager.loadAsset(AssetManager.java:274)
+	at Core2D.AssetManager.AssetManager.getAssetObject(AssetManager.java:299)
+	at Core2D.AssetManager.AssetManager.getAsset(AssetManager.java:246)
+	at Core2D.AssetManager.AssetManager.load(AssetManager.java:140)
 	at Core2D.AssetManager.AssetManager.load(AssetManager.java:131)
-	at Core2D.AssetManager.AssetManager.load(AssetManager.java:122)
-	at Core2D.AssetManager.AssetManager.load(AssetManager.java:112)
+	at Core2D.AssetManager.AssetManager.load(AssetManager.java:121)
 	at Core2D.Project.Project.load(Project.java:48)
 	at Core2D.Project.ProjectsManager.loadProject(ProjectsManager.java:39)
-	at SungearEngine2D.GUI.Views.EditorView.TopToolbarView.draw(TopToolbarView.java:222)
+	at SungearEngine2D.GUI.Views.EditorView.TopToolbarView.draw(TopToolbarView.java:223)
 	at SungearEngine2D.GUI.Views.ViewsManager.draw(ViewsManager.java:115)
 	at SungearEngine2D.GUI.GUI.draw(GUI.java:55)
-	at SungearEngine2D.Main.Main$1.onUpdate(Main.java:324)
-	at Core2D.Graphics.Graphics.draw(Graphics.java:87)
+	at SungearEngine2D.Main.Main$1.onUpdate(Main.java:290)
+	at Core2D.Graphics.Graphics.draw(Graphics.java:88)
 	at Core2D.Core2D.Core2D.run(Core2D.java:123)
 	at Core2D.Core2D.Core2D.create(Core2D.java:110)
 	at Core2D.Core2D.Core2D.start(Core2D.java:61)
-	at SungearEngine2D.Main.Main.main(Main.java:349)
+	at SungearEngine2D.Main.Main.main(Main.java:318)
 
 
-[#FFFFFF] 2023/03/26 01:52:49 | [#FF0000] java.lang.NullPointerException: Cannot invoke "java.io.InputStream.read()" because "this.in" is null
+[#FFFFFF] 2023/04/02 01:40:35 | [#FF0000] java.lang.NullPointerException: Cannot invoke "java.io.InputStream.read()" because "this.in" is null
 	at org.apache.commons.io.input.BOMInputStream.getBOM(BOMInputStream.java:213)
 	at org.apache.commons.io.input.BOMInputStream.readFirstBytes(BOMInputStream.java:255)
 	at org.apache.commons.io.input.BOMInputStream.read(BOMInputStream.java:328)
@@ -65,92 +65,64 @@
 	at Core2D.Utils.FileUtils.readAllFile(FileUtils.java:137)
 	at Core2D.DataClasses.ShaderData.load(ShaderData.java:35)
 	at Core2D.DataClasses.ShaderData.load(ShaderData.java:9)
-	at Core2D.AssetManager.AssetManager.loadAsset(AssetManager.java:260)
-	at Core2D.AssetManager.AssetManager.getAssetObject(AssetManager.java:285)
-	at Core2D.AssetManager.AssetManager.getAsset(AssetManager.java:232)
+	at Core2D.AssetManager.AssetManager.loadAsset(AssetManager.java:274)
+	at Core2D.AssetManager.AssetManager.getAssetObject(AssetManager.java:299)
+	at Core2D.AssetManager.AssetManager.getAsset(AssetManager.java:246)
+	at Core2D.AssetManager.AssetManager.load(AssetManager.java:140)
 	at Core2D.AssetManager.AssetManager.load(AssetManager.java:131)
-	at Core2D.AssetManager.AssetManager.load(AssetManager.java:122)
-	at Core2D.AssetManager.AssetManager.load(AssetManager.java:112)
+	at Core2D.AssetManager.AssetManager.load(AssetManager.java:121)
 	at Core2D.Project.Project.load(Project.java:48)
 	at Core2D.Project.ProjectsManager.loadProject(ProjectsManager.java:39)
-	at SungearEngine2D.GUI.Views.EditorView.TopToolbarView.draw(TopToolbarView.java:222)
+	at SungearEngine2D.GUI.Views.EditorView.TopToolbarView.draw(TopToolbarView.java:223)
 	at SungearEngine2D.GUI.Views.ViewsManager.draw(ViewsManager.java:115)
 	at SungearEngine2D.GUI.GUI.draw(GUI.java:55)
-	at SungearEngine2D.Main.Main$1.onUpdate(Main.java:324)
-	at Core2D.Graphics.Graphics.draw(Graphics.java:87)
+	at SungearEngine2D.Main.Main$1.onUpdate(Main.java:290)
+	at Core2D.Graphics.Graphics.draw(Graphics.java:88)
 	at Core2D.Core2D.Core2D.run(Core2D.java:123)
 	at Core2D.Core2D.Core2D.create(Core2D.java:110)
 	at Core2D.Core2D.Core2D.start(Core2D.java:61)
-	at SungearEngine2D.Main.Main.main(Main.java:349)
+	at SungearEngine2D.Main.Main.main(Main.java:318)
 
 
-[#FFFFFF] 2023/03/26 01:52:49 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\kakish_city.jpg
+[#FFFFFF] 2023/04/02 01:40:35 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\kakish_city.jpg
 
-[#FFFFFF] 2023/03/26 01:52:49 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\vlad.png
+[#FFFFFF] 2023/04/02 01:40:35 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\vlad.png
 
-[#FFFFFF] 2023/03/26 01:52:49 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\facts_files.png
+[#FFFFFF] 2023/04/02 01:40:35 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\facts_files.png
 
-[#FFFFFF] 2023/03/26 01:52:49 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\ferapont.png
+[#FFFFFF] 2023/04/02 01:40:35 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\ferapont.png
 
-[#FFFFFF] 2023/03/26 01:52:49 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources/slay.png
+[#FFFFFF] 2023/04/02 01:40:35 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources/slay.png
 
-[#FFFFFF] 2023/03/26 01:52:49 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\test.png
+[#FFFFFF] 2023/04/02 01:40:35 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\test.png
 
-[#FFFFFF] 2023/03/26 01:52:49 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg
+[#FFFFFF] 2023/04/02 01:40:35 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg
 
-[#FFFFFF] 2023/03/26 01:52:49 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\map.png
+[#FFFFFF] 2023/04/02 01:40:35 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\map.png
 
-[#FFFFFF] 2023/03/26 01:52:49 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\perlin_noise.png
+[#FFFFFF] 2023/04/02 01:40:35 | [#FFFF00] texture data path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\perlin_noise.png
 
-[#FFFFFF] 2023/03/26 01:52:50 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 70 [#FFFFFF] | [#008000] vlad zhoshe: STOPPED
-
-[#FFFFFF] 2023/03/26 01:54:11 | [#008000] scrolling
-
-[#FFFFFF] 2023/03/26 01:54:11 | [#008000] scrolling
-
-[#FFFFFF] 2023/03/26 01:54:11 | [#008000] scrolling
-
-[#FFFFFF] 2023/03/26 01:54:11 | [#008000] scrolling
-
-[#FFFFFF] 2023/03/26 01:54:11 | [#008000] scrolling
-
-[#FFFFFF] 2023/03/26 02:00:54 | [#FF0000] java.util.ConcurrentModificationException
+[#FFFFFF] 2023/04/02 01:41:32 | [#FF0000] java.util.ConcurrentModificationException
 	at java.base/java.util.ArrayList$Itr.checkForComodification(ArrayList.java:1013)
 	at java.base/java.util.ArrayList$Itr.next(ArrayList.java:967)
-	at Core2D.ECS.ECSWorld.update(ECSWorld.java:122)
+	at Core2D.ECS.ECSWorld.update(ECSWorld.java:125)
 	at Core2D.Scene2D.SceneManager.updateCurrentScene2D(SceneManager.java:62)
-	at Core2D.Graphics.Graphics.draw(Graphics.java:84)
+	at Core2D.Graphics.Graphics.draw(Graphics.java:85)
 	at Core2D.Core2D.Core2D.run(Core2D.java:123)
 	at Core2D.Core2D.Core2D.create(Core2D.java:110)
 	at Core2D.Core2D.Core2D.start(Core2D.java:61)
-	at SungearEngine2D.Main.Main.main(Main.java:349)
+	at SungearEngine2D.Main.Main.main(Main.java:318)
 
 
-[#FFFFFF] 2023/03/26 02:01:21 | [#008000] scrolling
+[#FFFFFF] 2023/04/02 01:41:39 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Scenes\vlad_naelsya_kakisha.sgs' already exists
 
-[#FFFFFF] 2023/03/26 02:01:21 | [#008000] scrolling
+[#FFFFFF] 2023/04/02 01:41:40 | [#008000] scene destroyed: vlad_naelsya_kakisha
 
-[#FFFFFF] 2023/03/26 02:01:21 | [#008000] scrolling
+[#FFFFFF] 2023/04/02 01:41:41 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Scenes\vlad_naelsya_kakisha.sgs' already exists
 
-[#FFFFFF] 2023/03/26 02:01:21 | [#008000] scrolling
+[#FFFFFF] 2023/04/02 01:41:42 | [#008000] scene destroyed: vlad_naelsya_kakisha
 
-[#FFFFFF] 2023/03/26 02:01:21 | [#008000] scrolling
+[#FFFFFF] 2023/04/02 01:41:42 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Scenes\vlad_naelsya_kakisha.sgs' already exists
 
-[#FFFFFF] 2023/03/26 02:01:21 | [#008000] scrolling
-
-[#FFFFFF] 2023/03/26 02:01:22 | [#008000] scrolling
-
-[#FFFFFF] 2023/03/26 02:01:25 | [#008000] scrolling
-
-[#FFFFFF] 2023/03/26 02:01:36 | [#008000] scrolling
-
-[#FFFFFF] 2023/03/26 02:01:36 | [#008000] scrolling
-
-[#FFFFFF] 2023/03/26 02:01:36 | [#008000] scrolling
-
-[#FFFFFF] 2023/03/26 02:01:36 | [#008000] scrolling
-
-[#FFFFFF] 2023/03/26 02:01:36 | [#008000] scrolling
-
-[#FFFFFF] 2023/03/26 02:01:38 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\SceneManager.sm' already exists
+[#FFFFFF] 2023/04/02 01:41:50 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\SceneManager.sm' already exists
 

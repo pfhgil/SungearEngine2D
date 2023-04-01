@@ -6,6 +6,9 @@ import Core2D.Debug.DebugDraw;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Audio.AudioComponent;
 import Core2D.ECS.Component.Components.Camera.CameraComponent;
+import Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent;
+import Core2D.ECS.Component.Components.Physics.Collider2DComponent;
+import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
@@ -20,6 +23,7 @@ import Core2D.Scene2D.SceneManager;
 import org.joml.Vector2i;
 import org.lwjgl.openal.AL10;
 
+import static org.lwjgl.opengl.GL11C.glDrawElements;
 import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
 
 // система для инициализации компонентов
@@ -75,7 +79,8 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
         } else if(component instanceof AudioComponent audioComponent) {
             ECSWorld.getCurrentECSWorld().audioSystem.setAudioComponentData(audioComponent,
                     AssetManager.getInstance().getAudioData(audioComponent.path));
-            //Log.CurrentSession.println("audio initialized: " + audioComponent.path, Log.MessageType.SUCCESS);
+        } else if(component instanceof Rigidbody2DComponent rigidbody2DComponent) {
+            ECSWorld.getCurrentECSWorld().physicsSystem.addRigidbody2D(rigidbody2DComponent);
         }
     }
 
@@ -94,7 +99,16 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
             }
         } else if(component instanceof AudioComponent audioComponent) {
             OpenAL.alCall(params -> AL10.alDeleteSources(audioComponent.sourceHandler));
-            //Log.CurrentSession.println("audio destroyed: " + audioComponent.path, Log.MessageType.SUCCESS);
+        } else if(component instanceof Rigidbody2DComponent rigidbody2DComponent) {
+            if(rigidbody2DComponent.body != null) {
+                ECSWorld.getCurrentECSWorld().physicsSystem.getWorld().destroyBody(rigidbody2DComponent.body);
+            }
+        } else if(component instanceof Collider2DComponent collider2DComponent) {
+            Rigidbody2DComponent rigidbody2DComponent = component.entity.getComponent(Rigidbody2DComponent.class);
+
+            if(rigidbody2DComponent != null) {
+                rigidbody2DComponent.body.destroyFixture(collider2DComponent.fixture);
+            }
         }
     }
 
@@ -113,8 +127,9 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
 
         // создаю описание аттрибутов в шейдерной программе
         BufferLayout attributesLayout = new BufferLayout(
-                new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2),
-                new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT2)
+                new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3),
+                new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3),
+                new VertexAttribute(2, "normalPositionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3)
         );
 
         vertexBuffer.setLayout(attributesLayout);

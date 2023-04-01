@@ -74,8 +74,8 @@ public class CamerasController3DSystem extends System implements NonDuplicated
 
                 Vector2f deltaMousePos = Mouse.getDeltaPosition();
 
-                controllerComponent.cameraRotation.x += -deltaMousePos.y * controllerComponent.rotationSensitivity;
-                controllerComponent.cameraRotation.y += deltaMousePos.x * controllerComponent.rotationSensitivity;
+                controllerComponent.cameraRotation.x += deltaMousePos.y * controllerComponent.rotationSensitivity;
+                controllerComponent.cameraRotation.y -= deltaMousePos.x * controllerComponent.rotationSensitivity;
             }
 
             float speedMultiplier = 1f;
@@ -89,25 +89,33 @@ public class CamerasController3DSystem extends System implements NonDuplicated
             if(!shiftDown && Keyboard.keyDown(GLFW.GLFW_KEY_W)) {
                 translateDirectlyForward(controllerComponent, new Vector3f(0f, 0f, -controllerComponent.forwardMovementSpeed * speedMultiplier * deltaTime));
             } else if(shiftDown && Keyboard.keyDown(GLFW.GLFW_KEY_W)) {
-                controllerComponent.cameraPosition.y -= controllerComponent.verticalMovementSpeed * speedMultiplier * deltaTime;
+                controllerComponent.cameraPosition.y += controllerComponent.verticalMovementSpeed * speedMultiplier * deltaTime;
             }
 
             if(!shiftDown && Keyboard.keyDown(GLFW.GLFW_KEY_S)) {
                 translateDirectlyForward(controllerComponent, new Vector3f(0f, 0f, controllerComponent.forwardMovementSpeed * speedMultiplier * deltaTime));
             } else if(shiftDown && Keyboard.keyDown(GLFW.GLFW_KEY_S)) {
-                controllerComponent.cameraPosition.y += controllerComponent.verticalMovementSpeed * speedMultiplier * deltaTime;
+                controllerComponent.cameraPosition.y -= controllerComponent.verticalMovementSpeed * speedMultiplier * deltaTime;
+            }
+
+            if(Keyboard.keyDown(GLFW.GLFW_KEY_F) && Keyboard.keyReleased(GLFW.GLFW_KEY_EQUAL)) {
+                cameraComponent.FOV += 1f;
+            }
+
+            if(Keyboard.keyDown(GLFW.GLFW_KEY_F) && Keyboard.keyReleased(GLFW.GLFW_KEY_MINUS)) {
+                cameraComponent.FOV -= 1f;
             }
 
             // moving
             if(Keyboard.keyDown(GLFW.GLFW_KEY_A)) {
-                translateDirectlyHorizontal(controllerComponent, new Vector3f(controllerComponent.horizontalMovementSpeed * speedMultiplier * deltaTime, 0f, 0f));
-            }
-
-            if(Keyboard.keyDown(GLFW.GLFW_KEY_D)) {
                 translateDirectlyHorizontal(controllerComponent, new Vector3f(-controllerComponent.horizontalMovementSpeed * speedMultiplier * deltaTime, 0f, 0f));
             }
 
-            if (Keyboard.keyDown(GLFW.GLFW_KEY_C) && Keyboard.keyDown(GLFW.GLFW_KEY_V) && Keyboard.keyPressed(GLFW.GLFW_KEY_2)) {
+            if(Keyboard.keyDown(GLFW.GLFW_KEY_D)) {
+                translateDirectlyHorizontal(controllerComponent, new Vector3f(controllerComponent.horizontalMovementSpeed * speedMultiplier * deltaTime, 0f, 0f));
+            }
+
+            if (Keyboard.keyDown(GLFW.GLFW_KEY_C) && Keyboard.keyPressed(GLFW.GLFW_KEY_2)) {
                 cameraComponent.viewMode = CameraComponent.ViewMode.VIEW_MODE_2D;
             }
 

@@ -1,6 +1,7 @@
 package Core2D.Graphics.OpenGL;
 
 import Core2D.Log.Log;
+import Core2D.Utils.Debugger;
 import Core2D.Utils.ExceptionsUtils;
 import org.lwjgl.opengl.GL;
 import org.lwjgl.opengl.GL46C;
@@ -9,6 +10,9 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11C.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11C.GL_UNSIGNED_INT;
+import static org.lwjgl.opengl.GL11C.glDrawElements;
 
 public class OpenGL
 {
@@ -43,6 +47,20 @@ public class OpenGL
         Object obj = func.apply(null);
         checkForGLErrors();
         return toClass.cast(obj);
+    }
+
+    public static void glDrawElements(int mode, int count, int type, long indices)
+    {
+        OpenGL.glCall((params) -> GL46C.glDrawElements(mode, count, type, indices));
+
+        Debugger.drawCallsNum++;
+    }
+
+    public static void glDrawArrays(int mode, int start, int count)
+    {
+        OpenGL.glCall((params) -> GL46C.glDrawArrays(mode, start, count));
+
+        Debugger.drawCallsNum++;
     }
 
     public static void checkForGLErrors()

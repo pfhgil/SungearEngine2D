@@ -76,6 +76,276 @@
     },
     {
       "assetObject": {
+        "meshesData": [
+          {
+            "vertexArray": {
+              "handler": 1,
+              "VBOs": [
+                {
+                  "handler": 1,
+                  "data": [
+                    -50.0,
+                    -50.0,
+                    0.0,
+                    -50.0,
+                    50.0,
+                    0.0,
+                    50.0,
+                    50.0,
+                    0.0,
+                    -50.0,
+                    -50.0,
+                    0.0,
+                    50.0,
+                    50.0,
+                    0.0,
+                    50.0,
+                    -50.0,
+                    0.0
+                  ],
+                  "usage": 35044,
+                  "layout": {
+                    "attributes": [
+                      {
+                        "name": "positionAttribute",
+                        "shaderDataType": 7,
+                        "convertedShaderDataType": 5126,
+                        "offset": 0,
+                        "size": 12,
+                        "normalized": false,
+                        "ID": 0
+                      }
+                    ],
+                    "stride": 12
+                  }
+                },
+                {
+                  "handler": 2,
+                  "data": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0,
+                    1.0,
+                    0.0,
+                    0.0
+                  ],
+                  "usage": 35044,
+                  "layout": {
+                    "attributes": [
+                      {
+                        "name": "textureCoordsAttribute",
+                        "shaderDataType": 7,
+                        "convertedShaderDataType": 5126,
+                        "offset": 0,
+                        "size": 12,
+                        "normalized": false,
+                        "ID": 1
+                      }
+                    ],
+                    "stride": 12
+                  }
+                },
+                {
+                  "handler": 3,
+                  "data": [
+                    0.0,
+                    0.0,
+                    -1.0,
+                    0.0,
+                    0.0,
+                    -1.0,
+                    0.0,
+                    0.0,
+                    -1.0,
+                    0.0,
+                    0.0,
+                    -1.0,
+                    0.0,
+                    0.0,
+                    -1.0,
+                    0.0,
+                    0.0,
+                    -1.0
+                  ],
+                  "usage": 35044,
+                  "layout": {
+                    "attributes": [
+                      {
+                        "name": "normalPositionAttribute",
+                        "shaderDataType": 7,
+                        "convertedShaderDataType": 5126,
+                        "offset": 0,
+                        "size": 12,
+                        "normalized": false,
+                        "ID": 2
+                      }
+                    ],
+                    "stride": 12
+                  }
+                }
+              ],
+              "IBOs": [
+                {
+                  "handler": 4,
+                  "data": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5
+                  ],
+                  "usage": 35044
+                }
+              ]
+            },
+            "positionsBuffer": {
+              "handler": 1,
+              "data": [
+                -50.0,
+                -50.0,
+                0.0,
+                -50.0,
+                50.0,
+                0.0,
+                50.0,
+                50.0,
+                0.0,
+                -50.0,
+                -50.0,
+                0.0,
+                50.0,
+                50.0,
+                0.0,
+                50.0,
+                -50.0,
+                0.0
+              ],
+              "usage": 35044,
+              "layout": {
+                "attributes": [
+                  {
+                    "name": "positionAttribute",
+                    "shaderDataType": 7,
+                    "convertedShaderDataType": 5126,
+                    "offset": 0,
+                    "size": 12,
+                    "normalized": false,
+                    "ID": 0
+                  }
+                ],
+                "stride": 12
+              }
+            },
+            "uvBuffer": {
+              "handler": 2,
+              "data": [
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0,
+                1.0,
+                0.0,
+                0.0
+              ],
+              "usage": 35044,
+              "layout": {
+                "attributes": [
+                  {
+                    "name": "textureCoordsAttribute",
+                    "shaderDataType": 7,
+                    "convertedShaderDataType": 5126,
+                    "offset": 0,
+                    "size": 12,
+                    "normalized": false,
+                    "ID": 1
+                  }
+                ],
+                "stride": 12
+              }
+            },
+            "normalsBuffer": {
+              "handler": 3,
+              "data": [
+                0.0,
+                0.0,
+                -1.0,
+                0.0,
+                0.0,
+                -1.0,
+                0.0,
+                0.0,
+                -1.0,
+                0.0,
+                0.0,
+                -1.0,
+                0.0,
+                0.0,
+                -1.0,
+                0.0,
+                0.0,
+                -1.0
+              ],
+              "usage": 35044,
+              "layout": {
+                "attributes": [
+                  {
+                    "name": "normalPositionAttribute",
+                    "shaderDataType": 7,
+                    "convertedShaderDataType": 5126,
+                    "offset": 0,
+                    "size": 12,
+                    "normalized": false,
+                    "ID": 2
+                  }
+                ],
+                "stride": 12
+              }
+            },
+            "indexBuffer": {
+              "handler": 4,
+              "data": [
+                0,
+                1,
+                2,
+                3,
+                4,
+                5
+              ],
+              "usage": 35044
+            }
+          }
+        ],
+        "path": "/data/models/plane.obj"
+      },
+      "path": "/data/models/plane.obj",
+      "assetObjectClassName": "Core2D.DataClasses.ModelData"
+    },
+    {
+      "assetObject": {
         "lastModified": -1,
         "path": "/data/shaders/common/only_color_shader.glsl"
       },
@@ -218,30 +488,6 @@
     },
     {
       "assetObject": {
-        "lastModified": 1679509950330,
-        "path": "Scripts\\PickableComponent.class"
-      },
-      "path": "Scripts\\PickableComponent.class",
-      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
-    },
-    {
-      "assetObject": {
-        "lastModified": 1679509950411,
-        "path": "Scripts\\SetActiveComponent.class"
-      },
-      "path": "Scripts\\SetActiveComponent.class",
-      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
-    },
-    {
-      "assetObject": {
-        "lastModified": 1679509950352,
-        "path": "Scripts\\SpaceDeformationComponent.class"
-      },
-      "path": "Scripts\\SpaceDeformationComponent.class",
-      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
-    },
-    {
-      "assetObject": {
         "lastModified": 1679510103768,
         "path": "Scripts\\test\\dfdf.java"
       },
@@ -250,7 +496,31 @@
     },
     {
       "assetObject": {
-        "lastModified": 1679511219750,
+        "lastModified": 1680042202526,
+        "path": "Scripts\\SpaceDeformationComponent.class"
+      },
+      "path": "Scripts\\SpaceDeformationComponent.class",
+      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1680042209540,
+        "path": "Scripts\\SetActiveComponent.class"
+      },
+      "path": "Scripts\\SetActiveComponent.class",
+      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1680042220055,
+        "path": "Scripts\\PickableComponent.class"
+      },
+      "path": "Scripts\\PickableComponent.class",
+      "assetObjectClassName": "Core2D.DataClasses.ScriptData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1680042220042,
         "path": "Scripts\\HoholMegaSuperComponent.class"
       },
       "path": "Scripts\\HoholMegaSuperComponent.class",

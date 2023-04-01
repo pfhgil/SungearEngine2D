@@ -249,7 +249,7 @@
                   "position": {
                     "x": -68.50412,
                     "y": 80.739555,
-                    "z": 1.0
+                    "z": -1.0
                   },
                   "rotation": {
                     "x": 0.0,
@@ -358,7 +358,7 @@
                   "position": {
                     "x": -68.50412,
                     "y": 80.739555,
-                    "z": 1.0
+                    "z": -1.0
                   },
                   "rotation": {
                     "x": 0.0,
@@ -372,8 +372,8 @@
                   },
                   "zoom": 1.0,
                   "viewportSize": {
-                    "x": 2560.0,
-                    "y": 1377.0
+                    "x": 1080.0,
+                    "y": 720.0
                   },
                   "viewMode": "VIEW_MODE_2D",
                   "FOV": 75.0,
@@ -1012,7 +1012,7 @@
     }
   ],
   "scriptSystem": {},
-  "maxObjectID": 201,
+  "maxObjectID": 205,
   "inBuild": false,
   "isMainScene2D": false
 }

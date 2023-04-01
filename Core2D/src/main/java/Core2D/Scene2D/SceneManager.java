@@ -191,7 +191,7 @@ public class SceneManager
             Settings.Other.Picking.currentPickingColor.z = 0.0f;
 
             Scene2D deserializedScene2D = Utils.gson.fromJson(deserializedScene2DString, Scene2D.class);
-            deserializedScene2D.initPhysicsWorld();
+            //deserializedScene2D.initPhysicsWorld();
             //deserializedScene2D.setPhysicsWorld(tmpPhysicsWorld);
 
             deserializedScene2D.setScenePath(scene2DPath);

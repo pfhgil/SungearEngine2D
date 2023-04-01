@@ -2,10 +2,11 @@ package Core2D.ECS.System.Systems;
 
 import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
+import Core2D.ECS.Component.Components.Transform.MoveToComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
-import Core2D.Physics.PhysicsWorld;
+import Core2D.Settings.PhysicsSettings;
 import org.jbox2d.common.Vec2;
 import org.joml.*;
 import org.joml.Math;
@@ -36,20 +37,22 @@ public class TransformationsSystem extends System
     // for 2d (box2d)
     public void updateRigidbody2D(TransformComponent transformComponent, Rigidbody2DComponent rigidbody2DComponent)
     {
+        if(rigidbody2DComponent.body == null) return;
+
         Vector3f posDif = new Vector3f(transformComponent.position).add(new Vector3f(transformComponent.lastPosition).negate());
         float rotDifZ = transformComponent.rotation.z - transformComponent.lastRotation.z;
 
-        Vec2 bodyPos = rigidbody2DComponent.getRigidbody2D().getBody().getPosition();
-        float bodyRot = rigidbody2DComponent.getRigidbody2D().getBody().getAngle();
+        Vec2 bodyPos = rigidbody2DComponent.body.getPosition();
+        float bodyRot = rigidbody2DComponent.body.getAngle();
 
-        rigidbody2DComponent.getRigidbody2D().getBody().setTransform(bodyPos.add(new Vec2(posDif.x / PhysicsWorld.RATIO, posDif.y / PhysicsWorld.RATIO)),
+        rigidbody2DComponent.body.setTransform(bodyPos.add(new Vec2(posDif.x / PhysicsSettings.ratio, posDif.y / PhysicsSettings.ratio)),
                 bodyRot + Math.toRadians(rotDifZ));
 
-        bodyPos = rigidbody2DComponent.getRigidbody2D().getBody().getPosition();
-        bodyRot = rigidbody2DComponent.getRigidbody2D().getBody().getAngle();
+        bodyPos = rigidbody2DComponent.body.getPosition();
+        bodyRot = rigidbody2DComponent.body.getAngle();
 
-        Vector2f dif = new Vector2f(bodyPos.x * PhysicsWorld.RATIO - transformComponent.position.x,
-                bodyPos.y * PhysicsWorld.RATIO - transformComponent.position.y);
+        Vector2f dif = new Vector2f(bodyPos.x * PhysicsSettings.ratio - transformComponent.position.x,
+                bodyPos.y * PhysicsSettings.ratio - transformComponent.position.y);
         float box2DRotDifZ = (float) Math.toDegrees(bodyRot) - transformComponent.rotation.z;
 
         transformComponent.position.add(new Vector3f(dif.x, dif.y, 0f));
@@ -59,7 +62,9 @@ public class TransformationsSystem extends System
     @Override
     public void deltaUpdate(ComponentsQuery componentsQuery, float deltaTime)
     {
-
+        TransformComponent transformComponent = componentsQuery.getComponent(TransformComponent.class);
+        if (transformComponent == null) return;
+        moveTo(transformComponent, componentsQuery, deltaTime);
     }
 
     public boolean hasTransformComponentChanged(TransformComponent transformComponent)
@@ -144,4 +149,20 @@ public class TransformationsSystem extends System
 
 
     // вспомогательные методы для изменения трансформации
+    private void moveTo(TransformComponent transformComponent, ComponentsQuery componentsQuery, float deltaTime)
+    {
+        MoveToComponent moveToComponent = componentsQuery.getComponent(MoveToComponent.class);
+
+        if(moveToComponent == null) return;
+
+        if(moveToComponent.needMoveTo) {
+
+            Vector2f dif = new Vector2f(moveToComponent.destinationPosition.x - transformComponent.position.x, moveToComponent.destinationPosition.y - transformComponent.position.y).mul(moveToComponent.ration).mul(deltaTime);
+            if(java.lang.Math.abs(dif.x) > moveToComponent.errorRate || java.lang.Math.abs(dif.y) > moveToComponent.errorRate) {
+                transformComponent.position.add(new Vector3f(dif.x, dif.y, 0f));
+            } else {
+                moveToComponent.needMoveTo= false;
+            }
+        }
+    }
 }

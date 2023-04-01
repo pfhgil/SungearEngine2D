@@ -1,6 +1,7 @@
 package sungear.project.test12.Scripts.Systems.Postprocessing;
 
 import Core2D.ECS.Entity;
+import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import org.joml.Random;
 import org.joml.Vector2f;
@@ -17,6 +18,16 @@ public class PPTest1System extends System
     private transient Vector2f lightPos = new Vector2f(0.0f, 0.0f);
     private transient Vector2f lastMousePosition = new Vector2f();
     private transient Vector2f mousePosition = new Vector2f();
+
+    @Override
+    public void update(ComponentsQuery componentsQuery) {
+
+    }
+
+    @Override
+    public void deltaUpdate(ComponentsQuery componentsQuery, float deltaTime) {
+
+    }
 
     @Override
     public void collider2DEnter(Entity otherObj)

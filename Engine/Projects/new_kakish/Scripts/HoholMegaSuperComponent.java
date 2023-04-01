@@ -5,6 +5,7 @@ import Core2D.ECS.Component.Components.*;
 //import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Component.Components.Audio.AudioComponent;
 import Core2D.ECS.Component.Components.Audio.AudioState;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.*;
@@ -93,11 +94,11 @@ public class HoholMegaSuperComponent extends Component
         slayActiveTimer.startFrame();
     }
 
-    //public void deltaUpdate(ComponentsQuery)
+    //public void deltaUpdate(ComponentsQuery)в
 
     private Entity createSlayEntity(Vector2f onPosition)
     {
-        Entity slayEntity = Entity.createAsObject2D();
+        Entity slayEntity = Entity.createAsObject();
 
         TransformComponent slayTransform = slayEntity.getComponent(TransformComponent.class);
         slayTransform.scale.x = -20f;

@@ -1,4 +1,4 @@
-package SungearEngine2D.Utils;
+package Core2D.Utils;
 
 import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Log.Log;
@@ -15,6 +15,10 @@ import java.net.MalformedURLException;
 public class Debugger
 {
     private static MBeanServerConnection mbs;
+
+    public static int VAOBindCallsNum = 0;
+    public static int textureBindCallsNum = 0;
+    public static int drawCallsNum = 0;
 
     public static void init()
     {
@@ -42,6 +46,14 @@ public class Debugger
         } else {
             throw new RuntimeException("JMXConnector did not connect.");
         }
+    }
+
+    // сбросить показатели на кадр
+    public static void resetFrameMetrics()
+    {
+        VAOBindCallsNum = 0;
+        textureBindCallsNum = 0;
+        drawCallsNum = 0;
     }
 
     public static class CPU

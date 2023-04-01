@@ -12,19 +12,8 @@ public class BoxComponent extends PrimitiveComponent
 
     public BoxComponent()
     {
-        data = new float[] {
-                // первая точка
-                0.0f, 0.0f,
-
-                // вторая точка
-                0.0f, 0.0f,
-
-                // третья точка
-                0.0f, 0.0f,
-
-                // четвертая точка
-                0.0f, 0.0f
-        };
+        // 8 значений для точек примитивов (xy)
+        data = new float[8];
 
         linesData = new LineData[]{
                 new LineData(new Vector3f(), new Vector3f(-size.x / 2.0f, -size.y / 2.0f, 0f), new Vector3f(-size.x / 2.0f, size.y / 2.0f, 0f)),

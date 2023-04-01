@@ -2,10 +2,6 @@ plugins {
     id 'java'
 }
 
-group 'sungear'
-version '1.0-SNAPSHOT'
-version ''
-
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
@@ -20,6 +16,7 @@ sourceSets {
     }
 }
 
+/*
 repositories {
     flatDir {
         dirs 'libs'
@@ -27,8 +24,13 @@ repositories {
     mavenCentral()
 }
 
+ */
+repositories {
+    mavenCentral()
+}
+
 dependencies {
-    implementation name: "Core2D"
+    implementation files('libs/Core2D.jar')
 }
 
 test {

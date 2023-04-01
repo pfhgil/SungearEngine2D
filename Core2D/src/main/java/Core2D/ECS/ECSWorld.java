@@ -30,20 +30,23 @@ public class ECSWorld
     public final CamerasManagerSystem camerasManagerSystem = new CamerasManagerSystem();
     public final TransformationsSystem transformationsSystem = new TransformationsSystem();
     public final AudioSystem audioSystem = new AudioSystem();
+    public final PhysicsSystem physicsSystem = new PhysicsSystem();
     // ----------------------------------
 
     public ECSWorld()
     {
         systems.add(componentsInitializerSystem);
+
         systems.add(camerasManagerSystem);
+
         systems.add(meshesRendererSystem);
         systems.add(primitivesRendererSystem);
 
-        // transformations
         systems.add(transformationsSystem);
 
-        // audio
         systems.add(audioSystem);
+
+        systems.add(physicsSystem);
 
         Log.CurrentSession.println("ECSWorld created!", Log.MessageType.WARNING);
     }

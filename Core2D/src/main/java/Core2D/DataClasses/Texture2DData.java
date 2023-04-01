@@ -3,6 +3,7 @@ package Core2D.DataClasses;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 import org.lwjgl.BufferUtils;
+import org.lwjgl.system.MemoryUtil;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -65,7 +66,10 @@ public class Texture2DData extends Data
         IntBuffer channelsBuffer = BufferUtils.createIntBuffer(1);
 
         try(inputStream) {
-            pixelsData = stbi_load_from_memory(Core2D.Utils.Utils.resourceToByteBuffer(inputStream), widthBuffer, heightBuffer, channelsBuffer, 0);
+            ByteBuffer resource = Core2D.Utils.Utils.resourceToByteBuffer(inputStream);
+            pixelsData = stbi_load_from_memory(resource, widthBuffer, heightBuffer, channelsBuffer, 0);
+            resource.clear();
+            //MemoryUtil.memFree(resource);
 
             // получаю из буферов размер и каналы загруженной текстуры
             width = widthBuffer.get(0);
@@ -99,6 +103,9 @@ public class Texture2DData extends Data
         widthBuffer.clear();
         heightBuffer.clear();
         channelsBuffer.clear();
+        //MemoryUtil.memFree(widthBuffer);
+        //MemoryUtil.memFree(heightBuffer);
+        //MemoryUtil.memFree(channelsBuffer);
 
         return this;
     }

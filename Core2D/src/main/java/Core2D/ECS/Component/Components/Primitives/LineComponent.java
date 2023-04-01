@@ -8,13 +8,7 @@ public class LineComponent extends PrimitiveComponent
 {
     public LineComponent()
     {
-        data = new float[] {
-                // первая точка
-                0.0f, 0.0f, 0f,
-
-                // вторая точка
-                0.0f, 0.0f, 0f
-        };
+        data = new float[4];
 
         linesData = new LineData[] {
                 new LineData(new Vector3f(), new Vector3f(), new Vector3f(0.0f, 100.0f, 0f))

@@ -32,5 +32,19 @@ public class ComponentsQuery
         return null;
     }
 
+    public <T extends Component> List<T> getAllComponents(Class<T> componentClass)
+    {
+        List<T> componentsFound = new ArrayList<>();
+        for(var component : components) {
+            if(componentClass.isAssignableFrom(component.getClass())){
+                componentsFound.add(componentClass.cast(component));
+            } else if(ScriptComponent.class.isAssignableFrom(component.getClass()) && componentClass.isAssignableFrom(((ScriptComponent) component).script.getScriptClass())) {
+                componentsFound.add(componentClass.cast(((ScriptComponent) component).script.getScriptClassInstance()));
+            }
+        }
+
+        return componentsFound;
+    }
+
     public List<Component> getComponents() { return components; }
 }

@@ -11,6 +11,7 @@ import Core2D.Input.PC.Keyboard;
 import Core2D.Input.PC.Mouse;
 import Core2D.Log.Log;
 import Core2D.Scene2D.SceneManager;
+import Core2D.Utils.Debugger;
 import Core2D.Utils.ExceptionsUtils;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
@@ -111,6 +112,8 @@ public abstract class Graphics
                     capInit = System.currentTimeMillis();
                     
                 }
+
+                Debugger.resetFrameMetrics();
             } catch (Exception e) {
                 Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
             }

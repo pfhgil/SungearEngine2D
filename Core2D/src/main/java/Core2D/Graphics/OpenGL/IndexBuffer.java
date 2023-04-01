@@ -7,13 +7,13 @@ public class IndexBuffer
     // id буфера
     private int handler;
     // данные в буфере
-    private short[] data;
+    private int[] data;
     // использование буфера
     private int usage;
     // слой
     private BufferLayout layout;
 
-    public IndexBuffer(short[] data)
+    public IndexBuffer(int[] data)
     {
         this.data = data;
         usage = GL_STATIC_DRAW;
@@ -55,7 +55,7 @@ public class IndexBuffer
     }
 
     // геттеры и сеттеры
-    public short[] getData() { return data; }
+    public int[] getData() { return data; }
 
     public int getUsage() { return usage; }
 }

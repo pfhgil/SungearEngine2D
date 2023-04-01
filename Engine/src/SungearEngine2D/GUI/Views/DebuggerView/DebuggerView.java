@@ -1,7 +1,7 @@
 package SungearEngine2D.GUI.Views.DebuggerView;
 
 import SungearEngine2D.GUI.Views.View;
-import SungearEngine2D.Utils.Debugger;
+import Core2D.Utils.Debugger;
 import imgui.ImGui;
 import imgui.flag.ImGuiStyleVar;
 import imgui.type.ImBoolean;
@@ -48,6 +48,13 @@ public class DebuggerView extends View
             ImGui.text("GPU total memory: " + (Debugger.GPU.getGPUTotalMemInKB() / 1024.0f) + " MB (" + Debugger.GPU.getGPUTotalMemInKB() + " KB)");
             ImGui.text("GPU available memory: " + (Debugger.GPU.getGPUCurrentMemAvailableInKB() / 1024.0f) + " MB (" + Debugger.GPU.getGPUCurrentMemAvailableInKB() + " KB)");
             ImGui.text("GPU usage: " + Debugger.GPU.getGPUUsagePercentage() + "% (" + (Debugger.GPU.getGPUUsageInKB() / 1024.0f) + " MB (" + Debugger.GPU.getGPUUsageInKB() + " KB))");
+
+            ImGui.separator();
+
+            ImGui.text("Draw calls number: " + Debugger.drawCallsNum);
+            ImGui.text("VAO bind calls number: " + Debugger.VAOBindCallsNum);
+            ImGui.text("Texture bind calls number: " + Debugger.textureBindCallsNum);
+
             ImGui.end();
 
             ImGui.begin("Memory");
