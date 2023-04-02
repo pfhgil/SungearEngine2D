@@ -127,7 +127,6 @@ public class CamerasManagerSystem extends System implements NonRemovable, NonDup
 
                     frameBufferToBind.unBindTexture();
                 }
-                cameraComponent.ppQuadVertexArray.unBind();
                 cameraComponent.resultFrameBuffer.unBind();
             }
         }

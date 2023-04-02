@@ -1,22 +1,7 @@
 {
   "scene2DStoredValues": [
     {
-      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scenes\\mega_kakish_super.sgs",
-      "inBuild": false,
-      "isMainScene2D": false
-    },
-    {
-      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scenes\\mega_kakish_super.sgs",
-      "inBuild": false,
-      "isMainScene2D": false
-    },
-    {
-      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scenes\\mega_kakish_super.sgs",
-      "inBuild": false,
-      "isMainScene2D": false
-    },
-    {
-      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scenes\\vlad_naelsya_kakisha.sgs",
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scenes\\test01.sgs",
       "inBuild": false,
       "isMainScene2D": false
     }

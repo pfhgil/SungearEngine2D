@@ -132,11 +132,11 @@ public class ResourcesView extends View
             if(mouseRightClickedOnResourcesView) {
                 if(ImGui.beginPopupContextWindow("File")) {
                     if(ImGui.beginMenu("Create")) {
-                        if(ImGuiUtils.menuItemWithImage("Directory", Resources.Textures.Icons.directoryIcon.getTextureHandler(), 14, 14)) {
+                        if(ImGuiUtils.menuItemWithImage("Directory", Resources.Textures.Icons.directoryIcon.getHandler(), 14, 14)) {
                             ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Directory");
                         }
                         ImGui.separator();
-                        if(ImGuiUtils.beginMenuWithImage("Java file", Resources.Textures.Icons.javaFileIcon14.getTextureHandler(), 14, 14)) {
+                        if(ImGuiUtils.beginMenuWithImage("Java file", Resources.Textures.Icons.javaFileIcon14.getHandler(), 14, 14)) {
                             if(ImGuiUtils.menuItemWithImage("Component", 0, 14, 14)) {
                                 ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Java.Component");
                             }
@@ -145,7 +145,7 @@ public class ResourcesView extends View
                             }
                             ImGui.endMenu();
                         }
-                        if(ImGuiUtils.menuItemWithImage("Text file", Resources.Textures.Icons.textFileIcon14.getTextureHandler(), 14, 14)) {
+                        if(ImGuiUtils.menuItemWithImage("Text file", Resources.Textures.Icons.textFileIcon14.getHandler(), 14, 14)) {
                             ViewsManager.getTopToolbarView().setCurrentFileTypeNeedCreate("Text");
                         }
                         ImGui.separator();

@@ -59,7 +59,7 @@ public class ProjectTreeView extends View
         if(ImGui.beginDragDropSource()) {
             ImGui.setDragDropPayload("File", dir);
 
-            ImGui.image(Resources.Textures.Icons.directoryIcon.getTextureHandler(), iconImageSize.x / 2.0f, iconImageSize.y / 2.0f, 0, 0, 1, 1, 1.0f, 1.0f, 1.0f, 0.5f);
+            ImGui.image(Resources.Textures.Icons.directoryIcon.getHandler(), iconImageSize.x / 2.0f, iconImageSize.y / 2.0f, 0, 0, 1, 1, 1.0f, 1.0f, 1.0f, 0.5f);
 
             ImGui.endDragDropSource();
         }

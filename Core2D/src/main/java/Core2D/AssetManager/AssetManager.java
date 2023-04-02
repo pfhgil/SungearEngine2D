@@ -265,6 +265,8 @@ public class AssetManager implements Serializable
         Object objToCast = null;
         if (assetObjectClass.getSuperclass().isAssignableFrom(Data.class)) {
             try {
+                Log.CurrentSession.println("trying load: " + fullPath, Log.MessageType.WARNING);
+
                 if (new File(fullPath).exists()) {
                     //Log.CurrentSession.println("trying to load not from resources.... Path: " + fullPath, Log.MessageType.WARNING);
                     objToCast = ((Data) assetObjectClass.getConstructor().newInstance()).load(fullPath);
@@ -292,6 +294,8 @@ public class AssetManager implements Serializable
         for(Asset asset : assets) {
             if(asset.path.equals(path) && assetObjectClass.isAssignableFrom(asset.getAssetObject().getClass())) {
                 assetObj = assetObjectClass.cast(asset.getAssetObject());
+
+                Log.CurrentSession.println("found asset: " + assetObj + ", " + asset.path, Log.MessageType.SUCCESS);
             }
         }
 

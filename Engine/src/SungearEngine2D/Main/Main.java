@@ -32,7 +32,6 @@ import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Tasks.StoppableTask;
 import Core2D.Utils.ExceptionsUtils;
-import Core2D.Utils.FileUtils;
 import SungearEngine2D.DebugDraw.CamerasDebugLines;
 import SungearEngine2D.DebugDraw.EntitiesDebugDraw;
 import SungearEngine2D.DebugDraw.Gizmo;
@@ -44,7 +43,6 @@ import SungearEngine2D.Utils.AppData.AppDataManager;
 import imgui.ImGui;
 import org.apache.commons.io.FilenameUtils;
 import org.joml.Math;
-import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
@@ -128,14 +126,14 @@ public class Main
 
                                         EngineSettings.Playmode.canEnterPlaymode = false;
 
-                                        String scriptPath = scriptData.getPath();
+                                        String scriptPath = scriptData.getAbsolutePath();
 
                                         ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
                                             public void run() {
                                                 if (currentSceneManager.getCurrentScene2D() == null) return;
                                                 boolean compiled = Compiler.compileScript(scriptData.getAbsolutePath().replace(".class", ".java"));
 
-                                                AssetManager.getInstance().reloadAsset(scriptData.getPath(), ScriptData.class);
+                                                AssetManager.getInstance().reloadAsset(scriptData.getAbsolutePath(), ScriptData.class);
 
                                                 for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
                                                     for (Component component : componentsQuery.getComponents()) {
@@ -159,7 +157,7 @@ public class Main
                                     if(shaderData.lastModified != shaderData.getScriptFileLastModified()) {
                                         shaderData.lastModified = shaderData.getScriptFileLastModified();
 
-                                        String shaderPath = shaderData.getPath();
+                                        String shaderPath = shaderData.getAbsolutePath();
 
                                         for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
                                             for (Component component : componentsQuery.getComponents()) {

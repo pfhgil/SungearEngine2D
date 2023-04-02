@@ -37,7 +37,7 @@ public class ToolbarView extends View
                 gizmoTranslationButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
             }
             ImGui.setCursorPos(0.0f, 2);
-            if(ImGui.imageButton(Resources.Textures.Icons.gizmoTranslationIcon.getTextureHandler(), 13, 13, 0, 0, 1, 1, -1, 1, 1, 1, 0, gizmoTranslationButtonColor.x, gizmoTranslationButtonColor.y, gizmoTranslationButtonColor.z, gizmoTranslationButtonColor.w)) {
+            if(ImGui.imageButton(Resources.Textures.Icons.gizmoTranslationIcon.getHandler(), 13, 13, 0, 0, 1, 1, -1, 1, 1, 1, 0, gizmoTranslationButtonColor.x, gizmoTranslationButtonColor.y, gizmoTranslationButtonColor.z, gizmoTranslationButtonColor.w)) {
                 if(gizmoMode != Gizmo.GizmoMode.TRANSLATION && !Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
                     Gizmo.gizmoMode = Gizmo.GizmoMode.TRANSLATION;
                 } else if(gizmoMode == Gizmo.GizmoMode.ROTATION && Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
@@ -60,7 +60,7 @@ public class ToolbarView extends View
                 ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0, 0, 0, 0);
                 gizmoRotationButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
             }
-            if(ImGui.imageButton(Resources.Textures.Icons.gizmoRotationIcon.getTextureHandler(), 13, 13, 0, 0, 1, 1, -1, 1, 1, 1, 0, gizmoRotationButtonColor.x, gizmoRotationButtonColor.y, gizmoRotationButtonColor.z, gizmoRotationButtonColor.w)) {
+            if(ImGui.imageButton(Resources.Textures.Icons.gizmoRotationIcon.getHandler(), 13, 13, 0, 0, 1, 1, -1, 1, 1, 1, 0, gizmoRotationButtonColor.x, gizmoRotationButtonColor.y, gizmoRotationButtonColor.z, gizmoRotationButtonColor.w)) {
                 if(gizmoMode != Gizmo.GizmoMode.ROTATION && !Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
                     Gizmo.gizmoMode = Gizmo.GizmoMode.ROTATION;
                 } else if(gizmoMode == Gizmo.GizmoMode.TRANSLATION && Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
@@ -83,7 +83,7 @@ public class ToolbarView extends View
                 ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0, 0, 0, 0);
                 gizmoScaleButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
             }
-            if(ImGui.imageButton(Resources.Textures.Icons.gizmoScaleIcon.getTextureHandler(), 13, 13, 0, 0, 1, 1, -1, 1, 1, 1, 0, gizmoScaleButtonColor.x, gizmoScaleButtonColor.y, gizmoScaleButtonColor.z, gizmoScaleButtonColor.w)) {
+            if(ImGui.imageButton(Resources.Textures.Icons.gizmoScaleIcon.getHandler(), 13, 13, 0, 0, 1, 1, -1, 1, 1, 1, 0, gizmoScaleButtonColor.x, gizmoScaleButtonColor.y, gizmoScaleButtonColor.z, gizmoScaleButtonColor.w)) {
                 if(gizmoMode != Gizmo.GizmoMode.SCALE && !Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
                     Gizmo.gizmoMode = Gizmo.GizmoMode.SCALE;
                 } else if(gizmoMode == Gizmo.GizmoMode.ROTATION && Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_SHIFT)) {
@@ -106,7 +106,7 @@ public class ToolbarView extends View
                 ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0, 0, 0, 0);
                 gizmoNoneButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
             }
-            if(ImGui.imageButton(Resources.Textures.Icons.noneIcon.getTextureHandler(), 13, 13, 0, 0, 1, 1, -1, 1, 1, 1, 0, gizmoNoneButtonColor.x, gizmoNoneButtonColor.y, gizmoNoneButtonColor.z, gizmoNoneButtonColor.w)) {
+            if(ImGui.imageButton(Resources.Textures.Icons.noneIcon.getHandler(), 13, 13, 0, 0, 1, 1, -1, 1, 1, 1, 0, gizmoNoneButtonColor.x, gizmoNoneButtonColor.y, gizmoNoneButtonColor.z, gizmoNoneButtonColor.w)) {
                 Gizmo.gizmoMode = Gizmo.GizmoMode.NO_GIZMO ;
             }
             if(gizmoMode == Gizmo.GizmoMode.NO_GIZMO) {

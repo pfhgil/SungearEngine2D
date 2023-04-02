@@ -104,11 +104,6 @@ public class GameView extends View
             vertexBuffer.setLayout(attributesLayout);
             ppQuadVertexArray.putVBO(vertexBuffer, false);
             ppQuadVertexArray.putIBO(indexBuffer);
-
-            ppQuadIndices = null;
-
-            // отвязываю vao
-            ppQuadVertexArray.unBind();
         }
 
         if(camera2DComponentHandler != null) {
@@ -143,7 +138,7 @@ public class GameView extends View
                     ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0, 0, 0, 0);
                     playButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
                 }
-                if(ImGui.imageButton(Resources.Textures.Icons.playButtonIcon.getTextureHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, playButtonColor.x, playButtonColor.y, playButtonColor.z, playButtonColor.w)) {
+                if(ImGui.imageButton(Resources.Textures.Icons.playButtonIcon.getHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, playButtonColor.x, playButtonColor.y, playButtonColor.z, playButtonColor.w)) {
                     if(currentSceneManager.getCurrentScene2D() != null) {
                         if(!EngineSettings.Playmode.active && !EngineSettings.Playmode.paused) {
                             ViewsManager.getSceneView().startPlayMode();
@@ -164,7 +159,7 @@ public class GameView extends View
                     ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0, 0, 0, 0);
                     pauseButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
                 }
-                if(ImGui.imageButton(Resources.Textures.Icons.pauseButtonIcon.getTextureHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, pauseButtonColor.x, pauseButtonColor.y, pauseButtonColor.z, pauseButtonColor.w)) {
+                if(ImGui.imageButton(Resources.Textures.Icons.pauseButtonIcon.getHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, pauseButtonColor.x, pauseButtonColor.y, pauseButtonColor.z, pauseButtonColor.w)) {
                     if(currentSceneManager.getCurrentScene2D() != null) {
                         ViewsManager.getSceneView().pausePlayMode();
                     }
@@ -173,7 +168,7 @@ public class GameView extends View
                     ImGui.popStyleColor(3);
                 }
 
-                if(ImGui.imageButton(Resources.Textures.Icons.stopButtonIcon.getTextureHandler(), 8, 10)) {
+                if(ImGui.imageButton(Resources.Textures.Icons.stopButtonIcon.getHandler(), 8, 10)) {
                     if(currentSceneManager.getCurrentScene2D() != null) {
                         ViewsManager.getSceneView().stopPlayMode();
                     }
@@ -231,7 +226,6 @@ public class GameView extends View
 
                 frameBufferToBind.unBindTexture();
             }
-            ppQuadVertexArray.unBind();
             debugRenderFB.unBind();
 
             if(OpenGL.glCall((params) -> GL46C.glIsTexture(viewTextureHandler), Boolean.class) && postprocessingLayer == null) {

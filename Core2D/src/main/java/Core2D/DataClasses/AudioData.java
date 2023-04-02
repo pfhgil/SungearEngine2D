@@ -62,11 +62,13 @@ public class AudioData extends Data
     }
 
     @Override
-    public AudioData load(String path)
+    public AudioData load(String absolutePath)
     {
-        this.path = path;
+        this.absolutePath = absolutePath;
 
-        File audioFile = new File(path);
+        createRelativePath();
+
+        File audioFile = new File(absolutePath);
         try(AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(audioFile)) {
             create(audioInputStream);
             return this;
@@ -78,9 +80,11 @@ public class AudioData extends Data
     }
 
     @Override
-    public AudioData load(InputStream inputStream, String path)
+    public AudioData load(InputStream inputStream, String absolutePath)
     {
-        this.path = path;
+        this.absolutePath = absolutePath;
+
+        createRelativePath();
 
         try(AudioInputStream audioInputStream = AudioSystem.getAudioInputStream(new BufferedInputStream(inputStream)); inputStream) {
             create(audioInputStream);

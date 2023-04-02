@@ -77,9 +77,6 @@ public class PrimitiveComponent extends Component
 
         vertexBuffer.setLayout(attributesLayout);
         vertexArray.putVBO(vertexBuffer, false);
-
-        // отвязываю vao
-        vertexArray.unBind();
     }
 
     @Override

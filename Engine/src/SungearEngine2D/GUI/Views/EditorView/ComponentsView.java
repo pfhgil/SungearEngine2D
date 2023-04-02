@@ -181,7 +181,7 @@ public class ComponentsView extends View
                     case "MeshComponent" -> {
                         MeshComponent meshComponent = (MeshComponent) currentComponent;
 
-                        ImGuiUtils.inputText("Texture", new File(meshComponent.getTexture().path).getName(), ImGuiInputTextFlags.ReadOnly);
+                        ImGuiUtils.inputText("Texture", new File(meshComponent.texture2DData.getAbsolutePath()).getName(), ImGuiInputTextFlags.ReadOnly);
 
                         if (ImGui.beginDragDropTarget()) {
                             Object imageFile = ImGui.acceptDragDropPayload("File");
@@ -189,8 +189,8 @@ public class ComponentsView extends View
                                 String relativePath = FileUtils.getRelativePath(
                                         file,
                                         new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                                meshComponent.setTexture(new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath)));
-                                meshComponent.getTexture().path = relativePath;
+
+                                meshComponent.texture2DData = AssetManager.getInstance().getTexture2DData(relativePath);
                             }
 
                             ImGui.endDragDropTarget();
@@ -201,7 +201,7 @@ public class ComponentsView extends View
                         boolean[] shaderEditButtonPressed = new boolean[1];
                         Object[] droppedObject = new Object[1];
                         ImGuiUtils.imCallWBorder(func -> ImGuiUtils.inputTextWithRightButton("Shader", shaderName, ImGuiInputTextFlags.ReadOnly,
-                                Resources.Textures.Icons.editIcon24.getTextureHandler(), shaderEditButtonPressed, "Edit shader", true, droppedObject, "File"));
+                                Resources.Textures.Icons.editIcon24.getHandler(), shaderEditButtonPressed, "Edit shader", true, droppedObject, "File"));
 
                         if (droppedObject[0] instanceof File file) {
                             shaderName.set(file.getName(), true);
@@ -691,7 +691,7 @@ public class ComponentsView extends View
                             playButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
                         }
                         ImGui.pushID("AudioPlayButton_" + i);
-                        if(ImGui.imageButton(Resources.Textures.Icons.playButtonIcon.getTextureHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, playButtonColor.x, playButtonColor.y, playButtonColor.z, playButtonColor.w)) {
+                        if(ImGui.imageButton(Resources.Textures.Icons.playButtonIcon.getHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, playButtonColor.x, playButtonColor.y, playButtonColor.z, playButtonColor.w)) {
                             if(audioComponent.state == AudioState.PLAYING) {
                                 audioComponent.state = AudioState.STOPPED;
                             } else {
@@ -713,7 +713,7 @@ public class ComponentsView extends View
                         }
                         ImGui.sameLine();
                         ImGui.pushID("AudioPauseButton_" + i);
-                        if(ImGui.imageButton(Resources.Textures.Icons.pauseButtonIcon.getTextureHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, pauseButtonColor.x, pauseButtonColor.y, pauseButtonColor.z, pauseButtonColor.w)) {
+                        if(ImGui.imageButton(Resources.Textures.Icons.pauseButtonIcon.getHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, pauseButtonColor.x, pauseButtonColor.y, pauseButtonColor.z, pauseButtonColor.w)) {
                             if (audioComponent.state == AudioState.PAUSED) {
                                 audioComponent.state = AudioState.PLAYING;
                             } else {
@@ -728,7 +728,7 @@ public class ComponentsView extends View
                         ImGui.sameLine();
 
                         ImGui.pushID("AudioStopButton_" + i);
-                        if(ImGui.imageButton(Resources.Textures.Icons.stopButtonIcon.getTextureHandler(), 8, 10)) {
+                        if(ImGui.imageButton(Resources.Textures.Icons.stopButtonIcon.getHandler(), 8, 10)) {
                             audioComponent.state = AudioState.STOPPED;
                         }
                         ImGui.popID();
@@ -872,7 +872,7 @@ public class ComponentsView extends View
                                         boolean[] shaderEditButtonPressed = new boolean[1];
                                         Object[] droppedObject = new Object[1];
                                         ImGuiUtils.imCallWBorder(func -> ImGuiUtils.inputTextWithRightButton("Shader", shaderName, ImGuiInputTextFlags.ReadOnly,
-                                                Resources.Textures.Icons.editIcon24.getTextureHandler(), shaderEditButtonPressed, "Edit shader", true, droppedObject, "File"));
+                                                Resources.Textures.Icons.editIcon24.getHandler(), shaderEditButtonPressed, "Edit shader", true, droppedObject, "File"));
 
                                         if (droppedObject[0] instanceof File file) {
                                             shaderName.set(file.getName(), true);

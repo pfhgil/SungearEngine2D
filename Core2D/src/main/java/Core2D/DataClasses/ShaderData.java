@@ -12,17 +12,12 @@ public class ShaderData extends Data
     public long lastModified = -1;
 
     @Override
-    public ShaderData load(String path)
+    public ShaderData load(String absolutePath)
     {
-        code = FileUtils.readAllFile(path);
-        if(ProjectsManager.getCurrentProject() != null) {
-            this.path = FileUtils.getRelativePath(
-                    new File(path),
-                    new File(ProjectsManager.getCurrentProject().getProjectPath())
-            );
-        } else {
-            this.path = path;
-        }
+        this.absolutePath = absolutePath;
+
+        code = FileUtils.readAllFile(absolutePath);
+        createRelativePath();
 
         lastModified = getScriptFileLastModified();
 
@@ -30,10 +25,12 @@ public class ShaderData extends Data
     }
 
     @Override
-    public ShaderData load(InputStream inputStream, String path)
+    public ShaderData load(InputStream inputStream, String absolutePath)
     {                                                                       
         code = FileUtils.readAllFile(inputStream);
-        this.path = path;
+        this.absolutePath = absolutePath;
+
+        createRelativePath();
 
         lastModified = getScriptFileLastModified();
 
@@ -50,14 +47,15 @@ public class ShaderData extends Data
         return -1;
     }
 
+    @Override
     public String getAbsolutePath()
     {
-        File file = new File(path);
+        File file = new File(absolutePath);
         if(file.exists()) {
-            return path;
+            return absolutePath;
         } else {
             if(ProjectsManager.getCurrentProject() != null) {
-                file = new File(ProjectsManager.getCurrentProject().getProjectPath() + "/" + path);
+                file = new File(ProjectsManager.getCurrentProject().getProjectPath() + "/" + absolutePath);
                 //Log.CurrentSession.println("script path: " + file.getPath(), Log.MessageType.INFO);
 
                 return file.exists() ? file.getPath() : "";

@@ -57,15 +57,15 @@ public class VertexArray
     // связка
     public void bind()
     {
-        OpenGL.glCall((params) -> glBindVertexArray(handler));
+        if(OpenGL.currentVAOHandler != handler) {
+            OpenGL.glCall((params) -> glBindVertexArray(handler));
 
-        Debugger.VAOBindCallsNum++;
+            OpenGL.currentVAOHandler = handler;
+
+            Debugger.VAOBindCallsNum++;
+        }
     }
-    // развязывание
-    public void unBind()
-    {
-        OpenGL.glCall((params) -> glBindVertexArray(0));
-    }
+
     public void putVBO(VertexBuffer vertexBuffer, boolean divisor)
     {
         // добавляю все аттрибуты

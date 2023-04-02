@@ -15,13 +15,13 @@ public class ResourcesUtils
 
         if(file.isFile()) {
             return switch (fileExtension) {
-                case "png", "jpg" -> Resources.Textures.Icons.imageFileIcon.getTextureHandler();
-                case "java" -> Resources.Textures.Icons.javaFileIcon.getTextureHandler();
-                case "txt" -> Resources.Textures.Icons.textFileIcon96.getTextureHandler();
-                default -> Resources.Textures.Icons.unknownFileIcon.getTextureHandler();
+                case "png", "jpg" -> Resources.Textures.Icons.imageFileIcon.getHandler();
+                case "java" -> Resources.Textures.Icons.javaFileIcon.getHandler();
+                case "txt" -> Resources.Textures.Icons.textFileIcon96.getHandler();
+                default -> Resources.Textures.Icons.unknownFileIcon.getHandler();
             };
         } else {
-            return Resources.Textures.Icons.directoryIcon.getTextureHandler();
+            return Resources.Textures.Icons.directoryIcon.getHandler();
         }
     }
 

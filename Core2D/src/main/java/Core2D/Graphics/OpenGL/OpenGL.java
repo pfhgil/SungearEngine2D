@@ -10,14 +10,20 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.glBindTexture;
 import static org.lwjgl.opengl.GL11C.GL_TRIANGLES;
 import static org.lwjgl.opengl.GL11C.GL_UNSIGNED_INT;
 import static org.lwjgl.opengl.GL11C.glDrawElements;
+import static org.lwjgl.opengl.GL13.glActiveTexture;
 
 public class OpenGL
 {
     public static final int GL_GPU_MEM_INFO_TOTAL_AVAILABLE_MEM_NVX = 0x9048;
     public static final int GL_GPU_MEM_INFO_CURRENT_AVAILABLE_MEM_NVX = 0x9049;
+
+    // переменные для предотвращения бинда одних и тех же объектов гпу
+    public static int currentVAOHandler = -1;
+    public static int currentTextureHandler = -1;
 
     public static void init()
     {
@@ -61,6 +67,18 @@ public class OpenGL
         OpenGL.glCall((params) -> GL46C.glDrawArrays(mode, start, count));
 
         Debugger.drawCallsNum++;
+    }
+
+    public static void glBindTexture(int handler, int textureBlock)
+    {
+        if(currentTextureHandler != handler) {
+            OpenGL.glCall((params) -> glActiveTexture(textureBlock));
+            OpenGL.glCall((params) -> GL46C.glBindTexture(GL_TEXTURE_2D, handler));
+
+            Debugger.textureBindCallsNum++;
+
+            currentTextureHandler = handler;
+        }
     }
 
     public static void checkForGLErrors()

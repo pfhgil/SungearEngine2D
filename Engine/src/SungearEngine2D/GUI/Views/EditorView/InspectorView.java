@@ -83,7 +83,7 @@ public class InspectorView extends View
     {
         setCurrentInspectingObject(inspectingEntity);
         if(inspectingEntity != null && !inspectingEntity.isShouldDestroy()) {
-            ImGui.image(Resources.Textures.Icons.object2DFileIcon.getTextureHandler(), 27.0f, 27.0f);
+            ImGui.image(Resources.Textures.Icons.object2DFileIcon.getHandler(), 27.0f, 27.0f);
 
             ImGui.sameLine();
 

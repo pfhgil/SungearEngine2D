@@ -130,7 +130,7 @@ public class SpriteAnimation
 
             MeshComponent textureComponent = attachedEntity.getComponent(MeshComponent.class);
             if(textureComponent != null) {
-                textureComponent.setTexture(sprites.get(this.currentSprite));
+                //textureComponent.setTexture(sprites.get(this.currentSprite));
             }
         }
     }

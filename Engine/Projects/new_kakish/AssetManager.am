@@ -3,7 +3,8 @@
     {
       "assetObject": {
         "lastModified": -1,
-        "path": "/data/shaders/mesh/default_shader.glsl"
+        "absolutePath": "/data/shaders/mesh/default_shader.glsl",
+        "relativePath": "/data/shaders/mesh/default_shader.glsl"
       },
       "path": "/data/shaders/mesh/default_shader.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
@@ -11,7 +12,8 @@
     {
       "assetObject": {
         "lastModified": -1,
-        "path": "/data/shaders/mesh/instancing_shader.glsl"
+        "absolutePath": "/data/shaders/mesh/instancing_shader.glsl",
+        "relativePath": "/data/shaders/mesh/instancing_shader.glsl"
       },
       "path": "/data/shaders/mesh/instancing_shader.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
@@ -19,7 +21,8 @@
     {
       "assetObject": {
         "lastModified": -1,
-        "path": "/data/shaders/mesh/picking_shader.glsl"
+        "absolutePath": "/data/shaders/mesh/picking_shader.glsl",
+        "relativePath": "/data/shaders/mesh/picking_shader.glsl"
       },
       "path": "/data/shaders/mesh/picking_shader.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
@@ -27,7 +30,8 @@
     {
       "assetObject": {
         "lastModified": -1,
-        "path": "/data/shaders/primitives/line/shader.glsl"
+        "absolutePath": "/data/shaders/primitives/line/shader.glsl",
+        "relativePath": "/data/shaders/primitives/line/shader.glsl"
       },
       "path": "/data/shaders/primitives/line/shader.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
@@ -35,7 +39,8 @@
     {
       "assetObject": {
         "lastModified": -1,
-        "path": "/data/shaders/primitives/line/instancing/shader.glsl"
+        "absolutePath": "/data/shaders/primitives/line/instancing/shader.glsl",
+        "relativePath": "/data/shaders/primitives/line/instancing/shader.glsl"
       },
       "path": "/data/shaders/primitives/line/instancing/shader.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
@@ -43,7 +48,17 @@
     {
       "assetObject": {
         "lastModified": -1,
-        "path": "/data/shaders/postprocessing/postprocessing_test0_shader.glsl"
+        "absolutePath": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
+        "relativePath": "/data/shaders/postprocessing/postprocessing_default_shader.glsl"
+      },
+      "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "lastModified": -1,
+        "absolutePath": "/data/shaders/postprocessing/postprocessing_test0_shader.glsl",
+        "relativePath": "/data/shaders/postprocessing/postprocessing_test0_shader.glsl"
       },
       "path": "/data/shaders/postprocessing/postprocessing_test0_shader.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
@@ -51,295 +66,34 @@
     {
       "assetObject": {
         "lastModified": -1,
-        "path": "/data/shaders/postprocessing/postprocessing_test1_shader.glsl"
+        "absolutePath": "/data/shaders/postprocessing/postprocessing_test1_shader.glsl",
+        "relativePath": "/data/shaders/postprocessing/postprocessing_test1_shader.glsl"
       },
       "path": "/data/shaders/postprocessing/postprocessing_test1_shader.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
     },
     {
       "assetObject": {
-        "filterParam": 9729,
-        "wrapParam": 33071,
-        "path": "/data/textures/white_texture.png"
+        "textureBlock": 33984,
+        "absolutePath": "/data/textures/white_texture.png",
+        "relativePath": "/data/textures/white_texture.png"
       },
       "path": "/data/textures/white_texture.png",
       "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
     },
     {
       "assetObject": {
-        "filterParam": 9729,
-        "wrapParam": 33071,
-        "path": "/data/textures/ui/progressBar/progress_bar.png"
+        "textureBlock": 33984,
+        "absolutePath": "/data/textures/ui/progressBar/progress_bar.png",
+        "relativePath": "/data/textures/ui/progressBar/progress_bar.png"
       },
       "path": "/data/textures/ui/progressBar/progress_bar.png",
       "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
     },
     {
       "assetObject": {
-        "meshesData": [
-          {
-            "vertexArray": {
-              "handler": 1,
-              "VBOs": [
-                {
-                  "handler": 1,
-                  "data": [
-                    -50.0,
-                    -50.0,
-                    0.0,
-                    -50.0,
-                    50.0,
-                    0.0,
-                    50.0,
-                    50.0,
-                    0.0,
-                    -50.0,
-                    -50.0,
-                    0.0,
-                    50.0,
-                    50.0,
-                    0.0,
-                    50.0,
-                    -50.0,
-                    0.0
-                  ],
-                  "usage": 35044,
-                  "layout": {
-                    "attributes": [
-                      {
-                        "name": "positionAttribute",
-                        "shaderDataType": 7,
-                        "convertedShaderDataType": 5126,
-                        "offset": 0,
-                        "size": 12,
-                        "normalized": false,
-                        "ID": 0
-                      }
-                    ],
-                    "stride": 12
-                  }
-                },
-                {
-                  "handler": 2,
-                  "data": [
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    0.0,
-                    1.0,
-                    0.0,
-                    0.0,
-                    1.0,
-                    0.0,
-                    0.0
-                  ],
-                  "usage": 35044,
-                  "layout": {
-                    "attributes": [
-                      {
-                        "name": "textureCoordsAttribute",
-                        "shaderDataType": 7,
-                        "convertedShaderDataType": 5126,
-                        "offset": 0,
-                        "size": 12,
-                        "normalized": false,
-                        "ID": 1
-                      }
-                    ],
-                    "stride": 12
-                  }
-                },
-                {
-                  "handler": 3,
-                  "data": [
-                    0.0,
-                    0.0,
-                    -1.0,
-                    0.0,
-                    0.0,
-                    -1.0,
-                    0.0,
-                    0.0,
-                    -1.0,
-                    0.0,
-                    0.0,
-                    -1.0,
-                    0.0,
-                    0.0,
-                    -1.0,
-                    0.0,
-                    0.0,
-                    -1.0
-                  ],
-                  "usage": 35044,
-                  "layout": {
-                    "attributes": [
-                      {
-                        "name": "normalPositionAttribute",
-                        "shaderDataType": 7,
-                        "convertedShaderDataType": 5126,
-                        "offset": 0,
-                        "size": 12,
-                        "normalized": false,
-                        "ID": 2
-                      }
-                    ],
-                    "stride": 12
-                  }
-                }
-              ],
-              "IBOs": [
-                {
-                  "handler": 4,
-                  "data": [
-                    0,
-                    1,
-                    2,
-                    3,
-                    4,
-                    5
-                  ],
-                  "usage": 35044
-                }
-              ]
-            },
-            "positionsBuffer": {
-              "handler": 1,
-              "data": [
-                -50.0,
-                -50.0,
-                0.0,
-                -50.0,
-                50.0,
-                0.0,
-                50.0,
-                50.0,
-                0.0,
-                -50.0,
-                -50.0,
-                0.0,
-                50.0,
-                50.0,
-                0.0,
-                50.0,
-                -50.0,
-                0.0
-              ],
-              "usage": 35044,
-              "layout": {
-                "attributes": [
-                  {
-                    "name": "positionAttribute",
-                    "shaderDataType": 7,
-                    "convertedShaderDataType": 5126,
-                    "offset": 0,
-                    "size": 12,
-                    "normalized": false,
-                    "ID": 0
-                  }
-                ],
-                "stride": 12
-              }
-            },
-            "uvBuffer": {
-              "handler": 2,
-              "data": [
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
-                0.0,
-                1.0,
-                0.0,
-                0.0
-              ],
-              "usage": 35044,
-              "layout": {
-                "attributes": [
-                  {
-                    "name": "textureCoordsAttribute",
-                    "shaderDataType": 7,
-                    "convertedShaderDataType": 5126,
-                    "offset": 0,
-                    "size": 12,
-                    "normalized": false,
-                    "ID": 1
-                  }
-                ],
-                "stride": 12
-              }
-            },
-            "normalsBuffer": {
-              "handler": 3,
-              "data": [
-                0.0,
-                0.0,
-                -1.0,
-                0.0,
-                0.0,
-                -1.0,
-                0.0,
-                0.0,
-                -1.0,
-                0.0,
-                0.0,
-                -1.0,
-                0.0,
-                0.0,
-                -1.0,
-                0.0,
-                0.0,
-                -1.0
-              ],
-              "usage": 35044,
-              "layout": {
-                "attributes": [
-                  {
-                    "name": "normalPositionAttribute",
-                    "shaderDataType": 7,
-                    "convertedShaderDataType": 5126,
-                    "offset": 0,
-                    "size": 12,
-                    "normalized": false,
-                    "ID": 2
-                  }
-                ],
-                "stride": 12
-              }
-            },
-            "indexBuffer": {
-              "handler": 4,
-              "data": [
-                0,
-                1,
-                2,
-                3,
-                4,
-                5
-              ],
-              "usage": 35044
-            }
-          }
-        ],
-        "path": "/data/models/plane.obj"
+        "absolutePath": "/data/models/plane.obj",
+        "relativePath": "/data/models/plane.obj"
       },
       "path": "/data/models/plane.obj",
       "assetObjectClassName": "Core2D.DataClasses.ModelData"
@@ -347,22 +101,32 @@
     {
       "assetObject": {
         "lastModified": -1,
-        "path": "/data/shaders/common/only_color_shader.glsl"
+        "absolutePath": "/data/shaders/common/only_color_shader.glsl",
+        "relativePath": "/data/shaders/common/only_color_shader.glsl"
       },
       "path": "/data/shaders/common/only_color_shader.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
     },
     {
       "assetObject": {
-        "path": "/data/audio/dj-arbuz.wav"
+        "absolutePath": "/data/audio/dj-arbuz.wav",
+        "relativePath": "/data/audio/dj-arbuz.wav"
       },
       "path": "/data/audio/dj-arbuz.wav",
       "assetObjectClassName": "Core2D.DataClasses.AudioData"
     },
     {
       "assetObject": {
+        "textureBlock": 33984,
+        "absolutePath": "/data/textures/x.png"
+      },
+      "path": "/data/textures/x.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
         "lastModified": -1,
-        "path": "/data/shaders/primitives/line2D/shader.glsl"
+        "absolutePath": "/data/shaders/primitives/line2D/shader.glsl"
       },
       "path": "/data/shaders/primitives/line2D/shader.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
@@ -370,66 +134,68 @@
     {
       "assetObject": {
         "lastModified": -1,
-        "path": "/data/shaders/primitives/line2D/instancing/shader.glsl"
+        "absolutePath": "/data/shaders/primitives/line2D/instancing/shader.glsl"
       },
       "path": "/data/shaders/primitives/line2D/instancing/shader.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
     },
     {
       "assetObject": {
-        "filterParam": 9729,
-        "wrapParam": 33071,
-        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\kakish_city.jpg"
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\kakish_city.jpg",
+        "relativePath": "Resources\\kakish_city.jpg"
       },
       "path": "Resources\\kakish_city.jpg",
       "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
     },
     {
       "assetObject": {
-        "filterParam": 9729,
-        "wrapParam": 33071,
-        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\vlad.png"
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\vlad.png",
+        "relativePath": "Resources\\vlad.png"
       },
       "path": "Resources\\vlad.png",
       "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
     },
     {
       "assetObject": {
-        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\kakish_audio\\norm_kakish.wav"
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\kakish_audio\\norm_kakish.wav",
+        "relativePath": "kakish_audio\\norm_kakish.wav"
       },
       "path": "kakish_audio\\norm_kakish.wav",
       "assetObjectClassName": "Core2D.DataClasses.AudioData"
     },
     {
       "assetObject": {
-        "filterParam": 9729,
-        "wrapParam": 33071,
-        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\facts_files.png"
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\facts_files.png",
+        "relativePath": "Resources\\facts_files.png"
       },
       "path": "Resources\\facts_files.png",
       "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
     },
     {
       "assetObject": {
-        "filterParam": 9729,
-        "wrapParam": 33071,
-        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ferapont.png"
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ferapont.png",
+        "relativePath": "Resources\\ferapont.png"
       },
       "path": "Resources\\ferapont.png",
       "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
     },
     {
       "assetObject": {
-        "filterParam": 9729,
-        "wrapParam": 33071,
-        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources/slay.png"
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources/slay.png",
+        "relativePath": "Resources\\slay.png"
       },
       "path": "Resources/slay.png",
       "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
     },
     {
       "assetObject": {
-        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\kakish_audio\\judgement-cut-sfx.wav"
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\kakish_audio\\judgement-cut-sfx.wav",
+        "relativePath": "kakish_audio\\judgement-cut-sfx.wav"
       },
       "path": "kakish_audio\\judgement-cut-sfx.wav",
       "assetObjectClassName": "Core2D.DataClasses.AudioData"
@@ -437,7 +203,8 @@
     {
       "assetObject": {
         "lastModified": 1678727574938,
-        "path": "shaders\\SlaysPPShader.glsl"
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\shaders\\SlaysPPShader.glsl",
+        "relativePath": "shaders\\SlaysPPShader.glsl"
       },
       "path": "shaders\\SlaysPPShader.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
@@ -445,43 +212,44 @@
     {
       "assetObject": {
         "lastModified": 1678639308291,
-        "path": "shaders\\Sample.glsl"
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\shaders\\Sample.glsl",
+        "relativePath": "shaders\\Sample.glsl"
       },
       "path": "shaders\\Sample.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
     },
     {
       "assetObject": {
-        "filterParam": 9729,
-        "wrapParam": 33071,
-        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\test.png"
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\test.png",
+        "relativePath": "Resources\\test.png"
       },
       "path": "Resources\\test.png",
       "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
     },
     {
       "assetObject": {
-        "filterParam": 9729,
-        "wrapParam": 33071,
-        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+        "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
       },
       "path": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
       "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
     },
     {
       "assetObject": {
-        "filterParam": 9729,
-        "wrapParam": 33071,
-        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\map.png"
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\map.png",
+        "relativePath": "Resources\\map.png"
       },
       "path": "Resources\\map.png",
       "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
     },
     {
       "assetObject": {
-        "filterParam": 9729,
-        "wrapParam": 33071,
-        "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\perlin_noise.png"
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\perlin_noise.png",
+        "relativePath": "Resources\\perlin_noise.png"
       },
       "path": "Resources\\perlin_noise.png",
       "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
@@ -489,7 +257,8 @@
     {
       "assetObject": {
         "lastModified": 1679510103768,
-        "path": "Scripts\\test\\dfdf.java"
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scripts\\test\\dfdf.java",
+        "relativePath": "Scripts\\test\\dfdf.java"
       },
       "path": "Scripts\\test\\dfdf.java",
       "assetObjectClassName": "Core2D.DataClasses.ScriptData"
@@ -497,7 +266,8 @@
     {
       "assetObject": {
         "lastModified": 1680042202526,
-        "path": "Scripts\\SpaceDeformationComponent.class"
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scripts\\SpaceDeformationComponent.class",
+        "relativePath": "Scripts\\SpaceDeformationComponent.class"
       },
       "path": "Scripts\\SpaceDeformationComponent.class",
       "assetObjectClassName": "Core2D.DataClasses.ScriptData"
@@ -505,7 +275,8 @@
     {
       "assetObject": {
         "lastModified": 1680042209540,
-        "path": "Scripts\\SetActiveComponent.class"
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scripts\\SetActiveComponent.class",
+        "relativePath": "Scripts\\SetActiveComponent.class"
       },
       "path": "Scripts\\SetActiveComponent.class",
       "assetObjectClassName": "Core2D.DataClasses.ScriptData"
@@ -513,7 +284,8 @@
     {
       "assetObject": {
         "lastModified": 1680042220055,
-        "path": "Scripts\\PickableComponent.class"
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scripts\\PickableComponent.class",
+        "relativePath": "Scripts\\PickableComponent.class"
       },
       "path": "Scripts\\PickableComponent.class",
       "assetObjectClassName": "Core2D.DataClasses.ScriptData"
@@ -521,17 +293,100 @@
     {
       "assetObject": {
         "lastModified": 1680042220042,
-        "path": "Scripts\\HoholMegaSuperComponent.class"
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scripts\\HoholMegaSuperComponent.class",
+        "relativePath": "Scripts\\HoholMegaSuperComponent.class"
       },
       "path": "Scripts\\HoholMegaSuperComponent.class",
       "assetObjectClassName": "Core2D.DataClasses.ScriptData"
     },
     {
       "assetObject": {
-        "lastModified": -1,
-        "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl"
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\player.png",
+        "relativePath": "Resources\\player.png"
       },
-      "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
+      "path": "Resources\\player.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\limon.png",
+        "relativePath": "Resources\\limon.png"
+      },
+      "path": "Resources\\limon.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1680397656653,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\",
+        "relativePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish"
+      },
+      "path": "",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\влад2.png",
+        "relativePath": "Resources\\влад2.png"
+      },
+      "path": "Resources\\влад2.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\slay.png",
+        "relativePath": "Resources\\slay.png"
+      },
+      "path": "Resources\\slay.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\spike.png",
+        "relativePath": "Resources\\spike.png"
+      },
+      "path": "Resources\\spike.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\test2.png",
+        "relativePath": "Resources\\test2.png"
+      },
+      "path": "Resources\\test2.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\gui\\world\\crosshair.png",
+        "relativePath": "Resources\\gui\\world\\crosshair.png"
+      },
+      "path": "Resources\\gui\\world\\crosshair.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "textureBlock": 33984,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\white_texture.png",
+        "relativePath": "Resources\\white_texture.png"
+      },
+      "path": "Resources\\white_texture.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1680397656653,
+        "absolutePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish",
+        "relativePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish"
+      },
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
     }
   ]

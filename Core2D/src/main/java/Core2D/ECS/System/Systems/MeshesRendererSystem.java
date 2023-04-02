@@ -16,6 +16,7 @@ import org.joml.Vector3f;
 import org.joml.Vector4f;
 
 import static org.lwjgl.opengl.GL11C.*;
+import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
 
 public class MeshesRendererSystem extends System implements NonRemovable
 {
@@ -55,8 +56,8 @@ public class MeshesRendererSystem extends System implements NonRemovable
         }
 
         // использую VAO, текстуру и шейдер
-        meshComponent.getVertexArrayObject().bind();
-        meshComponent.getTexture().bind();
+        meshComponent.meshData.getVertexArray().bind();
+        OpenGL.glBindTexture(meshComponent.texture2DData.getHandler(), meshComponent.texture2DData.textureBlock);
         if (meshComponent.material2D != null && meshComponent.material2D.material2DData != null) {
             OpenGL.glCall((params) -> glBlendFunc(meshComponent.material2D.material2DData.blendSourceFactor, meshComponent.material2D.material2DData.blendDestinationFactor));
         }
@@ -75,17 +76,14 @@ public class MeshesRendererSystem extends System implements NonRemovable
                 //new Vector4f(1.0f)
                 entity.getColor()
         );
+
         ShaderUtils.setUniform(
                 shader.getProgramHandler(),
                 "sampler",
-                meshComponent.getTexture().getFormattedTextureBlock()
+                meshComponent.texture2DData.getFormattedTextureBlock()
         );
 
         // нарисовать два треугольника
         OpenGL.glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-
-        // прекращаю использование шейдера, текстуры и VAO
-        meshComponent.getTexture().unBind();
-        meshComponent.getVertexArrayObject().unBind();
     }
 }

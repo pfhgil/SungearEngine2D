@@ -137,9 +137,6 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
         cameraComponent.ppQuadVertexArray.putIBO(indexBuffer);
 
         cameraComponent.ppQuadIndices = null;
-
-        // отвязываю vao
-        cameraComponent.ppQuadVertexArray.unBind();
     }
 
     public void setScene2DMainCamera2D(CameraComponent cameraComponent, boolean scene2DMainCamera2D, Scene2D scene2D)

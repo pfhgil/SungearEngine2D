@@ -103,7 +103,7 @@ public class SceneView extends View
                     ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0, 0, 0, 0);
                     playButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
                 }
-                if(ImGui.imageButton(Resources.Textures.Icons.playButtonIcon.getTextureHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, playButtonColor.x, playButtonColor.y, playButtonColor.z, playButtonColor.w)) {
+                if(ImGui.imageButton(Resources.Textures.Icons.playButtonIcon.getHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, playButtonColor.x, playButtonColor.y, playButtonColor.z, playButtonColor.w)) {
                     if(currentSceneManager.getCurrentScene2D() != null) {
                         if(!EngineSettings.Playmode.active && !EngineSettings.Playmode.paused) {
                             startPlayMode();
@@ -124,7 +124,7 @@ public class SceneView extends View
                     ImGui.pushStyleColor(ImGuiCol.ButtonHovered, 0, 0, 0, 0);
                     pauseButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
                 }
-                if(ImGui.imageButton(Resources.Textures.Icons.pauseButtonIcon.getTextureHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, pauseButtonColor.x, pauseButtonColor.y, pauseButtonColor.z, pauseButtonColor.w)) {
+                if(ImGui.imageButton(Resources.Textures.Icons.pauseButtonIcon.getHandler(), 8, 10, 0, 0, 1, 1, -1, 1, 1, 1, 0, pauseButtonColor.x, pauseButtonColor.y, pauseButtonColor.z, pauseButtonColor.w)) {
                     if(currentSceneManager.getCurrentScene2D() != null) {
                         pausePlayMode();
                     }
@@ -133,7 +133,7 @@ public class SceneView extends View
                     ImGui.popStyleColor(3);
                 }
 
-                if(ImGui.imageButton(Resources.Textures.Icons.stopButtonIcon.getTextureHandler(), 8, 10)) {
+                if(ImGui.imageButton(Resources.Textures.Icons.stopButtonIcon.getHandler(), 8, 10)) {
                     if(currentSceneManager.getCurrentScene2D() != null) {
                         stopPlayMode();
                     }
@@ -348,17 +348,16 @@ public class SceneView extends View
                     file,
                     new File(ProjectsManager.getCurrentProject().getProjectPath()));
             MeshComponent meshComponent = newSceneEntity.getComponent(MeshComponent.class);
-            Texture2D texture2D = new Texture2D(AssetManager.getInstance().getTexture2DData(relativePath));
-            meshComponent.setTexture(texture2D);
-            meshComponent.getTexture().path = relativePath;
+
+            meshComponent.texture2DData = AssetManager.getInstance().getTexture2DData(relativePath);
 
             TransformComponent newSceneEntityTransform = newSceneEntity.getComponent(TransformComponent.class);
 
             Vector2f oglPosition = Mouse.getMouseOGLPosition(Mouse.getMousePosition());
             newSceneEntityTransform.position.set(oglPosition.x, oglPosition.y, newSceneEntityTransform.position.z);
 
-            Vector2f newEntityScale = new Vector2f(meshComponent.getTexture().getTexture2DData().getWidth() / 100.0f,
-                    meshComponent.getTexture().getTexture2DData().getHeight() / 100.0f);
+            Vector2f newEntityScale = new Vector2f(meshComponent.texture2DData.getWidth() / 100.0f,
+                    meshComponent.texture2DData.getHeight() / 100.0f);
             newSceneEntityTransform.scale.set(newEntityScale.x, newEntityScale.y, newSceneEntityTransform.scale.z);
 
             // дефолтный layer

@@ -1,7 +1,6 @@
 package SungearEngine2D.Builder;
 
 import Core2D.Core2D.Core2D;
-import Core2D.ECS.Component.Components.Audio.AudioComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.Entity;
@@ -252,16 +251,16 @@ public class Builder {
                     MeshComponent textureComponent = entity.getComponent(MeshComponent.class);
                     if (textureComponent != null) {
                         // новый путь до текстуры
-                        File newFile = new File(toDir + "\\" + textureComponent.getTexture().path);
+                        File newFile = new File(toDir + "\\" + textureComponent.texture2DData.getAbsolutePath());
                         // создаю все папки, которых нет
                         newFile.getParentFile().mkdirs();
                         // копирую файл в эти папки
                         FileUtils.copyFile(ProjectsManager.getCurrentProject().getProjectPath() +
                                         File.separator +
-                                        textureComponent.getTexture().path,
+                                        textureComponent.texture2DData.getAbsolutePath(),
                                 newFile.getPath(), false);
                         // устанавливаю для текстурного компонента путь в билде (относительный)
-                        textureComponent.getTexture().path = "/" + textureComponent.getTexture().path.replace("\\", "/");
+                        //textureComponent.texture2DData. = "/" + textureComponent.getTexture().path.replace("\\", "/");
                     }
 
                     // то же самое для скриптов

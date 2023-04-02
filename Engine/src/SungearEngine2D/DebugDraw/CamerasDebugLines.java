@@ -27,13 +27,13 @@ public class CamerasDebugLines
 
     public static void init()
     {
-        inspectorCamera2DIcon.getComponent(MeshComponent.class).getTexture().set(Resources.Textures.Icons.cameraIcon96);
-        Vector2f cameraSize = new Vector2f(Resources.Textures.Icons.cameraIcon96.getTexture2DData().getWidth(),
-                Resources.Textures.Icons.cameraIcon96.getTexture2DData().getHeight());
+        inspectorCamera2DIcon.getComponent(MeshComponent.class).texture2DData = Resources.Textures.Icons.cameraIcon96;
+        Vector2f cameraSize = new Vector2f(Resources.Textures.Icons.cameraIcon96.getWidth(),
+                Resources.Textures.Icons.cameraIcon96.getHeight());
         inspectorCamera2DIcon.getComponent(TransformComponent.class).scale.set(new Vector3f(cameraSize.x / 100.0f, cameraSize.y / 100.0f, 1f));
         inspectorCamera2DIcon.setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.75f));
 
-        mainCamera2DIcon.getComponent(MeshComponent.class).getTexture().set(Resources.Textures.Icons.cameraIcon96);
+        mainCamera2DIcon.getComponent(MeshComponent.class).texture2DData = Resources.Textures.Icons.cameraIcon96;
         mainCamera2DIcon.getComponent(TransformComponent.class).scale.set(new Vector3f(cameraSize.x / 100.0f, cameraSize.y / 100.0f, 1f));
         mainCamera2DIcon.setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.75f));
 

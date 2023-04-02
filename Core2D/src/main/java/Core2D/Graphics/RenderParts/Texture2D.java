@@ -43,13 +43,13 @@ public class Texture2D
     {
         this.texture2DData = texture2DData;
 
-        if(ProjectsManager.getCurrentProject() != null && new File(texture2DData.getPath()).exists()) {
+        if(ProjectsManager.getCurrentProject() != null && new File(texture2DData.getAbsolutePath()).exists()) {
             this.path = FileUtils.getRelativePath(
-                    new File(texture2DData.getPath()),
+                    new File(texture2DData.getAbsolutePath()),
                     new File(ProjectsManager.getCurrentProject().getProjectPath())
             );
         } else {
-            this.path = texture2DData.getPath();
+            this.path = texture2DData.getAbsolutePath();
         }
 
         // активирую нулевой текстурный блок
@@ -93,6 +93,7 @@ public class Texture2D
         OpenGL.glCall((params) -> glDeleteTextures(textureHandler));
     }
 
+    /*
     public void set(Texture2D texture2D)
     {
         destroy();
@@ -103,11 +104,13 @@ public class Texture2D
         path = texture2D.path;
     }
 
+     */
+
     public void bind()
     {
         // активирую нулевой текстурный блок
         OpenGL.glCall((params) -> glActiveTexture(textureBlock));
-        OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, textureHandler));
+        OpenGL.glBindTexture(GL_TEXTURE_2D, textureHandler);
 
         Debugger.textureBindCallsNum++;
         //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
@@ -115,11 +118,12 @@ public class Texture2D
     }
     public void unBind()
     {
-        OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, 0));
+        //OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, 0));
         //OpenGL.glCall((params) -> glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
        // glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     }
 
+    /*
     public static String blendFactorToString(int blendFactor)
     {
         return switch(blendFactor) {
@@ -161,6 +165,8 @@ public class Texture2D
         };
     }
 
+
+     */
     public Texture2DData getTexture2DData() { return texture2DData; }
 
     public int getTextureHandler() { return textureHandler; }

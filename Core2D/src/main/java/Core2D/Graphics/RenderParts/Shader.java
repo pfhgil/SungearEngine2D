@@ -315,7 +315,7 @@ public class Shader implements Serializable
         destroy();
 
         this.shaderData = shaderData;
-        path = shaderData.getPath();
+        path = shaderData.getRelativePath();
 
         compiled = true;
 

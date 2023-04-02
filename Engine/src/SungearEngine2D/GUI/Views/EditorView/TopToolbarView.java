@@ -120,14 +120,14 @@ public class TopToolbarView
                         currentAction = "File/New/Project";
                     }
 
-                    if(ImGuiUtils.menuItemWithImage("Directory", Resources.Textures.Icons.directoryIcon.getTextureHandler(), 14, 14)) {
+                    if(ImGuiUtils.menuItemWithImage("Directory", Resources.Textures.Icons.directoryIcon.getHandler(), 14, 14)) {
                         currentFileTypeNeedCreate = "Directory";
                         showFileCreateDialog();
                     }
 
                     ImGui.separator();
 
-                    if(ImGuiUtils.beginMenuWithImage("Java file", Resources.Textures.Icons.javaFileIcon14.getTextureHandler(), 14, 14)) {
+                    if(ImGuiUtils.beginMenuWithImage("Java file", Resources.Textures.Icons.javaFileIcon14.getHandler(), 14, 14)) {
                         if(ImGuiUtils.menuItemWithImage("Component", 0, 14, 14)) {
                             currentFileTypeNeedCreate = "Java.Component";
                             showFileCreateDialog();
@@ -139,7 +139,7 @@ public class TopToolbarView
                         ImGui.endMenu();
                     }
 
-                    if(ImGuiUtils.menuItemWithImage("Text file", Resources.Textures.Icons.textFileIcon14.getTextureHandler(), 14, 14)) {
+                    if(ImGuiUtils.menuItemWithImage("Text file", Resources.Textures.Icons.textFileIcon14.getHandler(), 14, 14)) {
                         currentFileTypeNeedCreate = "Text";
                         showFileCreateDialog();
                     }
@@ -160,7 +160,7 @@ public class TopToolbarView
                 }
 
                 //ImGui.setCursorPosY(-2.0f);
-                if(ImGuiUtils.beginMenuWithImage("Open", Resources.Textures.Icons.openDirectoryIcon.getTextureHandler(), 14.0f, 14.0f)) {
+                if(ImGuiUtils.beginMenuWithImage("Open", Resources.Textures.Icons.openDirectoryIcon.getHandler(), 14.0f, 14.0f)) {
                     if(ImGuiUtils.menuItemWithImage("Project", 0, 14, 14)) {
                         dialogWindow.setWindowName("Open project");
                         dialogWindow.setRightButtonText("Open");
@@ -384,13 +384,13 @@ public class TopToolbarView
 
             if(ImGui.beginMenu("Objects")) {
                 if(ImGuiUtils.beginMenuWithImage("New...", 0, 14, 14)) {
-                    if(ImGuiUtils.menuItemWithImage("Object2D", Resources.Textures.Icons.object2DFileIcon.getTextureHandler(), 14, 14)) {
+                    if(ImGuiUtils.menuItemWithImage("Object2D", Resources.Textures.Icons.object2DFileIcon.getHandler(), 14, 14)) {
                         if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
                             new Entity().setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
                         }
                     }
 
-                    if(ImGuiUtils.menuItemWithImage("Camera2D", Resources.Textures.Icons.cameraIcon48.getTextureHandler(), 14, 14)) {
+                    if(ImGuiUtils.menuItemWithImage("Camera2D", Resources.Textures.Icons.cameraIcon48.getHandler(), 14, 14)) {
                         if(SceneManager.currentSceneManager != null && SceneManager.currentSceneManager.getCurrentScene2D() != null) {
                             Entity camera2D = Entity.createAsCamera2D();
                             camera2D.setLayer(SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
@@ -454,7 +454,7 @@ public class TopToolbarView
                             boolean clicked = ImGuiUtils.menuItemWithImage(FilenameUtils.getBaseName(new File(storedValues.path).getName()), 0, 14, 14);
                             if (storedValues.isMainScene2D) {
                                 ImGui.sameLine();
-                                ImGui.image(Resources.Textures.Icons.checkMarkIcon.getTextureHandler(), 12, 12);
+                                ImGui.image(Resources.Textures.Icons.checkMarkIcon.getHandler(), 12, 12);
                             }
                             if (clicked) {
                                 // убираю текущую сцену

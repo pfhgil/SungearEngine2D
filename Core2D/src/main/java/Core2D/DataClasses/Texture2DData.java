@@ -1,9 +1,9 @@
 package Core2D.DataClasses;
 
+import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Log.Log;
 import Core2D.Utils.ExceptionsUtils;
 import org.lwjgl.BufferUtils;
-import org.lwjgl.system.MemoryUtil;
 
 import java.io.BufferedInputStream;
 import java.io.FileInputStream;
@@ -32,20 +32,26 @@ public class Texture2DData extends Data
     // сколько бит будет занимать каждый из каналов
     private transient int internalFormat;
 
-    private int filterParam = GL_LINEAR;
+    private transient int filterParam = GL_LINEAR;
 
-    private int wrapParam = GL_CLAMP_TO_EDGE;
+    private transient int wrapParam = GL_CLAMP_TO_EDGE;
+
+    private transient int handler;
+
+    public int textureBlock = GL_TEXTURE0;
 
     @Override
-    public Texture2DData load(String path)
+    public Texture2DData load(String absolutePath)
     {
-        this.path = path;
+        this.absolutePath = absolutePath;
 
-        Log.CurrentSession.println("texture data path: " + path, Log.MessageType.WARNING);
+        createRelativePath();
 
-        try (FileInputStream fis = new FileInputStream(path);
+        Log.CurrentSession.println("texture data absolute path: " + absolutePath + ", relative: " + relativePath, Log.MessageType.WARNING);
+
+        try (FileInputStream fis = new FileInputStream(absolutePath);
              BufferedInputStream bis = new BufferedInputStream(fis)) {
-            load(bis, path);
+            load(bis, absolutePath);
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
@@ -54,9 +60,11 @@ public class Texture2DData extends Data
     }
 
     @Override
-    public Texture2DData load(InputStream inputStream, String path)
+    public Texture2DData load(InputStream inputStream, String absolutePath)
     {
-        this.path = path;
+        this.absolutePath = absolutePath;
+
+        createRelativePath();
 
         // буфер для ширины текстуры
         IntBuffer widthBuffer = BufferUtils.createIntBuffer(1);
@@ -107,7 +115,50 @@ public class Texture2DData extends Data
         //MemoryUtil.memFree(heightBuffer);
         //MemoryUtil.memFree(channelsBuffer);
 
+        create();
+
         return this;
+    }
+
+    private void create()
+    {
+        // активирую нулевой текстурный блок
+        OpenGL.glCall((params) -> glActiveTexture(textureBlock));
+
+        // создание текстуры
+        handler = OpenGL.glCall((params) -> glGenTextures(), Integer.class);
+        OpenGL.glBindTexture(handler, textureBlock);
+
+        // ставлю режим выравнивания данных текстуры по 1 байту (чтобы цвет текстуры был правильный)
+        OpenGL.glCall((params) -> glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
+        OpenGL.glCall((params) -> glTexImage2D(GL_TEXTURE_2D,
+                0,
+                internalFormat,
+                width,
+                height,
+                0,
+                format,
+                GL_UNSIGNED_BYTE,
+                pixelsData));
+
+        // текстура будет растягиваться под фигуру
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, wrapParam));
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, wrapParam));
+
+        // устанавливаю параметры текстуры
+        OpenGL.glCall((params) -> glGenerateMipmap(GL_TEXTURE_2D));
+
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, filterParam));
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, filterParam));
+
+        // использовать сгенерированный мипмап
+        OpenGL.glCall((params) -> glTexParameteri(GL_TEXTURE_2D, GL_GENERATE_MIPMAP, GL_TRUE));
+    }
+
+    @Override
+    public void destroy()
+    {
+        OpenGL.glCall(func -> glDeleteTextures(handler));
     }
 
     @Override
@@ -147,4 +198,8 @@ public class Texture2DData extends Data
     public int getFilterParam() { return filterParam; }
 
     public int getWrapParam() { return wrapParam; }
+
+    public int getHandler() { return handler; }
+
+    public int getFormattedTextureBlock() { return textureBlock - GL_TEXTURE0; }
 }

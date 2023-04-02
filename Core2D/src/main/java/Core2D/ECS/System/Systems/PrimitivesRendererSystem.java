@@ -102,8 +102,6 @@ public class PrimitivesRendererSystem extends System
                 OpenGL.glDrawArrays(GL_LINES, 0, 2);
                 OpenGL.glCall((params) -> glLineWidth(1.0f));
             }
-
-            primitiveComponent.vertexArray.unBind();
         }
     }
 }

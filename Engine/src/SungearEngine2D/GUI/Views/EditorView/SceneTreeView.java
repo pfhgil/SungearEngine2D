@@ -142,7 +142,7 @@ public class SceneTreeView extends View
                                     }
                                     if (ImGui.beginDragDropSource()) {
                                         ImGui.setDragDropPayload("Entity", entity);
-                                        ImGui.image(Resources.Textures.Icons.object2DFileIcon.getTextureHandler(), 25.0f, 25.0f);
+                                        ImGui.image(Resources.Textures.Icons.object2DFileIcon.getHandler(), 25.0f, 25.0f);
                                         ImGui.endDragDropSource();
                                     }
 
@@ -233,7 +233,7 @@ public class SceneTreeView extends View
                 if (ImGui.beginDragDropSource()) {
                     //ImGui.acceptDragDropPayload()
                     ImGui.setDragDropPayload("Entity", entity);
-                    ImGui.image(Resources.Textures.Icons.object2DFileIcon.getTextureHandler(), 25.0f, 25.0f);
+                    ImGui.image(Resources.Textures.Icons.object2DFileIcon.getHandler(), 25.0f, 25.0f);
                     ImGui.endDragDropSource();
                 }
 

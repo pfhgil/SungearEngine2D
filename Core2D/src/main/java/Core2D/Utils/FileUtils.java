@@ -28,6 +28,10 @@ public class FileUtils
     {
         String filePath = file.getAbsolutePath();
         String folderPath = folder.getAbsolutePath();
+
+        if(filePath.equals(folderPath)) return filePath;
+        //Log.CurrentSession.println("processing: " + filePath + ", folder: " + folderPath, Log.MessageType.WARNING);
+
         if (filePath.startsWith(folderPath)) {
             return filePath.substring(folderPath.length() + 1);
         } else {

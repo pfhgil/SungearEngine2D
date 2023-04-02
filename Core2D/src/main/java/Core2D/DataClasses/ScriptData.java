@@ -18,23 +18,18 @@ public class ScriptData extends Data
     public long lastModified;
 
     @Override
-    public ScriptData load(String path)
+    public ScriptData load(String absolutePath)
     {
+        this.absolutePath = absolutePath;
+
         try {
-            data = Files.readAllBytes(Path.of(path));
+            data = Files.readAllBytes(Path.of(absolutePath));
             //Log.CurrentSession.println("script data modified", Log.MessageType.SUCCESS);
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
 
-        if(ProjectsManager.getCurrentProject() != null) {
-            this.path = FileUtils.getRelativePath(
-                    new File(path),
-                    new File(ProjectsManager.getCurrentProject().getProjectPath())
-            );
-        } else {
-            this.path = path;
-        }
+        createRelativePath();
 
         lastModified = getScriptFileLastModified();
 
@@ -42,7 +37,7 @@ public class ScriptData extends Data
     }
 
     @Override
-    public ScriptData load(InputStream inputStream, String path)
+    public ScriptData load(InputStream inputStream, String absolutePath)
     {
         try {
             data = IOUtils.toByteArray(inputStream);
@@ -50,7 +45,9 @@ public class ScriptData extends Data
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
-        this.path = path;
+        this.absolutePath = absolutePath;
+
+        createRelativePath();
 
         lastModified = getScriptFileLastModified();
 
@@ -67,14 +64,15 @@ public class ScriptData extends Data
         return -1;
     }
 
+    @Override
     public String getAbsolutePath()
     {
-        File file = new File(path);
+        File file = new File(absolutePath);
         if(file.exists()) {
-            return path;
+            return absolutePath;
         } else {
             if(ProjectsManager.getCurrentProject() != null) {
-                file = new File(ProjectsManager.getCurrentProject().getProjectPath() + "/" + path);
+                file = new File(ProjectsManager.getCurrentProject().getProjectPath() + "/" + absolutePath);
 
                 return file.exists() ? file.getPath() : "";
             }

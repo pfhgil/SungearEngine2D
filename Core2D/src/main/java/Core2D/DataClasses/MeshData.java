@@ -6,6 +6,8 @@ import org.joml.Vector3i;
 
 public class MeshData
 {
+    public String name = "";
+
     public transient int[] indices;
 
     public transient float[] verticesPositions;
@@ -13,11 +15,11 @@ public class MeshData
     public transient float[] verticesNormals;
 
     // opengl --------------------------------
-    private VertexArray vertexArray;
-    private VertexBuffer positionsBuffer;
-    private VertexBuffer uvBuffer;
-    private VertexBuffer normalsBuffer;
-    private IndexBuffer indexBuffer;
+    private transient VertexArray vertexArray;
+    private transient VertexBuffer positionsBuffer;
+    private transient VertexBuffer uvBuffer;
+    private transient VertexBuffer normalsBuffer;
+    private transient IndexBuffer indexBuffer;
 
     public MeshData(int verticesNum, int indicesNum)
     {
@@ -34,22 +36,20 @@ public class MeshData
         vertexArray = new VertexArray();
 
         positionsBuffer = new VertexBuffer(verticesPositions);
-        positionsBuffer.setLayout(new BufferLayout( new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3)));
+        positionsBuffer.setLayout(new BufferLayout(new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3)));
         vertexArray.putVBO(positionsBuffer, false);
 
         uvBuffer = new VertexBuffer(verticesUV);
-        uvBuffer.setLayout(new BufferLayout( new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3)));
+        uvBuffer.setLayout(new BufferLayout(new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3)));
         vertexArray.putVBO(uvBuffer, false);
 
         normalsBuffer = new VertexBuffer(verticesNormals);
-        normalsBuffer.setLayout(new BufferLayout( new VertexAttribute(2, "normalPositionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3)));
+        normalsBuffer.setLayout(new BufferLayout(new VertexAttribute(2, "normalPositionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3)));
         vertexArray.putVBO(normalsBuffer, false);
 
         indexBuffer = new IndexBuffer(indices);
 
         vertexArray.putIBO(indexBuffer);
-
-        vertexArray.unBind();
     }
 
     public void setVertexPosition(int idx, float x, float y, float z)
@@ -63,7 +63,7 @@ public class MeshData
     {
         verticesUV[idx * 3] = x;
         verticesUV[idx * 3 + 1] = y;
-        verticesUV[idx * 3 + 1] = z;
+        verticesUV[idx * 3 + 2] = z;
     }
 
     public void setVertexNormal(int idx, float x, float y, float z)
@@ -97,4 +97,23 @@ public class MeshData
     {
         return new Vector3i(indices[faceIdx * 3], indices[faceIdx * 3 + 1], indices[faceIdx * 3 + 2]);
     }
+
+    public void destroy()
+    {
+        positionsBuffer.destroy();
+        uvBuffer.destroy();
+        normalsBuffer.destroy();
+        indexBuffer.destroy();
+        vertexArray.destroy();
+    }
+
+    public VertexArray getVertexArray() { return vertexArray; }
+
+    public VertexBuffer getPositionsBuffer() { return positionsBuffer; }
+
+    public VertexBuffer getUvBuffer() { return uvBuffer; }
+
+    public VertexBuffer getNormalsBuffer() { return normalsBuffer; }
+
+    public IndexBuffer getIndexBuffer() { return indexBuffer; }
 }

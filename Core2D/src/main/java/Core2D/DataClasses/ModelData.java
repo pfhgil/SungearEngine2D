@@ -4,10 +4,7 @@ import Core2D.Log.Log;
 import Core2D.Settings.ImportSettings;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.Utils;
-import org.joml.Vector2f;
-import org.joml.Vector2i;
 import org.joml.Vector3f;
-import org.joml.Vector3i;
 import org.lwjgl.assimp.*;
 
 import java.io.InputStream;
@@ -15,19 +12,25 @@ import java.nio.ByteBuffer;
 
 public class ModelData extends Data
 {
-    public MeshData[] meshesData;
+    public transient MeshData[] meshesData;
 
     // TODO: сделать загрузку моделек по пути
     @Override
-    public ModelData load(String path)
+    public ModelData load(String absolutePath)
     {
+        this.absolutePath = absolutePath;
+
+        createRelativePath();
+
         return this;
     }
 
     @Override
-    public ModelData load(InputStream inputStream, String path)
+    public ModelData load(InputStream inputStream, String absolutePath)
     {
-        this.path = path;
+        this.absolutePath = absolutePath;
+
+        createRelativePath();
 
         try(inputStream) {
             ByteBuffer resource = Utils.resourceToByteBuffer(inputStream);
@@ -63,6 +66,10 @@ public class ModelData extends Data
             int i = 0;
             int k = 0;
 
+            meshData.name = aiMesh.mName().dataString();
+
+            Log.CurrentSession.println(meshData.name, Log.MessageType.SUCCESS);
+
             for(i = 0; i < aiMesh.mNumVertices(); i++) {
                 AIVector3D vertexPos = aiMesh.mVertices().get(i);
 
@@ -81,8 +88,6 @@ public class ModelData extends Data
             for(i = 0; i < aiMesh.mTextureCoords().limit(); i++) {
                 AIVector3D.Buffer texPosBuf = aiMesh.mTextureCoords(i);
 
-                //Log.CurrentSession.println("tex: " + texPosBuf, Log.MessageType.SUCCESS);
-
                 if(texPosBuf == null) continue;
 
                 for(k = 0; k < texPosBuf.limit(); k++) {
@@ -90,11 +95,8 @@ public class ModelData extends Data
 
                     meshData.setVertexUV(texPosCount, texPos.x(), texPos.y(), texPos.z());
 
-                    /*
                     Vector3f tp = meshData.getVertexUV(texPosCount);
-                    Log.CurrentSession.println("uv: " + tp.x + ", " + tp.y, Log.MessageType.SUCCESS);
-
-                     */
+                    Log.CurrentSession.println("uv: " + tp.x + ", " + tp.y + ", " + tp.z, Log.MessageType.SUCCESS);
 
                     texPosCount++;
                 }
@@ -107,6 +109,25 @@ public class ModelData extends Data
             }
 
             return meshData;
+        }
+
+        return null;
+    }
+
+    @Override
+    public void destroy()
+    {
+        for(int i = 0; i < meshesData.length; i++) {
+            meshesData[i].destroy();
+        }
+    }
+
+    public MeshData getMeshData(String name)
+    {
+        for (MeshData meshData : meshesData) {
+            if (meshData.name.equals(name)) {
+                return meshData;
+            }
         }
 
         return null;

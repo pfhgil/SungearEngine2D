@@ -1,6 +1,9 @@
 package Core2D.ECS.Component.Components;
 
+import Core2D.AssetManager.Asset;
 import Core2D.AssetManager.AssetManager;
+import Core2D.DataClasses.MeshData;
+import Core2D.DataClasses.Texture2DData;
 import Core2D.ECS.Component.Component;
 import Core2D.Graphics.OpenGL.*;
 import Core2D.Graphics.RenderParts.Material2D;
@@ -14,12 +17,15 @@ import static org.lwjgl.opengl.GL11.GL_TRIANGLES;
 
 public class MeshComponent extends Component
 {
-    private Texture2D texture = new Texture2D(AssetManager.getInstance().getTexture2DData("/data/textures/white_texture.png"));
+    public Texture2DData texture2DData = AssetManager.getInstance().getTexture2DData("/data/textures/white_texture.png");
 
     private Shader shader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/mesh/default_shader.glsl"));
 
     public Material2D material2D;
 
+    public transient MeshData meshData = AssetManager.getInstance().getModelData("/data/models/plane.obj").getMeshData("plane");
+
+    /*
     // VAO четырехугольника (VAO - Vertex Array Object. Хранит в себе указатели на VBO, IBO и т.д.)
     private transient VertexArray vertexArray;
     private int drawingMode = GL_TRIANGLES;
@@ -27,6 +33,8 @@ public class MeshComponent extends Component
     // массив данных о вершинах
     // первые строки - позиции вершин, вторые строки - текстурные координаты
     private transient Vector2f size = new Vector2f(100.0f, 100.0f);
+
+     */
 
     public MeshComponent() { }
 
@@ -59,27 +67,33 @@ public class MeshComponent extends Component
     public void init() {
         entity.color.set(new Vector4f(1.0f, 1.0f, 1.0f, 1.0f));
 
-        loadVAO();
+        //loadVAO();
     }
 
     @Override
     public void destroy() {
+        /*
         if(vertexArray != null) {
             vertexArray.destroy();
             vertexArray = null;
         }
 
+         */
+
+        /*
         if(texture != null) {
             texture.destroy();
             texture = null;
         }
 
+         */
         if(shader != null) {
             shader.destroy();
             shader = null;
         }
     }
 
+    /*
     private void loadVAO()
     {
         float[] data = new float[] {
@@ -127,8 +141,11 @@ public class MeshComponent extends Component
         // отвязываю vao
         vertexArray.unBind();
     }
+
+     */
     public void setUV(float[] UV)
     {
+        /*
         if (entity != null) {
             if (vertexArray != null) {
                 VertexBuffer vbo = vertexArray.getVBOs().get(0);
@@ -147,6 +164,8 @@ public class MeshComponent extends Component
                 vertexArray.updateVBO(vbo, vbo.getData());
             }
         }
+
+         */
     }
 
     public void setUV(Vector2f bottomLeft, Vector2f upLeft, Vector2f upRight, Vector2f bottomRight){
@@ -158,17 +177,6 @@ public class MeshComponent extends Component
         Vector2f resP2 = new Vector2f(positionsQuad.getRightTop().x / positionsQuad.getAtlasSize().x, positionsQuad.getRightTop().y / positionsQuad.getAtlasSize().y);
         Vector2f resP3 = new Vector2f(positionsQuad.getRightBottom().x / positionsQuad.getAtlasSize().x, positionsQuad.getRightBottom().y / positionsQuad.getAtlasSize().y);
         setUV(resP0, resP1, resP2, resP3);
-    }
-
-    public VertexArray getVertexArrayObject() { return vertexArray; }
-
-    public Texture2D getTexture() { return texture; }
-    public void setTexture(Texture2D texture)
-    {
-        if(this.texture != null) {
-            this.texture.destroy();
-        }
-        this.texture = texture;
     }
 
     public Shader getShader() { return shader; }

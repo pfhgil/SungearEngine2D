@@ -86,14 +86,14 @@ public class Gizmo
         yScaleHandler.name = "gizmo.yScaleHandler";
         xScaleHandler.name = "gizmo.xScaleHandler";
 
-        yArrow.getComponent(MeshComponent.class).setTexture(Resources.Textures.Gizmo.gizmoArrow);
-        xArrow.getComponent(MeshComponent.class).setTexture(Resources.Textures.Gizmo.gizmoArrow);
-        centrePoint.getComponent(MeshComponent.class).setTexture(Resources.Textures.Gizmo.gizmoPoint);
-        centrePointToEditCenter.getComponent(MeshComponent.class).setTexture(Resources.Textures.Gizmo.gizmoPoint);
+        yArrow.getComponent(MeshComponent.class).texture2DData = Resources.Textures.Gizmo.gizmoArrow;
+        xArrow.getComponent(MeshComponent.class).texture2DData = Resources.Textures.Gizmo.gizmoArrow;
+        centrePoint.getComponent(MeshComponent.class).texture2DData = Resources.Textures.Gizmo.gizmoPoint;
+        centrePointToEditCenter.getComponent(MeshComponent.class).texture2DData = Resources.Textures.Gizmo.gizmoPoint;
         //rotationCircle.getComponent(TextureComponent.class).setTexture2D(Resources.Textures.Gizmo.gizmoCircle);
-        rotationHandler.getComponent(MeshComponent.class).setTexture(Resources.Textures.Gizmo.gizmoPoint);
-        yScaleHandler.getComponent(MeshComponent.class).setTexture(Resources.Textures.Gizmo.gizmoPoint);
-        xScaleHandler.getComponent(MeshComponent.class).setTexture(Resources.Textures.Gizmo.gizmoPoint);
+        rotationHandler.getComponent(MeshComponent.class).texture2DData = Resources.Textures.Gizmo.gizmoPoint;
+        yScaleHandler.getComponent(MeshComponent.class).texture2DData = Resources.Textures.Gizmo.gizmoPoint;
+        xScaleHandler.getComponent(MeshComponent.class).texture2DData = Resources.Textures.Gizmo.gizmoPoint;
 
         yArrow.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 0.65f));
         xArrow.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
@@ -108,8 +108,8 @@ public class Gizmo
 
         //xArrow.getComponent(TransformComponent.class).getTransform().setRotation(-90.0f);
 
-        Vector2f arrowScale = new Vector2f(Resources.Textures.Gizmo.gizmoArrow.getTexture2DData().getWidth() / 100.0f, Resources.Textures.Gizmo.gizmoArrow.getTexture2DData().getHeight() / 100.0f).mul(1.5f);
-        Vector2f pointScale = new Vector2f(Resources.Textures.Gizmo.gizmoPoint.getTexture2DData().getWidth() / 100.0f, Resources.Textures.Gizmo.gizmoPoint.getTexture2DData().getHeight() / 100.0f);
+        Vector2f arrowScale = new Vector2f(Resources.Textures.Gizmo.gizmoArrow.getWidth() / 100.0f, Resources.Textures.Gizmo.gizmoArrow.getHeight() / 100.0f).mul(1.5f);
+        Vector2f pointScale = new Vector2f(Resources.Textures.Gizmo.gizmoPoint.getWidth() / 100.0f, Resources.Textures.Gizmo.gizmoPoint.getHeight() / 100.0f);
         //Vector2f rotationCircleScale = new Vector2f(Resources.Textures.Gizmo.gizmoCircle.getWidth() / 100.0f, Resources.Textures.Gizmo.gizmoCircle.getWidth() / 100.0f).mul(5.5f);
         yArrow.getComponent(TransformComponent.class).scale.set(new Vector3f(arrowScale.x, arrowScale.y, 1f));
         xArrow.getComponent(TransformComponent.class).scale.set(new Vector3f(arrowScale.x, arrowScale.y, 1f));

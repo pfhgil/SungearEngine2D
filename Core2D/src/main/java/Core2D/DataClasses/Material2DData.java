@@ -11,14 +11,14 @@ public class Material2DData extends Data
     public int blendDestinationFactor = GL_ONE_MINUS_SRC_ALPHA;
 
     @Override
-    public Data load(String path)
+    public Data load(String absolutePath)
     {
 
         return this;
     }
 
     @Override
-    public Data load(InputStream inputStream, String path)
+    public Data load(InputStream inputStream, String absolutePath)
     {
 
         return this;

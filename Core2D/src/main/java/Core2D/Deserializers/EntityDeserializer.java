@@ -77,16 +77,11 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                 shader.getShaderUniforms().addAll(meshComponent.getShader().getShaderUniforms());
                 shader.compile(AssetManager.getInstance().getShaderData(meshComponent.getShader().path));
 
-                Texture2D texture = new Texture2D(
-                        AssetManager.getInstance().getTexture2DData(meshComponent.getTexture().path),
-                        meshComponent.getTexture().getGLTextureBlock()
-                );
-
                 //texture2D.blendSourceFactor = textureComponent.texture.blendSourceFactor;
                 //texture2D.blendDestinationFactor = textureComponent.texture.blendDestinationFactor;
 
 
-                meshComponent.setTexture(texture);
+                meshComponent.texture2DData = AssetManager.getInstance().getTexture2DData(meshComponent.texture2DData.getRelativePath());
                 meshComponent.setShader(shader);
                 entity.addComponent(meshComponent);
 
