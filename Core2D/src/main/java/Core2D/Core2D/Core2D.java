@@ -128,6 +128,7 @@ public class Core2D extends Graphics
     // инициализация самой игры
     private void initCore() {
         try {
+            //
             Graphics.init();
             Log.Console.println("graphics initialized");
             OpenAL.init();
