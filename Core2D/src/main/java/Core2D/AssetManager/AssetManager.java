@@ -57,6 +57,7 @@ public class AssetManager implements Serializable
 
         // models ------------------------------
         String planeObjectPath = "/data/models/plane.obj";
+        String planeNormalizedObjectPath = "/data/models/plane_normalized.obj";
         // -------------------------------------
 
         ShaderData entityDefaultShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(entityDefaultShaderPath), entityDefaultShaderPath);
@@ -75,6 +76,8 @@ public class AssetManager implements Serializable
 
         ModelData planeModelData = new ModelData().load(Core2D.class.getResourceAsStream(planeObjectPath), planeObjectPath);
 
+        ModelData planeNormalizedModelData = new ModelData().load(Core2D.class.getResourceAsStream(planeNormalizedObjectPath), planeNormalizedObjectPath);
+
         addAsset(new Asset(entityDefaultShaderData, entityDefaultShaderPath));
         addAsset(new Asset(entitiesInstancingShaderData, entitiesInstancingShaderPath));
         addAsset(new Asset(entityPickingShaderData, entityPickingShader));
@@ -89,7 +92,10 @@ public class AssetManager implements Serializable
         addAsset(new Asset(whiteTextureData, whiteTexturePath));
         addAsset(new Asset(defaultProgressBarTextureData, defaultProgressBarTexturePath));
 
+        // model -------------------------------------------
+
         addAsset(new Asset(planeModelData, planeObjectPath));
+        addAsset(new Asset(planeNormalizedModelData, planeNormalizedObjectPath));
 
         // ---------------- other graphics shaders
         String onlyColorShaderPath = "/data/shaders/common/only_color_shader.glsl";
@@ -265,7 +271,7 @@ public class AssetManager implements Serializable
         Object objToCast = null;
         if (assetObjectClass.getSuperclass().isAssignableFrom(Data.class)) {
             try {
-                Log.CurrentSession.println("trying load: " + fullPath, Log.MessageType.WARNING);
+                //Log.CurrentSession.println("trying load: " + fullPath, Log.MessageType.WARNING);
 
                 if (new File(fullPath).exists()) {
                     //Log.CurrentSession.println("trying to load not from resources.... Path: " + fullPath, Log.MessageType.WARNING);
@@ -295,7 +301,7 @@ public class AssetManager implements Serializable
             if(asset.path.equals(path) && assetObjectClass.isAssignableFrom(asset.getAssetObject().getClass())) {
                 assetObj = assetObjectClass.cast(asset.getAssetObject());
 
-                Log.CurrentSession.println("found asset: " + assetObj + ", " + asset.path, Log.MessageType.SUCCESS);
+                //Log.CurrentSession.println("found asset: " + assetObj + ", " + asset.path, Log.MessageType.SUCCESS);
             }
         }
 

@@ -150,7 +150,7 @@
                   "FOV": 75.0,
                   "nearPlane": 1.0,
                   "farPlane": 9999.0,
-                  "scene2DMainCamera2D": true,
+                  "sceneMainCamera": true,
                   "render": true,
                   "postprocessingDefaultShader": {
                     "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish",
@@ -12161,8 +12161,8 @@
                 "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
                 "properties": {
                   "position": {
-                    "x": -29741.59,
-                    "y": -14195.966,
+                    "x": -44315.047,
+                    "y": -19165.809,
                     "z": 0.0
                   },
                   "rotation": {
@@ -15437,8 +15437,8 @@
                 "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
                 "properties": {
                   "position": {
-                    "x": -26646.203,
-                    "y": -15371.105,
+                    "x": -27280.906,
+                    "y": -15496.061,
                     "z": 0.0
                   },
                   "rotation": {

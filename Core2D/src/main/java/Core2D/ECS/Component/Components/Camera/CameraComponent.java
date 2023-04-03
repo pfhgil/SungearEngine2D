@@ -2,9 +2,9 @@ package Core2D.ECS.Component.Components.Camera;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Core2D.Core2D;
+import Core2D.DataClasses.MeshData;
 import Core2D.ECS.Component.Component;
 import Core2D.Graphics.OpenGL.FrameBuffer;
-import Core2D.Graphics.OpenGL.VertexArray;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Layering.PostprocessingLayer;
 import org.joml.Matrix4f;
@@ -64,7 +64,7 @@ public class CameraComponent extends Component {
 
     // ----------------------------------
 
-    public boolean scene2DMainCamera2D = false;
+    public boolean sceneMainCamera = false;
 
     // промежуточный фрейм буфер без пост процессинга
     public transient FrameBuffer frameBuffer;
@@ -80,30 +80,7 @@ public class CameraComponent extends Component {
     public boolean render = true;
 
     // post processing -----------------------------------------------------
-    public transient int[] ppQuadIndices = new int[] { 0, 1, 2, 0, 2, 3 };
-
-    // массив данных о вершинах
-    // первые строки - позиции вершин, вторые строки - текстурные координаты
-    public transient float[] ppQuadData = new float[] {
-            -1, -1, 0,
-            0, 0, 0,
-            0, 0, 0,
-
-            -1, 1, 0,
-            0, 1, 0,
-            0, 0, 0,
-
-            1, 1, 0,
-            1, 1, 0,
-            0, 0, 0,
-
-            1, -1, 0,
-            1, 0, 0,
-            0, 0, 0
-    };
-
-    public transient VertexArray ppQuadVertexArray;
-
+    public transient MeshData quadMeshData = AssetManager.getInstance().getModelData("/data/models/plane_normalized.obj").getMeshData("plane_normalized");
     public Shader postprocessingDefaultShader = new Shader(AssetManager.getInstance().getShaderData("/data/shaders/postprocessing/postprocessing_default_shader.glsl"));
 
     public List<PostprocessingLayer> postprocessingLayers = new ArrayList<>();

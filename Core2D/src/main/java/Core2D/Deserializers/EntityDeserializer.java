@@ -16,6 +16,7 @@ import Core2D.ECS.Entity;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Layering.PostprocessingLayer;
+import Core2D.Utils.ECSUtils;
 import Core2D.Utils.Tag;
 import com.google.gson.*;
 import org.joml.Vector4f;
@@ -66,23 +67,23 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
 
             int lastComponentID = component.ID;
             if(component instanceof MeshComponent meshComponent) {
-                meshComponent.getShader().fixUniforms();
+                meshComponent.shader.fixUniforms();
 
                 Shader shader = new Shader();
 
-                for(Shader.ShaderDefine shaderDefine : meshComponent.getShader().getShaderDefines()) {
+                for(Shader.ShaderDefine shaderDefine : meshComponent.shader.getShaderDefines()) {
                     shader.getShaderDefine(shaderDefine.name).value = shaderDefine.value;
                 }
 
-                shader.getShaderUniforms().addAll(meshComponent.getShader().getShaderUniforms());
-                shader.compile(AssetManager.getInstance().getShaderData(meshComponent.getShader().path));
+                shader.getShaderUniforms().addAll(meshComponent.shader.getShaderUniforms());
+                shader.compile(AssetManager.getInstance().getShaderData(meshComponent.shader.path));
 
                 //texture2D.blendSourceFactor = textureComponent.texture.blendSourceFactor;
                 //texture2D.blendDestinationFactor = textureComponent.texture.blendDestinationFactor;
 
 
                 meshComponent.texture2DData = AssetManager.getInstance().getTexture2DData(meshComponent.texture2DData.getRelativePath());
-                meshComponent.setShader(shader);
+                meshComponent.shader = ECSUtils.setNewShader(shader, meshComponent.shader);
                 entity.addComponent(meshComponent);
 
                 meshComponent.ID = lastComponentID;

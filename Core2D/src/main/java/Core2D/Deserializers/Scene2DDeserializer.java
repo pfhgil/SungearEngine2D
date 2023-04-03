@@ -53,7 +53,7 @@ public class Scene2DDeserializer implements JsonDeserializer<Scene2D>
                 CameraComponent cameraComponent = entity.getComponent(CameraComponent.class);
 
                 if(cameraComponent != null) {
-                    ECSWorld.getCurrentECSWorld().componentsInitializerSystem.setScene2DMainCamera2D(cameraComponent, cameraComponent.scene2DMainCamera2D, scene2D);
+                    ECSWorld.getCurrentECSWorld().componentsInitializerSystem.setScene2DMainCamera2D(cameraComponent, cameraComponent.sceneMainCamera, scene2D);
                 }
             }
         }

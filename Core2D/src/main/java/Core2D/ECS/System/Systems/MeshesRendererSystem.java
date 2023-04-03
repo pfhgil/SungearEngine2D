@@ -52,7 +52,7 @@ public class MeshesRendererSystem extends System implements NonRemovable
         !meshComponent.active || !transformComponent.active || !cameraComponent.active) return;
 
         if(shader == null) {
-            shader = meshComponent.getShader();
+            shader = meshComponent.shader;
         }
 
         // использую VAO, текстуру и шейдер
@@ -72,7 +72,7 @@ public class MeshesRendererSystem extends System implements NonRemovable
         ShaderUtils.setUniform(
                 shader.getProgramHandler(),
                 "color",
-                // FIXME перенести color в mesh
+                // FIXME: перенести color в material
                 //new Vector4f(1.0f)
                 entity.getColor()
         );

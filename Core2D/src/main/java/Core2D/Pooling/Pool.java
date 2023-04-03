@@ -18,7 +18,7 @@ public class Pool
         while(iterator.hasNext()) {
             PoolObject poolObject = iterator.next();
             freePoolObjects.add(poolObject);
-            poolObject.destroyFromScene2D();
+            poolObject.destroyFromScene();
             iterator.remove();
         }
     }
@@ -30,7 +30,7 @@ public class Pool
             PoolObject poolObject0 = iterator.next();
             if(poolObject0 == poolObject) {
                 freePoolObjects.add(poolObject);
-                poolObject.destroyFromScene2D();
+                poolObject.destroyFromScene();
                 iterator.remove();
             }
         }

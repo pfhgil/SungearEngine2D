@@ -14,10 +14,7 @@ import Core2D.Log.Log;
 import Core2D.Pooling.PoolObject;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
-import Core2D.Utils.ExceptionsUtils;
-import Core2D.Utils.MatrixUtils;
-import Core2D.Utils.Tag;
-import Core2D.Utils.Utils;
+import Core2D.Utils.*;
 import org.joml.Vector3f;
 import org.joml.Vector4f;
 
@@ -34,7 +31,7 @@ public class Entity implements Serializable, PoolObject
 
     protected transient Layer layer;
 
-    public String layerName = "";
+    public String layerName = "default";
 
     public Tag tag = new Tag();
 
@@ -47,7 +44,7 @@ public class Entity implements Serializable, PoolObject
     public boolean isUIElement = false;
 
     // цвет
-    public Vector4f color = new Vector4f();
+    public Vector4f color = new Vector4f(1f);
     protected transient Vector3f pickColor = new Vector3f();
 
     public transient Entity parentEntity;
@@ -63,66 +60,49 @@ public class Entity implements Serializable, PoolObject
         createNewID();
     }
 
-    @Deprecated
-    // копировать объект
-    public Entity(Entity entity)
+    public Entity copy()
     {
-        /*
-        destroy();
+        Entity entity = new Entity();
 
-        setColor(new Vector4f(entity.getColor().x, entity.getColor().y, entity.getColor().z, entity.getColor().w));
+        entity.createNewID();
+        entity.createPickColor();
 
-        Transform objectTransform = entity.getComponent(TransformComponent.class).getTransform();
-        addComponent(new TransformComponent(objectTransform));
+        entity.name = name + "_" + entity.ID;
 
-        if(entity.getComponent(Rigidbody2DComponent.class) != null) {
-            Rigidbody2DComponent rigidbody2DComponent = new Rigidbody2DComponent();
-            rigidbody2DComponent.set(entity.getComponent(Rigidbody2DComponent.class));
-            addComponent(rigidbody2DComponent);
+        entity.active = active;
+
+        entity.layerName = layerName;
+
+        entity.tag.setName(tag.getName());
+
+        entity.isUIElement = isUIElement;
+
+        entity.color.set(color);
+
+        entity.setParentEntity(parentEntity);
+
+        for(Component component : components) {
+            addComponent(ECSUtils.copyComponent(component));
         }
 
-        active = entity.active;
-
-        tag = entity.tag;
-
-        pickColor.set(createPickColor());
-
-        createNewID();
-
-         */
-    }
-
-    /*
-    public void set(Entity entity)
-    {
-        for(var component : entity.getComponents()) {
-            Component existingComponent = getComponent(component.getClass());
-            if(existingComponent != null) {
-                existingComponent.set(component);
-            } else {
-                Component newComponent = null;
-                try {
-                    newComponent = component.getClass().getConstructor().newInstance();
-                } catch (InstantiationException | IllegalAccessException | InvocationTargetException |
-                         NoSuchMethodException e) {
-                    Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
-                }
-                addComponent(newComponent);
-                newComponent.set(component);
-            }
+        for(Entity child : childrenEntities) {
+            entity.addChildEntity(child.copy());
         }
 
-        name = entity.name;
-        //setLayer(gameObject.getLayer());
-        tag.set(entity.tag);
-
-        isUIElement = entity.isUIElement;
-        setColor(entity.getColor());
-        setParentEntity(entity.getParentEntity());
-        addChildrenEntities(entity.getChildrenEntities());
+        return entity;
     }
 
-     */
+    public void addOnScene()
+    {
+        addOnScene(SceneManager.currentSceneManager.getCurrentScene2D());
+    }
+
+    public void addOnScene(Scene2D scene2D)
+    {
+        if(scene2D != null) {
+            setLayer(scene2D.getLayering().getLayer(layerName));
+        }
+    }
 
     public static Entity createAsObject()
     {
@@ -272,13 +252,6 @@ public class Entity implements Serializable, PoolObject
             for(int i = 0; i < sz; i++) {
                 components.get(i).update();
             }
-
-            /*
-            for(Systems system : systems) {
-                system.update();
-            }
-
-             */
         }
     }
 
@@ -290,13 +263,6 @@ public class Entity implements Serializable, PoolObject
             for(int i = 0; i < sz; i++) {
                 components.get(i).deltaUpdate(deltaTime);
             }
-
-            /*
-            for(Systems system : systems) {
-                system.deltaUpdate(deltaTime);
-            }
-
-             */
         }
     }
 
@@ -326,7 +292,7 @@ public class Entity implements Serializable, PoolObject
     }
 
     @Override
-    public void destroyFromScene2D()
+    public void destroyFromScene()
     {
         shouldDestroy = true;
 
@@ -505,142 +471,6 @@ public class Entity implements Serializable, PoolObject
             }
         }
     }
-
-    // Systems
-    /*
-    public <T extends Systems> T addSystem(T system)
-    {
-        for(var currentSystem : systems) {
-            if(currentSystem.getClass().equals(system.getClass()) && currentSystem instanceof NonDuplicated) {
-                Log.showErrorDialog("Systems " + system.getClass().getName() + " already exists");
-                Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Systems " + system.getClass().getName() + " already exists")), Log.MessageType.ERROR);
-            }
-        }
-
-        systems.add(system);
-        system.entity = this;
-        if(system instanceof ScriptableSystem scriptableSystem) {
-            scriptableSystem.script.setFieldValue(scriptableSystem.script.getField("entity"), this);
-        }
-        system.initSystem();
-        return system;
-    }
-
-    public void addAllSystems(List<? extends Systems> systems)
-    {
-        for(Systems system : systems) {
-            addSystem(system);
-        }
-    }
-
-
-    public <T extends Systems> T getSystem(Class<T> systemClass)
-    {
-        for(var system : systems) {
-            if(systemClass.isAssignableFrom(system.getClass())) {
-                return systemClass.cast(system);
-            } else if(ScriptableSystem.class.isAssignableFrom(system.getClass()) && systemClass.isAssignableFrom(((ScriptableSystem) system).script.getScriptClass())) {
-                return systemClass.cast(((ScriptableSystem) system).script.getScriptClassInstance());
-            }
-        }
-
-        return null;
-    }
-
-    public <T extends Systems> List<T> getAllSystems(Class<T> systemClass)
-    {
-        List<T> systemsFound = new ArrayList<>();
-        for(var system : systems) {
-            if(systemClass.isAssignableFrom(system.getClass())){
-                systemsFound.add(systemClass.cast(system));
-            } else if(ScriptableSystem.class.isAssignableFrom(system.getClass()) && systemClass.isAssignableFrom(((ScriptableSystem) system).script.getScriptClass())) {
-                systemsFound.add(systemClass.cast(((ScriptableSystem) system).script.getScriptClassInstance()));
-            }
-        }
-
-        return systemsFound;
-    }
-
-    public void removeSystem(Systems system)
-    {
-        if(system instanceof NonRemovable) {
-            Log.showErrorDialog("Systems " + system.getClass().getName() + " is non-removable");
-
-            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Systems " + system.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
-        } else {
-            boolean removed = systems.remove(system);
-            if (removed) {
-                system.destroy();
-            } else { // попытка получить все скриптабельные системы и попробовать на основе скриптов удалить систему из списка
-                List<ScriptableSystem> scriptableSystems = getAllSystems(ScriptableSystem.class);
-                for(var scriptableSystem : scriptableSystems) {
-                    if(system == scriptableSystem.script.getScriptClassInstance()) {
-                        removed = systems.remove(scriptableSystem);
-                        if(removed) {
-                            system.destroy();
-                        } else {
-                            Log.CurrentSession.println("Systems " + system + " was not found for deletion!", Log.MessageType.ERROR);
-                        }
-
-                        return;
-                    }
-                }
-            }
-        }
-    }
-
-    public void removeFirstSystem(Class<? extends Systems> systemClass)
-    {
-        Systems system = getSystem(systemClass);
-
-        if(system instanceof NonRemovable) {
-            Log.showErrorDialog("Systems " + system.getClass().getName() + " is non-removable");
-
-            Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Systems " + system.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
-        } else {
-            if(system != null) {
-                boolean removed = systems.remove(system);
-                if (removed) {
-                    system.destroy();
-                } else {
-                    List<ScriptableSystem> scriptableSystems = getAllSystems(ScriptableSystem.class);
-                    for (var scriptableSystem : scriptableSystems) {
-                        if (systemClass.isAssignableFrom(scriptableSystem.script.getScriptClass())) {
-                            removed = systems.remove(scriptableSystem);
-                            if (removed) {
-                                scriptableSystem.destroy();
-                            } else {
-                                Log.CurrentSession.println("Systems " + systemClass + " was not found for deletion!", Log.MessageType.ERROR);
-                            }
-                            return;
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    public void removeAllSystems(Class<? extends Systems> systemClass)
-    {
-        Iterator<? extends Systems> systemsIterator = systems.listIterator();
-
-        while(systemsIterator.hasNext()) {
-            Systems system = systemsIterator.next();
-
-            boolean assignable = systemClass.isAssignableFrom(system.getClass()) ||
-                    (ScriptableSystem.class.isAssignableFrom(system.getClass()) && systemClass.isAssignableFrom(((ScriptableSystem) system).script.getScriptClass()));
-            if(assignable && system instanceof NonRemovable) {
-                Log.showErrorDialog("Systems " + system.getClass().getName() + " is non-removable");
-
-                Log.CurrentSession.println(ExceptionsUtils.toString(new RuntimeException("Systems " + system.getClass().getName() + " is non-removable")), Log.MessageType.ERROR);
-            } else if(assignable) {
-                system.destroy();
-                systemsIterator.remove();
-            }
-        }
-    }
-
-     */
 
     public boolean isShouldDestroy() { return shouldDestroy; }
 

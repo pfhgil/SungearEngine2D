@@ -43,7 +43,7 @@ public class Texture2DData extends Data
     @Override
     public Texture2DData load(String absolutePath)
     {
-        this.absolutePath = absolutePath;
+        this.canonicalPath = absolutePath;
 
         createRelativePath();
 
@@ -62,7 +62,7 @@ public class Texture2DData extends Data
     @Override
     public Texture2DData load(InputStream inputStream, String absolutePath)
     {
-        this.absolutePath = absolutePath;
+        this.canonicalPath = absolutePath;
 
         createRelativePath();
 

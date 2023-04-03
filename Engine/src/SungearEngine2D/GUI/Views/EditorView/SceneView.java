@@ -15,6 +15,8 @@ import Core2D.Input.PC.Mouse;
 import Core2D.Prefab.Prefab;
 import Core2D.Project.ProjectsManager;
 import Core2D.Systems.ScriptSystem;
+import Core2D.UserActions.Commands.Entities.EntityAddOnScene;
+import Core2D.UserActions.Executors.Executor;
 import Core2D.Utils.FileUtils;
 import SungearEngine2D.GUI.Views.View;
 import SungearEngine2D.GUI.Views.ViewsManager;
@@ -189,6 +191,8 @@ public class SceneView extends View
                     // если превью не существует, то создаю его
                     if(newEntityPreview == null) {
                         newEntityPreview = createSceneEntity(ViewsManager.getResourcesView().getCurrentMovingFile());
+
+                        Executor.executeCommand(new EntityAddOnScene(), newEntityPreview);
                     }
                     if(newEntityPreview == null) return;
 
@@ -210,6 +214,8 @@ public class SceneView extends View
                                     newEntityPreview.getComponent(TransformComponent.class).position
                             );
                         }
+
+                        Executor.executeCommand(new EntityAddOnScene(), entity);
                         newEntityPreview.destroy();
                         newEntityPreview = null;
                     }
@@ -361,13 +367,12 @@ public class SceneView extends View
             newSceneEntityTransform.scale.set(newEntityScale.x, newEntityScale.y, newSceneEntityTransform.scale.z);
 
             // дефолтный layer
-            newSceneEntity.setLayer(currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
+            //newSceneEntity.setLayer(currentSceneManager.getCurrentScene2D().getLayering().getLayer("default"));
             newSceneEntity.name = FilenameUtils.getBaseName(file.getName());
 
             ViewsManager.getResourcesView().setCurrentMovingFile(null);
 
             System.gc();
-            System.out.println("added obj!");
 
             return newSceneEntity;
         } else if(extension.equals("sgopref")) {

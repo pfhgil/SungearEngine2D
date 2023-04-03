@@ -14,12 +14,12 @@ public class ShaderData extends Data
     @Override
     public ShaderData load(String absolutePath)
     {
-        this.absolutePath = absolutePath;
+        this.canonicalPath = absolutePath;
 
         code = FileUtils.readAllFile(absolutePath);
         createRelativePath();
 
-        lastModified = getScriptFileLastModified();
+        lastModified = getShaderFileLastModified();
 
         return this;
     }
@@ -28,18 +28,18 @@ public class ShaderData extends Data
     public ShaderData load(InputStream inputStream, String absolutePath)
     {                                                                       
         code = FileUtils.readAllFile(inputStream);
-        this.absolutePath = absolutePath;
+        this.canonicalPath = absolutePath;
 
         createRelativePath();
 
-        lastModified = getScriptFileLastModified();
+        lastModified = getShaderFileLastModified();
 
         return this;
     }
 
-    public long getScriptFileLastModified()
+    public long getShaderFileLastModified()
     {
-        File file = new File(getAbsolutePath());
+        File file = new File(getCanonicalPath());
         if(file.exists()) {
             return file.lastModified();
         }
@@ -48,15 +48,14 @@ public class ShaderData extends Data
     }
 
     @Override
-    public String getAbsolutePath()
+    public String getCanonicalPath()
     {
-        File file = new File(absolutePath);
+        File file = new File(canonicalPath);
         if(file.exists()) {
-            return absolutePath;
+            return canonicalPath;
         } else {
             if(ProjectsManager.getCurrentProject() != null) {
-                file = new File(ProjectsManager.getCurrentProject().getProjectPath() + "/" + absolutePath);
-                //Log.CurrentSession.println("script path: " + file.getPath(), Log.MessageType.INFO);
+                file = new File(ProjectsManager.getCurrentProject().getProjectPath() + "/" + canonicalPath);
 
                 return file.exists() ? file.getPath() : "";
             }

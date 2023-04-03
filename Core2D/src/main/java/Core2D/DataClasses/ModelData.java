@@ -18,7 +18,7 @@ public class ModelData extends Data
     @Override
     public ModelData load(String absolutePath)
     {
-        this.absolutePath = absolutePath;
+        this.canonicalPath = absolutePath;
 
         createRelativePath();
 
@@ -28,7 +28,7 @@ public class ModelData extends Data
     @Override
     public ModelData load(InputStream inputStream, String absolutePath)
     {
-        this.absolutePath = absolutePath;
+        this.canonicalPath = absolutePath;
 
         createRelativePath();
 

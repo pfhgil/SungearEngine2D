@@ -87,7 +87,7 @@ public class Script
 
                 scriptClass = flexibleURLClassLoader.loadNewClass(path, scriptData.data);
 
-                this.path = scriptData.getAbsolutePath();
+                this.path = scriptData.getCanonicalPath();
             } else {  // если в in-build
                 ScriptData scriptData = AssetManager.getInstance().getScriptData(scriptsDirPath + "/" + baseName + ".class");
 
@@ -98,7 +98,7 @@ public class Script
                     Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
                 }
 
-                this.path = scriptData.getAbsolutePath();
+                this.path = scriptData.getCanonicalPath();
             }
 
             scriptClassInstance = scriptClass.getConstructor().newInstance();

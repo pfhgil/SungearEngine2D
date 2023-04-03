@@ -232,7 +232,7 @@ public class ShadersEditorView extends View
             if (foundComponent == null) return;
             Shader foundShader = null;
             if (foundComponent instanceof MeshComponent meshComponent) {
-                foundShader = meshComponent.getShader();
+                foundShader = meshComponent.shader;
             } else if(foundComponent instanceof CameraComponent cameraComponent) {
                 PostprocessingLayer ppLayer = ECSWorld.getCurrentECSWorld().camerasManagerSystem.getPostprocessingLayerByName(cameraComponent, ppLayerName);
                 if(ppLayer != null) {

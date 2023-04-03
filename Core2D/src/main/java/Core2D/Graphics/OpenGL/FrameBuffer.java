@@ -221,8 +221,6 @@ public class FrameBuffer
         applyTextureParams();
 
         OpenGL.glCall((params) -> glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, textureHandler, 0));
-
-        //OpenGL.glBindTexture(GL_TEXTURE_2D, 0);
     }
 
     private void applyTextureParams()
@@ -266,8 +264,6 @@ public class FrameBuffer
         OpenGL.glCall((params) -> glTexParameterfv(GL_TEXTURE_2D, GL_TEXTURE_BORDER_COLOR, borderColor));
 
         OpenGL.glCall((params) -> glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, textureHandler, 0));
-
-        //OpenGL.glCall((params) -> glBindTexture(GL_TEXTURE_2D, 0));
     }
 
     // удаляет FBO

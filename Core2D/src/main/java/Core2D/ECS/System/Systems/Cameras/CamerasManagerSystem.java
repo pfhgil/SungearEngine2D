@@ -86,7 +86,7 @@ public class CamerasManagerSystem extends System implements NonRemovable, NonDup
 
                 cameraComponent.resultFrameBuffer.bind();
                 cameraComponent.resultFrameBuffer.clear();
-                cameraComponent.ppQuadVertexArray.bind();
+                cameraComponent.quadMeshData.getVertexArray().bind();
 
                 for (Layer layer : SceneManager.currentSceneManager.getCurrentScene2D().getLayering().getLayers()) {
                     Shader shader = cameraComponent.postprocessingDefaultShader;

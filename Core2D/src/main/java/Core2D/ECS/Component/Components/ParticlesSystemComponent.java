@@ -8,6 +8,7 @@ import Core2D.Scripting.InspectorView;
 import Core2D.Timer.Timer;
 import Core2D.Timer.TimerCallback;
 
+@Deprecated
 public class ParticlesSystemComponent extends ScriptComponent
 {
     @InspectorView

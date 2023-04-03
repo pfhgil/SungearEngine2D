@@ -165,7 +165,7 @@ public class Scene2D
         for(Layer layer : layering.getLayers()) {
             for(Entity entity : layer.getEntities()) {
                 for(MeshComponent meshComponent : entity.getAllComponents(MeshComponent.class)) {
-                    meshComponent.getShader().initUniforms();
+                    meshComponent.shader.initUniforms();
                 }
                 for(CameraComponent cameraComponent : entity.getAllComponents(CameraComponent.class)) {
                     for(int i = 0; i < cameraComponent.postprocessingLayers.size(); i++) {

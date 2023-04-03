@@ -27,6 +27,7 @@ import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Scripting.Script;
 import Core2D.Utils.ComponentHandler;
+import Core2D.Utils.ECSUtils;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import SungearEngine2D.GUI.ImGuiUtils;
@@ -181,7 +182,7 @@ public class ComponentsView extends View
                     case "MeshComponent" -> {
                         MeshComponent meshComponent = (MeshComponent) currentComponent;
 
-                        ImGuiUtils.inputText("Texture", new File(meshComponent.texture2DData.getAbsolutePath()).getName(), ImGuiInputTextFlags.ReadOnly);
+                        ImGuiUtils.inputText("Texture", new File(meshComponent.texture2DData.getCanonicalPath()).getName(), ImGuiInputTextFlags.ReadOnly);
 
                         if (ImGui.beginDragDropTarget()) {
                             Object imageFile = ImGui.acceptDragDropPayload("File");
@@ -196,7 +197,8 @@ public class ComponentsView extends View
                             ImGui.endDragDropTarget();
                         }
 
-                        ImString shaderName = new ImString(new File(meshComponent.getShader().path).getName());
+                        //Log.CurrentSession.println("shader path: " + meshComponent.shader.path, Log.MessageType.WARNING);
+                        ImString shaderName = new ImString(new File(meshComponent.shader.path).getName());
 
                         boolean[] shaderEditButtonPressed = new boolean[1];
                         Object[] droppedObject = new Object[1];
@@ -208,17 +210,17 @@ public class ComponentsView extends View
                             String relativePath = FileUtils.getRelativePath(
                                     file,
                                     new File(ProjectsManager.getCurrentProject().getProjectPath()));
-                            meshComponent.setShader(new Shader(AssetManager.getInstance().getShaderData(relativePath)));
+                            meshComponent.shader = ECSUtils.setNewShader(new Shader(AssetManager.getInstance().getShaderData(relativePath)), meshComponent.shader);
                             //meshComponent.getShader().path = relativePath;
                         }
 
                         if(shaderEditButtonPressed[0]) {
                             ViewsManager.getShadersEditorView().addEditingShader(
-                                    new ShadersEditorView.ShaderEditorWindow(meshComponent.getShader(), new ComponentHandler(meshComponent.entity.getLayer().getID(), meshComponent.entity.ID, meshComponent.ID))
+                                    new ShadersEditorView.ShaderEditorWindow(meshComponent.shader, new ComponentHandler(meshComponent.entity.getLayer().getID(), meshComponent.entity.ID, meshComponent.ID))
                             );
                         }
 
-                        drawShaderDefaultBooleanDefines(meshComponent.getShader());
+                        drawShaderDefaultBooleanDefines(meshComponent.shader);
                     }
                     case "TextureComponent" -> {
                         TextureComponent textureComponent = (TextureComponent) currentComponent;
@@ -737,8 +739,8 @@ public class ComponentsView extends View
                         CameraComponent cameraComponent = (CameraComponent) currentComponent;
 
                         ImGui.pushID("Scene2DMainCamera_" + i);
-                        if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Scene2D main camera", cameraComponent.scene2DMainCamera2D))) {
-                            ECSWorld.getCurrentECSWorld().componentsInitializerSystem.setScene2DMainCamera2D(cameraComponent, !cameraComponent.scene2DMainCamera2D);
+                        if (ImGuiUtils.imCallWBorder(func -> ImGui.checkbox("Scene2D main camera", cameraComponent.sceneMainCamera))) {
+                            ECSWorld.getCurrentECSWorld().componentsInitializerSystem.setScene2DMainCamera2D(cameraComponent, !cameraComponent.sceneMainCamera);
                             //camera2DComponent.setScene2DMainCamera2D(!camera2DComponent.isScene2DMainCamera2D);
                         }
                         ImGui.popID();

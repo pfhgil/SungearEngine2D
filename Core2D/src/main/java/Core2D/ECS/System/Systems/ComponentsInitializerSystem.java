@@ -6,7 +6,7 @@ import Core2D.Debug.DebugDraw;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Audio.AudioComponent;
 import Core2D.ECS.Component.Components.Camera.CameraComponent;
-import Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent;
+import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Physics.Collider2DComponent;
 import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
@@ -52,9 +52,7 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
                 cameraComponent.resultFrameBuffer = null;
             }
 
-            loadCameraVAO(cameraComponent);
-
-            setScene2DMainCamera2D(cameraComponent, cameraComponent.scene2DMainCamera2D);
+            setScene2DMainCamera2D(cameraComponent, cameraComponent.sceneMainCamera);
 
             Vector2i screenSize = Graphics.getScreenSize();
             cameraComponent.frameBuffer = new FrameBuffer(screenSize.x, screenSize.y, FrameBuffer.BuffersTypes.ALL_BUFFER, GL_TEXTURE0);
@@ -90,7 +88,6 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
         if(component instanceof CameraComponent cameraComponent) {
             setScene2DMainCamera2D(cameraComponent, false);
             cameraComponent.frameBuffer.destroy();
-            cameraComponent.ppQuadVertexArray.destroy();
             cameraComponent.resultFrameBuffer.destroy();
             //camera2DComponent.postprocessingDefaultShader.destroy();
 
@@ -109,34 +106,9 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
             if(rigidbody2DComponent != null) {
                 rigidbody2DComponent.body.destroyFixture(collider2DComponent.fixture);
             }
+        } else if(component instanceof MeshComponent meshComponent) {
+            meshComponent.shader.destroy();
         }
-    }
-
-    private void loadCameraVAO(CameraComponent cameraComponent)
-    {
-        if (cameraComponent.ppQuadVertexArray != null) {
-            cameraComponent.ppQuadVertexArray.destroy();
-            cameraComponent.ppQuadVertexArray = null;
-        }
-
-        cameraComponent.ppQuadVertexArray = new VertexArray();
-        // VBO вершин (VBO - Vertex Buffer Object. Может хранить в себе цвета, позиции вершин и т.д.)
-        VertexBuffer vertexBuffer = new VertexBuffer(cameraComponent.ppQuadData);
-        // IBO вершин (IBO - Index Buffer Object. IBO хранит в себе индексы вершин, по которым будут соединяться вершины)
-        IndexBuffer indexBuffer = new IndexBuffer(cameraComponent.ppQuadIndices);
-
-        // создаю описание аттрибутов в шейдерной программе
-        BufferLayout attributesLayout = new BufferLayout(
-                new VertexAttribute(0, "positionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3),
-                new VertexAttribute(1, "textureCoordsAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3),
-                new VertexAttribute(2, "normalPositionAttribute", VertexAttribute.ShaderDataType.SHADER_DATA_TYPE_T_FLOAT3)
-        );
-
-        vertexBuffer.setLayout(attributesLayout);
-        cameraComponent.ppQuadVertexArray.putVBO(vertexBuffer, false);
-        cameraComponent.ppQuadVertexArray.putIBO(indexBuffer);
-
-        cameraComponent.ppQuadIndices = null;
     }
 
     public void setScene2DMainCamera2D(CameraComponent cameraComponent, boolean scene2DMainCamera2D, Scene2D scene2D)
@@ -145,13 +117,13 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
                 scene2DMainCamera2D && scene2D.getSceneMainCamera2D() != null) {
             CameraComponent foundComponent = scene2D.getSceneMainCamera2D().getComponent(CameraComponent.class);
             if(foundComponent != null) {
-                foundComponent.scene2DMainCamera2D = false;
+                foundComponent.sceneMainCamera = false;
                 scene2D.setSceneMainCamera2D(null);
             }
         }
-        cameraComponent.scene2DMainCamera2D = scene2DMainCamera2D;
+        cameraComponent.sceneMainCamera = scene2DMainCamera2D;
         if(scene2D != null) {
-            scene2D.setSceneMainCamera2D(cameraComponent.scene2DMainCamera2D ? cameraComponent.entity : scene2D.getSceneMainCamera2D());
+            scene2D.setSceneMainCamera2D(cameraComponent.sceneMainCamera ? cameraComponent.entity : scene2D.getSceneMainCamera2D());
         }
     }
 

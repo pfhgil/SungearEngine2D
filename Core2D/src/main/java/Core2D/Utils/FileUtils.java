@@ -26,17 +26,23 @@ public class FileUtils
 
     public static String getRelativePath(File file, File folder)
     {
-        String filePath = file.getAbsolutePath();
-        String folderPath = folder.getAbsolutePath();
+        try {
+            String filePath = file.getCanonicalPath();
+            String folderPath = folder.getCanonicalPath();
 
-        if(filePath.equals(folderPath)) return filePath;
-        //Log.CurrentSession.println("processing: " + filePath + ", folder: " + folderPath, Log.MessageType.WARNING);
+            if (filePath.equals(folderPath)) return filePath;
+            //Log.CurrentSession.println("processing: " + filePath + ", folder: " + folderPath, Log.MessageType.WARNING);
 
-        if (filePath.startsWith(folderPath)) {
-            return filePath.substring(folderPath.length() + 1);
-        } else {
-            return null;
+            if (filePath.startsWith(folderPath)) {
+                return filePath.substring(folderPath.length() + 1);
+            }
+
+            return "";
+        } catch (Exception e) {
+            Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
+
+        return "";
     }
 
     public static File findFile(File dir, String name) {

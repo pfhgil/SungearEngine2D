@@ -27,10 +27,12 @@ import Core2D.ECS.System.Systems.Cameras.CamerasController3DSystem;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Graphics.RenderParts.Shader;
+import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Tasks.StoppableTask;
+import Core2D.UserActions.Executors.Executor;
 import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.DebugDraw.CamerasDebugLines;
 import SungearEngine2D.DebugDraw.EntitiesDebugDraw;
@@ -126,14 +128,14 @@ public class Main
 
                                         EngineSettings.Playmode.canEnterPlaymode = false;
 
-                                        String scriptPath = scriptData.getAbsolutePath();
+                                        String scriptPath = scriptData.getCanonicalPath();
 
                                         ViewsManager.getBottomMenuView().addTaskToList(new StoppableTask("Compiling script " + new File(scriptPath).getName() + "... ", 1.0f, 0.0f) {
                                             public void run() {
                                                 if (currentSceneManager.getCurrentScene2D() == null) return;
-                                                boolean compiled = Compiler.compileScript(scriptData.getAbsolutePath().replace(".class", ".java"));
+                                                boolean compiled = Compiler.compileScript(scriptData.getCanonicalPath().replace(".class", ".java"));
 
-                                                AssetManager.getInstance().reloadAsset(scriptData.getAbsolutePath(), ScriptData.class);
+                                                AssetManager.getInstance().reloadAsset(scriptData.getCanonicalPath(), ScriptData.class);
 
                                                 for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
                                                     for (Component component : componentsQuery.getComponents()) {
@@ -154,15 +156,15 @@ public class Main
                                         });
                                     }
                                 } else if(asset.getAssetObject() instanceof ShaderData shaderData) {
-                                    if(shaderData.lastModified != shaderData.getScriptFileLastModified()) {
-                                        shaderData.lastModified = shaderData.getScriptFileLastModified();
+                                    if(shaderData.lastModified != shaderData.getShaderFileLastModified()) {
+                                        shaderData.lastModified = shaderData.getShaderFileLastModified();
 
-                                        String shaderPath = shaderData.getAbsolutePath();
+                                        String shaderPath = shaderData.getCanonicalPath();
 
                                         for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
                                             for (Component component : componentsQuery.getComponents()) {
-                                                if(component instanceof MeshComponent meshComponent && meshComponent.getShader().path.equals(shaderPath)) {
-                                                    Compiler.addShaderToCompile(meshComponent.getShader());
+                                                if(component instanceof MeshComponent meshComponent && meshComponent.shader.path.equals(shaderPath)) {
+                                                    Compiler.addShaderToCompile(meshComponent.shader);
                                                 }
                                                 if(component instanceof CameraComponent cameraComponent) {
                                                     for(PostprocessingLayer postprocessingLayer : cameraComponent.postprocessingLayers) {
@@ -293,6 +295,13 @@ public class Main
                         new Vector3f(0f),
                         new Vector3f(Math.sin(Math.toRadians((float) GLFW.glfwGetTime() * 100f)) * 1000f, Math.cos(Math.toRadians((float) GLFW.glfwGetTime() * 100f)) * 1000f, 1000f),
                         new Vector4f(1f, 0.7f, 0.5f, 1f));
+
+                // executor test --------------------------------------
+                if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL) && Keyboard.keyReleased(GLFW.GLFW_KEY_Z)) {
+                    Executor.revertLastCommand();
+                } else if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL) && Keyboard.keyReleased(GLFW.GLFW_KEY_Y)) {
+                    Executor.restoreLastCommand();
+                }
 
                 /*
                 DebugDraw.drawBox("test_" + 1, new Vector3f(-250f, 0f, 500f), new Vector3f((float) GLFW.glfwGetTime() * 50f, 0f, 0f), new Vector2f(250f), new Vector4f(1f, 0f, 0f, 1f));

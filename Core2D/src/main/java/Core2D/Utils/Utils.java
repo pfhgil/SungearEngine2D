@@ -3,6 +3,7 @@ package Core2D.Utils;
 import Core2D.AssetManager.Asset;
 import Core2D.Deserializers.*;
 import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.System;

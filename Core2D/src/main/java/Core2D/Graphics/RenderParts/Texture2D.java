@@ -43,13 +43,13 @@ public class Texture2D
     {
         this.texture2DData = texture2DData;
 
-        if(ProjectsManager.getCurrentProject() != null && new File(texture2DData.getAbsolutePath()).exists()) {
+        if(ProjectsManager.getCurrentProject() != null && new File(texture2DData.getCanonicalPath()).exists()) {
             this.path = FileUtils.getRelativePath(
-                    new File(texture2DData.getAbsolutePath()),
+                    new File(texture2DData.getCanonicalPath()),
                     new File(ProjectsManager.getCurrentProject().getProjectPath())
             );
         } else {
-            this.path = texture2DData.getAbsolutePath();
+            this.path = texture2DData.getCanonicalPath();
         }
 
         // активирую нулевой текстурный блок

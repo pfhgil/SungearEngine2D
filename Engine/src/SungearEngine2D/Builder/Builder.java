@@ -251,13 +251,13 @@ public class Builder {
                     MeshComponent textureComponent = entity.getComponent(MeshComponent.class);
                     if (textureComponent != null) {
                         // новый путь до текстуры
-                        File newFile = new File(toDir + "\\" + textureComponent.texture2DData.getAbsolutePath());
+                        File newFile = new File(toDir + "\\" + textureComponent.texture2DData.getCanonicalPath());
                         // создаю все папки, которых нет
                         newFile.getParentFile().mkdirs();
                         // копирую файл в эти папки
                         FileUtils.copyFile(ProjectsManager.getCurrentProject().getProjectPath() +
                                         File.separator +
-                                        textureComponent.texture2DData.getAbsolutePath(),
+                                        textureComponent.texture2DData.getCanonicalPath(),
                                 newFile.getPath(), false);
                         // устанавливаю для текстурного компонента путь в билде (относительный)
                         //textureComponent.texture2DData. = "/" + textureComponent.getTexture().path.replace("\\", "/");

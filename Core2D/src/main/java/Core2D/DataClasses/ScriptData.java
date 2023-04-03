@@ -3,7 +3,6 @@ package Core2D.DataClasses;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Utils.ExceptionsUtils;
-import Core2D.Utils.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 import java.io.File;
@@ -20,7 +19,7 @@ public class ScriptData extends Data
     @Override
     public ScriptData load(String absolutePath)
     {
-        this.absolutePath = absolutePath;
+        this.canonicalPath = absolutePath;
 
         try {
             data = Files.readAllBytes(Path.of(absolutePath));
@@ -45,7 +44,7 @@ public class ScriptData extends Data
         } catch (IOException e) {
             Log.CurrentSession.println(ExceptionsUtils.toString(e), Log.MessageType.ERROR);
         }
-        this.absolutePath = absolutePath;
+        this.canonicalPath = absolutePath;
 
         createRelativePath();
 
@@ -56,7 +55,7 @@ public class ScriptData extends Data
 
     public long getScriptFileLastModified()
     {
-        File file = new File(getAbsolutePath().replaceAll(".class", ".java"));
+        File file = new File(getCanonicalPath().replaceAll(".class", ".java"));
         if(file.exists()) {
             return file.lastModified();
         }
@@ -65,14 +64,14 @@ public class ScriptData extends Data
     }
 
     @Override
-    public String getAbsolutePath()
+    public String getCanonicalPath()
     {
-        File file = new File(absolutePath);
+        File file = new File(canonicalPath);
         if(file.exists()) {
-            return absolutePath;
+            return canonicalPath;
         } else {
             if(ProjectsManager.getCurrentProject() != null) {
-                file = new File(ProjectsManager.getCurrentProject().getProjectPath() + "/" + absolutePath);
+                file = new File(ProjectsManager.getCurrentProject().getProjectPath() + "/" + canonicalPath);
 
                 return file.exists() ? file.getPath() : "";
             }

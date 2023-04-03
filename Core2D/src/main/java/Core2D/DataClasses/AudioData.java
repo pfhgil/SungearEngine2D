@@ -64,7 +64,7 @@ public class AudioData extends Data
     @Override
     public AudioData load(String absolutePath)
     {
-        this.absolutePath = absolutePath;
+        this.canonicalPath = absolutePath;
 
         createRelativePath();
 
@@ -82,7 +82,7 @@ public class AudioData extends Data
     @Override
     public AudioData load(InputStream inputStream, String absolutePath)
     {
-        this.absolutePath = absolutePath;
+        this.canonicalPath = absolutePath;
 
         createRelativePath();
 
