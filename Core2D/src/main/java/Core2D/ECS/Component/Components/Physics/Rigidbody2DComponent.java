@@ -1,10 +1,9 @@
 package Core2D.ECS.Component.Components.Physics;
 
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.NonDuplicated;
+import Core2D.Common.Interfaces.NonDuplicated;
 import org.jbox2d.dynamics.Body;
 import org.jbox2d.dynamics.BodyType;
-import org.joml.Vector2f;
 
 public class Rigidbody2DComponent extends Component implements NonDuplicated
 {

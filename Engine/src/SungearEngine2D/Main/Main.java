@@ -32,6 +32,8 @@ import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
 import Core2D.Tasks.StoppableTask;
+import Core2D.UserActions.Commands.Entities.EntitiesPaste;
+import Core2D.UserActions.Commands.ObjectCopy;
 import Core2D.UserActions.Executors.Executor;
 import Core2D.Utils.ExceptionsUtils;
 import SungearEngine2D.DebugDraw.CamerasDebugLines;
@@ -297,10 +299,18 @@ public class Main
                         new Vector4f(1f, 0.7f, 0.5f, 1f));
 
                 // executor test --------------------------------------
-                if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL) && Keyboard.keyReleased(GLFW.GLFW_KEY_Z)) {
+                if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL) && Keyboard.keyPressed(GLFW.GLFW_KEY_Z)) {
                     Executor.revertLastCommand();
-                } else if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL) && Keyboard.keyReleased(GLFW.GLFW_KEY_Y)) {
+                } else if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL) && Keyboard.keyPressed(GLFW.GLFW_KEY_Y)) {
                     Executor.restoreLastCommand();
+                } else if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL) && Keyboard.keyPressed(GLFW.GLFW_KEY_C)) {
+                    if(ViewsManager.getInspectorView().getCurrentInspectingObject() != null && ViewsManager.isSceneViewFocused) {
+                        Executor.executeCommand(new ObjectCopy(), ViewsManager.getInspectorView().getCurrentInspectingObject());
+                    }
+                } else if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL) && Keyboard.keyPressed(GLFW.GLFW_KEY_V)) {
+                    if(ViewsManager.getInspectorView().getCurrentInspectingObject() != null && ViewsManager.isSceneViewFocused) {
+                        Executor.executeCommand(new EntitiesPaste());
+                    }
                 }
 
                 /*

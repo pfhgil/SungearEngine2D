@@ -1,5 +1,7 @@
 package Core2D.ECS;
 
+import Core2D.Common.Interfaces.NonDuplicated;
+import Core2D.Common.Interfaces.NonRemovable;
 import Core2D.Core2D.Settings;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera.CameraComponent;
@@ -82,7 +84,7 @@ public class Entity implements Serializable, PoolObject
         entity.setParentEntity(parentEntity);
 
         for(Component component : components) {
-            addComponent(ECSUtils.copyComponent(component));
+            entity.addComponent(ECSUtils.copyComponent(component));
         }
 
         for(Entity child : childrenEntities) {
@@ -294,7 +296,9 @@ public class Entity implements Serializable, PoolObject
     @Override
     public void destroyFromScene()
     {
-        shouldDestroy = true;
+        if(layer != null) {
+            layer.getEntities().remove(this);
+        }
 
         active = false;
     }
@@ -302,7 +306,9 @@ public class Entity implements Serializable, PoolObject
     @Override
     public void restore()
     {
-        shouldDestroy = false;
+        if(layer != null) {
+            layer.getEntities().add(this);
+        }
 
         active = true;
     }
@@ -310,6 +316,8 @@ public class Entity implements Serializable, PoolObject
     // Components
     public <T extends Component> T addComponent (T component)
     {
+        if(component == null) return null;
+
         if(component instanceof NonDuplicated) {
             Optional<Component> foundComponent = components.stream().filter(c -> c.getClass().equals(component.getClass())).findAny();
             if(foundComponent.isPresent()) {
@@ -514,7 +522,11 @@ public class Entity implements Serializable, PoolObject
             transformComponent.scale.set(new Vector3f(transformComponent.scale).div(MatrixUtils.getScale(parentTransformComponent.modelMatrix)));
         } else {
             this.parentEntityID = -1;
-            getComponent(TransformComponent.class).parentTransformComponent = null;
+            TransformComponent transformComponent = getComponent(TransformComponent.class);
+
+            if(transformComponent != null) {
+                transformComponent.parentTransformComponent = null;
+            }
         }
     }
 
@@ -602,6 +614,8 @@ public class Entity implements Serializable, PoolObject
 
         this.layer.getEntities().remove(this);
         this.layer.getEntities().add(this);
+
+        Log.CurrentSession.println("entity added: " + name + ", lname: " + layerName, Log.MessageType.WARNING);
 
         TransformComponent transformComponent = getComponent(TransformComponent.class);
         if(transformComponent != null) {

@@ -1,4 +1,0 @@
-{
-  "jdkPath": "D:\\jdks\\corretto_17\\bin",
-  "currentPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\DontBreak\\ProjectSettings.txt"
-}

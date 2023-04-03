@@ -1,7 +1,7 @@
 package Core2D.ECS.Component.Components.Transform;
 
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.NonDuplicated;
+import Core2D.Common.Interfaces.NonDuplicated;
 import org.joml.Matrix4f;
 import org.joml.Vector3f;
 

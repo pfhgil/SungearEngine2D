@@ -1,4 +1,0 @@
-{
-  "jdkPath": "No JDK",
-  "currentPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\test10\\ProjectSettings.txt"
-}

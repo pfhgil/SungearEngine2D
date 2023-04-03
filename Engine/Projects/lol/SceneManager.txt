@@ -1,4 +1,0 @@
-{
-  "scene2DStoredValues": [],
-  "mainScene2DPath": ""
-}

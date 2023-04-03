@@ -18,7 +18,7 @@ import Core2D.ECS.Component.Components.Shader.TextureComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
-import Core2D.ECS.NonRemovable;
+import Core2D.Common.Interfaces.NonRemovable;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Layering.Layer;

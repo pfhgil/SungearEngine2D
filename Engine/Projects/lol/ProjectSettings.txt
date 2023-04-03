@@ -1,4 +1,0 @@
-{
-  "jdkPath": "No JDK",
-  "currentPath": ""
-}

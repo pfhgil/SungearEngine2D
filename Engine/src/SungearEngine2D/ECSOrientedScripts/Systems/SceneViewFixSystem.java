@@ -3,7 +3,7 @@ package SungearEngine2D.ECSOrientedScripts.Systems;
 import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.Camera.CameraController2DComponent;
 import Core2D.ECS.Component.Components.Camera.CameraController3DComponent;
-import Core2D.ECS.NonDuplicated;
+import Core2D.Common.Interfaces.NonDuplicated;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import SungearEngine2D.GUI.Views.ViewsManager;

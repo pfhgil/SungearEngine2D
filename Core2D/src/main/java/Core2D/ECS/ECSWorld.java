@@ -1,7 +1,7 @@
 package Core2D.ECS;
 
+import Core2D.Common.Interfaces.NonDuplicated;
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.ScriptComponent;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.*;

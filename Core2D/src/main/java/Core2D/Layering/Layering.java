@@ -15,7 +15,7 @@ public class Layering {
 
     private transient boolean shouldDestroy = false;
 
-    // набор констант z индексов (так сказать слоев ОТРИСОВКИ)
+    // z indices constants
     public static final float Z_INDEX_M40 = -40f;
     public static final float Z_INDEX_M38 = -38f;
     public static final float Z_INDEX_M36 = -36f;

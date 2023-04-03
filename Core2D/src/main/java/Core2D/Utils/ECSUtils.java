@@ -2,6 +2,7 @@ package Core2D.Utils;
 
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera.CameraComponent;
+import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.Graphics.RenderParts.Shader;
 
@@ -17,6 +18,10 @@ public class ECSUtils
             copy.scale.set(transformComponent.scale);
 
             copy.center.set(transformComponent.center);
+
+            copy.active = transformComponent.active;
+
+            return (T) copy;
         } else if(component instanceof CameraComponent cameraComponent) {
             CameraComponent copy = new CameraComponent();
 
@@ -40,6 +45,20 @@ public class ECSUtils
             copy.sceneMainCamera = cameraComponent.sceneMainCamera;
 
             copy.render = cameraComponent.render;
+
+            copy.active = cameraComponent.active;
+
+            return (T) copy;
+        } else if(component instanceof MeshComponent meshComponent) {
+            MeshComponent copy = new MeshComponent();
+
+            copy.texture2DData = meshComponent.texture2DData;
+            copy.meshData = meshComponent.meshData;
+            copy.material2D = meshComponent.material2D;
+
+            copy.active = meshComponent.active;
+
+            return (T) copy;
         }
 
         return null;

@@ -31,9 +31,7 @@ public class EntityAddOnScene extends Command
 
         for(Object obj : executedObjects) {
             if(obj instanceof Entity entity) {
-                entity.addOnScene();
-
-                executedObjects.add(entity);
+                entity.restore();
             }
         }
 
