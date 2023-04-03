@@ -69,6 +69,7 @@ public class Core2D extends Graphics
         create(windowName, Window.defaultWindowSize, new int[] {}, new int[] {});
     }
 
+    //
     /**
      * Starts Core2D.
      * @param windowName The name of the window that will be created when Core2D is launched.
