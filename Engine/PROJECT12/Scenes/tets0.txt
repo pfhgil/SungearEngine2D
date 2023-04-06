@@ -2783,7 +2783,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.PrimitivesRendererSystem",
+                "type": "Core2D.ECS.System.Systems.PrimitivesSystem",
                 "properties": {
                   "active": true
                 }
@@ -5811,7 +5811,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.PrimitivesRendererSystem",
+                "type": "Core2D.ECS.System.Systems.PrimitivesSystem",
                 "properties": {
                   "active": true
                 }

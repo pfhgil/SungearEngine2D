@@ -1,9 +1,10 @@
 package Core2D.ECS.System.Systems.Cameras;
 
-import Core2D.Core2D.Core2D;
-import Core2D.ECS.Component.Components.Camera.*;
-import Core2D.ECS.Component.Components.Transform.MoveToComponent;
 import Core2D.Common.Interfaces.NonDuplicated;
+import Core2D.Core2D.Core2D;
+import Core2D.ECS.Component.Components.Camera.CameraComponent;
+import Core2D.ECS.Component.Components.Camera.CameraController2DComponent;
+import Core2D.ECS.Component.Components.Transform.MoveToComponent;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import Core2D.Input.PC.Keyboard;

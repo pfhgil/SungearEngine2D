@@ -3,6 +3,7 @@ package Core2D.ECS;
 import Core2D.Common.Interfaces.NonDuplicated;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.System.ComponentsQuery;
+import Core2D.ECS.System.NonComponentSystem;
 import Core2D.ECS.System.System;
 import Core2D.ECS.System.Systems.*;
 import Core2D.ECS.System.Systems.Cameras.CamerasManagerSystem;
@@ -26,7 +27,7 @@ public class ECSWorld
     // операции с ComponentsQueries происходит через componentsManager
     public final ComponentsInitializerSystem componentsInitializerSystem = new ComponentsInitializerSystem();
     public final MeshesRendererSystem meshesRendererSystem = new MeshesRendererSystem();
-    public final PrimitivesRendererSystem primitivesRendererSystem = new PrimitivesRendererSystem();
+    public final PrimitivesSystem primitivesSystem = new PrimitivesSystem();
     public final CamerasManagerSystem camerasManagerSystem = new CamerasManagerSystem();
     public final TransformationsSystem transformationsSystem = new TransformationsSystem();
     public final AudioSystem audioSystem = new AudioSystem();
@@ -40,7 +41,7 @@ public class ECSWorld
         systems.add(camerasManagerSystem);
 
         systems.add(meshesRendererSystem);
-        systems.add(primitivesRendererSystem);
+        systems.add(primitivesSystem);
 
         systems.add(transformationsSystem);
 
@@ -120,10 +121,16 @@ public class ECSWorld
     public void update()
     {
         for(System system : systems) {
-            if(!system.active) continue;
+            if(system.active) {
+                if(!(system instanceof NonComponentSystem)) {
+                    for (ComponentsQuery componentsQuery : componentsQueries) {
+                        if(componentsQuery.getComponents().get(0).entity != null && !componentsQuery.getComponents().get(0).entity.active) continue;
 
-            for (ComponentsQuery componentsQuery : componentsQueries) {
-                system.update(componentsQuery);
+                        system.update(componentsQuery);
+                    }
+                }
+
+                system.update();
             }
         }
     }
@@ -131,10 +138,16 @@ public class ECSWorld
     public void deltaUpdate(float deltaTime)
     {
         for(System system : systems) {
-            if(!system.active) continue;
+            if(system.active) {
+                if (!(system instanceof NonComponentSystem)) {
+                    for (ComponentsQuery componentsQuery : componentsQueries) {
+                        if(componentsQuery.getComponents().get(0).entity != null && !componentsQuery.getComponents().get(0).entity.active) continue;
 
-            for (ComponentsQuery componentsQuery : componentsQueries) {
-                system.deltaUpdate(componentsQuery, deltaTime);
+                        system.deltaUpdate(componentsQuery, deltaTime);
+                    }
+                }
+
+                system.deltaUpdate(deltaTime);
             }
         }
     }

@@ -1,7 +1,6 @@
 package Core2D.ECS.Component.Components.Camera;
 
 import Core2D.ECS.Component.Component;
-import org.joml.Vector2f;
 import org.joml.Vector3f;
 
 public class CameraController2DComponent extends Component

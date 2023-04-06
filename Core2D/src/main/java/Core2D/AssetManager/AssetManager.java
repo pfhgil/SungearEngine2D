@@ -8,7 +8,6 @@ import Core2D.Project.ProjectsManager;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.FileUtils;
 import Core2D.Utils.Utils;
-import org.lwjgl.opengl.GL;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,6 +57,7 @@ public class AssetManager implements Serializable
         // models ------------------------------
         String planeObjectPath = "/data/models/plane.obj";
         String planeNormalizedObjectPath = "/data/models/plane_normalized.obj";
+        String sphereObjectPath = "/data/models/Tiger_I.obj";
         // -------------------------------------
 
         ShaderData entityDefaultShaderData = new ShaderData().load(Core2D.class.getResourceAsStream(entityDefaultShaderPath), entityDefaultShaderPath);
@@ -75,8 +75,8 @@ public class AssetManager implements Serializable
         Texture2DData defaultProgressBarTextureData = new Texture2DData().load(Core2D.class.getResourceAsStream(defaultProgressBarTexturePath), defaultProgressBarTexturePath);
 
         ModelData planeModelData = new ModelData().load(Core2D.class.getResourceAsStream(planeObjectPath), planeObjectPath);
-
         ModelData planeNormalizedModelData = new ModelData().load(Core2D.class.getResourceAsStream(planeNormalizedObjectPath), planeNormalizedObjectPath);
+        ModelData sphereModelData = new ModelData().load(Core2D.class.getResourceAsStream(sphereObjectPath), sphereObjectPath);
 
         addAsset(new Asset(entityDefaultShaderData, entityDefaultShaderPath));
         addAsset(new Asset(entitiesInstancingShaderData, entitiesInstancingShaderPath));
@@ -92,10 +92,11 @@ public class AssetManager implements Serializable
         addAsset(new Asset(whiteTextureData, whiteTexturePath));
         addAsset(new Asset(defaultProgressBarTextureData, defaultProgressBarTexturePath));
 
-        // model -------------------------------------------
+        // models -------------------------------------------
 
         addAsset(new Asset(planeModelData, planeObjectPath));
         addAsset(new Asset(planeNormalizedModelData, planeNormalizedObjectPath));
+        addAsset(new Asset(sphereModelData, sphereObjectPath));
 
         // ---------------- other graphics shaders
         String onlyColorShaderPath = "/data/shaders/common/only_color_shader.glsl";

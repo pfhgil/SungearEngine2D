@@ -10,12 +10,12 @@ import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
-import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Input.PC.Mouse;
 import Core2D.Prefab.Prefab;
 import Core2D.Project.ProjectsManager;
 import Core2D.Systems.ScriptSystem;
 import Core2D.UserActions.Commands.Entities.EntityAddOnScene;
+import Core2D.UserActions.Commands.Entities.EntityAddOnSceneUnregistered;
 import Core2D.UserActions.Executors.Executor;
 import Core2D.Utils.FileUtils;
 import SungearEngine2D.GUI.Views.View;
@@ -192,7 +192,7 @@ public class SceneView extends View
                     if(newEntityPreview == null) {
                         newEntityPreview = createSceneEntity(ViewsManager.getResourcesView().getCurrentMovingFile());
 
-                        Executor.executeCommand(new EntityAddOnScene(), newEntityPreview);
+                        Executor.executeCommand(new EntityAddOnSceneUnregistered(), newEntityPreview);
                     }
                     if(newEntityPreview == null) return;
 
@@ -259,6 +259,8 @@ public class SceneView extends View
                 CamerasManager.mainCamera2D = currentSceneManager.getCurrentScene2D().getSceneMainCamera2D();
                 currentSceneManager.getCurrentScene2D().setRunning(true);
                 currentSceneManager.getCurrentScene2D().applyScriptsTempValues();
+
+                Executor.active = false;
             }
         }
     }
@@ -275,13 +277,15 @@ public class SceneView extends View
 
             ViewsManager.getInspectorView().setCurrentInspectingObject(null);
             currentSceneManager.getCurrentScene2D().setRunning(false);
+
+            Executor.active = true;
+            Executor.reloadReferences();
         }
     }
 
     public void pausePlayMode()
     {
         if(currentSceneManager.getCurrentScene2D() != null && EngineSettings.Playmode.active) {
-            System.out.println("paused!!");
             EngineSettings.Playmode.paused = !EngineSettings.Playmode.paused;
             currentSceneManager.getCurrentScene2D().setRunning(!currentSceneManager.getCurrentScene2D().isRunning());
         }

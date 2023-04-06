@@ -12,7 +12,6 @@ import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import Core2D.Log.Log;
 import Core2D.Utils.MatrixUtils;
-import org.joml.Vector2f;
 import org.joml.Vector3f;
 import org.lwjgl.openal.AL10;
 import org.lwjgl.openal.AL11;

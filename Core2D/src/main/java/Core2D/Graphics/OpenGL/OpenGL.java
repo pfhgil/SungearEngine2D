@@ -10,10 +10,6 @@ import java.util.function.Consumer;
 import java.util.function.Function;
 
 import static org.lwjgl.opengl.GL11.*;
-import static org.lwjgl.opengl.GL11.glBindTexture;
-import static org.lwjgl.opengl.GL11C.GL_TRIANGLES;
-import static org.lwjgl.opengl.GL11C.GL_UNSIGNED_INT;
-import static org.lwjgl.opengl.GL11C.glDrawElements;
 import static org.lwjgl.opengl.GL13.glActiveTexture;
 
 public class OpenGL

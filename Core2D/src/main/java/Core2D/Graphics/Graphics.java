@@ -61,8 +61,6 @@ public abstract class Graphics
         long capDiff = System.currentTimeMillis();
         long capInit = System.currentTimeMillis();
 
-        Log.Console.println("first");
-
         while (!glfwWindowShouldClose(Core2D.getWindow().getWindow())) {
             try {
                 if(Settings.Core2D.sleepCore2D) {
@@ -149,7 +147,7 @@ public abstract class Graphics
 
         Vector4f selectedPixelColor = getPixelColor(oglPosition);
 
-        Log.Console.println("selectedPixelColor: " + selectedPixelColor.x + ", " + selectedPixelColor.y + ", " + selectedPixelColor.z + ", " + selectedPixelColor.w);
+        //Log.Console.println("selectedPixelColor: " + selectedPixelColor.x + ", " + selectedPixelColor.y + ", " + selectedPixelColor.z + ", " + selectedPixelColor.w);
 
         //OpenGL.glCall((params) -> glEnable(GL_BLEND));
         pickingRenderTarget.unBind();

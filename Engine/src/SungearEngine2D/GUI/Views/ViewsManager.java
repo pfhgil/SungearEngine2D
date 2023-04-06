@@ -1,21 +1,20 @@
 package SungearEngine2D.GUI.Views;
 
 import Core2D.Core2D.Core2D;
-import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera.CameraComponent;
-import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
-import Core2D.ECS.ECSWorld;
-import Core2D.ECS.System.ComponentsQuery;
+import Core2D.ECS.Entity;
+import Core2D.UserActions.Commands.Command;
+import Core2D.UserActions.Executors.Executor;
 import SungearEngine2D.GUI.Views.DebuggerView.DebuggerView;
 import SungearEngine2D.GUI.Views.EditorView.*;
 import SungearEngine2D.GUI.Views.Other.EngineSettingsView;
 import SungearEngine2D.GUI.Views.Other.ProjectSettingsView;
 import imgui.ImGui;
+import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImBoolean;
-import org.jbox2d.common.Vec2;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -132,6 +131,37 @@ public class ViewsManager
                 FBOViews.get(i).draw();
             }
 
+            ImGui.begin("Actions");
+
+            //TODO: delete this -----------------
+            int i = 0;
+            for(Command command : Executor.getCommands()) {
+                int toPop = 0;
+                if(!command.isExecuted()) {
+                    ImGui.pushStyleColor(ImGuiCol.Header, 0.3f, 0.3f, 0.3f, 1f);
+                    toPop++;
+                } else if(command == Executor.getLastExecutedCommand()) {
+                    ImGui.pushStyleColor(ImGuiCol.Header, 1f, 0.3f, 0.3f, 1f);
+                    toPop++;
+                }
+                ImGui.pushID(command.getClass().getSimpleName() + i);
+                if(ImGui.collapsingHeader(command.getClass().getSimpleName())) {
+                    for(Object obj : command.executedObjects) {
+                        if(obj instanceof Entity entity) {
+                            ImGui.text("Entity: " + entity.name);
+                        }
+                    }
+                }
+                ImGui.popID();
+
+                ImGui.popStyleColor(toPop);
+
+                i++;
+            }
+            // ------------------------------------
+
+            ImGui.end();
+
             logView.draw();
 
             bottomMenuView.draw();
@@ -141,6 +171,10 @@ public class ViewsManager
             debuggerView.draw();
 
             shadersEditorView.draw();
+
+            //ImGui.showDemoWindow();
+            //ImGui.showMetricsWindow();
+            //ImGui.showStackToolWindow();
 
             /*
             ImGui.begin("Systems");

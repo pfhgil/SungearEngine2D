@@ -3,7 +3,6 @@ package Core2D.Debug;
 import Core2D.ECS.Component.Components.Primitives.BoxComponent;
 import Core2D.ECS.Component.Components.Primitives.CircleComponent;
 import Core2D.ECS.Component.Components.Primitives.LineComponent;
-import Core2D.ECS.Component.Components.Primitives.PrimitiveComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import org.joml.Vector2f;
@@ -31,11 +30,11 @@ public class DebugDraw
         LineComponent primitiveComponent = foundEntity.getComponent(LineComponent.class);
 
         if(primitiveComponent != null) {
-            primitiveComponent.setLinesWidth(width);
-            primitiveComponent.getLinesData()[0].getVertices()[0].set(start);
-            primitiveComponent.getLinesData()[0].getVertices()[1].set(end);
+            primitiveComponent.linesWidth = width;
+            primitiveComponent.linesData[0].start.set(start);
+            primitiveComponent.linesData[0].end.set(end);
 
-            primitiveComponent.setColor(color);
+            primitiveComponent.color.set(color);
         }
 
         foundEntity.update();
@@ -66,9 +65,9 @@ public class DebugDraw
         TransformComponent transformComponent = foundEntity.getComponent(TransformComponent.class);
 
         if(primitiveComponent != null) {
-            primitiveComponent.setLinesWidth(width);
-            primitiveComponent.setSize(size);
-            primitiveComponent.setColor(color);
+            primitiveComponent.linesWidth = width;
+            primitiveComponent.size.set(size);
+            primitiveComponent.color.set(color);
 
             transformComponent.position.set(position);
             transformComponent.rotation.set(rotation);
@@ -99,7 +98,7 @@ public class DebugDraw
 
         if(foundEntity == null) {
             foundEntity = Entity.createAsCircle();
-            foundEntity.getComponent(CircleComponent.class).setAngleIncrement(8);
+            foundEntity.getComponent(CircleComponent.class).angleIncrement = 8;
             debugPrimitives.put(ID, foundEntity);
         }
 
@@ -109,9 +108,9 @@ public class DebugDraw
         TransformComponent transformComponent = foundEntity.getComponent(TransformComponent.class);
 
         if(primitiveComponent != null) {
-            primitiveComponent.setLinesWidth(width);
-            primitiveComponent.setRadius(radius);
-            primitiveComponent.setColor(color);
+            primitiveComponent.linesWidth = width;
+            primitiveComponent.radius = radius;
+            primitiveComponent.color.set(color);
 
             transformComponent.position.set(position);
             transformComponent.rotation.set(rotation);

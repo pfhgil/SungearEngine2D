@@ -10,11 +10,9 @@ import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Component.Components.ScriptComponent;
-import Core2D.ECS.Component.Components.Shader.TextureComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.RenderParts.Shader;
-import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Layering.PostprocessingLayer;
 import Core2D.Utils.ECSUtils;
 import Core2D.Utils.Tag;
@@ -88,7 +86,7 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
 
                 meshComponent.ID = lastComponentID;
                 //newMeshComponent.set(component);
-            } else if(component instanceof TextureComponent textureComponent) {
+            } /*else if(component instanceof TextureComponent textureComponent) {
                 Texture2D texture = new Texture2D(
                         AssetManager.getInstance().getTexture2DData(textureComponent.getTexture().path),
                         textureComponent.getTexture().getGLTextureBlock()
@@ -98,7 +96,7 @@ public class EntityDeserializer implements JsonDeserializer<Entity>
                 entity.addComponent(textureComponent);
 
                 textureComponent.ID = lastComponentID;
-            } else if(component instanceof Rigidbody2DComponent rigidbody2DComponent) {
+            }*/ else if(component instanceof Rigidbody2DComponent rigidbody2DComponent) {
                 rigidbody2DComponent.set(component);
 
                 entity.addComponent(rigidbody2DComponent);

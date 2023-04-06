@@ -3,8 +3,10 @@ package Core2D.ECS.Component.Components;
 import Core2D.ECS.Component.Component;
 import Core2D.Timer.Timer;
 
+@Deprecated
 public class TimerComponent extends Component
 {
+    /*
     private Timer timer = new Timer(0.0f);
 
     @Override
@@ -14,4 +16,6 @@ public class TimerComponent extends Component
     }
 
     public Timer getTimer() { return timer; }
+
+     */
 }

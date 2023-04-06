@@ -2,8 +2,6 @@ package Core2D.Utils;
 
 import Core2D.Log.Log;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.net.URLClassLoader;
 

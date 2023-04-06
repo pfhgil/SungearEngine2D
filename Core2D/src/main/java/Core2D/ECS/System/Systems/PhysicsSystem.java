@@ -1,5 +1,7 @@
 package Core2D.ECS.System.Systems;
 
+import Core2D.Common.Interfaces.NonDuplicated;
+import Core2D.Common.Interfaces.NonRemovable;
 import Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent;
 import Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent;
 import Core2D.ECS.Component.Components.Physics.Collider2DComponent;
@@ -7,8 +9,6 @@ import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
-import Core2D.Common.Interfaces.NonDuplicated;
-import Core2D.Common.Interfaces.NonRemovable;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import Core2D.Settings.PhysicsSettings;
@@ -19,7 +19,10 @@ import org.jbox2d.collision.shapes.CircleShape;
 import org.jbox2d.collision.shapes.PolygonShape;
 import org.jbox2d.common.Settings;
 import org.jbox2d.common.Vec2;
-import org.jbox2d.dynamics.*;
+import org.jbox2d.dynamics.Body;
+import org.jbox2d.dynamics.BodyDef;
+import org.jbox2d.dynamics.FixtureDef;
+import org.jbox2d.dynamics.World;
 import org.jbox2d.dynamics.contacts.Contact;
 import org.joml.Math;
 import org.joml.Vector2f;
@@ -44,7 +47,12 @@ public class PhysicsSystem extends System implements NonRemovable, NonDuplicated
                     System system = ECSWorld.getCurrentECSWorld().getSystems().get(i);
                     if(!system.active) continue;
 
-                    system.beginContact(contact, (Entity) contact.getFixtureA().getBody().getUserData(), (Entity) contact.getFixtureB().getBody().getUserData());
+                    Entity entityA = (Entity) contact.getFixtureA().getBody().getUserData();
+                    Entity entityB = (Entity) contact.getFixtureB().getBody().getUserData();
+
+                    if(entityA != null && entityB != null && entityA.active && entityB.active) {
+                        system.beginContact(contact, entityA, entityB);
+                    }
                 }
             }
 
@@ -57,7 +65,12 @@ public class PhysicsSystem extends System implements NonRemovable, NonDuplicated
                     System system = ECSWorld.getCurrentECSWorld().getSystems().get(i);
                     if(!system.active) continue;
 
-                    system.endContact(contact, (Entity) contact.getFixtureA().getBody().getUserData(), (Entity) contact.getFixtureB().getBody().getUserData());
+                    Entity entityA = (Entity) contact.getFixtureA().getBody().getUserData();
+                    Entity entityB = (Entity) contact.getFixtureB().getBody().getUserData();
+
+                    if(entityA != null && entityB != null && entityA.active && entityB.active) {
+                        system.endContact(contact, entityA, entityB);
+                    }
                 }
             }
 
@@ -70,7 +83,12 @@ public class PhysicsSystem extends System implements NonRemovable, NonDuplicated
                     System system = ECSWorld.getCurrentECSWorld().getSystems().get(i);
                     if(!system.active) continue;
 
-                    system.preSolve(contact, (Entity) contact.getFixtureA().getBody().getUserData(), (Entity) contact.getFixtureB().getBody().getUserData(), manifold);
+                    Entity entityA = (Entity) contact.getFixtureA().getBody().getUserData();
+                    Entity entityB = (Entity) contact.getFixtureB().getBody().getUserData();
+
+                    if(entityA != null && entityB != null && entityA.active && entityB.active) {
+                        system.preSolve(contact, entityA, entityB, manifold);
+                    }
                 }
             }
 
@@ -83,7 +101,12 @@ public class PhysicsSystem extends System implements NonRemovable, NonDuplicated
                     System system = ECSWorld.getCurrentECSWorld().getSystems().get(i);
                     if(!system.active) continue;
 
-                    system.postSolve(contact, (Entity) contact.getFixtureA().getBody().getUserData(), (Entity) contact.getFixtureB().getBody().getUserData(), contactImpulse);
+                    Entity entityA = (Entity) contact.getFixtureA().getBody().getUserData();
+                    Entity entityB = (Entity) contact.getFixtureB().getBody().getUserData();
+
+                    if(entityA != null && entityB != null && entityA.active && entityB.active) {
+                        system.postSolve(contact, entityA, entityB, contactImpulse);
+                    }
                 }
             }
         });
@@ -110,12 +133,17 @@ public class PhysicsSystem extends System implements NonRemovable, NonDuplicated
     }
 
     @Override
-    public void deltaUpdate(ComponentsQuery componentsQuery, float deltaTime)
+    public void deltaUpdate(ComponentsQuery componentsQuery, float deltaTime) {
+
+    }
+
+    @Override
+    public void deltaUpdate(float deltaTime)
     {
         if(!simulatePhysics || !active) return;
 
         // setting settings
-        world.setGravity(new Vec2(PhysicsSettings.gravity.x / PhysicsSettings.ratio, PhysicsSettings.gravity.y / PhysicsSettings.ratio));
+        world.setGravity(new Vec2(PhysicsSettings.gravity.x, PhysicsSettings.gravity.y));
         Settings.velocityThreshold = PhysicsSettings.velocityThreshold;
 
         // updating physics world
@@ -149,6 +177,7 @@ public class PhysicsSystem extends System implements NonRemovable, NonDuplicated
             rigidbody2DComponent.lastBodyType = rigidbody2DComponent.bodyType;
         }
 
+        /*
         if (rigidbody2DComponent.density != rigidbody2DComponent.lastDensity) {
             rigidbody2DComponent.lastDensity = rigidbody2DComponent.density;
         }
@@ -164,6 +193,8 @@ public class PhysicsSystem extends System implements NonRemovable, NonDuplicated
         if (rigidbody2DComponent.sensor != rigidbody2DComponent.lastSensor) {
             rigidbody2DComponent.lastSensor = rigidbody2DComponent.sensor;
         }
+
+         */
 
         if (rigidbody2DComponent.fixedRotation != rigidbody2DComponent.lastFixedRotation) {
             rigidbody2DComponent.body.setFixedRotation(rigidbody2DComponent.fixedRotation);

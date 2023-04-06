@@ -37,8 +37,8 @@ public class CamerasDebugLines
         mainCamera2DIcon.getComponent(TransformComponent.class).scale.set(new Vector3f(cameraSize.x / 100.0f, cameraSize.y / 100.0f, 1f));
         mainCamera2DIcon.setColor(new Vector4f(0.8f, 0.8f, 0.8f, 0.75f));
 
-        inspectorCamera2DBox.getComponent(BoxComponent.class).setColor(new Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
-        mainCamera2DBox.getComponent(BoxComponent.class).setColor(new Vector4f(1.0f, 0.0f, 1.0f, 1.0f));
+        inspectorCamera2DBox.getComponent(BoxComponent.class).color.set(new Vector4f(0.0f, 0.0f, 1.0f, 1.0f));
+        mainCamera2DBox.getComponent(BoxComponent.class).color.set(new Vector4f(1.0f, 0.0f, 1.0f, 1.0f));
     }
 
     public static void draw() {
@@ -71,8 +71,8 @@ public class CamerasDebugLines
 
                 boxTransformComponent.position.set(camera2DRealPosition.x, camera2DRealPosition.y, camera2DRealPosition.z + Layering.Z_INDEX_P2);
                 boxTransformComponent.rotation.set(camera2DRealRotation);
-                boxComponent.setWidth(cameraComponent.viewportSize.x * (1.0f / camera2DRealScale.x));
-                boxComponent.setHeight(cameraComponent.viewportSize.y * (1.0f / camera2DRealScale.y));
+                boxComponent.size.x = cameraComponent.viewportSize.x * (1.0f / camera2DRealScale.x);
+                boxComponent.size.y = cameraComponent.viewportSize.y * (1.0f / camera2DRealScale.y);
             }
         }
         if (currentSceneManager.getCurrentScene2D() != null && currentSceneManager.getCurrentScene2D().getSceneMainCamera2D() != null) {
@@ -96,8 +96,8 @@ public class CamerasDebugLines
 
                 boxTransformComponent.position.set(camera2DRealPosition.x, camera2DRealPosition.y, camera2DRealPosition.z + Layering.Z_INDEX_P2);
                 boxTransformComponent.rotation.set(camera2DRealRotation);
-                boxComponent.setWidth(cameraComponent.viewportSize.x * (1.0f / camera2DRealScale.x));
-                boxComponent.setHeight(cameraComponent.viewportSize.y * (1.0f / camera2DRealScale.y));
+                boxComponent.size.x = cameraComponent.viewportSize.x * (1.0f / camera2DRealScale.x);
+                boxComponent.size.y = cameraComponent.viewportSize.y * (1.0f / camera2DRealScale.y);
             }
         }
 

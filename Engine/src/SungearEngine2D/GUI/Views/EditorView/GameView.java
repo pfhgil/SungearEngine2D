@@ -26,7 +26,8 @@ import org.joml.Vector4f;
 import org.lwjgl.opengl.GL46C;
 
 import static Core2D.Scene2D.SceneManager.currentSceneManager;
-import static org.lwjgl.opengl.GL11C.*;
+import static org.lwjgl.opengl.GL11C.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11C.GL_UNSIGNED_INT;
 import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
 
 public class GameView extends View

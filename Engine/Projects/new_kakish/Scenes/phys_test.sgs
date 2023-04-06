@@ -18,8 +18,8 @@
                 "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
                 "properties": {
                   "position": {
-                    "x": 0.0,
-                    "y": 0.0,
+                    "x": 728.60126,
+                    "y": -932.2282,
                     "z": 0.0
                   },
                   "rotation": {
@@ -127,8 +127,8 @@
                   "followTransformRotation": false,
                   "followTransformScale": false,
                   "position": {
-                    "x": 0.0,
-                    "y": 0.0,
+                    "x": 728.60126,
+                    "y": -932.2282,
                     "z": 0.0
                   },
                   "rotation": {
@@ -207,7 +207,7 @@
             "childrenEntitiesID": []
           },
           {
-            "name": "ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir)",
+            "name": "test",
             "active": true,
             "layerName": "default",
             "tag": {
@@ -219,8 +219,2528 @@
                 "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
                 "properties": {
                   "position": {
-                    "x": -17.978115,
-                    "y": -727.2979,
+                    "x": 3359.7666,
+                    "y": 466.55713,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_819",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 819,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 4300.807,
+                    "y": -1404.1726,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_821",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 821,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 3251.8767,
+                    "y": -1404.1726,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_823",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 823,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 2102.8408,
+                    "y": -1404.1726,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_825",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 825,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 914.63306,
+                    "y": -1404.1726,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_827",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 827,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 5423.7285,
+                    "y": -1404.1726,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_829",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 829,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 5434.204,
+                    "y": -2223.6628,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_831",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 831,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 4299.4556,
+                    "y": -2223.6628,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_833",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 833,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 3255.487,
+                    "y": -2223.6628,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_835",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 835,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 2106.7727,
+                    "y": -2223.6628,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_837",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 837,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 910.97534,
+                    "y": -2223.6628,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_839",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 839,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 914.02325,
+                    "y": -2965.7979,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_841",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 841,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 2112.1946,
+                    "y": -2965.7979,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_843",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 843,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 3267.3435,
+                    "y": -2965.7979,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_845",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 845,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 4317.6924,
+                    "y": -2965.7979,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_847",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 847,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 5435.9067,
+                    "y": -3775.2012,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_849",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 849,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 5435.9067,
+                    "y": -2965.7979,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_853",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 853,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 4296.642,
+                    "y": -3781.7747,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_855",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 855,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 3242.3262,
+                    "y": -3781.7747,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_857",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 857,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 2105.4106,
+                    "y": -3786.31,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 8.0,
+                    "y": 6.0,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "test_859",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 859,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 915.1338,
+                    "y": -3786.31,
                     "z": 0.0
                   },
                   "rotation": {
@@ -350,7 +2870,7 @@
     }
   ],
   "scriptSystem": {},
-  "maxObjectID": 3,
+  "maxObjectID": 867,
   "inBuild": false,
   "isMainScene2D": false
 }

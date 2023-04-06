@@ -2,12 +2,9 @@ package Core2D.Graphics.RenderParts;
 
 import Core2D.DataClasses.ShaderData;
 import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.Shader.ShaderUniformFloatComponent;
-import Core2D.ECS.Component.Components.Shader.TextureComponent;
 import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Log.Log;
 import Core2D.Utils.ComponentHandler;
-import Core2D.Utils.ShaderUtils;
 import org.joml.*;
 import org.lwjgl.BufferUtils;
 
@@ -108,6 +105,7 @@ public class Shader implements Serializable
         // сначала нужно забиндить шейдер
         public void apply(int programHandler)
         {
+            /*
             if(attachedComponent instanceof ShaderUniformFloatComponent shaderUniformFloatComponent) {
                 value = shaderUniformFloatComponent.uniformValue;
             } else if(attachedComponent instanceof TextureComponent textureComponent) {
@@ -121,6 +119,8 @@ public class Shader implements Serializable
                     name,
                     value
             );
+
+             */
         }
 
         public String getName() { return name; }

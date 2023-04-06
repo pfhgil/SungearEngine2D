@@ -1,10 +1,10 @@
 package Core2D.ECS.System.Systems.Cameras;
 
+import Core2D.Common.Interfaces.NonDuplicated;
+import Core2D.Common.Interfaces.NonRemovable;
 import Core2D.Core2D.Core2D;
 import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
-import Core2D.Common.Interfaces.NonDuplicated;
-import Core2D.Common.Interfaces.NonRemovable;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import Core2D.Graphics.Graphics;
@@ -16,12 +16,15 @@ import Core2D.Layering.PostprocessingLayer;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.MatrixUtils;
 import Core2D.Utils.ShaderUtils;
-import org.joml.*;
+import org.joml.Quaternionf;
+import org.joml.Vector2i;
+import org.joml.Vector3f;
+import org.joml.Vector4f;
 
-import java.lang.Math;
 import java.util.Optional;
 
-import static org.lwjgl.opengl.GL11C.*;
+import static org.lwjgl.opengl.GL11C.GL_TRIANGLES;
+import static org.lwjgl.opengl.GL11C.GL_UNSIGNED_INT;
 import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
 
 // система для рендера и управления камерами

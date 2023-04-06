@@ -9,6 +9,21 @@
       "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scenes\\phys_test.sgs",
       "inBuild": false,
       "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scenes\\physics_copy_test.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scenes\\TOP.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
+    },
+    {
+      "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scenes\\3dtest.sgs",
+      "inBuild": false,
+      "isMainScene2D": false
     }
   ],
   "mainScene2DPath": ""

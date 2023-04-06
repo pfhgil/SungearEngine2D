@@ -266,7 +266,7 @@ public class Script
             component.collider2DEnter(otherObj);
         }
         if(scriptClassInstance instanceof System system) {
-            system.collider2DEnter(otherObj);
+            //system.collider2DEnter(otherObj);
         }
     }
 
@@ -276,7 +276,7 @@ public class Script
             component.collider2DExit(otherObj);
         }
         if(scriptClassInstance instanceof System system) {
-            system.collider2DExit(otherObj);
+            //system.collider2DExit(otherObj);
         }
     }
 

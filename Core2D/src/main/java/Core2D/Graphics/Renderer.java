@@ -26,7 +26,7 @@ public class Renderer
 
             if(cameraComponent != null) {
                 ECSWorld.getCurrentECSWorld().meshesRendererSystem.renderEntity(entity, cameraComponent, shader);
-                ECSWorld.getCurrentECSWorld().primitivesRendererSystem.renderEntity(entity, cameraComponent, shader);
+                ECSWorld.getCurrentECSWorld().primitivesSystem.renderEntity(entity, cameraComponent, shader);
             }
         }
     }
@@ -36,7 +36,7 @@ public class Renderer
         if(!entity.active || entity.isShouldDestroy()) return;
 
         ECSWorld.getCurrentECSWorld().meshesRendererSystem.renderEntity(entity, cameraComponent, shader);
-        ECSWorld.getCurrentECSWorld().primitivesRendererSystem.renderEntity(entity, cameraComponent, shader);
+        ECSWorld.getCurrentECSWorld().primitivesSystem.renderEntity(entity, cameraComponent, shader);
     }
 
     public void render(Entity entity, CameraComponent cameraComponent)
@@ -44,7 +44,7 @@ public class Renderer
         if(!entity.active || entity.isShouldDestroy()) return;
 
         ECSWorld.getCurrentECSWorld().meshesRendererSystem.renderEntity(entity, cameraComponent);
-        ECSWorld.getCurrentECSWorld().primitivesRendererSystem.renderEntity(entity, cameraComponent);
+        ECSWorld.getCurrentECSWorld().primitivesSystem.renderEntity(entity, cameraComponent);
     }
 
     public void render(Layering layering, CameraComponent cameraComponent)

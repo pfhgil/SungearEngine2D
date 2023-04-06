@@ -127,8 +127,8 @@ public class SystemsView extends View
                             inspectingEntity.addSystem(new MeshRendererSystem());
                             action = "";
                         }
-                        if (ImGui.selectable("PrimitivesRendererSystem")) {
-                            inspectingEntity.addSystem(new PrimitivesRendererSystem());
+                        if (ImGui.selectable("PrimitivesSystem")) {
+                            inspectingEntity.addSystem(new PrimitivesSystem());
                             action = "";
                         }
                     } catch (Exception e) {

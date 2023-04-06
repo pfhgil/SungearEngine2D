@@ -3,9 +3,6 @@ package SungearEngine2D.GUI.Views.EditorView;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
-import Core2D.ECS.Component.Components.ProgramTimeComponent;
-import Core2D.ECS.Component.Components.Shader.ShaderUniformFloatComponent;
-import Core2D.ECS.Component.Components.Shader.TextureComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Layering.PostprocessingLayer;
@@ -16,7 +13,6 @@ import SungearEngine2D.GUI.Views.ViewsManager;
 import SungearEngine2D.Scripting.Compiler;
 import imgui.ImGui;
 import imgui.ImVec2;
-import imgui.flag.ImGuiInputTextFlags;
 import imgui.flag.ImGuiStyleVar;
 import imgui.type.ImBoolean;
 import org.lwjgl.opengl.GL46C;
@@ -135,6 +131,7 @@ public class ShadersEditorView extends View
                         boolean isSampler = shaderUniform.getType() == GL46C.GL_SAMPLER_1D ||
                                 shaderUniform.getType() == GL46C.GL_SAMPLER_2D ||
                                 shaderUniform.getType() == GL46C.GL_SAMPLER_3D;
+                        /*
                         if (shaderUniform.value instanceof Integer) {
                             editUniformValue(shaderUniform,
                                     !isSampler || shaderUniform.getAttachedComponent() == null,
@@ -164,12 +161,14 @@ public class ShadersEditorView extends View
                                     () -> {
                                         String[] text = new String[1];
                                         if (shaderUniform.getAttachedComponent() instanceof ProgramTimeComponent programTimeComponent) {
-                                            text[0] = "" + programTimeComponent.uniformValue;
+                                            text[0] = String.valueOf(programTimeComponent.uniformValue);
                                         }
                                         ImGuiUtils.inputText(shaderUniform.getName(), text[0], ImGuiInputTextFlags.ReadOnly);
                                     },
                                     ShaderUniformFloatComponent.class);
                         }
+
+                         */
                     }
 
                     ImGui.endChild();

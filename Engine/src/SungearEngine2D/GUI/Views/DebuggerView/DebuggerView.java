@@ -1,7 +1,7 @@
 package SungearEngine2D.GUI.Views.DebuggerView;
 
-import SungearEngine2D.GUI.Views.View;
 import Core2D.Utils.Debugger;
+import SungearEngine2D.GUI.Views.View;
 import imgui.ImGui;
 import imgui.flag.ImGuiStyleVar;
 import imgui.type.ImBoolean;

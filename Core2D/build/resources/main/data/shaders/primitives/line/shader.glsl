@@ -1,7 +1,4 @@
 #ifdef VERTEX
-    // id аттрибута = 0. позиции вершин. входной параметр
-    layout (location = 0) in vec2 positionAttribute;
-
     uniform mat4 mvpMatrix;
 
     uniform vec3 offset;

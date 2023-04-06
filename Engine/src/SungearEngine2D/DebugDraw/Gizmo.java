@@ -99,12 +99,12 @@ public class Gizmo
         xArrow.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
         centrePoint.setColor(new Vector4f(0.5f, 0.5f, 0.5f, 1));
         centrePointToEditCenter.setColor(new Vector4f(0.25f, 0.9f, 0.5f, 1.0f));
-        rotationCircle.getComponent(CircleComponent.class).setColor(new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
+        rotationCircle.getComponent(CircleComponent.class).color.set(new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
         rotationHandler.setColor(new Vector4f(0.5f, 0.5f, 0.5f, 1));
         yScaleHandler.setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1));
-        yScaleLine.getComponent(LineComponent.class).setColor(new Vector4f(1.0f, 0.0f, 0.0f, 0.65f));
+        yScaleLine.getComponent(LineComponent.class).color.set(new Vector4f(1.0f, 0.0f, 0.0f, 0.65f));
         xScaleHandler.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 1));
-        xScaleLine.getComponent(LineComponent.class).setColor(new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
+        xScaleLine.getComponent(LineComponent.class).color.set(new Vector4f(0.0f, 1.0f, 0.0f, 0.65f));
 
         //xArrow.getComponent(TransformComponent.class).getTransform().setRotation(-90.0f);
 
@@ -115,15 +115,15 @@ public class Gizmo
         xArrow.getComponent(TransformComponent.class).scale.set(new Vector3f(arrowScale.x, arrowScale.y, 1f));
         centrePoint.getComponent(TransformComponent.class).scale.set(new Vector3f(pointScale.x, pointScale.y, 1f));
         centrePointToEditCenter.getComponent(TransformComponent.class).scale.set(new Vector3f(new Vector2f(pointScale).div(2.5f), 1f));
-        rotationCircle.getComponent(CircleComponent.class).setRadius(300.0f);
-        rotationCircle.getComponent(CircleComponent.class).setAngleIncrement(5);
+        rotationCircle.getComponent(CircleComponent.class).radius = 300.0f;
+        rotationCircle.getComponent(CircleComponent.class).angleIncrement = 5;
         //rotationCircle.getComponent(TransformComponent.class).getTransform().setScale(rotationCircleScale);
         rotationHandler.getComponent(TransformComponent.class).scale.set(new Vector3f(pointScale.x, pointScale.y, 1f));
         yScaleHandler.getComponent(TransformComponent.class).scale.set(new Vector3f(pointScale.x, pointScale.y, 1f));
         xScaleHandler.getComponent(TransformComponent.class).scale.set(new Vector3f(pointScale.x, pointScale.y, 1f));
 
-        yScaleLine.getComponent(LineComponent.class).setLinesWidth(6.0f);
-        xScaleLine.getComponent(LineComponent.class).setLinesWidth(6.0f);
+        yScaleLine.getComponent(LineComponent.class).linesWidth = 6.0f;
+        xScaleLine.getComponent(LineComponent.class).linesWidth = 6.0f;
         //Transform rotationCircleTransform = rotationCircle.getComponent(TransformComponent.class).getTransform();
         //rotationHandler.getComponent(TransformComponent.class).getTransform().setPosition(new Vector2f(rotationCircleTransform.getPosition()).add(new Vector2f(0.0f, rotationCircleTransform.getScale().x * 100.0f / 2.0f)));
 
@@ -185,7 +185,7 @@ public class Gizmo
                 centerPointToEditCenterTransform.position.set(entityCentrePos.x, entityCentrePos.y, entityPosition.z + Layering.Z_INDEX_P8);
 
                 rotationCircleTransform.position.set(entityCentrePos.x, entityCentrePos.y, entityCentrePos.z);
-                rotationHandlerTransform.position.set(rotationCircleTransform.position).add(0f, rotationCircle.getComponent(CircleComponent.class).getRadius(), Layering.Z_INDEX_P4);
+                rotationHandlerTransform.position.set(rotationCircleTransform.position).add(0f, rotationCircle.getComponent(CircleComponent.class).radius, Layering.Z_INDEX_P4);
                 Vector2f rotationOffset = new Vector2f(entityCentrePos.x, entityCentrePos.y).add(new Vector2f(rotationHandlerTransform.position.x, rotationHandlerTransform.position.y).negate());
                 rotationHandlerTransform.rotation.set(entityRotation);
                 rotationHandlerTransform.center.set(rotationOffset.x, rotationOffset.y, rotationHandlerTransform.center.z);
@@ -215,11 +215,11 @@ public class Gizmo
                 LineComponent yScaleLineComponent = yScaleLine.getComponent(LineComponent.class);
                 LineComponent xScaleLineComponent = xScaleLine.getComponent(LineComponent.class);
 
-                yScaleLineComponent.getLinesData()[0].getVertices()[0].set(entityPosition.x, entityPosition.y, entityPosition.z + Layering.Z_INDEX_P2);
-                yScaleLineComponent.getLinesData()[0].getVertices()[1].set(new Vector3f(entityPosition.x, entityPosition.y, entityPosition.z).add(yScaleLineEnd.x, yScaleLineEnd.y, Layering.Z_INDEX_P2));
+                yScaleLineComponent.linesData[0].start.set(entityPosition.x, entityPosition.y, entityPosition.z + Layering.Z_INDEX_P2);
+                yScaleLineComponent.linesData[0].end.set(new Vector3f(entityPosition.x, entityPosition.y, entityPosition.z).add(yScaleLineEnd.x, yScaleLineEnd.y, Layering.Z_INDEX_P2));
 
-                xScaleLineComponent.getLinesData()[0].getVertices()[0].set(entityPosition.x, entityPosition.y, entityPosition.z + Layering.Z_INDEX_P2);
-                xScaleLineComponent.getLinesData()[0].getVertices()[1].set(new Vector3f(entityPosition.x, entityPosition.y, entityPosition.z).add(xScaleLineEnd.x, xScaleLineEnd.y, Layering.Z_INDEX_P2));
+                xScaleLineComponent.linesData[0].start.set(entityPosition.x, entityPosition.y, entityPosition.z + Layering.Z_INDEX_P2);
+                xScaleLineComponent.linesData[0].end.set(new Vector3f(entityPosition.x, entityPosition.y, entityPosition.z).add(xScaleLineEnd.x, xScaleLineEnd.y, Layering.Z_INDEX_P2));
 
                 yScaleHandlerTransform.position.set(new Vector3f(entityPosition).add(yScaleLineEnd.x, yScaleLineEnd.y, Layering.Z_INDEX_P4));
                 xScaleHandlerTransform.position.set(new Vector3f(entityPosition).add(xScaleLineEnd.x, xScaleLineEnd.y, Layering.Z_INDEX_P4));

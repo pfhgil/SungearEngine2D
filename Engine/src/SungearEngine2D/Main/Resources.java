@@ -4,7 +4,6 @@ import Core2D.Core2D.Core2D;
 import Core2D.DataClasses.ShaderData;
 import Core2D.DataClasses.Texture2DData;
 import Core2D.Graphics.RenderParts.Shader;
-import Core2D.Graphics.RenderParts.Texture2D;
 import org.lwjgl.glfw.GLFW;
 
 // TODO: в дальнейшем все это перенести в AssetManager

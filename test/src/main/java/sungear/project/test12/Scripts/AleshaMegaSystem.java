@@ -1,6 +1,5 @@
 package sungear.project.test12.Scripts;
 
-import Core2D.ECS.Entity;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 

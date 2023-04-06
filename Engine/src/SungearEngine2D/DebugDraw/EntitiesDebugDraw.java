@@ -45,7 +45,7 @@ public class EntitiesDebugDraw
                     if (boxes.size() < i + 1) {
                         Entity newBox = Entity.createAsBox();
 
-                        newBox.getComponent(BoxComponent.class).setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
+                        newBox.getComponent(BoxComponent.class).color.set(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 
                         boxes.add(newBox);
                     }
@@ -69,17 +69,17 @@ public class EntitiesDebugDraw
                     Vec2 wp2 = body.getWorldPoint(verticesPos[2]);
                     Vec2 wp3 = body.getWorldPoint(verticesPos[3]);
 
-                    boxComponent.getLinesData()[0].getVertices()[0].set(wp0.x * PhysicsSettings.ratio, wp0.y * PhysicsSettings.ratio, boxComponent.getLinesData()[0].getVertices()[0].z);
-                    boxComponent.getLinesData()[0].getVertices()[1].set(wp1.x * PhysicsSettings.ratio, wp1.y * PhysicsSettings.ratio, boxComponent.getLinesData()[0].getVertices()[1].z);
+                    boxComponent.linesData[0].start.set(wp0.x * PhysicsSettings.ratio, wp0.y * PhysicsSettings.ratio, boxComponent.linesData[0].start.z);
+                    boxComponent.linesData[0].end.set(wp1.x * PhysicsSettings.ratio, wp1.y * PhysicsSettings.ratio, boxComponent.linesData[0].end.z);
 
-                    boxComponent.getLinesData()[1].getVertices()[0].set(wp1.x * PhysicsSettings.ratio, wp1.y * PhysicsSettings.ratio, boxComponent.getLinesData()[1].getVertices()[0].z);
-                    boxComponent.getLinesData()[1].getVertices()[1].set(wp2.x * PhysicsSettings.ratio, wp2.y * PhysicsSettings.ratio, boxComponent.getLinesData()[1].getVertices()[1].z);
+                    boxComponent.linesData[1].start.set(wp1.x * PhysicsSettings.ratio, wp1.y * PhysicsSettings.ratio, boxComponent.linesData[1].start.z);
+                    boxComponent.linesData[1].end.set(wp2.x * PhysicsSettings.ratio, wp2.y * PhysicsSettings.ratio, boxComponent.linesData[1].end.z);
 
-                    boxComponent.getLinesData()[2].getVertices()[0].set(wp2.x * PhysicsSettings.ratio, wp2.y * PhysicsSettings.ratio, boxComponent.getLinesData()[2].getVertices()[0].z);
-                    boxComponent.getLinesData()[2].getVertices()[1].set(wp3.x * PhysicsSettings.ratio, wp3.y * PhysicsSettings.ratio, boxComponent.getLinesData()[2].getVertices()[1].z);
+                    boxComponent.linesData[2].start.set(wp2.x * PhysicsSettings.ratio, wp2.y * PhysicsSettings.ratio, boxComponent.linesData[2].start.z);
+                    boxComponent.linesData[2].end.set(wp3.x * PhysicsSettings.ratio, wp3.y * PhysicsSettings.ratio, boxComponent.linesData[2].end.z);
 
-                    boxComponent.getLinesData()[3].getVertices()[0].set(wp3.x * PhysicsSettings.ratio, wp3.y * PhysicsSettings.ratio, boxComponent.getLinesData()[3].getVertices()[0].z);
-                    boxComponent.getLinesData()[3].getVertices()[1].set(wp0.x * PhysicsSettings.ratio, wp0.y * PhysicsSettings.ratio, boxComponent.getLinesData()[3].getVertices()[1].z);
+                    boxComponent.linesData[3].start.set(wp3.x * PhysicsSettings.ratio, wp3.y * PhysicsSettings.ratio, boxComponent.linesData[3].start.z);
+                    boxComponent.linesData[3].end.set(wp0.x * PhysicsSettings.ratio, wp0.y * PhysicsSettings.ratio, boxComponent.linesData[3].end.z);
 
                     box.update();
 
@@ -92,7 +92,7 @@ public class EntitiesDebugDraw
                     if (circles.size() < i + 1) {
                         Entity newCircle = Entity.createAsCircle();
 
-                        newCircle.getComponent(CircleComponent.class).setColor(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
+                        newCircle.getComponent(CircleComponent.class).color.set(new Vector4f(1.0f, 0.0f, 0.0f, 1.0f));
 
                         circles.add(newCircle);
                     }
@@ -111,8 +111,8 @@ public class EntitiesDebugDraw
                     Vec2 circlePos = rigidbody2DComponent.body.getWorldPoint(circleShape.m_p);
                     float circleRadius = circleShape.m_radius * PhysicsSettings.ratio;
 
-                    circleComponent.setOffset(new Vector3f(circlePos.x * PhysicsSettings.ratio, circlePos.y * PhysicsSettings.ratio, circleComponent.getOffset().z));
-                    circleComponent.setRadius(circleRadius);
+                    circleComponent.offset.set(new Vector3f(circlePos.x * PhysicsSettings.ratio, circlePos.y * PhysicsSettings.ratio, circleComponent.offset.z));
+                    circleComponent.radius = circleRadius;
 
                     circle.update();
 

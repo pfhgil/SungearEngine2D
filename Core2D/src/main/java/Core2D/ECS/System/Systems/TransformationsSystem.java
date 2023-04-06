@@ -8,8 +8,8 @@ import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import Core2D.Settings.PhysicsSettings;
 import org.jbox2d.common.Vec2;
-import org.joml.*;
 import org.joml.Math;
+import org.joml.*;
 
 public class TransformationsSystem extends System
 {

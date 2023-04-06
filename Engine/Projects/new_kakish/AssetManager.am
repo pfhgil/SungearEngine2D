@@ -48,6 +48,15 @@
     {
       "assetObject": {
         "lastModified": -1,
+        "canonicalPath": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
+        "relativePath": "/data/shaders/postprocessing/postprocessing_default_shader.glsl"
+      },
+      "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
+      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
+    },
+    {
+      "assetObject": {
+        "lastModified": -1,
         "canonicalPath": "/data/shaders/postprocessing/postprocessing_test0_shader.glsl",
         "relativePath": "/data/shaders/postprocessing/postprocessing_test0_shader.glsl"
       },
@@ -99,6 +108,14 @@
     },
     {
       "assetObject": {
+        "canonicalPath": "/data/models/Tiger_I.obj",
+        "relativePath": "/data/models/Tiger_I.obj"
+      },
+      "path": "/data/models/Tiger_I.obj",
+      "assetObjectClassName": "Core2D.DataClasses.ModelData"
+    },
+    {
+      "assetObject": {
         "lastModified": -1,
         "canonicalPath": "/data/shaders/common/only_color_shader.glsl",
         "relativePath": "/data/shaders/common/only_color_shader.glsl"
@@ -113,6 +130,38 @@
       },
       "path": "/data/audio/dj-arbuz.wav",
       "assetObjectClassName": "Core2D.DataClasses.AudioData"
+    },
+    {
+      "assetObject": {
+        "canonicalPath": "/data/models/model.dae",
+        "relativePath": "/data/models/model.dae"
+      },
+      "path": "/data/models/model.dae",
+      "assetObjectClassName": "Core2D.DataClasses.ModelData"
+    },
+    {
+      "assetObject": {
+        "canonicalPath": "/data/models/model.dat",
+        "relativePath": "/data/models/model.dat"
+      },
+      "path": "/data/models/model.dat",
+      "assetObjectClassName": "Core2D.DataClasses.ModelData"
+    },
+    {
+      "assetObject": {
+        "canonicalPath": "/data/models/obshaga_21.skp",
+        "relativePath": "/data/models/obshaga_21.skp"
+      },
+      "path": "/data/models/obshaga_21.skp",
+      "assetObjectClassName": "Core2D.DataClasses.ModelData"
+    },
+    {
+      "assetObject": {
+        "canonicalPath": "/data/models/sphere.stl",
+        "relativePath": "/data/models/sphere.stl"
+      },
+      "path": "/data/models/sphere.stl",
+      "assetObjectClassName": "Core2D.DataClasses.ModelData"
     },
     {
       "assetObject": {
@@ -204,7 +253,7 @@
     },
     {
       "assetObject": {
-        "lastModified": 1678727574938,
+        "lastModified": 1680546388207,
         "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\shaders\\SlaysPPShader.glsl",
         "relativePath": "shaders\\SlaysPPShader.glsl"
       },
@@ -213,7 +262,7 @@
     },
     {
       "assetObject": {
-        "lastModified": 1678639308291,
+        "lastModified": 1680546388207,
         "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\shaders\\Sample.glsl",
         "relativePath": "shaders\\Sample.glsl"
       },
@@ -258,7 +307,7 @@
     },
     {
       "assetObject": {
-        "lastModified": 1679510103768,
+        "lastModified": 1680546387911,
         "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scripts\\test\\dfdf.java",
         "relativePath": "Scripts\\test\\dfdf.java"
       },
@@ -267,7 +316,7 @@
     },
     {
       "assetObject": {
-        "lastModified": 1680042202526,
+        "lastModified": 1680546387910,
         "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scripts\\SpaceDeformationComponent.class",
         "relativePath": "Scripts\\SpaceDeformationComponent.class"
       },
@@ -276,7 +325,7 @@
     },
     {
       "assetObject": {
-        "lastModified": 1680042209540,
+        "lastModified": 1680546387909,
         "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scripts\\SetActiveComponent.class",
         "relativePath": "Scripts\\SetActiveComponent.class"
       },
@@ -285,7 +334,7 @@
     },
     {
       "assetObject": {
-        "lastModified": 1680042220055,
+        "lastModified": 1680546387908,
         "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scripts\\PickableComponent.class",
         "relativePath": "Scripts\\PickableComponent.class"
       },
@@ -294,7 +343,7 @@
     },
     {
       "assetObject": {
-        "lastModified": 1680042220042,
+        "lastModified": 1680546387907,
         "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scripts\\HoholMegaSuperComponent.class",
         "relativePath": "Scripts\\HoholMegaSuperComponent.class"
       },
@@ -375,7 +424,7 @@
     },
     {
       "assetObject": {
-        "lastModified": 1680540315632,
+        "lastModified": 1680819396330,
         "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\",
         "relativePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish"
       },
@@ -384,20 +433,47 @@
     },
     {
       "assetObject": {
-        "lastModified": 1680540315632,
+        "textureBlock": 33984,
+        "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\Снимок.PNG",
+        "relativePath": "Resources\\Снимок.PNG"
+      },
+      "path": "Resources\\Снимок.PNG",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "textureBlock": 33984,
+        "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\tanks\\ussr\\is7.png",
+        "relativePath": "Resources\\tanks\\ussr\\is7.png"
+      },
+      "path": "Resources\\tanks\\ussr\\is7.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "textureBlock": 33984,
+        "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\tanks\\ussr\\is7\\is7_hull.png",
+        "relativePath": "Resources\\tanks\\ussr\\is7\\is7_hull.png"
+      },
+      "path": "Resources\\tanks\\ussr\\is7\\is7_hull.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "textureBlock": 33984,
+        "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\tanks\\ussr\\is7\\is7_tower.png",
+        "relativePath": "Resources\\tanks\\ussr\\is7\\is7_tower.png"
+      },
+      "path": "Resources\\tanks\\ussr\\is7\\is7_tower.png",
+      "assetObjectClassName": "Core2D.DataClasses.Texture2DData"
+    },
+    {
+      "assetObject": {
+        "lastModified": 1680819396330,
         "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish",
         "relativePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish"
       },
       "path": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish",
-      "assetObjectClassName": "Core2D.DataClasses.ShaderData"
-    },
-    {
-      "assetObject": {
-        "lastModified": -1,
-        "canonicalPath": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
-        "relativePath": "/data/shaders/postprocessing/postprocessing_default_shader.glsl"
-      },
-      "path": "/data/shaders/postprocessing/postprocessing_default_shader.glsl",
       "assetObjectClassName": "Core2D.DataClasses.ShaderData"
     }
   ]

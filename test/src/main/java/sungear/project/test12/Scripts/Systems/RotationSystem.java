@@ -1,6 +1,5 @@
 package sungear.project.test12.Scripts.Systems;
 
-import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
 import Core2D.ECS.Entity;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;

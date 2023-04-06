@@ -1,13 +1,7 @@
 package Core2D.Utils;
 
-import Core2D.Log.Log;
-
-import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.net.URLClassLoader;
-import java.nio.file.Files;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.Map;
 

@@ -205,7 +205,7 @@ public class Main
                     @Override
                     public void preRender()
                     {
-                        if(ViewsManager.getInspectorView().getCurrentInspectingObject() != null) {
+                        if(ViewsManager.getInspectorView().getCurrentInspectingObject() != null && ((Entity) ViewsManager.getInspectorView().getCurrentInspectingObject()).getLayer() != null) {
                             // обработка стенсил буфера отключена
                             OpenGL.glCall(func -> glStencilMask(0x00));
 
@@ -301,13 +301,16 @@ public class Main
                 // executor test --------------------------------------
                 if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL) && Keyboard.keyPressed(GLFW.GLFW_KEY_Z)) {
                     Executor.revertLastCommand();
-                } else if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL) && Keyboard.keyPressed(GLFW.GLFW_KEY_Y)) {
+                }
+                if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL) && Keyboard.keyPressed(GLFW.GLFW_KEY_Y)) {
                     Executor.restoreLastCommand();
-                } else if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL) && Keyboard.keyPressed(GLFW.GLFW_KEY_C)) {
+                }
+                if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL) && Keyboard.keyPressed(GLFW.GLFW_KEY_C)) {
                     if(ViewsManager.getInspectorView().getCurrentInspectingObject() != null && ViewsManager.isSceneViewFocused) {
                         Executor.executeCommand(new ObjectCopy(), ViewsManager.getInspectorView().getCurrentInspectingObject());
                     }
-                } else if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL) && Keyboard.keyPressed(GLFW.GLFW_KEY_V)) {
+                }
+                if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL) && Keyboard.keyPressed(GLFW.GLFW_KEY_V)) {
                     if(ViewsManager.getInspectorView().getCurrentInspectingObject() != null && ViewsManager.isSceneViewFocused) {
                         Executor.executeCommand(new EntitiesPaste());
                     }

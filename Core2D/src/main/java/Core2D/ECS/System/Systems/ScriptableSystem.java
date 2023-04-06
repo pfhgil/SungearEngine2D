@@ -45,10 +45,7 @@ public class ScriptableSystem extends System
         script.deltaUpdate(deltaTime);
     }
 
-    /**
-     * Calls the collider2DEnter method of the script if current scene is set.
-     * @see Script#collider2DEnter(Entity)
-     */
+    /*
     @Override
     public void collider2DEnter(Entity otherEntity)
     {
@@ -56,16 +53,13 @@ public class ScriptableSystem extends System
         script.collider2DEnter(otherEntity);
     }
 
-    /**
-     * Calls the collider2DExit method of the script if current scene is set.
-     * @see Script#collider2DExit(Entity)
-     */
     @Override
     public void collider2DExit(Entity otherEntity)
     {
         if(!SceneManager.currentSceneManager.getCurrentScene2D().getScriptSystem().runScripts) return;
         script.collider2DExit(otherEntity);
     }
+    */
 
     @Override
     public void renderEntity(Entity entity, CameraComponent cameraComponent)

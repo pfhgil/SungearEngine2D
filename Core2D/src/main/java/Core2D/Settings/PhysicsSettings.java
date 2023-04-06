@@ -4,7 +4,7 @@ import org.jbox2d.common.Vec2;
 
 public class PhysicsSettings
 {
-    public static Vec2 gravity = new Vec2(0f, -2f);
+    public static Vec2 gravity = new Vec2(0f, -140f);
 
     public static int velocityIterations = 6;
     public static int positionIterations = 2;

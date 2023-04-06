@@ -3,8 +3,6 @@ package SungearEngine2D.DebugDraw;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.Entity;
-import Core2D.Utils.ECSUtils;
-import SungearEngine2D.Main.Resources;
 import org.joml.Vector2f;
 
 public class Grid

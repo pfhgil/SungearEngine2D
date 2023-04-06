@@ -1,0 +1,361 @@
+{
+  "name": "3dtest",
+  "scenePath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Scenes\\3dtest.sgs",
+  "layering": {
+    "layers": [
+      {
+        "entities": [
+          {
+            "name": "default",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 938873618,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 3256.4028,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 30.0,
+                    "y": 30.0,
+                    "z": 30.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "properties": {
+                  "texture2DData": {
+                    "textureBlock": 33984,
+                    "canonicalPath": "D:\\Pixelfield\\SungearEngine2D\\Engine\\Projects\\new_kakish\\Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
+                    "relativePath": "Resources\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg"
+                  },
+                  "shader": {
+                    "path": "/data/shaders/mesh/default_shader.glsl",
+                    "shaderUniforms": [
+                      {
+                        "name": "color",
+                        "size": 1,
+                        "type": 35666,
+                        "value": {
+                          "x": 0.0,
+                          "y": 0.0,
+                          "z": 0.0,
+                          "w": 1.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "mvpMatrix",
+                        "size": 1,
+                        "type": 35676,
+                        "value": {
+                          "m00": 1.0,
+                          "m01": 0.0,
+                          "m02": 0.0,
+                          "m03": 0.0,
+                          "m10": 0.0,
+                          "m11": 1.0,
+                          "m12": 0.0,
+                          "m13": 0.0,
+                          "m20": 0.0,
+                          "m21": 0.0,
+                          "m22": 1.0,
+                          "m23": 0.0,
+                          "m30": 0.0,
+                          "m31": 0.0,
+                          "m32": 0.0,
+                          "m33": 1.0,
+                          "properties": 30.0
+                        },
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      },
+                      {
+                        "name": "sampler",
+                        "size": 1,
+                        "type": 35678,
+                        "value": 0,
+                        "attachedComponentHandler": {
+                          "layerID": -1,
+                          "entityID": -1,
+                          "componentID": -1
+                        }
+                      }
+                    ],
+                    "shaderDefines": [
+                      {
+                        "name": "FLIP_TEXTURES_Y",
+                        "value": 1
+                      }
+                    ]
+                  },
+                  "ID": 1,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 1.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "kakish_city",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 4,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 521.0829,
+                    "y": 8.915074,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 12.8,
+                    "y": 7.2,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Primitives.BoxComponent",
+                "properties": {
+                  "size": {
+                    "x": 100.0,
+                    "y": 100.0
+                  },
+                  "scaleWithEntity": false,
+                  "offset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 1.0
+                  },
+                  "color": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                  },
+                  "linesWidth": 5.0,
+                  "ID": 2,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Primitives.CircleComponent",
+                "properties": {
+                  "radius": 4.8,
+                  "angleIncrement": 8,
+                  "scaleWithEntity": false,
+                  "offset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 1.0
+                  },
+                  "color": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                  },
+                  "linesWidth": 3.0,
+                  "ID": 3,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Primitives.LineComponent",
+                "properties": {
+                  "scaleWithEntity": false,
+                  "offset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "color": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                  },
+                  "linesWidth": 3.0,
+                  "ID": 4,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 0.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          },
+          {
+            "name": "kakish_city_16",
+            "active": true,
+            "layerName": "default",
+            "tag": {
+              "name": "default"
+            },
+            "ID": 16,
+            "components": [
+              {
+                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "properties": {
+                  "position": {
+                    "x": 12.114362,
+                    "y": 8.915074,
+                    "z": 0.0
+                  },
+                  "rotation": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "scale": {
+                    "x": 12.8,
+                    "y": 7.2,
+                    "z": 1.0
+                  },
+                  "center": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0
+                  },
+                  "ID": 0,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Primitives.BoxComponent",
+                "properties": {
+                  "size": {
+                    "x": 100.0,
+                    "y": 100.0
+                  },
+                  "scaleWithEntity": false,
+                  "offset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 1.0
+                  },
+                  "color": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                  },
+                  "linesWidth": 5.0,
+                  "ID": 1,
+                  "active": true
+                }
+              },
+              {
+                "type": "Core2D.ECS.Component.Components.Primitives.CircleComponent",
+                "properties": {
+                  "radius": 4.8,
+                  "angleIncrement": 8,
+                  "scaleWithEntity": false,
+                  "offset": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 1.0
+                  },
+                  "color": {
+                    "x": 0.0,
+                    "y": 0.0,
+                    "z": 0.0,
+                    "w": 1.0
+                  },
+                  "linesWidth": 3.0,
+                  "ID": 2,
+                  "active": true
+                }
+              }
+            ],
+            "isUIElement": false,
+            "color": {
+              "x": 1.0,
+              "y": 1.0,
+              "z": 1.0,
+              "w": 0.0
+            },
+            "parentEntityID": -1,
+            "childrenEntitiesID": []
+          }
+        ],
+        "ID": 0,
+        "name": "default"
+      }
+    ]
+  },
+  "screenClearColor": {
+    "x": 1.0,
+    "y": 1.0,
+    "z": 1.0,
+    "w": 1.0
+  },
+  "tags": [
+    {
+      "name": "default"
+    }
+  ],
+  "scriptSystem": {},
+  "maxObjectID": 16,
+  "inBuild": false,
+  "isMainScene2D": false
+}

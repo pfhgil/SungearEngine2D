@@ -1,11 +1,9 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
 import Core2D.Core2D.Core2D;
-import Core2D.Input.PC.Keyboard;
 import Core2D.Log.Log;
 import Core2D.Tasks.StoppableTask;
 import Core2D.Tasks.Task;
-import Core2D.Utils.Utils;
 import SungearEngine2D.Main.Resources;
 import imgui.ImGui;
 import imgui.ImGuiWindowClass;
@@ -17,7 +15,6 @@ import imgui.internal.flag.ImGuiDockNodeFlags;
 import org.joml.Vector2f;
 import org.joml.Vector2i;
 import org.joml.Vector4f;
-import org.lwjgl.glfw.GLFW;
 
 import java.util.ArrayList;
 import java.util.List;

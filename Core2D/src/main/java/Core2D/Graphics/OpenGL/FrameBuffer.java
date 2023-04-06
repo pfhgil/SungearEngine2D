@@ -4,9 +4,7 @@ import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
 import Core2D.Log.Log;
 import org.joml.Vector4f;
-import org.lwjgl.system.MemoryUtil;
 
-import java.io.Serializable;
 import java.nio.ByteBuffer;
 
 import static org.lwjgl.opengl.GL11C.GL_ALWAYS;
@@ -84,7 +82,7 @@ public class FrameBuffer
             complete = true;
         }
 
-        OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, 0));
+        //OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, 0));
     }
 
     public void copyData(FrameBuffer out)
@@ -183,7 +181,7 @@ public class FrameBuffer
             createRBOAttachment(width, height);
         }
 
-        OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, 0));
+        //OpenGL.glCall((params) -> glBindFramebuffer(GL_FRAMEBUFFER, 0));
     }
 
     // перестать использовать текстуру

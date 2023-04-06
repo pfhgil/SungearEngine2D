@@ -11,6 +11,7 @@ import Core2D.Timer.TimerCallback;
 @Deprecated
 public class ParticlesSystemComponent extends ScriptComponent
 {
+    /*
     @InspectorView
     public Entity exampleEntity;
     private transient Pool particlesPool = new Pool();
@@ -74,4 +75,6 @@ public class ParticlesSystemComponent extends ScriptComponent
     {
         spawnTimer.startFrame();
     }
+
+     */
 }

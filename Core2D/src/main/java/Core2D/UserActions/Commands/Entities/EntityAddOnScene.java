@@ -6,8 +6,7 @@ import Core2D.UserActions.Commands.Command;
 
 import java.util.Iterator;
 
-public class EntityAddOnScene extends Command
-{
+public class EntityAddOnScene extends Command {
     @Override
     public void execute(Object... params)
     {

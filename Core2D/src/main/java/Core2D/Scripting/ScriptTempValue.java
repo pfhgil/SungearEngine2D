@@ -2,14 +2,12 @@ package Core2D.Scripting;
 
 import Core2D.ECS.Entity;
 import Core2D.Log.Log;
-import Core2D.Project.ProjectsManager;
 import Core2D.Scene2D.SceneManager;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.Utils;
 import com.google.gson.JsonObject;
 import com.google.gson.internal.LinkedTreeMap;
 
-import java.io.File;
 import java.lang.reflect.Field;
 
 // само одно временное значение в скрипте (хранятся только в рантайме)

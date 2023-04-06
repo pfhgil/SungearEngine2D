@@ -166,6 +166,8 @@ public class Core2D extends Graphics
                         if(!system.active) continue;
 
                         for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
+                            if(componentsQuery.getComponents().get(0).entity != null && !componentsQuery.getComponents().get(0).entity.active) continue;
+
                             system.onMouseScroll(componentsQuery, xOffset, yOffset);
                         }
                     }
@@ -177,6 +179,8 @@ public class Core2D extends Graphics
                         if(!system.active) continue;
 
                         for(ComponentsQuery componentsQuery : ECSWorld.getCurrentECSWorld().getComponentsQueries()) {
+                            if(componentsQuery.getComponents().get(0).entity != null && !componentsQuery.getComponents().get(0).entity.active) continue;
+
                             system.onMousePositionChanged(componentsQuery, posX, posY);
                         }
                     }

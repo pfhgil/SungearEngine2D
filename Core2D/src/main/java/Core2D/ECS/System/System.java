@@ -16,6 +16,16 @@ public abstract class System
 
     public abstract void deltaUpdate(ComponentsQuery componentsQuery, float deltaTime);
 
+    public void update()
+    {
+
+    }
+
+    public void deltaUpdate(float deltaTime)
+    {
+
+    }
+
     // срабатывает при добавлении компонента в систему
     public void initComponentOnAdd(Component component)
     {
@@ -24,16 +34,6 @@ public abstract class System
 
     // удаляет компонент
     public void destroyComponent(Component component)
-    {
-
-    }
-
-    public void collider2DEnter(Entity otherObj)
-    {
-
-    }
-
-    public void collider2DExit(Entity otherObj)
     {
 
     }

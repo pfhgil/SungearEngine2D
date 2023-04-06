@@ -4,7 +4,6 @@ import Core2D.Log.Log;
 import Core2D.Settings.ImportSettings;
 import Core2D.Utils.ExceptionsUtils;
 import Core2D.Utils.Utils;
-import org.joml.Vector3f;
 import org.lwjgl.assimp.*;
 
 import java.io.InputStream;
@@ -82,6 +81,8 @@ public class ModelData extends Data
                 for(k = 0; k < aiFace.mNumIndices(); k++) {
                     meshData.setIndex(i, k, aiFace.mIndices().get(k));
                 }
+
+                //Log.CurrentSession.println(meshData.getFaceIndices(i).toString(), Log.MessageType.WARNING);
             }
 
             int texPosCount = 0;
@@ -95,17 +96,19 @@ public class ModelData extends Data
 
                     meshData.setVertexUV(texPosCount, texPos.x(), texPos.y(), texPos.z());
 
-                    Vector3f tp = meshData.getVertexUV(texPosCount);
-                    Log.CurrentSession.println("uv: " + tp.x + ", " + tp.y + ", " + tp.z, Log.MessageType.SUCCESS);
+                    //Vector3f tp = meshData.getVertexUV(texPosCount);
+                    //Log.CurrentSession.println("uv: " + tp.x + ", " + tp.y + ", " + tp.z, Log.MessageType.SUCCESS);
 
                     texPosCount++;
                 }
             }
 
-            for (i = 0; i < aiMesh.mNormals().limit(); i++) {
-                AIVector3D normalPosBuffer = aiMesh.mNormals().get(i);
+            if(aiMesh.mNormals() != null) {
+                for (i = 0; i < aiMesh.mNormals().limit(); i++) {
+                    AIVector3D normalPosBuffer = aiMesh.mNormals().get(i);
 
-                meshData.setVertexNormal(i, normalPosBuffer.x(), normalPosBuffer.y(), normalPosBuffer.z());
+                    meshData.setVertexNormal(i, normalPosBuffer.x(), normalPosBuffer.y(), normalPosBuffer.z());
+                }
             }
 
             return meshData;

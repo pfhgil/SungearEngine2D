@@ -2,7 +2,6 @@ package Core2D.Utils;
 
 import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Log.Log;
-import Core2D.Utils.ExceptionsUtils;
 import org.lwjgl.opengl.GL46C;
 
 import javax.management.MBeanServerConnection;

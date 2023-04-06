@@ -1,10 +1,10 @@
 package Core2D.ECS.System.Systems.Cameras;
 
+import Core2D.Common.Interfaces.NonDuplicated;
 import Core2D.Core2D.Core2D;
 import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.Camera.CameraController3DComponent;
 import Core2D.ECS.Component.Components.Transform.MoveToComponent;
-import Core2D.Common.Interfaces.NonDuplicated;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import Core2D.Input.PC.Keyboard;
@@ -80,6 +80,9 @@ public class CamerasController3DSystem extends System implements NonDuplicated
             float speedMultiplier = 1f;
             if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_CONTROL)) {
                 speedMultiplier = controllerComponent.acceleratingMultiplier;
+            }
+            if(Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_ALT)) {
+                speedMultiplier /= controllerComponent.acceleratingMultiplier;
             }
 
             boolean shiftDown = Keyboard.keyDown(GLFW.GLFW_KEY_LEFT_SHIFT);

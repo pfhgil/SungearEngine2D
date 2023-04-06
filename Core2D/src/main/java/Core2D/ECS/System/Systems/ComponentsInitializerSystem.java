@@ -2,6 +2,8 @@ package Core2D.ECS.System.Systems;
 
 import Core2D.AssetManager.AssetManager;
 import Core2D.Audio.OpenAL;
+import Core2D.Common.Interfaces.NonRemovable;
+import Core2D.DataClasses.LineData;
 import Core2D.Debug.DebugDraw;
 import Core2D.ECS.Component.Component;
 import Core2D.ECS.Component.Components.Audio.AudioComponent;
@@ -9,21 +11,25 @@ import Core2D.ECS.Component.Components.Camera.CameraComponent;
 import Core2D.ECS.Component.Components.MeshComponent;
 import Core2D.ECS.Component.Components.Physics.Collider2DComponent;
 import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
+import Core2D.ECS.Component.Components.Primitives.BoxComponent;
+import Core2D.ECS.Component.Components.Primitives.CircleComponent;
+import Core2D.ECS.Component.Components.Primitives.LineComponent;
+import Core2D.ECS.Component.Components.Primitives.PrimitiveComponent;
 import Core2D.ECS.Component.Components.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
-import Core2D.Common.Interfaces.NonRemovable;
 import Core2D.ECS.System.ComponentsQuery;
 import Core2D.ECS.System.System;
 import Core2D.Graphics.Graphics;
-import Core2D.Graphics.OpenGL.*;
+import Core2D.Graphics.OpenGL.FrameBuffer;
 import Core2D.Layering.PostprocessingLayer;
 import Core2D.Scene2D.Scene2D;
 import Core2D.Scene2D.SceneManager;
+import org.joml.Vector2f;
 import org.joml.Vector2i;
+import org.joml.Vector3f;
 import org.lwjgl.openal.AL10;
 
-import static org.lwjgl.opengl.GL11C.glDrawElements;
 import static org.lwjgl.opengl.GL13C.GL_TEXTURE0;
 
 // система для инициализации компонентов
@@ -79,6 +85,19 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
                     AssetManager.getInstance().getAudioData(audioComponent.path));
         } else if(component instanceof Rigidbody2DComponent rigidbody2DComponent) {
             ECSWorld.getCurrentECSWorld().physicsSystem.addRigidbody2D(rigidbody2DComponent);
+        } else if(component instanceof LineComponent lineComponent) {
+            lineComponent.linesData = new LineData[] {
+                    new LineData(new Vector3f(), new Vector3f(), new Vector3f(0.0f, 100.0f, 0f))
+            };
+        } else if(component instanceof BoxComponent boxComponent) {
+            Vector2f size = boxComponent.size;
+
+            boxComponent.linesData = new LineData[]{
+                    new LineData(new Vector3f(), new Vector3f(-size.x / 2.0f, -size.y / 2.0f, 0f), new Vector3f(-size.x / 2.0f, size.y / 2.0f, 0f)),
+                    new LineData(new Vector3f(), new Vector3f(-size.x / 2.0f, size.y / 2.0f, 0f), new Vector3f(size.x / 2.0f, size.y / 2.0f, 0f)),
+                    new LineData(new Vector3f(), new Vector3f(size.x / 2.0f, size.y / 2.0f, 0f), new Vector3f(size.x / 2.0f, -size.y / 2.0f, 0f)),
+                    new LineData(new Vector3f(), new Vector3f(size.x / 2.0f, -size.y / 2.0f, 0f), new Vector3f(-size.x / 2.0f, -size.y / 2.0f, 0f))
+            };
         }
     }
 
@@ -108,6 +127,8 @@ public class ComponentsInitializerSystem extends System implements NonRemovable
             }
         } else if(component instanceof MeshComponent meshComponent) {
             meshComponent.shader.destroy();
+        } else if(component instanceof PrimitiveComponent primitiveComponent) {
+            primitiveComponent.shader.destroy();
         }
     }
 
