@@ -1,6 +1,6 @@
 package Core2D.Systems;
 
-import Core2D.ECS.Component.Components.ScriptComponent;
+import Core2D.ECS.Script.ScriptComponent;
 import Core2D.ECS.Entity;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;

@@ -15,7 +15,7 @@
             "ID": 913399188,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -38,7 +38,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Camera.CameraComponent",
+                "type": "Core2D.ECS.Camera.CameraComponent",
                 "properties": {
                   "viewportSize": {
                     "x": 1080.0,
@@ -78,7 +78,7 @@
             "ID": 4,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -101,7 +101,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ferapont.png",
@@ -176,7 +176,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Camera.CameraComponent",
+                "type": "Core2D.ECS.Camera.CameraComponent",
                 "properties": {
                   "viewportSize": {
                     "x": 1080.0,
@@ -195,7 +195,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.ScriptComponent",
+                "type": "Core2D.ECS.Script.ScriptComponent",
                 "properties": {
                   "script": {
                     "path": "Scripts\\Components\\SomeSuperComponent",
@@ -212,13 +212,13 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
               },
               {
-                "type": "Core2D.ECS.System.Systems.ScriptableSystem",
+                "type": "Core2D.ECS.Script.ScriptableSystem",
                 "properties": {
                   "script": {
                     "path": "Scripts\\Systems\\SuperSystem",

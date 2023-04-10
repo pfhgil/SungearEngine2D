@@ -1,6 +1,6 @@
 package Core2D.Utils;
 
-import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component;
 import Core2D.ECS.Entity;
 import Core2D.Layering.Layer;
 

@@ -107,7 +107,7 @@ public class ToolbarView extends View
                 gizmoNoneButtonColor.set(0.5f, 0.5f, 0.5f, 1.0f);
             }
             if(ImGui.imageButton(Resources.Textures.Icons.noneIcon.getHandler(), 13, 13, 0, 0, 1, 1, -1, 1, 1, 1, 0, gizmoNoneButtonColor.x, gizmoNoneButtonColor.y, gizmoNoneButtonColor.z, gizmoNoneButtonColor.w)) {
-                Gizmo.gizmoMode = Gizmo.GizmoMode.NO_GIZMO ;
+                Gizmo.gizmoMode = Gizmo.GizmoMode.NO_GIZMO;
             }
             if(gizmoMode == Gizmo.GizmoMode.NO_GIZMO) {
                 ImGui.popStyleColor(3);

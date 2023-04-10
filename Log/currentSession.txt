@@ -1,50 +1,50 @@
-[#FFFFFF] 2023/04/07 01:25:38 | [#008000] Current session log file was created!
+[#FFFFFF] 2023/04/08 01:32:57 | [#008000] Current session log file was created!
 
-[#FFFFFF] 2023/04/07 01:25:38 | [#FFFFFF] Starting Core2D...
+[#FFFFFF] 2023/04/08 01:32:57 | [#FFFFFF] Starting Core2D...
 
-[#FFFFFF] 2023/04/07 01:25:38 | [#008000] Core2D started!
+[#FFFFFF] 2023/04/08 01:32:57 | [#008000] Core2D started!
 
-[#FFFFFF] 2023/04/07 01:25:38 | [#FFFFFF] LWJGL version is 3.3.2-snapshot
+[#FFFFFF] 2023/04/08 01:32:57 | [#FFFFFF] LWJGL version is 3.3.2-snapshot
 
-[#FFFFFF] 2023/04/07 01:25:39 | [#008000] plane
+[#FFFFFF] 2023/04/08 01:32:57 | [#008000] plane
 
-[#FFFFFF] 2023/04/07 01:25:39 | [#008000] plane_normalized
+[#FFFFFF] 2023/04/08 01:32:57 | [#008000] plane_normalized
 
-[#FFFFFF] 2023/04/07 01:25:39 | [#008000] Gun_Object_1.003
+[#FFFFFF] 2023/04/08 01:32:57 | [#008000] Gun_Object_1.003
 
-[#FFFFFF] 2023/04/07 01:25:39 | [#008000] Turret_Object_1.002
+[#FFFFFF] 2023/04/08 01:32:57 | [#008000] Turret_Object_1.002
 
-[#FFFFFF] 2023/04/07 01:25:39 | [#008000] Hull_Object_1.001
+[#FFFFFF] 2023/04/08 01:32:57 | [#008000] Hull_Object_1.001
 
-[#FFFFFF] 2023/04/07 01:25:39 | [#008000] Wheels_Right_Object_4
+[#FFFFFF] 2023/04/08 01:32:57 | [#008000] Wheels_Right_Object_4
 
-[#FFFFFF] 2023/04/07 01:25:39 | [#008000] Wheels_Left_Object_3
+[#FFFFFF] 2023/04/08 01:32:57 | [#008000] Wheels_Left_Object_3
 
-[#FFFFFF] 2023/04/07 01:25:39 | [#008000] Track_Right_Object_2
+[#FFFFFF] 2023/04/08 01:32:57 | [#008000] Track_Right_Object_2
 
-[#FFFFFF] 2023/04/07 01:25:39 | [#008000] Track_Left_Object_1
+[#FFFFFF] 2023/04/08 01:32:57 | [#008000] Track_Left_Object_1
 
-[#FFFFFF] 2023/04/07 01:25:39 | [#FFFF00] ECSWorld created!
+[#FFFFFF] 2023/04/08 01:32:58 | [#FFFF00] ECSWorld created!
 
-[#FFFFFF] 2023/04/07 01:25:39 | [#FFFFFF] Initializing compiler...  
+[#FFFFFF] 2023/04/08 01:32:58 | [#FFFFFF] Initializing compiler...  
 
-[#FFFFFF] 2023/04/07 01:25:41 | [#9932CC] Called from: Core2D.ECS.ECSWorld::addComponent. Line: 59 [#FFFFFF] | [#FFFF00] Value of field 'entity' in component 'Core2D.ECS.Component.Components.Audio.AudioComponent@fbd1f6' is equals null. It will be added in Р±Р»СЏС‚СЊ Р·Р°Р±С‹Р»
+[#FFFFFF] 2023/04/08 01:33:00 | [#9932CC] Called from: Core2D.ECS.ECSWorld::addComponent. Line: 60 [#FFFFFF] | [#FFFF00] Value of field 'entity' in component 'Core2D.ECS.Audio.AudioComponent@fbd1f6' is equals null. It will be added in Р±Р»СЏС‚СЊ Р·Р°Р±С‹Р»
 
-[#FFFFFF] 2023/04/07 01:25:41 | [#FFFF00] invoked
+[#FFFFFF] 2023/04/08 01:33:00 | [#FFFF00] invoked
 
-[#FFFFFF] 2023/04/07 01:25:41 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 69 [#FFFFFF] | [#008000] vlad zhoshe: PLAYING
+[#FFFFFF] 2023/04/08 01:33:00 | [#9932CC] Called from: Core2D.ECS.Audio.AudioSystem::update. Line: 69 [#FFFFFF] | [#008000] vlad zhoshe: PLAYING
 
-[#FFFFFF] 2023/04/07 01:25:43 | [#FFFFFF] Log cleared! See log directory in the engine directory.
+[#FFFFFF] 2023/04/08 01:33:02 | [#FFFFFF] Log cleared! See log directory in the engine directory.
 
-[#FFFFFF] 2023/04/07 01:25:46 | [#9932CC] Called from: Core2D.ECS.System.Systems.AudioSystem::update. Line: 69 [#FFFFFF] | [#008000] vlad zhoshe: STOPPED
+[#FFFFFF] 2023/04/08 01:33:04 | [#9932CC] Called from: Core2D.ECS.Audio.AudioSystem::update. Line: 69 [#FFFFFF] | [#008000] vlad zhoshe: STOPPED
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#008000] ID21.ID31.ID1561.ID41.ID1551.ID51.ID1541.ID61.ID1531.ID71.ID1521.ID81.ID1511.ID91.ID1501.ID101.ID1491.ID111.ID1481.ID121.ID1471.ID131.ID1461.ID141.ID1451.ID151.ID1441.ID161.ID1431.ID171.ID1421.ID181.ID1411.ID191.ID1401.ID201.ID1391.ID211.ID1381.ID221.ID1371.ID231.ID1361.ID241.ID1351.ID251.ID1341.ID261.ID1331.ID271.ID1321.ID281.ID1311.ID291.ID1301.ID301.ID1291.ID311.ID1281.ID321.ID1271.ID331.ID1261.ID341.ID1251.ID351.ID1241.ID361.ID1231.ID371.ID1221.ID381.ID1211.ID391.ID1201.ID401.ID1191.ID411.ID1181.ID421.ID1171.ID431.ID1161.ID441.ID1151.ID451.ID1141.ID461.ID1131.ID471.ID1121.ID481.ID1111.ID491.ID1101.ID501.ID1091.ID511.ID1081.ID521.ID1071.ID531.ID1061.ID541.ID1051.ID551.ID1041.ID561.ID1031.ID571.ID1021.ID581.ID1011.ID591.ID1001.ID601.ID991.ID611.ID981.ID621.ID971.ID631.ID961.ID641.ID951.ID651.ID941.ID661.ID931.ID671.ID921.ID681.ID911.ID691.ID901.ID701.ID891.ID711.ID881.ID721.ID871.ID731.ID861.ID741.ID851.ID751.ID841.ID761.ID831.ID771.ID821.ID781.ID811.ID791.ID801.ID4
+[#FFFFFF] 2023/04/08 01:33:07 | [#008000] ID21.ID31.ID1561.ID41.ID1551.ID51.ID1541.ID61.ID1531.ID71.ID1521.ID81.ID1511.ID91.ID1501.ID101.ID1491.ID111.ID1481.ID121.ID1471.ID131.ID1461.ID141.ID1451.ID151.ID1441.ID161.ID1431.ID171.ID1421.ID181.ID1411.ID191.ID1401.ID201.ID1391.ID211.ID1381.ID221.ID1371.ID231.ID1361.ID241.ID1351.ID251.ID1341.ID261.ID1331.ID271.ID1321.ID281.ID1311.ID291.ID1301.ID301.ID1291.ID311.ID1281.ID321.ID1271.ID331.ID1261.ID341.ID1251.ID351.ID1241.ID361.ID1231.ID371.ID1221.ID381.ID1211.ID391.ID1201.ID401.ID1191.ID411.ID1181.ID421.ID1171.ID431.ID1161.ID441.ID1151.ID451.ID1141.ID461.ID1131.ID471.ID1121.ID481.ID1111.ID491.ID1101.ID501.ID1091.ID511.ID1081.ID521.ID1071.ID531.ID1061.ID541.ID1051.ID551.ID1041.ID561.ID1031.ID571.ID1021.ID581.ID1011.ID591.ID1001.ID601.ID991.ID611.ID981.ID621.ID971.ID631.ID961.ID641.ID951.ID651.ID941.ID661.ID931.ID671.ID921.ID681.ID911.ID691.ID901.ID701.ID891.ID711.ID881.ID721.ID871.ID731.ID861.ID741.ID851.ID751.ID841.ID761.ID831.ID771.ID821.ID781.ID811.ID791.ID801.ID4
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#008000] ID1561.ID791.ID781.ID801.ID771.ID811.ID761.ID821.ID751.ID831.ID741.ID841.ID731.ID851.ID721.ID861.ID711.ID871.ID701.ID881.ID691.ID891.ID681.ID901.ID671.ID911.ID661.ID921.ID651.ID931.ID641.ID941.ID631.ID951.ID621.ID961.ID611.ID971.ID601.ID981.ID591.ID991.ID581.ID1001.ID571.ID1011.ID561.ID1021.ID551.ID1031.ID541.ID1041.ID531.ID1051.ID521.ID1061.ID511.ID1071.ID501.ID1081.ID491.ID1091.ID481.ID1101.ID471.ID1111.ID461.ID1121.ID451.ID1131.ID441.ID1141.ID431.ID1151.ID421.ID1161.ID411.ID1171.ID401.ID1181.ID391.ID1191.ID381.ID1201.ID371.ID1211.ID361.ID1221.ID351.ID1231.ID341.ID1241.ID331.ID1251.ID321.ID1261.ID311.ID1271.ID301.ID1281.ID291.ID1291.ID281.ID1301.ID271.ID1311.ID261.ID1321.ID251.ID1331.ID241.ID1341.ID231.ID1351.ID221.ID1361.ID211.ID1371.ID201.ID1381.ID191.ID1391.ID181.ID1401.ID171.ID1411.ID161.ID1421.ID151.ID1431.ID141.ID1441.ID131.ID1451.ID121.ID1461.ID111.ID1471.ID101.ID1481.ID91.ID1491.ID81.ID1501.ID71.ID1511.ID61.ID1521.ID51.ID1531.ID41.ID1541.ID31.ID1551.ID21.ID4
+[#FFFFFF] 2023/04/08 01:33:07 | [#008000] ID1561.ID791.ID781.ID801.ID771.ID811.ID761.ID821.ID751.ID831.ID741.ID841.ID731.ID851.ID721.ID861.ID711.ID871.ID701.ID881.ID691.ID891.ID681.ID901.ID671.ID911.ID661.ID921.ID651.ID931.ID641.ID941.ID631.ID951.ID621.ID961.ID611.ID971.ID601.ID981.ID591.ID991.ID581.ID1001.ID571.ID1011.ID561.ID1021.ID551.ID1031.ID541.ID1041.ID531.ID1051.ID521.ID1061.ID511.ID1071.ID501.ID1081.ID491.ID1091.ID481.ID1101.ID471.ID1111.ID461.ID1121.ID451.ID1131.ID441.ID1141.ID431.ID1151.ID421.ID1161.ID411.ID1171.ID401.ID1181.ID391.ID1191.ID381.ID1201.ID371.ID1211.ID361.ID1221.ID351.ID1231.ID341.ID1241.ID331.ID1251.ID321.ID1261.ID311.ID1271.ID301.ID1281.ID291.ID1291.ID281.ID1301.ID271.ID1311.ID261.ID1321.ID251.ID1331.ID241.ID1341.ID231.ID1351.ID221.ID1361.ID211.ID1371.ID201.ID1381.ID191.ID1391.ID181.ID1401.ID171.ID1411.ID161.ID1421.ID151.ID1431.ID141.ID1441.ID131.ID1451.ID121.ID1461.ID111.ID1471.ID101.ID1481.ID91.ID1491.ID81.ID1501.ID71.ID1511.ID61.ID1521.ID51.ID1531.ID41.ID1541.ID31.ID1551.ID21.ID4
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#008000] Untitled-597b8606
+[#FFFFFF] 2023/04/08 01:33:07 | [#008000] Untitled-597b8606
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FF0000] java.lang.NullPointerException: Cannot invoke "java.io.InputStream.read()" because "this.in" is null
+[#FFFFFF] 2023/04/08 01:33:07 | [#FF0000] java.lang.NullPointerException: Cannot invoke "java.io.InputStream.read()" because "this.in" is null
 	at org.apache.commons.io.input.BOMInputStream.getBOM(BOMInputStream.java:213)
 	at org.apache.commons.io.input.BOMInputStream.readFirstBytes(BOMInputStream.java:255)
 	at org.apache.commons.io.input.BOMInputStream.read(BOMInputStream.java:328)
@@ -67,17 +67,17 @@
 	at Core2D.Project.Project.load(Project.java:48)
 	at Core2D.Project.ProjectsManager.loadProject(ProjectsManager.java:39)
 	at SungearEngine2D.GUI.Views.EditorView.TopToolbarView.draw(TopToolbarView.java:223)
-	at SungearEngine2D.GUI.Views.ViewsManager.draw(ViewsManager.java:114)
+	at SungearEngine2D.GUI.Views.ViewsManager.draw(ViewsManager.java:117)
 	at SungearEngine2D.GUI.GUI.draw(GUI.java:55)
-	at SungearEngine2D.Main.Main$1.onUpdate(Main.java:292)
+	at SungearEngine2D.Main.Main$1.onUpdate(Main.java:296)
 	at Core2D.Graphics.Graphics.draw(Graphics.java:86)
 	at Core2D.Core2D.Core2D.run(Core2D.java:124)
 	at Core2D.Core2D.Core2D.create(Core2D.java:111)
 	at Core2D.Core2D.Core2D.start(Core2D.java:61)
-	at SungearEngine2D.Main.Main.main(Main.java:338)
+	at SungearEngine2D.Main.Main.main(Main.java:342)
 
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FF0000] java.lang.NullPointerException: Cannot invoke "java.io.InputStream.read()" because "this.in" is null
+[#FFFFFF] 2023/04/08 01:33:07 | [#FF0000] java.lang.NullPointerException: Cannot invoke "java.io.InputStream.read()" because "this.in" is null
 	at org.apache.commons.io.input.BOMInputStream.getBOM(BOMInputStream.java:213)
 	at org.apache.commons.io.input.BOMInputStream.readFirstBytes(BOMInputStream.java:255)
 	at org.apache.commons.io.input.BOMInputStream.read(BOMInputStream.java:328)
@@ -100,51 +100,51 @@
 	at Core2D.Project.Project.load(Project.java:48)
 	at Core2D.Project.ProjectsManager.loadProject(ProjectsManager.java:39)
 	at SungearEngine2D.GUI.Views.EditorView.TopToolbarView.draw(TopToolbarView.java:223)
-	at SungearEngine2D.GUI.Views.ViewsManager.draw(ViewsManager.java:114)
+	at SungearEngine2D.GUI.Views.ViewsManager.draw(ViewsManager.java:117)
 	at SungearEngine2D.GUI.GUI.draw(GUI.java:55)
-	at SungearEngine2D.Main.Main$1.onUpdate(Main.java:292)
+	at SungearEngine2D.Main.Main$1.onUpdate(Main.java:296)
 	at Core2D.Graphics.Graphics.draw(Graphics.java:86)
 	at Core2D.Core2D.Core2D.run(Core2D.java:124)
 	at Core2D.Core2D.Core2D.create(Core2D.java:111)
 	at Core2D.Core2D.Core2D.start(Core2D.java:61)
-	at SungearEngine2D.Main.Main.main(Main.java:338)
+	at SungearEngine2D.Main.Main.main(Main.java:342)
 
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\kakish_city.jpg, relative: Resources\kakish_city.jpg
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\kakish_city.jpg, relative: Resources\kakish_city.jpg
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\vlad.png, relative: Resources\vlad.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\vlad.png, relative: Resources\vlad.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\facts_files.png, relative: Resources\facts_files.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\facts_files.png, relative: Resources\facts_files.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\ferapont.png, relative: Resources\ferapont.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\ferapont.png, relative: Resources\ferapont.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources/slay.png, relative: Resources\slay.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources/slay.png, relative: Resources\slay.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\test.png, relative: Resources\test.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\test.png, relative: Resources\test.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg, relative: Resources\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg, relative: Resources\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\map.png, relative: Resources\map.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\map.png, relative: Resources\map.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\perlin_noise.png, relative: Resources\perlin_noise.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\perlin_noise.png, relative: Resources\perlin_noise.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\player.png, relative: Resources\player.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\player.png, relative: Resources\player.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\limon.png, relative: Resources\limon.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\limon.png, relative: Resources\limon.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\влад2.png, relative: Resources\влад2.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\влад2.png, relative: Resources\влад2.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\slay.png, relative: Resources\slay.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\slay.png, relative: Resources\slay.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\spike.png, relative: Resources\spike.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\spike.png, relative: Resources\spike.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\test2.png, relative: Resources\test2.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\test2.png, relative: Resources\test2.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\gui\world\crosshair.png, relative: Resources\gui\world\crosshair.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\gui\world\crosshair.png, relative: Resources\gui\world\crosshair.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\white_texture.png, relative: Resources\white_texture.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\white_texture.png, relative: Resources\white_texture.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FF0000] java.io.FileNotFoundException: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish (Отказано в доступе)
+[#FFFFFF] 2023/04/08 01:33:07 | [#FF0000] java.io.FileNotFoundException: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish (Отказано в доступе)
 	at java.base/java.io.FileInputStream.open0(Native Method)
 	at java.base/java.io.FileInputStream.open(FileInputStream.java:216)
 	at java.base/java.io.FileInputStream.<init>(FileInputStream.java:157)
@@ -164,25 +164,25 @@
 	at Core2D.Project.Project.load(Project.java:48)
 	at Core2D.Project.ProjectsManager.loadProject(ProjectsManager.java:39)
 	at SungearEngine2D.GUI.Views.EditorView.TopToolbarView.draw(TopToolbarView.java:223)
-	at SungearEngine2D.GUI.Views.ViewsManager.draw(ViewsManager.java:114)
+	at SungearEngine2D.GUI.Views.ViewsManager.draw(ViewsManager.java:117)
 	at SungearEngine2D.GUI.GUI.draw(GUI.java:55)
-	at SungearEngine2D.Main.Main$1.onUpdate(Main.java:292)
+	at SungearEngine2D.Main.Main$1.onUpdate(Main.java:296)
 	at Core2D.Graphics.Graphics.draw(Graphics.java:86)
 	at Core2D.Core2D.Core2D.run(Core2D.java:124)
 	at Core2D.Core2D.Core2D.create(Core2D.java:111)
 	at Core2D.Core2D.Core2D.start(Core2D.java:61)
-	at SungearEngine2D.Main.Main.main(Main.java:338)
+	at SungearEngine2D.Main.Main.main(Main.java:342)
 
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\Снимок.PNG, relative: Resources\Снимок.PNG
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\Снимок.PNG, relative: Resources\Снимок.PNG
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\tanks\ussr\is7.png, relative: Resources\tanks\ussr\is7.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\tanks\ussr\is7.png, relative: Resources\tanks\ussr\is7.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\tanks\ussr\is7\is7_hull.png, relative: Resources\tanks\ussr\is7\is7_hull.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\tanks\ussr\is7\is7_hull.png, relative: Resources\tanks\ussr\is7\is7_hull.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\tanks\ussr\is7\is7_tower.png, relative: Resources\tanks\ussr\is7\is7_tower.png
+[#FFFFFF] 2023/04/08 01:33:07 | [#FFFF00] texture data absolute path: D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\Resources\tanks\ussr\is7\is7_tower.png, relative: Resources\tanks\ussr\is7\is7_tower.png
 
-[#FFFFFF] 2023/04/07 01:25:47 | [#FF0000] java.lang.NullPointerException: Cannot invoke "java.io.InputStream.read()" because "this.in" is null
+[#FFFFFF] 2023/04/08 01:33:07 | [#FF0000] java.lang.NullPointerException: Cannot invoke "java.io.InputStream.read()" because "this.in" is null
 	at org.apache.commons.io.input.BOMInputStream.getBOM(BOMInputStream.java:213)
 	at org.apache.commons.io.input.BOMInputStream.readFirstBytes(BOMInputStream.java:255)
 	at org.apache.commons.io.input.BOMInputStream.read(BOMInputStream.java:328)
@@ -205,47 +205,241 @@
 	at Core2D.Project.Project.load(Project.java:48)
 	at Core2D.Project.ProjectsManager.loadProject(ProjectsManager.java:39)
 	at SungearEngine2D.GUI.Views.EditorView.TopToolbarView.draw(TopToolbarView.java:223)
-	at SungearEngine2D.GUI.Views.ViewsManager.draw(ViewsManager.java:114)
+	at SungearEngine2D.GUI.Views.ViewsManager.draw(ViewsManager.java:117)
 	at SungearEngine2D.GUI.GUI.draw(GUI.java:55)
-	at SungearEngine2D.Main.Main$1.onUpdate(Main.java:292)
+	at SungearEngine2D.Main.Main$1.onUpdate(Main.java:296)
 	at Core2D.Graphics.Graphics.draw(Graphics.java:86)
 	at Core2D.Core2D.Core2D.run(Core2D.java:124)
 	at Core2D.Core2D.Core2D.create(Core2D.java:111)
 	at Core2D.Core2D.Core2D.start(Core2D.java:61)
-	at SungearEngine2D.Main.Main.main(Main.java:338)
+	at SungearEngine2D.Main.Main.main(Main.java:342)
 
 
-[#FFFFFF] 2023/04/07 01:25:49 | [#FFFFFF] Log cleared! See log directory in the engine directory.
+[#FFFFFF] 2023/04/08 01:33:12 | [#FFFFFF] Log cleared! See log directory in the engine directory.
 
-[#FFFFFF] 2023/04/07 01:25:52 | [#FFFF00] entity added: default, lname: default
+[#FFFFFF] 2023/04/08 01:33:12 | [#FFFFFF] Log cleared! See log directory in the engine directory.
 
-[#FFFFFF] 2023/04/07 01:25:52 | [#FFFF00] entity added: kakish_city, lname: default
+[#FFFFFF] 2023/04/08 01:33:22 | [#FFFF00] entity added: default, lname: default
 
-[#FFFFFF] 2023/04/07 01:25:52 | [#FFFF00] entity added: kakish_city_16, lname: default
+[#FFFFFF] 2023/04/08 01:33:22 | [#FFFF00] entity added: kakish_city, lname: default
 
-[#FFFFFF] 2023/04/07 01:25:53 | [#008000] scrolling
+[#FFFFFF] 2023/04/08 01:33:22 | [#FFFF00] entity added: kakish_city_16, lname: default
 
-[#FFFFFF] 2023/04/07 01:25:54 | [#008000] scrolling
+[#FFFFFF] 2023/04/08 01:33:22 | [#FFFF00] invoked
 
-[#FFFFFF] 2023/04/07 01:25:54 | [#008000] scrolling
+[#FFFFFF] 2023/04/08 01:33:22 | [#FFFF00] invoked
 
-[#FFFFFF] 2023/04/07 01:25:54 | [#008000] scrolling
+[#FFFFFF] 2023/04/08 01:33:24 | [#008000] scrolling
 
-[#FFFFFF] 2023/04/07 01:25:54 | [#008000] scrolling
+[#FFFFFF] 2023/04/08 01:33:24 | [#008000] scrolling
 
-[#FFFFFF] 2023/04/07 01:25:54 | [#008000] scrolling
+[#FFFFFF] 2023/04/08 01:33:24 | [#008000] scrolling
 
-[#FFFFFF] 2023/04/07 01:25:54 | [#008000] scrolling
+[#FFFFFF] 2023/04/08 01:33:24 | [#008000] scrolling
 
-[#FFFFFF] 2023/04/07 01:25:54 | [#008000] scrolling
+[#FFFFFF] 2023/04/08 01:33:24 | [#008000] scrolling
 
-[#FFFFFF] 2023/04/07 01:25:55 | [#008000] scrolling
+[#FFFFFF] 2023/04/08 01:35:38 | [#008000] scrolling
 
-[#FFFFFF] 2023/04/07 01:25:55 | [#008000] scrolling
+[#FFFFFF] 2023/04/08 01:35:38 | [#008000] scrolling
 
-[#FFFFFF] 2023/04/07 01:25:55 | [#008000] scrolling
+[#FFFFFF] 2023/04/08 01:35:38 | [#008000] scrolling
 
-[#FFFFFF] 2023/04/07 01:26:02 | [#008000] scrolling
+[#FFFFFF] 2023/04/08 01:35:39 | [#008000] scrolling
 
-[#FFFFFF] 2023/04/07 01:26:04 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\SceneManager.sm' already exists
+[#FFFFFF] 2023/04/08 01:35:39 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:39 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:39 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:39 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:39 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:40 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:40 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:40 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:40 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:40 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:40 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:41 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:41 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:41 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:41 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:41 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:41 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:41 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:41 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:35:41 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:08 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:08 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:08 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:09 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:09 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:09 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:09 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:09 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:09 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:11 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:11 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:11 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:11 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:11 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:11 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:11 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:11 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:11 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:11 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:11 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:11 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:14 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:15 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:15 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:15 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:15 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:15 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:15 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:16 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:17 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:17 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:17 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:17 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:17 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:17 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:17 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:17 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:17 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:17 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:17 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:17 | [#008000] scrolling
+
+[#FFFFFF] 2023/04/08 01:36:24 | [#FF0000] File by path 'D:\Pixelfield\SungearEngine2D\Engine\Projects\new_kakish\SceneManager.sm' already exists
 

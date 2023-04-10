@@ -1,20 +1,23 @@
 package SungearEngine2D.GUI.Views;
 
 import Core2D.Core2D.Core2D;
-import Core2D.ECS.Component.Components.Camera.CameraComponent;
+import Core2D.ECS.Camera.CameraComponent;
 import Core2D.ECS.Entity;
+import Core2D.Input.PC.Mouse;
 import Core2D.UserActions.Commands.Command;
 import Core2D.UserActions.Executors.Executor;
 import SungearEngine2D.GUI.Views.DebuggerView.DebuggerView;
 import SungearEngine2D.GUI.Views.EditorView.*;
 import SungearEngine2D.GUI.Views.Other.EngineSettingsView;
 import SungearEngine2D.GUI.Views.Other.ProjectSettingsView;
+import SungearEngine2D.Main.Main;
 import imgui.ImGui;
 import imgui.flag.ImGuiCol;
 import imgui.flag.ImGuiCond;
 import imgui.flag.ImGuiStyleVar;
 import imgui.flag.ImGuiWindowFlags;
 import imgui.type.ImBoolean;
+import org.joml.Vector2f;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,6 +162,12 @@ public class ViewsManager
                 i++;
             }
             // ------------------------------------
+
+            ImGui.begin("mouse");
+            Vector2f ogl = Mouse.getMouseOGLPosition(Main.getMainCamera(), Mouse.getMousePosition());
+
+            ImGui.text("ogl: " + ogl.x + ", " + ogl.y);
+            ImGui.end();
 
             ImGui.end();
 

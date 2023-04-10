@@ -34,10 +34,10 @@ C  [nvoglv64.dll+0x1564bd3]
 Java frames: (J=compiled Java code, j=interpreted, Vv=VM code)
 j  org.lwjgl.opengl.GL11C.nglDrawElements(IIIJ)V+0
 j  org.lwjgl.opengl.GL11C.glDrawElements(IIIJ)V+4
-j  Core2D.ECS.System.Systems.Cameras.CamerasManagerSystem.lambda$update$2([Ljava/lang/Object;)V+7
-j  Core2D.ECS.System.Systems.Cameras.CamerasManagerSystem$$Lambda$225+0x0000000800d016b0.accept(Ljava/lang/Object;)V+4
+j  Core2D.ECS.Camera.CamerasManagerSystem.lambda$update$2([Ljava/lang/Object;)V+7
+j  Core2D.ECS.Camera.CamerasManagerSystem$$Lambda$225+0x0000000800d016b0.accept(Ljava/lang/Object;)V+4
 J 2355 c2 Core2D.Graphics.OpenGL.OpenGL.glCall(Ljava/util/function/Consumer;)V (44 bytes) @ 0x00000226aafbaae0 [0x00000226aafba9a0+0x0000000000000140]
-j  Core2D.ECS.System.Systems.Cameras.CamerasManagerSystem.update(LCore2D/ECS/System/ComponentsQuery;)V+549
+j  Core2D.ECS.Camera.CamerasManagerSystem.update(LCore2D/ECS/System/ComponentsQuery;)V+549
 J 2352 c2 Core2D.ECS.ECSWorld.update()V (72 bytes) @ 0x00000226aafb8be0 [0x00000226aafb8ac0+0x0000000000000120]
 j  Core2D.Scene2D.SceneManager.updateCurrentScene2D()V+17
 j  Core2D.Graphics.Graphics.draw()V+84

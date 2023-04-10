@@ -1,21 +1,23 @@
 package Core2D.Utils;
 
-import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.Camera.CameraComponent;
-import Core2D.ECS.Component.Components.MeshComponent;
-import Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent;
-import Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent;
-import Core2D.ECS.Component.Components.Physics.Collider2DComponent;
-import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
-import Core2D.ECS.Component.Components.Primitives.BoxComponent;
-import Core2D.ECS.Component.Components.Primitives.CircleComponent;
-import Core2D.ECS.Component.Components.Primitives.LineComponent;
-import Core2D.ECS.Component.Components.Primitives.PrimitiveComponent;
-import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.Component;
+import Core2D.ECS.Camera.CameraComponent;
+import Core2D.ECS.Mesh.MeshComponent;
+import Core2D.ECS.Physics.BoxCollider2DComponent;
+import Core2D.ECS.Physics.CircleCollider2DComponent;
+import Core2D.ECS.Physics.Collider2DComponent;
+import Core2D.ECS.Physics.Rigidbody2DComponent;
+import Core2D.ECS.Primitives.BoxComponent;
+import Core2D.ECS.Primitives.CircleComponent;
+import Core2D.ECS.Primitives.LineComponent;
+import Core2D.ECS.Primitives.PrimitiveComponent;
+import Core2D.ECS.Transform.MoveToComponent;
+import Core2D.ECS.Transform.TransformComponent;
 import Core2D.Graphics.RenderParts.Shader;
 
 public class ECSUtils
 {
+    // TODO: сделать копирование для всех компонентов
     public static <T extends Component> T copyComponent(T component)
     {
         if(component instanceof TransformComponent transformComponent) {
@@ -28,6 +30,18 @@ public class ECSUtils
             copy.center.set(transformComponent.center);
 
             copy.active = transformComponent.active;
+
+            return (T) copy;
+        } else if(component instanceof MoveToComponent moveToComponent) {
+            MoveToComponent copy = new MoveToComponent();
+
+            copy.needMoveTo = moveToComponent.needMoveTo;
+            copy.destinationPosition = moveToComponent.destinationPosition;
+            copy.ration = moveToComponent.ration;
+
+            copy.errorRate = moveToComponent.errorRate;
+
+            copy.active = moveToComponent.active;
 
             return (T) copy;
         } else if(component instanceof CameraComponent cameraComponent) {
@@ -122,7 +136,7 @@ public class ECSUtils
             return (T) copy;
         }
 
-        return null;
+        return (T) new Component();
     }
 
     private static void fillCollider2DDefaultFields(Collider2DComponent copy, Collider2DComponent original)

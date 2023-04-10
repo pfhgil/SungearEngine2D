@@ -3,7 +3,7 @@ package Core2D.Graphics;
 import Core2D.Audio.AudioListener;
 import Core2D.Core2D.Core2D;
 import Core2D.Core2D.Settings;
-import Core2D.ECS.Component.Components.Camera.CameraComponent;
+import Core2D.ECS.Camera.CameraComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.OpenGL.FrameBuffer;
 import Core2D.Graphics.OpenGL.OpenGL;

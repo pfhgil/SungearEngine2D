@@ -1,9 +1,9 @@
 package Core2D.Graphics;
 
-import Core2D.ECS.Component.Components.Camera.CameraComponent;
+import Core2D.ECS.Camera.CameraComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
-import Core2D.ECS.System.ComponentsQuery;
+import Core2D.ECS.ComponentsQuery;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Layering.Layer;
 import Core2D.Layering.Layering;

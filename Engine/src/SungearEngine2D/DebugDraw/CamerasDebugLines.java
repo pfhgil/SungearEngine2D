@@ -1,9 +1,9 @@
 package SungearEngine2D.DebugDraw;
 
-import Core2D.ECS.Component.Components.Camera.CameraComponent;
-import Core2D.ECS.Component.Components.MeshComponent;
-import Core2D.ECS.Component.Components.Primitives.BoxComponent;
-import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.Camera.CameraComponent;
+import Core2D.ECS.Mesh.MeshComponent;
+import Core2D.ECS.Primitives.BoxComponent;
+import Core2D.ECS.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Layering.Layering;

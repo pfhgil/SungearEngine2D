@@ -5,11 +5,11 @@ package SungearEngine2D.DebugDraw;
 import Core2D.Drawable.Primitives.Line2D;*/
 
 import Core2D.AssetManager.AssetManager;
-import Core2D.ECS.Component.Components.Camera.CameraController2DComponent;
-import Core2D.ECS.Component.Components.MeshComponent;
-import Core2D.ECS.Component.Components.Primitives.CircleComponent;
-import Core2D.ECS.Component.Components.Primitives.LineComponent;
-import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.Camera.CameraController2DComponent;
+import Core2D.ECS.Mesh.MeshComponent;
+import Core2D.ECS.Primitives.CircleComponent;
+import Core2D.ECS.Primitives.LineComponent;
+import Core2D.ECS.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
@@ -241,7 +241,9 @@ public class Gizmo
                     rotationHandler.active = true;
                 }
 
-                centrePointToEditCenter.active = true;
+                if(gizmoMode != GizmoMode.NO_GIZMO) {
+                    centrePointToEditCenter.active = true;
+                }
                 //Graphics.getMainRenderer().render(centrePointToEditCentre);
 
                 yArrow.update();
@@ -305,7 +307,9 @@ public class Gizmo
                         Graphics.getMainRenderer().render(rotationHandler, Main.getMainCamera2DComponent(), pickingShader);
                     }
 
-                    Graphics.getMainRenderer().render(centrePointToEditCenter, Main.getMainCamera2DComponent());
+                    if(gizmoMode != GizmoMode.NO_GIZMO) {
+                        Graphics.getMainRenderer().render(centrePointToEditCenter, Main.getMainCamera2DComponent());
+                    }
 
                     Vector4f pickedColor = Graphics.getPixelColor(Mouse.getMousePosition());
 

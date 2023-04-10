@@ -15,11 +15,11 @@
             "ID": 559416273,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1025.2823,
-                    "y": 2590.008,
+                    "y": 2587.2588,
                     "z": 0.0
                   },
                   "rotation": {
@@ -42,7 +42,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -121,14 +121,14 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Camera.CameraComponent",
+                "type": "Core2D.ECS.Camera.CameraComponent",
                 "properties": {
                   "followTransformTranslation": true,
                   "followTransformRotation": true,
                   "followTransformScale": false,
                   "position": {
                     "x": -1025.2823,
-                    "y": 2590.008,
+                    "y": 2587.2588,
                     "z": 0.0
                   },
                   "rotation": {
@@ -196,7 +196,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -209,7 +209,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -251,7 +251,7 @@
             "ID": 2,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1229.2288,
@@ -278,7 +278,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -357,7 +357,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -370,7 +370,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -415,7 +415,7 @@
             "ID": 8,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -634.4895,
@@ -442,7 +442,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -521,7 +521,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -534,7 +534,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -576,7 +576,7 @@
             "ID": 11,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 895.712,
@@ -603,7 +603,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -682,7 +682,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -695,7 +695,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -740,7 +740,7 @@
             "ID": 13,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -634.27734,
@@ -767,7 +767,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -846,7 +846,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -859,7 +859,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -904,7 +904,7 @@
             "ID": 15,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -629.94226,
@@ -931,7 +931,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -1010,7 +1010,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -1023,7 +1023,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -1068,7 +1068,7 @@
             "ID": 17,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -237.39302,
@@ -1095,7 +1095,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -1174,7 +1174,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -1187,7 +1187,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -1232,7 +1232,7 @@
             "ID": 19,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1034.4031,
@@ -1259,7 +1259,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -1338,7 +1338,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -1351,7 +1351,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -1396,7 +1396,7 @@
             "ID": 21,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1114.0093,
@@ -1423,7 +1423,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -1502,7 +1502,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -1515,7 +1515,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -1560,7 +1560,7 @@
             "ID": 23,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1015.5491,
@@ -1587,7 +1587,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -1666,7 +1666,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -1679,7 +1679,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -1724,7 +1724,7 @@
             "ID": 25,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -774.6356,
@@ -1751,7 +1751,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -1830,7 +1830,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -1843,7 +1843,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -1888,7 +1888,7 @@
             "ID": 27,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -542.1017,
@@ -1915,7 +1915,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -1994,7 +1994,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -2007,7 +2007,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -2052,7 +2052,7 @@
             "ID": 29,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -489.72937,
@@ -2079,7 +2079,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -2158,7 +2158,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -2171,7 +2171,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -2216,7 +2216,7 @@
             "ID": 31,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -466.68533,
@@ -2243,7 +2243,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -2322,7 +2322,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -2335,7 +2335,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -2380,7 +2380,7 @@
             "ID": 33,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1028.1184,
@@ -2407,7 +2407,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -2486,7 +2486,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -2499,7 +2499,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -2544,7 +2544,7 @@
             "ID": 35,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1225.039,
@@ -2571,7 +2571,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -2650,7 +2650,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -2663,7 +2663,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -2708,7 +2708,7 @@
             "ID": 37,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1013.4541,
@@ -2735,7 +2735,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -2814,7 +2814,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -2827,7 +2827,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -2872,7 +2872,7 @@
             "ID": 39,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -529.5324,
@@ -2899,7 +2899,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -2978,7 +2978,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -2991,7 +2991,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -3036,7 +3036,7 @@
             "ID": 41,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -818.6284,
@@ -3063,7 +3063,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -3142,7 +3142,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -3155,7 +3155,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -3200,7 +3200,7 @@
             "ID": 43,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -313.7579,
@@ -3227,7 +3227,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -3306,7 +3306,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -3319,7 +3319,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -3364,7 +3364,7 @@
             "ID": 45,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -412.21786,
@@ -3391,7 +3391,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -3470,7 +3470,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -3483,7 +3483,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -3528,7 +3528,7 @@
             "ID": 61,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -829.3236,
@@ -3555,7 +3555,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -3634,7 +3634,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -3647,7 +3647,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -3692,7 +3692,7 @@
             "ID": 63,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -829.3236,
@@ -3719,7 +3719,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -3798,7 +3798,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -3811,7 +3811,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -3856,7 +3856,7 @@
             "ID": 65,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1307.6742,
@@ -3883,7 +3883,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -3962,7 +3962,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -3975,7 +3975,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -4020,7 +4020,7 @@
             "ID": 67,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -683.3815,
@@ -4047,7 +4047,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -4126,7 +4126,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -4139,7 +4139,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -4184,7 +4184,7 @@
             "ID": 69,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 116.366104,
@@ -4211,7 +4211,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -4290,7 +4290,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -4303,7 +4303,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -4348,7 +4348,7 @@
             "ID": 71,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 401.99057,
@@ -4375,7 +4375,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -4454,7 +4454,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -4467,7 +4467,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -4512,7 +4512,7 @@
             "ID": 73,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 91.88403,
@@ -4539,7 +4539,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -4618,7 +4618,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -4631,7 +4631,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -4676,7 +4676,7 @@
             "ID": 75,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -177.41856,
@@ -4703,7 +4703,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -4782,7 +4782,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -4795,7 +4795,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -4840,7 +4840,7 @@
             "ID": 77,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -495.68533,
@@ -4867,7 +4867,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -4946,7 +4946,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -4959,7 +4959,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -5004,7 +5004,7 @@
             "ID": 79,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1275.0315,
@@ -5031,7 +5031,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -5110,7 +5110,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -5123,7 +5123,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -5168,7 +5168,7 @@
             "ID": 81,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1674.9052,
@@ -5195,7 +5195,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -5274,7 +5274,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -5287,7 +5287,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -5332,7 +5332,7 @@
             "ID": 83,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -942.43,
@@ -5359,7 +5359,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -5438,7 +5438,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -5451,7 +5451,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -5496,7 +5496,7 @@
             "ID": 85,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1805.4762,
@@ -5523,7 +5523,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -5602,7 +5602,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -5615,7 +5615,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -5660,7 +5660,7 @@
             "ID": 87,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1552.4948,
@@ -5687,7 +5687,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -5766,7 +5766,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -5779,7 +5779,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -5824,7 +5824,7 @@
             "ID": 89,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1115.8975,
@@ -5851,7 +5851,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -5930,7 +5930,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -5943,7 +5943,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -5988,7 +5988,7 @@
             "ID": 91,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -769.0687,
@@ -6015,7 +6015,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -6094,7 +6094,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -6107,7 +6107,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -6152,7 +6152,7 @@
             "ID": 93,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -516.087,
@@ -6179,7 +6179,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -6258,7 +6258,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -6271,7 +6271,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -6316,7 +6316,7 @@
             "ID": 95,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -320.23053,
@@ -6343,7 +6343,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -6422,7 +6422,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -6435,7 +6435,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -6480,7 +6480,7 @@
             "ID": 97,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -242.70404,
@@ -6507,7 +6507,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -6586,7 +6586,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -6599,7 +6599,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -6644,7 +6644,7 @@
             "ID": 99,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -46.847595,
@@ -6671,7 +6671,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -6750,7 +6750,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -6763,7 +6763,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -6808,7 +6808,7 @@
             "ID": 101,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 316.30334,
@@ -6835,7 +6835,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -6914,7 +6914,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -6927,7 +6927,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -6972,7 +6972,7 @@
             "ID": 103,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 389.7495,
@@ -6999,7 +6999,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -7078,7 +7078,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -7091,7 +7091,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -7136,7 +7136,7 @@
             "ID": 105,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 585.60596,
@@ -7163,7 +7163,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -7242,7 +7242,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -7255,7 +7255,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -7300,7 +7300,7 @@
             "ID": 107,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 695.77527,
@@ -7327,7 +7327,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -7406,7 +7406,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -7419,7 +7419,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -7464,7 +7464,7 @@
             "ID": 109,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 724.33765,
@@ -7491,7 +7491,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -7570,7 +7570,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -7583,7 +7583,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -7628,7 +7628,7 @@
             "ID": 111,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 548.88293,
@@ -7655,7 +7655,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -7734,7 +7734,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -7747,7 +7747,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -7792,7 +7792,7 @@
             "ID": 113,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 312.223,
@@ -7819,7 +7819,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -7898,7 +7898,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -7911,7 +7911,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -7956,7 +7956,7 @@
             "ID": 115,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 108.20545,
@@ -7983,7 +7983,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -8062,7 +8062,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -8075,7 +8075,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -8120,7 +8120,7 @@
             "ID": 117,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -205.98097,
@@ -8147,7 +8147,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -8226,7 +8226,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -8239,7 +8239,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -8284,7 +8284,7 @@
             "ID": 119,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -662.9798,
@@ -8311,7 +8311,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -8390,7 +8390,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -8403,7 +8403,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -8448,7 +8448,7 @@
             "ID": 121,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1205.6655,
@@ -8475,7 +8475,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -8554,7 +8554,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -8567,7 +8567,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -8612,7 +8612,7 @@
             "ID": 123,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1617.7803,
@@ -8639,7 +8639,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -8718,7 +8718,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -8731,7 +8731,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -8776,7 +8776,7 @@
             "ID": 125,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1980.9309,
@@ -8803,7 +8803,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -8882,7 +8882,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -8895,7 +8895,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -8940,7 +8940,7 @@
             "ID": 127,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2156.3857,
@@ -8967,7 +8967,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -9046,7 +9046,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -9059,7 +9059,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -9104,7 +9104,7 @@
             "ID": 129,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2348.162,
@@ -9131,7 +9131,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -9210,7 +9210,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -9223,7 +9223,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -9268,7 +9268,7 @@
             "ID": 131,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2299.198,
@@ -9295,7 +9295,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -9374,7 +9374,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -9387,7 +9387,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -9432,7 +9432,7 @@
             "ID": 133,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2017.654,
@@ -9459,7 +9459,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -9538,7 +9538,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -9551,7 +9551,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -9596,7 +9596,7 @@
             "ID": 135,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1776.9138,
@@ -9623,7 +9623,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -9702,7 +9702,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -9715,7 +9715,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -9760,7 +9760,7 @@
             "ID": 137,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1491.2896,
@@ -9787,7 +9787,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -9866,7 +9866,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -9879,7 +9879,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -9924,7 +9924,7 @@
             "ID": 139,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1234.2278,
@@ -9951,7 +9951,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -10030,7 +10030,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -10043,7 +10043,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -10088,7 +10088,7 @@
             "ID": 141,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -842.5149,
@@ -10115,7 +10115,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -10194,7 +10194,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -10207,7 +10207,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -10252,7 +10252,7 @@
             "ID": 143,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -312.0699,
@@ -10279,7 +10279,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -10358,7 +10358,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -10371,7 +10371,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -10416,7 +10416,7 @@
             "ID": 145,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 173.49097,
@@ -10443,7 +10443,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -10522,7 +10522,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -10535,7 +10535,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -10580,7 +10580,7 @@
             "ID": 147,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 610.088,
@@ -10607,7 +10607,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -10686,7 +10686,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -10699,7 +10699,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -10744,7 +10744,7 @@
             "ID": 149,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 744.7394,
@@ -10771,7 +10771,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -10850,7 +10850,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -10863,7 +10863,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -10908,7 +10908,7 @@
             "ID": 151,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 944.6762,
@@ -10935,7 +10935,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -11014,7 +11014,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -11027,7 +11027,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -11072,7 +11072,7 @@
             "ID": 153,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 1018.1227,
@@ -11099,7 +11099,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -11178,7 +11178,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -11191,7 +11191,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -11236,7 +11236,7 @@
             "ID": 155,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 1075.2476,
@@ -11263,7 +11263,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -11342,7 +11342,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -11355,7 +11355,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -11400,7 +11400,7 @@
             "ID": 157,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 981.3992,
@@ -11427,7 +11427,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -11506,7 +11506,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -11519,7 +11519,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -11564,7 +11564,7 @@
             "ID": 160,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1061.1459,
@@ -11591,7 +11591,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -11670,7 +11670,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -11683,7 +11683,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -11725,7 +11725,7 @@
             "ID": 162,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1612.0721,
@@ -11752,7 +11752,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -11831,7 +11831,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -11844,7 +11844,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -11886,7 +11886,7 @@
             "ID": 164,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1085.0276,
@@ -11913,7 +11913,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -11992,7 +11992,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -12005,7 +12005,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -12047,7 +12047,7 @@
             "ID": 166,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -251.95702,
@@ -12074,7 +12074,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -12153,7 +12153,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -12166,7 +12166,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -12208,7 +12208,7 @@
             "ID": 168,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -13.937073,
@@ -12235,7 +12235,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -12314,7 +12314,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -12327,7 +12327,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -12369,7 +12369,7 @@
             "ID": 170,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -178.28418,
@@ -12396,7 +12396,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -12475,7 +12475,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -12488,7 +12488,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -12530,7 +12530,7 @@
             "ID": 172,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -555.1495,
@@ -12557,7 +12557,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -12636,7 +12636,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -12649,7 +12649,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -12691,7 +12691,7 @@
             "ID": 175,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -814.05164,
@@ -12718,7 +12718,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -12797,7 +12797,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -12810,7 +12810,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -12852,7 +12852,7 @@
             "ID": 177,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1481.8738,
@@ -12879,7 +12879,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -12958,7 +12958,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -12971,7 +12971,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -13013,7 +13013,7 @@
             "ID": 179,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -536.9055,
@@ -13040,7 +13040,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -13119,7 +13119,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -13132,7 +13132,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -13174,7 +13174,7 @@
             "ID": 181,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1959.3666,
@@ -13201,7 +13201,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -13280,7 +13280,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -13293,7 +13293,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -13335,7 +13335,7 @@
             "ID": 183,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -112.8387,
@@ -13362,7 +13362,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -13441,7 +13441,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -13454,7 +13454,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -13496,7 +13496,7 @@
             "ID": 185,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 548.3055,
@@ -13523,7 +13523,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -13602,7 +13602,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -13615,7 +13615,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -13657,7 +13657,7 @@
             "ID": 187,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 428.09747,
@@ -13684,7 +13684,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -13763,7 +13763,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -13776,7 +13776,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -13818,7 +13818,7 @@
             "ID": 189,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 434.7757,
@@ -13845,7 +13845,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -13924,7 +13924,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -13937,7 +13937,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -13979,7 +13979,7 @@
             "ID": 191,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 70.81246,
@@ -14006,7 +14006,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -14085,7 +14085,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -14098,7 +14098,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -14140,7 +14140,7 @@
             "ID": 193,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1665.5249,
@@ -14167,7 +14167,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -14246,7 +14246,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -14259,7 +14259,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -14301,7 +14301,7 @@
             "ID": 195,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2102.9482,
@@ -14328,7 +14328,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -14407,7 +14407,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -14420,7 +14420,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -14462,7 +14462,7 @@
             "ID": 197,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2049.5225,
@@ -14489,7 +14489,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -14568,7 +14568,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "DYNAMIC",
                   "density": 1.0,
@@ -14581,7 +14581,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "radius": 50.0,
                   "offset": {
@@ -14623,7 +14623,7 @@
             "ID": 200,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -237.39302,
@@ -14650,7 +14650,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -14729,7 +14729,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -14742,7 +14742,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -14787,7 +14787,7 @@
             "ID": 202,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1970.9829,
@@ -14814,7 +14814,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -14893,7 +14893,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -14906,7 +14906,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -14951,7 +14951,7 @@
             "ID": 204,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2646.6729,
@@ -14978,7 +14978,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -15057,7 +15057,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -15070,7 +15070,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -15115,7 +15115,7 @@
             "ID": 206,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2588.1294,
@@ -15142,7 +15142,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -15221,7 +15221,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -15234,7 +15234,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -15279,7 +15279,7 @@
             "ID": 208,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2473.4817,
@@ -15306,7 +15306,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -15385,7 +15385,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -15398,7 +15398,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -15443,7 +15443,7 @@
             "ID": 210,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2260.023,
@@ -15470,7 +15470,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -15549,7 +15549,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -15562,7 +15562,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -15607,7 +15607,7 @@
             "ID": 212,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1950.344,
@@ -15634,7 +15634,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -15713,7 +15713,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -15726,7 +15726,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -15771,7 +15771,7 @@
             "ID": 214,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1007.0156,
@@ -15798,7 +15798,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -15877,7 +15877,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -15890,7 +15890,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -15935,7 +15935,7 @@
             "ID": 216,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 17.306152,
@@ -15962,7 +15962,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -16041,7 +16041,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -16054,7 +16054,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -16099,7 +16099,7 @@
             "ID": 218,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 231.69861,
@@ -16126,7 +16126,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -16205,7 +16205,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -16218,7 +16218,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -16263,7 +16263,7 @@
             "ID": 220,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -582.99414,
@@ -16290,7 +16290,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -16369,7 +16369,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -16382,7 +16382,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -16427,7 +16427,7 @@
             "ID": 222,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -459.12262,
@@ -16454,7 +16454,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -16533,7 +16533,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -16546,7 +16546,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -16591,7 +16591,7 @@
             "ID": 224,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -697.3371,
@@ -16618,7 +16618,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -16697,7 +16697,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -16710,7 +16710,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -16755,7 +16755,7 @@
             "ID": 226,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1369.1012,
@@ -16782,7 +16782,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -16861,7 +16861,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -16874,7 +16874,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -16919,7 +16919,7 @@
             "ID": 228,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1688.3085,
@@ -16946,7 +16946,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -17025,7 +17025,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -17038,7 +17038,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -17083,7 +17083,7 @@
             "ID": 230,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2312.43,
@@ -17110,7 +17110,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -17189,7 +17189,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -17202,7 +17202,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -17247,7 +17247,7 @@
             "ID": 232,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2664.9868,
@@ -17274,7 +17274,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -17353,7 +17353,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -17366,7 +17366,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -17411,7 +17411,7 @@
             "ID": 234,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2922.2583,
@@ -17438,7 +17438,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -17517,7 +17517,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -17530,7 +17530,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -17575,7 +17575,7 @@
             "ID": 236,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2717.394,
@@ -17602,7 +17602,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -17681,7 +17681,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -17694,7 +17694,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -17739,7 +17739,7 @@
             "ID": 238,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2660.2227,
@@ -17766,7 +17766,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -17845,7 +17845,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -17858,7 +17858,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -17903,7 +17903,7 @@
             "ID": 240,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2369.601,
@@ -17930,7 +17930,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -18009,7 +18009,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -18022,7 +18022,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -18067,7 +18067,7 @@
             "ID": 242,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2445.8296,
@@ -18094,7 +18094,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -18173,7 +18173,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -18186,7 +18186,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -18231,7 +18231,7 @@
             "ID": 244,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1988.4585,
@@ -18258,7 +18258,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -18337,7 +18337,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -18350,7 +18350,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -18395,7 +18395,7 @@
             "ID": 246,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1559.6726,
@@ -18422,7 +18422,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -18501,7 +18501,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -18514,7 +18514,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -18559,7 +18559,7 @@
             "ID": 248,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1035.6013,
@@ -18586,7 +18586,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -18665,7 +18665,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -18678,7 +18678,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -18723,7 +18723,7 @@
             "ID": 250,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -492.4727,
@@ -18750,7 +18750,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -18829,7 +18829,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -18842,7 +18842,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -18887,7 +18887,7 @@
             "ID": 252,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -368.6012,
@@ -18914,7 +18914,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -18993,7 +18993,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -19006,7 +19006,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -19051,7 +19051,7 @@
             "ID": 254,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -216.14398,
@@ -19078,7 +19078,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -19157,7 +19157,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -19170,7 +19170,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -19215,7 +19215,7 @@
             "ID": 256,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 41.127625,
@@ -19242,7 +19242,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -19321,7 +19321,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -19334,7 +19334,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -19379,7 +19379,7 @@
             "ID": 258,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -82.7439,
@@ -19406,7 +19406,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -19485,7 +19485,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -19498,7 +19498,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -19543,7 +19543,7 @@
             "ID": 260,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 407.97714,
@@ -19570,7 +19570,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -19649,7 +19649,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -19662,7 +19662,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -19707,7 +19707,7 @@
             "ID": 262,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 298.39856,
@@ -19734,7 +19734,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -19813,7 +19813,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -19826,7 +19826,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -19871,7 +19871,7 @@
             "ID": 264,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 731.94885,
@@ -19898,7 +19898,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -19977,7 +19977,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -19990,7 +19990,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -20035,7 +20035,7 @@
             "ID": 266,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 789.12024,
@@ -20062,7 +20062,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -20141,7 +20141,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -20154,7 +20154,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -20199,7 +20199,7 @@
             "ID": 268,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 898.699,
@@ -20226,7 +20226,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -20305,7 +20305,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -20318,7 +20318,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -20363,7 +20363,7 @@
             "ID": 270,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 932.049,
@@ -20390,7 +20390,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -20469,7 +20469,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -20482,7 +20482,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -20527,7 +20527,7 @@
             "ID": 272,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 808.1775,
@@ -20554,7 +20554,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -20633,7 +20633,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -20646,7 +20646,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -20691,7 +20691,7 @@
             "ID": 274,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 989.22046,
@@ -20718,7 +20718,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -20797,7 +20797,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -20810,7 +20810,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -20855,7 +20855,7 @@
             "ID": 276,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -994.50885,
@@ -20882,7 +20882,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -20961,7 +20961,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -20974,7 +20974,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -21019,7 +21019,7 @@
             "ID": 278,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -964.7325,
@@ -21046,7 +21046,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -21125,7 +21125,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -21138,7 +21138,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -21183,7 +21183,7 @@
             "ID": 280,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1119.5723,
@@ -21210,7 +21210,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -21289,7 +21289,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -21302,7 +21302,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -21347,7 +21347,7 @@
             "ID": 282,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1542.4021,
@@ -21374,7 +21374,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -21453,7 +21453,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -21466,7 +21466,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -21511,7 +21511,7 @@
             "ID": 284,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1834.2148,
@@ -21538,7 +21538,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -21617,7 +21617,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -21630,7 +21630,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -21675,7 +21675,7 @@
             "ID": 286,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2126.0273,
@@ -21702,7 +21702,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -21781,7 +21781,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -21794,7 +21794,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -21839,7 +21839,7 @@
             "ID": 288,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2548.8574,
@@ -21866,7 +21866,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -21945,7 +21945,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -21958,7 +21958,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -22003,7 +22003,7 @@
             "ID": 290,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -2930.0002,
@@ -22030,7 +22030,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -22109,7 +22109,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -22122,7 +22122,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -22167,7 +22167,7 @@
             "ID": 292,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -3126.527,
@@ -22194,7 +22194,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -22273,7 +22273,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -22286,7 +22286,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -22331,7 +22331,7 @@
             "ID": 294,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -3186.0808,
@@ -22358,7 +22358,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -22437,7 +22437,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -22450,7 +22450,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -22495,7 +22495,7 @@
             "ID": 296,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -3215.8577,
@@ -22522,7 +22522,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -22601,7 +22601,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -22614,7 +22614,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -22659,7 +22659,7 @@
             "ID": 298,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -3239.679,
@@ -22686,7 +22686,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -22765,7 +22765,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -22778,7 +22778,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -22823,7 +22823,7 @@
             "ID": 300,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -3656.554,
@@ -22850,7 +22850,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -22929,7 +22929,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -22942,7 +22942,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -22987,7 +22987,7 @@
             "ID": 302,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 2162.4746,
@@ -23014,7 +23014,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -23093,7 +23093,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -23106,7 +23106,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -23151,7 +23151,7 @@
             "ID": 304,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -942.43,
@@ -23178,7 +23178,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -23257,7 +23257,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "bodyType": "STATIC",
                   "density": 1.0,
@@ -23270,7 +23270,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "scale": {
                     "x": 1.0,
@@ -23323,7 +23323,7 @@
     }
   ],
   "scriptSystem": {},
-  "maxObjectID": 310,
+  "maxObjectID": 312,
   "inBuild": false,
   "isMainScene2D": false
 }

@@ -74,7 +74,7 @@ loadScripts(document, 'script');</script>
 <h1 title="Class System" class="title">Class System</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance">Core2D.ECS.System.System</div>
+<div class="inheritance">Core2D.ECS.System</div>
 </div>
 <section class="class-description" id="class-description">
 <dl class="notes">
@@ -138,11 +138,11 @@ loadScripts(document, 'script');</script>
 <div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#collider2DExit(Core2D.ECS.Entity)" class="member-name-link">collider2DExit</a><wbr>(<a href="../Entity.html" title="class in Core2D.ECS">Entity</a>&nbsp;otherObj)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#deltaUpdate(Core2D.ECS.System.ComponentsQuery,float)" class="member-name-link">deltaUpdate</a><wbr>(<a href="ComponentsQuery.html" title="class in Core2D.ECS.System">ComponentsQuery</a>&nbsp;componentsQuery,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#deltaUpdate(Core2D.ECS.ComponentsQuery,float)" class="member-name-link">deltaUpdate</a><wbr>(<a href="ComponentsQuery.html" title="class in Core2D.ECS.System">ComponentsQuery</a>&nbsp;componentsQuery,
  float&nbsp;deltaTime)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#destroyComponent(Core2D.ECS.Component.Component)" class="member-name-link">destroyComponent</a><wbr>(<a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&nbsp;component)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#destroyComponent(Core2D.ECS.Component)" class="member-name-link">destroyComponent</a><wbr>(<a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&nbsp;component)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#endContact(org.jbox2d.dynamics.contacts.Contact,Core2D.ECS.Entity,Core2D.ECS.Entity)" class="member-name-link">endContact</a><wbr>(org.jbox2d.dynamics.contacts.Contact&nbsp;contact,
@@ -150,15 +150,15 @@ loadScripts(document, 'script');</script>
  <a href="../Entity.html" title="class in Core2D.ECS">Entity</a>&nbsp;entityB)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initComponentOnAdd(Core2D.ECS.Component.Component)" class="member-name-link">initComponentOnAdd</a><wbr>(<a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&nbsp;component)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#initComponentOnAdd(Core2D.ECS.Component)" class="member-name-link">initComponentOnAdd</a><wbr>(<a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&nbsp;component)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onMousePositionChanged(Core2D.ECS.System.ComponentsQuery,double,double)" class="member-name-link">onMousePositionChanged</a><wbr>(<a href="ComponentsQuery.html" title="class in Core2D.ECS.System">ComponentsQuery</a>&nbsp;componentsQuery,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onMousePositionChanged(Core2D.ECS.ComponentsQuery,double,double)" class="member-name-link">onMousePositionChanged</a><wbr>(<a href="ComponentsQuery.html" title="class in Core2D.ECS.System">ComponentsQuery</a>&nbsp;componentsQuery,
  double&nbsp;posX,
  double&nbsp;posY)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onMouseScroll(Core2D.ECS.System.ComponentsQuery,double,double)" class="member-name-link">onMouseScroll</a><wbr>(<a href="ComponentsQuery.html" title="class in Core2D.ECS.System">ComponentsQuery</a>&nbsp;componentsQuery,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#onMouseScroll(Core2D.ECS.ComponentsQuery,double,double)" class="member-name-link">onMouseScroll</a><wbr>(<a href="ComponentsQuery.html" title="class in Core2D.ECS.System">ComponentsQuery</a>&nbsp;componentsQuery,
  double&nbsp;xOffset,
  double&nbsp;yOffset)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
@@ -175,16 +175,16 @@ loadScripts(document, 'script');</script>
  org.jbox2d.collision.Manifold&nbsp;manifold)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#renderEntity(Core2D.ECS.Entity,Core2D.ECS.Component.Components.Camera.CameraComponent)" class="member-name-link">renderEntity</a><wbr>(<a href="../Entity.html" title="class in Core2D.ECS">Entity</a>&nbsp;entity,
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#renderEntity(Core2D.ECS.Entity,Core2D.ECS.Camera.CameraComponent)" class="member-name-link">renderEntity</a><wbr>(<a href="../Entity.html" title="class in Core2D.ECS">Entity</a>&nbsp;entity,
  <a href="../Component/Components/Camera/CameraComponent.html" title="class in Core2D.ECS.Component.Components.Camera">CameraComponent</a>&nbsp;cameraComponent)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#renderEntity(Core2D.ECS.Entity,Core2D.ECS.Component.Components.Camera.CameraComponent,Core2D.Graphics.RenderParts.Shader)" class="member-name-link">renderEntity</a><wbr>(<a href="../Entity.html" title="class in Core2D.ECS">Entity</a>&nbsp;entity,
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#renderEntity(Core2D.ECS.Entity,Core2D.ECS.Camera.CameraComponent,Core2D.Graphics.RenderParts.Shader)" class="member-name-link">renderEntity</a><wbr>(<a href="../Entity.html" title="class in Core2D.ECS">Entity</a>&nbsp;entity,
  <a href="../Component/Components/Camera/CameraComponent.html" title="class in Core2D.ECS.Component.Components.Camera">CameraComponent</a>&nbsp;cameraComponent,
  <a href="../../Graphics/RenderParts/Shader.html" title="class in Core2D.Graphics.RenderParts">Shader</a>&nbsp;shader)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code>abstract void</code></div>
-<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#update(Core2D.ECS.System.ComponentsQuery)" class="member-name-link">update</a><wbr>(<a href="ComponentsQuery.html" title="class in Core2D.ECS.System">ComponentsQuery</a>&nbsp;componentsQuery)</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3"><code><a href="#update(Core2D.ECS.ComponentsQuery)" class="member-name-link">update</a><wbr>(<a href="ComponentsQuery.html" title="class in Core2D.ECS.System">ComponentsQuery</a>&nbsp;componentsQuery)</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">&nbsp;</div>
 </div>
 </div>
@@ -232,26 +232,26 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="update(Core2D.ECS.System.ComponentsQuery)">
+<section class="detail" id="update(Core2D.ECS.ComponentsQuery)">
 <h3>update</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">update</span><wbr><span class="parameters">(<a href="ComponentsQuery.html" title="class in Core2D.ECS.System">ComponentsQuery</a>&nbsp;componentsQuery)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="deltaUpdate(Core2D.ECS.System.ComponentsQuery,float)">
+<section class="detail" id="deltaUpdate(Core2D.ECS.ComponentsQuery,float)">
 <h3>deltaUpdate</h3>
 <div class="member-signature"><span class="modifiers">public abstract</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">deltaUpdate</span><wbr><span class="parameters">(<a href="ComponentsQuery.html" title="class in Core2D.ECS.System">ComponentsQuery</a>&nbsp;componentsQuery,
  float&nbsp;deltaTime)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="initComponentOnAdd(Core2D.ECS.Component.Component)">
+<section class="detail" id="initComponentOnAdd(Core2D.ECS.Component)">
 <h3>initComponentOnAdd</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">initComponentOnAdd</span><wbr><span class="parameters">(<a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&nbsp;component)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="destroyComponent(Core2D.ECS.Component.Component)">
+<section class="detail" id="destroyComponent(Core2D.ECS.Component)">
 <h3>destroyComponent</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">destroyComponent</span><wbr><span class="parameters">(<a href="../Component/Component.html" title="class in Core2D.ECS.Component">Component</a>&nbsp;component)</span></div>
 </section>
@@ -269,14 +269,14 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="renderEntity(Core2D.ECS.Entity,Core2D.ECS.Component.Components.Camera.CameraComponent)">
+<section class="detail" id="renderEntity(Core2D.ECS.Entity,Core2D.ECS.Camera.CameraComponent)">
 <h3>renderEntity</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">renderEntity</span><wbr><span class="parameters">(<a href="../Entity.html" title="class in Core2D.ECS">Entity</a>&nbsp;entity,
  <a href="../Component/Components/Camera/CameraComponent.html" title="class in Core2D.ECS.Component.Components.Camera">CameraComponent</a>&nbsp;cameraComponent)</span></div>
 </section>
 </li>
 <li>
-<section class="detail" id="renderEntity(Core2D.ECS.Entity,Core2D.ECS.Component.Components.Camera.CameraComponent,Core2D.Graphics.RenderParts.Shader)">
+<section class="detail" id="renderEntity(Core2D.ECS.Entity,Core2D.ECS.Camera.CameraComponent,Core2D.Graphics.RenderParts.Shader)">
 <h3>renderEntity</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">renderEntity</span><wbr><span class="parameters">(<a href="../Entity.html" title="class in Core2D.ECS">Entity</a>&nbsp;entity,
  <a href="../Component/Components/Camera/CameraComponent.html" title="class in Core2D.ECS.Component.Components.Camera">CameraComponent</a>&nbsp;cameraComponent,
@@ -284,7 +284,7 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="onMouseScroll(Core2D.ECS.System.ComponentsQuery,double,double)">
+<section class="detail" id="onMouseScroll(Core2D.ECS.ComponentsQuery,double,double)">
 <h3>onMouseScroll</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onMouseScroll</span><wbr><span class="parameters">(<a href="ComponentsQuery.html" title="class in Core2D.ECS.System">ComponentsQuery</a>&nbsp;componentsQuery,
  double&nbsp;xOffset,
@@ -292,7 +292,7 @@ loadScripts(document, 'script');</script>
 </section>
 </li>
 <li>
-<section class="detail" id="onMousePositionChanged(Core2D.ECS.System.ComponentsQuery,double,double)">
+<section class="detail" id="onMousePositionChanged(Core2D.ECS.ComponentsQuery,double,double)">
 <h3>onMousePositionChanged</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">onMousePositionChanged</span><wbr><span class="parameters">(<a href="ComponentsQuery.html" title="class in Core2D.ECS.System">ComponentsQuery</a>&nbsp;componentsQuery,
  double&nbsp;posX,

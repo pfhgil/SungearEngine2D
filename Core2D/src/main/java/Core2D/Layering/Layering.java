@@ -1,6 +1,6 @@
 package Core2D.Layering;
 
-import Core2D.ECS.Component.Components.Camera.CameraComponent;
+import Core2D.ECS.Camera.CameraComponent;
 import Core2D.ECS.Entity;
 import Core2D.Log.Log;
 import org.joml.Vector4f;

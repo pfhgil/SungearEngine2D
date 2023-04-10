@@ -1,6 +1,6 @@
 package Core2D.Animation.SpriteAnimation;
 
-import Core2D.ECS.Component.Components.MeshComponent;
+import Core2D.ECS.Mesh.MeshComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.RenderParts.Texture2D;
 import Core2D.Utils.PositionsQuad;

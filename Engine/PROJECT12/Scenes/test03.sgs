@@ -15,7 +15,7 @@
             "ID": 61532367,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 660.92285,
@@ -35,7 +35,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "/data/textures/white_texture.png",
@@ -129,7 +129,7 @@
             "ID": 2,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 507.5597,
@@ -149,7 +149,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -223,7 +223,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Camera.CameraComponent",
+                "type": "Core2D.ECS.Camera.CameraComponent",
                 "properties": {
                   "viewportSize": {
                     "x": 1080.0,
@@ -261,7 +261,7 @@
             "ID": 4,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -131.45427,
@@ -281,7 +281,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -375,7 +375,7 @@
             "ID": 6,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -923.83136,
@@ -395,7 +395,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -489,7 +489,7 @@
             "ID": 8,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -942.089,
@@ -509,7 +509,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -603,7 +603,7 @@
             "ID": 10,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -825.7466,
@@ -623,7 +623,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -717,7 +717,7 @@
             "ID": 12,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -158.94655,
@@ -737,7 +737,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -831,7 +831,7 @@
             "ID": 14,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -581.5116,
@@ -851,7 +851,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -945,7 +945,7 @@
             "ID": 16,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 0.0,
@@ -965,7 +965,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -1059,7 +1059,7 @@
             "ID": 18,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 0.0,
@@ -1079,7 +1079,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -1173,7 +1173,7 @@
             "ID": 20,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 0.0,
@@ -1193,7 +1193,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -1287,7 +1287,7 @@
             "ID": 23,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -558.2511,
@@ -1307,7 +1307,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -1401,7 +1401,7 @@
             "ID": 25,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 682.30707,
@@ -1421,7 +1421,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -1515,7 +1515,7 @@
             "ID": 27,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -93.04185,
@@ -1535,7 +1535,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -1629,7 +1629,7 @@
             "ID": 29,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 176.77956,
@@ -1649,7 +1649,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -1743,7 +1743,7 @@
             "ID": 31,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 499.32455,
@@ -1763,7 +1763,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -1857,7 +1857,7 @@
             "ID": 33,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 418.68842,
@@ -1877,7 +1877,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -1971,7 +1971,7 @@
             "ID": 35,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -282.2269,
@@ -1991,7 +1991,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -2085,7 +2085,7 @@
             "ID": 37,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 0.0,
@@ -2105,7 +2105,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -2199,7 +2199,7 @@
             "ID": 39,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 263.67316,
@@ -2219,7 +2219,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -2313,7 +2313,7 @@
             "ID": 41,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 2122.2476,
@@ -2333,7 +2333,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -2427,7 +2427,7 @@
             "ID": 43,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -690.1498,
@@ -2447,7 +2447,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -2541,7 +2541,7 @@
             "ID": 45,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -724.39386,
@@ -2561,7 +2561,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -2655,7 +2655,7 @@
             "ID": 47,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -758.63794,
@@ -2675,7 +2675,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -2769,7 +2769,7 @@
             "ID": 49,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -521.56354,
@@ -2789,7 +2789,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -2883,7 +2883,7 @@
             "ID": 51,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -136.97632,
@@ -2903,7 +2903,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -2997,7 +2997,7 @@
             "ID": 53,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 171.22037,
@@ -3017,7 +3017,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -3111,7 +3111,7 @@
             "ID": 55,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -239.7085,
@@ -3131,7 +3131,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -3225,7 +3225,7 @@
             "ID": 57,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -558.4417,
@@ -3245,7 +3245,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -3339,7 +3339,7 @@
             "ID": 59,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -595.32,
@@ -3359,7 +3359,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -3453,7 +3453,7 @@
             "ID": 62,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -534.7344,
@@ -3473,7 +3473,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -3567,7 +3567,7 @@
             "ID": 65,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -252.87927,
@@ -3587,7 +3587,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -3681,7 +3681,7 @@
             "ID": 67,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -131.70795,
@@ -3701,7 +3701,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -3795,7 +3795,7 @@
             "ID": 69,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -202.83034,
@@ -3815,7 +3815,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -3909,7 +3909,7 @@
             "ID": 71,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -300.29413,
@@ -3929,7 +3929,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -4023,7 +4023,7 @@
             "ID": 73,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -397.75806,
@@ -4043,7 +4043,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -4137,7 +4137,7 @@
             "ID": 75,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 373.721,
@@ -4157,7 +4157,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -4251,7 +4251,7 @@
             "ID": 77,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 325.0,
@@ -4271,7 +4271,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -4365,7 +4365,7 @@
             "ID": 79,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 216.6248,
@@ -4385,7 +4385,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -4479,7 +4479,7 @@
             "ID": 81,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 481.97122,
@@ -4499,7 +4499,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -4593,7 +4593,7 @@
             "ID": 84,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -352.55325,
@@ -4613,7 +4613,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -4707,7 +4707,7 @@
             "ID": 86,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 234.54216,
@@ -4727,7 +4727,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -4821,7 +4821,7 @@
             "ID": 88,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -293.822,
@@ -4841,7 +4841,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -4935,7 +4935,7 @@
             "ID": 90,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 448.46524,
@@ -4955,7 +4955,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -5049,7 +5049,7 @@
             "ID": 92,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 371.1436,
@@ -5069,7 +5069,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -5163,7 +5163,7 @@
             "ID": 94,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 0.0,
@@ -5183,7 +5183,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -5277,7 +5277,7 @@
             "ID": 96,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -11.173704,
@@ -5297,7 +5297,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -5391,7 +5391,7 @@
             "ID": 98,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -11.173704,
@@ -5411,7 +5411,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -5505,7 +5505,7 @@
             "ID": 100,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 0.0,
@@ -5525,7 +5525,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -5619,7 +5619,7 @@
             "ID": 102,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 203.33206,
@@ -5639,7 +5639,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -5733,7 +5733,7 @@
             "ID": 105,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": -1438.3386,
@@ -5753,7 +5753,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",
@@ -5847,7 +5847,7 @@
             "ID": 107,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 547.84393,
@@ -5867,7 +5867,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\����2.png",

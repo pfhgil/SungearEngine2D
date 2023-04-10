@@ -1,7 +1,7 @@
 package SungearEngine2D.DebugDraw;
 
-import Core2D.ECS.Component.Components.MeshComponent;
-import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.Mesh.MeshComponent;
+import Core2D.ECS.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import org.joml.Vector2f;
 

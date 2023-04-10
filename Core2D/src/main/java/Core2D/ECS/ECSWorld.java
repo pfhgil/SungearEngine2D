@@ -1,12 +1,13 @@
 package Core2D.ECS;
 
 import Core2D.Common.Interfaces.NonDuplicated;
-import Core2D.ECS.Component.Component;
-import Core2D.ECS.System.ComponentsQuery;
-import Core2D.ECS.System.NonComponentSystem;
-import Core2D.ECS.System.System;
-import Core2D.ECS.System.Systems.*;
-import Core2D.ECS.System.Systems.Cameras.CamerasManagerSystem;
+import Core2D.ECS.Audio.AudioSystem;
+import Core2D.ECS.Mesh.MeshesRendererSystem;
+import Core2D.ECS.Other.ComponentsInitializerSystem;
+import Core2D.ECS.Physics.PhysicsSystem;
+import Core2D.ECS.Primitives.PrimitivesSystem;
+import Core2D.ECS.Camera.CamerasManagerSystem;
+import Core2D.ECS.Transform.TransformationsSystem;
 import Core2D.Log.Log;
 
 import java.util.ArrayList;

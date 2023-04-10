@@ -1,11 +1,11 @@
 package SungearEngine2D.ECSOrientedScripts.Systems;
 
 import Core2D.Common.Interfaces.NonDuplicated;
-import Core2D.ECS.Component.Components.Camera.CameraComponent;
-import Core2D.ECS.Component.Components.Camera.CameraController2DComponent;
-import Core2D.ECS.Component.Components.Camera.CameraController3DComponent;
-import Core2D.ECS.System.ComponentsQuery;
-import Core2D.ECS.System.System;
+import Core2D.ECS.Camera.CameraComponent;
+import Core2D.ECS.Camera.CameraController2DComponent;
+import Core2D.ECS.Camera.CameraController3DComponent;
+import Core2D.ECS.ComponentsQuery;
+import Core2D.ECS.System;
 import SungearEngine2D.GUI.Views.ViewsManager;
 
 public class SceneViewFixSystem extends System implements NonDuplicated

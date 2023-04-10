@@ -74,9 +74,9 @@ loadScripts(document, 'script');</script>
 <h1 title="Class CircleComponent" class="title">Class CircleComponent</h1>
 </div>
 <div class="inheritance" title="Inheritance Tree"><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">java.lang.Object</a>
-<div class="inheritance"><a href="../../Component.html" title="class in Core2D.ECS.Component">Core2D.ECS.Component.Component</a>
-<div class="inheritance"><a href="PrimitiveComponent.html" title="class in Core2D.ECS.Component.Components.Primitives">Core2D.ECS.Component.Components.Primitives.PrimitiveComponent</a>
-<div class="inheritance">Core2D.ECS.Component.Components.Primitives.CircleComponent</div>
+<div class="inheritance"><a href="../../Component.html" title="class in Core2D.ECS.Component">Core2D.ECS.Component</a>
+<div class="inheritance"><a href="PrimitiveComponent.html" title="class in Core2D.ECS.Component.Components.Primitives">Core2D.ECS.Primitives.PrimitiveComponent</a>
+<div class="inheritance">Core2D.ECS.Primitives.CircleComponent</div>
 </div>
 </div>
 </div>
@@ -92,10 +92,10 @@ loadScripts(document, 'script');</script>
 <section class="field-summary" id="field-summary">
 <h2>Field Summary</h2>
 <div class="inherited-list">
-<h3 id="fields-inherited-from-class-Core2D.ECS.Component.Components.Primitives.PrimitiveComponent">Fields inherited from class&nbsp;Core2D.ECS.Component.Components.Primitives.<a href="PrimitiveComponent.html" title="class in Core2D.ECS.Component.Components.Primitives">PrimitiveComponent</a></h3>
+<h3 id="fields-inherited-from-class-Core2D.ECS.Primitives.PrimitiveComponent">Fields inherited from class&nbsp;Core2D.ECS.Component.Components.Primitives.<a href="PrimitiveComponent.html" title="class in Core2D.ECS.Component.Components.Primitives">PrimitiveComponent</a></h3>
 <code><a href="PrimitiveComponent.html#scaleWithEntity">scaleWithEntity</a>, <a href="PrimitiveComponent.html#shader">shader</a>, <a href="PrimitiveComponent.html#vertexArray">vertexArray</a></code></div>
 <div class="inherited-list">
-<h3 id="fields-inherited-from-class-Core2D.ECS.Component.Component">Fields inherited from class&nbsp;Core2D.ECS.Component.<a href="../../Component.html" title="class in Core2D.ECS.Component">Component</a></h3>
+<h3 id="fields-inherited-from-class-Core2D.ECS.Component">Fields inherited from class&nbsp;Core2D.ECS.Component.<a href="../../Component.html" title="class in Core2D.ECS.Component">Component</a></h3>
 <code><a href="../../Component.html#active">active</a>, <a href="../../Component.html#entity">entity</a>, <a href="../../Component.html#ID">ID</a></code></div>
 </section>
 </li>
@@ -130,7 +130,7 @@ loadScripts(document, 'script');</script>
 <div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#getRadius()" class="member-name-link">getRadius</a>()</code></div>
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">&nbsp;</div>
 <div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code>void</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set(Core2D.ECS.Component.Component)" class="member-name-link">set</a><wbr>(<a href="../../Component.html" title="class in Core2D.ECS.Component">Component</a>&nbsp;component)</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4"><code><a href="#set(Core2D.ECS.Component)" class="member-name-link">set</a><wbr>(<a href="../../Component.html" title="class in Core2D.ECS.Component">Component</a>&nbsp;component)</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab4">
 <div class="block">Sets the parameters of the transmitted component for this component.</div>
 </div>
@@ -144,11 +144,11 @@ loadScripts(document, 'script');</script>
 </div>
 </div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-Core2D.ECS.Component.Components.Primitives.PrimitiveComponent">Methods inherited from class&nbsp;Core2D.ECS.Component.Components.Primitives.<a href="PrimitiveComponent.html" title="class in Core2D.ECS.Component.Components.Primitives">PrimitiveComponent</a></h3>
+<h3 id="methods-inherited-from-class-Core2D.ECS.Primitives.PrimitiveComponent">Methods inherited from class&nbsp;Core2D.ECS.Component.Components.Primitives.<a href="PrimitiveComponent.html" title="class in Core2D.ECS.Component.Components.Primitives">PrimitiveComponent</a></h3>
 <code><a href="PrimitiveComponent.html#destroy()">destroy</a>, <a href="PrimitiveComponent.html#getColor()">getColor</a>, <a href="PrimitiveComponent.html#getLinesData()">getLinesData</a>, <a href="PrimitiveComponent.html#getLinesWidth()">getLinesWidth</a>, <a href="PrimitiveComponent.html#getOffset()">getOffset</a>, <a href="PrimitiveComponent.html#init()">init</a>, <a href="PrimitiveComponent.html#setColor(org.joml.Vector4f)">setColor</a>, <a href="PrimitiveComponent.html#setLinesWidth(float)">setLinesWidth</a>, <a href="PrimitiveComponent.html#setOffset(org.joml.Vector3f)">setOffset</a></code></div>
 <div class="inherited-list">
-<h3 id="methods-inherited-from-class-Core2D.ECS.Component.Component">Methods inherited from class&nbsp;Core2D.ECS.Component.<a href="../../Component.html" title="class in Core2D.ECS.Component">Component</a></h3>
-<code><a href="../../Component.html#collider2DEnter(Core2D.ECS.Entity)">collider2DEnter</a>, <a href="../../Component.html#collider2DExit(Core2D.ECS.Entity)">collider2DExit</a>, <a href="../../Component.html#deltaUpdate(float)">deltaUpdate</a>, <a href="../../Component.html#getComponent(java.lang.Class)">getComponent</a>, <a href="../../Component.html#render(Core2D.ECS.Component.Components.Camera.CameraComponent)">render</a>, <a href="../../Component.html#render(Core2D.ECS.Component.Components.Camera.CameraComponent,Core2D.Graphics.RenderParts.Shader)">render</a>, <a href="../../Component.html#update()">update</a></code></div>
+<h3 id="methods-inherited-from-class-Core2D.ECS.Component">Methods inherited from class&nbsp;Core2D.ECS.Component.<a href="../../Component.html" title="class in Core2D.ECS.Component">Component</a></h3>
+<code><a href="../../Component.html#collider2DEnter(Core2D.ECS.Entity)">collider2DEnter</a>, <a href="../../Component.html#collider2DExit(Core2D.ECS.Entity)">collider2DExit</a>, <a href="../../Component.html#deltaUpdate(float)">deltaUpdate</a>, <a href="../../Component.html#getComponent(java.lang.Class)">getComponent</a>, <a href="../../Component.html#render(Core2D.ECS.Camera.CameraComponent)">render</a>, <a href="../../Component.html#render(Core2D.ECS.Camera.CameraComponent,Core2D.Graphics.RenderParts.Shader)">render</a>, <a href="../../Component.html#update()">update</a></code></div>
 <div class="inherited-list">
 <h3 id="methods-inherited-from-class-java.lang.Object">Methods inherited from class&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html" title="class or interface in java.lang" class="external-link">Object</a></h3>
 <code><a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#equals(java.lang.Object)" title="class or interface in java.lang" class="external-link">equals</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#getClass()" title="class or interface in java.lang" class="external-link">getClass</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#hashCode()" title="class or interface in java.lang" class="external-link">hashCode</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notify()" title="class or interface in java.lang" class="external-link">notify</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#notifyAll()" title="class or interface in java.lang" class="external-link">notifyAll</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#toString()" title="class or interface in java.lang" class="external-link">toString</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait()" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long)" title="class or interface in java.lang" class="external-link">wait</a>, <a href="https://docs.oracle.com/en/java/javase/17/docs/api/java.base/java/lang/Object.html#wait(long,int)" title="class or interface in java.lang" class="external-link">wait</a></code></div>
@@ -178,14 +178,14 @@ loadScripts(document, 'script');</script>
 <h2>Method Details</h2>
 <ul class="member-list">
 <li>
-<section class="detail" id="set(Core2D.ECS.Component.Component)">
+<section class="detail" id="set(Core2D.ECS.Component)">
 <h3>set</h3>
 <div class="member-signature"><span class="modifiers">public</span>&nbsp;<span class="return-type">void</span>&nbsp;<span class="element-name">set</span><wbr><span class="parameters">(<a href="../../Component.html" title="class in Core2D.ECS.Component">Component</a>&nbsp;component)</span></div>
-<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../../Component.html#set(Core2D.ECS.Component.Component)">Component</a></code></span></div>
+<div class="block"><span class="descfrm-type-label">Description copied from class:&nbsp;<code><a href="../../Component.html#set(Core2D.ECS.Component)">Component</a></code></span></div>
 <div class="block">Sets the parameters of the transmitted component for this component.</div>
 <dl class="notes">
 <dt>Overrides:</dt>
-<dd><code><a href="PrimitiveComponent.html#set(Core2D.ECS.Component.Component)">set</a></code>&nbsp;in class&nbsp;<code><a href="PrimitiveComponent.html" title="class in Core2D.ECS.Component.Components.Primitives">PrimitiveComponent</a></code></dd>
+<dd><code><a href="PrimitiveComponent.html#set(Core2D.ECS.Component)">set</a></code>&nbsp;in class&nbsp;<code><a href="PrimitiveComponent.html" title="class in Core2D.ECS.Component.Components.Primitives">PrimitiveComponent</a></code></dd>
 <dt>Parameters:</dt>
 <dd><code>component</code> - Component.</dd>
 </dl>

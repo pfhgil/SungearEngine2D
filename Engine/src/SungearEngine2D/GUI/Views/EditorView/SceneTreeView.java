@@ -1,7 +1,7 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
-import Core2D.ECS.Component.Components.Transform.MoveToComponent;
-import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.Transform.MoveToComponent;
+import Core2D.ECS.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Utils.MatrixUtils;
 import SungearEngine2D.GUI.Views.View;

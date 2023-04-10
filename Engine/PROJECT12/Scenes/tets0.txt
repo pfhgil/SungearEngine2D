@@ -15,7 +15,7 @@
             "ID": 93,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -38,7 +38,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -113,7 +113,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "rigidbody2D": {
                     "bodyType": "DYNAMIC",
@@ -129,7 +129,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "circleCollider2D": {
                     "offset": {
@@ -146,7 +146,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
@@ -172,7 +172,7 @@
             "ID": 633,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -195,7 +195,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -270,7 +270,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "circleCollider2D": {
                     "offset": {
@@ -285,7 +285,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "rigidbody2D": {
                     "bodyType": "DYNAMIC",
@@ -301,7 +301,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Camera.CameraComponent",
+                "type": "Core2D.ECS.Camera.CameraComponent",
                 "properties": {
                   "viewportSize": {
                     "x": 1080.0,
@@ -322,13 +322,13 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
               },
               {
-                "type": "Core2D.ECS.System.Systems.ScriptableSystem",
+                "type": "Core2D.ECS.Script.ScriptableSystem",
                 "properties": {
                   "script": {
                     "path": "Scripts\\Systems\\Postprocessing\\PPTest0System",
@@ -341,7 +341,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.System.Systems.ScriptableSystem",
+                "type": "Core2D.ECS.Script.ScriptableSystem",
                 "properties": {
                   "script": {
                     "path": "Scripts\\Systems\\Postprocessing\\PPTest1System",
@@ -380,7 +380,7 @@
             "ID": 614,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -403,7 +403,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -478,7 +478,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "boxCollider2D": {
                     "scale": {
@@ -497,7 +497,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "rigidbody2D": {
                     "bodyType": "STATIC",
@@ -515,7 +515,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
@@ -547,7 +547,7 @@
             "ID": 19,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -591,7 +591,7 @@
             "ID": 4,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -614,7 +614,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Primitives.LineComponent",
+                "type": "Core2D.ECS.Primitives.LineComponent",
                 "properties": {
                   "linesData": [
                     {
@@ -659,7 +659,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Primitives.LineComponent",
+                "type": "Core2D.ECS.Primitives.LineComponent",
                 "properties": {
                   "linesData": [
                     {
@@ -704,7 +704,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Primitives.LineComponent",
+                "type": "Core2D.ECS.Primitives.LineComponent",
                 "properties": {
                   "linesData": [
                     {
@@ -749,7 +749,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Primitives.BoxComponent",
+                "type": "Core2D.ECS.Primitives.BoxComponent",
                 "properties": {
                   "size": {
                     "x": 100.0,
@@ -867,7 +867,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Primitives.BoxComponent",
+                "type": "Core2D.ECS.Primitives.BoxComponent",
                 "properties": {
                   "size": {
                     "x": 100.0,
@@ -985,7 +985,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -1060,7 +1060,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Primitives.CircleComponent",
+                "type": "Core2D.ECS.Primitives.CircleComponent",
                 "properties": {
                   "radius": 150.0,
                   "linesNum": 36,
@@ -1913,7 +1913,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Primitives.CircleComponent",
+                "type": "Core2D.ECS.Primitives.CircleComponent",
                 "properties": {
                   "radius": 70.0,
                   "linesNum": 36,
@@ -2766,7 +2766,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.ScriptComponent",
+                "type": "Core2D.ECS.Script.ScriptComponent",
                 "properties": {
                   "script": {
                     "path": "Scripts\\Components\\SomeSuperComponent",
@@ -2783,13 +2783,13 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.PrimitivesSystem",
+                "type": "Core2D.ECS.Primitives.PrimitivesSystem",
                 "properties": {
                   "active": true
                 }
               },
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
@@ -2815,7 +2815,7 @@
             "ID": 63,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -2838,7 +2838,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\limon.png",
@@ -2915,7 +2915,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
@@ -2941,7 +2941,7 @@
             "ID": 84,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -2964,7 +2964,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -3039,7 +3039,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "boxCollider2D": {
                     "scale": {
@@ -3058,7 +3058,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "rigidbody2D": {
                     "bodyType": "STATIC",
@@ -3074,7 +3074,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "boxCollider2D": {
                     "scale": {
@@ -3095,7 +3095,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
@@ -3121,7 +3121,7 @@
             "ID": 129,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -3144,7 +3144,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -3219,7 +3219,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "rigidbody2D": {
                     "bodyType": "STATIC",
@@ -3235,7 +3235,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "boxCollider2D": {
                     "scale": {
@@ -3256,7 +3256,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
@@ -3282,7 +3282,7 @@
             "ID": 132,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -3305,7 +3305,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -3380,7 +3380,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "boxCollider2D": {
                     "scale": {
@@ -3399,7 +3399,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "rigidbody2D": {
                     "bodyType": "STATIC",
@@ -3417,7 +3417,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
@@ -3443,7 +3443,7 @@
             "ID": 135,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -3466,7 +3466,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ferapont.png",
@@ -3541,7 +3541,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "circleCollider2D": {
                     "offset": {
@@ -3556,7 +3556,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "rigidbody2D": {
                     "bodyType": "DYNAMIC",
@@ -3574,7 +3574,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
@@ -3600,7 +3600,7 @@
             "ID": 157,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -3623,7 +3623,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -3698,7 +3698,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "boxCollider2D": {
                     "scale": {
@@ -3717,7 +3717,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "boxCollider2D": {
                     "scale": {
@@ -3736,7 +3736,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "rigidbody2D": {
                     "bodyType": "STATIC",
@@ -3752,7 +3752,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "boxCollider2D": {
                     "scale": {
@@ -3773,7 +3773,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
@@ -3799,7 +3799,7 @@
             "ID": 159,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -3822,7 +3822,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -3897,7 +3897,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "circleCollider2D": {
                     "offset": {
@@ -3912,7 +3912,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "rigidbody2D": {
                     "bodyType": "DYNAMIC",
@@ -3930,13 +3930,13 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
               },
               {
-                "type": "Core2D.ECS.System.Systems.ScriptableSystem",
+                "type": "Core2D.ECS.Script.ScriptableSystem",
                 "properties": {
                   "script": {
                     "path": "Scripts\\Systems\\VoidsTestSystem",
@@ -3969,7 +3969,7 @@
             "ID": 185,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -3992,7 +3992,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -4080,13 +4080,13 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
               },
               {
-                "type": "Core2D.ECS.System.Systems.ScriptableSystem",
+                "type": "Core2D.ECS.Script.ScriptableSystem",
                 "properties": {
                   "script": {
                     "path": "Scripts\\FunnySystem",
@@ -4119,7 +4119,7 @@
             "ID": 198,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -4142,7 +4142,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ferapont.png",
@@ -4219,7 +4219,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
@@ -4245,7 +4245,7 @@
             "ID": 606,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -4268,7 +4268,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -4343,7 +4343,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "boxCollider2D": {
                     "scale": {
@@ -4362,7 +4362,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "rigidbody2D": {
                     "bodyType": "STATIC",
@@ -4380,7 +4380,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
@@ -4406,7 +4406,7 @@
             "ID": 608,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -4429,7 +4429,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -4504,7 +4504,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "rigidbody2D": {
                     "bodyType": "STATIC",
@@ -4520,7 +4520,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "boxCollider2D": {
                     "scale": {
@@ -4541,7 +4541,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
@@ -4567,7 +4567,7 @@
             "ID": 611,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -4590,7 +4590,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -4665,7 +4665,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "boxCollider2D": {
                     "scale": {
@@ -4684,7 +4684,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "rigidbody2D": {
                     "bodyType": "STATIC",
@@ -4702,7 +4702,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
@@ -4728,7 +4728,7 @@
             "ID": 637,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -4751,7 +4751,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -4826,7 +4826,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent",
+                "type": "Core2D.ECS.Physics.BoxCollider2DComponent",
                 "properties": {
                   "boxCollider2D": {
                     "scale": {
@@ -4845,7 +4845,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "rigidbody2D": {
                     "bodyType": "KINEMATIC",
@@ -4863,13 +4863,13 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
               },
               {
-                "type": "Core2D.ECS.System.Systems.ScriptableSystem",
+                "type": "Core2D.ECS.Script.ScriptableSystem",
                 "properties": {
                   "script": {
                     "path": "Scripts\\Systems\\RotationSystem",
@@ -4902,7 +4902,7 @@
             "ID": 704,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -4925,7 +4925,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent",
+                "type": "Core2D.ECS.Physics.CircleCollider2DComponent",
                 "properties": {
                   "circleCollider2D": {
                     "offset": {
@@ -4940,7 +4940,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Primitives.CircleComponent",
+                "type": "Core2D.ECS.Primitives.CircleComponent",
                 "properties": {
                   "radius": 50.0,
                   "linesNum": 36,
@@ -5793,7 +5793,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent",
+                "type": "Core2D.ECS.Physics.Rigidbody2DComponent",
                 "properties": {
                   "rigidbody2D": {
                     "bodyType": "DYNAMIC",
@@ -5811,7 +5811,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.PrimitivesSystem",
+                "type": "Core2D.ECS.Primitives.PrimitivesSystem",
                 "properties": {
                   "active": true
                 }
@@ -5837,7 +5837,7 @@
             "ID": 998,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -5860,7 +5860,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -5932,13 +5932,13 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
               },
               {
-                "type": "Core2D.ECS.System.Systems.ScriptableSystem",
+                "type": "Core2D.ECS.Script.ScriptableSystem",
                 "properties": {
                   "script": {
                     "path": "Scripts\\FunnySystem",
@@ -5971,7 +5971,7 @@
             "ID": 2260,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -5994,7 +5994,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -6066,7 +6066,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }

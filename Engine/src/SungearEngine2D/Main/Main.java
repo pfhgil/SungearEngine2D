@@ -9,25 +9,26 @@ import Core2D.Core2D.Settings;
 import Core2D.DataClasses.ScriptData;
 import Core2D.DataClasses.ShaderData;
 import Core2D.Debug.DebugDraw;
-import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.Audio.AudioComponent;
-import Core2D.ECS.Component.Components.Audio.AudioState;
-import Core2D.ECS.Component.Components.Camera.CameraComponent;
-import Core2D.ECS.Component.Components.Camera.CameraController2DComponent;
-import Core2D.ECS.Component.Components.Camera.CameraController3DComponent;
-import Core2D.ECS.Component.Components.MeshComponent;
-import Core2D.ECS.Component.Components.ScriptComponent;
-import Core2D.ECS.Component.Components.Transform.MoveToComponent;
-import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.Component;
+import Core2D.ECS.Audio.AudioComponent;
+import Core2D.ECS.Audio.AudioState;
+import Core2D.ECS.Camera.CameraComponent;
+import Core2D.ECS.Camera.CameraController2DComponent;
+import Core2D.ECS.Camera.CameraController3DComponent;
+import Core2D.ECS.Mesh.MeshComponent;
+import Core2D.ECS.Script.ScriptComponent;
+import Core2D.ECS.Transform.MoveToComponent;
+import Core2D.ECS.Transform.TransformComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
-import Core2D.ECS.System.ComponentsQuery;
-import Core2D.ECS.System.Systems.Cameras.CamerasController2DSystem;
-import Core2D.ECS.System.Systems.Cameras.CamerasController3DSystem;
+import Core2D.ECS.ComponentsQuery;
+import Core2D.ECS.Camera.CamerasController2DSystem;
+import Core2D.ECS.Camera.CamerasController3DSystem;
 import Core2D.Graphics.Graphics;
 import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Graphics.RenderParts.Shader;
 import Core2D.Input.PC.Keyboard;
+import Core2D.Input.PC.Mouse;
 import Core2D.Layering.PostprocessingLayer;
 import Core2D.Log.Log;
 import Core2D.Project.ProjectsManager;
@@ -46,9 +47,8 @@ import SungearEngine2D.Scripting.Compiler;
 import SungearEngine2D.Utils.AppData.AppDataManager;
 import imgui.ImGui;
 import org.apache.commons.io.FilenameUtils;
+import org.joml.*;
 import org.joml.Math;
-import org.joml.Vector3f;
-import org.joml.Vector4f;
 import org.lwjgl.glfw.GLFW;
 
 import java.io.File;
@@ -183,6 +183,7 @@ public class Main
                         }
                     }
                 });
+                
                 helpThread.start();
 
                 /**
@@ -235,7 +236,8 @@ public class Main
 
                                 ECSWorld.getCurrentECSWorld().transformationsSystem.updateScaleMatrix(transformComponent);
                                 ECSWorld.getCurrentECSWorld().transformationsSystem.updateModelMatrix(transformComponent);
-                                transformComponent.lastScale.set(transformComponent.scale);
+                                ECSWorld.getCurrentECSWorld().transformationsSystem.updateLastScale(transformComponent);
+                                //transformComponent.lastScale.set(transformComponent.scale);
 
                                 inspectingEntity.setColor(new Vector4f(0.0f, 1.0f, 0.0f, 1.0f));
 
@@ -252,7 +254,8 @@ public class Main
 
                                 ECSWorld.getCurrentECSWorld().transformationsSystem.updateScaleMatrix(transformComponent);
                                 ECSWorld.getCurrentECSWorld().transformationsSystem.updateModelMatrix(transformComponent);
-                                transformComponent.lastScale.set(transformComponent.scale);
+                                ECSWorld.getCurrentECSWorld().transformationsSystem.updateLastScale(transformComponent);
+                                //transformComponent.lastScale.set(transformComponent.scale);
 
                                 inspectingEntity.setColor(lastColor);
                             }

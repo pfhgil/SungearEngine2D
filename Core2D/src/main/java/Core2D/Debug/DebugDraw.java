@@ -1,9 +1,9 @@
 package Core2D.Debug;
 
-import Core2D.ECS.Component.Components.Primitives.BoxComponent;
-import Core2D.ECS.Component.Components.Primitives.CircleComponent;
-import Core2D.ECS.Component.Components.Primitives.LineComponent;
-import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.Primitives.BoxComponent;
+import Core2D.ECS.Primitives.CircleComponent;
+import Core2D.ECS.Primitives.LineComponent;
+import Core2D.ECS.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import org.joml.Vector2f;
 import org.joml.Vector3f;

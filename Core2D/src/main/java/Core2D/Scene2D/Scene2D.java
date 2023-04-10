@@ -1,8 +1,8 @@
 package Core2D.Scene2D;
 
 import Core2D.CamerasManager.CamerasManager;
-import Core2D.ECS.Component.Components.Camera.CameraComponent;
-import Core2D.ECS.Component.Components.MeshComponent;
+import Core2D.ECS.Camera.CameraComponent;
+import Core2D.ECS.Mesh.MeshComponent;
 import Core2D.ECS.ECSWorld;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;

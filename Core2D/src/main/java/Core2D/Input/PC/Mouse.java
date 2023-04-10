@@ -2,13 +2,13 @@ package Core2D.Input.PC;
 
 import Core2D.CamerasManager.CamerasManager;
 import Core2D.Core2D.Core2D;
-import Core2D.ECS.Component.Components.Camera.CameraComponent;
+import Core2D.ECS.Camera.CameraComponent;
+import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
-import org.joml.Matrix4f;
-import org.joml.Vector2f;
-import org.joml.Vector2i;
-import org.joml.Vector4f;
+import org.joml.*;
 import org.lwjgl.glfw.GLFWCursorPosCallback;
+import org.lwjglx.debug.org.lwjgl.opengl.GLUtil;
+import org.newdawn.slick.opengl.GLUtils;
 
 import static org.lwjgl.glfw.GLFW.*;
 
@@ -169,41 +169,58 @@ public class Mouse
         return deltaPosition;
     }
 
+    // TODO: исправить нахождение позиции. чет не работает
     /**
      * @param mousePosition Mouse position.
      * @return The position of the cursor in the world space.
      */
-    public static Vector2f getMouseOGLPosition(Vector2f mousePosition)
+    public static Vector2f getMouseOGLPosition(Entity mainCamera, Vector2f mousePosition)
     {
         if(CamerasManager.mainCamera2D != null) {
-            float currentX = mousePosition.x / Graphics.getScreenSize().x * 2.0f - 1.0f;
-            Vector4f tmp = new Vector4f(currentX, 0, 0, 1);
+            float normalizedX = mousePosition.x / Graphics.getScreenSize().x * 2.0f - 1.0f;
+            float normalizedY = mousePosition.y / Graphics.getScreenSize().y * 2.0f - 1.0f;
+
+            Vector4f tmp = new Vector4f(normalizedX, 0, 0, 1);
 
             Matrix4f viewProjection = new Matrix4f();
             Matrix4f inverseView = new Matrix4f();
             Matrix4f inverseProjection = new Matrix4f();
 
-            CameraComponent cameraComponent = CamerasManager.mainCamera2D.getComponent(CameraComponent.class);
+            CameraComponent cameraComponent = mainCamera.getComponent(CameraComponent.class);
             if(cameraComponent != null) {
                 cameraComponent.viewMatrix.invert(inverseView);
                 cameraComponent.projectionMatrix.invert(inverseProjection);
+
+                inverseView.mul(inverseProjection, viewProjection);
+                tmp.mul(viewProjection);
+            }/* else if (cameraComponent != null && cameraComponent.viewMode == CameraComponent.ViewMode.VIEW_MODE_3D) {
+                cameraComponent.projectionMatrix.invert(inverseProjection);
+                cameraComponent.viewMatrix.invert(inverseView);
+
+                Vector4f viewPosH = new Vector4f();
+                Vector4f ndc = new Vector4f(normalizedX, normalizedY, 0f, 1f);
+
+                ndc.mul(inverseProjection, viewPosH);
+
+                return new Vector2f(viewPosH.x / viewPosH.w, viewPosH.y / viewPosH.w);
             }
+        */
 
-            inverseView.mul(inverseProjection, viewProjection);
+            normalizedX = tmp.x;
+
+            tmp = new Vector4f(0, normalizedY, 0, 1);
             tmp.mul(viewProjection);
 
-            currentX = tmp.x;
+            normalizedY = tmp.y;
 
-            float currentY = mousePosition.y / Graphics.getScreenSize().y * 2.0f - 1.0f;
-
-            tmp = new Vector4f(0, currentY, 0, 1);
-            tmp.mul(viewProjection);
-
-            currentY = tmp.y;
-
-            return new Vector2f(currentX, currentY);
+            return new Vector2f(normalizedX, normalizedY);
         }
         return new Vector2f();
+    }
+
+    public static Vector2f getMouseOGLPosition(Vector2f mousePosition)
+    {
+        return getMouseOGLPosition(CamerasManager.mainCamera2D, mousePosition);
     }
 
     public static Vector2f getScreenMousePosition() { return screenMousePosition; }

@@ -15,7 +15,7 @@
             "ID": 45050884,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -38,7 +38,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "/data/textures/white_texture.png",
@@ -115,7 +115,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }
@@ -141,7 +141,7 @@
             "ID": 3,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "transform": {
                     "position": {
@@ -164,7 +164,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture": {
                     "source": "Resources\\textures\\ss_stuka_12-30-22_11-16-50_(prostranstvenniy_puzir).jpg",
@@ -245,7 +245,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Camera.CameraComponent",
+                "type": "Core2D.ECS.Camera.CameraComponent",
                 "properties": {
                   "viewportSize": {
                     "x": 2560.0,
@@ -290,7 +290,7 @@
             ],
             "systems": [
               {
-                "type": "Core2D.ECS.System.Systems.MeshesRendererSystem",
+                "type": "Core2D.ECS.Mesh.MeshesRendererSystem",
                 "properties": {
                   "active": true
                 }

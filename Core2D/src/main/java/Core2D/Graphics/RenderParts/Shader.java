@@ -1,7 +1,7 @@
 package Core2D.Graphics.RenderParts;
 
 import Core2D.DataClasses.ShaderData;
-import Core2D.ECS.Component.Component;
+import Core2D.ECS.Component;
 import Core2D.Graphics.OpenGL.OpenGL;
 import Core2D.Log.Log;
 import Core2D.Utils.ComponentHandler;

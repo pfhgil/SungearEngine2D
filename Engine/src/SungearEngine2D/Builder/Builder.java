@@ -1,8 +1,8 @@
 package SungearEngine2D.Builder;
 
 import Core2D.Core2D.Core2D;
-import Core2D.ECS.Component.Components.MeshComponent;
-import Core2D.ECS.Component.Components.ScriptComponent;
+import Core2D.ECS.Mesh.MeshComponent;
+import Core2D.ECS.Script.ScriptComponent;
 import Core2D.ECS.Entity;
 import Core2D.Layering.Layer;
 import Core2D.Log.Log;

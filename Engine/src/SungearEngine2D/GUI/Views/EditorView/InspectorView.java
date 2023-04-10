@@ -1,7 +1,7 @@
 package SungearEngine2D.GUI.Views.EditorView;
 
-import Core2D.ECS.Component.Component;
-import Core2D.ECS.Component.Components.ScriptComponent;
+import Core2D.ECS.Component;
+import Core2D.ECS.Script.ScriptComponent;
 import Core2D.ECS.Entity;
 import Core2D.Input.PC.Keyboard;
 import Core2D.Layering.Layer;

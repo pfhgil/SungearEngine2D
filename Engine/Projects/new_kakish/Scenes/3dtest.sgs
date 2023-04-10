@@ -15,7 +15,7 @@
             "ID": 938873618,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 3256.4028,
@@ -42,7 +42,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.MeshComponent",
+                "type": "Core2D.ECS.Mesh.MeshComponent",
                 "properties": {
                   "texture2DData": {
                     "textureBlock": 33984,
@@ -141,7 +141,7 @@
             "ID": 4,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 521.0829,
@@ -168,7 +168,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Primitives.BoxComponent",
+                "type": "Core2D.ECS.Primitives.BoxComponent",
                 "properties": {
                   "size": {
                     "x": 100.0,
@@ -192,7 +192,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Primitives.CircleComponent",
+                "type": "Core2D.ECS.Primitives.CircleComponent",
                 "properties": {
                   "radius": 4.8,
                   "angleIncrement": 8,
@@ -214,7 +214,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Primitives.LineComponent",
+                "type": "Core2D.ECS.Primitives.LineComponent",
                 "properties": {
                   "scaleWithEntity": false,
                   "offset": {
@@ -254,7 +254,7 @@
             "ID": 16,
             "components": [
               {
-                "type": "Core2D.ECS.Component.Components.Transform.TransformComponent",
+                "type": "Core2D.ECS.Transform.TransformComponent",
                 "properties": {
                   "position": {
                     "x": 12.114362,
@@ -281,7 +281,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Primitives.BoxComponent",
+                "type": "Core2D.ECS.Primitives.BoxComponent",
                 "properties": {
                   "size": {
                     "x": 100.0,
@@ -305,7 +305,7 @@
                 }
               },
               {
-                "type": "Core2D.ECS.Component.Components.Primitives.CircleComponent",
+                "type": "Core2D.ECS.Primitives.CircleComponent",
                 "properties": {
                   "radius": 4.8,
                   "angleIncrement": 8,

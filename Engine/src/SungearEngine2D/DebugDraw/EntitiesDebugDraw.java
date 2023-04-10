@@ -1,11 +1,11 @@
 package SungearEngine2D.DebugDraw;
 
-import Core2D.ECS.Component.Components.Physics.BoxCollider2DComponent;
-import Core2D.ECS.Component.Components.Physics.CircleCollider2DComponent;
-import Core2D.ECS.Component.Components.Physics.Rigidbody2DComponent;
-import Core2D.ECS.Component.Components.Primitives.BoxComponent;
-import Core2D.ECS.Component.Components.Primitives.CircleComponent;
-import Core2D.ECS.Component.Components.Transform.TransformComponent;
+import Core2D.ECS.Physics.BoxCollider2DComponent;
+import Core2D.ECS.Physics.CircleCollider2DComponent;
+import Core2D.ECS.Physics.Rigidbody2DComponent;
+import Core2D.ECS.Primitives.BoxComponent;
+import Core2D.ECS.Primitives.CircleComponent;
+import Core2D.ECS.Transform.TransformComponent;
 import Core2D.ECS.Entity;
 import Core2D.Graphics.Graphics;
 import Core2D.Settings.PhysicsSettings;
